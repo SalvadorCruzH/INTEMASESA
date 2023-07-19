@@ -1,0 +1,11 @@
+[
+    {
+        "screenName": "camaraadm",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "type":"1",
+        "title":"Creador de grupo",
+        "description": "Role para la creación de grupos",
+        "name": "creadorGrupo"
+    }
+]

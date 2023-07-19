@@ -1,0 +1,45 @@
+apply plugin: "com.liferay.node"
+
+node {
+	nodeVersion = "16.15.1"
+}
+// Check GETTING_STARTED.markdown for information regarding usage.
+
+
+buildscript {
+	repositories {
+		maven {url "https://plugins.gradle.org/m2/"}
+	}
+
+	dependencies {
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+	}
+}
+
+subprojects { subproject ->
+	apply plugin: "io.spring.dependency-management"
+	plugins.withId("java") {
+		sourceCompatibility = "11"
+	}
+
+	buildscript {
+		repositories {
+			maven {
+				url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			}
+		}
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencyManagement {
+		dependencies {
+			dependency "com.liferay.portal:release.dxp.api:7.4.13.u83"
+			dependency "javax.mail:mail:1.4.7"
+		}
+	}
+}

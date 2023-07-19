@@ -1,0 +1,18 @@
+<ehcache
+	dynamicConfig="true"
+	monitoring="off"
+	name="module-single-vm"
+	updateCheck="false"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+>
+	<cache
+		eternal="false"
+		maxElementsInMemory="10000"
+		name="es.camara.intranet.base.util.CustomCacheSimpleUtil"
+		overflowToDisk="false"
+		timeToIdleSeconds="3600"
+		timeToLiveSeconds="86400"
+	>
+	</cache>
+</ehcache>

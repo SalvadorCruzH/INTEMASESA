@@ -1,0 +1,4 @@
+Bundle-Name: selae-pv-gogo-util
+Bundle-SymbolicName: selae.pv.gogo.util
+Bundle-Version: 1.0.0
+Export-Package: es.selae.pv.gogo.*

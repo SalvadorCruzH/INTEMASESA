@@ -1,0 +1,18 @@
+[
+  {
+    "expandoName": "linkedIn",
+    "className": "com.liferay.portal.kernel.model.User",
+    "companyWebId": "liferay.com",
+    "type": "15",
+    "defaultData": "",
+    "typeSettings": {
+      "display-type": "input-field",
+      "hidden": false,
+      "index-type": "0",
+      "localize-field-name": false,
+      "localize-field": false,
+      "visible-with-update-permission": false,
+      "width": "0"
+    }
+  }
+  ]

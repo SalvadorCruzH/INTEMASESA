@@ -1,0 +1,11 @@
+Bundle-Name: selae-pv-base-module
+Bundle-SymbolicName: selae.pv.base.module
+Bundle-Version: 1.0.0
+-metatype: *
+
+Export-Package: \
+    es.selae.pv.base.util.*, \
+    es.selae.pv.base.constant.*, \
+    es.selae.pv.base.model.*
+
+Web-ContextPath: /base-module

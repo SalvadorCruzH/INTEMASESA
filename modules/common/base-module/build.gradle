@@ -1,0 +1,4 @@
+dependencies {
+	compileOnly "com.liferay.portal:release.dxp.api"
+	compileOnly "javax.mail:mail"
+}

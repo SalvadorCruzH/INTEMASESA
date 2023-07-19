@@ -1,0 +1,5 @@
+Bundle-Name: settings-module
+Bundle-SymbolicName: settings-module
+Bundle-Version: 1.0.0
+Export-Package: es.camara.intranet.settings.configuration, es.camara.intranet.settings.constant, es.camara.intranet.settings.osgi, es.camara.intranet.settings.templatecontributor
+-metatype: *

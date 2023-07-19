@@ -1,0 +1,11 @@
+[  {
+    "screenName": "camaraadm",
+    "name":"CE - RRSS Footer",
+    "companyWebId":"liferay.com",
+    "groupFriendlyUrl":"/global",
+    "structureKey":"CE-RRSS-FOOTER",
+    "structureFile":"rrssFooter.json",
+    "comment": "Estructura para redes sociales del footer",
+    "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+  }
+]
