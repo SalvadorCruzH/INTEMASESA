@@ -6,3 +6,4 @@ out
 .idea/
 gradlew
 bundles/
+.DS_Store
