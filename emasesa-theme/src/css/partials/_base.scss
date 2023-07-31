@@ -1,0 +1,35 @@
+.i-mainWrapper {
+    @include font_base;
+    color: $color-text;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    strong,
+    b {
+        @include font_base-bold;
+    }
+    h1 em,
+    h2 em,
+    h3 em,
+    h4 em,
+    strong em,
+    h1 i,
+    h2 i,
+    h3 i,
+    h4 i,
+    strong i, 
+    b i {
+        @include font_base-bold-italic;
+    }
+    em,
+    i {
+        @include font_base-italic;
+    }
+    .portlet-header {
+        display: none;
+    }
+}
+
+  
