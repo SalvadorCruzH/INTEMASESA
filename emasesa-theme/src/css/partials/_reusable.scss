@@ -1,0 +1,6 @@
+/* Clases reusables del portal */
+
+/*px a rem*/
+@function m-rem($pixels, $context: $base-size) {
+    @return calc($pixels / $context) * 1rem;
+}
