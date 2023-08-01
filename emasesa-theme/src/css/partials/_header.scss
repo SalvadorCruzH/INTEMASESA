@@ -1,0 +1,18 @@
+.i-header {
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1920px;
+        padding: 27px 35px 0;
+        align-items: center;
+
+    }
+    &__logo {
+        display: flex;
+        align-items: center;
+    }
+    &__navSearch {
+        display: flex;
+        align-items: center;
+    }
+}
