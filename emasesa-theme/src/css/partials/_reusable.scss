@@ -4,3 +4,92 @@
 @function m-rem($pixels, $context: $base-size) {
     @return calc($pixels / $context) * 1rem;
 }
+
+/* Listados */
+
+.m-listBase {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+  .m-listNocenter {
+    display: flex;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+  .m-listBaseWrap {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    &.list1R {
+      margin: 0 -1rem;
+    }
+  }
+  .m-listBaseNoStyles {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+  .m-listBaseNoStylesOnlyPl {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 1rem;
+  }
+  .m-listBaseColumn {
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+  }
+  
+  /* display flex alineados */
+  
+  .m-dFlex {
+    display: flex;
+  }
+  .m-dFlexCenter {
+    display: flex;
+    align-items: center;
+  }
+  .m-dFlexSBCenter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .m-dFlexSACenter {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .m-dFlexColumnCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .m-dFlexRReverse {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+.i-mainWrapper {
+    .i-logo__img {
+        width: m-rem(70px);
+        height: m-rem(83px);
+    }
+    .i-logo__name {
+        @include font_base-bold;
+        font-size: m-rem(38px);
+    }
+    .btn-primary {
+        border-radius: m-rem(15px);
+    }
+}
+
