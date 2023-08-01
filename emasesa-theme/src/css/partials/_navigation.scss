@@ -1,0 +1,16 @@
+.i-mainNavigation {
+    &__ul {
+
+    }
+    &__li {
+        margin-right: m-rem(26px);
+        &.selected {
+
+        }
+    }
+    &__link {
+        @include font_base-bold;
+        font-size: m-rem(20px);
+        color: $color-text;
+    }
+}
