@@ -33,6 +33,51 @@
     .portlet {
         margin-bottom: 0;
     }
+
+    h1 {
+        @include font_base-black;
+        font-size: 1.5rem;
+        line-height: 1.33;
+        @include media-breakpoint-up(xl) {
+          font-size: m-rem(40px);
+          line-height: 1.33;
+        }
+    }
+    h2 {
+        @include font_base-black;
+        font-size: m-rem(24px);
+        line-height: 1.33;
+        @include media-breakpoint-up(xl) {
+          font-size: m-rem(36px);
+          line-height: 1.33;
+        }
+    }
+    h3 {
+        @include font_base-bold;
+        font-size: m-rem(18px);
+        @include media-breakpoint-up(xl) {
+          font-size: m-rem(30px);
+        }
+      }
+    h4 {
+        @include font_base-bold;
+        font-size: 1rem;
+        @include media-breakpoint-up(xl) {
+          font-size: m-rem(24px);
+        }
+      }
+    
+    h5,
+    h6 {
+        font-size: m-rem(14px);
+        @include media-breakpoint-up(xl) {
+          font-size: m-rem(20px);
+        }
+    }
+    p {
+        @include font_base;
+        font-size: m-rem(18px);
+    }
 }
 
   
