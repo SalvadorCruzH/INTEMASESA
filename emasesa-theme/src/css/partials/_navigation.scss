@@ -5,12 +5,126 @@
     &__li {
         margin-right: m-rem(26px);
         &.selected {
-
+            border-bottom: 2px solid $color-aux-blue;
+            .i-mainNavigation__link {
+                color: $color-aux-blue;
+            }
+            &.children {
+                .i-mainNavigation__link {
+                    &::after {
+                        content: "";
+                        background: transparent url("@theme_image_path@/icons/angle-down-blue.svg") center center no-repeat;
+                        background-size: 10px 7px;
+                        display: block;
+                        width: 10px;
+                        height: 19px;
+                        margin: 3px 0 0 0.5rem;
+                        transform: rotate(180deg);
+                    }
+                    &:hover {
+                        &::after {
+                            transform: rotate(0deg);
+                        }
+                    }
+                }
+            }
+            .i-mainNavigation__link {
+                color: $color-aux-blue;
+            }
+        }
+        &:hover {
+            color: $color-aux-blue;
+        }
+        &.children {
+            .i-mainNavigation__link {
+                &::after {
+                    content: "";
+                    background: transparent url("@theme_image_path@/icons/angle-down.svg") center center no-repeat;
+                    background-size: 10px 7px;
+                    display: block;
+                    width: 10px;
+                    height: 19px;
+                    margin: 3px 0 0 0.5rem;
+                }
+                &:hover {
+                    &::after {
+                        transform: rotate(0deg);
+                        background: transparent url("@theme_image_path@/icons/angle-down-blue.svg") center center no-repeat;
+                    }
+                }
+            }
+            &.show {
+                .i-mainNavigation__submenuContainer {
+                    display: block;
+                }
+            }
         }
     }
     &__link {
         @include font_base-bold;
         font-size: m-rem(20px);
         color: $color-text;
+        display: flex;
+        align-items: center;
+        &:hover {
+            color: $color-aux-blue;
+            text-decoration: none;
+        }
+    }
+    &__submenuContainer {
+        display: none;
+        position: absolute;
+        background-color: rgba(255,255,255,0.8);
+        width: 100%;
+        left: 0;
+        top: m-rem(114px);
+        z-index: 1;
+        height: 100vh;
+        box-shadow: 0 m-rem(3px) m-rem(6px) rgba(0, 0, 0, 0.16)
+    }
+    &__submenuWrapper {
+        position: relative;
+        width: m-rem(1280px);
+        margin-left: auto;
+        margin-right: auto;
+        padding: 3rem m-rem(48px);
+        background-color: white;
+        border-radius: 0 0 m-rem(30px) m-rem(30px);
+        box-shadow: 0 m-rem(3px) m-rem(6px) rgba(0, 0, 0, 0.16);
+    }
+    &__innerWrapper {
+        display: flex;
+        justify-content: space-between;
+
+    }
+    &__submenuUl {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 2rem;
+
+    }
+    &__submenuLi {
+        border-right: 1px solid $color-light-grey;
+        padding-right: 2rem;
+        &:nth-of-type(3n) {
+            border-right: none;
+        }
+
+    }
+    &__link2 {
+        @include font_base-black;
+        font-size: m-rem(18px);
+        color: $color-text;
+        &:hover {
+            color: $color-text;
+        }
+    }
+    &__link2Level {
+        @include font_base;
+        font-size: 1rem;
+        color: $color-text;
+        &:hover {
+            color: $color-text;
+        }
     }
 }
