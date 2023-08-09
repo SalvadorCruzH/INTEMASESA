@@ -4,12 +4,17 @@
 $color-blue:#0096DA;
 $color-aux-blue:#2978DA;
 
+
+$color-light-blue:#E5F4FB;
+
 $color-green:#A8C855;
 $color-black:#000000;
 $color-grey:#555;
+$color-light-grey: #d9d9d9;
 $color-bg-grey:#EEF1F7;
 $color-border:#BBB;
 $color-light-grey: #EEEEEE;
+$color-white:#FFFFFF;
 
 
 $color-success: #1A5F12;
@@ -87,4 +92,11 @@ $base-size: 16px;
 	font-weight: 900;
 	font-style: italic;
 }
+
+
+/*px a rem*/
+@function m-rem($pixels, $context: $base-size) {
+    @return calc($pixels / $context) * 1rem;
+}
+
 
