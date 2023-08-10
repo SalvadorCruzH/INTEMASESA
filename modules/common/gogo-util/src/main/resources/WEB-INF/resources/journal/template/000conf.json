@@ -1,14 +1,14 @@
 [
     {
-        "screenName": "camaraadm",
-        "name":"CE - RRSS Footer",
-        "templateKey": "CE-RRSS-FOOTER-TEMPLATE",
-        "structureKey": "CE-RRSS-FOOTER",
+        "screenName": "admin",
+        "name":"EMA - PRUEBA TEMPLATE",
+        "templateKey": "EMA-PRUEBA-TEMPLATE",
+        "structureKey": "EMA-PRUEBA-ESTRUCTURA",
         "companyWebId": "liferay.com",
         "groupFriendlyUrl": "/global",
-        "templateFile": "rrssFooter.ftl",
+        "templateFile": "prueba.ftl",
         "cacheable": true,
-        "comment": "Plantilla por defecto de RRSS Footer",
+        "comment": "Plantilla por PRUEBA",
         "uuid": "d7f6ff6e-2cd1-9b60-f7aa-ea64377bf1a9",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     }

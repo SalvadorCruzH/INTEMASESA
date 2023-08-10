@@ -2,8 +2,8 @@
 
 <%@page import="com.liferay.portal.kernel.util.PortalUtil"%>
 <%@page import="com.liferay.portal.kernel.util.GetterUtil"%>
-<%@page import="es.camara.intranet.adtcomponent.model.AdtComponent"%>
-<%@page import="es.camara.intranet.adtcomponent.constants.AdtComponentConstants"%>
+<%@page import="es.emasesa.intranet.adtcomponent.model.AdtComponent"%>
+<%@page import="es.emasesa.intranet.adtcomponent.constants.AdtComponentConstants"%>
 
 <%
 	String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", ""));

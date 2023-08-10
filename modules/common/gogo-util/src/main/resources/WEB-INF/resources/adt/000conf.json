@@ -1,13 +1,13 @@
 [
     {
-        "screenName": "camaraadm",
-        "name":"CE - Publicador Caja enlace",
+        "screenName": "admin",
+        "name":"EMA - EJEMPLO ADT a borrar",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",
         "companyWebId":"liferay.com",
         "groupFriendlyUrl":"/global",
-        "templateKey":"CE-CAJA-ENLACE-TEMPLATE",
-        "templateFile":"publisher-caja-enlace.ftl",
+        "templateKey":"EMA-EJEMPLO-ADT-A-BORRAR",
+        "templateFile":"applications.ftl",
         "comment": "Publicador para las cajas enlace",
         "uuid":"4c95a3e3-e32c-6092-c56b-a3138797b996"
     }

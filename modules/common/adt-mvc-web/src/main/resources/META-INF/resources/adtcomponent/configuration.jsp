@@ -1,4 +1,4 @@
-<%@ page import="es.camara.intranet.adtcomponent.model.AdtComponent" %>
+<%@ page import="es.emasesa.intranet.adtcomponent.model.AdtComponent" %>
 <%@ include file="init.jsp" %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

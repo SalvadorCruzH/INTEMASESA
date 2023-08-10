@@ -1,0 +1,67 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": ["es_ES"],
+  "successPage": { "body": {}, "title": {}, "enabled": false },
+  "defaultLanguageId": "es_ES",
+  "fields": [
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "predefinedValue": { "es_ES": "" },
+      "tooltip": { "es_ES": "" },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "requiredErrorMessage": { "es_ES": "" },
+      "objectFieldName": "",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción15791983",
+          "label": { "es_ES": "Opción" },
+          "value": "Opción15791983"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": { "es_ES": "" },
+      "fieldReference": "titulo",
+      "tip": { "es_ES": "" },
+      "placeholder": { "es_ES": "" },
+      "direction": ["vertical"],
+      "hideField": false,
+      "confirmationErrorMessage": { "es_ES": "" },
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": { "es_ES": "Campo de texto" },
+      "indexType": "text",
+      "visibilityExpression": "",
+      "fieldNamespace": "",
+      "name": "Text53127208",
+      "localizable": true,
+      "dataSourceType": "manual"
+    },
+    {
+      "dataType": "string",
+      "predefinedValue": { "es_ES": "" },
+      "readOnly": false,
+      "label": { "es_ES": "Texto enriquecido" },
+      "type": "rich_text",
+      "required": false,
+      "showLabel": true,
+      "indexType": "text",
+      "visibilityExpression": "",
+      "requiredErrorMessage": { "es_ES": "" },
+      "fieldNamespace": "",
+      "objectFieldName": "",
+      "repeatable": false,
+      "name": "RichText21757562",
+      "localizable": true,
+      "fieldReference": "html",
+      "tip": { "es_ES": "" }
+    }
+  ]
+}

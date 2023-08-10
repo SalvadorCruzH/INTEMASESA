@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class AdtComponentConstants {
 
-	public static final String ADT_COMPONENT_PORTLET_KEY = "es_camara_adtcomponent_portlet_AdtMVCPortlet";
+	public static final String ADT_COMPONENT_PORTLET_KEY = "es_emasesa_adtcomponent_portlet_AdtMVCPortlet";
 	public static final String ADT_COMPONENT_TEMPLATE_NAME_DEFAULT = "ADT Portlet";
 	public static final String ADT_COMPONENT_TEMPLATE_RESOURCENAME_DEFAULT = ADT_COMPONENT_PORTLET_KEY;  
 	
