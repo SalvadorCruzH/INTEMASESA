@@ -10,6 +10,12 @@
         display: flex;
         align-items: center;
     }
+    &__logoLink {
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
+    }
     &__navSearch {
         display: flex;
         align-items: center;

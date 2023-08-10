@@ -82,6 +82,11 @@
   .i-logo__name {
       @include font_base-bold;
       font-size: m-rem(38px);
+      color: $color-text;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
     }
   .btn-primary {
        border-radius: m-rem(15px);
