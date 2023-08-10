@@ -1,5 +1,5 @@
-Bundle-Name: selae-pv-adt-mvc-web
-Bundle-SymbolicName: selae.pv.adt.mvc.web
+Bundle-Name: adt-mvc-web
+Bundle-SymbolicName: adt-mvc-web
 Bundle-Version: 1.0.0
 
 -metatype: *

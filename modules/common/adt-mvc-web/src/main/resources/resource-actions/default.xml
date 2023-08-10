@@ -2,7 +2,7 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.4.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_4_0.dtd">
 <resource-action-mapping>
     <portlet-resource>
-        <portlet-name>es_camara_adtcomponent_portlet_AdtMVCPortlet</portlet-name>
+        <portlet-name>es_emasesa_adtcomponent_portlet_AdtMVCPortlet</portlet-name>
         <permissions>
             <supports>
                 <action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>

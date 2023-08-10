@@ -1,5 +1,5 @@
 Bundle-Name: search-util
 Bundle-SymbolicName: search-util
 Bundle-Version: 1.0.0
-Export-Package: es.camara.intranet.searchframework.*
+Export-Package: es.emasesa.intranet.searchframework.*
 -metatype: *

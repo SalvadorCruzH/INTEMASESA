@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Component(
         immediate = true,
-        configurationPid = "es.camara.intranet.settings.configuration.BaseConfiguration",
+        configurationPid = "es.emasesa.intranet.settings.configuration.BaseConfiguration",
         service = BaseSettings.class
 )
 public class BaseSettings {

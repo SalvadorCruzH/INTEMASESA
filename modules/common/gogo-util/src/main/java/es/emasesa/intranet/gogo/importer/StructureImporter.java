@@ -93,6 +93,12 @@ public class StructureImporter {
         final int type = DDMStructureConstants.TYPE_DEFAULT;
 
         final DDMForm ddmForm = (_ddmFormDeserializer.deserialize(DDMFormDeserializerDeserializeRequest.Builder.newBuilder(definition).build())).getDDMForm();
+        /*if(ddmForm.getDefaultLocale() == null) {
+            ddmForm.setDefaultLocale(new Locale("es","ES"));//TODO: he tenido que añadir esta linea porque sino no pillaba default locale y petaba por null la siguiente línea
+        }*/
+
+        //ddmForm.addAvailableLocale(locale);
+        //ddmForm.setDefaultLocale(locale);
         _ddm.updateDDMFormDefaultLocale(ddmForm, locale);
 
         final DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);

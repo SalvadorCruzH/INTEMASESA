@@ -4,7 +4,7 @@ public class BaseConstants {
     /**
      * SETTINGS
      */
-    public static final String BASE_SETTINGS_ID="es.camara.intranet.base.settings";
+    public static final String BASE_SETTINGS_ID="es.emasesa.intranet.base.settings";
 
     /**
      * SESSION KEYS
@@ -20,6 +20,6 @@ public class BaseConstants {
     /**
      * MAIL
      */
-    public static final String MAIL_DEFAULT_USER = "no-reply@camara.es";
+    public static final String MAIL_DEFAULT_USER = "no-reply@emasesa.com";
 
 }

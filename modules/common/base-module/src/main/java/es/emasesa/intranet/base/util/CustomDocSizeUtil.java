@@ -66,7 +66,7 @@ public class CustomDocSizeUtil {
                             file.getTitle():
                             file.getDescription()):title);
                     properties.put("docFileExtensionSrOnly",
-                            language.get(themeDisplay.getLocale(), "es.camara.intranet.common.template.documents.filesize.sronly-description"));
+                            language.get(themeDisplay.getLocale(), "es.emasesa.intranet.common.template.documents.filesize.sronly-description"));
                     properties.put("request", themeDisplay.getRequest());
                     docSize=processTemplate(properties);
                     customCacheSingleUtil.put(getCacheName(url, title), docSize, CustomTemplateCacheSingleUtil.TTL_10_MIN);

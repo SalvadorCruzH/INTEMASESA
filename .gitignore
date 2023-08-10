@@ -4,6 +4,7 @@ target/
 bin
 out
 .idea/
-gradlew
 bundles/
 .DS_Store
+/gradle-*.properties
+/configs/me

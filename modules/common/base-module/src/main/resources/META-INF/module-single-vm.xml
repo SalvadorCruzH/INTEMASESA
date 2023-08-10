@@ -9,7 +9,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="es.camara.intranet.base.util.CustomCacheSimpleUtil"
+		name="es.emasesa.intranet.base.util.CustomCacheSimpleUtil"
 		overflowToDisk="false"
 		timeToIdleSeconds="3600"
 		timeToLiveSeconds="86400"
