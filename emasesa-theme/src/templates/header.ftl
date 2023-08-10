@@ -15,7 +15,7 @@
 				<#if has_navigation && is_setup_complete>
 					<#include "${full_templates_path}/navigation.ftl" />
 				</#if>
-				<button>Search</button>
+				<button aria-label="Abrir busqueda"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</div>
 			<button class="btn btn-primary">Administrar tareas</button>
 		</div>
