@@ -23,8 +23,7 @@
     b i {
         @include font_base-bold-italic;
     }
-    em,
-    i {
+    em {
         @include font_base-italic;
     }
     .portlet-header {
