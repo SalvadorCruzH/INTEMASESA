@@ -30,12 +30,9 @@
 			<li class="${nav_item_css_class}" id="layout_${nav_item.getLayoutId()}" role="presentation">
 				
 				<#if nav_item.hasChildren()>
-					<a class="i-mainNavigation__link" ${nav_item_attr_has_popup} href="javascript:void(0)" ${nav_item.getTarget()} role="menuitem"><span><@liferay_theme["layout-icon"] layout=nav_item_layout /> ${nav_item.getName()}</span></a>
+					<a class="i-mainNavigation__link" ${nav_item_attr_has_popup} href="javascript:void(0)" ${nav_item.getTarget()} role="menuitem"><span class="i-mainNavigation__span"><@liferay_theme["layout-icon"] layout=nav_item_layout /> ${nav_item.getName()}</span></a>
 					<div class="i-mainNavigation__submenuContainer">
 						<div class="i-mainNavigation__submenuWrapper">
-							<button id="i-closeButton" aria-label="<@liferay.language key='close' />" class="btn flex-shrink-0 i-btn i-btn--close" type="button">
-								<svg class="lexicon-icon i-close"><use xlink:href="${images_folder}/lexicon/icons.svg#times" /></svg>
-							</button>
 							<div class="i-mainNavigation__innerWrapper">
 								<ul class="i-mainNavigation__submenuUl m-listBaseNoStyles" role="menu">
 									<#list nav_item.getChildren() as nav_child>
