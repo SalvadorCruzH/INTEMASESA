@@ -3,14 +3,12 @@
 		<div class="i-header__wrapper">
 			<div id="heading">
 				<div aria-level="1" class="i-header__logo site-title" role="heading">
-					<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
+					<a class="i-header__logoLink" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 						<img class="i-logo__img i-footer__img" src="${images_folder}/logos/logo-emasesa-color.svg" alt="Logotipo Emasesa">
-					</a>
-					<#if show_site_name>
 						<span class="i-logo__name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 							emplead@s
 						</span> 
-					</#if>
+					</a>
 				</div>
 			</div>
 			<div class="i-header__navSearch">
