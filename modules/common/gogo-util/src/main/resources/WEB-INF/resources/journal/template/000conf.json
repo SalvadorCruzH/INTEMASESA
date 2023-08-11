@@ -1,8 +1,8 @@
 [
     {
         "screenName": "admin",
-        "name":"EMA - Nota de Prensa Tarjeta",
-        "templateKey": "EMA-NOTA-PRENSA-TEMPLATE",
+        "name":"EMA - Nota de Prensa - Tarjeta",
+        "templateKey": "EMA-NOTA-PRENSA-TARJETA-TEMPLATE",
         "structureKey": "EMA-NOTA-PRENSA",
         "companyWebId": "liferay.com",
         "groupFriendlyUrl": "/global",

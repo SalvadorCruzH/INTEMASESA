@@ -1,0 +1,5 @@
+Bundle-Name: news-ajaxsearch
+Bundle-SymbolicName: news-ajaxsearch
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.intranet.portlet.ajaxsearch.impl.news
+Web-ContextPath: /news-ajaxsearch

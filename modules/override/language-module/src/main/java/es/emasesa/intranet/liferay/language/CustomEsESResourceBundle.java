@@ -1,4 +1,4 @@
-package es.camara.intranet.liferay.language;
+package es.emasesa.intranet.liferay.language;
 
 import com.liferay.portal.kernel.language.UTF8Control;
 import org.osgi.service.component.annotations.Component;
@@ -8,12 +8,12 @@ import java.util.ResourceBundle;
 
 @Component(
 		property = {
-				"language.id="
+				"language.id=es_ES"
 		},
 		service = ResourceBundle.class
 	)
 
-public class CustomResourceBundle extends ResourceBundle {
+public class CustomEsESResourceBundle extends ResourceBundle {
 
 	@Override
 	protected Object handleGetObject(String key) {
@@ -26,8 +26,8 @@ public class CustomResourceBundle extends ResourceBundle {
 		return _resourceBundle.getKeys();
 	}
 
-	// FALLBACK - Castellano
 	private final ResourceBundle _resourceBundle =
 			ResourceBundle.getBundle("content.Language_es_ES", UTF8Control.INSTANCE);
+
 
 }
