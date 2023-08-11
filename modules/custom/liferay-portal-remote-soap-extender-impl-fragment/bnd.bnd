@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Remote SOAP Extender Implementation Fragment
+Bundle-SymbolicName: it.dontesta.labs.liferay.portal.remote.soap.extender.impl
+Bundle-Version: 1.0.0
+Export-Package: org.apache.cxf.jaxws.spi;version="3.4.10"
+Fragment-Host: com.liferay.portal.remote.soap.extender.impl
