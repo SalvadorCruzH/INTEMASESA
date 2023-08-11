@@ -42,7 +42,7 @@ import java.util.Map;
 )
 public class StructureImporter {
 
-    public boolean importStructure(final JSONObject structure, final boolean override){
+    public boolean importStructure(final JSONObject structure, final boolean override) throws PortalException {
 
         final JsonStructure jsonStructure = new JsonStructure(structure);
         final String structureFullFileName = GogoConstant.CONFIG_PATH_STRUCTURE_BASE+jsonStructure.getStructureFile();
@@ -92,13 +92,10 @@ public class StructureImporter {
         final boolean guestPermissions = Boolean.FALSE;
         final int type = DDMStructureConstants.TYPE_DEFAULT;
 
-        final DDMForm ddmForm = (_ddmFormDeserializer.deserialize(DDMFormDeserializerDeserializeRequest.Builder.newBuilder(definition).build())).getDDMForm();
-        /*if(ddmForm.getDefaultLocale() == null) {
-            ddmForm.setDefaultLocale(new Locale("es","ES"));//TODO: he tenido que añadir esta linea porque sino no pillaba default locale y petaba por null la siguiente línea
-        }*/
+        final DDMForm ddmForm;
 
-        //ddmForm.addAvailableLocale(locale);
-        //ddmForm.setDefaultLocale(locale);
+        ddmForm = _ddm.getDDMForm(definition);
+
         _ddm.updateDDMFormDefaultLocale(ddmForm, locale);
 
         final DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
