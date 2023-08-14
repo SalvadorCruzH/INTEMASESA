@@ -11,7 +11,7 @@
       "tooltip": { "es_ES": "" },
       "requireConfirmation": false,
       "type": "text",
-      "required": false,
+      "required": true,
       "showLabel": true,
       "displayStyle": "singleline",
       "requiredErrorMessage": { "es_ES": "" },
@@ -20,14 +20,14 @@
       "repeatable": false,
       "options": [
         {
-          "reference": "Opción15791983",
+          "reference": "Opción72894869",
           "label": { "es_ES": "Opción" },
-          "value": "Opción15791983"
+          "value": "Opción72894869"
         }
       ],
       "nativeField": false,
       "confirmationLabel": { "es_ES": "" },
-      "fieldReference": "titulo",
+      "fieldReference": "title",
       "tip": { "es_ES": "" },
       "placeholder": { "es_ES": "" },
       "direction": ["vertical"],
@@ -36,32 +36,13 @@
       "autocomplete": false,
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Campo de texto" },
-      "indexType": "text",
+      "label": { "es_ES": "Título" },
       "visibilityExpression": "",
+      "indexType": "keyword",
       "fieldNamespace": "",
-      "name": "Text53127208",
+      "name": "Text69024001",
       "localizable": true,
       "dataSourceType": "manual"
-    },
-    {
-      "dataType": "string",
-      "predefinedValue": { "es_ES": "" },
-      "readOnly": false,
-      "label": { "es_ES": "Texto enriquecido" },
-      "type": "rich_text",
-      "required": false,
-      "showLabel": true,
-      "indexType": "text",
-      "visibilityExpression": "",
-      "requiredErrorMessage": { "es_ES": "" },
-      "fieldNamespace": "",
-      "objectFieldName": "",
-      "repeatable": false,
-      "name": "RichText21757562",
-      "localizable": true,
-      "fieldReference": "html",
-      "tip": { "es_ES": "" }
     }
   ]
 }

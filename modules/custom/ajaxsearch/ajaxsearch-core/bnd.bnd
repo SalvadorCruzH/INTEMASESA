@@ -1,0 +1,7 @@
+Bundle-Name: ajaxsearch-core
+Bundle-SymbolicName: ajaxsearch-core
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.intranet.portlet.ajaxsearch.model, \
+                es.emasesa.intranet.portlet.ajaxsearch.constant, \
+                es.emasesa.intranet.portlet.ajaxsearch.base,\
+                es.emasesa.intranet.portlet.ajaxsearch.util

@@ -1,14 +1,14 @@
 [
     {
         "screenName": "admin",
-        "name":"EMA - PRUEBA TEMPLATE",
-        "templateKey": "EMA-PRUEBA-TEMPLATE",
-        "structureKey": "EMA-PRUEBA-ESTRUCTURA",
+        "name":"EMA - Nota de Prensa - Tarjeta",
+        "templateKey": "EMA-NOTA-PRENSA-TARJETA-TEMPLATE",
+        "structureKey": "EMA-NOTA-PRENSA",
         "companyWebId": "liferay.com",
         "groupFriendlyUrl": "/global",
-        "templateFile": "prueba.ftl",
+        "templateFile": "nota-prensa-tarjeta.ftl",
         "cacheable": true,
-        "comment": "Plantilla por PRUEBA",
+        "comment": "Plantilla de tarjeta para Nota de Prensa",
         "uuid": "d7f6ff6e-2cd1-9b60-f7aa-ea64377bf1a9",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     }

@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="results-pagination-wrapper row d-flex justify-content-end">
+        <section>
+            <div class="data-container" hidden></div>
+            <div id="camara_pagination" class="pagination"></div>
+        </section>
+        <input type="hidden" value="<%=ajaxSearchDisplayContext.getCurrentPage()%>" id="asCurrentPage"/> <!-- id="data-num" -->
+    </div>
+</div>
