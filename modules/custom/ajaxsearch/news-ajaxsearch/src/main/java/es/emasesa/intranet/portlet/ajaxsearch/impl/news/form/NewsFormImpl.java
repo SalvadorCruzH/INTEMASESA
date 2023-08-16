@@ -1,8 +1,11 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.news.form;
 
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+import es.emasesa.intranet.base.util.CustomGetterUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchForm;
@@ -25,8 +28,10 @@ public class NewsFormImpl implements AjaxSearchForm {
     private static final Properties DFLT_PROPERTIES = new Properties();
     private final static Log LOG = LoggerUtil.getLog(NewsFormImpl.class);
 
-    static {
+    public static final String CATEGORY_ID = "category-id";
 
+    static {
+        DFLT_PROPERTIES.put(CATEGORY_ID, "-1");
     }
 
     @Override
@@ -45,10 +50,17 @@ public class NewsFormImpl implements AjaxSearchForm {
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
+
+        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+
+        //request.setAttribute("groups",customGetterUtil.get(""));
+        request.setAttribute("groupSelected", ajaxSearchDisplayContext.getLong("groupSelected"));
         return VIEW;
     }
 
     @Reference
     protected Portal _portal;
 
+    @Reference
+    CustomGetterUtil customGetterUtil;
 }

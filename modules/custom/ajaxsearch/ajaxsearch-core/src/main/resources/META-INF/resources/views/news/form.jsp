@@ -1,14 +1,22 @@
 <%@ include file="init.jsp" %>
 
 <div class="m-searchAjax m-searchAjax--form c-news-form">
-    <input name="<portlet:namespace />queryText"
+    <select name="<portlet:namespace />area"
             type="text"
-            id="queryText"
-            value="<%=HtmlUtil.escape(ajaxSearchDisplayContext.getQueryText()) %>"
-            data-as-id="queryText"
-            class="m-searchAjax__input text"
-            placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
-    />
+            value='<%=ajaxSearchDisplayContext.getLong("category") %>'
+            data-as-id="catSelected"
+            class="m-searchAjax__input select"
+            id="category"
+        >
+            <option value="" ${ groupSelected == 0 ? "selected" : ""}>
+                <liferay-ui:message key="es.camara.intranet.area" />
+            </option>
+            <c:forEach items="${categories}" var="category">
+                <option value="${category.getCategoryId()}" ${category.getCategoryId() == catSelected ? "selected" : ""}>
+                    ${area.getName()}
+                </option>
+            </c:forEach>
+    </select>
     <input name="<portlet:namespace />fechaDesde"
             type="date"
             value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaDesde")) %>'
@@ -22,6 +30,14 @@
             data-as-id="fechaHasta"
             class="m-searchAjax__input date"
             id="fechaHasta"
+    />
+    <input name="<portlet:namespace />queryText"
+            type="text"
+            id="queryText"
+            value="<%=HtmlUtil.escape(ajaxSearchDisplayContext.getQueryText()) %>"
+            data-as-id="queryText"
+            class="m-searchAjax__input text"
+            placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
     />
     <button type="button"
         class="btn btn-primary"
