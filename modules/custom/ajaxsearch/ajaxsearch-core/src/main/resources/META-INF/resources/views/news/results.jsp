@@ -20,14 +20,14 @@
 
 <template id="as-total-items-template">
     <div class="m-ajaxresults-header-element">
-        #total-items# resultado
+        #total-items# noticia con fechas de #fechaDesde# a #fechaHasta#
     </div>
 
     <div class="m-ajaxresults-header-elements">
-        #total-items# resultados
+        #total-items# noticias con fechas de #fechaDesde# a #fechaHasta#
     </div>
 
-    <div> #items-page# elementos por página</div>
+    <div class="d-none"> #items-page# elementos por página</div>
 </template>
 
 

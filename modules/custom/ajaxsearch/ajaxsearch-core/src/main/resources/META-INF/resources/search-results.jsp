@@ -7,7 +7,7 @@
 <%@ include file="pagination.jspf" %>
 
 <template id="default-empty-results">
-    <h6><liferay-ui:message key="es.camara.intranet.ajaxsearch.results.no-results" /></h6>
+    <h6><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.results.no-results" /></h6>
 </template>
 
 <script>

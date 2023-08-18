@@ -108,6 +108,15 @@ public class AjaxSearchDisplayContext {
     	return ParamUtil.getString(getRequest(), param,
                 ParamUtil.getString(getOriginalRequest(), param, defaultValue));
     }
+
+    public final String[] getStringValues(String param) {
+        return getStringValues(param, StringPool.EMPTY_ARRAY);
+    }
+
+    public final String[] getStringValues(String param, String[] defaultValue) {
+        return ParamUtil.getStringValues(getRequest(), param,
+                ParamUtil.getStringValues(getOriginalRequest(), param, defaultValue));
+    }
     public final long getLong(String param) {
         return getLong(param, 0L);
     }

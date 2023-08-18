@@ -63,7 +63,7 @@ public class NewsResultImpl implements AjaxSearchResult {
 		DFLT_PROPERTIES.put(STRUCTURE_KEY, "EMA-NOTA-PRENSA");
 		DFLT_PROPERTIES.put(CSS_WRAPPER_CLASS, "");
 		DFLT_PROPERTIES.put(DISABLE_PAGINATION, "0");
-		DFLT_PROPERTIES.put(FORCE_GROUP_ID, "-1");
+		//DFLT_PROPERTIES.put(FORCE_GROUP_ID, "-1");
 		//DFLT_PROPERTIES.put(ONLY_SITE_CONTENT, "1");
 		//DFLT_PROPERTIES.put(INCLUDE_CHILDSITE_CONTENT, "0");
 	}
@@ -92,7 +92,7 @@ public class NewsResultImpl implements AjaxSearchResult {
 			if(!Validator.isBlank(templateKey) && !Validator.isBlank(structureKey)) {
 				//final boolean onlySiteContent = ajaxSearchDisplayContext.getConfig().getOrDefault(ONLY_SITE_CONTENT, StringConstants.ZERO).equals(StringConstants.ONE);
 				//final boolean includeChildSiteContent = ajaxSearchDisplayContext.getConfig().getOrDefault(INCLUDE_CHILDSITE_CONTENT, StringConstants.ONE).equals(StringConstants.ONE);
-				final long forceGroupId = GetterUtil.getLong(ajaxSearchDisplayContext.getConfig().getOrDefault(FORCE_GROUP_ID, StringConstants.MINUS_ONE), LongConstants.MINUS_ONE);
+				//final long forceGroupId = GetterUtil.getLong(ajaxSearchDisplayContext.getConfig().getOrDefault(FORCE_GROUP_ID, StringConstants.MINUS_ONE), LongConstants.MINUS_ONE);
 
 				Date fromDate = ajaxSearchDisplayContext.getDate("fechaDesde");
 				Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate("fechaHasta");
@@ -106,7 +106,7 @@ public class NewsResultImpl implements AjaxSearchResult {
 					toDate,
 					currentPage,
 					pageSize,
-					forceGroupId,
+					//forceGroupId,
 					disablePagination,
 					jsonArray);
 			}
@@ -145,7 +145,7 @@ public class NewsResultImpl implements AjaxSearchResult {
 									   final Date toDate,
 									   final int currentPage,
 									   final int pageSize,
-									   final long forceGroupId,
+									   //final long forceGroupId,
 									   final boolean disablePagination,
 									   final JSONArray jsonArray) throws ParseException, SearchException {
 
@@ -160,14 +160,15 @@ public class NewsResultImpl implements AjaxSearchResult {
 		//searchingCommon.addGroupIdFilter(themeDisplay, onlySiteContent, includeChildSiteContent, searchContext, booleanQuery);
 		if (Validator.isNotNull(themeDisplay)) {
 			searchingCommon.addCompanyIdFilter(searchContext, themeDisplay.getCompanyId());
-			searchingCommon.addGroupIdFilter(searchContext, (forceGroupId>0)?forceGroupId:themeDisplay.getScopeGroupId());
+			//searchingCommon.addGroupIdFilter(searchContext, (forceGroupId>0)?forceGroupId:themeDisplay.getScopeGroupId());
 		} else {
 			searchingCommon.addCompanyIdFilter(searchContext, PortalUtil.getDefaultCompanyId());
-			if (forceGroupId>0){
+			/*if (forceGroupId>0){
 				searchingCommon.addGroupIdFilter(searchContext, forceGroupId);
-			}
+			}*/
 		}
-
+		List<String> categories = Arrays.asList(ajaxSearchDisplayContext.getStringValues("catSelected"));
+		searchingJournal.addCategoriesFilter(categories, booleanQuery, Boolean.FALSE);
 		searchingJournal.addStructureFilter(Collections.singletonList(structureKey), booleanQuery);
 
 		searchContext.setKeywords(ajaxSearchDisplayContext.getQueryText());

@@ -1,42 +1,83 @@
 <%@ include file="init.jsp" %>
 
-<div class="m-searchAjax m-searchAjax--form c-news-form">
-    <input name="<portlet:namespace />queryText"
-            type="text"
-            id="queryText"
-            value="<%=HtmlUtil.escape(ajaxSearchDisplayContext.getQueryText()) %>"
-            data-as-id="queryText"
-            class="m-searchAjax__input text"
-            placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
-    />
-    <input name="<portlet:namespace />fechaDesde"
-            type="date"
-            value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaDesde")) %>'
-            data-as-id="fechaDesde"
-            class="m-searchAjax__input date"
-            id="fechaDesde"
-    />
-    <input name="<portlet:namespace />fechaHasta"
-            type="date"
-            value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
-            data-as-id="fechaHasta"
-            class="m-searchAjax__input date"
-            id="fechaHasta"
-    />
-    <button type="button"
-        class="btn btn-primary"
-        aria-label='<liferay-ui:message key="search"></liferay-ui:message>'
-        title='<liferay-ui:message key="search"></liferay-ui:message>'
-        id="m-searchAjax__button">
-        <liferay-ui:message key="search"></liferay-ui:message>
-    </button>
-    <button type="button"
-            class="btn btn-secondary"
-            aria-label='<liferay-ui:message key="clear"></liferay-ui:message>'
-            title='<liferay-ui:message key="clear"></liferay-ui:message>'
-            id="m-searchAjax__clean__button">
-            <liferay-ui:message key="clear"></liferay-ui:message>
-    </button>
+<div class="m-searchAjax m-searchAjax--form ema-news-form">
+    <p class="ema-news-form__filtertext">
+        <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message>
+    </p>
+    <div class="ema-news-form__filters">
+        <h2>
+            <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-title"></liferay-ui:message>
+        </h2>
+        <div class="fila">
+            <div class="columna">
+                <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.category"></liferay-ui:message></label>
+                <select name="<portlet:namespace />area"
+                        type="text"
+                        value='<%=ajaxSearchDisplayContext.getLong("category") %>'
+                        data-as-id="catSelected"
+                        class="m-searchAjax__input select"
+                        id="category"
+                    >
+                        <option value="" ${ groupSelected == 0 ? "selected" : ""}>
+                            <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.categorias" />
+                        </option>
+                        <c:forEach items="${categories}" var="category">
+                            <option value="${category.getCategoryId()}" ${category.getCategoryId() == catSelected ? "selected" : ""}>
+                                ${category.getName()}
+                            </option>
+                        </c:forEach>
+                </select>
+            </div>
+            <div class="columna">
+                <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.from-date"></liferay-ui:message></label>
+                <input name="<portlet:namespace />fechaDesde"
+                        type="date"
+                        value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaDesde")) %>'
+                        data-as-id="fechaDesde"
+                        class="m-searchAjax__input date"
+                        id="fechaDesde"
+                />
+            </div>
+            <div class="columna">
+                <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.to-date"></liferay-ui:message></label>
+                <input name="<portlet:namespace />fechaHasta"
+                        type="date"
+                        value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
+                        data-as-id="fechaHasta"
+                        class="m-searchAjax__input date"
+                        id="fechaHasta"
+                />
+            </div>
+            <div class="columna">
+                <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.free-text"></liferay-ui:message></label>
+                <input name="<portlet:namespace />queryText"
+                        type="text"
+                        id="queryText"
+                        value="<%=HtmlUtil.escape(ajaxSearchDisplayContext.getQueryText()) %>"
+                        data-as-id="queryText"
+                        class="m-searchAjax__input text"
+                        placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
+                />
+            </div>
+            <div class="columna">
+                <button type="button"
+                        class="btn btn-primary search"
+                        aria-label='<liferay-ui:message key="search"></liferay-ui:message>'
+                        title='<liferay-ui:message key="search"></liferay-ui:message>'
+                        id="m-searchAjax__button">
+                        <i class="fa-solid fa-magnifying-glass fa-xl" aria-hidden="true"></i>
+                </button>
+                <button type="button"
+                    class="btn btn-secondary clear"
+                    aria-label='<liferay-ui:message key="clear"></liferay-ui:message>'
+                    title='<liferay-ui:message key="clear"></liferay-ui:message>'
+                    id="m-searchAjax__clean__button">
+                    <liferay-ui:message key="clear"></liferay-ui:message>
+                </button>
+            </div>
+        </div>  
+    </div>
+    
 </div>
 
 
@@ -56,6 +97,7 @@
     });
 
     $("#m-searchAjax__clean__button").on("click", function (e){
+        $('#category').val('');
         $('#queryText').val('');
         $('#fechaDesde').val('');
         $('#fechaHasta').val('');
