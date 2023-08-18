@@ -1,7 +1,7 @@
 package es.emasesa.intranet.portal.firmas.service;
 
 import com.liferay.portal.kernel.util.Validator;
-import es.emasesa.intranet.portal.firmas.service.model.PFirmasAdminServices;
+import es.emasesa.intranet.portal.firmas.model.PFirmasAdminServices;
 import juntadeandalucia.cice.pfirma.admin.v2.AdminService;
 import juntadeandalucia.cice.pfirma.admin.v2.AdminServiceService;
 import juntadeandalucia.cice.pfirma.admin.v2.PfirmaException;

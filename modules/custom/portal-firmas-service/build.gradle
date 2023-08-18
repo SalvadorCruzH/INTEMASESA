@@ -30,5 +30,5 @@ jar {
 
 jaxws {
 	wsdlDir = 'src/main/resources/META-INF/wsdl'
-	generatedSources = 'generatedsources/src/main/java'
+	generatedSources = 'soap/service/src/main/java'
 }

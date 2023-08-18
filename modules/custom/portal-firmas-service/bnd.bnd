@@ -3,7 +3,7 @@ Bundle-SymbolicName: portal.firmas.service
 Bundle-Version: 1.0.0
 -metatype: *
 Export-Package: \
-    es.emasesa.intranet.portal.firmas.service.*,\
+    es.emasesa.intranet.portal.firmas.*,\
     juntadeandalucia.cice.pfirma.*;
 Import-Package:\
 	org.apache.cxf.jaxws.spi,\
