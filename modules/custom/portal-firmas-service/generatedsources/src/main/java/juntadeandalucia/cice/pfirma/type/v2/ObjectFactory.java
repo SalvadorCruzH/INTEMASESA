@@ -27,10 +27,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _SignLineType_QNAME = new QName("", "type");
-    private final static QName _DocumentTypeValid_QNAME = new QName("", "valid");
-    private final static QName _DocumentTypeDescription_QNAME = new QName("", "description");
-    private final static QName _RequestIdentifier_QNAME = new QName("", "identifier");
+    private final static QName _SignerFstate_QNAME = new QName("", "fstate");
+    private final static QName _SignerState_QNAME = new QName("", "state");
+    private final static QName _DocumentIdentifier_QNAME = new QName("", "identifier");
+    private final static QName _DocumentDocumentType_QNAME = new QName("", "documentType");
+    private final static QName _DocumentSign_QNAME = new QName("", "sign");
+    private final static QName _DocumentType_QNAME = new QName("", "type");
+    private final static QName _DocumentUri_QNAME = new QName("", "uri");
+    private final static QName _DocumentContent_QNAME = new QName("", "content");
     private final static QName _RequestFexpiration_QNAME = new QName("", "fexpiration");
     private final static QName _RequestNoticeList_QNAME = new QName("", "noticeList");
     private final static QName _RequestFstart_QNAME = new QName("", "fstart");
@@ -45,19 +49,15 @@ public class ObjectFactory {
     private final static QName _RequestParameterList_QNAME = new QName("", "parameterList");
     private final static QName _RequestText_QNAME = new QName("", "text");
     private final static QName _RequestFentry_QNAME = new QName("", "fentry");
-    private final static QName _SignerFstate_QNAME = new QName("", "fstate");
-    private final static QName _SignerState_QNAME = new QName("", "state");
-    private final static QName _SignUri_QNAME = new QName("", "uri");
-    private final static QName _SignContent_QNAME = new QName("", "content");
-    private final static QName _DocumentDocumentType_QNAME = new QName("", "documentType");
-    private final static QName _DocumentSign_QNAME = new QName("", "sign");
     private final static QName _CommentFcomment_QNAME = new QName("", "fcomment");
     private final static QName _DetailedJobOrganism_QNAME = new QName("", "organism");
     private final static QName _DetailedJobEndDate_QNAME = new QName("", "endDate");
     private final static QName _DetailedJobInitDate_QNAME = new QName("", "initDate");
+    private final static QName _DetailedJobDescription_QNAME = new QName("", "description");
     private final static QName _DetailedJobMain_QNAME = new QName("", "main");
     private final static QName _DetailedJobJob_QNAME = new QName("", "job");
     private final static QName _DetailedJobDepartament_QNAME = new QName("", "departament");
+    private final static QName _DocumentTypeValid_QNAME = new QName("", "valid");
     private final static QName _UserSurname1_QNAME = new QName("", "surname1");
     private final static QName _UserSurname2_QNAME = new QName("", "surname2");
     private final static QName _UserName_QNAME = new QName("", "name");
@@ -350,48 +350,76 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "type", scope = SignLine.class)
-    public JAXBElement<String> createSignLineType(String value) {
-        return new JAXBElement<String>(_SignLineType_QNAME, String.class, SignLine.class, value);
+    @XmlElementDecl(namespace = "", name = "fstate", scope = Signer.class)
+    public JAXBElement<XMLGregorianCalendar> createSignerFstate(XMLGregorianCalendar value) {
+        return new JAXBElement<XMLGregorianCalendar>(_SignerFstate_QNAME, XMLGregorianCalendar.class, Signer.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link State }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "state", scope = Signer.class)
+    public JAXBElement<State> createSignerState(State value) {
+        return new JAXBElement<State>(_SignerState_QNAME, State.class, Signer.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "type", scope = Action.class)
-    public JAXBElement<String> createActionType(String value) {
-        return new JAXBElement<String>(_SignLineType_QNAME, String.class, Action.class, value);
+    @XmlElementDecl(namespace = "", name = "identifier", scope = Document.class)
+    public JAXBElement<String> createDocumentIdentifier(String value) {
+        return new JAXBElement<String>(_DocumentIdentifier_QNAME, String.class, Document.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DocumentType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "documentType", scope = Document.class)
+    public JAXBElement<DocumentType> createDocumentDocumentType(DocumentType value) {
+        return new JAXBElement<DocumentType>(_DocumentDocumentType_QNAME, DocumentType.class, Document.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "valid", scope = DocumentType.class)
-    public JAXBElement<Boolean> createDocumentTypeValid(Boolean value) {
-        return new JAXBElement<Boolean>(_DocumentTypeValid_QNAME, Boolean.class, DocumentType.class, value);
+    @XmlElementDecl(namespace = "", name = "sign", scope = Document.class)
+    public JAXBElement<Boolean> createDocumentSign(Boolean value) {
+        return new JAXBElement<Boolean>(_DocumentSign_QNAME, Boolean.class, Document.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "description", scope = DocumentType.class)
-    public JAXBElement<String> createDocumentTypeDescription(String value) {
-        return new JAXBElement<String>(_DocumentTypeDescription_QNAME, String.class, DocumentType.class, value);
+    @XmlElementDecl(namespace = "", name = "type", scope = Document.class)
+    public JAXBElement<String> createDocumentType(String value) {
+        return new JAXBElement<String>(_DocumentType_QNAME, String.class, Document.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "description", scope = Job.class)
-    public JAXBElement<String> createJobDescription(String value) {
-        return new JAXBElement<String>(_DocumentTypeDescription_QNAME, String.class, Job.class, value);
+    @XmlElementDecl(namespace = "", name = "uri", scope = Document.class)
+    public JAXBElement<String> createDocumentUri(String value) {
+        return new JAXBElement<String>(_DocumentUri_QNAME, String.class, Document.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DataHandler }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "content", scope = Document.class)
+    @XmlMimeType("application/octet-stream")
+    public JAXBElement<DataHandler> createDocumentContent(DataHandler value) {
+        return new JAXBElement<DataHandler>(_DocumentContent_QNAME, DataHandler.class, Document.class, value);
     }
 
     /**
@@ -400,7 +428,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "", name = "identifier", scope = Request.class)
     public JAXBElement<String> createRequestIdentifier(String value) {
-        return new JAXBElement<String>(_RequestIdentifier_QNAME, String.class, Request.class, value);
+        return new JAXBElement<String>(_DocumentIdentifier_QNAME, String.class, Request.class, value);
     }
 
     /**
@@ -533,110 +561,18 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "fstate", scope = Signer.class)
-    public JAXBElement<XMLGregorianCalendar> createSignerFstate(XMLGregorianCalendar value) {
-        return new JAXBElement<XMLGregorianCalendar>(_SignerFstate_QNAME, XMLGregorianCalendar.class, Signer.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link State }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "state", scope = Signer.class)
-    public JAXBElement<State> createSignerState(State value) {
-        return new JAXBElement<State>(_SignerState_QNAME, State.class, Signer.class, value);
+    @XmlElementDecl(namespace = "", name = "fcomment", scope = Comment.class)
+    public JAXBElement<XMLGregorianCalendar> createCommentFcomment(XMLGregorianCalendar value) {
+        return new JAXBElement<XMLGregorianCalendar>(_CommentFcomment_QNAME, XMLGregorianCalendar.class, Comment.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "identifier", scope = Sign.class)
-    public JAXBElement<String> createSignIdentifier(String value) {
-        return new JAXBElement<String>(_RequestIdentifier_QNAME, String.class, Sign.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "type", scope = Sign.class)
-    public JAXBElement<String> createSignType(String value) {
-        return new JAXBElement<String>(_SignLineType_QNAME, String.class, Sign.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "uri", scope = Sign.class)
-    public JAXBElement<String> createSignUri(String value) {
-        return new JAXBElement<String>(_SignUri_QNAME, String.class, Sign.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DataHandler }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "content", scope = Sign.class)
-    @XmlMimeType("application/octet-stream")
-    public JAXBElement<DataHandler> createSignContent(DataHandler value) {
-        return new JAXBElement<DataHandler>(_SignContent_QNAME, DataHandler.class, Sign.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "identifier", scope = Document.class)
-    public JAXBElement<String> createDocumentIdentifier(String value) {
-        return new JAXBElement<String>(_RequestIdentifier_QNAME, String.class, Document.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DocumentType }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "documentType", scope = Document.class)
-    public JAXBElement<DocumentType> createDocumentDocumentType(DocumentType value) {
-        return new JAXBElement<DocumentType>(_DocumentDocumentType_QNAME, DocumentType.class, Document.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "sign", scope = Document.class)
-    public JAXBElement<Boolean> createDocumentSign(Boolean value) {
-        return new JAXBElement<Boolean>(_DocumentSign_QNAME, Boolean.class, Document.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "type", scope = Document.class)
-    public JAXBElement<String> createDocumentType(String value) {
-        return new JAXBElement<String>(_SignLineType_QNAME, String.class, Document.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "uri", scope = Document.class)
-    public JAXBElement<String> createDocumentUri(String value) {
-        return new JAXBElement<String>(_SignUri_QNAME, String.class, Document.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DataHandler }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "content", scope = Document.class)
-    @XmlMimeType("application/octet-stream")
-    public JAXBElement<DataHandler> createDocumentContent(DataHandler value) {
-        return new JAXBElement<DataHandler>(_SignContent_QNAME, DataHandler.class, Document.class, value);
+    @XmlElementDecl(namespace = "", name = "type", scope = Action.class)
+    public JAXBElement<String> createActionType(String value) {
+        return new JAXBElement<String>(_DocumentType_QNAME, String.class, Action.class, value);
     }
 
     /**
@@ -645,7 +581,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "", name = "identifier", scope = RequestSign.class)
     public JAXBElement<String> createRequestSignIdentifier(String value) {
-        return new JAXBElement<String>(_RequestIdentifier_QNAME, String.class, RequestSign.class, value);
+        return new JAXBElement<String>(_DocumentIdentifier_QNAME, String.class, RequestSign.class, value);
     }
 
     /**
@@ -757,12 +693,49 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "fcomment", scope = Comment.class)
-    public JAXBElement<XMLGregorianCalendar> createCommentFcomment(XMLGregorianCalendar value) {
-        return new JAXBElement<XMLGregorianCalendar>(_CommentFcomment_QNAME, XMLGregorianCalendar.class, Comment.class, value);
+    @XmlElementDecl(namespace = "", name = "type", scope = SignLine.class)
+    public JAXBElement<String> createSignLineType(String value) {
+        return new JAXBElement<String>(_DocumentType_QNAME, String.class, SignLine.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "identifier", scope = Sign.class)
+    public JAXBElement<String> createSignIdentifier(String value) {
+        return new JAXBElement<String>(_DocumentIdentifier_QNAME, String.class, Sign.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "type", scope = Sign.class)
+    public JAXBElement<String> createSignType(String value) {
+        return new JAXBElement<String>(_DocumentType_QNAME, String.class, Sign.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "uri", scope = Sign.class)
+    public JAXBElement<String> createSignUri(String value) {
+        return new JAXBElement<String>(_DocumentUri_QNAME, String.class, Sign.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DataHandler }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "content", scope = Sign.class)
+    @XmlMimeType("application/octet-stream")
+    public JAXBElement<DataHandler> createSignContent(DataHandler value) {
+        return new JAXBElement<DataHandler>(_DocumentContent_QNAME, DataHandler.class, Sign.class, value);
     }
 
     /**
@@ -798,7 +771,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "", name = "description", scope = DetailedJob.class)
     public JAXBElement<String> createDetailedJobDescription(String value) {
-        return new JAXBElement<String>(_DocumentTypeDescription_QNAME, String.class, DetailedJob.class, value);
+        return new JAXBElement<String>(_DetailedJobDescription_QNAME, String.class, DetailedJob.class, value);
     }
 
     /**
@@ -826,6 +799,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "departament", scope = DetailedJob.class)
     public JAXBElement<String> createDetailedJobDepartament(String value) {
         return new JAXBElement<String>(_DetailedJobDepartament_QNAME, String.class, DetailedJob.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "description", scope = Job.class)
+    public JAXBElement<String> createJobDescription(String value) {
+        return new JAXBElement<String>(_DetailedJobDescription_QNAME, String.class, Job.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "valid", scope = DocumentType.class)
+    public JAXBElement<Boolean> createDocumentTypeValid(Boolean value) {
+        return new JAXBElement<Boolean>(_DocumentTypeValid_QNAME, Boolean.class, DocumentType.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "description", scope = DocumentType.class)
+    public JAXBElement<String> createDocumentTypeDescription(String value) {
+        return new JAXBElement<String>(_DetailedJobDescription_QNAME, String.class, DocumentType.class, value);
     }
 
     /**

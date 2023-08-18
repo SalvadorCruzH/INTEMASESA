@@ -1,14 +1,27 @@
 [
     {
         "screenName": "admin",
-        "name":"EMA - Nota de Prensa - Tarjeta",
+        "name":"EMA - Noticia - Detalle",
+        "templateKey": "EMA-NOTA-PRENSA-DETALLE-TEMPLATE",
+        "structureKey": "EMA-NOTA-PRENSA",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "noticia-detalle.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de detalle para Nota de Prensa",
+        "uuid": "9662d7c3-e9fd-2016-e433-947cae665c84",
+        "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+    },
+    {
+        "screenName": "admin",
+        "name":"EMA - Noticia - Tarjeta",
         "templateKey": "EMA-NOTA-PRENSA-TARJETA-TEMPLATE",
         "structureKey": "EMA-NOTA-PRENSA",
         "companyWebId": "liferay.com",
         "groupFriendlyUrl": "/global",
-        "templateFile": "nota-prensa-tarjeta.ftl",
+        "templateFile": "noticia-tarjeta.ftl",
         "cacheable": true,
-        "comment": "Plantilla de tarjeta para Nota de Prensa",
+        "comment": "Plantilla de tarjeta para Noticia",
         "uuid": "d7f6ff6e-2cd1-9b60-f7aa-ea64377bf1a9",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     }

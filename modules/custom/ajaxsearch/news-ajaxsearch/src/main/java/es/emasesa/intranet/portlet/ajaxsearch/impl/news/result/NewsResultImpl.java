@@ -167,7 +167,7 @@ public class NewsResultImpl implements AjaxSearchResult {
 				searchingCommon.addGroupIdFilter(searchContext, forceGroupId);
 			}*/
 		}
-		List<String> categories = Arrays.asList(ajaxSearchDisplayContext.getStringValues("categories"));
+		List<String> categories = Arrays.asList(ajaxSearchDisplayContext.getStringValues("catSelected"));
 		searchingJournal.addCategoriesFilter(categories, booleanQuery, Boolean.FALSE);
 		searchingJournal.addStructureFilter(Collections.singletonList(structureKey), booleanQuery);
 

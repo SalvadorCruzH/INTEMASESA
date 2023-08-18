@@ -1,11 +1,12 @@
-[  {
+[
+  {
     "screenName": "admin",
-    "name":"EMA - Nota de Prensa",
+    "name":"EMA - Noticia",
     "companyWebId":"liferay.com",
     "groupFriendlyUrl":"/global",
     "structureKey":"EMA-NOTA-PRENSA",
-    "structureFile":"nota-prensa.json",
-    "comment": "Estructura para Nota de Prensa",
+    "structureFile":"noticia.json",
+    "comment": "Estructura para Noticia",
     "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
   }
 ]
