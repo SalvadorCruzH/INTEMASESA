@@ -11,57 +11,74 @@
                     text-transform: uppercase;
                 }
                 .ema-news-form__filters {
-                    padding: m-rem(55px);
+                    padding: 1.5rem;
                     background: #A8C8551A 0% 0% no-repeat padding-box;
                     border-radius: 30px;
-                    .fila {
+                    display: flex;
+                    width: 100%;
+                    flex-wrap: nowrap;
+                    gap: 1rem;
+                    flex-direction: column;
+                    @include media-breakpoint-up(lg) {
+                        padding: 2rem;
+                        flex-direction: row;
+                    }
+                    .ema-news-filters__dates {
                         display: flex;
-                        width: 100%;
                         flex-wrap: nowrap;
                         gap: 1rem;
-                        .columna {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: baseline;
-                            justify-content: flex-end;
-                            label {
-                                @include font_base-bold;
-                                font-size: m-rem(20px);
+                    }
+                    .ema-news-filters__buttons {     
+                        display: flex;
+                        flex-direction: column;
+                        align-items: stretch;
+                        justify-content: flex-end;                       
+                        button.search{
+                            width: m-rem(55px);
+                            height: m-rem(55px);
+                            border-radius: 50%;
+                            background-color: $color-green;
+                            border: none;
+                            i {
+                                color: black;
                             }
-                            .m-searchAjax__input {
-                                &.select {
-    
-                                }
-                                &.date {
-                                    
-                                }
-                                &.text {
-                                    
-                                }
-                                height: m-rem(55px);
-                                border: 1px solid $color-border;
-                                border-radius: .25rem;
-                                background: $color-white 0% 0% no-repeat padding-box;
-                                padding: 1rem 1.5rem;
+                        }
+                        button.clear{
+                            @include sr-only;
+                        }
+                    }
+
+                    .ema-news-filters__category,
+                    .ema-news-filters__dateFrom,
+                    .ema-news-filters__dateTo,
+                    .ema-news-filters__text {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: stretch;
+                        justify-content: flex-end;
+                        flex: 1;
+                        label {
+                            @include font_base-bold;
+                            font-size: m-rem(20px);
+                        }
+                        .m-searchAjax__input {
+                            &.select {
+
                             }
-    
-                            button.search{
-                                width: m-rem(55px);
-                                height: m-rem(55px);
-                                border-radius: 50%;
-                                background-color: $color-green;
-                                border: none;
-                                i {
-                                    color: black;
-                                }
+                            &.date {
+                                
                             }
-                            button.clear{
-                                @include sr-only;
+                            &.text {
+                                
                             }
+                            height: m-rem(55px);
+                            border: 1px solid $color-border;
+                            border-radius: .25rem;
+                            background: $color-white 0% 0% no-repeat padding-box;
+                            padding: 1rem 1.5rem;
                         }
                     }
                 }
-                
             }
         }
     }
