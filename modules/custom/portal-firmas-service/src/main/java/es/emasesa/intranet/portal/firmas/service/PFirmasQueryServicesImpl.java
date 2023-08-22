@@ -1,7 +1,6 @@
 package es.emasesa.intranet.portal.firmas.service;
 
-import com.liferay.portal.kernel.util.Validator;
-import es.emasesa.intranet.portal.firmas.service.model.PFirmasQueryServices;
+import es.emasesa.intranet.portal.firmas.model.PFirmasQueryServices;
 import java.io.File;
 import java.net.URL;
 import java.util.Dictionary;
@@ -128,7 +127,7 @@ public class PFirmasQueryServicesImpl implements PFirmasQueryServices {
             bundleContext.registerService(Provider.class, providerImpl, providerProperties);
        }
 
-        this.wsdlURL = getClass().getClassLoader().getResource("wsdl/QueryService.wsdl");
+        this.wsdlURL = getClass().getClassLoader().getResource("META-INF/wsdl/QueryService.wsdl");
         this.queryServiceService = new QueryServiceService(wsdlURL);
     }
 
