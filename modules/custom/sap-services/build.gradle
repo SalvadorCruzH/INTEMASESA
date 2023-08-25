@@ -1,0 +1,36 @@
+buildscript {
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath group: "gradle.plugin.cz.swsamuraj", name: "gradle-jaxws-plugin", version: "0.6.1"
+	}
+}
+
+apply plugin: "cz.swsamuraj.jaxws"
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileInclude 'com.sun.activation:jakarta.activation:1.2.2'
+	compileInclude group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.4'
+	compileOnly 'javax.xml.bind:jaxb-api:2.3.1'
+	compileOnly 'javax.xml.ws:jaxws-api:2.3.1'
+	compileOnly 'javax.jws:javax.jws-api:1.1'
+	compileOnly group: 'org.apache.cxf', name: 'cxf-rt-transports-http', version: '3.4.10'
+	compileOnly 'org.apache.cxf:cxf-rt-frontend-jaxws:3.4.10'
+
+
+}
+
+jar {
+	manifest.attributes(
+			'Multi-Release': 'false',
+	)
+}
+
+jaxws {
+	wsdlDir = 'src/main/resources/META-INF/wsdl'
+	generatedSources = 'soap/service/src/main/java/'
+}
