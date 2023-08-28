@@ -6,8 +6,8 @@
             <!-- EMPTY BY DEFAULT -->
         </div>
 
-        <div class="m-results-wrapper c-publisher c-noticias">
-            <ul id="as-wrapper" class="c-publisher__list m-dFlexWrap m-listBaseNoStyles c-noticias__list">
+        <div class="m-results-wrapper ema-publisher ema-noticias">
+            <ul id="as-wrapper" class="ema-publisher__list m-dFlexWrap m-listBaseNoStyles ema-noticias__list">
                 <!-- -->
             </ul>
             <div id="wrapper-not-result" class="d-none">
@@ -32,7 +32,7 @@
 
 
 <template id="as-template">
-    <li class="c-noticias__item">
+    <li class="ema-noticias__item">
         #html#
 
     </li>

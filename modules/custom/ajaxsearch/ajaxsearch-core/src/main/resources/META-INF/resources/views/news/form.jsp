@@ -1,11 +1,11 @@
 <%@ include file="init.jsp" %>
 
-<div class="m-searchAjax m-searchAjax--form ema-news-form">
-    <p class="ema-news-form__filtertext">
+<div class="m-searchAjax m-searchAjax--form ema-noticias-form">
+    <p class="ema-noticias-form__filtertext">
         <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message>
     </p>
-    <div class="ema-news-form__filters">
-        <div class="ema-news-filters__category">
+    <div class="ema-noticias-form__filters">
+        <div class="ema-noticias-filtros__category">
             <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.category"></liferay-ui:message></label>
             <select name="<portlet:namespace />area"
                     type="text"
@@ -24,8 +24,8 @@
                     </c:forEach>
             </select>
         </div>
-        <div class="ema-news-filters__dates">
-            <div class="ema-news-filters__dateFrom">
+        <div class="ema-noticias-filtros__dates">
+            <div class="ema-noticias-filtros__dateFrom">
                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.from-date"></liferay-ui:message></label>
                 <input name="<portlet:namespace />fechaDesde"
                         type="date"
@@ -35,7 +35,7 @@
                         id="fechaDesde"
                 />
             </div>
-            <div class="ema-news-filters__dateTo">
+            <div class="ema-noticias-filtros__dateTo">
                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.to-date"></liferay-ui:message></label>
                 <input name="<portlet:namespace />fechaHasta"
                         type="date"
@@ -46,7 +46,7 @@
                 />
             </div>
         </div>
-        <div class="ema-news-filters__text">
+        <div class="ema-noticias-filtros__text">
             <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.free-text"></liferay-ui:message></label>
             <input name="<portlet:namespace />queryText"
                     type="text"
@@ -57,7 +57,7 @@
                     placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
             />
         </div>
-        <div class="ema-news-filters__buttons">
+        <div class="ema-noticias-filtros__buttons">
             <button type="button"
                     class="btn btn-primary search"
                     aria-label='<liferay-ui:message key="search"></liferay-ui:message>'

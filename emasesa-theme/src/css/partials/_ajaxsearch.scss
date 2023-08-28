@@ -1,8 +1,8 @@
 .i-mainWrapper {
     .m-searchAjax {
         &.m-searchAjax--form {
-            &.ema-news-form {
-                .ema-news-form__filtertext {
+            &.ema-noticias-form {
+                .ema-noticias-form__filtertext {
                     i {
                        color: $color-blue;
                     }
@@ -10,7 +10,7 @@
                     font-size: m-rem(20px);
                     text-transform: uppercase;
                 }
-                .ema-news-form__filters {
+                .ema-noticias-form__filters {
                     padding: 1.5rem;
                     background: #A8C8551A 0% 0% no-repeat padding-box;
                     border-radius: 30px;
@@ -23,12 +23,12 @@
                         padding: 2rem;
                         flex-direction: row;
                     }
-                    .ema-news-filters__dates {
+                    .ema-noticias-filtros__dates {
                         display: flex;
                         flex-wrap: nowrap;
                         gap: 1rem;
                     }
-                    .ema-news-filters__buttons {     
+                    .ema-noticias-filtros__buttons {     
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
@@ -48,10 +48,10 @@
                         }
                     }
 
-                    .ema-news-filters__category,
-                    .ema-news-filters__dateFrom,
-                    .ema-news-filters__dateTo,
-                    .ema-news-filters__text {
+                    .ema-noticias-filtros__category,
+                    .ema-noticias-filtros__dateFrom,
+                    .ema-noticias-filtros__dateTo,
+                    .ema-noticias-filtros__text {
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
@@ -79,6 +79,23 @@
                         }
                     }
                 }
+            }
+        }
+        .ema-noticias {
+            &__list {
+                
+            }
+            &__item:first-child {
+                padding-top: 0;
+            }
+            &__item {
+                padding-top: m-rem(54px);
+                padding-bottom: m-rem(54px);
+                border-bottom: 1px solid #CCCCCC;
+            }
+            &__item:last-child {
+                padding-bottom:0;
+                border-bottom: none;
             }
         }
     }
