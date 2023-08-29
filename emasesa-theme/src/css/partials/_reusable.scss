@@ -76,14 +76,21 @@
   }
 
   .i-logo__img {
-      width: m-rem(70px);
-      height: m-rem(83px);
+      width: m-rem(28px);
+      height: m-rem(32px);
+      @include media_breakpoint_up(xl) {
+        width: m-rem(70px);
+        height: m-rem(83px);
+      }
   }
   .i-logo__name {
       @include font_base-bold;
-      font-size: m-rem(38px);
+      font-size: m-rem(20px);
       color: $color-text;
       text-decoration: none;
+      @include media_breakpoint_up(xl) {
+        font-size: m-rem(38px);
+      }
       &:hover {
         text-decoration: none;
       }
@@ -100,7 +107,14 @@
       color: $color-text;
     }
   }
+  /* Buttons */
 
+  .m-btn {
+    &--noSytles {
+      border: none;
+      background-color: transparent;
+    }
+  }
 
   /* Titles */
 

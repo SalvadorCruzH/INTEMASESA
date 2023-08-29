@@ -3,8 +3,18 @@
         display: flex;
         justify-content: space-between;
         max-width: 1920px;
-        padding: m-rem(27px) m-rem(35px) m-rem(4px);
+        padding: m-rem(14px) 0 m-rem(10px);
         align-items: center;
+        border-bottom: m-rem(1px) solid $color-light-grey;
+        @include media_breakpoint_up(xl) {
+            padding: m-rem(27px) m-rem(35px) m-rem(4px);
+            border-bottom: none;
+        }
+    }
+    &__btnMenu {
+        @include media_breakpoint_up(xl) {
+            display: none;
+        }
     }
     &__logo {
         display: flex;
@@ -12,6 +22,12 @@
     }
     &__logoLink {
         text-decoration: none;
+        display: flex;
+        align-items: center;
+        @include media_breakpoint_up(xl) {
+            flex-direction: column;
+            margin-right: m-rem(35px);
+        }
         &:hover {
             text-decoration: none;
         }
@@ -19,5 +35,11 @@
     &__navSearch {
         display: flex;
         align-items: center;
+    }
+    &__btnAdmin {
+        display: none;
+        @include media_breakpoint_up(xl) {
+           display: block;
+        }
     }
 }

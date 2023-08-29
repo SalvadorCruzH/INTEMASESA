@@ -1,4 +1,8 @@
 .i-mainNavigation {
+    display: none;
+    @include media_breakpoint_up(xl) {
+       display: block;
+    }
     &__ul {
 
     }
