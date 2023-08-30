@@ -1,4 +1,8 @@
 .i-header {
+    box-shadow: 0 m-rem(3px) m-rem(6px) rgba(0, 0, 0, 0.16);
+    @include media_breakpoint_up(xl) {
+        box-shadow: none
+    }
     &__wrapper {
         display: flex;
         justify-content: space-between;
@@ -25,7 +29,7 @@
         display: flex;
         align-items: center;
         @include media_breakpoint_up(xl) {
-            flex-direction: column;
+            flex-direction: row;
             margin-right: m-rem(35px);
         }
         &:hover {
