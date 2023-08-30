@@ -77,6 +77,9 @@
         @include font_base;
         font-size: m-rem(18px);
     }
+    .fa-solid {
+      color: $color-text;
+    }
 }
 
   
