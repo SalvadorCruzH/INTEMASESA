@@ -132,3 +132,51 @@
         }
     }
 }
+
+
+/* user navigation */
+.i-header {
+    &__userNav {
+        padding: 0 0.5rem;
+        background-color: white;
+        @include media_breakpoint_up(xl) {
+            position: fixed;
+            left: m-rem(37px);
+            top: m-rem(188px);
+            box-shadow: 0 m-rem(3px) m-rem(6px) rgba(0, 0, 0, 0.16);
+            z-index: 2;
+            border-radius: 33px;
+            padding: 0;
+        }
+    }
+    &__userList {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        list-style: none;
+        margin-bottom: 0;
+        padding: 0;
+        @include media_breakpoint_up(xl) {
+            flex-direction: column;
+            padding: 1rem;
+            padding: m-rem(20px) 0;
+        }
+    }
+    &__userItem{
+        padding: 0.5rem 0.3rem;
+        @include media_breakpoint_up(xl) {
+            padding: m-rem(2px) m-rem(20px) m-rem(2px) m-rem(18px);
+            margin: m-rem(11px) 0;
+        }
+        &.selected {
+            border-bottom: m-rem(4px) solid $color-aux-blue;
+            @include media_breakpoint_up(xl) {
+                border-left: m-rem(4px) solid $color-aux-blue;
+                border-bottom: none;
+            }
+        }
+    }
+    &__userLink {
+
+    }
+}
