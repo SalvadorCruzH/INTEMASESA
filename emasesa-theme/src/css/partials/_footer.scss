@@ -69,9 +69,19 @@
         @include media-breakpoint-up(xl) {
             margin-top: m-rem(80px);
         }
-         li {
+        .navbar-nav {
+            flex-wrap: wrap;
+            display: flex;
+            // flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            @include media-breakpoint-up(xl) {
+               
+            }
+        }
+        li {
             .nav-link {
-                span {
+                > span {
                    border-right: 1px solid white;
                    padding-right: 1rem;
                 }
