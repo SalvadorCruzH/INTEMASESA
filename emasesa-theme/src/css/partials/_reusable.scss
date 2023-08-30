@@ -119,24 +119,38 @@
   /* Titles */
 
   .i-title {
-  @include font_base-bold;
-  color: $color-text;
-  &--blue {
-    color: $color-light-blue;
+    @include font_base-bold;
+    color: $color-text;
+    &--blue {
+      color: $color-light-blue;
+    }
+    &--white {
+      color: $color-white;
+    }
+    &--center {
+      text-align: center;
+    }
+    &--black {
+      @include font_base-black;
+    }
+    &--18 {
+      font-size: m-rem(18px);
+    }
   }
-  &--white {
-    color: $color-white;
-  }
-  &--center {
-    text-align: center;
-  }
-  &--black {
-    @include font_base-black;
-  }
-  &--18 {
-    font-size: m-rem(18px);
-  }
-  }
+
+
 }
+  /* Icons */
+  .fa-solid {
+    &.i-icon {
+      &--grey {
+        color: $color-icon-grey;
+        .selected &{
+          color: $color-aux-blue;
+        }
+      }
+    }
+  }
+
 
 
