@@ -1,0 +1,104 @@
+///*--------------------------------
+//  # COLORS
+//-----------------------------------*/
+$color-blue:#0096DA;
+$color-aux-blue:#2978DA;
+
+
+$color-light-blue:#E5F4FB;
+
+$color-green:#A8C855;
+$color-black:#000000;
+$color-grey:#555;
+$color-icon-grey:#999;
+$color-light-grey: #d9d9d9;
+$color-ultra-light-grey: #ddd;
+$color-bg-grey:#EEF1F7;
+$color-border:#BBB;
+$color-light-grey: #EEEEEE;
+$color-white:#FFFFFF;
+
+
+$color-success: #1A5F12;
+$color-light-green: #ECF4DB;
+$color-error: #B33333;
+$color-light-red: #FDE2E3;
+
+
+
+$color-text: $color-black;
+$color-primary: $color-aux-blue;
+$color-secundary: $color-green;
+$color-tertiary: $color-blue;
+
+$base-size: 16px;
+
+
+///*--------------------------------
+//  # FONTS
+//-----------------------------------*/
+@mixin font {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+@mixin font_base {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+@mixin font_base-italic {
+    font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-style: italic;
+}
+@mixin font_base-light {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-style: normal;
+}
+@mixin font_base-light-italic {
+    font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-style: italic;
+}
+@mixin font_base-medium {
+    font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+@mixin font_base-medium-italic {
+    font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-style: italic;
+}
+@mixin font_base-bold {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-style: normal;
+}
+@mixin font_base-bold-italic {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-style: italic;
+}
+@mixin font_base-black {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-style: normal;
+}
+@mixin font_base-black-italic {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-style: italic;
+}
+
+
+/*px a rem*/
+@function m-rem($pixels, $context: $base-size) {
+    @return calc($pixels / $context) * 1rem;
+}
+
+

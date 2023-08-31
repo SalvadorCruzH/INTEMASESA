@@ -1,0 +1,100 @@
+.i-footer {
+    background-color: $color-aux-blue;
+    color: white;
+    padding: m-rem(42px) 0 m-rem(64.5px);
+    a {
+        color: white;
+    }
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @include media-breakpoint-up(xl) {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: m-rem(1275px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    &__logo {
+        display: flex;
+        margin-bottom: 2rem;
+        @include media-breakpoint-up(xl) {
+            flex-basis: 40%;
+        }
+    }
+    &__img {
+        width: m-rem(70px);
+        height: m-rem(83px);
+    }
+    &__name {
+        @include font_base-bold;
+        font-size: m-rem(38px);
+        color: white;
+
+    }
+    &__menuWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        @include media-breakpoint-up(xl) {
+            flex-basis: 70%;
+            align-items: flex-start;
+        }
+
+    }
+    &__menu {
+        .navbar-nav {
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            @include media-breakpoint-up(xl) {
+                flex-direction: row;
+            }
+        }
+        .nav-link {
+            @include font_base-bold;
+            font-size: m-rem(20px);
+        }
+    }
+    &__menuLegal {
+        margin-top: 2rem;
+        @include media-breakpoint-up(xl) {
+            margin-top: m-rem(80px);
+        }
+        .navbar-nav {
+            flex-wrap: wrap;
+            display: flex;
+            // flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            @include media-breakpoint-up(xl) {
+               
+            }
+        }
+        li {
+            .nav-link {
+                > span {
+                   border-right: 1px solid white;
+                   padding-right: 1rem;
+                }
+            }
+            &:last-of-type {
+                .nav-link {
+                    span {
+                       border-right: none;
+                       padding-right: 0;
+                    }
+                }
+            }
+        } 
+    }
+}
