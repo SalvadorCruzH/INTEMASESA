@@ -1,6 +1,7 @@
 .i-mainWrapper {
-    @include font_base;
-    color: $color-text;
+  position: relative;
+  @include font_base;
+  color: $color-text;
 
     h1,
     h2,

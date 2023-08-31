@@ -10,3 +10,12 @@
         }
     }
 }
+
+.btn {
+    &.btn-primary {
+        background-color: $color-aux-blue;
+        color: white;
+        border-radius: m-rem(25px);
+        padding: m-rem(12px) m-rem(25px);
+    }
+}

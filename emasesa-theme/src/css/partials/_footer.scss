@@ -35,6 +35,7 @@
     &__name {
         @include font_base-bold;
         font-size: m-rem(38px);
+        color: white;
 
     }
     &__menuWrapper {
