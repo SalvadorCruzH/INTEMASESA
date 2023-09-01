@@ -1,63 +1,9 @@
 
-/*
- * This function gets loaded when all the HTML, not including the portlets, is
- * loaded.
- */
-AUI().ready(function () {
+$(function() {
     menuFuntion.init();
+	menuDesktop.init();
 
-   
-    var menuItems = document.querySelectorAll('.i-mainNavigation__ul .i-mainNavigation__li.children');
-   
-    Array.prototype.forEach.call(menuItems, function(el, i){
-        el.querySelector('a').addEventListener("click",  function(event){
-            var parentNodeLink = this.parentNode;
-         
-            if(parentNodeLink.classList.contains('show')){
-                parentNodeLink.classList.remove('show');
-                parentNodeLink.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
-                this.setAttribute('aria-expanded', "false");
-
-            }else {
-                menuItems.forEach(function(element){
-                    element.classList.remove('show');
-                    element.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
-                });
-                parentNodeLink.classList.add('show');
-                parentNodeLink.querySelector('a').setAttribute('aria-expanded', "true");
-                parentNodeLink.querySelector('.i-mainNavigation__submenuContainer').classList.add('open');
-                this.setAttribute('aria-expanded', "true");
-                
-            }
-            event.preventDefault();
-            return false;
-        
-        });
-    });
-
-    window.addEventListener('click', function(e){
-        if(e.target.className === "i-mainNavigation__submenuContainer open") {
-            menuItems.forEach(function(element){
-                element.classList.remove('show');
-                element.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
-            });
-        }
-      }); 
 });
-
-/*
- * This function gets loaded after each and every portlet on the page.
- *
- * portletId: the current portlet's id
- * node: the Alloy Node object of the current portlet
- */
-Liferay.Portlet.ready(function (_portletId, _node) {});
-
-/*
- * This function gets loaded when everything, including the portlets, is on
- * the page.
- */
-Liferay.on('allPortletsReady', function () {});
 
 
  /**
@@ -135,10 +81,13 @@ Liferay.on('allPortletsReady', function () {});
 		}
 
 		window.addEventListener('click', function(e){
+			console.log("estoy haciendo click");
 			const menu = document.querySelector("#i-menuMobile");
+			console.log(menu);
 			if (menu && !menu.classList.contains("hidden") && !menu.contains(e.target)){
-				if (document.querySelector("i-menuMobile__closeButton"))
-					document.querySelector("i-menuMobile__closeButton").click();
+				if (document.querySelector("#i-menuMobile__closeButton"))
+					document.querySelector("#i-menuMobile__closeButton").click();
+					console.log("estoy haciendo click fuera del menu");
 			}
 		});
 	}
@@ -159,6 +108,65 @@ Liferay.on('allPortletsReady', function () {});
 	var _init = function () {
         _menuToggle();
 		
+	}
+
+	return {
+		init: _init,
+	};
+})();
+
+/**
+* Menu desktop
+*/
+
+var menuDesktop = (function () {
+	var _menuItems = document.querySelectorAll('.i-mainNavigation__ul .i-mainNavigation__li.children');
+	
+	var _navDeskLevelOne = function() {
+
+		Array.prototype.forEach.call(_menuItems, function(el, i){
+			el.querySelector('a').addEventListener("click",  function(event){
+				var parentNodeLink = this.parentNode;
+			
+				if(parentNodeLink.classList.contains('show')){
+					parentNodeLink.classList.remove('show');
+					parentNodeLink.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
+					this.setAttribute('aria-expanded', "false");
+	
+				}else {
+					_menuItems.forEach(function(element){
+						element.classList.remove('show');
+						element.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
+					});
+					parentNodeLink.classList.add('show');
+					parentNodeLink.querySelector('a').setAttribute('aria-expanded', "true");
+					parentNodeLink.querySelector('.i-mainNavigation__submenuContainer').classList.add('open');
+					this.setAttribute('aria-expanded', "true");
+					
+				}
+				event.preventDefault();
+				return false;
+			
+			});
+		});
+
+	}
+
+	var _closeMenuDesktop = function() {	
+		window.addEventListener('click', function(e){
+			if(e.target.className === "i-mainNavigation__submenuContainer open") {
+				_menuItems.forEach(function(element){
+					element.classList.remove('show');
+					element.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
+				});
+			}
+		}); 
+	}
+
+ 
+	var _init = function () {
+        _navDeskLevelOne();
+		_closeMenuDesktop();   
 	}
 
 	return {
