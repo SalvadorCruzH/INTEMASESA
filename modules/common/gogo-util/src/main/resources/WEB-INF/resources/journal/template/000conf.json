@@ -2,8 +2,8 @@
     {
         "screenName": "admin",
         "name":"EMA - Noticia - Detalle",
-        "templateKey": "EMA-NOTA-PRENSA-DETALLE-TEMPLATE",
-        "structureKey": "EMA-NOTA-PRENSA",
+        "templateKey": "EMA-NOTICIA-DETALLE-TEMPLATE",
+        "structureKey": "EMA-NOTICIA",
         "companyWebId": "liferay.com",
         "groupFriendlyUrl": "/global",
         "templateFile": "noticia-detalle.ftl",
@@ -15,8 +15,8 @@
     {
         "screenName": "admin",
         "name":"EMA - Noticia - Tarjeta",
-        "templateKey": "EMA-NOTA-PRENSA-TARJETA-TEMPLATE",
-        "structureKey": "EMA-NOTA-PRENSA",
+        "templateKey": "EMA-NOTICIA-TARJETA-TEMPLATE",
+        "structureKey": "EMA-NOTICIA",
         "companyWebId": "liferay.com",
         "groupFriendlyUrl": "/global",
         "templateFile": "noticia-tarjeta.ftl",

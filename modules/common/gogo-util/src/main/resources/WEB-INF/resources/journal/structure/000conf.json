@@ -4,7 +4,7 @@
     "name":"EMA - Noticia",
     "companyWebId":"liferay.com",
     "groupFriendlyUrl":"/global",
-    "structureKey":"EMA-NOTA-PRENSA",
+    "structureKey":"EMA-NOTICIA",
     "structureFile":"noticia.json",
     "comment": "Estructura para Noticia",
     "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"

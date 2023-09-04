@@ -8,3 +8,5 @@ bundles/
 .DS_Store
 /gradle-*.properties
 /configs/me
+node_modules*/
+themes/emasesa-theme/package-lock.json
