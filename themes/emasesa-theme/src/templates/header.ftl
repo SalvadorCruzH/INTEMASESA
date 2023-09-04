@@ -9,7 +9,7 @@
 					<a class="i-header__logoLink" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 						<img class="i-logo__img i-footer__img" src="${images_folder}/logos/logo-emasesa-color.svg" alt="Logotipo Emasesa">
 						<span class="i-logo__name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-							emplead@s
+							personas
 						</span> 
 					</a>
 				</div>
@@ -87,7 +87,7 @@
 						</a>
 					</div>
 				</div>
-				<button id="i-menuMobile__closeButton" aria-label="<@liferay.language key='close' />" class="btn m-btn--noSytles">
+				<button id="i-menuMobile__closeButton" aria-label="<@liferay.language key='close' />" class="i-menuMobile__closeButton btn m-btn--noSytles">
 					<i class="fa-solid fa-xmark fa-2xl"></i>
 				</button>
 			</div>

@@ -16,6 +16,7 @@ $(function() {
 	var _closeBtn = document.querySelector("#i-menuMobile__closeButton");
 	var _mobileNavigation = document.querySelector("#i-menuMobile");
 	var _body = document.querySelector("body");
+	var _menuLiMobile = document.querySelectorAll('.i-menuMobile__navWrapper .i-navMainMobile__li.children .i-navMainMobile__link');
 
 	var _menuToggle = function() {
 		if (typeof _toggleBtn != "undefined" && _toggleBtn != undefined) {
@@ -92,6 +93,39 @@ $(function() {
 		});
 	}
 
+	var _navInLevelOne = function() {
+		Array.prototype.forEach.call(_menuLiMobile, function(el, i){
+			el.addEventListener("click",  function(event){
+	
+				var parentLi = this.parentNode;
+				var listUlchild = this.nextElementSibling
+				
+				if(parentLi.classList.contains('li-open')){
+					parentLi.classList.remove('li-open');
+					listUlchild.classList.remove('nav-open');
+					el.classList.remove('link-open');
+					el.setAttribute('aria-expanded', "false");
+
+				}else {
+					_menuLiMobile.forEach(function(element){
+						element.parentNode.classList.remove('li-open');
+					
+						element.nextElementSibling.classList.remove('nav-open');
+						element.setAttribute('aria-expanded', "false");
+						element.classList.remove('link-open');
+					});
+					parentLi.classList.add('li-open');
+					listUlchild.classList.add('nav-open');
+					el.classList.add('link-open');
+					el.setAttribute('aria-expanded', "true");				
+				}
+				event.preventDefault();
+			
+			});
+		
+    	});
+	}
+
 
 	var _initial = function() {
 		if((window.innerWidth > 1200) && (_body.classList.contains("menu-open"))) {
@@ -107,6 +141,7 @@ $(function() {
 
 	var _init = function () {
         _menuToggle();
+		_navInLevelOne();
 		
 	}
 
