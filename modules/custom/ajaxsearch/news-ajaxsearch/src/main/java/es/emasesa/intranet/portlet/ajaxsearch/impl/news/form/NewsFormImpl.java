@@ -58,10 +58,14 @@ public class NewsFormImpl implements AjaxSearchForm {
 
         ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
         String categoryId = ajaxSearchDisplayContext.getConfig().getOrDefault(CATEGORY_ID, StringPool.BLANK);
-        List<AssetCategory> categories = assetCategoryLocalService.getVocabularyRootCategories(Long.parseLong(categoryId), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-        request.setAttribute("categories", categories);
+        if(!categoryId.isBlank()){
+            List<AssetCategory> categories = assetCategoryLocalService.getVocabularyRootCategories(Long.parseLong(categoryId), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+            request.setAttribute("categories", categories);
+        }
+
         request.setAttribute("catSelected", ajaxSearchDisplayContext.getLong("catSelected"));
+
         return VIEW;
     }
 
