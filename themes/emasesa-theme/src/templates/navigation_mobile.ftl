@@ -34,15 +34,11 @@
                         <span class="i-navMainMobile__span">${nav_item.getName()}</span>
                         <i class="fa-solid fa-angle-right fa-xs"></i>
                     </a>
-					<#--  <div class="i-navMainMobile__submenuContainer">
-						<div class="i-navMainMobile__submenuWrapper">
-							<div class="i-navMainMobile__innerWrapper">
-								<ul class="i-navMainMobile__submenuUl" role="menu">
-									<#list nav_item.getChildren() as nav_child>
+						<ul class="i-navMainMobile__submenuUl m-listBaseNoStyles" role="menu">
+							<#list nav_item.getChildren() as nav_child>
 										<#assign
 											nav_child_css_class = "i-navMainMobile__submenuLi"
 										/>
-
 										<#if nav_child.isSelected()>
 											<#assign
 												nav_child_css_class = "i-navMainMobile__submenuLi selected"
@@ -53,7 +49,7 @@
 											<a class="i-navMainMobile__link2" href="${nav_child.getURL()}" ${nav_child.getTarget()} role="menuitem">${nav_child.getName()}</a>
 															
 											<#if nav_child.hasChildren()>
-												<ul class="child-menu i-navMainMobile__submenuUl2" role="menu">
+												<ul class="child-menu i-navMainMobile__submenuUl2 m-listBaseNoStyles" role="menu">
 													<#list nav_child.getChildren() as nav_child2>
 														<#assign
 															nav_child2_css_class = "i-navMainMobile__li2Level"
@@ -66,21 +62,19 @@
 														</#if>
 
 														<li class="${nav_child2_css_class}" id="layout_${nav_child2.getLayoutId()}" role="presentation">
+															<i class="fa-solid fa-chevron-right fa-xs mr-1"></i>
 															<a class="i-navMainMobile__link2Level" href="${nav_child2.getURL()}" ${nav_child2.getTarget()} role="menuitem">${nav_child2.getName()}</a>
 														</li>
 													</#list>
 												</ul>
 											</#if>
 										</li>
-									</#list>
-								</ul>
-							</div>
-						</div>
-					</div>  -->
+							</#list>
+						</ul>
 				<#else>
 					<a class="i-navMainMobile__link" ${nav_item_attr_has_popup} href="${nav_item.getURL()}" ${nav_item.getTarget()} role="menuitem">
                         <span class="i-navMainMobile__span">${nav_item.getName()}</span>
-                        <i class="fa-solid fa-angle-right fa-xs"></i>
+                        <i class="fa-solid fa-angle-right fa-xs mr-1"></i>
                     </a>
 				</#if>
 			</li>

@@ -108,6 +108,7 @@
 
     }
     &__submenuLi {
+        margin-bottom: m-rem(10px);
         border-right: 1px solid $color-light-grey;
         padding-right: 2rem;
         &:nth-of-type(3n) {
@@ -196,6 +197,7 @@
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
+    overflow-y: scroll;
     @include media-breakpoint-up(sm) {
         width: 25rem;
     }
@@ -214,6 +216,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        position: relative;
     }
     &__btnWrapper {
         display: flex;
@@ -221,12 +224,35 @@
         align-items: center;
         margin-bottom: 2rem;
     }
+    &__closeButton {
+        margin-right: -0.7rem;
+    }
     .i-header__btnAdmin  {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-left: auto;
         margin-right: auto;
+        min-width: m-rem(246px);
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translate(-60%,0%);
+        @include media-breakpoint-up(sm) {
+            transform: none;
+            left: calc((400px - 246px)/2);
+        }
+    }
+    .i-footer__img {
+        width: m-rem(28px);
+        height: m-rem(32px);
+        margin-right: m-rem(5px);
+    }
+    .i-logo__name {
+        @include font_base-bold;
+        font-size: m-rem(20px);
+        color: $color-text;
+        margin-bottom: 0;
     }
     .i-navMainMobile {
         &__ul {
@@ -243,9 +269,53 @@
             align-items: center;
             padding: m-rem(11px) m-rem(2px);
             color: $color-text;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
             &:hover {
                 text-decoration: none;
             }
+            i{
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            &.link-open {
+                color: $color-aux-blue;
+                i {
+                    color: $color-aux-blue;
+                    transform: rotate(90deg);
+                }
+            }
+        }
+        &__submenuUl {
+            display: none;
+            margin-bottom: m-rem(24px);
+            padding-left: m-rem(5px);
+            &.nav-open {
+                display: block;
+            }
+        }
+        &__submenuLi {
+            margin-bottom: m-rem(10px);
+        }
+        &__submenuUl2 {
+            padding-left: 1rem;
+            padding-top: 0.5rem;
+            margin-bottom: m-rem(18px);
+        }
+        &__li2Level {
+            margin-bottom: m-rem(10px);
+        }
+        &__link2 {
+            @include font_base-bold;
+            font-size: m-rem(18px);
+            color: $color-text;
+        }
+        &__link2Level {
+            color: $color-text;
         }
     }
 }
