@@ -9,7 +9,7 @@
 					<a class="i-header__logoLink" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 						<img class="i-logo__img i-footer__img" src="${images_folder}/logos/logo-emasesa-color.svg" alt="Logotipo Emasesa">
 						<span class="i-logo__name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-							personas
+							<@liferay.language key='es.emasesa.intranet.common.personas'/>
 						</span> 
 					</a>
 				</div>
