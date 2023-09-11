@@ -2,6 +2,7 @@
 $(function() {
     menuFuntion.init();
 	menuDesktop.init();
+	changeBtnAdminTareas.init();
 
 });
 
@@ -204,4 +205,30 @@ var menuDesktop = (function () {
 	return {
 		init: _init,
 	};
+})();
+
+
+
+
+var changeBtnAdminTareas = (function () {
+	var _btnAdminTask = document.querySelector('#i-btnAdminTareas');
+
+	var _btnAdminToggle = function() {
+		_btnAdminTask.addEventListener("click", function () {
+			_btnAdminTask.classList.toggle('open');
+			// llamar al portlet admin tareas
+
+		});
+	}
+
+
+
+	var _init = function () {
+        _btnAdminToggle(); 
+	}
+
+	return {
+		init: _init,
+	};
+
 })();
