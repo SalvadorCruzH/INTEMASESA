@@ -20,9 +20,11 @@
 				</#if>
 				<button class="btn m-btn--noSytles"aria-label="Abrir busqueda"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
 			</div>
-			<button class="i-header__btnAdmin btn btn-primary">
-				<i class="fa-regular fa-bell mr-2"></i>
-				<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />
+			<button id="i-btnAdminTareas" class="i-header__btnAdmin btn" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />">
+				<i class="fa-solid fa-folder fa-lg i-icon--green i-header__btnIn"></i>
+				<span class="i-header__btnIn sr-only"><@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/></span>
+				<i class="fa-solid fa-folder-open fa-lg i-icon--green i-header__btnOut mr-2"></i>
+				<span class="i-header__btnOut i-header__btnOut--text"><@liferay.language key='es.emasesa.intranet.common.salir'/></span>
 			</button>
 		</div>
 		<nav class="i-header__userNav">
