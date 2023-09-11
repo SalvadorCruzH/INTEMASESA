@@ -238,6 +238,7 @@
         bottom: 2rem;
         left: 50%;
         transform: translate(-60%,0%);
+        color: white;
         @include media-breakpoint-up(sm) {
             transform: none;
             left: calc((400px - 246px)/2);

@@ -78,7 +78,8 @@
         @include font_base;
         font-size: m-rem(18px);
     }
-    .fa-solid {
+    .fa-solid,
+    .fa-regular {
       color: $color-text;
     }
 }
