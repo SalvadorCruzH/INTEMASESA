@@ -9,7 +9,7 @@ import javax.portlet.Portlet;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.camara",
+		"com.liferay.portlet.display-category=category.emasesa",
 		"javax.portlet.version=3.0",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=AjaxSearch Form",
