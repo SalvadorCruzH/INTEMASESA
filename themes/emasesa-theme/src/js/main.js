@@ -82,13 +82,10 @@ $(function() {
 		}
 
 		window.addEventListener('click', function(e){
-			console.log("estoy haciendo click");
 			const menu = document.querySelector("#i-menuMobile");
-			console.log(menu);
 			if (menu && !menu.classList.contains("hidden") && !menu.contains(e.target)){
 				if (document.querySelector("#i-menuMobile__closeButton"))
 					document.querySelector("#i-menuMobile__closeButton").click();
-					console.log("estoy haciendo click fuera del menu");
 			}
 		});
 	}
