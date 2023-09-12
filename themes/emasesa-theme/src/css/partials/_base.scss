@@ -3,6 +3,13 @@
   @include font_base;
   color: $color-text;
 
+  .container,
+  .container-fluid-max-xl {
+    @media(min-width: 1400px) {
+      max-width: 1280px;
+    }
+  }
+
     h1,
     h2,
     h3,
