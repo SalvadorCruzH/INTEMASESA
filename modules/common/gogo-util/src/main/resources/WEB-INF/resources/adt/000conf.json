@@ -1,14 +1,14 @@
 [
     {
         "screenName": "admin",
-        "name":"EMA - EJEMPLO ADT a borrar",
+        "name":"EMA - administradorDocumentos",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",
         "companyWebId":"liferay.com",
         "groupFriendlyUrl":"/global",
-        "templateKey":"EMA-EJEMPLO-ADT-A-BORRAR",
-        "templateFile":"applications.ftl",
-        "comment": "Publicador para las cajas enlace",
-        "uuid":"4c95a3e3-e32c-6092-c56b-a3138797b996"
+        "templateKey":"EMA-ADMINISTRADORDOCUMENTOS",
+        "templateFile":"administradorDocumentos.ftl",
+        "comment": "Publicador de RRHH",
+        "uuid":"e49b87f4-202b-46ab-45a0-5ab4b5aa5331"
     }
 ]
