@@ -36,8 +36,10 @@
                 </#list>
             </p>
         </div>
-        <p class="ema-noticia-tarjeta__fecha">${displaydate?string["dd"]} de ${displaydate?string["MMMM"]} de ${displaydate?string["yyyy"]}</p>
-        <h3 class="ema-noticia-tarjeta__titulo">${title.getData()}</h3>
-        <h4 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h4>
+        <div class="ema-noticia-tarjeta__wrapperTexts">
+            <p class="ema-noticia-tarjeta__fecha">${displaydate?string["dd"]} de ${displaydate?string["MMMM"]} de ${displaydate?string["yyyy"]}</p>
+            <h3 class="ema-noticia-tarjeta__titulo">${title.getData()}</h3>
+            <h4 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h4>
+        </div>
     </div>
 </div>

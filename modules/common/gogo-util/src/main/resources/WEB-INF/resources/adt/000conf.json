@@ -10,5 +10,17 @@
         "templateFile":"administradorDocumentos.ftl",
         "comment": "Publicador de RRHH",
         "uuid":"e49b87f4-202b-46ab-45a0-5ab4b5aa5331"
+    },
+    {
+        "screenName": "admin",
+        "name":"EMA - Listado noticias Home",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-NOTICIAS-HOME",
+        "templateFile":"noticias-listado.ftl",
+        "comment": "Listado de noticias de la home.",
+        "uuid":"6f21456d-19a9-25b2-164c-9ea3f5552868"
     }
 ]
