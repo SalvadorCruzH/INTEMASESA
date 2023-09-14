@@ -8,5 +8,15 @@
     "structureFile":"noticia.json",
     "comment": "Estructura para Noticia",
     "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+  },
+  {
+    "screenName": "admin",
+    "name": "EMA - Boletín",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-BOLETIN",
+    "structureFile": "boletin.json",
+    "comment": "Estructura para envío de Boletines",
+    "uuid": "082198cd-c974-7965-1cad-e3f06576cff9"
   }
 ]
