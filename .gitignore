@@ -10,3 +10,6 @@ bundles/
 /configs/me
 node_modules*/
 themes/emasesa-theme/package-lock.json
+.yarnrc
+package.json
+yarn.lock
