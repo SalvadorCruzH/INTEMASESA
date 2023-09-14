@@ -1,3 +1,5 @@
+/* Buttons */
+
 .i-btn {
     &--close {
         position: absolute;
@@ -10,12 +12,80 @@
         }
     }
 }
-
-.btn {
-    &.btn-primary {
-        background-color: $color-aux-blue;
+.btn-success {
+    background-color: $color-success-btn;
+    border-radius: m-rem(25px);
+    border-color: #28A745;
+    padding: m-rem(12px) m-rem(25px);
+}
+.btn-info {
+    background-color: $color-info;
+    border-radius: m-rem(25px);
+    border-color: $color-info;
+    padding: m-rem(12px) m-rem(25px);
+}
+.btn-warning {
+    background-color: $color-warning;
+    border-radius: m-rem(25px);
+    border-color: $color-warning;
+    padding: m-rem(12px) m-rem(25px);
+}
+.btn-danger {
+    background-color: $color-danger;
+    border-radius: m-rem(25px);
+    border-color: $color-danger;
+    padding: m-rem(12px) m-rem(25px);
+}
+.btn-primary {
+    background-color: $color-aux-blue;
+    color: white;
+    border-radius: m-rem(25px);
+    border-color: $color-aux-blue;
+    padding: m-rem(12px) m-rem(25px);
+    &:hover {
+        background-color: $color-hover-blue;
         color: white;
-        border-radius: m-rem(25px);
-        padding: m-rem(12px) m-rem(25px);
+        border-color: transparent;
+    }
+}
+.btn-secondary {
+    background-color: $color-secondary;
+    color: $color-text;
+    border-radius: m-rem(25px);
+    border-color: $color-secondary;
+    padding: m-rem(12px) m-rem(25px);
+    &:hover {
+        background-color: $color-hover-green;
+        color: $color-text;
+        border-color: transparent;
+    }
+}
+.btn-outline-primary {
+    color: $color-aux-blue;
+    border: m-rem(2px) solid $color-aux-blue;
+    border-radius: m-rem(25px);
+    padding: m-rem(12px) m-rem(25px);
+    &:hover {
+        background-color: white;
+        border: m-rem(2px) solid $color-hover-blue;
+        color: $color-hover-blue;
+    }
+}
+.btn-outline-secondary {
+    color: $color-secondary;
+    border: m-rem(2px) solid $color-secondary;
+    border-radius: m-rem(25px);
+    padding: m-rem(12px) m-rem(25px);
+    &:hover {
+        background-color: white;
+        border: m-rem(2px) solid $color-hover-green;
+        color: $color-hover-green;
+    }
+}
+.btn-link {
+    color: $color-aux-blue;
+    text-decoration: underline;
+    &:hover {
+       color: $color-hover-blue;
     }
 }

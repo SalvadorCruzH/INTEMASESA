@@ -4,10 +4,12 @@
 $color-blue:#0096DA;
 $color-aux-blue:#3366CC;
 $color-light-blue: #D6E7F4;
+$color-hover-blue:#003399;
 
 // $color-light-blue:#E5F4FB;
 
 $color-green:#A8C855;
+$color-hover-green:#C2D888;
 $color-light-green: #d9e4c6;
 $color-black:#000000;
 $color-grey:#555;
@@ -21,15 +23,19 @@ $color-white:#FFFFFF;
 
 
 $color-success: #1A5F12;
+$color-success-btn:#28A745;
+$color-info: #17A2B8;
 $color-light-green: #ECF4DB;
 $color-error: #B33333;
+$color-danger: #DC3545;
+$color-warning: #FFC107;
 $color-light-red: #FDE2E3;
 
 
 
 $color-text: $color-black;
 $color-primary: $color-aux-blue;
-$color-secundary: $color-green;
+$color-secondary: $color-green;
 $color-tertiary: $color-blue;
 
 $base-size: 16px;
