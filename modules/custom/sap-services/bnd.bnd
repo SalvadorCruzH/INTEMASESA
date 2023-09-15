@@ -2,13 +2,11 @@ Bundle-Name: sap-service
 Bundle-SymbolicName: sap.service
 Bundle-Version: 1.0.0
 -metatype: *
+
 Export-Package: \
     es.emasesa.intranet.*,\
-    com.sap.document.sap.soap.functions.mc_style.*;
-Import-Package:\
-	org.apache.cxf.jaxws.spi,\
-    com.sun.xml.txw2,\
-	*;resolution:=optional
+
+Import-Package:\*;resolution:=optional
 
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -noimportjava: true

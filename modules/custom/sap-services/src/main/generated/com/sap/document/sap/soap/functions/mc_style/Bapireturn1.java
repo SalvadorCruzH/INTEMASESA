@@ -13,24 +13,24 @@ import javax.xml.bind.annotation.XmlType;
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="Bapireturn1">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Type" type="{urn:sap-com:document:sap:rfc:functions}char1"/>
- *         &lt;element name="Id" type="{urn:sap-com:document:sap:rfc:functions}char20"/>
- *         &lt;element name="Number" type="{urn:sap-com:document:sap:rfc:functions}numeric3"/>
- *         &lt;element name="Message" type="{urn:sap-com:document:sap:rfc:functions}char220"/>
- *         &lt;element name="LogNo" type="{urn:sap-com:document:sap:rfc:functions}char20"/>
- *         &lt;element name="LogMsgNo" type="{urn:sap-com:document:sap:rfc:functions}numeric6"/>
- *         &lt;element name="MessageV1" type="{urn:sap-com:document:sap:rfc:functions}char50"/>
- *         &lt;element name="MessageV2" type="{urn:sap-com:document:sap:rfc:functions}char50"/>
- *         &lt;element name="MessageV3" type="{urn:sap-com:document:sap:rfc:functions}char50"/>
- *         &lt;element name="MessageV4" type="{urn:sap-com:document:sap:rfc:functions}char50"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="Bapireturn1"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="Type" type="{urn:sap-com:document:sap:rfc:functions}char1"/&gt;
+ *         &lt;element name="Id" type="{urn:sap-com:document:sap:rfc:functions}char20"/&gt;
+ *         &lt;element name="Number" type="{urn:sap-com:document:sap:rfc:functions}numeric3"/&gt;
+ *         &lt;element name="Message" type="{urn:sap-com:document:sap:rfc:functions}char220"/&gt;
+ *         &lt;element name="LogNo" type="{urn:sap-com:document:sap:rfc:functions}char20"/&gt;
+ *         &lt;element name="LogMsgNo" type="{urn:sap-com:document:sap:rfc:functions}numeric6"/&gt;
+ *         &lt;element name="MessageV1" type="{urn:sap-com:document:sap:rfc:functions}char50"/&gt;
+ *         &lt;element name="MessageV2" type="{urn:sap-com:document:sap:rfc:functions}char50"/&gt;
+ *         &lt;element name="MessageV3" type="{urn:sap-com:document:sap:rfc:functions}char50"/&gt;
+ *         &lt;element name="MessageV4" type="{urn:sap-com:document:sap:rfc:functions}char50"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

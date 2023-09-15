@@ -1,20 +1,12 @@
-buildscript {
-	repositories {
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-		classpath group: "gradle.plugin.cz.swsamuraj", name: "gradle-jaxws-plugin", version: "0.6.1"
-	}
+plugins {
+	id("com.github.bjornvester.wsdl2java") version "1.2"
 }
-
-apply plugin: "cz.swsamuraj.jaxws"
 
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 	compileInclude 'com.sun.activation:jakarta.activation:1.2.2'
 	compileInclude group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.4'
+	compileOnly group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version: '3.4.10'
 	compileOnly 'javax.xml.bind:jaxb-api:2.3.1'
 	compileOnly 'javax.xml.ws:jaxws-api:2.3.1'
 	compileOnly 'javax.jws:javax.jws-api:1.1'
@@ -24,13 +16,8 @@ dependencies {
 
 }
 
-jar {
-	manifest.attributes(
-			'Multi-Release': 'false',
-	)
-}
 
-jaxws {
-	wsdlDir = 'src/main/resources/META-INF/wsdl'
-	generatedSources = 'soap/service/src/main/java/'
+wsdl2java {
+	includes = ['META-INF/wsdl/jornadaNomina.wsdl']
+	generatedSourceDir =  file("$projectDir/src/main/generated")
 }

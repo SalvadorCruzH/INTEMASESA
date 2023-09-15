@@ -1,5 +1,5 @@
 
-package com.sap.document.sap.soap.functions.mc_style;
+package es.emasesa.intranet.jornada.nomina.generated;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

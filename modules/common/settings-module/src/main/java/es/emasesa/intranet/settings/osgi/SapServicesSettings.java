@@ -11,7 +11,7 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
         immediate = true,
         configurationPid = "es.emasesa.intranet.settings.configuration.SapServicesConfiguration",
-        service = BaseSettings.class
+        service = SapServicesSettings.class
 )
 public class SapServicesSettings {
 

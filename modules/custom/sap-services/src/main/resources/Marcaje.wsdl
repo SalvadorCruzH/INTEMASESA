@@ -3,7 +3,7 @@
         <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
     </wsdl:documentation>
     <wsp:UsingPolicy wsdl:required="true"/>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_ACT_JORNADA_NOMINA">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_MARCAJES_HISTORICO_ACT">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -67,7 +67,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_ACT_JORNADA_NOMINA_soap12">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_MARCAJES_HISTORICO_ACT_soap12">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -131,7 +131,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="IF__Z_WS_PE_ACT_JORNADA_NOMINA">
+    <wsp:Policy wsu:Id="IF__Z_WS_PE_MARCAJES_HISTORICO_ACT">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
@@ -143,7 +143,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="OP__ZPeActJornadaNomina">
+    <wsp:Policy wsu:Id="OP__ZPeMarcajesHistoricoActual">
         <wsp:ExactlyOne>
             <wsp:All>
                 <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
@@ -154,119 +154,31 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsdl:types>
-        <xsd:schema xmlns:n0="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
-            <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
-            <xsd:simpleType name="char4">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="4"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="decimal7.2">
-                <xsd:restriction base="xsd:decimal">
-                    <xsd:totalDigits value="7"/>
-                    <xsd:fractionDigits value="2"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:complexType name="ZpeStActJornadaNomina">
-                <xsd:sequence>
-                    <xsd:element name="Pernr" type="n0:numeric8"/>
-                    <xsd:element name="FechaInicio" type="n0:date10"/>
-                    <xsd:element name="Iban" type="n0:char34"/>
-                    <xsd:element name="IrpfSolicitado" type="n0:decimal4.2"/>
-                    <xsd:element name="HeInicio" type="n0:time"/>
-                    <xsd:element name="HeFin" type="n0:time"/>
-                    <xsd:element name="HeTipoRetribucion" type="n0:char1"/>
-                    <xsd:element name="PlusCcnomina" type="n0:char4"/>
-                    <xsd:element name="PlusUnidades" type="tns:decimal7.2"/>
-                    <xsd:element name="MarcajeHora" type="n0:time"/>
-                    <xsd:element name="MarcajeMotivo" type="tns:char4"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:element name="Return">
-            <xsd:complexType name="Bapireturn1">
-                <xsd:sequence>
-                    <xsd:element name="Type" type="n0:char1"/>
-                    <xsd:element name="Id" type="n0:char20"/>
-                    <xsd:element name="Number" type="n0:numeric3"/>
-                    <xsd:element name="Message" type="n0:char220"/>
-                    <xsd:element name="LogNo" type="n0:char20"/>
-                    <xsd:element name="LogMsgNo" type="n0:numeric6"/>
-                    <xsd:element name="MessageV1" type="n0:char50"/>
-                    <xsd:element name="MessageV2" type="n0:char50"/>
-                    <xsd:element name="MessageV3" type="n0:char50"/>
-                    <xsd:element name="MessageV4" type="n0:char50"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ZPeActJornadaNomina">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="TEmpleados" type="tns:ZpeStActJornadaNomina"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ZPeActJornadaNominaResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element ref="tns:Return"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:schema>
-        <xsd:schema xmlns:tns="urn:sap-com:document:sap:rfc:functions" xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
-            <xsd:import namespace="urn:sap-com:document:sap:soap:functions:mc-style"/>
+        <xsd:schema xmlns:tns="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="1"/>
                 </xsd:restriction>
             </xsd:simpleType>
-            <xsd:simpleType name="char20">
+            <xsd:simpleType name="char12">
                 <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="20"/>
+                    <xsd:maxLength value="12"/>
                 </xsd:restriction>
             </xsd:simpleType>
-            <xsd:simpleType name="char220">
+            <xsd:simpleType name="char15">
                 <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="220"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char34">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="34"/>
+                    <xsd:maxLength value="15"/>
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="char4">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="4"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char50">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="50"/>
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="date10">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="10"/>
                     <xsd:pattern value="\d\d\d\d-\d\d-\d\d"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="decimal4.2">
-                <xsd:restriction base="xsd:decimal">
-                    <xsd:totalDigits value="4"/>
-                    <xsd:fractionDigits value="2"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="numeric3">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="3"/>
-                    <xsd:pattern value="\d*"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="numeric6">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="6"/>
-                    <xsd:pattern value="\d*"/>
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="numeric8">
@@ -281,32 +193,70 @@
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:schema>
+        <xsd:schema xmlns:n0="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
+            <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
+            <xsd:complexType name="ZpeStMarcajesHistoricoActu">
+                <xsd:sequence>
+                    <xsd:element name="Pernr" type="n0:numeric8"/>
+                    <xsd:element name="Fecha" type="n0:date10"/>
+                    <xsd:element name="Ent1" type="n0:char15"/>
+                    <xsd:element name="Sal1" type="n0:char15"/>
+                    <xsd:element name="Ent2" type="n0:char15"/>
+                    <xsd:element name="Sal2" type="n0:char15"/>
+                    <xsd:element name="Ent3" type="n0:char15"/>
+                    <xsd:element name="Sal3" type="n0:char15"/>
+                    <xsd:element name="Ent4" type="n0:char15"/>
+                    <xsd:element name="Sal4" type="n0:char15"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStMarcajesHistoricoActu">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStMarcajesHistoricoActu" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ZPeMarcajesHistoricoActual">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="FechaFin" type="n0:date10" minOccurs="0"/>
+                        <xsd:element name="FechaInicio" type="n0:date10" minOccurs="0"/>
+                        <xsd:element name="Pernr" type="n0:numeric8" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ZPeMarcajesHistoricoActualResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="TEmpleados" type="tns:TableOfZpeStMarcajesHistoricoActu"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="ZPeActJornadaNomina">
-        <wsdl:part name="parameters" element="tns:ZPeActJornadaNomina"/>
+    <wsdl:message name="ZPeMarcajesHistoricoActual">
+        <wsdl:part name="parameters" element="tns:ZPeMarcajesHistoricoActual"/>
     </wsdl:message>
-    <wsdl:message name="ZPeActJornadaNominaResponse">
-        <wsdl:part name="parameter" element="tns:ZPeActJornadaNominaResponse"/>
+    <wsdl:message name="ZPeMarcajesHistoricoActualResponse">
+        <wsdl:part name="parameter" element="tns:ZPeMarcajesHistoricoActualResponse"/>
     </wsdl:message>
-    <wsdl:portType name="Z_WS_PE_ACT_JORNADA_NOMINA">
+    <wsdl:portType name="Z_WS_PE_MARCAJES_HISTORICO_ACT">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#IF__Z_WS_PE_ACT_JORNADA_NOMINA"/>
+            <wsp:PolicyReference URI="#IF__Z_WS_PE_MARCAJES_HISTORICO_ACT"/>
         </wsp:Policy>
-        <wsdl:operation name="ZPeActJornadaNomina">
+        <wsdl:operation name="ZPeMarcajesHistoricoActual">
             <wsp:Policy>
-                <wsp:PolicyReference URI="#OP__ZPeActJornadaNomina"/>
+                <wsp:PolicyReference URI="#OP__ZPeMarcajesHistoricoActual"/>
             </wsp:Policy>
-            <wsdl:input message="tns:ZPeActJornadaNomina"/>
-            <wsdl:output message="tns:ZPeActJornadaNominaResponse"/>
+            <wsdl:input message="tns:ZPeMarcajesHistoricoActual"/>
+            <wsdl:output message="tns:ZPeMarcajesHistoricoActualResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="Z_WS_PE_ACT_JORNADA_NOMINA" type="tns:Z_WS_PE_ACT_JORNADA_NOMINA">
+    <wsdl:binding name="Z_WS_PE_MARCAJES_HISTORICO_ACT" type="tns:Z_WS_PE_MARCAJES_HISTORICO_ACT">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_ACT_JORNADA_NOMINA"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_MARCAJES_HISTORICO_ACT"/>
         </wsp:Policy>
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeActJornadaNomina">
-            <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_ACT_JORNADA_NOMINA:ZPeActJornadaNominaRequest" style="document"/>
+        <wsdl:operation name="ZPeMarcajesHistoricoActual">
+            <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_MARCAJES_HISTORICO_ACT:ZPeMarcajesHistoricoActualRequest" style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -315,13 +265,13 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Z_WS_PE_ACT_JORNADA_NOMINA_soap12" type="tns:Z_WS_PE_ACT_JORNADA_NOMINA">
+    <wsdl:binding name="Z_WS_PE_MARCAJES_HISTORICO_ACT_soap12" type="tns:Z_WS_PE_MARCAJES_HISTORICO_ACT">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_ACT_JORNADA_NOMINA_soap12"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_MARCAJES_HISTORICO_ACT_soap12"/>
         </wsp:Policy>
         <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeActJornadaNomina">
-            <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_ACT_JORNADA_NOMINA:ZPeActJornadaNominaRequest" style="document"/>
+        <wsdl:operation name="ZPeMarcajesHistoricoActual">
+            <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_MARCAJES_HISTORICO_ACT:ZPeMarcajesHistoricoActualRequest" style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
             </wsdl:input>
@@ -330,12 +280,12 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="Z_WS_PE_ACT_JORNADA_NOMINA">
-        <wsdl:port name="Z_WS_PE_ACT_JORNADA_NOMINA" binding="tns:Z_WS_PE_ACT_JORNADA_NOMINA">
-            <soap:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_act_jornada_nomina/010/z_ws_pe_act_jornada_nomina/z_ws_pe_act_jornada_nomina"/>
+    <wsdl:service name="Z_WS_PE_MARCAJES_HISTORICO_ACT">
+        <wsdl:port name="Z_WS_PE_MARCAJES_HISTORICO_ACT" binding="tns:Z_WS_PE_MARCAJES_HISTORICO_ACT">
+            <soap:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_marcajes_historico_act/010/z_ws_pe_marcajes_historico_act/z_ws_pe_marcajes_historico_act"/>
         </wsdl:port>
-        <wsdl:port name="Z_WS_PE_ACT_JORNADA_NOMINA_soap12" binding="tns:Z_WS_PE_ACT_JORNADA_NOMINA_soap12">
-            <wsoap12:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_act_jornada_nomina/010/z_ws_pe_act_jornada_nomina/z_ws_pe_act_jornada_nomina"/>
+        <wsdl:port name="Z_WS_PE_MARCAJES_HISTORICO_ACT_soap12" binding="tns:Z_WS_PE_MARCAJES_HISTORICO_ACT_soap12">
+            <wsoap12:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_marcajes_historico_act/010/z_ws_pe_marcajes_historico_act/z_ws_pe_marcajes_historico_act"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

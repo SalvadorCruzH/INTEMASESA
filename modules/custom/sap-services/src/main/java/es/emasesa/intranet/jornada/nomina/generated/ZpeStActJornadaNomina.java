@@ -1,5 +1,5 @@
 
-package com.sap.document.sap.soap.functions.mc_style;
+package es.emasesa.intranet.jornada.nomina.generated;
 
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,25 +16,25 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="ZpeStActJornadaNomina">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Pernr" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/>
- *         &lt;element name="FechaInicio" type="{urn:sap-com:document:sap:rfc:functions}date10"/>
- *         &lt;element name="Iban" type="{urn:sap-com:document:sap:rfc:functions}char34"/>
- *         &lt;element name="IrpfSolicitado" type="{urn:sap-com:document:sap:rfc:functions}decimal4.2"/>
- *         &lt;element name="HeInicio" type="{urn:sap-com:document:sap:rfc:functions}time"/>
- *         &lt;element name="HeFin" type="{urn:sap-com:document:sap:rfc:functions}time"/>
- *         &lt;element name="HeTipoRetribucion" type="{urn:sap-com:document:sap:rfc:functions}char1"/>
- *         &lt;element name="PlusCcnomina" type="{urn:sap-com:document:sap:rfc:functions}char4"/>
- *         &lt;element name="PlusUnidades" type="{urn:sap-com:document:sap:soap:functions:mc-style}decimal7.2"/>
- *         &lt;element name="MarcajeHora" type="{urn:sap-com:document:sap:rfc:functions}time"/>
- *         &lt;element name="MarcajeMotivo" type="{urn:sap-com:document:sap:soap:functions:mc-style}char4"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="ZpeStActJornadaNomina"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="Pernr" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
+ *         &lt;element name="FechaInicio" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
+ *         &lt;element name="Iban" type="{urn:sap-com:document:sap:rfc:functions}char34"/&gt;
+ *         &lt;element name="IrpfSolicitado" type="{urn:sap-com:document:sap:rfc:functions}decimal4.2"/&gt;
+ *         &lt;element name="HeInicio" type="{urn:sap-com:document:sap:rfc:functions}time"/&gt;
+ *         &lt;element name="HeFin" type="{urn:sap-com:document:sap:rfc:functions}time"/&gt;
+ *         &lt;element name="HeTipoRetribucion" type="{urn:sap-com:document:sap:rfc:functions}char1"/&gt;
+ *         &lt;element name="PlusCcnomina" type="{urn:sap-com:document:sap:rfc:functions}char4"/&gt;
+ *         &lt;element name="PlusUnidades" type="{urn:sap-com:document:sap:soap:functions:mc-style}decimal7.2"/&gt;
+ *         &lt;element name="MarcajeHora" type="{urn:sap-com:document:sap:rfc:functions}time"/&gt;
+ *         &lt;element name="MarcajeMotivo" type="{urn:sap-com:document:sap:soap:functions:mc-style}char4"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
