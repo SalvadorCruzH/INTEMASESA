@@ -1,3 +1,5 @@
+<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")/>
+
 <div class="boletin">
     <div class="boletin__inner">
         <#if (boletinHeaderImage.getData())?? && boletinHeaderImage.getData() != "">
@@ -22,14 +24,22 @@
                 </div>
             </#if>
             <#if boletinNotaPrensa.getSiblings()?has_content>
-                <#list boletinNotaPrensa.getSiblings() as cur_boletinNotaPrensa>
-                    <#assign webContentData = jsonFactoryUtil.createJSONObject(cur_boletinNotaPrensa.getData()) />
-                    <#if webContentData?? && webContentData.title??>
-                        <a href="${cur_boletinNotaPrensa.getFriendlyUrl()}">
-                            ${webContentData.title}
-                        </a>
-                    </#if>
-                </#list>
+                <div class="boletin__related">
+                    <#list boletinNotaPrensa.getSiblings() as cur_boletinNotaPrensa>
+                        <#assign webContentData = jsonFactoryUtil.createJSONObject(cur_boletinNotaPrensa.getData()) />
+                        <#assign relatedAssetEntry = assetEntryLocalService.getEntry(webContentData.assetEntryId?number) />
+                        <#assign assetRenderer = relatedAssetEntry.getAssetRenderer() journalArticle = assetRenderer.getAssetObject() />
+
+                        <div class="boletin__related__item">
+                            <@liferay_journal["journal-article"]
+                                articleId=journalArticle.getArticleId()
+                                ddmTemplateKey="EMA-ITEM-RELACIONADO" <#--Detalle app-->
+                                showTitle=false
+                                groupId=journalArticle.getGroupId()
+                            />
+                        </div>
+                    </#list>
+                </div>
             </#if>
         </div>
     </div>

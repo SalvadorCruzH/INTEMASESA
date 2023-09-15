@@ -29,4 +29,31 @@
             }
         }
     }
+    &__related {
+        &__item-img {
+            display: none;
+        }
+        &__item {
+            margin-bottom: 15px;
+            &__header {
+                min-height: 150px;
+                margin-bottom: 15px;
+                background-position: center;
+                background-size: cover;
+            }
+        }
+        @include media-breakpoint-up(md) {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            &__item {
+                &--2col {
+                    grid-column: span 2;
+                }
+                &--3col {
+                    grid-column: 1 / -1;
+                }
+            }
+        }
+    }
 }

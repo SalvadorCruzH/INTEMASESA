@@ -37,5 +37,18 @@
         "comment": "Plantilla para el envío de boletines",
         "uuid": "f99006b0-6adc-17a1-3d81-d2122728807e",
         "structureUuid": "082198cd-c974-7965-1cad-e3f06576cff9"
+    },
+    {
+        "screenName": "admin",
+        "name": "EMA - Item relacionado",
+        "templateKey": "EMA-ITEM-RELACIONADO",
+        "structureKey": "EMA-NOTICIA",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "item-relacionado.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para los contenidos relacionados al final del bloetín",
+        "uuid": "c60eb09c-b06e-39b1-4107-c9475db2d5a7",
+        "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     }
 ]
