@@ -13,6 +13,7 @@
 	<link href="${css_folder}/fontawesome/css/fontawesome.css" rel="stylesheet">
 	<link href="${css_folder}/fontawesome/css/brands.css" rel="stylesheet">
 	<link href="${css_folder}/fontawesome/css/solid.css" rel="stylesheet">
+	<link href="${css_folder}/fontawesome/css/regular.css" rel="stylesheet">
 	<script src="${javascript_folder}/Pagination.js" data-senna-track="permanent"></script>
 </head>
 

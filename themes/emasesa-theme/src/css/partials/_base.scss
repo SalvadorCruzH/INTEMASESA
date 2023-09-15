@@ -2,6 +2,14 @@
   position: relative;
   @include font_base;
   color: $color-text;
+  .container,
+  .container-fluid-max-xl {
+    padding-left: m-rem(15px);
+    padding-right: m-rem(15px);
+    @media(min-width: 1400px) {
+      max-width: 1280px;
+    }
+  }
 
     h1,
     h2,
@@ -78,7 +86,8 @@
         @include font_base;
         font-size: m-rem(18px);
     }
-    .fa-solid {
+    .fa-solid,
+    .fa-regular {
       color: $color-text;
     }
 }

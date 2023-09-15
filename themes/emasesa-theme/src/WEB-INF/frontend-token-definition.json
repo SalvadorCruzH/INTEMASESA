@@ -1,0 +1,94 @@
+{
+	"frontendTokenCategories": [
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#3366CC",
+							"editorType": "ColorPicker",
+							"label": "Primary color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary-color"
+								}
+							],
+							"name": "primaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#A8C855",
+							"editorType": "ColorPicker",
+							"label": "Secondary color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "secondary-color"
+								}
+							],
+							"name": "secondaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#000000",
+							"editorType": "ColorPicker",
+							"label": "Dark color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "dark-color"
+								}
+							],
+							"name": "darkColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#D6E7F4",
+							"editorType": "ColorPicker",
+							"label": "Light blue color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "light-blue-color"
+								}
+							],
+							"name": "lightBlueColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#d9e4c6",
+							"editorType": "ColorPicker",
+							"label": "Light green color",
+							"mappings": [
+								{
+								"type": "cssVariable",
+								"value": "light-green-color"
+								}
+							],
+							"name": "lightGreenColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#EEF1F7",
+							"editorType": "ColorPicker",
+							"label": "Grey bg color",
+							"mappings": [
+								{
+								"type": "cssVariable",
+								"value": "grey-color"
+								}
+							],
+							"name": "greyColor",
+							"type": "String"
+						}
+					],
+					"label": "Brand colors",
+					"name": "brandColors"
+				}
+			],
+			"label": "Color system",
+			"name": "colorSystem"
+		}
+	]
+}

@@ -2,7 +2,7 @@
 	<div class="i-footer__wrapper container-fluid">
 		<div class="i-footer__logo m-link-accessible-wrapper">
 			<img class="i-footer__img" src="${images_folder}/logos/logo-emasesa-white.svg" alt="Logotipo Emasesa">
-			<p class="i-logo__name i-footer__name">personas</p>
+			<p class="i-logo__name i-footer__name"><@liferay.language key='es.emasesa.intranet.common.personas'/></p>
        	</div>
 		<div class="i-footer__menuWrapper">
 			<div class="i-footer__menu">

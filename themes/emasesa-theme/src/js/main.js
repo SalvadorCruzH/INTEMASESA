@@ -2,6 +2,7 @@
 $(function() {
     menuFuntion.init();
 	menuDesktop.init();
+	changeBtnAdminTareas.init();
 
 });
 
@@ -82,13 +83,10 @@ $(function() {
 		}
 
 		window.addEventListener('click', function(e){
-			console.log("estoy haciendo click");
 			const menu = document.querySelector("#i-menuMobile");
-			console.log(menu);
 			if (menu && !menu.classList.contains("hidden") && !menu.contains(e.target)){
 				if (document.querySelector("#i-menuMobile__closeButton"))
 					document.querySelector("#i-menuMobile__closeButton").click();
-					console.log("estoy haciendo click fuera del menu");
 			}
 		});
 	}
@@ -207,4 +205,30 @@ var menuDesktop = (function () {
 	return {
 		init: _init,
 	};
+})();
+
+
+
+
+var changeBtnAdminTareas = (function () {
+	var _btnAdminTask = document.querySelector('#i-btnAdminTareas');
+
+	var _btnAdminToggle = function() {
+		_btnAdminTask.addEventListener("click", function () {
+			_btnAdminTask.classList.toggle('open');
+			// llamar al portlet admin tareas
+
+		});
+	}
+
+
+
+	var _init = function () {
+        _btnAdminToggle(); 
+	}
+
+	return {
+		init: _init,
+	};
+
 })();
