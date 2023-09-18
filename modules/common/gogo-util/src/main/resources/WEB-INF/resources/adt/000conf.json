@@ -1,14 +1,26 @@
 [
     {
         "screenName": "admin",
-        "name":"EMA - EJEMPLO ADT a borrar",
+        "name":"EMA - administradorDocumentos",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",
         "companyWebId":"liferay.com",
         "groupFriendlyUrl":"/global",
-        "templateKey":"EMA-EJEMPLO-ADT-A-BORRAR",
-        "templateFile":"applications.ftl",
-        "comment": "Publicador para las cajas enlace",
-        "uuid":"4c95a3e3-e32c-6092-c56b-a3138797b996"
+        "templateKey":"EMA-ADMINISTRADORDOCUMENTOS",
+        "templateFile":"administradorDocumentos.ftl",
+        "comment": "Publicador de RRHH",
+        "uuid":"e49b87f4-202b-46ab-45a0-5ab4b5aa5331"
+    },
+    {
+        "screenName": "admin",
+        "name":"EMA - Listado noticias Home",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-NOTICIAS-HOME",
+        "templateFile":"noticias-listado.ftl",
+        "comment": "Listado de noticias de la home.",
+        "uuid":"6f21456d-19a9-25b2-164c-9ea3f5552868"
     }
 ]

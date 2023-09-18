@@ -7,7 +7,7 @@ Export-Package: \
     juntadeandalucia.cice.pfirma.*;
 Import-Package:\
 	org.apache.cxf.jaxws.spi,\
-	*
+	*;resolution:=optional,
 
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -noimportjava: true

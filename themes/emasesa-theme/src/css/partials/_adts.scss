@@ -1,0 +1,129 @@
+.i-mainWrapper {
+    .ema-newsADT {
+        &__list {
+            display: grid;
+            grid-template-columns: repeat(3, m-rem(297px));
+            grid-gap: m-rem(25px);
+            overflow-x: scroll;
+            @include media-breakpoint-up(md) {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: m-rem(55px);
+            }
+            @include media-breakpoint-up(lg) {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: m-rem(55px);
+                overflow-x: initial;
+            }
+        }
+        &__li {
+            > div {
+                height: 100%;
+            }
+        }
+        .ema-noticia-tarjeta {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            
+            &__imgContainer {
+            }
+            &__img {
+                height: m-rem(161px);
+                width: 100%;
+                max-width: 100%;
+                border-radius: m-rem(25px) m-rem(25px) 0 0;
+                object-fit: cover;
+                @include media-breakpoint-up(md) {
+                    height: m-rem(225px);
+                }
+            }
+            &__contenido {
+                background-color: white;
+                padding: m-rem(17px) 0 2rem;
+                border-radius: 0 0 m-rem(25px) m-rem(25px);
+                height: 100%
+            }
+            &__categoriasContainer {
+                
+            }
+            &__categorias {
+                @include font_base;
+                @include media-breakpoint-up(md) {
+                    font-size: m-rem(18px);
+                    line-height: 1.5rem;
+                    color: #777;
+                    text-transform: uppercase;
+                }
+            }
+            &__categoria {
+                @include font_base;
+                font-size: m-rem(18px);
+                color: $color-text;
+                background: $color-tertiary;
+                width: fit-content;
+                padding: 0.5rem;
+            }
+            &__wrapperTexts {
+                padding: 2rem 1rem 0 1.5rem;
+                @include media-breakpoint-up(md) {
+                }
+                @include media-breakpoint-up(xl) {
+                    padding: 2rem 1rem 0 1.5rem;
+                }
+            }
+            &__fecha {
+                @include font_base;
+                font-size: m-rem(18px);
+                color: $color-text;
+                background: $color-tertiary;
+                width: fit-content;
+                padding: 0.5rem;
+                @include media-breakpoint-up(md) {
+                    font-size: m-rem(18px);
+                    background: transparent;
+                    width: fit-content;
+                    padding: 0;
+                }
+            }
+            &__titulo {
+                @include font_base-bold;
+                font-size: m-rem(20px);
+                line-height: m-rem(32px);
+                color: $color-text;
+                margin-bottom: m-rem(8px);
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                white-space: normal;
+                @include media-breakpoint-up(md) {
+                    // margin-bottom: m-rem(10px);
+                    // font-size: m-rem(24px);
+                    // line-height: m-rem(48px);
+                    // color: #000000;
+                    // -webkit-line-clamp: 2;
+                }
+            }
+            &__subtitulo {
+                @include font_base;
+                font-size: m-rem(18px);
+                line-height: m-rem(24px);
+                color: $color-text;
+                margin: 0;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 6;
+                -webkit-box-orient: vertical;
+                white-space: normal;
+                @include media-breakpoint-up(md) {
+                    -webkit-line-clamp: 4;
+                }
+            }
+        }
+    }
+}
