@@ -31,6 +31,7 @@
             </#if>
 
             <#if notasPrensa.getSiblings()?has_content>
+                <h3 class="boletin__related__title">Más actualidad</h3>
                 <div class="boletin__related">
                     <#list notasPrensa.getSiblings() as cur_notasPrensa>
                         <#assign webContentData = jsonFactoryUtil.createJSONObject(cur_notasPrensa.boletinNotaPrensa.getData()) />
