@@ -27,8 +27,9 @@
         </#if>
     </div>
     <div class="ema-noticia-tarjeta__contenido">
+        <#if categorias?has_content>
         <div class="ema-noticia-tarjeta__categoriasContainer">
-            <p class="ema-noticia-tarjeta__categorias">
+            <p class="ema-noticia-tarjeta__categorias m-listBaseNoStyles ">
                 <#list categorias as category>
                     <span class="ema-noticia-tarjeta__categoria">
                         ${category.getName()}<#if category?index+1 < categorias?size>,</#if>
@@ -36,9 +37,12 @@
                 </#list>
             </p>
         </div>
+        </#if>
         <div class="ema-noticia-tarjeta__wrapperTexts">
             <p class="ema-noticia-tarjeta__fecha">${displaydate?string["dd"]} de ${displaydate?string["MMMM"]} de ${displaydate?string["yyyy"]}</p>
-            <h3 class="ema-noticia-tarjeta__titulo">${title.getData()}</h3>
+            <h3 class="ema-noticia-tarjeta__titulo">
+                <a class="ema-noticia-tarjeta__link" href="${viewURL}">${title.getData()}</a>
+            </h3>
             <h4 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h4>
         </div>
     </div>
