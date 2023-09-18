@@ -8,7 +8,7 @@
 	</div>
 </#if>
 <#if (title.getData())??>
-	<h3 class="boletin__title-related"><a href="${friendlyURL}" title="${title.getData()}">${title.getData()}</a></h3>
+	<h3 class="boletin__title-related"><a href="${friendlyURL}" title="${title.getData()}">${title.getData()?truncate(100, '&hellip;')}</a></h3>
 </#if>
 <#if (entradilla.getData())??>
 	<div class="boletin__related__date">

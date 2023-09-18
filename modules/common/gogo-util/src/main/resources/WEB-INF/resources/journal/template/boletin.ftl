@@ -1,6 +1,12 @@
-<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")/>
+<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService") />
+<#assign theme_display = themeDisplay />
+<#assign images_folder = theme_display.getPathThemeImages() />
 
 <div class="boletin">
+    <header class="boletin__header">
+        <img class="boletin__header__logo" src="${images_folder}/logos/logo-emasesa-color.svg" alt="" />
+        <h2 class="boletin__header__owner"><@liferay.language key='es.emasesa.intranet.common.personas'/></h2>
+    </header>
     <div class="boletin__inner">
         <#if (boletinHeaderImage.getData())?? && boletinHeaderImage.getData() != "">
             <div class="boletin__image-wrapper">
@@ -23,17 +29,18 @@
                     ${boletinIndice.getData()}
                 </div>
             </#if>
-            <#if boletinNotaPrensa.getSiblings()?has_content>
+
+            <#if notasPrensa.getSiblings()?has_content>
                 <div class="boletin__related">
-                    <#list boletinNotaPrensa.getSiblings() as cur_boletinNotaPrensa>
-                        <#assign webContentData = jsonFactoryUtil.createJSONObject(cur_boletinNotaPrensa.getData()) />
+                    <#list notasPrensa.getSiblings() as cur_notasPrensa>
+                        <#assign webContentData = jsonFactoryUtil.createJSONObject(cur_notasPrensa.boletinNotaPrensa.getData()) />
                         <#assign relatedAssetEntry = assetEntryLocalService.getEntry(webContentData.assetEntryId?number) />
                         <#assign assetRenderer = relatedAssetEntry.getAssetRenderer() journalArticle = assetRenderer.getAssetObject() />
 
-                        <div class="boletin__related__item">
+                        <div class="boletin__related__item <#if (cur_notasPrensa.columnas.getData())??>${cur_notasPrensa.columnas.getData()}</#if>">
                             <@liferay_journal["journal-article"]
                                 articleId=journalArticle.getArticleId()
-                                ddmTemplateKey="EMA-ITEM-RELACIONADO" <#--Detalle app-->
+                                ddmTemplateKey="EMA-ITEM-RELACIONADO"
                                 showTitle=false
                                 groupId=journalArticle.getGroupId()
                             />
