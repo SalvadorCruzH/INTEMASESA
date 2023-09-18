@@ -8,5 +8,15 @@
     "structureFile":"noticia.json",
     "comment": "Estructura para Noticia",
     "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+  },
+  {
+    "screenName": "admin",
+    "name":"EMA - banner 4 buttons",
+    "companyWebId":"liferay.com",
+    "groupFriendlyUrl":"/global",
+    "structureKey":"EMA-BANNER-4BUTTONS",
+    "structureFile":"banner-4buttons.json",
+    "comment": "Estructura para banner de 4 botones",
+    "uuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
   }
 ]
