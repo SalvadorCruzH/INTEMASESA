@@ -13,14 +13,14 @@
     },
     {
         "screenName": "admin",
-        "name":"EMA - Listado noticias Home",
+        "name":"EMA - Listado 3 noticias Home",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",
         "companyWebId":"liferay.com",
         "groupFriendlyUrl":"/global",
         "templateKey":"EMA-NOTICIAS-HOME",
         "templateFile":"noticias-listado.ftl",
-        "comment": "Listado de noticias de la home.",
+        "comment": "Listado de 3 noticias de la home.",
         "uuid":"6f21456d-19a9-25b2-164c-9ea3f5552868"
     }
 ]
