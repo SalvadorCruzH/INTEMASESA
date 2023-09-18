@@ -1,20 +1,24 @@
 .i-mainWrapper {
     .ema-newsADT {
+        &__li {
+            border-radius: m-rem(25px);
+        }
         &__list {
             display: grid;
             grid-template-columns: repeat(3, m-rem(297px));
             grid-gap: m-rem(25px);
             overflow-x: scroll;
             @include media-breakpoint-up(md) {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: m-rem(55px);
+                grid-template-columns: repeat(3, m-rem(282px));
+                grid-gap: m-rem(32px);
             }
             @include media-breakpoint-up(lg) {
-                display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                grid-gap: m-rem(55px);
                 overflow-x: initial;
+            }
+            @include media-breakpoint-up(xl) {
+                grid-gap: m-rem(55px);
+                
             }
         }
         &__li {
@@ -42,7 +46,7 @@
             }
             &__contenido {
                 background-color: white;
-                padding: m-rem(17px) 0 2rem;
+                padding: 0 0 2rem;
                 border-radius: 0 0 m-rem(25px) m-rem(25px);
                 height: 100%
             }
@@ -51,20 +55,33 @@
             }
             &__categorias {
                 @include font_base;
+                font-size: m-rem(18px);
+                line-height: 1.5rem;
+                color: $color-text;
+                text-transform: uppercase;
+                display: flex;
+                flex-wrap: wrap;
+                background-color: $color-medium-light;
+                padding: 0.5rem 1rem;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                white-space: normal;
                 @include media-breakpoint-up(md) {
-                    font-size: m-rem(18px);
-                    line-height: 1.5rem;
-                    color: #777;
-                    text-transform: uppercase;
+                    
                 }
             }
             &__categoria {
                 @include font_base;
                 font-size: m-rem(18px);
                 color: $color-text;
-                background: $color-tertiary;
+                // background: $color-tertiary;
                 width: fit-content;
-                padding: 0.5rem;
+                padding: 0;
+                padding-right: 0.5rem;
+                line-height: m-rem(40px);
             }
             &__wrapperTexts {
                 padding: 2rem 1rem 0 1.5rem;

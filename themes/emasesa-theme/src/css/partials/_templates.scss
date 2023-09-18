@@ -51,9 +51,7 @@
         }
         &__titulo {
             @include font_base-bold;
-
             margin-bottom: m-rem(16px);
-
             text-overflow: ellipsis;
             overflow: hidden;
             display: -webkit-box;
@@ -67,6 +65,10 @@
                 color: #000000;
                 -webkit-line-clamp: 4;
             }
+        }
+        &__link {
+            color: $color-text;
+            text-decoration: none
         }
         &__subtitulo {
             @include font_base;
