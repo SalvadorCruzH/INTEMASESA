@@ -90,6 +90,18 @@
     .fa-regular {
       color: $color-text;
     }
+  .linkify:hover {
+      cursor: pointer;
+      box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
+  }
+  .linkify.isfocused {
+      outline: 0;
+      box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
+  }
+  .linkify a:focus {
+      outline: none;
+      box-shadow: none !important;
+  }
 }
 
   

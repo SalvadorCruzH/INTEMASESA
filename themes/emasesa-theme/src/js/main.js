@@ -3,6 +3,7 @@ $(function() {
     menuFuntion.init();
 	menuDesktop.init();
 	changeBtnAdminTareas.init();
+	accFeature.init();
 
 });
 
@@ -208,7 +209,9 @@ var menuDesktop = (function () {
 })();
 
 
-
+/**
+ * Open close Portlet admin tareas
+ */
 
 var changeBtnAdminTareas = (function () {
 	var _btnAdminTask = document.querySelector('#i-btnAdminTareas');
@@ -232,3 +235,40 @@ var changeBtnAdminTareas = (function () {
 	};
 
 })();
+
+/**
+ * Link accessible
+ */
+var accFeature = (function () {
+
+	var _linkWrapper = ".m-link-accessible-wrapper";
+
+	var _fixBoxLinks = function(querySelectorVal) {
+	   var boxes = document.querySelectorAll(querySelectorVal);
+	   boxes.forEach(function (box) {
+		  var link = box.querySelector("a");
+		  if (link) {
+			 var url = link.getAttribute("href");
+			 box.addEventListener("click", function () {
+				location.href = url;
+				link.preventDefault;
+			 });
+			 box.classList.add("linkify");
+			 link.addEventListener("focus", function () {
+				box.classList.add("isfocused");
+			 });
+			 link.addEventListener("blur", function () {
+				box.classList.remove("isfocused");
+			 });
+		  }
+	   });
+	}
+	var _init = function () {
+		_fixBoxLinks(_linkWrapper);
+	 };
+ 
+	 return {
+		init: _init,
+		fixBoxLinks: _fixBoxLinks
+	 };
+  })();
