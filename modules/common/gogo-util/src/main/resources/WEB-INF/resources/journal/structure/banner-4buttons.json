@@ -1,0 +1,436 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "es_ES"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
+  "defaultLanguageId": "es_ES",
+  "fields": [
+    {
+      "dataType": "image",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Imagen"
+      },
+      "type": "image",
+      "required": false,
+      "showLabel": true,
+      "indexType": "text",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "repeatable": false,
+      "requiredDescription": true,
+      "name": "Image16099729",
+      "localizable": false,
+      "fieldReference": "imagen",
+      "tip": {
+        "es_ES": ""
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción20981414",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción20981414"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "antetitulo",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "antetítulo"
+      },
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "name": "Text50610096",
+      "localizable": false,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción20981414",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción20981414"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "titulo",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Título"
+      },
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "name": "Text09175415",
+      "localizable": false,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "multiline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción20981414",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción20981414"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "descripcion",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Descripción"
+      },
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "name": "Campo16340712",
+      "localizable": false,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmStructureLayoutId": "",
+      "ddmStructureId": "",
+      "upgradedStructure": false,
+      "readOnly": false,
+      "label": {
+        "es_ES": "Grupo de campos"
+      },
+      "type": "fieldset",
+      "rows": [
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Separator39904401"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Radio61797021"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Text95074501"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Campo26884960"
+              ]
+            }
+          ]
+        }
+      ],
+      "collapsible": false,
+      "required": false,
+      "showLabel": false,
+      "nestedFields": [
+        {
+          "rulesConditionDisabled": true,
+          "dataType": "",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Botón"
+          },
+          "type": "separator",
+          "required": false,
+          "showLabel": true,
+          "repeatable": false,
+          "name": "Separator39904401",
+          "localizable": false,
+          "fieldReference": "boton",
+          "tip": {
+            "es_ES": "Crear  un máximo de 4 botones."
+          },
+          "style": {
+            "es_ES": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Selección de icono"
+          },
+          "type": "radio",
+          "required": false,
+          "showLabel": true,
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "inline": true,
+          "repeatable": false,
+          "name": "Radio61797021",
+          "options": [
+            {
+              "reference": "clipboard",
+              "label": {
+                "es_ES": "Clipboard"
+              },
+              "value": "Opción15138441"
+            },
+            {
+              "reference": "calendar",
+              "label": {
+                "es_ES": "Calendar"
+              },
+              "value": "Opción12817291"
+            },
+            {
+              "reference": "file",
+              "label": {
+                "es_ES": "File"
+              },
+              "value": "Opción89632809"
+            },
+            {
+              "reference": "desktop",
+              "label": {
+                "es_ES": "Desktop"
+              },
+              "value": "Opción83160805"
+            }
+          ],
+          "localizable": false,
+          "nativeField": false,
+          "fieldReference": "seleccionIcono",
+          "tip": {
+            "es_ES": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": false,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción06857977",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción06857977"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "textoBoton",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Texto del botón"
+          },
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "name": "Text95074501",
+          "localizable": false,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": false,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción06857977",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción06857977"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "urlBoton",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Url del botón"
+          },
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "name": "Campo26884960",
+          "localizable": false,
+          "dataSourceType": "manual"
+        }
+      ],
+      "repeatable": true,
+      "name": "Fieldset50811352",
+      "localizable": false,
+      "fieldReference": "conjuntoBoton"
+    }
+  ]
+}

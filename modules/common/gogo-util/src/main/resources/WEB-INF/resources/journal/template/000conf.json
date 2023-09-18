@@ -37,5 +37,18 @@
         "comment": "Plantilla de detalle para Noticia",
         "uuid": "ada16de5-94ff-07af-9dbc-f5885c2ceb33",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+    },
+    {
+        "screenName": "admin",
+        "name":"EMA - banner 4 buttons",
+        "templateKey": "EMA-BANNER-4BUTTONS-TEMPLATE",
+        "structureKey": "EMA-BANNER-4BUTTONS",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "banner-4buttons.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de bunner 4 botones",
+        "uuid": "c9ff7d29-61c9-4b94-c7cc-de16d6cfef4d",
+        "structureUuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
     }
 ]
