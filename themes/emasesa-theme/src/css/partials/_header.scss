@@ -10,6 +10,8 @@
         padding: m-rem(14px) 0 m-rem(10px);
         align-items: center;
         border-bottom: m-rem(1px) solid $color-light-grey;
+        margin-left: auto;
+        margin-right: auto;
         @include media_breakpoint_up(xl) {
             padding: m-rem(27px) m-rem(35px) m-rem(4px);
             border-bottom: none;
