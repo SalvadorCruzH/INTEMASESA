@@ -11,12 +11,13 @@
 
         }
         &__img {
+            height: m-rem(435px);
+            width: 100%;
+            max-width: 100%;
+            border-radius: m-rem(40px);
+            object-fit: cover;
             @include media-breakpoint-up(md) {
-                height: m-rem(435px);
-                width: 100%;
-                max-width: 100%;
-                border-radius: m-rem(40px);
-                object-fit: cover;
+                
             }
         }
         &__contenido {
@@ -40,7 +41,6 @@
         }
         &__fecha {
             @include font_base;
-            
             @include media-breakpoint-up(md) {
                 font-size: m-rem(18px);
                 color: #000000;
@@ -90,7 +90,77 @@
         }
     }
 
-                                    /*  banner-4buttons   */
+    /* Noticia detail */
+    .ema-noticiasDetail {
+        padding: m-rem(53px) 0 m-rem(95px);
+        &__wrapperTitleImg {
+            margin-bottom: 2rem;
+            @include media-breakpoint-up(xl) {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 4rem;
+            } 
+        }
+        &__wrapperTexts,
+        &__wrapperImg {
+            @include media-breakpoint-up(xl) {
+                flex-basis: calc(50% - 3rem);
+            }
+        }
+        &__antetitulo {
+            @include font_base;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .ema-noticia-tarjeta {
+            display: initial;
+            &__categoriasContainer {
+                margin-bottom: 1rem;
+            }
+            &__categorias {
+                width: fit-content;
+                background-color: $color-medium-light;
+                padding: m-rem(2px) m-rem( 10px);
+                flex-wrap: wrap;
+            }
+            &__categoria {
+               color: $color-text;
+            }
+            &__titulo {
+                @include font_base-bold;
+                margin-bottom: m-rem(16px);
+                text-overflow: unset;
+                overflow: unset;
+                display: block;
+                font-size: m-rem(28px);
+                line-height: m-rem(37px);
+                @include media-breakpoint-up(md) {
+                    font-size: m-rem(36px);
+                    line-height: m-rem(48px)
+                }
+            }
+            &__fecha {
+                @include media-breakpoint-up(md) {
+                    background: transparent;
+                }
+            }
+            &__subtitulo {
+                @include font_base;
+                margin-bottom: 1rem;
+                text-overflow: unset;
+                overflow: unset;
+                display: block;
+                font-size: m-rem(24px);
+                line-height: m-rem(32px);
+                @include media-breakpoint-up(md) {
+                    font-size: m-rem(24px);
+                    line-height: m-rem(32px);
+                }
+            }
+
+        }
+    }
+     /*  banner-4buttons   */
 
     .ema-bannerButtons {
         max-width: m-rem(398px);
