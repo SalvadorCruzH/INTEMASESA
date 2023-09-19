@@ -1,0 +1,195 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "es_ES"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
+  "defaultLanguageId": "es_ES",
+  "fields": [
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": true,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción41828425",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción41828425"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "titulo",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Título"
+      },
+      "indexType": "keyword",
+      "visibilityExpression": "",
+      "fieldNamespace": "",
+      "name": "Text01819196",
+      "localizable": false,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "multiline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción33338586",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción33338586"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "descripcion",
+      "tip": {
+        "es_ES": "Solo en caso de los vídeos no tener subtitulos o audios"
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Descripción"
+      },
+      "indexType": "keyword",
+      "visibilityExpression": "",
+      "fieldNamespace": "",
+      "name": "Text60516472",
+      "localizable": false,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "document-library",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Video"
+      },
+      "type": "document_library",
+      "required": false,
+      "showLabel": true,
+      "indexType": "keyword",
+      "visibilityExpression": "",
+      "fieldNamespace": "",
+      "repeatable": false,
+      "allowGuestUsers": false,
+      "name": "DocumentLibrary64907280",
+      "localizable": false,
+      "fieldReference": "video",
+      "tip": {
+        "es_ES": "Campo opcional, prevalece a enlace de video externo."
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción73817595",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción73817595"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "enlaceVideo",
+      "tip": {
+        "es_ES": "campo opcional, prevalece el video subido en el campo anterior."
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Enlace a video externo"
+      },
+      "indexType": "keyword",
+      "visibilityExpression": "",
+      "fieldNamespace": "",
+      "name": "Text62556116",
+      "localizable": false,
+      "dataSourceType": "manual"
+    }
+  ]
+}

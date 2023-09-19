@@ -22,5 +22,17 @@
         "templateFile":"noticias-listado.ftl",
         "comment": "Listado de 3 noticias de la home.",
         "uuid":"6f21456d-19a9-25b2-164c-9ea3f5552868"
+    },
+    {
+        "screenName": "admin",
+        "name":"EMA - Videos Corporativos",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-VIDEOSCORPORATIVOS",
+        "templateFile":"videosCorporativos.ftl",
+        "comment": "Gestion de videos corporativos.",
+        "uuid":"54607fde-5dc4-86b4-8089-cf6e9120ca2c"
     }
 ]

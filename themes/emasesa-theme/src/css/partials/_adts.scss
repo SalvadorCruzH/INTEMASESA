@@ -143,4 +143,115 @@
             }
         }
     }
+
+    .ema-videosCorporativos {
+
+        @include media-breakpoint-up(lg) {
+            margin: 4rem auto;
+            max-width: m-rem(1277px);
+        }
+
+        &__ul {
+            display: grid;
+            list-style: none;
+            justify-items: center;
+            padding: 0;
+            margin: 2rem auto;
+            row-gap: m-rem(25px);
+            column-gap: m-rem(16px);
+            width: fit-content;
+
+            @include media-breakpoint-up(lg) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        &__li {
+            display: flex;
+            flex-direction: column-reverse;
+            text-align: center;
+        }
+
+        &__enlace, &__video {
+            width: 50vw;
+            aspect-ratio: 16/9;
+            border: none;
+            min-width: m-rem(250px);
+
+            @include media-breakpoint-up(lg) {
+                width: 26vw;
+                max-width: m-rem(415px);
+                max-height: m-rem(277px);
+                height: 18vw;
+                object-fit: cover;
+            }
+        }
+
+        &__main {
+            position: relative;
+        }
+
+        &__title {
+            @include font_base-bold;
+            font-size: m-rem(16px) !important;
+            color: black;
+            margin-bottom: 0.5rem;
+
+            @include media-breakpoint-up(md) {
+                font-size: 1.25rem !important;
+                padding: 0 2rem;
+            }
+        }
+
+        &__titleContainer.upload {
+            position: absolute;
+            bottom: 0.4rem;
+            background-color: #010101b8;
+            width: 100%;
+            min-height: m-rem(48px);
+            height: 9vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            @include media-breakpoint-up(md) {
+                height: 6vw;
+                max-height: 90px;
+            }
+
+            .ema-videosCorporativos__title {
+                color: white;
+                margin-bottom: 0;
+            }
+        }
+
+        &__videoContainer {
+            cursor: pointer;
+        }
+
+        &__icon {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 22%;
+            width: 13%;
+
+            .fa-regular.fa-circle-play {
+                color: white !important;
+            }
+
+            .fa-regular.fa-circle-play::before {
+                font-size: m-rem(40px);
+
+                @include media-breakpoint-up(md) {
+                    font-size: m-rem(52px)
+                }
+            }
+        }
+    }
 }
