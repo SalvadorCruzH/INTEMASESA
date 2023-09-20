@@ -325,7 +325,28 @@
         "es_ES": "Campo URL"
       },
       "type": "fieldset",
-      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text94702669\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text50634272\"]}]}]",
+      "rows": [
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Text94702669"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Text50634272"
+              ]
+            }
+          ]
+        }
+      ],
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -474,7 +495,28 @@
         "es_ES": "Imagen Principal"
       },
       "type": "fieldset",
-      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image34625186\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text81494800\"]}]}]",
+      "rows": [
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Image34625186"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Text81494800"
+              ]
+            }
+          ]
+        }
+      ],
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -569,7 +611,28 @@
         "es_ES": "Imagen Izquierda"
       },
       "type": "fieldset",
-      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Campo83391335\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Campo33678966\"]}]}]",
+      "rows": [
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Campo83391335"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Campo33678966"
+              ]
+            }
+          ]
+        }
+      ],
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -664,7 +727,28 @@
         "es_ES": "Video"
       },
       "type": "fieldset",
-      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text04312069\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text10482403\"]}]}]",
+      "rows": [
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Text04312069"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Text10482403"
+              ]
+            }
+          ]
+        }
+      ],
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -791,8 +875,19 @@
         "es_ES": "Galería de Imágenes y videos"
       },
       "type": "fieldset",
-      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image63811982\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text82238770\"]}]}]",
-      "collapsible": false,
+      "rows": [
+        {
+          "columns": [
+            {
+              "size": 12,
+              "fields": [
+                "Image63811982"
+              ]
+            }
+          ]
+        }
+      ],
+      "collapsible": true,
       "required": false,
       "showLabel": true,
       "nestedFields": [
@@ -805,10 +900,10 @@
           "type": "image",
           "required": false,
           "showLabel": true,
-          "indexType": "text",
+          "indexType": "none",
           "fieldNamespace": "",
           "visibilityExpression": "",
-          "repeatable": false,
+          "repeatable": true,
           "requiredDescription": true,
           "name": "Image63811982",
           "localizable": true,
@@ -816,62 +911,9 @@
           "tip": {
             "es_ES": ""
           }
-        },
-        {
-          "labelAtStructureLevel": true,
-          "ddmDataProviderInstanceId": [],
-          "tooltip": {
-            "es_ES": ""
-          },
-          "requireConfirmation": false,
-          "type": "text",
-          "required": false,
-          "showLabel": true,
-          "displayStyle": "singleline",
-          "ddmDataProviderInstanceOutput": [],
-          "repeatable": false,
-          "options": [
-            {
-              "reference": "Opción58095723",
-              "label": {
-                "es_ES": "Opción"
-              },
-              "value": "Opción58095723"
-            }
-          ],
-          "nativeField": false,
-          "confirmationLabel": {
-            "es_ES": ""
-          },
-          "fieldReference": "pieFotoGaleria",
-          "tip": {
-            "es_ES": ""
-          },
-          "placeholder": {
-            "es_ES": ""
-          },
-          "direction": [
-            "vertical"
-          ],
-          "confirmationErrorMessage": {
-            "es_ES": ""
-          },
-          "hideField": false,
-          "autocomplete": false,
-          "dataType": "string",
-          "readOnly": false,
-          "label": {
-            "es_ES": "Pie de Foto"
-          },
-          "indexType": "keyword",
-          "fieldNamespace": "",
-          "visibilityExpression": "",
-          "name": "Text82238770",
-          "localizable": true,
-          "dataSourceType": "manual"
         }
       ],
-      "repeatable": true,
+      "repeatable": false,
       "name": "Fieldset98825031",
       "localizable": false,
       "fieldReference": "galeria"
