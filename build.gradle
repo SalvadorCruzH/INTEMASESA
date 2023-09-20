@@ -11,6 +11,10 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'distribution'
+}
+
 subprojects { subproject ->
 	apply plugin: "io.spring.dependency-management"
 	plugins.withId("java") {
@@ -20,14 +24,14 @@ subprojects { subproject ->
 	buildscript {
 		repositories {
 			maven {
-				url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+				url "https://slmaven.indra.es/nexus/repository/public/"
 			}
 		}
 	}
 
 	repositories {
 		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url "https://slmaven.indra.es/nexus/repository/public/"
 		}
 	}
 
@@ -48,3 +52,36 @@ node {
 }
 
 apply plugin: "org.sonarqube"
+
+
+def env = System.getenv("enviroment")
+
+distributions {
+	main {
+		distributionBaseName = 'portalempleado'
+		contents {
+			into('deploy/') {
+				from 'bundles/deploy'
+			}
+			into('osgi/modules') {
+				from 'bundles/osgi/modules'
+			}
+			into('osgi/configs') {
+				from 'configs/common/osgi/configs'
+			}
+			into('osgi/configs') {
+				from 'configs/'+env+'/osgi/configs'
+			}
+			into('.') {
+				from 'configs/common/portal-setup-wizard.properties'
+			}
+			into('.') {
+				from 'configs/'+env+'/portal-emasesa.properties'
+			}
+			into('tomcat/webapps/ROOT/WEB-INF/shielded-container-lib') {
+				from 'shielded-lib'
+			}
+		}
+
+	}
+}
