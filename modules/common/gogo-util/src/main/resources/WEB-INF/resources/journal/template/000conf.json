@@ -63,18 +63,5 @@
         "comment": "Plantilla de bunner 4 botones",
         "uuid": "c9ff7d29-61c9-4b94-c7cc-de16d6cfef4d",
         "structureUuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
-    },
-    {
-        "screenName": "admin",
-        "name":"EMA - Carrusel Slider",
-        "templateKey": "EMA-CARRUSEL-SLIDER-TEMPLATE",
-        "structureKey": "EMA-CARRUSEL-SLIDER",
-        "companyWebId": "liferay.com",
-        "groupFriendlyUrl": "/global",
-        "templateFile": "carrusel-slider.ftl",
-        "cacheable": true,
-        "comment": "Plantilla del Carrusel Slider",
-        "uuid": "21f48df3-5a66-0830-8302-6395d5159a99",
-        "structureUuid": "55a81d81-0eea-bbca-7f6c-d840167da8a4"
     }
 ]

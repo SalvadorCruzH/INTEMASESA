@@ -28,15 +28,5 @@
     "structureFile":"banner-4buttons.json",
     "comment": "Estructura para banner de 4 botones",
     "uuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
-  },
-  {
-    "screenName": "admin",
-    "name":"EMA - Carrusel Slider",
-    "companyWebId":"liferay.com",
-    "groupFriendlyUrl":"/global",
-    "structureKey":"EMA-CARRUSEL-SLIDER",
-    "structureFile":"carrusel-slider.json",
-    "comment": "Carrusel Slider banner para la Homepage",
-    "uuid": "55a81d81-0eea-bbca-7f6c-d840167da8a4"
-  }
+   }
 ]
