@@ -1,16 +1,35 @@
 .i-mainWrapper {
     .m-searchAjax {
         &.m-searchAjax--form {
-            &.ema-noticias-form {
-                .ema-noticias-form__filtertext {
-                    i {
-                       color: $color-blue;
+            &.ema-ajaxsearch-form {
+                .ema-ajaxsearch-form__filterbutton {
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    margin-bottom: .5rem;
+                    cursor: pointer;
+                    &:hover {
+                        text-decoration: underline;
                     }
-                    @include font_base-bold;
+                    i {
+                        &.fa-filter{
+                            color: $color-blue;
+                            margin-right: .5rem;
+                        }
+                        &.fa-chevron-down,
+                        &.fa-chevron-up {
+                            color: $color-black;
+                            margin-left: .5rem;
+                        }
+                    }
+                    @include font_base;
+                    font-weight: 500;
                     font-size: m-rem(20px);
+                    letter-spacing: 0.27px;
                     text-transform: uppercase;
                 }
-                .ema-noticias-form__filters {
+                .ema-ajaxsearch-form__filters {
                     padding: 1.5rem;
                     background: #A8C8551A 0% 0% no-repeat padding-box;
                     border-radius: 30px;
@@ -23,12 +42,12 @@
                         padding: 2rem;
                         flex-direction: row;
                     }
-                    .ema-noticias-filtros__dates {
+                    .ema-ajaxsearch-filtros__dates {
                         display: flex;
                         flex-wrap: nowrap;
                         gap: 1rem;
                     }
-                    .ema-noticias-filtros__buttons {     
+                    .ema-ajaxsearch-filtros__buttons {     
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
@@ -49,10 +68,10 @@
                         }
                     }
 
-                    .ema-noticias-filtros__category,
-                    .ema-noticias-filtros__dateFrom,
-                    .ema-noticias-filtros__dateTo,
-                    .ema-noticias-filtros__text {
+                    .ema-ajaxsearch-filtros__category,
+                    .ema-ajaxsearch-filtros__dateFrom,
+                    .ema-ajaxsearch-filtros__dateTo,
+                    .ema-ajaxsearch-filtros__text {
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
@@ -82,7 +101,7 @@
                 }
             }
         }
-        .ema-noticias {
+        .ema-ajaxsearch {
             &__list {
                 
             }
