@@ -16,6 +16,18 @@
             margin: 0;
         }
     }
+    &__title-related a,
+    &__related__date {
+        display: -moz-box;
+        display: -webkit-box;
+        display: box;
+        -moz-box-orient: vertical;
+        -webkit-box-orient: vertical;
+        box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     &__inner {
         max-width: 965px;
         margin: 0 auto;
@@ -29,9 +41,16 @@
     }
     &__content {
         padding: 30px;
+        &__header {
+            margin: -30px -30px 30px;
+            background-color: #0f71ca;
+            color: #ffffff;
+            padding: 30px;
+        }
     }
     &__date {
-        background-color: #b2dff4;
+        background-color: #d6e7f4;
+        color: #555;
         display: inline-block;
         font-size: 1.125rem;
         padding: 5px 10px;
@@ -42,7 +61,7 @@
         .i-mainWrapper & {
             font-size: 1.75rem;
             line-height: 1.25;
-            margin-bottom: 30px;
+            margin-bottom: 0;
             @include media-breakpoint-up(xl) {
                 font-size: 2.75rem;
             }
@@ -55,6 +74,9 @@
         &__item-img {
             display: none;
         }
+        &__title {
+            margin: 30px 0 15px;
+        }
         &__item {
             margin-bottom: 15px;
             &__header {
@@ -62,6 +84,21 @@
                 margin-bottom: 15px;
                 background-position: center;
                 background-size: cover;
+                @include media-breakpoint-up(sm) {
+                    height: 100%;
+                    width: 30%;
+                }
+                @include media-breakpoint-up(md) {
+                    width: auto;
+                }
+            }
+            &__content {
+                @include media-breakpoint-up(sm) {
+                    width: 70%;
+                }
+                @include media-breakpoint-up(md) {
+                    width: auto;
+                }
             }
         }
         @include media-breakpoint-up(md) {
@@ -78,6 +115,15 @@
                 &--3col {
                     grid-column: 1 / -1;
                 }
+            }
+        }
+        &__item-inner {
+            @include media-breakpoint-up(sm) {
+                display: flex;
+                gap: 15px;
+            }
+            @include media-breakpoint-up(md) {
+                display: block;
             }
         }
     }
