@@ -16,7 +16,7 @@
 
 							<!-- Descripción -->
 							<#if (cur_campoCarSlide.descCar_Slide.getData())??>
-								<p>${cur_campoCarSlide.descCar_Slide.getData()}</p>
+								<p class="ema-carouselSlide__descCarrusel">${cur_campoCarSlide.descCar_Slide.getData()}</p>
 							</#if>
 
 							<!-- Enlace Btn -->
@@ -38,7 +38,7 @@
 
 							<!-- Descripción -->
 							<#if (cur_campoCarSlide.descCar_Slide.getData())??>
-								<p>${cur_campoCarSlide.descCar_Slide.getData()}</p>
+								<p class="ema-carouselSlide__descCarrusel">${cur_campoCarSlide.descCar_Slide.getData()}</p>
 							</#if>
 
 							<!-- Enlace Btn -->
@@ -47,7 +47,6 @@
 										<h5>${cur_campoCarSlide.titleLinkCarSlide.getData()}</h5>
 								</a>
 							</#if>
-
 						</div>
 					</#if>
 				</div>
@@ -55,6 +54,7 @@
     </#list>
   </div>
 </#if>
+
 
 <style>
 .ema-carouselSlide {
@@ -72,7 +72,11 @@
 	padding: 0;
 	margin: 0;
 }
-
+@media screen and (max-width: 768px) {
+	.ema-carouselSlide__descCarrusel{
+		font-size: medium !important;
+	}
+}
 .carousel-item{
 	display: flex;
 }
@@ -94,8 +98,10 @@
     max-width: 35%;
     white-space-collapse: preserve-breaks;
 }
+
 @media screen and (max-width: 768px) {
   .col-content {
+	  text-align: center;
 		margin-left: 3rem;
     margin-top: 0;
     align-self: center;
@@ -113,11 +119,12 @@
 	}
 }
 
-.ema-carouselSlide__link{
+.ema-carouselSlide__link {
 	color: #a8c855;
 	border-radius: 90px;
   background-color: black;
 	padding: 15px;
+	font-size: medium !important;
 }
 @media screen and (max-width: 768px) {
  .ema-carouselSlide__link {
@@ -152,8 +159,8 @@ a:link{
 }
 
 .slick-dots {
-    bottom: 25rem;
-    right: 5rem;
+    bottom: 28rem;
+    right: 8rem;
     position: relative;
     list-style: none;
     text-align: end;
@@ -171,6 +178,41 @@ a:link{
 .slick-autoplay-toggle-button {
 	display:none;
 }
+
+.slick-next {
+	left: 138.3rem;
+	top: -1.55rem;
+}
+.slick-prev {
+    left: 130rem;
+    top: -1.55rem;
+    z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.slick-next, .slick-prev{
+		display:none;
+	}
+}
+
+
+.slick-next:focus, .slick-prev:focus {
+    top: -1.65rem !important;
+}
+
+.slick-next:focus .slick-next-icon,.slick-next:focus .slick-prev-icon,.slick-prev:focus .slick-next-icon,.slick-prev:focus .slick-prev-icon {
+    color: #a8c855;
+}
+
+.slick-dots li.slick-active button .slick-dot-icon {
+    color: #a8c855 !important;
+    opacity: 1
+}
+.slick-dots li.slick-active button:focus .slick-dot-icon {
+    color: #a8c855 !important;
+    opacity: 1
+}
+
 </style>
 
 <script>
