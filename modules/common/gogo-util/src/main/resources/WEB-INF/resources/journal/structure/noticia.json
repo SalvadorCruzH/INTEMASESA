@@ -1,13 +1,21 @@
 {
   "definitionSchemaVersion": "2.0",
-  "availableLanguageIds": ["es_ES"],
-  "successPage": { "body": {}, "title": {}, "enabled": false },
+  "availableLanguageIds": [
+    "es_ES"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
   "defaultLanguageId": "es_ES",
   "fields": [
     {
       "labelAtStructureLevel": true,
       "ddmDataProviderInstanceId": [],
-      "tooltip": { "es_ES": "" },
+      "tooltip": {
+        "es_ES": ""
+      },
       "requireConfirmation": false,
       "type": "text",
       "required": false,
@@ -18,25 +26,39 @@
       "options": [
         {
           "reference": "Opción58646372",
-          "label": { "es_ES": "Opción" },
+          "label": {
+            "es_ES": "Opción"
+          },
           "value": "Opción58646372"
         }
       ],
       "nativeField": false,
-      "confirmationLabel": { "es_ES": "" },
+      "confirmationLabel": {
+        "es_ES": ""
+      },
       "fieldReference": "antetitulo",
-      "tip": { "es_ES": "" },
-      "placeholder": { "es_ES": "" },
-      "direction": ["vertical"],
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
       "hideField": false,
-      "confirmationErrorMessage": { "es_ES": "" },
       "autocomplete": false,
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Antetítulo" },
+      "label": {
+        "es_ES": "Antetítulo"
+      },
       "indexType": "keyword",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "name": "Text63593691",
       "localizable": true,
       "dataSourceType": "manual"
@@ -44,7 +66,9 @@
     {
       "labelAtStructureLevel": true,
       "ddmDataProviderInstanceId": [],
-      "tooltip": { "es_ES": "" },
+      "tooltip": {
+        "es_ES": ""
+      },
       "requireConfirmation": false,
       "type": "text",
       "required": true,
@@ -55,25 +79,39 @@
       "options": [
         {
           "reference": "Opción72894869",
-          "label": { "es_ES": "Opción" },
+          "label": {
+            "es_ES": "Opción"
+          },
           "value": "Opción72894869"
         }
       ],
       "nativeField": false,
-      "confirmationLabel": { "es_ES": "" },
+      "confirmationLabel": {
+        "es_ES": ""
+      },
       "fieldReference": "title",
-      "tip": { "es_ES": "" },
-      "placeholder": { "es_ES": "" },
-      "direction": ["vertical"],
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
       "hideField": false,
-      "confirmationErrorMessage": { "es_ES": "" },
       "autocomplete": false,
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Título" },
+      "label": {
+        "es_ES": "Título"
+      },
       "indexType": "keyword",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "name": "Text69024001",
       "localizable": true,
       "dataSourceType": "manual"
@@ -81,7 +119,9 @@
     {
       "labelAtStructureLevel": true,
       "ddmDataProviderInstanceId": [],
-      "tooltip": { "es_ES": "" },
+      "tooltip": {
+        "es_ES": ""
+      },
       "requireConfirmation": false,
       "type": "text",
       "required": false,
@@ -92,131 +132,112 @@
       "options": [
         {
           "reference": "Opción66184932",
-          "label": { "es_ES": "Opción" },
+          "label": {
+            "es_ES": "Opción"
+          },
           "value": "Opción66184932"
         }
       ],
       "nativeField": false,
-      "confirmationLabel": { "es_ES": "" },
+      "confirmationLabel": {
+        "es_ES": ""
+      },
       "fieldReference": "subtitle",
-      "tip": { "es_ES": "" },
-      "placeholder": { "es_ES": "" },
-      "direction": ["vertical"],
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
       "hideField": false,
-      "confirmationErrorMessage": { "es_ES": "" },
       "autocomplete": false,
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Subtítulo" },
+      "label": {
+        "es_ES": "Subtítulo"
+      },
       "indexType": "keyword",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "name": "Text92085709",
       "localizable": true,
       "dataSourceType": "manual"
     },
     {
-      "labelAtStructureLevel": true,
       "dataType": "string",
       "readOnly": false,
-      "showAsSwitcher": false,
-      "label": { "es_ES": "Tipo de Noticia" },
-      "type": "checkbox_multiple",
-      "required": true,
-      "showLabel": true,
-      "indexType": "keyword",
-      "visibilityExpression": "",
-      "fieldNamespace": "",
-      "inline": true,
-      "repeatable": false,
-      "name": "CheckboxMultiple47296178",
-      "options": [
-        {
-          "reference": "transformacionCultural",
-          "label": { "es_ES": "Transformación Cultural" },
-          "value": "Opción93562896"
-        },
-        {
-          "reference": "innovacion",
-          "label": { "es_ES": "Innovación" },
-          "value": "Opción67514407"
-        },
-        {
-          "reference": "transformacionDigital",
-          "label": { "es_ES": "Transformación Digital" },
-          "value": "Opción37221827"
-        },
-        {
-          "reference": "prevencion",
-          "label": { "es_ES": "Prevención" },
-          "value": "Opción72693866"
-        },
-        {
-          "reference": "personas",
-          "label": { "es_ES": "Personas" },
-          "value": "Opción36784697"
-        }
-      ],
-      "localizable": true,
-      "nativeField": false,
-      "fieldReference": "tipoNoticia",
-      "tip": { "es_ES": "" }
-    },
-    {
-      "dataType": "string",
-      "predefinedValue": { "es_ES": "" },
-      "readOnly": false,
-      "label": { "es_ES": "Descripción" },
+      "label": {
+        "es_ES": "Descripción"
+      },
       "type": "rich_text",
       "required": true,
       "showLabel": true,
       "indexType": "text",
-      "requiredErrorMessage": { "es_ES": "" },
-      "visibilityExpression": "",
       "fieldNamespace": "",
-      "objectFieldName": "",
+      "visibilityExpression": "",
       "repeatable": false,
       "name": "RichText66361977",
       "localizable": true,
       "fieldReference": "descripcion",
-      "tip": { "es_ES": "" }
+      "tip": {
+        "es_ES": ""
+      }
     },
     {
       "labelAtStructureLevel": true,
       "ddmDataProviderInstanceId": [],
-      "predefinedValue": { "es_ES": "" },
-      "tooltip": { "es_ES": "" },
+      "tooltip": {
+        "es_ES": ""
+      },
       "requireConfirmation": false,
       "type": "text",
       "required": false,
       "showLabel": true,
       "displayStyle": "singleline",
-      "requiredErrorMessage": { "es_ES": "" },
-      "objectFieldName": "",
       "ddmDataProviderInstanceOutput": [],
       "repeatable": false,
       "options": [
         {
           "reference": "Opción57146522",
-          "label": { "es_ES": "Opción" },
+          "label": {
+            "es_ES": "Opción"
+          },
           "value": "Opción57146522"
         }
       ],
       "nativeField": false,
-      "confirmationLabel": { "es_ES": "" },
+      "confirmationLabel": {
+        "es_ES": ""
+      },
       "fieldReference": "autor",
-      "tip": { "es_ES": "" },
-      "placeholder": { "es_ES": "" },
-      "direction": ["vertical"],
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
       "hideField": false,
-      "confirmationErrorMessage": { "es_ES": "" },
       "autocomplete": false,
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Autor" },
+      "label": {
+        "es_ES": "Autor"
+      },
       "indexType": "keyword",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "name": "Text49831560",
       "localizable": true,
       "dataSourceType": "manual"
@@ -224,39 +245,52 @@
     {
       "labelAtStructureLevel": true,
       "ddmDataProviderInstanceId": [],
-      "predefinedValue": { "es_ES": "" },
-      "tooltip": { "es_ES": "" },
+      "tooltip": {
+        "es_ES": ""
+      },
       "requireConfirmation": false,
       "type": "text",
       "required": false,
       "showLabel": true,
       "displayStyle": "singleline",
-      "requiredErrorMessage": { "es_ES": "" },
-      "objectFieldName": "",
       "ddmDataProviderInstanceOutput": [],
       "repeatable": false,
       "options": [
         {
           "reference": "Opción57146522",
-          "label": { "es_ES": "Opción" },
+          "label": {
+            "es_ES": "Opción"
+          },
           "value": "Opción57146522"
         }
       ],
       "nativeField": false,
-      "confirmationLabel": { "es_ES": "" },
+      "confirmationLabel": {
+        "es_ES": ""
+      },
       "fieldReference": "departamento",
-      "tip": { "es_ES": "" },
-      "placeholder": { "es_ES": "" },
-      "direction": ["vertical"],
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
       "hideField": false,
-      "confirmationErrorMessage": { "es_ES": "" },
       "autocomplete": false,
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Departamento" },
+      "label": {
+        "es_ES": "Departamento"
+      },
       "indexType": "keyword",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "name": "Text85281295",
       "localizable": true,
       "dataSourceType": "manual"
@@ -264,18 +298,22 @@
     {
       "dataType": "string",
       "readOnly": false,
-      "label": { "es_ES": "Cuerpo" },
+      "label": {
+        "es_ES": "Cuerpo"
+      },
       "type": "rich_text",
       "required": true,
       "showLabel": true,
       "indexType": "text",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "repeatable": false,
       "name": "RichText47103182",
       "localizable": true,
       "fieldReference": "cuerpo",
-      "tip": { "es_ES": "" }
+      "tip": {
+        "es_ES": ""
+      }
     },
     {
       "labelAtStructureLevel": true,
@@ -283,12 +321,11 @@
       "ddmStructureId": "",
       "upgradedStructure": false,
       "readOnly": false,
-      "label": { "es_ES": "Campo URL" },
+      "label": {
+        "es_ES": "Campo URL"
+      },
       "type": "fieldset",
-      "rows": [
-        { "columns": [{ "size": 12, "fields": ["Text94702669"] }] },
-        { "columns": [{ "size": 12, "fields": ["Text50634272"] }] }
-      ],
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text94702669\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text50634272\"]}]}]",
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -296,7 +333,9 @@
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
@@ -307,25 +346,39 @@
           "options": [
             {
               "reference": "Opción60554667",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción60554667"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "urlTitle",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": "Si no se contribuye el texto será la url del enlace"
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "Título URL" },
+          "label": {
+            "es_ES": "Título URL"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Text94702669",
           "localizable": true,
           "dataSourceType": "manual"
@@ -333,7 +386,9 @@
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
@@ -344,25 +399,39 @@
           "options": [
             {
               "reference": "Opción60554667",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción60554667"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "url",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "URL" },
+          "label": {
+            "es_ES": "URL"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Text50634272",
           "localizable": true,
           "dataSourceType": "manual"
@@ -377,19 +446,23 @@
       "labelAtStructureLevel": true,
       "dataType": "document-library",
       "readOnly": false,
-      "label": { "es_ES": "Descargar" },
+      "label": {
+        "es_ES": "Descargar"
+      },
       "type": "document_library",
       "required": false,
       "showLabel": true,
       "indexType": "keyword",
-      "visibilityExpression": "",
       "fieldNamespace": "",
+      "visibilityExpression": "",
       "repeatable": true,
       "allowGuestUsers": false,
       "name": "DocumentLibrary75181763",
       "localizable": true,
       "fieldReference": "archivosDescargar",
-      "tip": { "es_ES": "" }
+      "tip": {
+        "es_ES": ""
+      }
     },
     {
       "labelAtStructureLevel": true,
@@ -397,12 +470,11 @@
       "ddmStructureId": "",
       "upgradedStructure": false,
       "readOnly": false,
-      "label": { "es_ES": "Imagen Principal" },
+      "label": {
+        "es_ES": "Imagen Principal"
+      },
       "type": "fieldset",
-      "rows": [
-        { "columns": [{ "size": 12, "fields": ["Image34625186"] }] },
-        { "columns": [{ "size": 12, "fields": ["Text81494800"] }] }
-      ],
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image34625186\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text81494800\"]}]}]",
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -410,24 +482,30 @@
         {
           "dataType": "image",
           "readOnly": false,
-          "label": { "es_ES": "Imagen principal" },
+          "label": {
+            "es_ES": "Imagen principal"
+          },
           "type": "image",
           "required": false,
           "showLabel": true,
           "indexType": "text",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "repeatable": false,
           "requiredDescription": true,
           "name": "Image34625186",
           "localizable": true,
           "fieldReference": "imgPrincipal",
-          "tip": { "es_ES": "" }
+          "tip": {
+            "es_ES": "Se usará como también como imagen en los listados. Si no se contribuye se usará el logo de Emasesa "
+          }
         },
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
@@ -438,25 +516,39 @@
           "options": [
             {
               "reference": "Opción58095723",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción58095723"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "pieFotoPrincipal",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "Pie de Foto" },
+          "label": {
+            "es_ES": "Pie de Foto"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Text81494800",
           "localizable": true,
           "dataSourceType": "manual"
@@ -473,12 +565,11 @@
       "ddmStructureId": "",
       "upgradedStructure": false,
       "readOnly": false,
-      "label": { "es_ES": "Imagen Izquierda" },
+      "label": {
+        "es_ES": "Imagen Izquierda"
+      },
       "type": "fieldset",
-      "rows": [
-        { "columns": [{ "size": 12, "fields": ["Campo83391335"] }] },
-        { "columns": [{ "size": 12, "fields": ["Campo33678966"] }] }
-      ],
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Campo83391335\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Campo33678966\"]}]}]",
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -486,24 +577,30 @@
         {
           "dataType": "image",
           "readOnly": false,
-          "label": { "es_ES": "Imagen izquierda" },
+          "label": {
+            "es_ES": "Imagen izquierda"
+          },
           "type": "image",
           "required": false,
           "showLabel": true,
           "indexType": "text",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "repeatable": false,
           "requiredDescription": true,
           "name": "Campo83391335",
           "localizable": true,
           "fieldReference": "imgIzquierda",
-          "tip": { "es_ES": "" }
+          "tip": {
+            "es_ES": ""
+          }
         },
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
@@ -514,25 +611,39 @@
           "options": [
             {
               "reference": "Opción58095723",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción58095723"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "pieFotoIzquierda",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "Pie de Foto" },
+          "label": {
+            "es_ES": "Pie de Foto"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Campo33678966",
           "localizable": true,
           "dataSourceType": "manual"
@@ -549,12 +660,11 @@
       "ddmStructureId": "",
       "upgradedStructure": false,
       "readOnly": false,
-      "label": { "es_ES": "Video" },
+      "label": {
+        "es_ES": "Video"
+      },
       "type": "fieldset",
-      "rows": [
-        { "columns": [{ "fields": ["Text04312069"], "size": 12 }] },
-        { "columns": [{ "fields": ["Text10482403"], "size": 12 }] }
-      ],
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text04312069\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text10482403\"]}]}]",
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -562,39 +672,52 @@
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "predefinedValue": { "es_ES": "" },
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
           "showLabel": true,
           "displayStyle": "singleline",
-          "requiredErrorMessage": { "es_ES": "" },
-          "objectFieldName": "",
           "ddmDataProviderInstanceOutput": [],
           "repeatable": false,
           "options": [
             {
               "reference": "Opción57146522",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción57146522"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "urlYoutube",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "URL YouTube" },
+          "label": {
+            "es_ES": "URL YouTube"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Text04312069",
           "localizable": true,
           "dataSourceType": "manual"
@@ -602,39 +725,52 @@
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "predefinedValue": { "es_ES": "" },
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
           "showLabel": true,
           "displayStyle": "singleline",
-          "requiredErrorMessage": { "es_ES": "" },
-          "objectFieldName": "",
           "ddmDataProviderInstanceOutput": [],
           "repeatable": false,
           "options": [
             {
               "reference": "Opción57146522",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción57146522"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "urlVimeo",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "URL Vimeo" },
+          "label": {
+            "es_ES": "URL Vimeo"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Text10482403",
           "localizable": true,
           "dataSourceType": "manual"
@@ -651,12 +787,11 @@
       "ddmStructureId": "",
       "upgradedStructure": false,
       "readOnly": false,
-      "label": { "es_ES": "Galería de Imágenes" },
+      "label": {
+        "es_ES": "Galería de Imágenes y videos"
+      },
       "type": "fieldset",
-      "rows": [
-        { "columns": [{ "size": 12, "fields": ["Image63811982"] }] },
-        { "columns": [{ "size": 12, "fields": ["Text82238770"] }] }
-      ],
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image63811982\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text82238770\"]}]}]",
       "collapsible": false,
       "required": false,
       "showLabel": true,
@@ -664,24 +799,30 @@
         {
           "dataType": "image",
           "readOnly": false,
-          "label": { "es_ES": "Imagen Galería" },
+          "label": {
+            "es_ES": "Imagen o video Galería"
+          },
           "type": "image",
           "required": false,
           "showLabel": true,
           "indexType": "text",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "repeatable": false,
           "requiredDescription": true,
           "name": "Image63811982",
           "localizable": true,
           "fieldReference": "imgGaleria",
-          "tip": { "es_ES": "" }
+          "tip": {
+            "es_ES": ""
+          }
         },
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
-          "tooltip": { "es_ES": "" },
+          "tooltip": {
+            "es_ES": ""
+          },
           "requireConfirmation": false,
           "type": "text",
           "required": false,
@@ -692,25 +833,39 @@
           "options": [
             {
               "reference": "Opción58095723",
-              "label": { "es_ES": "Opción" },
+              "label": {
+                "es_ES": "Opción"
+              },
               "value": "Opción58095723"
             }
           ],
           "nativeField": false,
-          "confirmationLabel": { "es_ES": "" },
+          "confirmationLabel": {
+            "es_ES": ""
+          },
           "fieldReference": "pieFotoGaleria",
-          "tip": { "es_ES": "" },
-          "placeholder": { "es_ES": "" },
-          "direction": ["vertical"],
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
           "hideField": false,
-          "confirmationErrorMessage": { "es_ES": "" },
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
-          "label": { "es_ES": "Pie de Foto" },
+          "label": {
+            "es_ES": "Pie de Foto"
+          },
           "indexType": "keyword",
-          "visibilityExpression": "",
           "fieldNamespace": "",
+          "visibilityExpression": "",
           "name": "Text82238770",
           "localizable": true,
           "dataSourceType": "manual"
