@@ -2,7 +2,7 @@
 
 buildscript {
 	repositories {
-		maven {url "https://plugins.gradle.org/m2/"}
+		maven {url "https://slmaven.indra.es/nexus/repository/public/"}
 	}
 
 	dependencies {
