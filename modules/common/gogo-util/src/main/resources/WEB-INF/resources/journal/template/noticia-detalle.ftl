@@ -28,7 +28,9 @@
             </#if>
             <div class="ema-noticiasDetail__wrapperTitleImg">
                 <div class="ema-noticiasDetail__wrapperTexts">
-                    <p class="ema-noticiasDetail__antetitulo">${entradilla.getData()}</p>
+                <#if (antetitulo.getData())??>
+                    <p class="ema-noticiasDetail__antetitulo">${antetitulo.getData()}</p>
+                </#if>
                     <h2 class="ema-noticia-tarjeta__titulo">
                         ${title.getData()}
                     </h2>
@@ -50,11 +52,16 @@
                 <#if campoUrl.getSiblings()?has_content>
                     <ul>
                     <#list campoUrl.getSiblings() as cur_campoUrl>
+                        <#if (cur_campoUrl.url.getData())?? && cur_campoUrl.url.getData() != "">
                         <li>
                             <a href="${cur_campoUrl.url.getData()}">
-                                ${cur_campoUrl.urlTitle.getData()}
+                                <#if cur_campoUrl.urlTitle.getData()?? && cur_campoUrl.urlTitle.getData() != "">
+                                    ${cur_campoUrl.urlTitle.getData()}
+                                <#else>${cur_campoUrl.url.getData()}
+                                </#if>
                             </a>
                         </li>
+                        </#if>
                     </#list>
                     </ul>
                 </#if>
