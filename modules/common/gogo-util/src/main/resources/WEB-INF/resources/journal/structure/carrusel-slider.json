@@ -1,0 +1,232 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "en_US"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
+  "defaultLanguageId": "en_US",
+  "fields": [
+    {
+      "labelAtStructureLevel": true,
+      "ddmStructureLayoutId": "",
+      "ddmStructureId": "35108",
+      "upgradedStructure": false,
+      "readOnly": false,
+      "label": {
+        "en_US": "CARRUSEL SLIDE"
+      },
+      "type": "fieldset",
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image89335515\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text72598278\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text60855488\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text33704322\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text58382900\"]}]}]",
+      "collapsible": false,
+      "required": false,
+      "showLabel": true,
+      "nestedFields": [
+        {
+          "dataType": "image",
+          "readOnly": false,
+          "label": {
+            "en_US": "Imagen"
+          },
+          "type": "image",
+          "required": false,
+          "showLabel": true,
+          "indexType": "text",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "repeatable": false,
+          "requiredDescription": true,
+          "name": "Image89335515",
+          "localizable": true,
+          "fieldReference": "imgCar_Slide",
+          "tip": {
+            "en_US": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "en_US": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": true,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "nativeField": false,
+          "confirmationLabel": {
+            "en_US": ""
+          },
+          "fieldReference": "titleCar_Slide",
+          "tip": {
+            "en_US": ""
+          },
+          "placeholder": {
+            "en_US": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "en_US": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "en_US": "Título"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Text72598278",
+          "localizable": true,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "en_US": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": true,
+          "showLabel": true,
+          "displayStyle": "multiline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "nativeField": false,
+          "confirmationLabel": {
+            "en_US": ""
+          },
+          "fieldReference": "descCar_Slide",
+          "tip": {
+            "en_US": ""
+          },
+          "placeholder": {
+            "en_US": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "en_US": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "en_US": "Descripción"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Text60855488",
+          "localizable": true,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "en_US": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": false,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "nativeField": false,
+          "confirmationLabel": {
+            "en_US": ""
+          },
+          "fieldReference": "titleLinkCarSlide",
+          "tip": {
+            "en_US": ""
+          },
+          "placeholder": {
+            "en_US": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "en_US": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "en_US": "Título Enlace"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Text33704322",
+          "localizable": true,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "en_US": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": false,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "nativeField": false,
+          "confirmationLabel": {
+            "en_US": ""
+          },
+          "fieldReference": "linkCarSlide",
+          "tip": {
+            "en_US": ""
+          },
+          "placeholder": {
+            "en_US": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "en_US": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "en_US": "URL"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Text58382900",
+          "localizable": true,
+          "dataSourceType": "manual"
+        }
+      ],
+      "repeatable": true,
+      "name": "Fieldset00040765",
+      "localizable": false,
+      "fieldReference": "campoCarSlide"
+    }
+  ]
+}

@@ -14,7 +14,12 @@
 	<link href="${css_folder}/fontawesome/css/brands.css" rel="stylesheet">
 	<link href="${css_folder}/fontawesome/css/solid.css" rel="stylesheet">
 	<link href="${css_folder}/fontawesome/css/regular.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="${javascript_folder}/slick/slick.min.css">
+	<link rel="stylesheet" href="${javascript_folder}/slick/accessible-slick-theme.min.css">
+
 	<script src="${javascript_folder}/Pagination.js" data-senna-track="permanent"></script>
+
 </head>
 
 <body class="${css_class}">
@@ -38,6 +43,9 @@
 <@liferay_util["include"] page=bottom_include />
 
 <!-- inject:js -->
+
+	<@liferay.js file_name="${javascript_folder}/slick/slick.js"/>
+
 <!-- endinject -->
 
 </body>
