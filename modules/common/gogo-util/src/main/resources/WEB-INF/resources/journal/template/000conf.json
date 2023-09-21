@@ -1,6 +1,6 @@
 [
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Noticia - Detalle",
         "templateKey": "EMA-NOTICIA-DETALLE-TEMPLATE",
         "structureKey": "EMA-NOTICIA",
@@ -13,7 +13,7 @@
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Noticia - Tarjeta",
         "templateKey": "EMA-NOTICIA-TARJETA-TEMPLATE",
         "structureKey": "EMA-NOTICIA",
@@ -26,7 +26,7 @@
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Noticia - Detalle",
         "templateKey": "EMA-NOTICIA-DETALLE-TEMPLATE",
         "structureKey": "EMA-NOTICIA",
@@ -39,7 +39,7 @@
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - videosCorporativos",
         "templateKey": "EMA-VIDEOSCORPORATIVOS-TEMPLATE",
         "structureKey": "EMA-VIDEOSCORPORATIVOS",
@@ -52,7 +52,7 @@
         "structureUuid": "7f77d98c-d0d8-6490-3bc6-3833d856ab89"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - banner 4 buttons",
         "templateKey": "EMA-BANNER-4BUTTONS-TEMPLATE",
         "structureKey": "EMA-BANNER-4BUTTONS",
@@ -63,5 +63,18 @@
         "comment": "Plantilla de bunner 4 botones",
         "uuid": "c9ff7d29-61c9-4b94-c7cc-de16d6cfef4d",
         "structureUuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Tarjeta de colores",
+        "templateKey": "EMA-TARJETA-COLORES-TEMPLATE",
+        "structureKey": "EMA-TARJETA-COLORES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "tarjeta-colores.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de tarjeta de colores",
+        "uuid": "fd5cc646-eeb0-d902-7459-06c2a807af2b",
+        "structureUuid": "b5a5d0fc-e133-46ee-48f6-5861fb349b39"
     }
 ]
