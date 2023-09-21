@@ -63,5 +63,18 @@
         "comment": "Plantilla de bunner 4 botones",
         "uuid": "c9ff7d29-61c9-4b94-c7cc-de16d6cfef4d",
         "structureUuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
+    },
+    {
+        "screenName": "admin",
+        "name":"EMA - Tarjeta de colores",
+        "templateKey": "EMA-TARJETA-COLORES-TEMPLATE",
+        "structureKey": "EMA-TARJETA-COLORES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "tarjeta-colores.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de tarjeta de colores",
+        "uuid": "fd5cc646-eeb0-d902-7459-06c2a807af2b",
+        "structureUuid": "b5a5d0fc-e133-46ee-48f6-5861fb349b39"
     }
 ]

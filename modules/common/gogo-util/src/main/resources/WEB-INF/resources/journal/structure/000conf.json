@@ -1,32 +1,42 @@
 [
   {
     "screenName": "admin",
-    "name":"EMA - Noticia",
-    "companyWebId":"liferay.com",
-    "groupFriendlyUrl":"/global",
-    "structureKey":"EMA-NOTICIA",
-    "structureFile":"noticia.json",
+    "name": "EMA - Noticia",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-NOTICIA",
+    "structureFile": "noticia.json",
     "comment": "Estructura para Noticia",
     "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
   },
   {
     "screenName": "admin",
-    "name":"EMA - videos Corporativos",
-    "companyWebId":"liferay.com",
-    "groupFriendlyUrl":"/global",
-    "structureKey":"EMA-VIDEOSCORPORATIVOS",
-    "structureFile":"videosCorporativos.json",
+    "name": "EMA - videos Corporativos",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-VIDEOSCORPORATIVOS",
+    "structureFile": "videosCorporativos.json",
     "comment": "Estructura para videos corporativos",
     "uuid": "7f77d98c-d0d8-6490-3bc6-3833d856ab89"
   },
   {
     "screenName": "admin",
-    "name":"EMA - banner 4 buttons",
-    "companyWebId":"liferay.com",
-    "groupFriendlyUrl":"/global",
-    "structureKey":"EMA-BANNER-4BUTTONS",
-    "structureFile":"banner-4buttons.json",
+    "name": "EMA - banner 4 buttons",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-BANNER-4BUTTONS",
+    "structureFile": "banner-4buttons.json",
     "comment": "Estructura para banner de 4 botones",
     "uuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
-   }
+  },
+  {
+    "screenName": "admin",
+    "name": "EMA - Tarjeta de colores",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-tarjeta-Colores",
+    "structureFile": "tarjeta-colores.json",
+    "comment": "Estructura para tarjeta de colores",
+    "uuid": "b5a5d0fc-e133-46ee-48f6-5861fb349b39"
+  }
 ]
