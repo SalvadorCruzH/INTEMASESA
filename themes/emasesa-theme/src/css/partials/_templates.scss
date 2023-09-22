@@ -442,18 +442,155 @@
     /* Carrusel Slider */
     .ema-carouselSlide {
 
-      &__carousel {
+        &__carousel {
+            width: 100%;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
 
-      }
+        @include media-breakpoint-up(md) {
+          &__descCarrusel {
+            font-size: medium !important;
+          }
+        }
 
-      &__descCarrusel {
+        &__link {
+            color: black;
+            border-radius: 90px;
+            background-color: #a8c855;
+            padding: 1rem;
+            text-decoration: none;
+        }
+        &__link a:hover, a.hover {
+            color: #a8c855;
+            background-color: black;
+            text-decoration: underline;
+        }
+        @include media-breakpoint-up(md) {
+            &__link {
+                padding: 8px;
+            }
+        }
 
-      }
+        &__bgImg{
+        	height: 429px;
+        }
 
-      &__link {
+        &__carousel-item{
+        	display: flex;
+        }
 
-      }
+        &__col-content-alone {
+            text-align-last: center;
+            margin-top: 8rem;
+            margin-left: 30rem;
+            margin-right: 30rem;
+        }
 
+        &__col-content {
+            margin-left: 3rem;
+            margin-top: 2rem;
+            align-self: center;
+            max-width: 35%;
+            white-space-collapse: preserve-breaks;
+        }
+        @media screen and (max-width: 768px) {
+            &__col-content {
+                text-align: center;
+                margin-left: 3rem;
+                margin-top: 0;
+                align-self: center;
+                max-width: 80%;
+                white-space-collapse: preserve-breaks;
+            }
+
+            &__bgImg{
+                height: 10rem;
+            }
+
+            &__col-content-alone {
+                margin-top: 8rem;
+                margin-left: 4rem;
+                margin-right: 4rem;
+                text-align: center;
+            }
+        }
+    }
+    .slick-slide{
+        margin:0;
+    }
+
+    .slick-slide img{
+        width:100%;
+        border: 2px solid #fff;
+    }
+
+    .slick-slider.slick-dotted {
+        margin-bottom: 0;
+    }
+
+    .slick-slider {
+        margin-bottom: 0;
+    }
+
+    .slick-dots {
+        bottom: 29rem !important;
+        padding-left: 123.5rem;
+        position: absolute;
+        list-style: none;
+        text-align: center;
+        right: 0;
+    }
+    @include media-breakpoint-up(md) {
+        .slick-dots {
+            bottom: 0.3rem;
+            position: relative;
+            list-style: none;
+            text-align: center;
+            right: 0;
+        }
+    }
+
+    .slick-autoplay-toggle-button {
+        display:none;
+    }
+
+    .slick-next {
+        left: 138.3rem;
+        top: -1.55rem;
+        z-index: 1;
+    }
+    .slick-prev {
+        left: 130rem;
+        top: -1.55rem;
+        z-index: 1;
+    }
+    @include media-breakpoint-up(md) {
+        .slick-next, .slick-prev{
+            display:none;
+        }
+    }
+
+    .slick-next:focus, .slick-prev:focus {
+        top: -1.7rem !important;
+    }
+
+    .slick-next:focus .slick-next-icon,.slick-next:focus .slick-prev-icon,.slick-prev:focus .slick-next-icon,.slick-prev:focus .slick-prev-icon {
+        color: #a8c855;
+    }
+
+    .slick-dots li button:focus .slick-dot-icon:before {
+        color: #a8c855;
+    }
+
+    .slick-dots li.slick-active button .slick-dot-icon {
+        color: #a8c855 !important;
+        opacity: 1
+    }
+    .slick-dots li.slick-active button:focus .slick-dot-icon {
+        color: #a8c855 !important;
+        opacity: 1
     }
 
     /**  Tarjeta de colores  **/
