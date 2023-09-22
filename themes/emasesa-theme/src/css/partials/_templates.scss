@@ -112,6 +112,10 @@
             font-size: 1rem;
             margin-bottom: 0.25rem;
         }
+        &__galeriaItem {
+            padding: 0 0.5rem;
+        }
+        padding: 0 0.625em;
         &__imgCarrousel {
             width: 100%;
             height: m-rem(250px);
@@ -164,6 +168,60 @@
             }
 
         }
+        .ema-carousel-icons {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: m-rem(20px);
+        }
+        .ema-slide-btn {
+            border-radius: 50%;
+            background-color: $color-primary;
+            border: none;
+            width: m-rem(34px);
+            height: m-rem(34px);
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+        .slick-dots {
+            position: initial;
+            padding: 0 0.5rem 0 1rem;
+            li {
+                &.slick-active {
+                    button {
+                        &:focus {
+                            .slick-dot-icon {
+                                color: $color-primary;
+                            }
+                        }
+                        .slick-dot-icon {
+                            color: $color-primary;
+                            &::before {
+                                font-size: m-rem(14px);
+                            }
+                        }
+                    }
+                }
+                button {
+                    &:focus {
+                        .slick-dot-icon {
+                            &::before {
+                                color: $color-primary;
+                            }
+                        }
+                    }
+                    .slick-dot-icon {
+                        color: $color-text;
+                        opacity: 1;
+                        &::before {
+                            font-size: m-rem(10px);
+                        }
+                    }
+                }
+            } 
+        }
+        
     }
      /*  banner-4buttons   */
 
