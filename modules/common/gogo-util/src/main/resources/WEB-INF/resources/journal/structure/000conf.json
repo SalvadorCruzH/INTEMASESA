@@ -1,6 +1,6 @@
 [
   {
-    "screenName": "aemasesa",
+    "screenName": "admin",
     "name": "EMA - Noticia",
     "companyWebId": "liferay.com",
     "groupFriendlyUrl": "/global",
@@ -10,7 +10,7 @@
     "uuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
   },
   {
-    "screenName": "aemasesa",
+    "screenName": "admin",
     "name": "EMA - videos Corporativos",
     "companyWebId": "liferay.com",
     "groupFriendlyUrl": "/global",
@@ -20,7 +20,7 @@
     "uuid": "7f77d98c-d0d8-6490-3bc6-3833d856ab89"
   },
   {
-    "screenName": "aemasesa",
+    "screenName": "admin",
     "name": "EMA - banner 4 buttons",
     "companyWebId": "liferay.com",
     "groupFriendlyUrl": "/global",
@@ -30,7 +30,7 @@
     "uuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
   },
   {
-    "screenName": "aemasesa",
+    "screenName": "admin",
     "name": "EMA - Tarjeta de colores",
     "companyWebId": "liferay.com",
     "groupFriendlyUrl": "/global",
@@ -38,5 +38,15 @@
     "structureFile": "tarjeta-colores.json",
     "comment": "Estructura para tarjeta de colores",
     "uuid": "b5a5d0fc-e133-46ee-48f6-5861fb349b39"
+  },
+  {
+    "screenName": "admin",
+    "name": "EMA - Tarjetas de imagenes",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-tarjetas-imagenes",
+    "structureFile": "tarjetas-imagenes.json",
+    "comment": "Estructura para tarjetas de Imagenes",
+    "uuid": "9197de5e-4461-48ef-d34e-963e0a03b394"
   }
 ]
