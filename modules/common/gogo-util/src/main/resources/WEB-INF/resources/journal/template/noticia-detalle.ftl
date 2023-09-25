@@ -35,7 +35,11 @@
             </div>
             </#if>
             <div class="ema-noticiasDetail__wrapperTitleImg">
-                <div class="ema-noticiasDetail__wrapperTexts">
+                <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
+                    <div class="ema-noticiasDetail__wrapperTexts ema-noticiasDetail__wrapperTexts--img">
+                <#else>
+                    <div class="ema-noticiasDetail__wrapperTexts">
+                </#if>
                 <#if (antetitulo.getData())??>
                     <p class="ema-noticiasDetail__antetitulo">${antetitulo.getData()}</p>
                 </#if>
@@ -49,11 +53,11 @@
                     <div class="ema-noticia-tarjeta__entradilla">${entradilla.getData()}</div>
                    
                 </div>
-                <div class="ema-noticiasDetail__wrapperImg">
-                    <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
+                <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
+                    <div class="ema-noticiasDetail__wrapperImg">
                         <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
-                    </#if>
-                </div>
+                    </div>
+                </#if>
             </div>
             <div class="ema-noticiasDetail__wrapperBody">
                 <#if (cuerpo.getData())??>
@@ -62,7 +66,7 @@
                 <#if campoUrl.getSiblings()?has_content>
                     <div class="ema-noticiasDetail__listLinksWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Enlaces relacionados</h3>
-                        <ul class="ema-noticiasDetail__listLinks">
+                        <ul class="ema-noticiasDetail__listLinks m-listBaseNoStyles m-list-dashed">
                             <#list campoUrl.getSiblings() as cur_campoUrl>
                                 <#if (cur_campoUrl.url.getData())?? && cur_campoUrl.url.getData() != "">
                                 <li class="ema-noticiasDetail__listLi">
@@ -81,7 +85,7 @@
                 <#if archivosDescargar.getSiblings()?has_content>
                     <div class="ema-noticiasDetail__filesWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Documentos relacionados</h3>
-                        <ul class="ema-noticiasDetail__filesList">
+                        <ul class="ema-noticiasDetail__filesList m-listBaseNoStyles m-list-dashed">
                             <#list archivosDescargar.getSiblings() as cur_file>
                                 <#if (cur_file.getData())?? && cur_file.getData() != "">
                                     <#assign
@@ -92,7 +96,7 @@
                                     />
                                 <li class="ema-noticiasDetail__filesLi">
                                     <a class="ema-noticiasDetail__file" href="${cur_file.getData()}" target="_blank">
-                                        ${dlFileEntry.getTitle()}
+                                        ${dlFileEntry.getTitle()}<span><#--  PLACEHOLDER EXTENSION AND SIZE FILE  --></span
                                     </a>
                                 </li>
                                 </#if>
@@ -140,6 +144,19 @@
                 </div>
                 </#if>
             </div>
+            <#if (autor.getData())?? || (departamento.getData())??>
+                <div class="ema-noticiasDetail__footer">
+                    <#if (departamento.getData())??>
+                        <p><@liferay.language key="es.emasesa.intranet.common.departamento"/>: ${departamento.getData()}</p>
+                    </#if>
+                    <#if (autor.getData())??>
+                        <p><@liferay.language key="es.emasesa.intranet.common.autor"/>: ${autor.getData()}.</p>
+                    </#if>
+                </div>
+            </#if>
+            <div class="">
+            <#--  PLACEHOLDER BUTTON GO BACK  -->
+            </div>    
         </div>
     </div>
 </div>
