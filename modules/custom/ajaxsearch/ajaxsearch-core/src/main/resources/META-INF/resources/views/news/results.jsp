@@ -32,7 +32,7 @@
 
 
 <template id="as-template">
-    <li class="ema-ajaxsearch__item">
+    <li class="ema-ajaxsearch__item m-link-accessible-wrapper">
         #html#
 
     </li>
