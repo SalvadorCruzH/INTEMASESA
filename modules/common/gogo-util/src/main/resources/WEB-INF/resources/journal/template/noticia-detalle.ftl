@@ -46,13 +46,13 @@
                     <#if (subtitle.getData())??>
                     <h3 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h3>
                     </#if>
-                    <div class="ema-noticia-tarjeta__entradilla">${entradilla.getData()}<div>
+                    <div class="ema-noticia-tarjeta__entradilla">${entradilla.getData()}</div>
                    
                 </div>
                 <div class="ema-noticiasDetail__wrapperImg">
-                <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
-                    <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
-                </#if>
+                    <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
+                        <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
+                    </#if>
                 </div>
             </div>
             <div class="ema-noticiasDetail__wrapperBody">
@@ -82,21 +82,21 @@
                     <div class="ema-noticiasDetail__filesWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Documentos relacionados</h3>
                         <ul class="ema-noticiasDetail__filesList">
-                        <#list archivosDescargar.getSiblings() as cur_file>
-                            <#if (cur_file.getData())?? && cur_file.getData() != "">
-                                <#assign
-                                    documentPath = cur_file.getData()?split("/")
-                                    uuid = documentPath[5]?substring(0, documentPath[5]?index_of("?"))
-                                    groupIdDoc = documentPath[2]
-                                    dlFileEntry = dLFileEntryLocalService.fetchDLFileEntryByUuidAndGroupId(uuid,groupIdDoc?number)
-                                />
-                            <li class="ema-noticiasDetail__filesLi">
-                                <a class="ema-noticiasDetail__file" href="${cur_file.getData()}" target="_blank">
-                                    ${dlFileEntry.getTitle()}
-                                </a>
-                            </li>
-                            </#if>
-                        </#list>
+                            <#list archivosDescargar.getSiblings() as cur_file>
+                                <#if (cur_file.getData())?? && cur_file.getData() != "">
+                                    <#assign
+                                        documentPath = cur_file.getData()?split("/")
+                                        uuid = documentPath[5]?substring(0, documentPath[5]?index_of("?"))
+                                        groupIdDoc = documentPath[2]
+                                        dlFileEntry = dLFileEntryLocalService.fetchDLFileEntryByUuidAndGroupId(uuid,groupIdDoc?number)
+                                    />
+                                <li class="ema-noticiasDetail__filesLi">
+                                    <a class="ema-noticiasDetail__file" href="${cur_file.getData()}" target="_blank">
+                                        ${dlFileEntry.getTitle()}
+                                    </a>
+                                </li>
+                                </#if>
+                            </#list>
                         </ul>
                     </div>
                 </#if>
