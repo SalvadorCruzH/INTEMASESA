@@ -1,0 +1,282 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "es_ES"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
+  "defaultLanguageId": "es_ES",
+  "fields": [
+    {
+      "labelAtStructureLevel": true,
+      "ddmStructureLayoutId": "",
+      "ddmStructureId": "",
+      "upgradedStructure": false,
+      "readOnly": false,
+      "label": {
+        "es_ES": "Tarjetas"
+      },
+      "type": "fieldset",
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Separator47233096\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Image52435919\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Radio65618793\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text77900666\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Campo22696208\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Campo12556959\"]}]}]",
+      "collapsible": false,
+      "showLabel": false,
+      "required": false,
+      "nestedFields": [
+        {
+          "rulesConditionDisabled": true,
+          "dataType": "",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Tarjetas"
+          },
+          "type": "separator",
+          "showLabel": false,
+          "required": false,
+          "repeatable": false,
+          "name": "Separator47233096",
+          "localizable": false,
+          "fieldReference": "Separator47233096",
+          "tip": {
+            "es_ES": "Crear un máximo de 5 tarjetas"
+          },
+          "style": {
+            "es_ES": ""
+          }
+        },
+        {
+          "dataType": "image",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Imagen"
+          },
+          "type": "image",
+          "showLabel": true,
+          "required": true,
+          "indexType": "text",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "repeatable": false,
+          "requiredDescription": true,
+          "name": "Image52435919",
+          "localizable": true,
+          "fieldReference": "image",
+          "tip": {
+            "es_ES": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Selección de color de fondo"
+          },
+          "type": "radio",
+          "showLabel": true,
+          "required": false,
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "inline": true,
+          "repeatable": false,
+          "name": "Radio65618793",
+          "options": [
+            {
+              "reference": "white",
+              "label": {
+                "es_ES": "Blanco"
+              },
+              "value": "Opción24278893"
+            },
+            {
+              "reference": "blue",
+              "label": {
+                "es_ES": "Azul"
+              },
+              "value": "Opción59291593"
+            },
+            {
+              "reference": "green",
+              "label": {
+                "es_ES": "Verde"
+              },
+              "value": "Opción79254879"
+            }
+          ],
+          "localizable": true,
+          "nativeField": false,
+          "fieldReference": "selectorColor",
+          "tip": {
+            "es_ES": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "showLabel": true,
+          "required": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción67043652",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción67043652"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "title",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Título"
+          },
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "name": "Text77900666",
+          "localizable": true,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "showLabel": true,
+          "required": true,
+          "displayStyle": "multiline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción67043652",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción67043652"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "description",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Descripcíon"
+          },
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "name": "Campo22696208",
+          "localizable": false,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "showLabel": true,
+          "required": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción67043652",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción67043652"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "link",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Enlace/URL"
+          },
+          "indexType": "keyword",
+          "fieldNamespace": "",
+          "visibilityExpression": "",
+          "name": "Campo12556959",
+          "localizable": true,
+          "dataSourceType": "manual"
+        }
+      ],
+      "repeatable": true,
+      "name": "Fieldset46435329",
+      "localizable": false,
+      "fieldReference": "tarjetas"
+    }
+  ]
+}

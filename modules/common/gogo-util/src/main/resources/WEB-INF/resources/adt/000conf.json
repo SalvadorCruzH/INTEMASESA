@@ -1,6 +1,6 @@
 [
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - administradorDocumentos",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",
@@ -12,7 +12,7 @@
         "uuid":"e49b87f4-202b-46ab-45a0-5ab4b5aa5331"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Listado 3 noticias Home",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",
@@ -24,7 +24,7 @@
         "uuid":"6f21456d-19a9-25b2-164c-9ea3f5552868"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Videos Corporativos",
         "type": "com.liferay.asset.kernel.model.AssetEntry",
         "displayType": "display",

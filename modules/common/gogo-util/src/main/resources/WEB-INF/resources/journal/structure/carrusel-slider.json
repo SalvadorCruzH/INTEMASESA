@@ -1,14 +1,14 @@
 {
   "definitionSchemaVersion": "2.0",
   "availableLanguageIds": [
-    "en_US"
+    "es_ES"
   ],
   "successPage": {
     "body": {},
     "title": {},
     "enabled": false
   },
-  "defaultLanguageId": "en_US",
+  "defaultLanguageId": "es_ES",
   "fields": [
     {
       "labelAtStructureLevel": true,
@@ -17,7 +17,7 @@
       "upgradedStructure": false,
       "readOnly": false,
       "label": {
-        "en_US": "CARRUSEL SLIDE"
+        "es_ES": "CARRUSEL SLIDE"
       },
       "type": "fieldset",
       "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image89335515\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text72598278\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text60855488\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text33704322\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text58382900\"]}]}]",
@@ -29,7 +29,7 @@
           "dataType": "image",
           "readOnly": false,
           "label": {
-            "en_US": "Imagen"
+            "es_ES": "Imagen"
           },
           "type": "image",
           "required": false,
@@ -43,14 +43,14 @@
           "localizable": true,
           "fieldReference": "imgCar_Slide",
           "tip": {
-            "en_US": ""
+            "es_ES": ""
           }
         },
         {
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
           "tooltip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "requireConfirmation": false,
           "type": "text",
@@ -61,27 +61,27 @@
           "repeatable": false,
           "nativeField": false,
           "confirmationLabel": {
-            "en_US": ""
+            "es_ES": ""
           },
           "fieldReference": "titleCar_Slide",
           "tip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "placeholder": {
-            "en_US": ""
+            "es_ES": ""
           },
           "direction": [
             "vertical"
           ],
           "confirmationErrorMessage": {
-            "en_US": ""
+            "es_ES": ""
           },
           "hideField": false,
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
           "label": {
-            "en_US": "Título"
+            "es_ES": "Título"
           },
           "indexType": "keyword",
           "visibilityExpression": "",
@@ -94,7 +94,7 @@
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
           "tooltip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "requireConfirmation": false,
           "type": "text",
@@ -105,27 +105,27 @@
           "repeatable": false,
           "nativeField": false,
           "confirmationLabel": {
-            "en_US": ""
+            "es_ES": ""
           },
           "fieldReference": "descCar_Slide",
           "tip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "placeholder": {
-            "en_US": ""
+            "es_ES": ""
           },
           "direction": [
             "vertical"
           ],
           "confirmationErrorMessage": {
-            "en_US": ""
+            "es_ES": ""
           },
           "hideField": false,
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
           "label": {
-            "en_US": "Descripción"
+            "es_ES": "Descripción"
           },
           "indexType": "keyword",
           "visibilityExpression": "",
@@ -138,7 +138,7 @@
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
           "tooltip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "requireConfirmation": false,
           "type": "text",
@@ -149,27 +149,27 @@
           "repeatable": false,
           "nativeField": false,
           "confirmationLabel": {
-            "en_US": ""
+            "es_ES": ""
           },
           "fieldReference": "titleLinkCarSlide",
           "tip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "placeholder": {
-            "en_US": ""
+            "es_ES": ""
           },
           "direction": [
             "vertical"
           ],
           "confirmationErrorMessage": {
-            "en_US": ""
+            "es_ES": ""
           },
           "hideField": false,
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
           "label": {
-            "en_US": "Título Enlace"
+            "es_ES": "Título Enlace"
           },
           "indexType": "keyword",
           "visibilityExpression": "",
@@ -182,7 +182,7 @@
           "labelAtStructureLevel": true,
           "ddmDataProviderInstanceId": [],
           "tooltip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "requireConfirmation": false,
           "type": "text",
@@ -193,27 +193,27 @@
           "repeatable": false,
           "nativeField": false,
           "confirmationLabel": {
-            "en_US": ""
+            "es_ES": ""
           },
           "fieldReference": "linkCarSlide",
           "tip": {
-            "en_US": ""
+            "es_ES": ""
           },
           "placeholder": {
-            "en_US": ""
+            "es_ES": ""
           },
           "direction": [
             "vertical"
           ],
           "confirmationErrorMessage": {
-            "en_US": ""
+            "es_ES": ""
           },
           "hideField": false,
           "autocomplete": false,
           "dataType": "string",
           "readOnly": false,
           "label": {
-            "en_US": "URL"
+            "es_ES": "URL"
           },
           "indexType": "keyword",
           "visibilityExpression": "",

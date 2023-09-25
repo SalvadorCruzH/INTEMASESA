@@ -43,7 +43,7 @@
             <h3 class="ema-noticia-tarjeta__titulo">
                 <a class="ema-noticia-tarjeta__link" href="${viewURL}">${title.getData()}</a>
             </h3>
-            <h4 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h4>
+            <div class="ema-noticia-tarjeta__subtitulo">${entradilla.getData()}</div>
         </div>
     </div>
 </div>

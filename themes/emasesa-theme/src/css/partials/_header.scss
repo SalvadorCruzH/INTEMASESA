@@ -1,91 +1,95 @@
-.i-header {
-    box-shadow: 0 m-rem(3px) m-rem(6px) rgba(0, 0, 0, 0.16);
-    @include media_breakpoint_up(xl) {
-        box-shadow: none
-    }
-    &__wrapper {
-        display: flex;
-        justify-content: space-between;
-        max-width: 1920px;
-        padding: m-rem(14px) 0 m-rem(10px);
-        align-items: center;
-        border-bottom: m-rem(1px) solid $color-light-grey;
-        margin-left: auto;
-        margin-right: auto;
+.i-mainWrapper {
+    .i-header {
+        box-shadow: 0 m-rem(3px) m-rem(6px) rgba(0, 0, 0, 0.16);
         @include media_breakpoint_up(xl) {
-            padding: m-rem(27px) m-rem(35px) m-rem(4px);
-            border-bottom: none;
+            box-shadow: none
         }
-    }
-    &__btnMenu {
-        @include media_breakpoint_up(xl) {
-            display: none;
-        }
-    }
-    &__logo {
-        display: flex;
-        align-items: center;
-    }
-    &__logoLink {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        @include media_breakpoint_up(xl) {
-            flex-direction: row;
-            margin-right: m-rem(35px);
-        }
-        &:hover {
-            text-decoration: none;
-        }
-    }
-    &__navSearch {
-        display: flex;
-        align-items: center;
-    }
-    &__btnAdmin {
-        display: none;
-        
-        @include media_breakpoint_up(xl) {
-            display: block;
-            position: absolute;
-            right: 0;
-            border-radius: 30px 0% 0% 30px;
-            padding: 12px 12px 13px 31px;
-            color: #A8C855;
-            background-color: #000;
-            border: none;
-            box-shadow: 0px 3px 6px #00000029;
-            top: 210px;
-            -webkit-transition: all 0.3s ease;
-            -moz-transition: all 0.3s ease;
-            -o-transition: all 0.3s ease;
-            transition: all 0.3s ease;
-        }
-        &:hover {
-            .i-header__btnOut {
-                &--text {
-                    color:  white;
-                }
+        &__wrapper {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1920px;
+            padding: m-rem(14px) 0 m-rem(10px);
+            align-items: center;
+            border-bottom: m-rem(1px) solid $color-light-grey;
+            margin-left: auto;
+            margin-right: auto;
+            @include media_breakpoint_up(xl) {
+                padding: m-rem(27px) m-rem(35px) m-rem(4px);
+                border-bottom: none;
             }
         }
-        
-        &.open {
-            .i-header__btnIn {
+        &__btnMenu {
+            @include media_breakpoint_up(xl) {
                 display: none;
             }
-            .i-header__btnOut {
-                display: inline-block;
-                &--text {
-                    color:  white;
+        }
+        &__logo {
+            display: flex;
+            align-items: center;
+        }
+        &__logoLink {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            @include media_breakpoint_up(xl) {
+                flex-direction: row;
+                margin-right: m-rem(35px);
+            }
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        &__navSearch {
+            display: flex;
+            align-items: center;
+        }
+        &__btnAdmin {
+            display: none;
+    
+            @include media_breakpoint_up(xl) {
+                display: block;
+                position: absolute;
+                right: 0;
+                border-radius: 30px 0% 0% 30px;
+                padding: 12px 12px 13px 31px;
+                color: #A8C855;
+                background-color: #000;
+                border: none;
+                box-shadow: 0px 3px 6px #00000029;
+                top: 210px;
+                z-index: 1;
+            -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            &:hover {
+                .i-header__btnOut {
+                    &--text {
+                        color:  white;
+                    }
                 }
             }
-            
-        }
-        .i-header__btnIn {
-            display: inline-block;
-        }
-        .i-header__btnOut {
-            display: none;
-        }
-    }
+    
+            &.open {
+                .i-header__btnIn {
+                    display: none;
+                }
+                .i-header__btnOut {
+                    display: inline-block;
+                    &--text {
+                        color:  white;
+                    }
+                }
+    
+            }
+            .i-header__btnIn {
+                display: inline-block;
+            }
+            .i-header__btnOut {
+                display: none;
+            }
+        }    }
+
 }
+
