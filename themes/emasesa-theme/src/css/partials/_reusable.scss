@@ -45,6 +45,38 @@
     align-items: center;
     margin-bottom: 0;
   }
+  .m-list-dashed {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+    padding-left: 0;
+    li {
+      padding-left: 1rem;
+      border-bottom: m-rem(1px) dashed $color-dashed;
+      padding-bottom: 1rem;
+      padding: 1rem 0 1.5rem 1rem;
+    }
+  }
+  .m-list-dotted {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    li {
+      position: relative;
+      padding-left: 1rem;
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background-color: $color-aux-blue;
+      }
+    }
+  }
 
   /* display flex alineados */
 
