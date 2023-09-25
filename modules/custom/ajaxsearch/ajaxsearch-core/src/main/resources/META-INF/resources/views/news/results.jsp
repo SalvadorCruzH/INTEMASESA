@@ -2,7 +2,7 @@
 
 <div class="m-searchAjax m-searchAjax--results">
     <div>
-        <div id="as-total-items" class="d-none">
+        <div id="as-total-items">
             <!-- EMPTY BY DEFAULT -->
         </div>
 
@@ -20,11 +20,11 @@
 
 <template id="as-total-items-template">
     <div class="m-ajaxresults-header-element">
-        #total-items# noticia con fechas de #fechaDesde# a #fechaHasta#
+        #total-items# noticia
     </div>
 
     <div class="m-ajaxresults-header-elements">
-        #total-items# noticias con fechas de #fechaDesde# a #fechaHasta#
+        #total-items# noticias
     </div>
 
     <div class="d-none"> #items-page# elementos por página</div>
@@ -45,4 +45,26 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {}
 }
+//cuando todo se haya cargado
+$(document).ready(function () {
+    //buscar select de paginacion
+    var options = $(".results-pagination-select-container .results-pagination-select option");
+    console.log(options);
+    //por cada option
+    for (var i = 0; i < options.length; i++) {
+        var urlParams = new URLSearchParams(window.location.search);
+        var curPage = urlParams.get('currentPage');
+        if (curPage == null) {
+            curPage = 1;
+        }
+        //coger el valor
+        var value = options[i].value;
+        //si es el valor de la pagina actual
+        if (value == curPage) {
+            //ponerlo como selected
+            options[i].selected = true;
+        }
+    }
+
+});
 </script>
