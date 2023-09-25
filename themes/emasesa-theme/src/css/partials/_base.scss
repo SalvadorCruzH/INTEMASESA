@@ -17,6 +17,15 @@
     margin-bottom: 0;
   }
 
+  a {
+    color: $color-link;
+    transition: color .3s ease;
+    &:hover,
+    &:focus {
+      color: $color-hover-blue;
+    }
+  }
+
   h1,
   h2,
   h3,
@@ -34,7 +43,7 @@
   h2 i,
   h3 i,
   h4 i,
-  strong i, 
+  strong i,
   b i {
     @include font_base-bold-italic;
   }
@@ -84,6 +93,7 @@
   .fa-regular {
     color: $color-text;
   }
+<<<<<<< HEAD
   .linkify:hover {
       cursor: pointer;
       box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
@@ -96,6 +106,7 @@
       outline: none;
       box-shadow: none !important;
   }
+=======
+>>>>>>> dfb1f377804edc29a7d1ff7dd2a6c72aa4f8c99d
 }
 
-  
