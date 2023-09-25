@@ -96,7 +96,7 @@
                                     />
                                 <li class="ema-noticiasDetail__filesLi">
                                     <a class="ema-noticiasDetail__file" href="${cur_file.getData()}" target="_blank">
-                                        ${dlFileEntry.getTitle()}<span><#--  PLACEHOLDER EXTENSION AND SIZE FILE  --></span
+                                        ${dlFileEntry.getTitle()}<span><@emasesa.docSize doc=cur_file.getData() locale=locale/></span
                                     </a>
                                 </li>
                                 </#if>
@@ -155,7 +155,7 @@
                 </div>
             </#if>
             <div class="">
-            <#--  PLACEHOLDER BUTTON GO BACK  -->
+                <@emasesa.header title=title.getData()/>
             </div>    
         </div>
     </div>
