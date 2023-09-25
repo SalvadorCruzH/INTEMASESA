@@ -58,5 +58,15 @@
     "structureFile":"carrusel-slider.json",
     "comment": "Carrusel Slider banner para la Homepage",
     "uuid": "55a81d81-0eea-bbca-7f6c-d840167da8a4"
+  },
+  {
+    "screenName": "admin",
+    "name": "EMA - Boletín",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-BOLETIN",
+    "structureFile": "boletin.json",
+    "comment": "Estructura para envío de Boletines",
+    "uuid": "082198cd-c974-7965-1cad-e3f06576cff9"
   }
 ]

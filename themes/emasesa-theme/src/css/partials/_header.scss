@@ -45,7 +45,7 @@
         }
         &__btnAdmin {
             display: none;
-            
+    
             @include media_breakpoint_up(xl) {
                 display: block;
                 position: absolute;
@@ -57,7 +57,8 @@
                 border: none;
                 box-shadow: 0px 3px 6px #00000029;
                 top: 210px;
-                -webkit-transition: all 0.3s ease;
+                z-index: 1;
+            -webkit-transition: all 0.3s ease;
                 -moz-transition: all 0.3s ease;
                 -o-transition: all 0.3s ease;
                 transition: all 0.3s ease;
@@ -69,7 +70,7 @@
                     }
                 }
             }
-            
+    
             &.open {
                 .i-header__btnIn {
                     display: none;
@@ -80,7 +81,7 @@
                         color:  white;
                     }
                 }
-                
+    
             }
             .i-header__btnIn {
                 display: inline-block;
@@ -88,6 +89,7 @@
             .i-header__btnOut {
                 display: none;
             }
-        }
-    }
+        }    }
+
 }
+

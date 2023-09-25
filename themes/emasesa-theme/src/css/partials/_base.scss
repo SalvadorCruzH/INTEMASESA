@@ -25,6 +25,15 @@
     }
   }
 
+  a {
+    color: $color-link;
+    transition: color .3s ease;
+    &:hover,
+    &:focus {
+      color: $color-hover-blue;
+    }
+  }
+
   h1,
   h2,
   h3,
@@ -42,7 +51,7 @@
   h2 i,
   h3 i,
   h4 i,
-  strong i, 
+  strong i,
   b i {
     @include font_base-bold-italic;
   }
@@ -106,4 +115,3 @@
   }
 }
 
-  
