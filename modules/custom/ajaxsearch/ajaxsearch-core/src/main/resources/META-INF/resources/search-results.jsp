@@ -36,6 +36,15 @@
         var _setCurrentPage = function(numPage){
             $("#asCurrentPage").val(numPage)
             $('html, body').animate({scrollTop:0}, '300');
+
+            //buscar select de paginacion y poner el valor selected
+            var options = $(".results-pagination-select-container .results-pagination-select option");
+            for (var i = 0; i < options.length; i++) {
+                var value = options[i].value;
+                if (value == numPage) {
+                    $(options[i]).attr("selected", "selected");
+                }
+            }
         }
 
         var _getCurrentPage = function(reset) {
@@ -277,6 +286,23 @@
             itemPlaced.append(templateHtmlString);
         }
 
+        /** SELECT PAGINATION **/
+        var _appendSelectToPagination = function(curTotal) {
+            $(".results-pagination-select-container").remove();
+            var paginationContainer = $(".results-pagination-wrapper");
+            var newSelect = $("<select class='results-pagination-select'></select>");
+            var newSelectContainer = $("<div class='results-pagination-select-container'></div>");
+            for (var i = 1; i <= curTotal; i++) {
+                var option = $("<option value='"+i+"'><liferay-ui:message key='es.emasesa.intranet.ajaxsearch.pagination.page' /> "+i+" <liferay-ui:message key='es.emasesa.intranet.ajaxsearch.pagination.of' /> "+curTotal+"</option>");
+                newSelect.append(option);
+            }
+            newSelect.on("change", function(){
+                _paginationFeature.go($(this).val());
+            });
+            newSelectContainer.append(newSelect);
+            paginationContainer.prepend(newSelectContainer);
+        }
+
         /** PAGINATION **/
         var _paginationFeature = (function () {
 
@@ -299,7 +325,7 @@
             };
 
             var _getPagContainer = function() {
-                return $('#camara_pagination');
+                return $('#emasesa_pagination');
             }
 
             var _goToPage = function(pageNum, callback) {
@@ -310,13 +336,16 @@
                 var options = {
                     dataSource: _getSource(curTotal),
                     pageSize: pageSize,
-                    pageNumber:curPage,
+                    pageNumber: curPage,
                     resetPageNumberOnInit: true,
-                    hideOnlyOnePage: true,
+                    hideOnlyOnePage: false,
                     autoHidePrevious: false,
                     autoHideNext: false,
                     autoHideFirst: false,
                     autoHideLast: false,
+                    showPageNumbers: false,
+                    nextText:"<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.pagination.next' /><i class='fa-solid fa-chevron-right fa-xs'></i>",
+                    prevText:"<i class='fa-solid fa-chevron-left fa-xs'></i><liferay-ui:message key='es.emasesa.intranet.ajaxsearch.pagination.prev' />",
 
                     callback: function (response, pagination) {
                         var dataHtml = '<ul>';
@@ -327,6 +356,9 @@
                         _getPagContainer().prev().html(dataHtml);
                         _setCurrentPage(pagination.pageNumber);
                         _doSearch(false, false, false);
+                    },
+                    afterRender: function(){
+                        _appendSelectToPagination(Math.ceil(curTotal/pageSize))
                     }
                 };
 
@@ -378,6 +410,7 @@
         }
 
         var _reloadPagination = function(curPage, curTotal, pageSize) {
+            console.log("reloadPagination", curPage, curTotal, pageSize);
             _paginationFeature.init(curPage, curTotal, pageSize);
             $("#"+_totalItemsId).focus();
         }
