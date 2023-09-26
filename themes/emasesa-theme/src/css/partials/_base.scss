@@ -19,21 +19,14 @@
   a {
     text-decoration: underline;
     color: $color-primary;
-    &:hover {
+    transition: color .3s ease;
+    &:hover,
+    &:focus {
       text-decoration: none;
       color: $color-hover-blue;
     }
   }
-
-  a {
-    color: $color-link;
-    transition: color .3s ease;
-    &:hover,
-    &:focus {
-      color: $color-hover-blue;
-    }
-  }
-
+  
   h1,
   h2,
   h3,

@@ -144,6 +144,20 @@
       background-color: transparent;
     }
   }
+  /* Colors brand */
+  .ema-color {
+    &--blue {
+      color: $color-aux-blue;
+      &:hover {
+        color: $color-hover-blue;
+        .i-icon {
+          &--blue {
+            color: $color-hover-blue;
+          }
+        }
+      }
+    }
+  }
 
   /* Titles */
 
@@ -169,6 +183,7 @@
 
 
 }
+
   /* Icons */
   .fa-solid,
   .fa-regular {
@@ -181,6 +196,9 @@
       }
       &--blue {
         color: $color-aux-blue;
+        &:hover {
+          color: $color-hover-blue;
+        }
       }
       &--white {
         color: $color-white;
