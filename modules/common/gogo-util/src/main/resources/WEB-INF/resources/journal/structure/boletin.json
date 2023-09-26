@@ -1,0 +1,150 @@
+{
+    "definitionSchemaVersion": "2.0",
+    "availableLanguageIds": [
+        "es_ES"
+    ],
+    "successPage": {
+        "body": {},
+        "title": {},
+        "enabled": false
+    },
+    "defaultLanguageId": "es_ES",
+    "fields": [
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": true,
+            "displayStyle": "singleline",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción91285338",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción91285338"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "boletinTitle",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": "Título del boletín"
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Título"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text89626710",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "dataType": "image",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Imagen de cabecera"
+            },
+            "type": "image",
+            "showLabel": true,
+            "required": true,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "text",
+            "repeatable": false,
+            "requiredDescription": false,
+            "name": "Image56862516",
+            "localizable": true,
+            "fieldReference": "boletinHeaderImage",
+            "tip": {
+                "es_ES": "Imagen para la cabecera"
+            }
+        },
+        {
+            "labelAtStructureLevel": true,
+            "dataType": "date",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Fecha"
+            },
+            "type": "date",
+            "showLabel": true,
+            "required": true,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "repeatable": false,
+            "name": "Date58667956",
+            "localizable": true,
+            "nativeField": false,
+            "fieldReference": "boletinFecha",
+            "tip": {
+                "es_ES": "Fecha del boletín"
+            }
+        },
+        {
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Índice"
+            },
+            "type": "rich_text",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "text",
+            "repeatable": false,
+            "name": "RichText34341541",
+            "localizable": true,
+            "fieldReference": "boletinIndice",
+            "tip": {
+                "es_ES": ""
+            }
+        },
+        {
+            "dataType": "journal-article",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Nota de prensa"
+            },
+            "type": "journal_article",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "repeatable": true,
+            "name": "JournalArticle21174023",
+            "localizable": true,
+            "fieldReference": "boletinNotaPrensa",
+            "tip": {
+                "es_ES": "Nota de prensa relacionada"
+            }
+        }
+    ]
+}

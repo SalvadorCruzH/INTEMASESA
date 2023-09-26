@@ -21,10 +21,9 @@
     />
 
 <div class="ema-noticia-tarjeta">
-    <div class="ema-noticia-tarjeta__imgContainer">
-        <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
-            <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
-        </#if>
+
+    <div class="ema-noticia-tarjeta__imgContainer" style="background-image:url('<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != '' >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}/logos/logo-emasesa-color.svg</#if>');">
+        <img alt="" class="ema-noticia-tarjeta__img" src='<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "" >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}//logos/logo-emasesa-color.svg</#if>'/>  
     </div>
     <div class="ema-noticia-tarjeta__contenido">
         <#if categorias?has_content>
@@ -43,7 +42,7 @@
             <h3 class="ema-noticia-tarjeta__titulo">
                 <a class="ema-noticia-tarjeta__link" href="${viewURL}">${title.getData()}</a>
             </h3>
-            <h4 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h4>
+            <div class="ema-noticia-tarjeta__subtitulo">${entradilla.getData()}</div>
         </div>
     </div>
 </div>

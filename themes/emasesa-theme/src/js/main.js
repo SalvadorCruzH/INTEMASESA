@@ -130,7 +130,7 @@ $(function() {
 		if((window.innerWidth > 1200) && (_body.classList.contains("menu-open"))) {
 			_body.classList.remove("menu-open");
 		  }
-		  if((window.innerWidth < 1200) && (_mobileNavigation.classList.contains("show-navigation"))) {
+		  if((window.innerWidth < 1200) && (_mobileNavigation) &&(_mobileNavigation.classList.contains("show-navigation"))) {
 			_body.classList.add("menu-open");
 		  }
 	}
@@ -217,11 +217,13 @@ var changeBtnAdminTareas = (function () {
 	var _btnAdminTask = document.querySelector('#i-btnAdminTareas');
 
 	var _btnAdminToggle = function() {
-		_btnAdminTask.addEventListener("click", function () {
-			_btnAdminTask.classList.toggle('open');
-			// llamar al portlet admin tareas
-
-		});
+		if(_btnAdminTask){
+			_btnAdminTask.addEventListener("click", function () {
+				_btnAdminTask.classList.toggle('open');
+				// llamar al portlet admin tareas
+	
+			});
+		}
 	}
 
 

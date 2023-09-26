@@ -1,0 +1,363 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "es_ES"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
+  "defaultLanguageId": "es_ES",
+  "fields": [
+    {
+      "labelAtStructureLevel": true,
+      "ddmStructureLayoutId": "",
+      "ddmStructureId": "",
+      "upgradedStructure": false,
+      "readOnly": false,
+      "label": {
+        "es_ES": "Tarjeta Conjunto"
+      },
+      "type": "fieldset",
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Separator21149659\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Radio10252530\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Radio63344130\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Image94476660\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text84449729\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Campo35356457\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Campo57256884\"]}]}]",
+      "collapsible": false,
+      "required": false,
+      "showLabel": false,
+      "nestedFields": [
+        {
+          "rulesConditionDisabled": true,
+          "dataType": "",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Tarjeta"
+          },
+          "type": "separator",
+          "required": false,
+          "showLabel": true,
+          "repeatable": false,
+          "name": "Separator21149659",
+          "localizable": false,
+          "fieldReference": "tarjeta",
+          "tip": {
+            "es_ES": "Recomendable 5 tarjetas maximas."
+          },
+          "style": {
+            "es_ES": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Selecctor color de fondo tarjeta"
+          },
+          "type": "radio",
+          "required": true,
+          "showLabel": true,
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "inline": true,
+          "repeatable": false,
+          "name": "Radio10252530",
+          "options": [
+            {
+              "reference": "blue",
+              "label": {
+                "es_ES": "Azul"
+              },
+              "value": "Opción99077956"
+            },
+            {
+              "reference": "green",
+              "label": {
+                "es_ES": "Verde"
+              },
+              "value": "Opción97931111"
+            },
+            {
+              "reference": "yellow",
+              "label": {
+                "es_ES": "Amarillo"
+              },
+              "value": "Opción72422572"
+            },
+            {
+              "reference": "orange",
+              "label": {
+                "es_ES": "Naranja"
+              },
+              "value": "Opción83384227"
+            },
+            {
+              "reference": "gray",
+              "label": {
+                "es_ES": "Gris"
+              },
+              "value": "Opción73541780"
+            },
+            {
+              "reference": "cyan",
+              "label": {
+                "es_ES": "Cyan"
+              },
+              "value": "Opción97495844"
+            }
+          ],
+          "localizable": true,
+          "nativeField": false,
+          "fieldReference": "color",
+          "tip": {
+            "es_ES": ""
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Selector de icono"
+          },
+          "type": "radio",
+          "required": false,
+          "showLabel": true,
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "inline": true,
+          "repeatable": false,
+          "name": "Radio63344130",
+          "options": [
+            {
+              "reference": "envelopes-bulk",
+              "label": {
+                "es_ES": "Sobres"
+              },
+              "value": "Opción54530552"
+            },
+            {
+              "reference": "table-tennis-paddle-ball",
+              "label": {
+                "es_ES": "Padel"
+              },
+              "value": "Opción53541331"
+            },
+            {
+              "reference": "water",
+              "label": {
+                "es_ES": "Agua"
+              },
+              "value": "Opción98479788"
+            },
+            {
+              "reference": "bullhorn",
+              "label": {
+                "es_ES": "Megafono"
+              },
+              "value": "Opción53495675"
+            },
+            {
+              "reference": "comments",
+              "label": {
+                "es_ES": "Comentarios"
+              },
+              "value": "Opción42242443"
+            }
+          ],
+          "localizable": false,
+          "nativeField": false,
+          "fieldReference": "selectorIcono",
+          "tip": {
+            "es_ES": ""
+          }
+        },
+        {
+          "dataType": "image",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Imagen"
+          },
+          "type": "image",
+          "required": false,
+          "showLabel": true,
+          "indexType": "text",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "repeatable": false,
+          "requiredDescription": true,
+          "name": "Image94476660",
+          "localizable": false,
+          "fieldReference": "image",
+          "tip": {
+            "es_ES": "Este campo prevalece sobre el anterior de Icono."
+          }
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": true,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción26610572",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción26610572"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "titulo",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Título"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Text84449729",
+          "localizable": true,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": true,
+          "showLabel": true,
+          "displayStyle": "multiline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción26610572",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción26610572"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "description",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Descripción"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Campo35356457",
+          "localizable": true,
+          "dataSourceType": "manual"
+        },
+        {
+          "labelAtStructureLevel": true,
+          "ddmDataProviderInstanceId": [],
+          "tooltip": {
+            "es_ES": ""
+          },
+          "requireConfirmation": false,
+          "type": "text",
+          "required": true,
+          "showLabel": true,
+          "displayStyle": "singleline",
+          "ddmDataProviderInstanceOutput": [],
+          "repeatable": false,
+          "options": [
+            {
+              "reference": "Opción26610572",
+              "label": {
+                "es_ES": "Opción"
+              },
+              "value": "Opción26610572"
+            }
+          ],
+          "nativeField": false,
+          "confirmationLabel": {
+            "es_ES": ""
+          },
+          "fieldReference": "enlace",
+          "tip": {
+            "es_ES": ""
+          },
+          "placeholder": {
+            "es_ES": ""
+          },
+          "direction": [
+            "vertical"
+          ],
+          "confirmationErrorMessage": {
+            "es_ES": ""
+          },
+          "hideField": false,
+          "autocomplete": false,
+          "dataType": "string",
+          "readOnly": false,
+          "label": {
+            "es_ES": "Enlace/Url"
+          },
+          "indexType": "keyword",
+          "visibilityExpression": "",
+          "fieldNamespace": "",
+          "name": "Campo57256884",
+          "localizable": true,
+          "dataSourceType": "manual"
+        }
+      ],
+      "repeatable": true,
+      "name": "Fieldset34548852",
+      "localizable": false,
+      "fieldReference": "tarjetaConjunto"
+    }
+  ]
+}
