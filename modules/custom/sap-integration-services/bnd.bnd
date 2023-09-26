@@ -1,0 +1,12 @@
+Bundle-Name: sap-service
+Bundle-SymbolicName: sap.service
+Bundle-Version: 1.0.0
+-metatype: *
+
+Export-Package: \
+    es.emasesa.intranet.*,\
+
+Import-Package:\*;resolution:=optional
+
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
+-noimportjava: true
