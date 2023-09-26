@@ -104,7 +104,7 @@
         "structureUuid": "55a81d81-0eea-bbca-7f6c-d840167da8a4"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name": "EMA - Boletín",
         "templateKey": "EMA-BOLETIN",
         "structureKey": "EMA-BOLETIN",
@@ -117,7 +117,7 @@
         "structureUuid": "082198cd-c974-7965-1cad-e3f06576cff9"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name": "EMA - Item relacionado",
         "templateKey": "EMA-ITEM-RELACIONADO",
         "structureKey": "EMA-NOTICIA",
