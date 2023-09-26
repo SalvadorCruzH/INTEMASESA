@@ -57,6 +57,9 @@
                 <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
                     <div class="ema-noticiasDetail__wrapperImg">
                         <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
+                        <#if (imagenPrincipal.pieFotoPrincipal.getData())??>
+                            <p class="ema-noticia-tarjeta__pie">${imagenPrincipal.pieFotoPrincipal.getData()}</p>
+                        </#if>
                     </div>
                 </#if>
             </div>

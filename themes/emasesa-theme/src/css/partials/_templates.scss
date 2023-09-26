@@ -110,7 +110,6 @@
             @include media-breakpoint-up(xl) {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 4rem;
             } 
         }
         &__wrapperTexts--img,
@@ -193,6 +192,13 @@
                 @include media-breakpoint-up(md) {
                     height: m-rem(435px);
                 }
+            }
+            &__pie {
+                font-size: m-rem(16px);
+                display: flex;
+                justify-content: flex-end;
+                padding-top: 1rem;
+                padding-right: 0.5rem;
             }
 
         }
