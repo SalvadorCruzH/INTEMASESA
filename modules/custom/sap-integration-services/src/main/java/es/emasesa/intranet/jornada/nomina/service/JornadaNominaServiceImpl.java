@@ -10,10 +10,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.Handler;
-import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.MessageContext;
-import javax.xml.ws.handler.PortInfo;
 
 import com.sap.document.sap.soap.functions.mc_style.*;
 import org.osgi.framework.BundleContext;
@@ -21,8 +18,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
-@Component(immediate = true, property = {}, service = ConsultaCertificadoRet.class)
-public class ConsultaCertificadoRet {
+@Component(immediate = true, property = {}, service = JornadaNominaServiceImpl.class)
+public class JornadaNominaServiceImpl {
 
 
    public Bapireturn1 peticionHorasExtras(String idEmpleado, String fechaInicio, String fechaFin, String tipoRetribucion)  {

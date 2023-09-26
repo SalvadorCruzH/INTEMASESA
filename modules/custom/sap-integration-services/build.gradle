@@ -1,5 +1,3 @@
-
-
 plugins {
 	id 'war'
 	id "uk.co.boothen.gradle.wsimport" version "0.21"
@@ -28,10 +26,11 @@ war {
 	enabled= true
 }
 
-wsimport {
+/*wsimport {
 	includeDependencies = true
 	wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated/java"
-}
+}*/
 

@@ -30,8 +30,40 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZPeActJornadaNomina }
+     * Create an instance of {@link ZPeEmpleadoEstructura }
      * 
+     */
+    public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
+        return new ZPeEmpleadoEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoEstructuraResponse }
+     * 
+     */
+    public ZPeEmpleadoEstructuraResponse createZPeEmpleadoEstructuraResponse() {
+        return new ZPeEmpleadoEstructuraResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoEstructura }
+     * 
+     */
+    public TableOfZpeStEmpleadoEstructura createTableOfZpeStEmpleadoEstructura() {
+        return new TableOfZpeStEmpleadoEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoEstructura }
+     * 
+     */
+    public ZpeStEmpleadoEstructura createZpeStEmpleadoEstructura() {
+        return new ZpeStEmpleadoEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZPeActJornadaNomina }
+     *
      */
     public ZPeActJornadaNomina createZPeActJornadaNomina() {
         return new ZPeActJornadaNomina();
@@ -39,7 +71,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStActJornadaNomina }
-     * 
+     *
      */
     public ZpeStActJornadaNomina createZpeStActJornadaNomina() {
         return new ZpeStActJornadaNomina();
@@ -47,7 +79,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeActJornadaNominaResponse }
-     * 
+     *
      */
     public ZPeActJornadaNominaResponse createZPeActJornadaNominaResponse() {
         return new ZPeActJornadaNominaResponse();
@@ -55,7 +87,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Bapireturn1 }
-     * 
+     *
      */
     public Bapireturn1 createBapireturn1() {
         return new Bapireturn1();
