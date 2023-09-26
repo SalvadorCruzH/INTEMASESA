@@ -10,7 +10,8 @@
 <#assign originalLocale = .locale>
 <#setting locale = localeUtil.getDefault()>
 <#assign displaydate = displaydate?datetime("EEE, d MMM yyyy HH:mm:ss Z")>
-<#assign locale = originalLocale>
+
+
 
 
 <#assign journalContentId = "jc" + articleId />
@@ -63,6 +64,8 @@
                 <#if (cuerpo.getData())??>
                     ${cuerpo.getData()}
                 </#if>
+            </div>
+            <div class="ema-noticiasDetail__wrapperfilesLinks">
                 <#if campoUrl.getSiblings()?has_content>
                     <div class="ema-noticiasDetail__listLinksWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Enlaces relacionados</h3>
@@ -95,15 +98,14 @@
                                         dlFileEntry = dLFileEntryLocalService.fetchDLFileEntryByUuidAndGroupId(uuid,groupIdDoc?number)
                                     />
                                 <li class="ema-noticiasDetail__filesLi">
-                                    <a class="ema-noticiasDetail__file" href="${cur_file.getData()}" target="_blank">
-                                        ${dlFileEntry.getTitle()}<span><@emasesa.docSize doc=cur_file.getData() locale=locale/></span
-                                    </a>
+                                    <@emasesa.docSize doc=cur_file.getData() locale=locale/>
                                 </li>
                                 </#if>
                             </#list>
                         </ul>
                     </div>
                 </#if>
+            </div>
                 <#if imgVideoGaleria.getSiblings()?has_content>
                 <div class="ema-noticiasDetail__wrapperGaleria">
                     <h3 class="ema-noticiasDetail__galeriaTitle">Galería Multimedia</h3>
@@ -143,18 +145,18 @@
                     </div>
                 </div>
                 </#if>
-            </div>
+       
             <#if (autor.getData())?? || (departamento.getData())??>
                 <div class="ema-noticiasDetail__footer">
                     <#if (departamento.getData())??>
-                        <p><@liferay.language key="es.emasesa.intranet.common.departamento"/>: ${departamento.getData()}</p>
+                        <p lass="pr-3"><span class="text-uppercase"><@liferay.language key="es.emasesa.intranet.common.departamento"/></span>: ${departamento.getData()}</p>
                     </#if>
                     <#if (autor.getData())??>
-                        <p><@liferay.language key="es.emasesa.intranet.common.autor"/>: ${autor.getData()}.</p>
+                        <p class=""><span class="text-uppercase"><@liferay.language key="es.emasesa.intranet.common.autor"/></span>: ${autor.getData()}.</p>
                     </#if>
                 </div>
             </#if>
-            <div class="">
+            <div class="ema-go-back">
                 <@emasesa.header title=title.getData()/>
             </div>    
         </div>
