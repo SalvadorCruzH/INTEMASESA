@@ -8,17 +8,25 @@
             grid-column-gap: m-rem(55px);
         }
         &__imgContainer {
-
-        }
-        &__img {
-            height: m-rem(435px);
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: m-rem(435px);
+            max-height: m-rem(435px);
             width: 100%;
             max-width: 100%;
             border-radius: m-rem(40px);
-            object-fit: cover;
-            @include media-breakpoint-up(md) {
+          
+        }
+        &__img {
+            display: none;
+            // height: m-rem(435px);
+            // width: 100%;
+            // max-width: 100%;
+            // border-radius: m-rem(40px);
+            // object-fit: cover;
+            // @include media-breakpoint-up(md) {
                 
-            }
+            // }
         }
         &__contenido {
             
@@ -96,7 +104,7 @@
 
     /* Noticia detail */
     .ema-noticiasDetail {
-        padding: m-rem(53px) 0 m-rem(95px);
+        padding: m-rem(53px) 0 m-rem(120px);
         &__wrapperTitleImg {
             margin-bottom: 2rem;
             @include media-breakpoint-up(xl) {
@@ -110,6 +118,9 @@
             @include media-breakpoint-up(xl) {
                 flex-basis: calc(50% - 3rem);
             }
+        }
+        &__wrapperBody {
+            margin-bottom: m-rem(100px);
         }
         &__antetitulo {
             @include font_base;
@@ -172,13 +183,29 @@
                     line-height: m-rem(32px);
                 }
             }
+            &__img {
+                display: block;
+                height: m-rem(240px);
+                width: 100%;
+                max-width: 100%;
+                border-radius: m-rem(40px);
+                object-fit: cover;
+                @include media-breakpoint-up(md) {
+                    height: m-rem(435px);
+                }
+            }
 
         }
         .ema-carousel-icons {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
             margin-bottom: m-rem(20px);
+            padding-top: 1rem;
+            @include media-breakpoint-up(md) {
+                justify-content: flex-end;
+                padding-top: 0;
+            }
         }
         .ema-slide-btn {
             border-radius: 50%;
@@ -230,6 +257,15 @@
         &__footer {
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding-top: 2rem;
+            margin-bottom: 4rem;
+            border-top: m-rem(1px) solid $color-dashed;
+        }
+        .ema-go-back {
+            font-size: m-rem(20px);
+            line-height: m-rem(26px);
         }
         
     }
