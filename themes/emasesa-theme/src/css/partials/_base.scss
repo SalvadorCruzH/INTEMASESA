@@ -39,6 +39,16 @@
   b i {
     @include font_base-bold-italic;
   }
+  h1 i.i-icon,
+  h2 i.i-icon,
+  h3 i.i-icon,
+  h4 i.i-icon,
+  strong i.i-icon,
+  b i.i-icon {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-style: normal;
+  }
   em {
     @include font_base-italic;
   }
