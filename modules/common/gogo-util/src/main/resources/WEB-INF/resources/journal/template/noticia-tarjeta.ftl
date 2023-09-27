@@ -22,8 +22,8 @@
 
 <div class="ema-noticia-tarjeta">
 
-    <div class="ema-noticia-tarjeta__imgContainer" style="background-image:url('<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != '' >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}/logos/logo-emasesa-color.svg</#if>');">
-        <img alt="" class="ema-noticia-tarjeta__img" src='<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "" >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}//logos/logo-emasesa-color.svg</#if>'/>  
+    <div class="ema-noticia-tarjeta__imgContainer" style="background-image:url('<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != '' >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}/logos/imagen-generica-noticia.png</#if>');">
+        <img alt="" class="ema-noticia-tarjeta__img" src='<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "" >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}/logos/imagen-generica-noticia.png</#if>'/>  
     </div>
     <div class="ema-noticia-tarjeta__contenido">
         <#if categorias?has_content>
