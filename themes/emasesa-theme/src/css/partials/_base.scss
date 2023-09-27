@@ -17,12 +17,12 @@
     margin-bottom: 0;
   }
   a {
-    text-decoration: underline;
+    text-decoration: none;
     color: $color-primary;
     transition: color .3s ease;
     &:hover,
     &:focus {
-      text-decoration: none;
+      text-decoration: underline;
       color: $color-hover-blue;
     }
   }
