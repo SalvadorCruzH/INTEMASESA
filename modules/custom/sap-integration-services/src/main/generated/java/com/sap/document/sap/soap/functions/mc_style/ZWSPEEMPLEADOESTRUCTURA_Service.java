@@ -17,23 +17,24 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_ESTRUCTURA", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_ESTRUCTURA", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "WEB-INF/classes/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl")
 public class ZWSPEEMPLEADOESTRUCTURA_Service
     extends Service
 {
 
     private final static URL ZWSPEEMPLEADOESTRUCTURA_WSDL_LOCATION;
     private final static WebServiceException ZWSPEEMPLEADOESTRUCTURA_EXCEPTION;
-    private final static QName ZWSPEEMPLEADOESTRUCTURA_QNAME = new QName("urn:sap-com:document:sap:soap:functions:mc-style", "Z_WS_PE_EMPLEADO_ESTRUCTURA");
+    public final static QName ZWSPEEMPLEADOESTRUCTURA_QNAME = new QName("urn:sap-com:document:sap:soap:functions:mc-style", "Z_WS_PE_EMPLEADO_ESTRUCTURA");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl");
+            url = new URL("classpath:/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
+
         ZWSPEEMPLEADOESTRUCTURA_WSDL_LOCATION = url;
         ZWSPEEMPLEADOESTRUCTURA_EXCEPTION = e;
     }
