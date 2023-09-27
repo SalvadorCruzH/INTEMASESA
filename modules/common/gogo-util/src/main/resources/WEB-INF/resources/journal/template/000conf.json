@@ -8,7 +8,7 @@
         "groupFriendlyUrl": "/global",
         "templateFile": "noticia-detalle.ftl",
         "cacheable": true,
-        "comment": "Plantilla de detalle para Nota de Prensa",
+        "comment": "Plantilla de detalle para Noticia",
         "uuid": "9662d7c3-e9fd-2016-e433-947cae665c84",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
@@ -128,5 +128,18 @@
         "comment": "Plantilla para los contenidos relacionados al final del bloetín",
         "uuid": "c60eb09c-b06e-39b1-4107-c9475db2d5a7",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Novedades item",
+        "templateKey": "EMA-NOVEDADES-TEMPLATE",
+        "structureKey": "EMA-NOVEDADES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "novedades-item.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para los contenidos relacionados al final del bloetín",
+        "uuid": "255ac4e7-a631-5fd4-856b-1d1a66d38d41",
+        "structureUuid": "157cd7ee-fb43-0bbf-22f4-4756b02f328a"
     }
 ]
