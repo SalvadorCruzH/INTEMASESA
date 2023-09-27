@@ -6,21 +6,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import es.emasesa.intranet.jornada.nomina.service.EmpleadoEstructuraServiceImpl;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.Servlet;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.osgi.service.component.annotations.Reference;
 
-@Component(
-        immediate = true,
-        property = {
-                "osgi.http.whiteboard.context.path=/",
-                "osgi.http.whiteboard.servlet.pattern=/soap/check"
-        },
-        service = Servlet.class
-)
+@WebServlet("/hello")
 public class TestSoapServlet extends HttpServlet {
 
     @Override
@@ -28,7 +24,7 @@ public class TestSoapServlet extends HttpServlet {
             HttpServletRequest request, HttpServletResponse response){
         try {
             response.setStatus(HttpServletResponse.SC_OK);
-            JSONObject json =  _empleadoEstructuraServiceImpl.getEmpleadoEstructura("1002982");
+            JSONObject json =  null;
 
             _log.info(json.toJSONString());
         } catch (Exception e) {
@@ -37,9 +33,13 @@ public class TestSoapServlet extends HttpServlet {
         }
     }
 
-    @Reference
+    @PostConstruct
+    public void test(){
+        _log.error("hola");
+        //_empleadoEstructuraServiceImpl.getEmpleadoEstructura("1002982");
+    }
+
+    //@Autowired
     EmpleadoEstructuraServiceImpl _empleadoEstructuraServiceImpl;
-
     Log _log = LogFactoryUtil.getLog(TestSoapServlet.class);
-
 }

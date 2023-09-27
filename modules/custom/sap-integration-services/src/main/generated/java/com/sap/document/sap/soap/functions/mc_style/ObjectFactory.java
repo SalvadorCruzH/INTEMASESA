@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
  * provided in this class.
  * 
  */
-@XmlRegistry
+//@XmlRegistry
 public class ObjectFactory {
 
 

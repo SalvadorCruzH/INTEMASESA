@@ -15,4 +15,6 @@ dependencies {
 //	compileOnly "com.liferay:com.liferay.portal.template.freemarker"
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder"
+
+	compile project (':modules:custom:sap-integration-services')
 }
