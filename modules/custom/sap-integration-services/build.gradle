@@ -1,0 +1,36 @@
+plugins {
+	id 'war'
+	id "uk.co.boothen.gradle.wsimport" version "0.21"
+}
+
+configurations {
+	jaxws
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs 'src/main/java'
+			srcDirs 'src/main/generated/java'
+		}
+	}
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	implementation "javax.xml.ws:jaxws-api:2.3.1"
+	implementation "com.sun.xml.ws:jaxws-rt:4.0.1"
+}
+
+war {
+	enabled= true
+}
+
+/*wsimport {
+	includeDependencies = true
+	wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
+	generatedClassesRoot = "build/classes"
+	generatedSourceRoot= "../src/main/generated/java"
+}*/
+
