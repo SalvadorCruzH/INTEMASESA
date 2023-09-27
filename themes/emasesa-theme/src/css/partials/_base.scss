@@ -16,16 +16,7 @@
   .portlet {
     margin-bottom: 0;
   }
-  a {
-    text-decoration: none;
-    color: $color-primary;
-    transition: color .3s ease;
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-      color: $color-hover-blue;
-    }
-  }
+  
   
   h1,
   h2,
@@ -105,6 +96,18 @@
   .linkify a:focus {
       outline: none;
       box-shadow: none !important;
+  }
+}
+body {
+  a {
+    text-decoration: none;
+    color: $color-primary;
+    transition: color .3s ease;
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      color: $color-hover-blue;
+    }
   }
 }
 
