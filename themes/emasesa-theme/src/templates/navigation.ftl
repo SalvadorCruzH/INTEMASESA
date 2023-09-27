@@ -71,7 +71,8 @@
 										</li>
 									</#list>
 								</ul>
-								<div class="i-wrapperBR i-wrapperBR--blue">
+								<div class="i-wrapperRight">
+									<div class="i-wrapperBR i-wrapperBR--blue">
 									<h2 class="i-title i-title--18 i-title--black">Hemos actualizado</h2>
 									<ul>
 										<li>Información General y Prestaciones</li>
@@ -86,9 +87,13 @@
 										<li>Petición de ayuda escolar</li>
 										<li>Buzón empleados</li>
 									</ul>
+									</div>
+									<a href="/consultas" class="btn btn-secondary mt-4 ema-20">
+										<i class="i-icon i-icon--black fa-lg fa-regular fa-comment mr-3"></i>
+										<@liferay.language key='es.emasesa.intranet.common.consultas'/>
+									</a>
 								</div>
 							</div>
-						
 						</div>
 					</div>
 				<#else>
