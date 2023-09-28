@@ -69,7 +69,7 @@
                 </#if>
             </div>
             <div class="ema-noticiasDetail__wrapperfilesLinks">
-                <#if campoUrl.getSiblings()?has_content>
+                <#if campoUrl.getSiblings()?has_content && campoUrl.getSiblings()[0].getData() != "">
                     <div class="ema-noticiasDetail__listLinksWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Enlaces relacionados</h3>
                         <ul class="ema-noticiasDetail__listLinks m-listBaseNoStyles m-list-dashed">
@@ -88,7 +88,7 @@
                         </ul>
                     </div>
                 </#if>
-                <#if archivosDescargar.getSiblings()?has_content>
+                <#if archivosDescargar.getSiblings()?has_content && archivosDescargar.getSiblings()[0].getData() != "">
                     <div class="ema-noticiasDetail__filesWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Documentos relacionados</h3>
                         <ul class="ema-noticiasDetail__filesList m-listBaseNoStyles m-list-dashed">
@@ -109,7 +109,7 @@
                     </div>
                 </#if>
             </div>
-                <#if imgVideoGaleria.getSiblings()?has_content>
+                <#if imgVideoGaleria.getSiblings()?has_content && (imgVideoGaleria.imgGaleria.getSiblings()[0].getData() != "" || imgVideoGaleria.videoGaleria.getSiblings()[0].getData() != "")>
                 <div class="ema-noticiasDetail__wrapperGaleria">
                     <h3 class="ema-noticiasDetail__galeriaTitle">Galería Multimedia</h3>
                     <div class="ema-carousel-icons">
