@@ -43,6 +43,12 @@ public class DocumentsFormImpl implements AjaxSearchForm {
     private final static Log LOG = LoggerUtil.getLog(DocumentsFormImpl.class);
 
     public static final String CATEGORY_ID = "category-id";
+    private static final String CATEGORIES = "categories";
+    private static final String SUBCATEGORIES = "subcategories";
+    private static final String CAT_SELECTED = "catSelected";
+    private static final String SUBCAT_SELECTED = "subCatSelected";
+    private static final String SORT = "sort";
+    private static final String SORTBY = "sortby";
 
     static {
         DFLT_PROPERTIES.put(CATEGORY_ID, "-1");
@@ -65,74 +71,35 @@ public class DocumentsFormImpl implements AjaxSearchForm {
     public String getFormView(PortletRequest request, PortletResponse response,
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
 
-        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-
-
         String categoryId = ajaxSearchDisplayContext.getConfig().getOrDefault(CATEGORY_ID, StringPool.BLANK);
 
         if(!categoryId.isBlank()){
             
             List<AssetCategory> categories = obtenerCategorias(Long.parseLong(categoryId));
-            //List<AssetCategory> subcategories = obtenerSubcategorias(Long.parseLong(categoryId));
 
-            request.setAttribute("categories", categories);
-            //request.setAttribute("subcategories", subcategories);
+            request.setAttribute(CATEGORIES, categories);
         }
 
-        request.setAttribute("catSelected", ajaxSearchDisplayContext.getLong("catSelected"));
-        if(ajaxSearchDisplayContext.getLong("catSelected") != 0){
+        request.setAttribute(CAT_SELECTED, ajaxSearchDisplayContext.getLong(CAT_SELECTED));
+        if(ajaxSearchDisplayContext.getLong(CAT_SELECTED) != 0){
             List<AssetCategory> subcategories = obtenerSubcategoriasdeCategoria(ajaxSearchDisplayContext.getLong("catSelected"));
-            request.setAttribute("subcategories", subcategories);
+            request.setAttribute(SUBCATEGORIES, subcategories);
         }
-        request.setAttribute("subCatSelected", ajaxSearchDisplayContext.getLong("subCatSelected"));
+        request.setAttribute(SUBCAT_SELECTED, ajaxSearchDisplayContext.getLong(SUBCAT_SELECTED));
 
-        request.setAttribute("sort", ajaxSearchDisplayContext.getLong("sort"));
+        request.setAttribute(SORT, ajaxSearchDisplayContext.getLong(SORTBY));
 
 
         return VIEW;
     }
 
-    //  Parte comunidades, provincias, municipios
     public List<AssetCategory> obtenerCategorias(long vocabularyId) {
-        return AssetCategoryLocalServiceUtil.getVocabularyRootCategories(vocabularyId, -1, -1, null);
+        return assetCategoryLocalService.getVocabularyRootCategories(vocabularyId, -1, -1, null);
     }
 
     public List<AssetCategory> obtenerSubcategoriasdeCategoria(long parentCategoryId) {
-        return AssetCategoryLocalServiceUtil.getChildCategories(parentCategoryId);
+        return assetCategoryLocalService.getChildCategories(parentCategoryId);
     }
-
-    public List<AssetCategory> obtenerHijasDeSubcategorias(AssetCategory categoriaPadre) {
-        List<AssetCategory> hijasDeSubcategorias = new ArrayList<>();
-        obtenerHijasRecursivas(categoriaPadre, hijasDeSubcategorias);
-        return hijasDeSubcategorias;
-    }
-    public void obtenerHijasRecursivas(AssetCategory categoriaPadre, List<AssetCategory> hijas) {
-        List<AssetCategory> subcategorias = AssetCategoryLocalServiceUtil.getChildCategories(categoriaPadre.getCategoryId());
-        hijas.addAll(subcategorias);
-
-        for (AssetCategory subcategoria : subcategorias) {
-            obtenerHijasRecursivas(subcategoria, hijas);
-        }
-    }
-
-    public List<AssetCategory> obtenerSubcategorias(long vocabularyId) {
-        List<AssetCategory> provincias = new ArrayList<>();
-        List<AssetCategory> comunidades = obtenerCategorias(vocabularyId);
-
-        for (AssetCategory comunidad : comunidades) {
-            List<AssetCategory> subcategoriasCategoria = AssetCategoryLocalServiceUtil.getChildCategories(comunidad.getCategoryId());
-            provincias.addAll(subcategoriasCategoria);
-        }
-
-        return provincias;
-    }
-    
-    @Reference
-    protected Portal _portal;
-
-    @Reference
-    CustomGetterUtil customGetterUtil;
-
 
     @Reference
     AssetCategoryLocalService assetCategoryLocalService;

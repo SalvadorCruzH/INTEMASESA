@@ -6,44 +6,32 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import es.emasesa.intranet.base.constant.StringConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.json.JSONFactory;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchJsonModel;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchResult;
-import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import es.emasesa.intranet.searchframework.SearchingCommon;
 import es.emasesa.intranet.searchframework.SearchingDocuments;
-import es.emasesa.intranet.searchframework.SearchingJournal;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.*;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import es.emasesa.intranet.base.model.AjaxMessage;
-import es.emasesa.intranet.base.util.CustomJournalUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.base.util.XMLDocumentUtil;
 @Component(
 		immediate = true,
 		property = { },
@@ -55,6 +43,12 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 
 	public static final String FILE_TYPE_ID = "file-type-id";
 	public static final String FILE_TYPE_ID_DFLT = "-1";
+	private static final String DOC_SIZE = "docSize";
+	private static final String DOC_URL = "docUrl";
+	private static final String DOC_NAME = "docName";
+	private static final String CATEGORY = "category";
+
+
 	private static final Properties DFLT_PROPERTIES = new Properties();
 
 
@@ -69,6 +63,14 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 		return DFLT_PROPERTIES;
 	}
 
+
+	private static final String VIEW = "/views/documents/results.jsp";
+
+	@Override
+	public String getResultsView(PortletRequest request, PortletResponse response) {
+		return VIEW;
+	}
+
 	@Override
 	public AjaxMessage filterResults(PortletRequest request,
 									 PortletResponse response,
@@ -78,7 +80,7 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 			final long totalItems;
 			final int currentPage = ajaxSearchDisplayContext.getCurrentPage();
 			final int pageSize = ajaxSearchDisplayContext.getPageSize();
-			final JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+			final JSONArray jsonArray = jsonFactory.createJSONArray();
 
 			totalItems = performSearchAndParse(
 					request,
@@ -104,7 +106,7 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 			if(LOG.isInfoEnabled()) {
 				LOG.info("Error At search in indexes: " + e.getLocalizedMessage());
 			}
-			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(0, 0, 0L, 0, JSONFactoryUtil.createJSONArray());
+			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(0, 0, 0L, 0, jsonFactory.createJSONArray());
 			return new AjaxMessage(
 					AjaxMessage.STATUS.ERROR_GENERAL,
 					AjaxMessage.MESSAGES_DEFAULT.ERROR_GENERAL,
@@ -141,14 +143,14 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 
 		Date fromDate = ajaxSearchDisplayContext.getDate("fechaDesde");
 		Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate("fechaHasta");
-		searchingDocuments.addPublishDateFilter(fromDate, toDate, booleanQuery);
+		searchingDocuments.addModifiedDateFilter(fromDate, toDate, booleanQuery);
 
 		// Set sort
 		String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
 
 		if(Validator.isNotNull(sortBy)) {
 			if(sortBy[0].equals("date")) {
-				searchContext.setSorts(sortFactory.create(Field.PUBLISH_DATE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
+				searchContext.setSorts(sortFactory.create(Field.MODIFIED_DATE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
 			} else if(sortBy[0].equals("name")) {
 				searchContext.setSorts(sortFactory.create(Field.TITLE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
 			}
@@ -199,68 +201,57 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 		return totalItems;
 	}
 
-	private final JSONObject getResultJson(final Document document,
-										   final ThemeDisplay themeDisplay) {
-		final JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+	private JSONObject getResultJson(final Document document,
+                                     final ThemeDisplay themeDisplay) {
+		final JSONObject jsonObject = jsonFactory.createJSONObject();
 		try {
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(GetterUtil.getLong(document.getField("entryClassPK").getValue(), 0));
-			jsonObject.put("docSize", fileEntry.getSize());
-			jsonObject.put("docUrl", dlurlHelper.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, Boolean.FALSE, Boolean.FALSE));
+			FileEntry fileEntry = dlAppService.getFileEntry(GetterUtil.getLong(document.getField(Field.ENTRY_CLASS_PK).getValue(), 0));
+			jsonObject.put(DOC_SIZE, fileEntry.getSize());
+			jsonObject.put(DOC_URL, dlurlHelper.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, Boolean.FALSE, Boolean.FALSE));
 
 		} catch (PortalException e) {
 			throw new RuntimeException(e);
 		}
-		jsonObject.put("docName", document.get(themeDisplay.getLocale(), "title"));
-		String date = document.get(themeDisplay.getLocale(), "publishDate");
-		String dateFormatted = date.substring(6, 8) + "/" + date.substring(4, 6) + "/" + date.substring(0, 4);
-		jsonObject.put("publishDate", dateFormatted);
-		String expirationDate = document.get(themeDisplay.getLocale(), "expirationDate");
-		String expirationDateFormatted = expirationDate.substring(6, 8) + "/" + expirationDate.substring(4, 6) + "/" + expirationDate.substring(0, 4);
-		jsonObject.put("expirationDate", expirationDateFormatted);
+		jsonObject.put(DOC_NAME, document.get(themeDisplay.getLocale(), Field.TITLE));
+		String date = document.get(themeDisplay.getLocale(), Field.MODIFIED_DATE);
+		String dateFormatted = date.substring(6, 8) + StringPool.SLASH + date.substring(4, 6) + StringPool.SLASH + date.substring(0, 4);
+		jsonObject.put(Field.MODIFIED_DATE, dateFormatted);
+		String expirationDate = document.get(themeDisplay.getLocale(), Field.EXPIRATION_DATE);
+		if(expirationDate.startsWith("2")){
+			String expirationDateFormatted = expirationDate.substring(6, 8) + StringPool.SLASH + expirationDate.substring(4, 6) + StringPool.SLASH + expirationDate.substring(0, 4);
+			jsonObject.put(Field.EXPIRATION_DATE, expirationDateFormatted);
+		} else {
+			jsonObject.put(Field.EXPIRATION_DATE, StringPool.DASH);
+		}
 		AssetCategory category = null;
 		try {
-			category = assetCategoryLocalService.getCategory(Long.parseLong(document.get(themeDisplay.getLocale(), "assetCategoryIds")));
+			category = assetCategoryLocalService.getCategory(Long.parseLong(document.get(themeDisplay.getLocale(), Field.ASSET_CATEGORY_IDS)));
 		} catch (PortalException e) {
+			if(LOG.isInfoEnabled()) {
+				LOG.info("Error At search in getResultJson: " + e.getLocalizedMessage());
+			}
 			throw new RuntimeException(e);
 		}
 
 		if(category.getParentCategoryId() != 0) {
 			AssetCategory parentCategory = assetCategoryLocalService.fetchAssetCategory(category.getParentCategoryId());
-			jsonObject.put("category", parentCategory.getTitle(themeDisplay.getLocale()) + StringPool.SPACE + StringPool.GREATER_THAN + StringPool.SPACE + category.getTitle(themeDisplay.getLocale()));
+			jsonObject.put(CATEGORY, parentCategory.getTitle(themeDisplay.getLocale()) + StringPool.SPACE + StringPool.GREATER_THAN + StringPool.SPACE + category.getTitle(themeDisplay.getLocale()));
 		} else {
-			jsonObject.put("category", category.getTitle(themeDisplay.getLocale()));
+			jsonObject.put(CATEGORY, category.getTitle(themeDisplay.getLocale()));
 		}
 
 		return jsonObject;
 	}
 
-	private static final String VIEW = "/views/documents/results.jsp";
-
-	@Override
-	public String getResultsView(PortletRequest request, PortletResponse response) {
-		return VIEW;
-	}
 
 	@Reference
-	JournalArticleLocalService journalArticleLocalService;
-
-	@Reference
-	AjaxSearchUtil ajaxSearchUtil;
-
-	@Reference
-	AssetEntryLocalService assetEntryLocalService;
+	JSONFactory jsonFactory;
 
 	@Reference
 	AssetCategoryLocalService assetCategoryLocalService;
 
 	@Reference
-	DDMStructureLocalService ddmStructureLocalService;
-
-	@Reference
-	XMLDocumentUtil xmlDocumentUtil;
-
-	@Reference
-	CustomJournalUtil customJournalUtil;
+	DLAppService dlAppService;
 
 	@Reference
 	SearchingDocuments searchingDocuments;

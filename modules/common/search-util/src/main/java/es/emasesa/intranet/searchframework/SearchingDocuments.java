@@ -58,6 +58,21 @@ public class SearchingDocuments {
 		booleanQueryDate.addRangeTerm(Field.PUBLISH_DATE, startDate, endDate);
 		booleanQuery.add(booleanQueryDate, BooleanClauseOccur.MUST);
 	}
+	/**
+	 * Auxiliar method to add modified date filter by range
+	 * @param dateFrom Date
+	 * @param dateTo Date
+	 * @param booleanQuery BooleanQuery
+	 * @throws ParseException
+	 */
+	public void addModifiedDateFilter(Date dateFrom, Date dateTo, BooleanQuery booleanQuery) throws ParseException {
+		final Long startDate = Validator.isNotNull(dateFrom)?Long.valueOf(SearchingUtilKeys.INDEX_DATE_FORMAT.format(dateFrom)).longValue():SearchingUtilKeys.LONG_INDEX_MIN_DATE;
+		final Long endDate = (Validator.isNotNull(dateTo))?Long.valueOf(SearchingUtilKeys.INDEX_DATE_FORMAT.format(dateTo)).longValue():SearchingUtilKeys.LONG_INDEX_MAX_DATE;
+		// Define modified date range
+		BooleanQuery booleanQueryDate = new BooleanQueryImpl();
+		booleanQueryDate.addRangeTerm(Field.MODIFIED_DATE, startDate, endDate);
+		booleanQuery.add(booleanQueryDate, BooleanClauseOccur.MUST);
+	}
 
 	/**
 	 * Auxiliar method to add categories filter queries to main booleanQuery passed
@@ -74,14 +89,6 @@ public class SearchingDocuments {
 					catQuery.addTerm(Field.ASSET_CATEGORY_IDS, categoryId, Boolean.FALSE, BooleanClauseOccur.SHOULD);
 				}
 				booleanQuery.add(catQuery, BooleanClauseOccur.MUST);
-				/**
-				 for(String categoryId:categoryIds){
-				 BooleanQuery catQuery2 = new BooleanQueryImpl();
-				 catQuery2.addTerm(Field.ASSET_CATEGORY_IDS, categoryId, Boolean.FALSE, BooleanClauseOccur.MUST);
-				 catQuery.add(catQuery2, BooleanClauseOccur.SHOULD);
-				 }
-				 booleanQuery.add(catQuery, BooleanClauseOccur.MUST);
-				 **/
 			} else {
 				for(String categoryId:categoryIds){
 					booleanQuery.addTerm(Field.ASSET_CATEGORY_IDS, categoryId, Boolean.FALSE, BooleanClauseOccur.MUST);

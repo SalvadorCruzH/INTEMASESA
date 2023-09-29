@@ -12,7 +12,7 @@
                  <tr>
                   <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-name" /></th>
                   <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-category" /></th>
-                  <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-publish-date" /></th>
+                  <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-modified-date" /></th>
                   <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-expiration-date" /></th>
                  </tr>
                 </thead>
@@ -45,7 +45,7 @@
     <tr>
         <td><a class="ema-searchAjax__linkDoc" href="#docUrl#" target="_blank">#docName#</a></td>
         <td class="ema-doc-category">#category#</td>
-        <td class="ema-publish-date">#publishDate#</td>
+        <td class="ema-publish-date">#modified#</td>
         <td class="ema-expiration-date">#expirationDate#</td>
     </tr>
 </template>

@@ -51,29 +51,24 @@ public class NewsFormImpl implements AjaxSearchForm {
     }
 
     private static final String VIEW = "/views/news/form.jsp";
+    private static final String CAT_SELECTED = "catSelected";
+    private static final String CATEGORIES = "categories";
 
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
 
-        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
         String categoryId = ajaxSearchDisplayContext.getConfig().getOrDefault(CATEGORY_ID, StringPool.BLANK);
 
         if(!categoryId.isBlank()){
             List<AssetCategory> categories = assetCategoryLocalService.getVocabularyRootCategories(Long.parseLong(categoryId), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-            request.setAttribute("categories", categories);
+            request.setAttribute(CATEGORIES, categories);
         }
 
-        request.setAttribute("catSelected", ajaxSearchDisplayContext.getLong("catSelected"));
+        request.setAttribute(CAT_SELECTED, ajaxSearchDisplayContext.getLong(CAT_SELECTED));
 
         return VIEW;
     }
-
-    @Reference
-    protected Portal _portal;
-
-    @Reference
-    CustomGetterUtil customGetterUtil;
 
 
     @Reference

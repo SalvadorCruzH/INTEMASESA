@@ -48,24 +48,22 @@ public class NewsResultImpl implements AjaxSearchResult {
 
 	public static final String TEMPLATE_KEY = "template-key";
 	public static final String STRUCTURE_KEY = "structure-key";
-	public static final String FORCE_GROUP_ID = "force-group-id";
 	public static final String CSS_WRAPPER_CLASS = "css-wrapper-class";
-	//public static final String ONLY_SITE_CONTENT = "only-site-content";
-	//public static final String INCLUDE_CHILDSITE_CONTENT = "only-site-content--include-subsites";
 	public static final String DISABLE_PAGINATION = "disable-pagination";
+	private static final String CAT_SELECTED = "catSelected";
+	private static final String FECHA_DESDE = "fechaDesde";
+	private static final String FECHA_HASTA = "fechaHasta";
+
 
 
 	static {
 		DFLT_PROPERTIES.put(AjaxSearchPortletKeys.PROP_BASE_PAGESIZE,
 							AjaxSearchPortletKeys.PROP_BASE_PAGESIZE_DFLT);
 
-		DFLT_PROPERTIES.put(TEMPLATE_KEY, "EMA-NOTA-PRENSA-TARJETA-TEMPLATE");
-		DFLT_PROPERTIES.put(STRUCTURE_KEY, "EMA-NOTA-PRENSA");
+		DFLT_PROPERTIES.put(TEMPLATE_KEY, "EMA-NOTICIA-TARJETA-TEMPLATE");
+		DFLT_PROPERTIES.put(STRUCTURE_KEY, "EMA-NOTICIA");
 		DFLT_PROPERTIES.put(CSS_WRAPPER_CLASS, "");
 		DFLT_PROPERTIES.put(DISABLE_PAGINATION, "0");
-		//DFLT_PROPERTIES.put(FORCE_GROUP_ID, "-1");
-		//DFLT_PROPERTIES.put(ONLY_SITE_CONTENT, "1");
-		//DFLT_PROPERTIES.put(INCLUDE_CHILDSITE_CONTENT, "0");
 	}
 
 	@Override
@@ -90,12 +88,9 @@ public class NewsResultImpl implements AjaxSearchResult {
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
 			if(!Validator.isBlank(templateKey) && !Validator.isBlank(structureKey)) {
-				//final boolean onlySiteContent = ajaxSearchDisplayContext.getConfig().getOrDefault(ONLY_SITE_CONTENT, StringConstants.ZERO).equals(StringConstants.ONE);
-				//final boolean includeChildSiteContent = ajaxSearchDisplayContext.getConfig().getOrDefault(INCLUDE_CHILDSITE_CONTENT, StringConstants.ONE).equals(StringConstants.ONE);
-				//final long forceGroupId = GetterUtil.getLong(ajaxSearchDisplayContext.getConfig().getOrDefault(FORCE_GROUP_ID, StringConstants.MINUS_ONE), LongConstants.MINUS_ONE);
 
-				Date fromDate = ajaxSearchDisplayContext.getDate("fechaDesde");
-				Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate("fechaHasta");
+				Date fromDate = ajaxSearchDisplayContext.getDate(FECHA_DESDE);
+				Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate(FECHA_HASTA);
 
 				totalItems = performSearchAndParse(request,
 					response,
@@ -106,7 +101,6 @@ public class NewsResultImpl implements AjaxSearchResult {
 					toDate,
 					currentPage,
 					pageSize,
-					//forceGroupId,
 					disablePagination,
 					jsonArray);
 			}
@@ -145,7 +139,6 @@ public class NewsResultImpl implements AjaxSearchResult {
 									   final Date toDate,
 									   final int currentPage,
 									   final int pageSize,
-									   //final long forceGroupId,
 									   final boolean disablePagination,
 									   final JSONArray jsonArray) throws ParseException, SearchException {
 
@@ -157,17 +150,12 @@ public class NewsResultImpl implements AjaxSearchResult {
 		final SearchContext searchContext = searchingCommon.createPaginatedSearchContext(start, end);
 		final BooleanQuery booleanQuery = searchingCommon.createEmptyBooleanQuery();
 
-		//searchingCommon.addGroupIdFilter(themeDisplay, onlySiteContent, includeChildSiteContent, searchContext, booleanQuery);
 		if (Validator.isNotNull(themeDisplay)) {
 			searchingCommon.addCompanyIdFilter(searchContext, themeDisplay.getCompanyId());
-			//searchingCommon.addGroupIdFilter(searchContext, (forceGroupId>0)?forceGroupId:themeDisplay.getScopeGroupId());
 		} else {
 			searchingCommon.addCompanyIdFilter(searchContext, PortalUtil.getDefaultCompanyId());
-			/*if (forceGroupId>0){
-				searchingCommon.addGroupIdFilter(searchContext, forceGroupId);
-			}*/
 		}
-		List<String> categories = Arrays.asList(ajaxSearchDisplayContext.getStringValues("catSelected"));
+		List<String> categories = Arrays.asList(ajaxSearchDisplayContext.getStringValues(CAT_SELECTED));
 		searchingJournal.addCategoriesFilter(categories, booleanQuery, Boolean.FALSE);
 		searchingJournal.addStructureFilter(Collections.singletonList(structureKey), booleanQuery);
 
@@ -195,7 +183,7 @@ public class NewsResultImpl implements AjaxSearchResult {
 		return totalItems;
 	}
 
-	private final JSONObject getResultJson(final Document document,
+	private JSONObject getResultJson(final Document document,
 										   final PortletRequest request,
 										   final PortletResponse response,
 										   final String templateKey,

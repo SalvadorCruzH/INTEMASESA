@@ -148,9 +148,19 @@
 	$('input#fechaHasta').on('change', function() {
 		$('input#fechaDesde').attr("max", $(this).val());
 	});
+    
+    $('select#sortby').on('change', function() {
+        ajaxSearchFeature.doSearch(true, false);
+    });
 
     //cuando todo se haya cargado
     $(document).ready(function() {
+        if($('#subCategory option').length <= 1) {
+            $('#subCategory').prop("disabled", "disabled");
+        } else {
+            $('#subCategory').prop("disabled", false);
+        }
+
         $('#p_p_id<portlet:namespace/> #buscador-categoria-select select').change(function(){
             let categoriaSelected = $(this).children("option:selected").val();
 
@@ -168,7 +178,7 @@
                         subCategorias.find('option')
                         .remove()
                         .end()
-                        .append('<option value=""><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.subcategorias" /></option>')
+                        .append('<option value="" selected><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.subcategorias" /></option>')
                         .val('');
                         
                         if(subcats != null && subcats.length > 0) {

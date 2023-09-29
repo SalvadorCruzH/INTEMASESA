@@ -1,8 +1,0 @@
-dependencies {
-	compileOnly "com.liferay.portal:release.dxp.api"
-	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs"
-
-	compile project (':modules:common:base-module')
-	compile project (':modules:common:settings-module')
-
-}

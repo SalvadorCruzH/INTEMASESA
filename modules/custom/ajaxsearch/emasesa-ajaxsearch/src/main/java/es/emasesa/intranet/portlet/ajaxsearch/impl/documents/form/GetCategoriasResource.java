@@ -27,11 +27,15 @@ import java.util.List;
         service = MVCResourceCommand.class
 )
 public class GetCategoriasResource implements MVCResourceCommand {
+    private static final String CATEGORY_ID = "categoryId";
+    private static final String SUBCATEGORY_ID = "subCategoryId";
+    private static final String TITLE_CURRENT_VALUE = "titleCurrentValue";
+
     @Override
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException {
 
         try {
-            int categoriaId = ParamUtil.getInteger(resourceRequest, "categoryId", -1);
+            int categoriaId = ParamUtil.getInteger(resourceRequest, CATEGORY_ID, -1);
             if(categoriaId != -1) {
 
                 JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -41,8 +45,8 @@ public class GetCategoriasResource implements MVCResourceCommand {
                 for (AssetCategory subcategoria : subcategorias) {
                     jsonArray.put(
                             _jsonFactory.createJSONObject()
-                                    .put("subCategoryId", subcategoria.getCategoryId())
-                                    .put("titleCurrentValue", subcategoria.getTitle(resourceRequest.getLocale()))
+                                    .put(SUBCATEGORY_ID, subcategoria.getCategoryId())
+                                    .put(TITLE_CURRENT_VALUE, subcategoria.getTitle(resourceRequest.getLocale()))
                     );
                 }
 
