@@ -13,7 +13,7 @@
 
     <mvc:annotation-driven />
     <context:annotation-config/>
-    <context:component-scan base-package="es.emasesa.intranet.jornada.nomina" />
+    <context:component-scan base-package="es.emasesa.intranet.sap" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">

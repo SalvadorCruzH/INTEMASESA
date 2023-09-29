@@ -1,12 +1,10 @@
 package es.emasesa.intranet.service.util;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import es.emasesa.intranet.jornada.nomina.proxy.SapInterfaceService;
+import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 
 import java.lang.reflect.Method;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.util.tracker.ServiceTracker;

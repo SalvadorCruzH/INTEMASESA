@@ -1,9 +1,9 @@
-package es.emasesa.intranet.jornada.nomina.service;
+package es.emasesa.intranet.sap.nomina.service;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.sun.xml.ws.developer.WSBindingProvider;
-import es.emasesa.intranet.jornada.nomina.util.SapConfigurationUtil;
+import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.Authenticator;
@@ -22,11 +22,6 @@ import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.MessageContext;
 
 import com.sap.document.sap.soap.functions.mc_style.*;
-import es.emasesa.intranet.settings.util.CustomSettingsReloadUtil;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component("jornadaNominaService")

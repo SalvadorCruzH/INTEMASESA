@@ -1,4 +1,4 @@
-package es.emasesa.intranet.jornada.nomina.exception;
+package es.emasesa.intranet.sap.base.exception;
 
 public class SapException extends Exception{
 

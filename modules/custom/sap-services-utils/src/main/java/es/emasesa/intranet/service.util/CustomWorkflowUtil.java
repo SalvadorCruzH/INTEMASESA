@@ -8,9 +8,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import es.emasesa.intranet.jornada.nomina.exception.SapException;
-import es.emasesa.intranet.jornada.nomina.proxy.SapInterfaceService;
-import es.emasesa.intranet.jornada.nomina.service.EmpleadoEstructuraService;
+import es.emasesa.intranet.sap.base.exception.SapException;
+import es.emasesa.intranet.sap.proxy.SapInterfaceService;
+import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
