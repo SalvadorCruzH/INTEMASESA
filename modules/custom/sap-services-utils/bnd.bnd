@@ -1,0 +1,11 @@
+Bundle-Name: sap-services-utils
+Bundle-SymbolicName: sap-services-utils
+Bundle-Version: 1.0.0
+-metatype: *
+Web-ContextPath: /sap-services-utils
+
+Export-Package: \
+    es.emasesa.intranet.service.util.*
+
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
+-noimportjava: true

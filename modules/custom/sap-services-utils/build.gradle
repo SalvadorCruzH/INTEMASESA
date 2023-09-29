@@ -1,0 +1,6 @@
+dependencies {
+	compileOnly "com.liferay.portal:release.dxp.api"
+	compileOnly project(":modules:custom:sap-integration-services")
+
+
+}
