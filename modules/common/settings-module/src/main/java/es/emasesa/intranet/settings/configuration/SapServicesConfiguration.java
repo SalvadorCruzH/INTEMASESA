@@ -29,4 +29,18 @@ public interface SapServicesConfiguration {
     )
     String passwordPrompt();
 
+    @Meta.AD(
+            deflt = "",
+            name = "empleadoEstructuraEndpoint",
+            required = false
+    )
+    String empleadoEstructuraEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "jornadaNominaEndpoint",
+            required = false
+    )
+    String jornadaNominaEndpoint();
+
 }

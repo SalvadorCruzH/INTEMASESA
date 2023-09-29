@@ -1,25 +1,15 @@
 <%@ include file="init.jsp" %>
-
-<h1 class="<%=cssClass%>">
-      <c:if test="<%=showBackButton%>">
-            <span role="button"
-                  tabindex="0"
-                  onclick="<%=onclick%>"
-                  style="display: inline-block;background: url('/o/emasesa-theme/images/icons/angle-down.svg') no-repeat;width: 30px;height: 30px;vertical-align: inherit;cursor: pointer;"
-                  class="emasesa-back-button"
-                  aria-label="<liferay-ui:message key="es.emasesa.main.go-back"/>"></span>
-      </c:if>
-      <span role="text">
-            <c:choose>
-                  <c:when test="<%=isKey%>">
-                        <liferay-ui:message key="<%=title%>"></liferay-ui:message>
-                  </c:when>
-                  <c:otherwise>
-                        <%=title%>
-                  </c:otherwise>
-            </c:choose>
+<c:if test="<%=showBackButton%>">
+<a class="emasesa-back-button ema-color--blue"
+      href="javascript:void(0)"
+      onclick="<%=onclick%>"      
+      <i class="fa-solid fa-arrow-left i-icon--blue"></i>
+      <span>
+            <liferay-ui:message key="es.emasesa.liferay.taglib.back-button"/>
       </span>
-</h1>
+</a>
+</c:if>
+
 
 <c:if test="<%=showBackButton%>">
       <script>

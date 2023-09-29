@@ -2,7 +2,7 @@
 
 buildscript {
 	repositories {
-		maven {url "https://slmaven.indra.es/nexus/repository/public/"}
+		maven {url "https://repository-cdn.liferay.com/nexus/content/groups/public"}
 	}
 
 	dependencies {
@@ -24,14 +24,14 @@ subprojects { subproject ->
 	buildscript {
 		repositories {
 			maven {
-				url "https://slmaven.indra.es/nexus/repository/public/"
+				url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 			}
 		}
 	}
 
 	repositories {
 		maven {
-			url "https://slmaven.indra.es/nexus/repository/public/"
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
 
@@ -42,8 +42,6 @@ subprojects { subproject ->
 		}
 	}
 }
-
-
 
 apply plugin: "com.liferay.node"
 

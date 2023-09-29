@@ -144,6 +144,28 @@
       background-color: transparent;
     }
   }
+  /* Colors brand */
+  .ema-color {
+    &--blue {
+      color: $color-aux-blue;
+      &:hover {
+        color: $color-hover-blue;
+        .i-icon {
+          &--blue {
+            color: $color-hover-blue;
+          }
+        }
+      }
+    }
+  }
+
+  /* Font size */
+  .ema-18 {
+    font-size: m-rem(18px)
+  }
+  .ema-20 {
+    font-size: m-rem(20px)
+  }
 
   /* Titles */
 
@@ -167,8 +189,98 @@
     }
   }
 
+  /* Icons downloads */
+  .ema-icon {
+    &--PDF {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-pdf.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--PPTX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-powerpoint.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--DOCX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-word.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--XLSX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-excel.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--XLSX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-excel.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--MP4 {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-audio.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--PNG,
+    &--JPEG {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-image.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+  }
+
 
 }
+
   /* Icons */
   .fa-solid,
   .fa-regular {
@@ -181,6 +293,9 @@
       }
       &--blue {
         color: $color-aux-blue;
+        &:hover {
+          color: $color-hover-blue;
+        }
       }
       &--white {
         color: $color-white;

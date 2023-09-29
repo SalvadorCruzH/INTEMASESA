@@ -1,0 +1,45 @@
+plugins {
+	id 'war'
+	id "uk.co.boothen.gradle.wsimport" version "0.21"
+}
+
+configurations {
+	jaxws
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs 'src/main/java'
+			srcDirs 'src/main/generated/java'
+		}
+	}
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly 'javax.servlet:javax.servlet-api:3.0.1'
+	implementation 'org.springframework:spring-webmvc:5.2.24.RELEASE'
+	implementation 'org.springframework:spring-context:5.2.24.RELEASE'
+	implementation 'com.sun.activation:jakarta.activation:1.2.2'
+	implementation group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '3.0.2'
+	implementation "javax.xml.ws:jaxws-api:2.3.1"
+	implementation 'com.sun.xml.ws:jaxws-rt:4.0.0'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+
+	compileOnly project(":modules:common:settings-module")
+}
+
+war {
+	enabled= true
+
+}
+
+/*wsimport {
+	includeDependencies = true
+	wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
+	generatedClassesRoot = "build/classes"
+	generatedSourceRoot= "../src/main/generated/java"
+}*/
+

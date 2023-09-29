@@ -16,24 +16,8 @@
   .portlet {
     margin-bottom: 0;
   }
-  a {
-    text-decoration: underline;
-    color: $color-primary;
-    &:hover {
-      text-decoration: none;
-      color: $color-hover-blue;
-    }
-  }
-
-  a {
-    color: $color-link;
-    transition: color .3s ease;
-    &:hover,
-    &:focus {
-      color: $color-hover-blue;
-    }
-  }
-
+  
+  
   h1,
   h2,
   h3,
@@ -54,6 +38,16 @@
   strong i,
   b i {
     @include font_base-bold-italic;
+  }
+  h1 i.i-icon,
+  h2 i.i-icon,
+  h3 i.i-icon,
+  h4 i.i-icon,
+  strong i.i-icon,
+  b i.i-icon {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-style: normal;
   }
   em {
     @include font_base-italic;
@@ -112,6 +106,18 @@
   .linkify a:focus {
       outline: none;
       box-shadow: none !important;
+  }
+}
+body {
+  a {
+    text-decoration: none;
+    color: $color-primary;
+    transition: color .3s ease;
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      color: $color-hover-blue;
+    }
   }
 }
 

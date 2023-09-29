@@ -129,7 +129,7 @@
             &__item {
                 padding-top: m-rem(54px);
                 padding-bottom: m-rem(54px);
-                border-bottom: 1px solid #CCCCCC;
+                border-bottom: m-rem(1px) solid $color-dashed;
             }
             &__item:last-child {
                 padding-bottom:0;
