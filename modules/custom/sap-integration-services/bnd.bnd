@@ -5,11 +5,12 @@ Bundle-Version: 1.0.0
 Web-ContextPath: /sap-integration-service
 
 Export-Package: \
-    es.emasesa.intranet.jornada.nomina.servlet,\
     es.emasesa.intranet.jornada.nomina.service,\
     es.emasesa.intranet.jornada.nomina.service.*,\
     es.emasesa.intranet.jornada.nomina.proxy,\
-    es.emasesa.intranet.jornada.nomina.proxy.*
+    es.emasesa.intranet.jornada.nomina.proxy.*,\
+    es.emasesa.intranet.jornada.nomina.base,\
+    es.emasesa.intranet.jornada.nomina.base.*
 
 Import-Package:\*;resolution:=optional
 
