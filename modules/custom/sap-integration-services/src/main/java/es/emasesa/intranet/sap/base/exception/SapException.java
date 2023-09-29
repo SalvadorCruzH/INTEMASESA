@@ -1,0 +1,12 @@
+package es.emasesa.intranet.sap.base.exception;
+
+public class SapException extends Exception{
+
+    public SapException(String message) {
+        super(message);
+    }
+    public SapException(Throwable cause) {
+        super(cause);
+    }
+
+}

@@ -1,4 +1,4 @@
-package es.emasesa.intranet.jornada.nomina.base;
+package es.emasesa.intranet.sap.base;
 
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -58,7 +58,6 @@ public interface SelfRegisteringService extends InitializingBean, BeanNameAware 
         if (names.isEmpty()) {
             return null;
         }
-
         HashMapDictionary<String, Object> properties =
                 HashMapDictionaryBuilder.<String, Object>put("bean.id", beanName).put(
                         "origin.bundle.symbolic.name",

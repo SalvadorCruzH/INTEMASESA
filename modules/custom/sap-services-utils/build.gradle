@@ -2,5 +2,5 @@ dependencies {
 	compileOnly "com.liferay.portal:release.dxp.api"
 	compileOnly project(":modules:custom:sap-integration-services")
 
-
+	implementation group: 'org.glassfish.hk2', name: 'osgi-resource-locator', version: '2.5.0-b42'
 }
