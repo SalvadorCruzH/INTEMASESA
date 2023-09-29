@@ -1,0 +1,5 @@
+Bundle-Name: emasesa-ajaxsearch
+Bundle-SymbolicName: emasesa-ajaxsearch
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.intranet.portlet.ajaxsearch.impl.news, es.emasesa.intranet.portlet.ajaxsearch.impl.documents
+Web-ContextPath: /emasesa-ajaxsearch

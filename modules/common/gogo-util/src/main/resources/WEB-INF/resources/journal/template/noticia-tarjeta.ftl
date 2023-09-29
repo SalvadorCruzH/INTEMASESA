@@ -20,7 +20,7 @@
         viewURL = "/web"+articleGroup.getFriendlyURL()+"/-/"+articleUrlTitle
     />
 
-<div class="ema-noticia-tarjeta">
+<div class="ema-noticia-tarjeta m-link-accessible-wrapper">
     <div class="ema-noticia-tarjeta__imgContainer">
         <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
             <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />

@@ -410,7 +410,6 @@
         }
 
         var _reloadPagination = function(curPage, curTotal, pageSize) {
-            console.log("reloadPagination", curPage, curTotal, pageSize);
             _paginationFeature.init(curPage, curTotal, pageSize);
             $("#"+_totalItemsId).focus();
         }
