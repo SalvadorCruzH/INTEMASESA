@@ -7,7 +7,7 @@
 						<#break>
 					</#if>
 					<#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
-					<li class="ema-novedadesADT__li m-link-accessible-wrapper ${curEntry?index}">
+					<li class="ema-novedadesADT__li m-link-accessible-wrapper ema-novedadesADT__li--${curEntry?index + 1}">
                         <@liferay_journal["journal-article"]
                             articleId=journalArticle.getArticleId()
 							ddmTemplateKey="EMA-NOVEDADES-TEMPLATE"
