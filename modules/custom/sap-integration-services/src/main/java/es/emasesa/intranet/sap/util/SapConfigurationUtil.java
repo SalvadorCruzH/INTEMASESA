@@ -1,4 +1,4 @@
-package es.emasesa.intranet.jornada.nomina.util;
+package es.emasesa.intranet.sap.util;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;

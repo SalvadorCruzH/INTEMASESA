@@ -1,4 +1,4 @@
-package es.emasesa.intranet.jornada.nomina.service;
+package es.emasesa.intranet.sap.estructura.service;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -10,11 +10,11 @@ import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoEstructu
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOESTRUCTURA;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOESTRUCTURA_Service;
 import com.sap.document.sap.soap.functions.mc_style.ZpeStEmpleadoEstructura;
-import com.sun.xml.internal.ws.fault.ServerSOAPFaultException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
-import es.emasesa.intranet.jornada.nomina.exception.EmpleadoEstructuraException;
-import es.emasesa.intranet.jornada.nomina.util.SapConfigurationUtil;
+import com.sun.xml.ws.fault.ServerSOAPFaultException;
+import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
+import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.Authenticator;
@@ -43,7 +43,7 @@ public class EmpleadoEstructuraService {
 
             return jsonResult;
         } catch (ServerSOAPFaultException e) {
-            throw new EmpleadoEstructuraException("Error llamando al WS");
+            throw new EmpleadoEstructuraException("Error llamando al WS para el pernr "+ pernr);
         }
     }
 

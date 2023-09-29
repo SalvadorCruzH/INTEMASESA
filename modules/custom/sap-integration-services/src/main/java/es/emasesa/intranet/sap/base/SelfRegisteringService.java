@@ -1,4 +1,4 @@
-package es.emasesa.intranet.jornada.nomina.base;
+package es.emasesa.intranet.sap.base;
 
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
