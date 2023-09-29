@@ -58,7 +58,6 @@ public interface SelfRegisteringService extends InitializingBean, BeanNameAware 
         if (names.isEmpty()) {
             return null;
         }
-
         HashMapDictionary<String, Object> properties =
                 HashMapDictionaryBuilder.<String, Object>put("bean.id", beanName).put(
                         "origin.bundle.symbolic.name",

@@ -1,8 +1,11 @@
 package es.emasesa.intranet.jornada.nomina.service;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import es.emasesa.intranet.jornada.nomina.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
+
 import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
@@ -19,6 +22,7 @@ import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.MessageContext;
 
 import com.sap.document.sap.soap.functions.mc_style.*;
+import es.emasesa.intranet.settings.util.CustomSettingsReloadUtil;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -26,10 +30,10 @@ import org.osgi.service.component.annotations.Modified;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component("jornadaNominaService")
-public class JornadaNominaService{
+public class JornadaNominaService {
 
 
-   public Bapireturn1 peticionHorasExtras(String idEmpleado, String fechaInicio, String fechaFin, String tipoRetribucion)  {
+    public Bapireturn1 peticionHorasExtras(String idEmpleado, String fechaInicio, String fechaFin, String tipoRetribucion) {
 
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -37,33 +41,33 @@ public class JornadaNominaService{
             LocalDateTime fechaFinDateTime = LocalDateTime.parse("2023-10-15 20:00", formatter);
 
             return peticionHorasExtras(idEmpleado, fechaInicioDateTime, fechaFinDateTime, tipoRetribucion);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new Bapireturn1();
     }
 
     public Bapireturn1 peticionHorasExtras(String idEmpleado, LocalDateTime fechaInicio, LocalDateTime fechaFin, String tipoRetribucion) {
-       try {
-           ZPeActJornadaNomina zpeStActJornadaNominaParent = getObjectFactory().createZPeActJornadaNomina();
-           ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
-           zpeStActJornadaNomina.setPernr(idEmpleado);
-           zpeStActJornadaNomina.setHeInicio(getXMLGregorianCalendar(fechaInicio));
-           zpeStActJornadaNomina.setHeFin(getXMLGregorianCalendar(fechaFin));
-           zpeStActJornadaNomina.setHeTipoRetribucion(tipoRetribucion);
-           DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-           zpeStActJornadaNomina.setFechaInicio(fechaInicio.format(dtf));
-           zpeStActJornadaNominaParent.setTEmpleados(zpeStActJornadaNomina);
-           ZPeActJornadaNominaResponse result = getObjectFactory().createZPeActJornadaNominaResponse();
+        try {
+            ZPeActJornadaNomina zpeStActJornadaNominaParent = getObjectFactory().createZPeActJornadaNomina();
+            ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
+            zpeStActJornadaNomina.setPernr(idEmpleado);
+            zpeStActJornadaNomina.setHeInicio(getXMLGregorianCalendar(fechaInicio));
+            zpeStActJornadaNomina.setHeFin(getXMLGregorianCalendar(fechaFin));
+            zpeStActJornadaNomina.setHeTipoRetribucion(tipoRetribucion);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            zpeStActJornadaNomina.setFechaInicio(fechaInicio.format(dtf));
+            zpeStActJornadaNominaParent.setTEmpleados(zpeStActJornadaNomina);
+            ZPeActJornadaNominaResponse result = getObjectFactory().createZPeActJornadaNominaResponse();
 
-           Bapireturn1 result1 = port.zPeActJornadaNomina(zpeStActJornadaNomina);
+            Bapireturn1 result1 = port.zPeActJornadaNomina(zpeStActJornadaNomina);
 
-           return result1;
-       }catch(Exception e){
-           e.printStackTrace();
-       }
+            return result1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-       return null;
+        return null;
     }
 
     private XMLGregorianCalendar getXMLGregorianCalendar(LocalDateTime localDateTime) throws DatatypeConfigurationException {
@@ -90,9 +94,12 @@ public class JornadaNominaService{
     @PostConstruct
     public void activate() throws MalformedURLException {
 
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[I] Activando EmpleadoEstructuraService");
+        }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            SapServicesConfiguration configuration =  sapConfigurationUtil.getConfiguration();
+            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
@@ -130,8 +137,10 @@ public class JornadaNominaService{
 
     }
 
-   private ZWSPEACTJORNADANOMINA port;
+    private ZWSPEACTJORNADANOMINA port;
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
+
+    private static final Log LOG = LogFactoryUtil.getLog(JornadaNominaService.class);
 
 }
