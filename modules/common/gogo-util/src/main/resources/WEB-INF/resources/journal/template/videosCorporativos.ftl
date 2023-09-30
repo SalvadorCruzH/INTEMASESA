@@ -12,7 +12,7 @@
     <#if video.getData()?? && video.getData()?has_content>
         <div class="ema-videosCorporativos__videoContainer">
             <button class="ema-videosCorporativos__icon" id="${themeDisplay.getPortletDisplay().getId()}_buttonVideo"><i class="fa-regular fa-circle-play fa-2xl"></i></button>
-            <video class="ema-videosCorporativos__video" id="${themeDisplay.getPortletDisplay().getId()}_video" autoplay>
+            <video class="ema-videosCorporativos__video" id="${themeDisplay.getPortletDisplay().getId()}_video">
                 <source src="${video.getData()}" type="video/mp4">
             </video>
         </div>
