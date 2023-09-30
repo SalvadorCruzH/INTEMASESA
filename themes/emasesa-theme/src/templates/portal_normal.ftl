@@ -14,6 +14,7 @@
 	<link href="${css_folder}/fontawesome/css/brands.css" rel="stylesheet">
 	<link href="${css_folder}/fontawesome/css/solid.css" rel="stylesheet">
 	<link href="${css_folder}/fontawesome/css/regular.css" rel="stylesheet">
+	<link href="${css_folder}/select2/select2.min.css" rel="stylesheet" />
 
 	<link rel="stylesheet" href="${javascript_folder}/slick/slick.min.css">
 	<link rel="stylesheet" href="${javascript_folder}/slick/accessible-slick-theme.min.css">

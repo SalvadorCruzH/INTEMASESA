@@ -1,0 +1,5 @@
+Bundle-Name: admintheme-fragment
+Bundle-SymbolicName: admintheme-fragment
+Bundle-Version: 1.0.0
+Fragment-Host: admin-theme
+
