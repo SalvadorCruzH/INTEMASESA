@@ -2,6 +2,7 @@
     "private": true,
     "workspaces": {
         "packages": [
+            "modules/override/rest-ddmfieldextender",
             "themes/emasesa-theme"
         ]
     }
