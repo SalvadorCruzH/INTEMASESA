@@ -2,11 +2,11 @@
   <div class="ema-carouselSlide__carouselWrapper">
     <div class="ema-carousel-icons">
       <button aria-label="anterior slide" class="prev ema-slide-btn ema-slide-pre">
-          <i class="i-icon--white fa-solid fa-angle-left"></i>
+          <i class="i-icon--black fa-solid fa-angle-left"></i>
       </button>
       <div class="carousel-dots-wrapper"></div>
       <button aria-label="siguiente slide" class="next ema-slide-btn ema-slide-next">
-          <i class="i-icon--white fa-solid fa-angle-right"></i>
+          <i class="i-icon--black fa-solid fa-angle-right"></i>
       </button>
     </div>
     <div class="ema-carouselSlide__carousel">
