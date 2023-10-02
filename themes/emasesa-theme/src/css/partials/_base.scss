@@ -16,8 +16,8 @@
   .portlet {
     margin-bottom: 0;
   }
-  
-  
+
+
   h1,
   h2,
   h3,
@@ -60,6 +60,9 @@
     @include media-breakpoint-up(xl) {
       font-size: m-rem(40px);
       line-height: m-rem(47px);
+    }
+    &.page-title {
+      @include font_base-bold;
     }
   }
   h2 {
@@ -119,5 +122,9 @@ body {
       color: $color-hover-blue;
     }
   }
+}
+
+.content {
+  background-color: $color-bg-grey;
 }
 

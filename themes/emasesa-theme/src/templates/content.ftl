@@ -1,4 +1,4 @@
-<section id="content">
+<section id="content" class="content">
 	<h2 class="hide-accessible sr-only" role="heading" aria-level="1">${htmlUtil.escape(the_title)}</h2>
 
 	<#if selectable>
