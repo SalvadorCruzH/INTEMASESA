@@ -20,11 +20,11 @@
 
 <template id="as-total-items-template">
     <div class="m-ajaxresults-header-element">
-        #total-items# noticia
+        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.found-sing" /> #total-items# <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.new" />
     </div>
 
     <div class="m-ajaxresults-header-elements">
-        #total-items# noticias
+        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.found-plur" /> #total-items# <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news" />
     </div>
 
     <div class="d-none"> #items-page# elementos por página</div>
