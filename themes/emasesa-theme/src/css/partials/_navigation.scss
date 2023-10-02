@@ -63,6 +63,13 @@
                     }
                 }
                 &.show {
+                    .i-mainNavigation__link {
+                        color: $color-aux-blue;
+                        &::after {
+                            transform: rotate(0deg);
+                            background: transparent url("@theme_image_path@/icons/angle-down-blue.svg") center center no-repeat;
+                        }
+                    }
                     .i-mainNavigation__submenuContainer {
                         display: block;
                     }

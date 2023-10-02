@@ -31,6 +31,10 @@
     list-style: none;
     margin-bottom: 0;
     padding-left: 0;
+    &--pm3 {
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
   }
   .m-listBaseNoStylesOnlyPl {
     list-style: none;
