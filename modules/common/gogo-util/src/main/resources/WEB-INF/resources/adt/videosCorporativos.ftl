@@ -1,17 +1,19 @@
 <#if entries?has_content>
     <div class="ema-videosCorporativos">
-        <ul class="ema-videosCorporativos__ul">
-            <#list entries as curEntry>
-                <#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
-                <li class="ema-videosCorporativos__li">
-                    <@liferay_journal["journal-article"]
-                    articleId=journalArticle.getArticleId()
-                    groupId=journalArticle.getGroupId()
-                    ddmTemplateKey="EMA-VIDEOSCORPORATIVOS-TEMPLATE"
-                    />
-                </li>
-            </#list>
-        </ul>
+        <div class="container">
+            <ul class="ema-videosCorporativos__ul">
+                <#list entries as curEntry>
+                    <#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
+                    <li class="ema-videosCorporativos__li">
+                        <@liferay_journal["journal-article"]
+                        articleId=journalArticle.getArticleId()
+                        groupId=journalArticle.getGroupId()
+                        ddmTemplateKey="EMA-VIDEOSCORPORATIVOS-TEMPLATE"
+                        />
+                    </li>
+                </#list>
+            </ul>
+        </div>
     </div>
 </#if>
 <script>
