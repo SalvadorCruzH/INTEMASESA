@@ -59,7 +59,8 @@ public class JornadaNominaService {
 
             return result1;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
+            LOG.debug(e.getMessage(),e);
         }
 
         return null;

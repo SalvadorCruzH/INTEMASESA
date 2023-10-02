@@ -1,0 +1,99 @@
+<div class="container">
+    <nav class="breadcrumbs" id="breadcrumbs" aria-label="breadcrumbs">
+        <ol class="breadcrumbs__items">
+            <li class="breadcrumbs__item">
+                <a href="/" title="Home">Home</a>
+                <span aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span>
+            </li>
+            <li class="breadcrumbs__item">
+                <a href="/parent" title="Parent">Parent</a>
+                <span aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span>
+            </li>
+            <li class="breadcrumbs__item">
+                <a href="/parent/current" title="Current" aria-current="location">Current</a>
+                <span aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span>
+            </li>
+        </ol>
+    </nav>
+    <!-- /.breadcrumbs -->
+
+    <div class="favorite">
+        <a href="#" title="Agregar a favorito" class="favorite__link">
+            <img src="/o/emasesa-theme/images/icons/ico-fav-no.svg" alt="" class="favorite__ico">
+            <span class="favorite__label">En favoritos</span>
+        </a>
+    </div>
+    <!-- /.favorite -->
+
+    <h1 class="page-title">Administrar tareas</h1>
+
+    <div class="widget widget--tareas-pendientes">
+        <div class="widget--tareas-pendientes__info">
+            <h3 class="widget-title">Tareas pendientes</h3>
+            <div class="widget--tareas-pendientes__asignaciones">
+                <div class="widget--tareas-pendientes__asignadas">
+                    <span class="widget--tareas-pendientes__number">8</span> <span class="widget--tareas-pendientes__num-label">Asignadas</span>
+                </div>
+                <div class="widget--tareas-pendientes__sin-asignar">
+                    <span class="widget--tareas-pendientes__number">12</span> <span class="widget--tareas-pendientes__num-label">Sin asignar</span>
+                </div>
+            </div>
+        </div>
+        <div class="widget--tareas-pendientes__notificaciones">
+            <h3 class="carrusel-title">Mis notificaciones</h3>
+            <div class="widget--tareas-pendientes__carrusel">
+                <div class="widget--tareas-pendientes__carrusel-item">
+                    <h4 class="widget--tareas-pendientes__title">Nóminas</h4>
+                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                </div>
+                <div class="widget--tareas-pendientes__carrusel-item">
+                    <h4 class="widget--tareas-pendientes__title">Cambio de turno</h4>
+                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                </div>
+                <div class="widget--tareas-pendientes__carrusel-item">
+                    <h4 class="widget--tareas-pendientes__title">Vacaciones</h4>
+                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> Sin notificaciones nuevas</p>
+                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                </div>
+                <div class="widget--tareas-pendientes__carrusel-item">
+                    <h4 class="widget--tareas-pendientes__title">Nóminas</h4>
+                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                </div>
+                <div class="widget--tareas-pendientes__carrusel-item">
+                    <h4 class="widget--tareas-pendientes__title">Cambio de turno</h4>
+                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                </div>
+                <div class="widget--tareas-pendientes__carrusel-item">
+                    <h4 class="widget--tareas-pendientes__title">Vacaciones</h4>
+                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> Sin notificaciones nuevas</p>
+                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.widget--tareas-pendientes -->
+</div>
+
+<section class="white-bg">
+    <div class="container">
+        <form method="post">
+            <div class="form-row form-row--inline">
+                <label for="sel_solicitud" id="seleccione-solicitud" class="sr-only">Seleccione una solicitud</label>
+                <select id="sel_solicitud" name="sel_solicitud" aria-labelledby="seleccione-solicitud">
+                    <option value="Seleccione una solicitud">Seleccione una solicitud</option>
+                    <option value="Solicitud número uno">Solicitud número uno</option>
+                    <option value="Segunda solicitud">Segunda solicitud</option>
+                    <option value="Tercera solicitud">Tercera solicitud</option>
+                </select>
+                <div class="btn-wrapper">
+                    <input type="submit" value="Consultar" class="btn btn-primary" aria-label="Consultar" />
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- /.white-bg -->

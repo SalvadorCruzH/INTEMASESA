@@ -6,14 +6,14 @@
             <!-- EMPTY BY DEFAULT -->
         </div>
 
-        <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
-            <table class="" style="width: 100%;">
+        <div class="m-results-wrapper ema-documentos-ajax ema-ajaxsearch">
+            <table class="ema-table__ajaxsearch">
                 <thead>
                  <tr>
                   <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-name" /></th>
                   <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-category" /></th>
-                  <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-modified-date" /></th>
-                  <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-expiration-date" /></th>
+                  <th class="ema-modified-date"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-modified-date" /></th>
+                  <th class="ema-expiration-date"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-expiration-date" /></th>
                  </tr>
                 </thead>
                 <tbody id="as-wrapper">
@@ -30,11 +30,11 @@
 
 <template id="as-total-items-template" class="d-none">
     <div class="m-ajaxresults-header-element">
-        #total-items# documento
+        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.found-sing" /> #total-items# <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.document" />
     </div>
 
     <div class="m-ajaxresults-header-elements">
-        #total-items# documentos
+        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.found-plur" /> #total-items# <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents" />
     </div>
 
     <div class="d-none"> #items-page# documentos por página</div>
@@ -45,7 +45,7 @@
     <tr>
         <td><a class="ema-searchAjax__linkDoc" href="#docUrl#" target="_blank">#docName#</a></td>
         <td class="ema-doc-category">#category#</td>
-        <td class="ema-publish-date">#modified#</td>
+        <td class="ema-modified-date">#modified#</td>
         <td class="ema-expiration-date">#expirationDate#</td>
     </tr>
 </template>
