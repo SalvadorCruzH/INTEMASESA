@@ -42,5 +42,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String jornadaNominaEndpoint();
+    @Meta.AD(
+            deflt = "",
+            name = "MarcajeEndpoint",
+            required = false
+    )
+    String MarcajeEndpoint();
 
 }
