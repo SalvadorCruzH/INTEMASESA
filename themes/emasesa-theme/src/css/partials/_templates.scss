@@ -37,6 +37,11 @@
         }
         &__categorias {
             @include font_base;
+            font-size: m-rem(16px);
+            line-height: 1.5rem;
+            color: #777;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
             
             @include media-breakpoint-up(md) {
                 font-size: m-rem(18px);
@@ -50,6 +55,11 @@
         }
         &__fecha {
             @include font_base;
+            font-size: m-rem(16px);
+            color: #000000;
+            background: #0096DA3A;
+            width: fit-content;
+            padding: 0 .5rem;
             @include media-breakpoint-up(md) {
                 font-size: m-rem(18px);
                 color: #000000;

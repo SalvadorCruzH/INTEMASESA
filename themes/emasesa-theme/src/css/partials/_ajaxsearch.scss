@@ -152,10 +152,8 @@
                 line-height: m-rem(24px);
                 margin-bottom: 2rem;
             }
-            .ema-documentos-ajax{
-                @include media-breakpoint-only(sm) {
-                    overflow: scroll;
-                }
+            .ema-documentos-ajax {
+                overflow: scroll;
             }
         }
         .ema-ajaxsearch {
