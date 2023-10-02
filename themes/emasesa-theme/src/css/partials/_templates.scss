@@ -166,6 +166,7 @@
                 }
             }
             &__fecha {
+                padding: 0;
                 @include media-breakpoint-up(md) {
                     background: transparent;
                 }
