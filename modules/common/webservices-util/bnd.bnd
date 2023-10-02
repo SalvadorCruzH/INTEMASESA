@@ -1,0 +1,7 @@
+Bundle-Name: webservices-util
+Bundle-SymbolicName: es.emasesa.intranet.webservices
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.intranet.webservices.*
+
+
+Web-ContextPath: /webservices-util

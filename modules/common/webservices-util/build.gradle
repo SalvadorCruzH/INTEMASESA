@@ -1,0 +1,62 @@
+dependencies {
+	compileOnly "com.liferay.portal:release.dxp.api"
+//	compileOnly "biz.aQute.bnd:biz.aQute.bndlib"
+//	compileOnly "com.liferay:com.liferay.portal.configuration.metatype"
+//	compileOnly "com.liferay:com.liferay.configuration.admin.api"
+
+//	compileOnly group: "com.liferay", name: "com.liferay.asset.taglib"
+//	compileOnly group: "com.liferay", name: "com.liferay.comment.taglib"
+//	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib"
+//	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.dynamic.section"
+//	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.form.navigator"
+//	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.util"
+//	compileOnly group: "com.liferay", name: "com.liferay.journal.taglib"
+//	compileOnly group: "com.liferay", name: "com.liferay.layout.taglib"
+//	compileOnly group: "com.liferay", name: "com.liferay.site.taglib"
+//	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+//	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
+//	compileOnly group: "javax.portlet", name: "portlet-api"
+//	compileOnly group: "javax.servlet", name: "javax.servlet-api"
+//	compileOnly group: "jstl", name: "jstl"
+//	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+//	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs"
+//	compileOnly "com.liferay:org.apache.axis"
+//	compileOnly "org.apache.commons:commons-lang3"
+//	compileOnly group: 'commons-logging', name: 'commons-logging', version: '1.2'
+//	compile "javax.mail:mail:1.4.7"
+//	compile "javax.activation:activation:1.1.1"
+//	compile "commons-discovery:commons-discovery:0.4"
+//	compile "com.liferay:javax.xml.soap:1.4.0.LIFERAY-PATCHED-1"
+//	compile "wsdl4j:wsdl4j:1.6.3"
+//	compileOnly group: 'org.apache.httpcomponents', name: 'httpclient'
+//	compileOnly group: 'org.apache.httpcomponents', name: 'httpcore'
+//
+//	compileOnly "com.google.code.gson:gson"
+//	compileOnly "org.apache.axis:axis-jaxrpc"
+//	compileOnly "org.apache.cxf:cxf-core"
+//	compileOnly "org.apache.cxf:cxf-rt-rs-client"
+//
+//	cssBuilder group: "com.liferay", name: "com.liferay.css.builder"
+//
+	compile project (':modules:common:base-module')
+//
+//	compileOnly "com.liferay:com.liferay.journal.web"
+//
+//	compileOnly group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.9.8'
+//    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.3'
+//    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.3'
+//    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+//    compileOnly group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version: '2.9.8'
+//    compileOnly group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.9.8'
+//
+//	// Test
+//	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+//	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
+//	testCompile 'junit:junit'
+//	testCompile "org.mockito:mockito-core"
+//	testCompile "org.powermock:powermock-core"
+//	testCompile "org.powermock:powermock-api-mockito2"
+//	testCompile "org.powermock:powermock-module-junit4"
+//	testCompile "org.powermock:powermock-reflect"
+}

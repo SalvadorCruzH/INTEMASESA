@@ -1,0 +1,22 @@
+dependencies {
+//	implementation project(path: ':modules:common:base-module')
+    compileOnly "com.liferay.portal:release.dxp.api"
+//	compileOnly "biz.aQute.bnd:biz.aQute.bndlib"
+//	compileOnly "com.liferay:com.liferay.portal.configuration.metatype"
+//	compileOnly "com.liferay:com.liferay.configuration.admin.api"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs"
+
+//	compileOnly "org.apache.cxf:cxf-core"
+//	compileOnly "org.apache.cxf:cxf-rt-rs-client"
+
+	compile project (':modules:common:webservices-util')
+	
+	compileOnly group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.9.8'
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.3'
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.3'
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+    compileOnly group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version: '2.9.8'
+    compileOnly group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.9.8'
+
+}
