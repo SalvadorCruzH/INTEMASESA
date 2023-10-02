@@ -182,7 +182,7 @@ public class ZpeStActJornadaNomina {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link XMLGregorianCalendar }
      *     
      */
     public XMLGregorianCalendar getHeInicio() {
@@ -206,7 +206,7 @@ public class ZpeStActJornadaNomina {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link XMLGregorianCalendar }
      *     
      */
     public XMLGregorianCalendar getHeFin() {
