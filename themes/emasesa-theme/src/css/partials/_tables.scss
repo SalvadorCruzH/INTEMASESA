@@ -1,0 +1,39 @@
+.i-mainWrapper {
+    table {
+        &.ema-table{
+            &__ajaxsearch {
+                width: 100%;
+                background-color: white;
+                border-radius: m-rem(30px);
+                thead{
+                    @include font_base-bold;
+                    border-bottom: m-rem(3px) solid $color-aux-blue;
+                    font-size: m-rem(20px);
+                    line-height: m-rem(26px);
+                    tr {
+                        th {
+                            padding-top: m-rem(45px);
+                            padding-bottom: m-rem(20px);
+                            padding-left: 1rem;
+                            padding-right: 1rem;
+                        }
+                    }
+                }
+                tbody{
+                    @include font_base;
+                    font-size: m-rem(18px);
+                    line-height: m-rem(24px);
+                    tr {
+                        border-bottom: m-rem(1px) solid $color-border;
+                        td {
+                            padding: m-rem(20px) 1rem;
+                        }
+                    }
+                    tr:last-child {
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+    }
+}

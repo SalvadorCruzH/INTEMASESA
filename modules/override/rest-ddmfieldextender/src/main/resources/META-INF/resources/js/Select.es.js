@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 
 const Select = ({ name, onChange, predefinedValue, value, options }) => {
 	const selectRef = useRef(null);
-
+	const timeStamp = Date.now();
 	useEffect(() => {
 		if (selectRef.current) {
 			$(selectRef.current).select2();
@@ -21,6 +21,7 @@ const Select = ({ name, onChange, predefinedValue, value, options }) => {
 		<select
 			className="ddm-rest-select form-control select"
 			ref={selectRef}
+			id={name + timeStamp}
 			onChange={onChange}
 			value={value ? value : predefinedValue}
 			name={name}
@@ -74,7 +75,10 @@ const Main = ({	  label,
 
 
 	return (
-		<FieldBase label={label} predefinedValue={predefinedValue} {...otherProps}>
+		<FieldBase label={label}
+				   name={name}
+				   predefinedValue={predefinedValue}
+				   {...otherProps}>
 			<Select
 				name={name}
 				onChange={(event) => {

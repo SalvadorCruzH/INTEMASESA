@@ -56,9 +56,9 @@
             "label": {
                 "es_ES": "Título"
             },
+            "indexType": "keyword",
             "fieldNamespace": "",
             "visibilityExpression": "",
-            "indexType": "keyword",
             "name": "Text89626710",
             "localizable": true,
             "dataSourceType": "manual"
@@ -72,9 +72,9 @@
             "type": "image",
             "showLabel": true,
             "required": true,
+            "indexType": "text",
             "fieldNamespace": "",
             "visibilityExpression": "",
-            "indexType": "text",
             "repeatable": false,
             "requiredDescription": false,
             "name": "Image56862516",
@@ -94,9 +94,9 @@
             "type": "date",
             "showLabel": true,
             "required": true,
+            "indexType": "keyword",
             "fieldNamespace": "",
             "visibilityExpression": "",
-            "indexType": "keyword",
             "repeatable": false,
             "name": "Date58667956",
             "localizable": true,
@@ -115,9 +115,9 @@
             "type": "rich_text",
             "showLabel": true,
             "required": false,
+            "indexType": "text",
             "fieldNamespace": "",
             "visibilityExpression": "",
-            "indexType": "text",
             "repeatable": false,
             "name": "RichText34341541",
             "localizable": true,
@@ -127,24 +127,112 @@
             }
         },
         {
-            "dataType": "journal-article",
+            "labelAtStructureLevel": true,
+            "ddmStructureLayoutId": "",
+            "ddmStructureId": "",
+            "upgradedStructure": false,
             "readOnly": false,
             "label": {
-                "es_ES": "Nota de prensa"
+                "es_ES": "Noticia adjunta"
             },
-            "type": "journal_article",
+            "type": "fieldset",
+            "rows": [
+                {
+                    "columns": [
+                        {
+                            "size": 12,
+                            "fields": [
+                                "Radio87931178"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "columns": [
+                        {
+                            "size": 12,
+                            "fields": [
+                                "JournalArticle21174023"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "collapsible": true,
             "showLabel": true,
             "required": false,
-            "fieldNamespace": "",
-            "visibilityExpression": "",
-            "indexType": "keyword",
+            "nestedFields": [
+                {
+                    "labelAtStructureLevel": true,
+                    "dataType": "string",
+                    "readOnly": false,
+                    "label": {
+                        "es_ES": "Columnas"
+                    },
+                    "type": "radio",
+                    "showLabel": true,
+                    "required": false,
+                    "indexType": "keyword",
+                    "fieldNamespace": "",
+                    "visibilityExpression": "",
+                    "inline": true,
+                    "repeatable": false,
+                    "name": "Radio87931178",
+                    "options": [
+                        {
+                            "reference": "boletin__related__item--1col",
+                            "label": {
+                                "es_ES": "1 sola columna"
+                            },
+                            "value": "Opción49995400"
+                        },
+                        {
+                            "reference": "boletin__related__item--2col",
+                            "label": {
+                                "es_ES": "2 columnas"
+                            },
+                            "value": "Opción99888833"
+                        },
+                        {
+                            "reference": "boletin__related__item--3col",
+                            "label": {
+                                "es_ES": "3 columnas"
+                            },
+                            "value": "Opción19664591"
+                        }
+                    ],
+                    "localizable": true,
+                    "nativeField": false,
+                    "fieldReference": "columnas",
+                    "tip": {
+                        "es_ES": "Columnas que ocupará la nota de prensa"
+                    }
+                },
+                {
+                    "dataType": "journal-article",
+                    "readOnly": false,
+                    "label": {
+                        "es_ES": "Nota de prensa"
+                    },
+                    "type": "journal_article",
+                    "showLabel": true,
+                    "required": false,
+                    "indexType": "keyword",
+                    "fieldNamespace": "",
+                    "visibilityExpression": "",
+                    "repeatable": false,
+                    "name": "JournalArticle21174023",
+                    "localizable": true,
+                    "fieldReference": "boletinNotaPrensa",
+                    "tip": {
+                        "es_ES": "Nota de prensa relacionada"
+                    }
+                }
+            ],
             "repeatable": true,
-            "name": "JournalArticle21174023",
-            "localizable": true,
-            "fieldReference": "boletinNotaPrensa",
-            "tip": {
-                "es_ES": "Nota de prensa relacionada"
-            }
+            "name": "Fieldset14089269",
+            "localizable": false,
+            "fieldReference": "notaPrensa"
         }
     ]
 }

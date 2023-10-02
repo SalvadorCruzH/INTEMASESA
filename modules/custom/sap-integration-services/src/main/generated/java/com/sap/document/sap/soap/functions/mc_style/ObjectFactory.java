@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
  * provided in this class.
  * 
  */
-//@XmlRegistry
+@XmlRegistry
 public class ObjectFactory {
 
 
@@ -29,68 +29,102 @@ public class ObjectFactory {
     public ObjectFactory() {
     }
 
+
+
+        /**
+         * Create an instance of {@link ZPeEmpleadoEstructura }
+         *
+         */
+        public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
+            return new ZPeEmpleadoEstructura();
+        }
+
+        /**
+         * Create an instance of {@link ZPeEmpleadoEstructuraResponse }
+         *
+         */
+        public ZPeEmpleadoEstructuraResponse createZPeEmpleadoEstructuraResponse() {
+            return new ZPeEmpleadoEstructuraResponse();
+        }
+
+        /**
+         * Create an instance of {@link TableOfZpeStEmpleadoEstructura }
+         *
+         */
+        public TableOfZpeStEmpleadoEstructura createTableOfZpeStEmpleadoEstructura() {
+            return new TableOfZpeStEmpleadoEstructura();
+        }
+
+        /**
+         * Create an instance of {@link ZpeStEmpleadoEstructura }
+         *
+         */
+        public ZpeStEmpleadoEstructura createZpeStEmpleadoEstructura() {
+            return new ZpeStEmpleadoEstructura();
+        }
+
+        /**
+         * Create an instance of {@link ZPeActJornadaNomina }
+         *
+         */
+        public ZPeActJornadaNomina createZPeActJornadaNomina() {
+            return new ZPeActJornadaNomina();
+        }
+
+        /**
+         * Create an instance of {@link ZpeStActJornadaNomina }
+         *
+         */
+        public ZpeStActJornadaNomina createZpeStActJornadaNomina() {
+            return new ZpeStActJornadaNomina();
+        }
+
+        /**
+         * Create an instance of {@link ZPeActJornadaNominaResponse }
+         *
+         */
+        public ZPeActJornadaNominaResponse createZPeActJornadaNominaResponse() {
+            return new ZPeActJornadaNominaResponse();
+        }
+
+        /**
+         * Create an instance of {@link Bapireturn1 }
+         *
+         */
+        public Bapireturn1 createBapireturn1() {
+            return new Bapireturn1();
+        }
+
     /**
-     * Create an instance of {@link ZPeEmpleadoEstructura }
+     * Create an instance of {@link ZPeMarcajesHistoricoActual }
      * 
      */
-    public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
-        return new ZPeEmpleadoEstructura();
+    public ZPeMarcajesHistoricoActual createZPeMarcajesHistoricoActual() {
+        return new ZPeMarcajesHistoricoActual();
     }
 
     /**
-     * Create an instance of {@link ZPeEmpleadoEstructuraResponse }
+     * Create an instance of {@link ZPeMarcajesHistoricoActualResponse }
      * 
      */
-    public ZPeEmpleadoEstructuraResponse createZPeEmpleadoEstructuraResponse() {
-        return new ZPeEmpleadoEstructuraResponse();
+    public ZPeMarcajesHistoricoActualResponse createZPeMarcajesHistoricoActualResponse() {
+        return new ZPeMarcajesHistoricoActualResponse();
     }
 
     /**
-     * Create an instance of {@link TableOfZpeStEmpleadoEstructura }
+     * Create an instance of {@link TableOfZpeStMarcajesHistoricoActu }
      * 
      */
-    public TableOfZpeStEmpleadoEstructura createTableOfZpeStEmpleadoEstructura() {
-        return new TableOfZpeStEmpleadoEstructura();
+    public TableOfZpeStMarcajesHistoricoActu createTableOfZpeStMarcajesHistoricoActu() {
+        return new TableOfZpeStMarcajesHistoricoActu();
     }
 
     /**
-     * Create an instance of {@link ZpeStEmpleadoEstructura }
+     * Create an instance of {@link ZpeStMarcajesHistoricoActu }
      * 
      */
-    public ZpeStEmpleadoEstructura createZpeStEmpleadoEstructura() {
-        return new ZpeStEmpleadoEstructura();
-    }
-
-    /**
-     * Create an instance of {@link ZPeActJornadaNomina }
-     *
-     */
-    public ZPeActJornadaNomina createZPeActJornadaNomina() {
-        return new ZPeActJornadaNomina();
-    }
-
-    /**
-     * Create an instance of {@link ZpeStActJornadaNomina }
-     *
-     */
-    public ZpeStActJornadaNomina createZpeStActJornadaNomina() {
-        return new ZpeStActJornadaNomina();
-    }
-
-    /**
-     * Create an instance of {@link ZPeActJornadaNominaResponse }
-     *
-     */
-    public ZPeActJornadaNominaResponse createZPeActJornadaNominaResponse() {
-        return new ZPeActJornadaNominaResponse();
-    }
-
-    /**
-     * Create an instance of {@link Bapireturn1 }
-     *
-     */
-    public Bapireturn1 createBapireturn1() {
-        return new Bapireturn1();
+    public ZpeStMarcajesHistoricoActu createZpeStMarcajesHistoricoActu() {
+        return new ZpeStMarcajesHistoricoActu();
     }
 
 }

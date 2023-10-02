@@ -27,12 +27,17 @@ import org.osgi.service.component.annotations.Reference;
         service = CustomWorkflowUtil.class
 )
 public class CustomWorkflowUtil {
-
+    /**
+     * Retrive responsableId from the soapService
+     * @param workflowContext
+     * @param userId
+     * @return
+     */
     public List<User> assignWorkflowUser(Map<String, Serializable> workflowContext, long userId) {
         List<User> users = new ArrayList<>();
         long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-        //TODO - get user screen from service
-        String screenName = "workflow-user";
+
+        String screenName = ""; //TODO - think on a default user, when the service fail
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -42,8 +47,8 @@ public class CustomWorkflowUtil {
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(user.getScreenName());
             Thread.currentThread().setContextClassLoader(actualClassLoader);
-
-            System.out.println(json.toJSONString());
+            screenName = json.getString("responsableId");
+            LOG.debug("responsable: "+screenName);
             users.add(_userLocalService.getUserByScreenName(companyId, screenName));
         } catch (SapException e) {
             LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+screenName, e);

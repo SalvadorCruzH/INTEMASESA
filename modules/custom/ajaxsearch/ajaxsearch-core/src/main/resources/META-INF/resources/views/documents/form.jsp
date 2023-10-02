@@ -84,30 +84,31 @@
             </button>
         </div>
     </div>
-    <div class="ema-ajaxsearch-filtros__sortby">
-        <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort-by"></liferay-ui:message></label>
-        <select name="<portlet:namespace />sortby"
-                type="text"
-                value='<%=ajaxSearchDisplayContext.getLong("sortby") %>'
-                data-as-id="sortby"
-                class="m-searchAjax__input select"
-                id="sortby"
-            >
-                <option value="name-asc" >
-                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.name-asc" />
-                </option>
-                <option value="name-desc" >
-                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.name-desc" />
-                </option>
-                <option value="date-asc" >
-                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.date-asc" />
-                </option>
-                <option value="date-desc" >
-                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.date-desc" />
-                </option>
-        </select>
+    <div class="ema-ajaxsearch-filtros__sortby--wrapper">
+        <div class="ema-ajaxsearch-filtros__sortby">
+            <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort-by"></liferay-ui:message></label>
+            <select name="<portlet:namespace />sortby"
+                    type="text"
+                    value='<%=ajaxSearchDisplayContext.getLong("sortby") %>'
+                    data-as-id="sortby"
+                    class="m-searchAjax__input select"
+                    id="sortby"
+                >
+                    <option value="name-asc" >
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.name-asc" />
+                    </option>
+                    <option value="name-desc" >
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.name-desc" />
+                    </option>
+                    <option value="date-asc" >
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.date-asc" />
+                    </option>
+                    <option value="date-desc" >
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.date-desc" />
+                    </option>
+            </select>
+        </div>
     </div>
-    
 </div>
 
 
