@@ -1,6 +1,8 @@
 package es.emasesa.intranet.base.util;
 
+import com.liferay.portal.kernel.cache.DynamicPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import org.osgi.service.component.annotations.Activate;
@@ -22,7 +24,7 @@ public class CustomCacheSingleUtil {
 	@Reference
 	private SingleVMPool singleVMPool;
 
-	public PortalCache<String, Object> cache;
+	public  PortalCache<String, Object> cache;
 	protected static final String CACHE_NAME = CustomCacheSingleUtil.class.getName();
 
 	public static final int TTL_A_MIN = 60;
@@ -38,7 +40,8 @@ public class CustomCacheSingleUtil {
 	public static final int TTL_INFINITE = 0;
 	
     private final static Log LOG = LoggerUtil.getLog(CustomCacheSingleUtil.class);
-	
+
+
 	@SuppressWarnings("unchecked")
 	@Activate
     @Modified
@@ -80,6 +83,22 @@ public class CustomCacheSingleUtil {
 	public void removeAll() {
 		cache.removeAll();
 	}
-	
 
+	public static void put(PortalCache<String, Object> cache, String key, Object value, int timeToLive) {
+		cache.put(key, value, timeToLive);
+	}
+
+	public static PortalCache<String, Object> getPortalCache() {
+		return PortalCacheHelperUtil.getPortalCache(CustomCacheSingleUtil.CACHE_NAME, CustomCacheSingleUtil.CACHE_NAME);
+	}
+
+	public static Object get(PortalCache<String, Object> cache,String key) {
+		Object value = cache.get(key);
+
+		if(LOG.isDebugEnabled()) {
+			LOG.debug((value != null ? "HIT": "MISS") + " at get cached data (Single), with key:" + key.substring(0, Math.min(key.length(), 120))+"...");
+		}
+
+		return value;
+	}
 }

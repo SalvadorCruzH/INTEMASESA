@@ -1,6 +1,6 @@
 [
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Noticia - Detalle",
         "templateKey": "EMA-NOTICIA-DETALLE-TEMPLATE",
         "structureKey": "EMA-NOTICIA",
@@ -8,12 +8,12 @@
         "groupFriendlyUrl": "/global",
         "templateFile": "noticia-detalle.ftl",
         "cacheable": true,
-        "comment": "Plantilla de detalle para Nota de Prensa",
+        "comment": "Plantilla de detalle para Noticia",
         "uuid": "9662d7c3-e9fd-2016-e433-947cae665c84",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name":"EMA - Noticia - Tarjeta",
         "templateKey": "EMA-NOTICIA-TARJETA-TEMPLATE",
         "structureKey": "EMA-NOTICIA",
@@ -26,7 +26,85 @@
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
+        "name":"EMA - Noticia - Detalle",
+        "templateKey": "EMA-NOTICIA-DETALLE-TEMPLATE",
+        "structureKey": "EMA-NOTICIA",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "noticia-detalle.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de detalle para Noticia",
+        "uuid": "ada16de5-94ff-07af-9dbc-f5885c2ceb33",
+        "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - videosCorporativos",
+        "templateKey": "EMA-VIDEOSCORPORATIVOS-TEMPLATE",
+        "structureKey": "EMA-VIDEOSCORPORATIVOS",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "videosCorporativos.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de videos corporativos",
+        "uuid": "7ca1e602-f2bf-7f4a-d3b1-bd38754c90ab",
+        "structureUuid": "7f77d98c-d0d8-6490-3bc6-3833d856ab89"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - banner 4 buttons",
+        "templateKey": "EMA-BANNER-4BUTTONS-TEMPLATE",
+        "structureKey": "EMA-BANNER-4BUTTONS",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "banner-4buttons.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de bunner 4 botones",
+        "uuid": "c9ff7d29-61c9-4b94-c7cc-de16d6cfef4d",
+        "structureUuid": "4c7e0c9e-71ef-0a0a-4382-556677fdd25c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Tarjeta de colores",
+        "templateKey": "EMA-TARJETA-COLORES-TEMPLATE",
+        "structureKey": "EMA-TARJETA-COLORES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "tarjeta-colores.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de tarjeta de colores",
+        "uuid": "fd5cc646-eeb0-d902-7459-06c2a807af2b",
+        "structureUuid": "b5a5d0fc-e133-46ee-48f6-5861fb349b39"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Tarjetas de imagenes",
+        "templateKey": "EMA-TARJETAS-IMAGENES-TEMPLATE",
+        "structureKey": "EMA-TARJETAS-IMAGENES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "tarjetas-imagenes.ftl",
+        "cacheable": true,
+        "comment": "Plantilla de tarjetas de imagenes",
+        "uuid": "22753e1e-82d1-fdc2-9f7c-5491f80fbfbd",
+        "structureUuid": "9197de5e-4461-48ef-d34e-963e0a03b394"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Carrusel Slider",
+        "templateKey": "EMA-CARRUSEL-SLIDER-TEMPLATE",
+        "structureKey": "EMA-CARRUSEL-SLIDER",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "carrusel-slider.ftl",
+        "cacheable": true,
+        "comment": "Plantilla del Carrusel Slider",
+        "uuid": "21f48df3-5a66-0830-8302-6395d5159a99",
+        "structureUuid": "55a81d81-0eea-bbca-7f6c-d840167da8a4"
+    },
+    {
+        "screenName": "aemasesa",
         "name": "EMA - Boletín",
         "templateKey": "EMA-BOLETIN",
         "structureKey": "EMA-BOLETIN",
@@ -39,7 +117,7 @@
         "structureUuid": "082198cd-c974-7965-1cad-e3f06576cff9"
     },
     {
-        "screenName": "admin",
+        "screenName": "aemasesa",
         "name": "EMA - Item relacionado",
         "templateKey": "EMA-ITEM-RELACIONADO",
         "structureKey": "EMA-NOTICIA",
@@ -50,5 +128,18 @@
         "comment": "Plantilla para los contenidos relacionados al final del bloetín",
         "uuid": "c60eb09c-b06e-39b1-4107-c9475db2d5a7",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Novedades item",
+        "templateKey": "EMA-NOVEDADES-TEMPLATE",
+        "structureKey": "EMA-NOVEDADES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "novedades-item.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para los contenidos relacionados al final del bloetín",
+        "uuid": "255ac4e7-a631-5fd4-856b-1d1a66d38d41",
+        "structureUuid": "157cd7ee-fb43-0bbf-22f4-4756b02f328a"
     }
 ]

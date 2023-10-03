@@ -1,0 +1,7 @@
+Bundle-Name: Emasesa Taglib
+Bundle-SymbolicName: emasesa-taglib
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.liferay.common.taglib.servlet.taglib
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://emasesa.es/tld/emasesa";version:Version="${Bundle-Version}"
+Require-Bundle: com.liferay.portal.template.freemarker
+Web-ContextPath: /emasesa-taglib

@@ -1,0 +1,208 @@
+{
+    "definitionSchemaVersion": "2.0",
+    "availableLanguageIds": [
+        "es_ES"
+    ],
+    "successPage": {
+        "body": {},
+        "title": {},
+        "enabled": false
+    },
+    "defaultLanguageId": "es_ES",
+    "fields": [
+        {
+            "dataType": "image",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Ilustración"
+            },
+            "type": "image",
+            "required": false,
+            "showLabel": true,
+            "indexType": "none",
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "repeatable": false,
+            "requiredDescription": true,
+            "name": "Image99204371",
+            "localizable": false,
+            "fieldReference": "img",
+            "tip": {
+                "es_ES": "se usarán ilustraciones con fondo transparente de 270px x 270px aproximadamente"
+            }
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "required": true,
+            "showLabel": true,
+            "displayStyle": "singleline",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción41100465",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción41100465"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "title",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Título"
+            },
+            "indexType": "text",
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "name": "Text64241036",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "required": false,
+            "showLabel": true,
+            "displayStyle": "multiline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción95382494",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción95382494"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "description",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Descripción"
+            },
+            "indexType": "text",
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "name": "Text88211658",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "required": false,
+            "showLabel": true,
+            "displayStyle": "singleline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción95382494",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción95382494"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "urlLink",
+            "tip": {
+                "es_ES": "Puede ser una url relativa (/pagina) o absoluta(https://"
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "URL del enlace"
+            },
+            "indexType": "keyword",
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "name": "Text73408940",
+            "localizable": true,
+            "dataSourceType": "manual"
+        }
+    ]
+}

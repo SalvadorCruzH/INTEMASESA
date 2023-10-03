@@ -14,4 +14,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BaseConfiguration {
 
+    @Meta.AD(
+            deflt = "-1",
+            name = "com.isplife.settings.configuration.BaseConfiguration.archive-dl-type-id",
+            required = false
+    )
+    long fileTypeId();
+
 }

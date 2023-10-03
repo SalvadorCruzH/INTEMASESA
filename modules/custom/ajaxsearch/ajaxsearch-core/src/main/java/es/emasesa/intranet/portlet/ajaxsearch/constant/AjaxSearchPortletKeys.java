@@ -10,9 +10,9 @@ public class AjaxSearchPortletKeys {
 	public static final DateFormat DFLT_SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	public static final String SEARCH_RENDER_PARAM_NAME = "searchActionParameters";
 	public static final String PORTLET_AJAXSEARCH_FORM =
-		"es_camara_intranet_portlet_ajaxsearch_portlet_form_AjaxSearchFormPortlet";
+		"es_emasesa_intranet_portlet_ajaxsearch_portlet_form_AjaxSearchFormPortlet";
 	public static final String PORTLET_AJAXSEARCH_RESULTS =
-		"es_camara_intranet_portlet_ajaxsearch_portlet_result_AjaxSearchResultsPortlet";
+		"es_emasesa_intranet_portlet_ajaxsearch_portlet_result_AjaxSearchResultsPortlet";
 	public static final String PORTLET_PREFS_SEARCH_IMPL="searchImpl";
 	public static final String PORTLET_CURRENT_CONFIG="currentConfig";
 	public static final String DEFAULT_JSP_FORM="/search-form.jsp";

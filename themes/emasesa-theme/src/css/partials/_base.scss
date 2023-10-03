@@ -10,15 +10,13 @@
       max-width: 1280px;
     }
   }
-
-  a {
-    color: $color-link;
-    transition: color .3s ease;
-    &:hover,
-    &:focus {
-      color: $color-hover-blue;
-    }
+  .portlet-header {
+    display: none;
   }
+  .portlet {
+    margin-bottom: 0;
+  }
+
 
   h1,
   h2,
@@ -26,7 +24,7 @@
   h4,
   strong,
   b {
-      @include font_base-bold;
+    @include font_base-bold;
   }
   h1 em,
   h2 em,
@@ -41,55 +39,56 @@
   b i {
     @include font_base-bold-italic;
   }
+  h1 i.i-icon,
+  h2 i.i-icon,
+  h3 i.i-icon,
+  h4 i.i-icon,
+  strong i.i-icon,
+  b i.i-icon {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-style: normal;
+  }
   em {
     @include font_base-italic;
-  }
-  .portlet-header {
-    display: none;
-  }
-  .portlet {
-    margin-bottom: 0;
   }
 
   h1 {
     @include font_base-black;
-    font-size: 1.5rem;
-    line-height: 1.33;
+    font-size: m-rem(36px);
+    line-height: m-rem(42px);
     @include media-breakpoint-up(xl) {
       font-size: m-rem(40px);
-      line-height: 1.33;
+      line-height: m-rem(47px);
+    }
+    &.page-title {
+      @include font_base-bold;
     }
   }
   h2 {
-    @include font_base-black;
-    font-size: m-rem(24px);
-    line-height: 1.33;
+    @include font_base-bold;
+    font-size: m-rem(28px);
+    line-height: m-rem(37px);
     @include media-breakpoint-up(xl) {
+      @include font_base-black;
       font-size: m-rem(36px);
-      line-height: 1.33;
+      line-height: m-rem(42px);
     }
   }
   h3 {
     @include font_base-bold;
-    font-size: m-rem(18px);
-    @include media-breakpoint-up(xl) {
-      font-size: m-rem(30px);
-    }
+    font-size: m-rem(24px);
+    line-height: m-rem(32px);
   }
   h4 {
     @include font_base-bold;
-    font-size: 1rem;
-    @include media-breakpoint-up(xl) {
-      font-size: m-rem(24px);
-    }
+    font-size: m-rem(24px);
+    line-height: m-rem(32px);
   }
-
   h5,
   h6 {
-    font-size: m-rem(14px);
-    @include media-breakpoint-up(xl) {
-      font-size: m-rem(20px);
-    }
+    font-size: m-rem(20px);
+    line-height: m-rem(26px);
   }
   p {
     @include font_base;
@@ -99,5 +98,33 @@
   .fa-regular {
     color: $color-text;
   }
+  .linkify:hover {
+      cursor: pointer;
+      box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
+  }
+  .linkify.isfocused {
+      outline: 0;
+      box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
+  }
+  .linkify a:focus {
+      outline: none;
+      box-shadow: none !important;
+  }
+}
+body {
+  a {
+    text-decoration: none;
+    color: $color-primary;
+    transition: color .3s ease;
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      color: $color-hover-blue;
+    }
+  }
+}
+
+.content {
+  background-color: $color-bg-grey;
 }
 

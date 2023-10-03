@@ -16,6 +16,10 @@ import java.util.Map;
         service = BaseSettings.class
 )
 public class BaseSettings {
+
+    public long fileTypeId(){
+        return configuration.fileTypeId();
+    }
     
     @Activate
     @Modified

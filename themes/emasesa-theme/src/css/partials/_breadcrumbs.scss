@@ -1,0 +1,29 @@
+.breadcrumbs {
+    margin: 2rem 0 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid $color-dashed;
+    &__items {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+    &__item {
+        display: flex;
+        a {
+            display: block;
+            color: $color-black;
+            font-size: m-rem(14px);
+            @include font_base-bold;
+            &[aria-current="location"] {
+                @include font_base;
+                + span {
+                    display: none;
+                }
+            }
+        }
+        span {
+            margin: 0 1rem;
+        }
+    }
+}

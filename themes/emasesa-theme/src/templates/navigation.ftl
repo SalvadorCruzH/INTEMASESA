@@ -34,7 +34,7 @@
 					<div class="i-mainNavigation__submenuContainer">
 						<div class="i-mainNavigation__submenuWrapper">
 							<div class="i-mainNavigation__innerWrapper">
-								<ul class="i-mainNavigation__submenuUl m-listBaseNoStyles" role="menu">
+								<ul class="i-mainNavigation__submenuUl m-listBaseNoStyles m-listBaseNoStyles--pm3" role="menu">
 									<#list nav_item.getChildren() as nav_child>
 										<#assign
 											nav_child_css_class = "i-mainNavigation__submenuLi"
@@ -47,10 +47,12 @@
 										</#if>
 
 										<li class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" role="presentation">
-											<a class="i-mainNavigation__link2" href="${nav_child.getURL()}" ${nav_child.getTarget()} role="menuitem">${nav_child.getName()}</a>
-															<#--  2º level descomentar para 2 y 3 nivel  -->
+											<a class="i-mainNavigation__link2" href="${nav_child.getURL()}" ${nav_child.getTarget()} role="menuitem">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												${nav_child.getName()}
+											</a>
 											<#if nav_child.hasChildren()>
-												<ul class="child-menu i-mainNavigation__submenuUl2" role="menu">
+												<ul class="child-menu i-mainNavigation__submenuUl2 m-listBaseNoStyles m-listBaseNoStyles--pm3" role="menu">
 													<#list nav_child.getChildren() as nav_child2>
 														<#assign
 															nav_child2_css_class = "i-navMainMobile__li2Level"
@@ -63,7 +65,10 @@
 														</#if>
 
 														<li class="${nav_child2_css_class}" id="layout_${nav_child2.getLayoutId()}" role="presentation">
-															<a class="i-mainNavigation__link2Level" href="${nav_child2.getURL()}" ${nav_child2.getTarget()} role="menuitem">${nav_child2.getName()}</a>
+															<a class="i-mainNavigation__link2Level" href="${nav_child2.getURL()}" ${nav_child2.getTarget()} role="menuitem">
+																<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+																${nav_child2.getName()}
+															</a>
 														</li>
 													</#list>
 												</ul>
@@ -71,24 +76,68 @@
 										</li>
 									</#list>
 								</ul>
-								<div class="i-wrapperBR i-wrapperBR--blue">
+								<div class="i-wrapperRight">
+									<div class="i-wrapperBR i-wrapperBR--blue">
 									<h2 class="i-title i-title--18 i-title--black">Hemos actualizado</h2>
-									<ul>
-										<li>Información General y Prestaciones</li>
-										<li>Ofertas especiales para el colectivo de Emasesa</li>
-										<li>Sistemas de gestión ambiental</li>
-										<li>Sistemas de Gestión de la energía</li>
+									<ul class="m-listBaseNoStyles m-listBaseNoStyles--pm3">
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Información General y Prestaciones
+											</a>
+										</li>	
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Ofertas especiales para el colectivo de Emasesa
+											</a>
+										</li>
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Sistemas de gestión ambiental
+											</a>
+										</li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Sistemas de Gestión de la energía
+											</a>
+										<li>
 									</ul>
 									<h2 class="i-title i-title--18 i-title--black">Lo más visto</h2>
-									<ul>
-										<li>Noticias Coorporativas</li>
-										<li>Boletín digital</li>
-										<li>Petición de ayuda escolar</li>
-										<li>Buzón empleados</li>
+									<ul class="m-listBaseNoStyles m-listBaseNoStyles--pm3">
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Noticias Coorporativas
+											</a>
+										</li>
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Boletín digital
+											</a>
+										</li>
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Petición de ayuda escolar
+											</a>
+										</li>
+										<li>
+											<a href="/" class="i-mainNavigation__link2Level">
+												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+												Buzón empleados
+											</a>
+										</li>
 									</ul>
+									</div>
+									<a href="/consultas" class="btn btn-secondary mt-4 ema-20">
+										<i class="i-icon i-icon--black fa-lg fa-regular fa-comment mr-3"></i>
+										<@liferay.language key='es.emasesa.intranet.common.consultas'/>
+									</a>
 								</div>
 							</div>
-						
 						</div>
 					</div>
 				<#else>

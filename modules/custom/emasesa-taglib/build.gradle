@@ -1,0 +1,20 @@
+dependencies {
+//	compileOnly "biz.aQute.bnd:biz.aQute.bndlib"
+//	compileOnly "com.liferay:com.liferay.osgi.util"
+//	compileOnly "com.liferay:com.liferay.frontend.taglib"
+//	compileOnly "com.liferay:com.liferay.petra.lang"
+//	compileOnly "com.liferay.portal:com.liferay.portal.kernel"
+//	compileOnly "com.liferay.portal:com.liferay.util.taglib"
+//	compileOnly "org.osgi:org.osgi.core"
+//	compileOnly "javax.portlet:portlet-api"
+	compileOnly "javax.servlet:javax.servlet-api"
+//    compileOnly "org.osgi:org.osgi.service.component.annotations"
+	compileOnly "javax.servlet.jsp:jsp-api"
+//	compileOnly "com.liferay:com.liferay.petra.string"
+//	compileOnly "com.liferay:com.liferay.petra.lang"
+//	compileOnly "com.liferay:com.liferay.portal.template.freemarker"
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder"
+
+	compile project (':modules:custom:sap-integration-services')
+}

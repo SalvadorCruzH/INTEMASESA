@@ -21,14 +21,14 @@
     />
 
 <div class="ema-noticia-tarjeta">
-    <div class="ema-noticia-tarjeta__imgContainer">
-        <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
-            <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
-        </#if>
+
+    <div class="ema-noticia-tarjeta__imgContainer" style="background-image:url('<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != '' >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}/logos/imagen-generica-noticia.png</#if>');">
+        <img alt="" class="ema-noticia-tarjeta__img" src='<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "" >${imagenPrincipal.imgPrincipal.getData()}<#else>${themeDisplay.getPathThemeImages()}/logos/imagen-generica-noticia.png</#if>'/>  
     </div>
     <div class="ema-noticia-tarjeta__contenido">
+        <#if categorias?has_content>
         <div class="ema-noticia-tarjeta__categoriasContainer">
-            <p class="ema-noticia-tarjeta__categorias">
+            <p class="ema-noticia-tarjeta__categorias m-listBaseNoStyles ">
                 <#list categorias as category>
                     <span class="ema-noticia-tarjeta__categoria">
                         ${category.getName()}<#if category?index+1 < categorias?size>,</#if>
@@ -36,8 +36,13 @@
                 </#list>
             </p>
         </div>
-        <p class="ema-noticia-tarjeta__fecha">${displaydate?string["dd"]} de ${displaydate?string["MMMM"]} de ${displaydate?string["yyyy"]}</p>
-        <h3 class="ema-noticia-tarjeta__titulo">${title.getData()}</h3>
-        <h4 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h4>
+        </#if>
+        <div class="ema-noticia-tarjeta__wrapperTexts">
+            <p class="ema-noticia-tarjeta__fecha">${displaydate?string["dd"]} de ${displaydate?string["MMMM"]} de ${displaydate?string["yyyy"]}</p>
+            <h3 class="ema-noticia-tarjeta__titulo">
+                <a class="ema-noticia-tarjeta__link" href="${viewURL}">${title.getData()}</a>
+            </h3>
+            <div class="ema-noticia-tarjeta__subtitulo">${entradilla.getData()}</div>
+        </div>
     </div>
 </div>

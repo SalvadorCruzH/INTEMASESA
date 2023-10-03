@@ -31,6 +31,10 @@
     list-style: none;
     margin-bottom: 0;
     padding-left: 0;
+    &--pm3 {
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
   }
   .m-listBaseNoStylesOnlyPl {
     list-style: none;
@@ -44,6 +48,38 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 0;
+  }
+  .m-list-dashed {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+    padding-left: 0;
+    li {
+      padding-left: 1rem;
+      border-bottom: m-rem(1px) dashed $color-dashed;
+      padding-bottom: 1rem;
+      padding: 1rem 0 1.5rem 1rem;
+    }
+  }
+  .m-list-dotted {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    li {
+      position: relative;
+      padding-left: 1rem;
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background-color: $color-aux-blue;
+      }
+    }
   }
 
   /* display flex alineados */
@@ -112,6 +148,28 @@
       background-color: transparent;
     }
   }
+  /* Colors brand */
+  .ema-color {
+    &--blue {
+      color: $color-aux-blue;
+      &:hover {
+        color: $color-hover-blue;
+        .i-icon {
+          &--blue {
+            color: $color-hover-blue;
+          }
+        }
+      }
+    }
+  }
+
+  /* Font size */
+  .ema-18 {
+    font-size: m-rem(18px)
+  }
+  .ema-20 {
+    font-size: m-rem(20px)
+  }
 
   /* Titles */
 
@@ -135,8 +193,147 @@
     }
   }
 
-
+  /* Icons downloads */
+  .ema-icon {
+    &--PDF {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-pdf.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--PPTX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-powerpoint.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--DOCX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-word.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--XLSX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-excel.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--XLSX {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-excel.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--MP4 {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-audio.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+    &--PNG,
+    &--JPEG {
+      &::before {
+        content: "";
+        display: inline-block;
+        background: url('@theme_image_path@/icons/file-image.svg') center no-repeat;
+        background-position: bottom;
+        background-size: m-rem(18px) auto;
+        width: m-rem(18px);
+        height: m-rem(26px);
+        margin-right: m-rem(10px);
+      }
+    }
+  }
 }
+
+.favorite {
+  display: flex;
+  margin-bottom: 1rem;
+  &__link {
+    display: flex;
+    gap: .5rem;
+    color: black;
+    margin-left: auto;
+  }
+  &__ico {
+    width: 25px;
+  }
+  &__label {
+    font-size: 18px;
+  }
+}
+
+.widget {
+  background-color: $color-light-blue;
+  border-radius: 30px;
+  padding: 30px;
+  .widget-title {
+    font-size: m-rem(24px);
+  }
+  &--tareas-pendientes {
+    &__info {
+      margin-bottom: 2rem;
+    }
+    &__asignaciones {
+      display: flex;
+      gap: 0 1rem;
+      margin-bottom: 1rem;
+      > * {
+        display: flex;
+        align-items: center;
+        gap: 0 .5rem;
+      }
+    }
+    &__number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-hover-green;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      @include font_base-bold;
+    }
+  }
+}
+
   /* Icons */
   .fa-solid,
   .fa-regular {
@@ -149,6 +346,9 @@
       }
       &--blue {
         color: $color-aux-blue;
+        &:hover {
+          color: $color-hover-blue;
+        }
       }
       &--white {
         color: $color-white;

@@ -3,6 +3,7 @@ $(function() {
     menuFuntion.init();
 	menuDesktop.init();
 	changeBtnAdminTareas.init();
+	accFeature.init();
 
 });
 
@@ -129,7 +130,7 @@ $(function() {
 		if((window.innerWidth > 1200) && (_body.classList.contains("menu-open"))) {
 			_body.classList.remove("menu-open");
 		  }
-		  if((window.innerWidth < 1200) && (_mobileNavigation.classList.contains("show-navigation"))) {
+		  if((window.innerWidth < 1200) && (_mobileNavigation) &&(_mobileNavigation.classList.contains("show-navigation"))) {
 			_body.classList.add("menu-open");
 		  }
 	}
@@ -208,17 +209,21 @@ var menuDesktop = (function () {
 })();
 
 
-
+/**
+ * Open close Portlet admin tareas
+ */
 
 var changeBtnAdminTareas = (function () {
 	var _btnAdminTask = document.querySelector('#i-btnAdminTareas');
 
 	var _btnAdminToggle = function() {
-		_btnAdminTask.addEventListener("click", function () {
-			_btnAdminTask.classList.toggle('open');
-			// llamar al portlet admin tareas
-
-		});
+		if(_btnAdminTask){
+			_btnAdminTask.addEventListener("click", function () {
+				_btnAdminTask.classList.toggle('open');
+				// llamar al portlet admin tareas
+	
+			});
+		}
 	}
 
 
@@ -232,3 +237,40 @@ var changeBtnAdminTareas = (function () {
 	};
 
 })();
+
+/**
+ * Link accessible
+ */
+var accFeature = (function () {
+
+	var _linkWrapper = ".m-link-accessible-wrapper";
+
+	var _fixBoxLinks = function(querySelectorVal) {
+	   var boxes = document.querySelectorAll(querySelectorVal);
+	   boxes.forEach(function (box) {
+		  var link = box.querySelector("a");
+		  if (link) {
+			 var url = link.getAttribute("href");
+			 box.addEventListener("click", function () {
+				location.href = url;
+				link.preventDefault;
+			 });
+			 box.classList.add("linkify");
+			 link.addEventListener("focus", function () {
+				box.classList.add("isfocused");
+			 });
+			 link.addEventListener("blur", function () {
+				box.classList.remove("isfocused");
+			 });
+		  }
+	   });
+	}
+	var _init = function () {
+		_fixBoxLinks(_linkWrapper);
+	 };
+ 
+	 return {
+		init: _init,
+		fixBoxLinks: _fixBoxLinks
+	 };
+  })();
