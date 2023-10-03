@@ -10,6 +10,6 @@ public class EmasesaConstants {
     public static final String REST_DFLT_OK_MSG = "OK";
     public static final String REST_DFLT_ERROR_MSG = "ERROR";
 
-    public static final String EMASESA_ADMIN_SCREENNAME="admin";
+    public static final String EMASESA_ADMIN_SCREENNAME="adminpersonas";
 
 }

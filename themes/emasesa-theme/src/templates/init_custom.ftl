@@ -6,7 +6,7 @@
     is_omniadmin = permissionChecker.isOmniadmin()
 
     navigationItems = principalMenu???then(principalMenu, nav_items)
-
+    has_navigation = (navigationItems?size > 0)
 />
 
 

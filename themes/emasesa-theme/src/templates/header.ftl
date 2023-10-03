@@ -15,7 +15,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="i-header__navSearch">
+			<div class="i-header__navSearch" data-setupcomplete="${is_setup_complete?c}">
 				<#if has_navigation && is_setup_complete>
 					<#include "${full_templates_path}/navigation.ftl" />
 				</#if>

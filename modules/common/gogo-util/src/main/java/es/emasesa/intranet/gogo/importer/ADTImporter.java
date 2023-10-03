@@ -3,6 +3,7 @@ package es.emasesa.intranet.gogo.importer;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import es.emasesa.intranet.base.util.CustomEmasesaUtil;
 import es.emasesa.intranet.base.util.CustomGetterUtil;
 import es.emasesa.intranet.gogo.base.CustomGogoLogger;
 import es.emasesa.intranet.gogo.base.GogoConstant;
@@ -58,7 +60,12 @@ public class ADTImporter {
         LocaleThreadLocal.setSiteDefaultLocale(locale);
         final Map<Locale, String> nameMap = _customGetter.getLocaleMap(locale, jsonADT.getName());
         final Map<Locale, String> descriptionMap = _customGetter.getLocaleMap(locale, jsonADT.getComment());
-        final User user = _customGetter.getUser(jsonADT.getScreenName(), companyId);
+        User user = null;
+        try {
+            user = _customEmasesaUtil.getEmasesaAdmin(companyId);
+        } catch (PortalException e) {
+            user = _customGetter.getUser(jsonADT.getScreenName(), companyId);
+        }
         final long userId = user.getUserId();
 
         final DDMTemplate actualDDMTemplate;
@@ -110,6 +117,9 @@ public class ADTImporter {
 
     @Reference
     CustomGetterUtil _customGetter;
+
+    @Reference
+    CustomEmasesaUtil _customEmasesaUtil;
 
     @Reference
     Portal _portal;
