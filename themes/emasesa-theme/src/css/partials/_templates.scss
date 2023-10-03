@@ -618,10 +618,10 @@
                 margin-left: 2rem;
                 margin-top: 2rem;
                 align-self: center;
-                max-width: 40%;
+                max-width: 43%;
                 white-space-collapse: preserve-breaks;
             }
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 767px) {
                 &__col-content {
                     text-align: center;
                     margin-left: 4rem;
@@ -658,7 +658,7 @@
                             color: #A8C855;
                             &::before {
                                 font-size: m-rem(14px);
-                                margin-top: -4px;
+                                margin-top: -2px;
                             }
                         }
                     }
