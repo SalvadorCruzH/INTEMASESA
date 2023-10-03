@@ -1,6 +1,6 @@
 <nav class="i-navMainMobile" aria-label="<@liferay.language key="site-pages" />" id="navigation" role="navigation">
 	<ul class="i-navMainMobile__ul m-listBaseNoStyles" role="menubar">
-		<#list nav_items as nav_item>
+		<#list navigationItems as nav_item>
 			<#assign
 				nav_item_attr_has_popup = ""
 				nav_item_css_class = "i-navMainMobile__li"

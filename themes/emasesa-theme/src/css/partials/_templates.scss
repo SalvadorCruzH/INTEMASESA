@@ -610,21 +610,21 @@
             &__col-content-alone {
                 text-align-last: center;
                 margin-top: 8rem;
-                margin-left: 30rem;
-                margin-right: 30rem;
+                margin-left: 15rem;
+                margin-right: 14rem;
             }
 
             &__col-content {
-                margin-left: 3rem;
+                margin-left: 2rem;
                 margin-top: 2rem;
                 align-self: center;
-                max-width: 25%;
+                max-width: 40%;
                 white-space-collapse: preserve-breaks;
             }
             @media screen and (max-width: 768px) {
                 &__col-content {
                     text-align: center;
-                    margin-left: 3rem;
+                    margin-left: 4rem;
                     margin-top: 0;
                     align-self: center;
                     max-width: 80%;
@@ -644,10 +644,8 @@
             }
         }
         .carousel-dots {
-            position: relative;
-            display: inline-flex;
+            position: initial;
             padding: 0;
-            list-style: none;
             li {
                 &.slick-active {
                     button {
@@ -660,6 +658,7 @@
                             color: #A8C855;
                             &::before {
                                 font-size: m-rem(14px);
+                                margin-top: -4px;
                             }
                         }
                     }

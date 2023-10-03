@@ -308,12 +308,20 @@
     font-size: m-rem(24px);
   }
   &--tareas-pendientes {
+    background-image: url('@theme_image_path@/decorative/ilustracion-tareas.svg');
+    background-position: calc(100% - 30px) 30px;
+    background-repeat: no-repeat;
+    background-size: 45% auto;
+    &__title {
+      margin-bottom: 1rem;
+    }
     &__info {
       margin-bottom: 2rem;
     }
     &__asignaciones {
       display: flex;
-      gap: 0 1rem;
+      flex-direction: column;
+      gap: .5rem;
       margin-bottom: 1rem;
       > * {
         display: flex;
@@ -331,7 +339,49 @@
       border-radius: 50%;
       @include font_base-bold;
     }
+    &__carrusel-item {
+      .notifica-label {
+        display: flex;
+        gap: .75rem;
+        font-size: 1rem;
+        position: relative;
+        i {
+          font-size: 1.5rem;
+        }
+      }
+      .notifica-num {
+        position: absolute;
+        top: -5px;
+        left: 12.5px;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-danger;
+        color: $color-white;
+        font-size: .875rem;
+        font-weight: 700;
+        border-radius: 50%;
+      }
+      &__inner {
+        background-color: $color-white;
+        border-radius: 25px;
+        box-shadow: 0 5px 5px rgba($color-black,.25);
+        padding: 30px;
+        margin: 10px 5px;
+        *:last-child {
+          margin: 0;
+        }
+      }
+    }
   }
+}
+
+.white-bg {
+    background-color: $color-white;
+    margin-top: 3rem;
+    padding-block: 3rem;
 }
 
   /* Icons */

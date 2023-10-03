@@ -43,34 +43,46 @@
             <h3 class="carrusel-title">Mis notificaciones</h3>
             <div class="widget--tareas-pendientes__carrusel">
                 <div class="widget--tareas-pendientes__carrusel-item">
-                    <h4 class="widget--tareas-pendientes__title">Nóminas</h4>
-                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
-                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    <div class="widget--tareas-pendientes__carrusel-item__inner">
+                        <h4 class="widget--tareas-pendientes__title">Nóminas</h4>
+                        <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                        <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    </div>
                 </div>
                 <div class="widget--tareas-pendientes__carrusel-item">
-                    <h4 class="widget--tareas-pendientes__title">Cambio de turno</h4>
-                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
-                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    <div class="widget--tareas-pendientes__carrusel-item__inner">
+                        <h4 class="widget--tareas-pendientes__title">Cambio de turno</h4>
+                        <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                        <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    </div>
                 </div>
                 <div class="widget--tareas-pendientes__carrusel-item">
-                    <h4 class="widget--tareas-pendientes__title">Vacaciones</h4>
-                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> Sin notificaciones nuevas</p>
-                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    <div class="widget--tareas-pendientes__carrusel-item__inner">
+                        <h4 class="widget--tareas-pendientes__title">Vacaciones</h4>
+                        <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> Sin notificaciones nuevas</p>
+                        <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    </div>
                 </div>
                 <div class="widget--tareas-pendientes__carrusel-item">
-                    <h4 class="widget--tareas-pendientes__title">Nóminas</h4>
-                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
-                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    <div class="widget--tareas-pendientes__carrusel-item__inner">
+                        <h4 class="widget--tareas-pendientes__title">Nóminas</h4>
+                        <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                        <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    </div>
                 </div>
                 <div class="widget--tareas-pendientes__carrusel-item">
-                    <h4 class="widget--tareas-pendientes__title">Cambio de turno</h4>
-                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
-                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    <div class="widget--tareas-pendientes__carrusel-item__inner">
+                        <h4 class="widget--tareas-pendientes__title">Cambio de turno</h4>
+                        <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> <span class="notifica-num">5</span> Notificaciones nuevas</p>
+                        <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    </div>
                 </div>
                 <div class="widget--tareas-pendientes__carrusel-item">
-                    <h4 class="widget--tareas-pendientes__title">Vacaciones</h4>
-                    <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> Sin notificaciones nuevas</p>
-                    <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    <div class="widget--tareas-pendientes__carrusel-item__inner">
+                        <h4 class="widget--tareas-pendientes__title">Vacaciones</h4>
+                        <p class="notifica-label"><i class="i-icon i-icon--black fa-solid fa-bell"></i> Sin notificaciones nuevas</p>
+                        <p><a href="#" title="Cancelar">Cancelar</a></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,3 +109,29 @@
     </div>
 </section>
 <!-- /.white-bg -->
+
+<script>
+    jQuery(document).ready(function () {
+        jQuery('.widget--tareas-pendientes__carrusel').slick({
+            dots: false,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            responsive: [
+                {
+                    breakpoint: 576,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                }
+            ]
+        })
+    })
+</script>
