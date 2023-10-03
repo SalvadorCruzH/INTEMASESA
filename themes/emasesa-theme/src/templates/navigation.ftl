@@ -1,6 +1,6 @@
 <nav class="i-mainNavigation" aria-label="<@liferay.language key="site-pages" />" id="navigation" role="navigation">
 	<ul class="i-mainNavigation__ul m-listBase m-dFlexSBCenter" role="menubar">
-		<#list nav_items as nav_item>
+		<#list navigationItems as nav_item>
 			<#assign
 				nav_item_attr_has_popup = ""
 				nav_item_css_class = "i-mainNavigation__li"

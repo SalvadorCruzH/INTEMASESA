@@ -3,6 +3,7 @@
     "workspaces": {
         "packages": [
             "modules/override/rest-ddmfieldextender",
+            "themes/emasesa-fragments",
             "themes/emasesa-theme"
         ]
     }
