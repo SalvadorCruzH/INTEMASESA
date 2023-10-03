@@ -7,7 +7,7 @@
 
     navigationItems = principalMenu???then(principalMenu, nav_items)
 
-    hasUserPermissionToViewUpperBar = is_omniadmin || customPermissionUtil.hasUserGroup(themeDisplay, global_theme_settings.groupNameAdminBar())
+
 
 />
 
