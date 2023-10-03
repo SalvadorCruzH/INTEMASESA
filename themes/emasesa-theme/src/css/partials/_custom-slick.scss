@@ -1,0 +1,26 @@
+.widget {
+    &--tareas-pendientes {
+        .slick-arrow {
+            width: 40px;
+            height: 40px;
+            z-index: 1;
+            transition: opacity .3s ease;
+            top: 50%;
+            &.slick-disabled {
+                cursor: not-allowed;
+                opacity: .25;
+            }
+            &.slick-prev {
+                background: transparent url('@theme_image_path@/icons/ico-angle-circle-left.svg') center center no-repeat;
+            }
+            &.slick-next {
+                background: transparent url('@theme_image_path@/icons/ico-angle-circle-right.svg') center center no-repeat;
+            }
+            > * {
+                .i-mainWrapper & {
+                    display: none;
+                }
+            }
+        }
+    }
+}
