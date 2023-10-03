@@ -1,6 +1,8 @@
 package es.emasesa.intranet.webservices.jaxrs.beans;
 
-public class ResponseData {
+import java.io.Serializable;
+
+public class ResponseData implements Serializable {
 	private boolean error;
 	private Object data;
 	private String errorCode;

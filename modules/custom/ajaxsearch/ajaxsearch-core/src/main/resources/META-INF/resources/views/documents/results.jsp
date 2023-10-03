@@ -57,7 +57,6 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {}
 }
-//cuando todo se haya cargado
 $(document).ready(function () {
     var options = $(".results-pagination-select-container .results-pagination-select option");
     for (var i = 0; i < options.length; i++) {
@@ -71,6 +70,5 @@ $(document).ready(function () {
             options[i].selected = true;
         }
     }
-
 });
 </script>

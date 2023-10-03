@@ -4,7 +4,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 @ExtendedObjectClassDefinition(
-        category = "emasesawebservices",
+        category = "emasesa-base",
         scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(

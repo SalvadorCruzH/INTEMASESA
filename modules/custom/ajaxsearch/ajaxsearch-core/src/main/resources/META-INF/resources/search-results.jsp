@@ -28,8 +28,12 @@
                 var emptyMessage = $(template.html());
                 emptyMessage.addClass("as-empty-message");
                 emptyMessage.appendTo(itemPlaced);
+                $(".results-pagination-wrapper").hide();
+                $(".m-results-wrapper").hide();
             } else {
                 $(".as-empty-message").remove();
+                $(".results-pagination-wrapper").show();
+                $(".m-results-wrapper").show();
             }
         }
 
@@ -37,7 +41,6 @@
             $("#asCurrentPage").val(numPage)
             $('html, body').animate({scrollTop:0}, '300');
 
-            //buscar select de paginacion y poner el valor selected
             var options = $(".results-pagination-select-container .results-pagination-select option");
             for (var i = 0; i < options.length; i++) {
                 var value = options[i].value;

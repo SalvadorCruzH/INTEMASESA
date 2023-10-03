@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import es.emasesa.intranet.base.util.CustomEmasesaUtil;
 import es.emasesa.intranet.base.util.CustomGetterUtil;
 import es.emasesa.intranet.gogo.base.GogoConstant;
 import es.emasesa.intranet.gogo.base.JSONFileUtil;
@@ -63,7 +64,12 @@ public class StructureImporter {
         LocaleThreadLocal.setSiteDefaultLocale(locale);
         final Map<Locale, String> nameMap = _customGetter.getLocaleMap(locale, jsonStructure.getName());
         final Map<Locale, String> descriptionMap = _customGetter.getLocaleMap(locale, jsonStructure.getComment());
-        final User user = _customGetter.getUser(jsonStructure.getScreenName(), companyId);
+        User user = null;
+        try {
+            user = _customEmasesaUtil.getEmasesaAdmin(companyId);
+        } catch (PortalException e) {
+            user = _customGetter.getUser(jsonStructure.getScreenName(), companyId);
+        }
         final long userId = user.getUserId();
         long parentStructureId = DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID;
         final String parentStructureKey = jsonStructure.getParentStructureKey();
@@ -206,6 +212,9 @@ public class StructureImporter {
 
     @Reference
     Language _language;
+
+    @Reference
+    CustomEmasesaUtil _customEmasesaUtil;
 
     @Reference
     private DDM _ddm;
