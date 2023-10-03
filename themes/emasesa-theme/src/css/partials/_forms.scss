@@ -1,0 +1,23 @@
+.i-mainWrapper {
+
+    .form-row {
+        &--inline {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+
+    select {
+        background-color: $color-white;
+        border: 1px solid $color-grey;
+        border-radius: 10px;
+        padding: 17px 15px;
+    }
+
+}
+
+.btn-wrapper {
+    .btn {
+        width: 100%;
+    }
+}
