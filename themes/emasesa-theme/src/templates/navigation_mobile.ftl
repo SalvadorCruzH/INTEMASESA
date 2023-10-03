@@ -1,6 +1,6 @@
 <nav class="i-navMainMobile" aria-label="<@liferay.language key="site-pages" />" id="navigation" role="navigation">
 	<ul class="i-navMainMobile__ul m-listBaseNoStyles" role="menubar">
-		<#list nav_items as nav_item>
+		<#list navigationItems as nav_item>
 			<#assign
 				nav_item_attr_has_popup = ""
 				nav_item_css_class = "i-navMainMobile__li"
@@ -13,7 +13,7 @@
 				/>
 			</#if>
 
-			<#if nav_item.isSelected()>
+			<#if nav_item.isSelected()> 
 				<#assign
 					nav_item_css_class = "i-navMainMobile__li selected"
 					
@@ -32,7 +32,7 @@
 				<#if nav_item.hasChildren()>
 					<a class="i-navMainMobile__link" ${nav_item_attr_has_popup} href="javascript:void(0)" ${nav_item.getTarget()} role="menuitem">
                         <span class="i-navMainMobile__span">${nav_item.getName()}</span>
-                        <i class="fa-solid fa-angle-right fa-xs"></i>
+                        <i class="fa-solid fa-angle-right fa-xs mr-1"></i>
                     </a>
 						<ul class="i-navMainMobile__submenuUl m-listBaseNoStyles" role="menu">
 							<#list nav_item.getChildren() as nav_child>

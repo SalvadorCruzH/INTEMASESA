@@ -39,6 +39,7 @@ war {
 	includeDependencies = true
 	wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
 	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
+	wsdl = "../META-INF/wsdl/Z_WS_PE_MARCAJES_HISTORICO_ACT.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated/java"
 }*/

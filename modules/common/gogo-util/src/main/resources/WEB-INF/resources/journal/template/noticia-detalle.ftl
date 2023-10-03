@@ -69,7 +69,7 @@
                 </#if>
             </div>
             <div class="ema-noticiasDetail__wrapperfilesLinks">
-                <#if campoUrl.getSiblings()?has_content && campoUrl.getSiblings()[0].getData() != "">
+                <#if campoUrl.getSiblings()?has_content && campoUrl.url.getSiblings()[0].getData() != "">
                     <div class="ema-noticiasDetail__listLinksWrapper">
                         <h3 class="ema-noticiasDetail__filesTitle">Enlaces relacionados</h3>
                         <ul class="ema-noticiasDetail__listLinks m-listBaseNoStyles m-list-dashed">
