@@ -28,8 +28,16 @@
                 var emptyMessage = $(template.html());
                 emptyMessage.addClass("as-empty-message");
                 emptyMessage.appendTo(itemPlaced);
+                //hide pagination
+                $(".results-pagination-wrapper").hide();
+                //hide results
+                $(".m-results-wrapper").hide();
             } else {
                 $(".as-empty-message").remove();
+                //hide pagination
+                $(".results-pagination-wrapper").show();
+                //hide results
+                $(".m-results-wrapper").show();
             }
         }
 

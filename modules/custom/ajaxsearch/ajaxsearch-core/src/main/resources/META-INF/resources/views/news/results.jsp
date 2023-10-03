@@ -45,23 +45,16 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {}
 }
-//cuando todo se haya cargado
 $(document).ready(function () {
-    //buscar select de paginacion
     var options = $(".results-pagination-select-container .results-pagination-select option");
-    console.log(options);
-    //por cada option
     for (var i = 0; i < options.length; i++) {
         var urlParams = new URLSearchParams(window.location.search);
         var curPage = urlParams.get('currentPage');
         if (curPage == null) {
             curPage = 1;
         }
-        //coger el valor
         var value = options[i].value;
-        //si es el valor de la pagina actual
         if (value == curPage) {
-            //ponerlo como selected
             options[i].selected = true;
         }
     }
