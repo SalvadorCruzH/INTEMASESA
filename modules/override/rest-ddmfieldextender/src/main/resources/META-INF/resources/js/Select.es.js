@@ -10,9 +10,7 @@ const Select = ({ name, onChange, predefinedValue, value, options }) => {
 		if (selectRef.current) {
 			$(selectRef.current).select2();
 			$(selectRef.current).on('select2:selecting', function(e) {
-                console.log('Selecting: ' , e.params.args.data.id);
                 onChange(e.params.args.data.id);
-
               });
 		}
 

@@ -57,7 +57,7 @@ public interface RestSelectDDMFormFieldTypeSettings
 
     @DDMFormField(
             label = "%restUrl",
-            predefinedValue = "/o/ddmselect/get-journal-by-structure/global/EMA-NOTICIA/20121",
+            predefinedValue = "/o/ddmselect/get-journal-by-structure/global/EMA-NOTICIA/20119",
             type = "text"
     )
     public String restUrl();
