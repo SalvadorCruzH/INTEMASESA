@@ -10,9 +10,10 @@ import es.emasesa.intranet.base.util.LoggerUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FormData {
+public class FormData implements Serializable {
     // Common fields
     private String name;
     private String surnames;
@@ -36,17 +37,18 @@ public class FormData {
 
     // Buzón Ético, Único and ComercialEstaciones fields
     private String nif;
-
     // Buzón Único and Dinamico fields
     private String message;
-
-    private static Log logger = LoggerUtil.getLog(FormData.class);
 
     // Form types
     public static final String BUZON_ETICO = "buzonEtico";
     public static final String BUZON_UNICO = "buzonUnico";
     public static final String BUZON_DINAMICO = "buzonDinamico";
     public static final String BUZON_COM_ESTACIONES = "comercialEstaciones";
+
+    private static Log logger = LoggerUtil.getLog(FormData.class);
+
+
 
     public String getName() {
         return name;

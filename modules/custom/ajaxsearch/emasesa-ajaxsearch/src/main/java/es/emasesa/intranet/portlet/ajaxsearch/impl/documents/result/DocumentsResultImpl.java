@@ -150,7 +150,7 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 
 		if(Validator.isNotNull(sortBy)) {
 			if(sortBy[0].equals("date")) {
-				searchContext.setSorts(sortFactory.create(Field.MODIFIED_DATE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
+				searchContext.setSorts(sortFactory.create(Field.MODIFIED_DATE, Sort.INT_TYPE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
 			} else if(sortBy[0].equals("name")) {
 				searchContext.setSorts(sortFactory.create(Field.TITLE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
 			}

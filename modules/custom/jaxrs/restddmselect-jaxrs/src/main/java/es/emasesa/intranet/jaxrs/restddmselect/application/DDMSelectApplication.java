@@ -66,7 +66,7 @@ import java.util.stream.Collectors;
 public class DDMSelectApplication extends Application {
 
 	public static final String ERROR = "error-";
-	private static Log logger = LoggerUtil.getLog(DDMSelectApplication.class);
+	private static final Log LOG = LoggerUtil.getLog(DDMSelectApplication.class);
 
 	@Activate
 	@Modified
@@ -118,7 +118,7 @@ public class DDMSelectApplication extends Application {
 								"Check Estaciones GroupId/StructureId in emasesa System Setting Config"));
 			}
 		} catch (Exception e){
-			LoggerUtil.error(logger, e);
+			LoggerUtil.error(LOG, e);
 			builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 					new ResponseData(Boolean.TRUE,
 							Collections.EMPTY_LIST,
@@ -163,7 +163,7 @@ public class DDMSelectApplication extends Application {
 			structure = _ddmStructureLocalService.getStructure(group.getGroupId(), _portal.getClassNameId(JournalArticle.class), structureKey);
 
 		}catch (PortalException e){
-			LoggerUtil.error(logger, e);
+			LoggerUtil.error(LOG, e);
 		}
 
 		if (structure == null){

@@ -8,6 +8,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import es.emasesa.intranet.base.util.CustomEmasesaUtil;
 import es.emasesa.intranet.base.util.CustomGetterUtil;
 import es.emasesa.intranet.gogo.base.CustomGogoLogger;
 import es.emasesa.intranet.gogo.base.GogoConstant;
@@ -62,7 +64,12 @@ public class JournalTemplateImporter {
 
         final Map<Locale, String> nameMap =  _customGetter.getLocaleMap(locale, jsonTemplate.getName());
         final Map<Locale, String> descriptionMap = _customGetter.getLocaleMap(locale, jsonTemplate.getComment());
-        final User user = _customGetter.getUser(jsonTemplate.getScreenName(), companyId);
+        User user = null;
+        try {
+            user = _customEmasesaUtil.getEmasesaAdmin(companyId);
+        } catch (PortalException e) {
+            user = _customGetter.getUser(jsonTemplate.getScreenName(), companyId);
+        }
         final long userId = user.getUserId();
         final String ddmType = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
         final String mode = DDMTemplateConstants.TEMPLATE_MODE_CREATE;
@@ -148,6 +155,9 @@ public class JournalTemplateImporter {
 
     @Reference
     Language _language;
+
+    @Reference
+    CustomEmasesaUtil _customEmasesaUtil;
 
     @Reference
     private DDM _ddm;

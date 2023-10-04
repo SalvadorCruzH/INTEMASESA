@@ -71,8 +71,6 @@ public class HeaderTag extends IncludeTag {
 		request.setAttribute("emasesa:header:key", isKey());
 		request.setAttribute("emasesa:header:removeBackButton", isRemoveBackButton());
 		request.setAttribute("emasesa:header:cssClass", getCssClass());
-
-
 	}
 
 
