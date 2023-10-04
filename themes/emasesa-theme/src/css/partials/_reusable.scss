@@ -304,14 +304,29 @@
   background-color: $color-light-blue;
   border-radius: 30px;
   padding: 30px;
+  margin-top: 2rem;
   .widget-title {
     font-size: m-rem(24px);
+    margin-bottom: 1rem;
   }
   &--tareas-pendientes {
     background-image: url('@theme_image_path@/decorative/ilustracion-tareas.svg');
-    background-position: calc(100% - 30px) 30px;
+    background-position: calc(100% - 30px) 50px;
     background-repeat: no-repeat;
     background-size: 45% auto;
+    @include media-breakpoint-up(md) {
+      background-image: none;
+      position: relative;
+      &::after {
+        content: url('@theme_image_path@/decorative/ilustracion-tareas.svg');
+        position: absolute;
+        z-index: 1;
+        width: 50%;
+        height: auto;
+        top: -30%;
+        right: -15px;
+      }
+    }
     &__title {
       margin-bottom: 1rem;
     }
@@ -323,6 +338,9 @@
       flex-direction: column;
       gap: .5rem;
       margin-bottom: 1rem;
+      @include media-breakpoint-up(sm) {
+        flex-direction: row;
+      }
       > * {
         display: flex;
         align-items: center;
@@ -338,6 +356,11 @@
       height: 35px;
       border-radius: 50%;
       @include font_base-bold;
+    }
+    &__carrusel {
+      .i-mainWrapper & {
+        margin-bottom: -180px;
+      }
     }
     &__carrusel-item {
       .notifica-label {
@@ -369,12 +392,22 @@
         border-radius: 25px;
         box-shadow: 0 5px 5px rgba($color-black,.25);
         padding: 30px;
-        margin: 10px 5px;
+        margin: 10px auto;
+        max-width: 90%;
         *:last-child {
           margin: 0;
         }
       }
     }
+    &__notificaciones {
+      @include media-breakpoint-up(md) {
+        position: relative;
+        z-index: 2;
+      }
+    }
+  }
+  &--carrusel {
+    margin-bottom: 180px;
   }
 }
 
