@@ -21,6 +21,11 @@
 
 	<script src="${javascript_folder}/Pagination.js" data-senna-track="permanent"></script>
 
+	<#-- duet date picker -->
+	<script type="module" src="${javascript_folder}/duet/duet.esm.js"></script>
+	<script nomodule src="${javascript_folder}/duet/duet.js"></script>
+	<link rel="stylesheet" href="${css_folder}/duet/duet-emasesa.css" />
+
 </head>
 
 <body class="${css_class}">
