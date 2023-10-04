@@ -1,75 +1,76 @@
-package es.emasesa.intranet.sap.estructura.service;
+package es.emasesa.intranet.sap.jornadadiaria.service;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.sap.document.sap.rfc.functions.TABLEOFZPESTEMPLEADOJORNADADIARIA;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoEstructura;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOESTRUCTURA;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOESTRUCTURA_Service;
-import com.sap.document.sap.soap.functions.mc_style.ZpeStEmpleadoEstructura;
+import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStMarcajesHistoricoActu;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT_Service;
 import com.sun.xml.ws.developer.WSBindingProvider;
-
-import com.sun.xml.ws.fault.ServerSOAPFaultException;
-import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
+import es.emasesa.intranet.sap.jornadadiaria.exception.MarcajeException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
-
 import java.net.Authenticator;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.MessageContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-@org.springframework.stereotype.Component("empleadoEstructuraService")
-public class EmpleadoEstructuraService {
+@org.springframework.stereotype.Component("jornadaDiaria")
+public class JornadaDiariaService {
 
-    public JSONObject getEmpleadoEstructura(String pernr) throws JSONException, EmpleadoEstructuraException {
 
+    public JSONArray obtenerMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) throws MarcajeException {
+        JSONArray data = JSONFactoryUtil.createJSONArray();
         try {
-            TableOfZpeStEmpleadoEstructura result = port.zPeEmpleadoEstructura(pernr);
-            JSONObject jsonResult = JSONFactoryUtil.createJSONObject();
-            ZpeStEmpleadoEstructura empleadoEstructura = result.getItem().stream().findFirst().orElse(null);
+            TABLEOFZPESTEMPLEADOJORNADADIARIA response = port.zPeEmpleadoJornadaDiaria(fechaFin,fechaInicio,pernr);
+            if(response.getItem().size()>0){
 
-            jsonResult = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoEstructura));
+                    data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
 
-            return jsonResult;
-        } catch (ServerSOAPFaultException e) {
-            throw new EmpleadoEstructuraException("Error llamando al WS para el pernr "+ pernr);
+            }
+
+        }catch (JSONException e) {
+            LOG.error(e.getMessage());
+        }catch (Exception e){
+            LOG.debug(e.getMessage(),e);
+            throw new MarcajeException("Error con el WS:"+e.getMessage());
+
         }
+        return data;
     }
 
     private ObjectFactory getObjectFactory() {
         return new ObjectFactory();
     }
 
+
     @PostConstruct
-    public void activate() {
+    public void activate() throws MalformedURLException {
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("[I] Activando EmpleadoEstructuraService");
         }
-
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
-
         try {
             SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJornadaDiari.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
-
-            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service();
-            port = service.getPort(ZWSPEEMPLEADOESTRUCTURA.class);
+            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service();
+            port = service.getPort(ZWSPEEMPLEADOJornadaDiari.class);
 
             Authenticator.setDefault(new Authenticator() {
                 @Override
@@ -81,12 +82,13 @@ public class EmpleadoEstructuraService {
             /*******************UserName & Password ******************************/
             Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
-            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.empleadoEstructuraEndpoint());
+            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.marcajeEndpoint());
             Map<String, List<String>> headers = new HashMap<String, List<String>>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,16 +96,12 @@ public class EmpleadoEstructuraService {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("[E] EmpleadoEstructuraService");
-        }
     }
 
-    protected ZWSPEEMPLEADOESTRUCTURA port;
-
+    private ZWSPEEMPLEADOJornadaDiari port;
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
-    private static final Log LOG = LogFactoryUtil.getLog(EmpleadoEstructuraService.class);
+    private static final Log LOG = LogFactoryUtil.getLog(JornadaDiariaService.class);
 
 }

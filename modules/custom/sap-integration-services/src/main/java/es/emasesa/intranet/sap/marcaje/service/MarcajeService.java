@@ -44,16 +44,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MarcajeService {
 
 
-    public JSONArray peticionHorasExtras(String pernr, String fechaInicio, String fechaFin) throws MarcajeException {
+    public JSONArray obtenerMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) throws MarcajeException {
         JSONArray data = JSONFactoryUtil.createJSONArray();
         try {
             TableOfZpeStMarcajesHistoricoActu response = port.zPeMarcajesHistoricoActual(fechaFin, fechaInicio, pernr);
-        if(response.getItem().size()>0){
+            if(response.getItem().size()>0){
 
-                data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
+                    data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
 
+            }
 
-        }
         }catch (JSONException e) {
             LOG.error(e.getMessage());
         }catch (Exception e){
@@ -81,11 +81,8 @@ public class MarcajeService {
             ClassLoader objectFactoryClassLoader = ZWSPEMARCAJESHISTORICOACT.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            String userName = configuration.userPrompt(); //"pe_hrcons"; //TODO: Poner en settings, estan creadas
-            String password = configuration.passwordPrompt(); //"J2iea.117";//TODO: Poner en settings, estan creadas
-
-            URL url = new URL(configuration.MarcajeEndpoint());
-
+            String userName = configuration.userPrompt();
+            String password = configuration.passwordPrompt();
             ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service();
             port = service.getPort(ZWSPEMARCAJESHISTORICOACT.class);
 
@@ -99,7 +96,7 @@ public class MarcajeService {
             /*******************UserName & Password ******************************/
             Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
-            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.jornadaNominaEndpoint());
+            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.marcajeEndpoint());
             Map<String, List<String>> headers = new HashMap<String, List<String>>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);

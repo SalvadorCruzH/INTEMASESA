@@ -99,10 +99,8 @@ public class JornadaNominaService {
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            String userName = configuration.userPrompt(); //"pe_hrcons"; //TODO: Poner en settings, estan creadas
-            String password = configuration.passwordPrompt(); //"J2iea.117";//TODO: Poner en settings, estan creadas
-
-            URL url = new URL(configuration.jornadaNominaEndpoint());
+            String userName = configuration.userPrompt();
+            String password = configuration.passwordPrompt();
 
             ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service();
             port = service.getPort(ZWSPEACTJORNADANOMINA.class);
