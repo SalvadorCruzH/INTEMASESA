@@ -22,8 +22,7 @@ public class RestSelectDDMFormFieldTemplateContextContributor
             DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
         Map<String, Object> parameters = new HashMap<>();
-
-        parameters.put("name", (String)ddmFormField.getProperty("name"));
+        parameters.put("name", (String)ddmFormFieldRenderingContext.getProperties().get("name"));
         parameters.put("restUrl", (String)ddmFormField.getProperty("restUrl"));
         parameters.put("restKey", (String)ddmFormField.getProperty("restKey"));
         parameters.put("restValue", (String)ddmFormField.getProperty("restValue"));
