@@ -418,35 +418,35 @@
 }
 
   /* Icons */
-  .fa-solid,
-  .fa-regular {
-    &.i-icon {
-      &--grey {
-        color: $color-icon-grey;
-        .selected &{
-          color: $color-aux-blue;
-        }
-      }
-      &--blue {
+.fa-solid,
+.fa-regular {
+  &.i-icon {
+    &--grey {
+      color: $color-icon-grey;
+      .selected &{
         color: $color-aux-blue;
-        &:hover {
-          color: $color-hover-blue;
-        }
-      }
-      &--white {
-        color: $color-white;
-      }
-      &--black {
-        color: $color-text;
-      }
-      &--green {
-        color: $color-green;
       }
     }
-    .span {
-      @include font_base-bold;
+    &--blue {
+      color: $color-aux-blue;
+      &:hover {
+        color: $color-hover-blue;
+      }
+    }
+    &--white {
+      color: $color-white;
+    }
+    &--black {
+      color: $color-text;
+    }
+    &--green {
+      color: $color-green;
     }
   }
+  .span {
+    @include font_base-bold;
+  }
+}
 
 
 

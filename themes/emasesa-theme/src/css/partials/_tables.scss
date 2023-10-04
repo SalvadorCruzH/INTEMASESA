@@ -1,6 +1,31 @@
 .i-mainWrapper {
+    .ema-table-wrapper {
+        background-color: white;
+        border-radius: 30px;
+        padding-block: 30px;
+        margin-block: 2rem;
+    }
     table {
         &.ema-table{
+            width: 100%;
+            border-bottom: 5px solid $color-green;
+            td,
+            th {
+                padding: 1rem;
+                &:nth-child(even) {
+                    background-color: #f6f9ee;
+                }
+                &:nth-child(odd) {
+                    background-color: #e2efec;
+                }
+                &:first-child,
+                &:nth-child(2) {
+                    background-color: transparent;
+                }
+            }
+            thead {
+                border-bottom: 5px solid $color-green;
+            }
             &__ajaxsearch {
                 width: 100%;
                 background-color: white;
