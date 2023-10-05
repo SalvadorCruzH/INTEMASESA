@@ -340,6 +340,36 @@
             }
         }
     }
+    .ema-menuBurbujas{
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        margin-bottom: 0;
+        padding-left: 0;
+        gap: m-rem(20px);
+        li {
+            &.active {
+                a {
+                    color: $color-aux-blue;
+                    box-shadow: 0 0 10px 0 rgba(0,0,0,0.30);
+                }
+            }
+            a {
+                @include font_base-bold;
+                font-size: m-rem(18px);
+                line-height: m-rem(24px);
+                letter-spacing: .27;
+                text-decoration: none;
+                padding: m-rem(18px) m-rem(30px);
+                border-radius: m-rem(15px);
+                background-color: white;
+                color: black;
+                &.active {
+                    box-shadow: 0 0 10px 0 rgba(0,0,0,0.30);
+                }
+            }
+        }
+    }
 }
 
 
