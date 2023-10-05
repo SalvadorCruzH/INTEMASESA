@@ -4,6 +4,7 @@
         border-radius: 30px;
         padding-block: 30px;
         margin-block: 2rem;
+        overflow-x: auto;
     }
     table {
         &.ema-table{
@@ -22,6 +23,9 @@
                 &:nth-child(2) {
                     background-color: transparent;
                 }
+            }
+            th {
+                white-space: nowrap;
             }
             thead {
                 border-bottom: 5px solid $color-green;
