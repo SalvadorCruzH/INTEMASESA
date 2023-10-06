@@ -220,6 +220,7 @@ var changeBtnAdminTareas = (function () {
 		if(_btnAdminTask){
 			_btnAdminTask.addEventListener("click", function () {
 				_btnAdminTask.classList.toggle('open');
+				document.body.classList.toggle('tareas-opened')
 				// llamar al portlet admin tareas
 
 			});

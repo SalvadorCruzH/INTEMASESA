@@ -94,6 +94,14 @@
             .i-header__btnOut {
                 display: none;
             }
+            &--mobile {
+                @include media-breakpoint-up(xl) {
+                    display: none;
+                }
+            }
         }
+    }
+    .heading {
+        margin: 0 auto;
     }
 }
