@@ -4,14 +4,14 @@
 			<button id="i-menuButton" aria-label="Menú" class="i-header__btnMenu btn m-btn--noSytles">
 				<i class="fa-solid fa-bars fa-lg"></i>
 			</button>
-			<div id="heading">
+			<div id="heading" class="heading">
 				<div aria-level="1" class="i-header__logo site-title" role="heading">
 					<a class="i-header__logoLink" href="${themeDisplay.getURLHome()}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-					
+
 						<img class="i-logo__img i-footer__img" src="${images_folder}/logos/logo-emasesa-color.svg" alt="Logotipo Emasesa">
 						<span class="i-logo__name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 							<@liferay.language key='es.emasesa.intranet.common.personas'/>
-						</span> 
+						</span>
 					</a>
 				</div>
 			</div>
@@ -26,6 +26,10 @@
 				<span class="i-header__btnIn sr-only"><@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/></span>
 				<i class="fa-solid fa-folder-open fa-lg i-icon--green i-header__btnOut mr-2"></i>
 				<span class="i-header__btnOut i-header__btnOut--text"><@liferay.language key='es.emasesa.intranet.common.salir'/></span>
+			</button>
+			<button id="i-btnAdminTareasMobile" class="i-header__btnAdmin--mobile btn" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />">
+				<i class="fa-solid fa-folder fa-lg i-icon--green i-header__btnIn"></i>
+				<span class="i-header__btnIn sr-only"><@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/></span>
 			</button>
 		</div>
 		<nav class="i-header__userNav">
@@ -86,7 +90,7 @@
 							<img class="i-logo__img i-footer__img" src="${images_folder}/logos/logo-emasesa-color.svg" alt="Logotipo Emasesa">
 							<span class="i-logo__name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 								<@liferay.language key='es.emasesa.intranet.common.personas'/>
-							</span> 
+							</span>
 						</a>
 					</div>
 				</div>

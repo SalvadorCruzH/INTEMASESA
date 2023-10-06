@@ -16,7 +16,7 @@
             width: 100%;
             max-width: 100%;
             border-radius: m-rem(40px);
-          
+
         }
         &__img {
             display: none;
@@ -26,14 +26,14 @@
             // border-radius: m-rem(40px);
             // object-fit: cover;
             // @include media-breakpoint-up(md) {
-                
+
             // }
         }
         &__contenido {
-            
+
         }
         &__categoriasContainer {
-            
+
         }
         &__categorias {
             @include font_base;
@@ -42,7 +42,7 @@
             color: #777;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            
+
             @include media-breakpoint-up(md) {
                 font-size: m-rem(18px);
                 line-height: 1.5rem;
@@ -51,7 +51,7 @@
             }
         }
         &__categoria {
-            
+
         }
         &__fecha {
             @include font_base;
@@ -121,7 +121,7 @@
             @include media-breakpoint-up(xl) {
                 display: flex;
                 justify-content: space-between;
-            } 
+            }
         }
         &__wrapperTexts--img,
         &__wrapperImg {
@@ -270,7 +270,7 @@
                         }
                     }
                 }
-            } 
+            }
         }
         &__footer {
             display: flex;
@@ -285,7 +285,7 @@
             font-size: m-rem(20px);
             line-height: m-rem(26px);
         }
-        
+
     }
      /*  banner-4buttons   */
 
@@ -537,18 +537,22 @@
             padding: 0
         }
 
-        .carousel-dots li button {
-            display: block;
-            height: 20px;
-            width: 20px;
-            margin-top: -4px;
-            margin-left: -4px;
-            line-height: 0;
-            font-size: 0;
-            color: transparent;
-            border: 0;
-            background: 0 0;
-            cursor: pointer
+        .carousel-dots li {
+            &.slick-active button {
+                margin-top: -2px;
+            }
+            button {
+                display: block;
+                height: 20px;
+                width: 20px;
+                margin-left: -4px;
+                line-height: 0;
+                font-size: 0;
+                color: transparent;
+                border: 0;
+                background: 0 0;
+                cursor: pointer
+            }
         }
 
         .carousel-dots li button .slick-dot-icon:before {
@@ -736,7 +740,7 @@
         }
         @media (min-width: 1920px) {
             max-width: m-rem(1920px);
-            
+
         }
 
         &::-webkit-scrollbar {
