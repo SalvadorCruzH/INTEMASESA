@@ -4,6 +4,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.DateUtil;
+import java.util.Calendar;
 import org.osgi.service.component.annotations.Component;
 
 import java.text.ParseException;
@@ -56,6 +57,15 @@ public class CustomDateUtil {
                             TimeZone.getDefault().toZoneId());
 
         return localDateTime.format(DTF);
+    }
+
+    public String getDateFieldDisplayName(Locale locale,String date,String format,int field) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);//"yyyy-MM-dd"
+        Date fecha = sdf.parse(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        return calendar.getDisplayName(field, Calendar.LONG, locale);
+
     }
 
     private static final Log _log = LoggerUtil.getLog(CustomDateUtil.class);

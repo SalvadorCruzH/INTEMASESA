@@ -51,6 +51,13 @@ public interface SapServicesConfiguration {
 
     @Meta.AD(
             deflt = "",
+            name = "JornadaDiariaEndpoint",
+            required = false
+    )
+    String jornadaDiariaEndpoint();
+
+    @Meta.AD(
+            deflt = "",
             name = "EmpleadoDatosPersonalesEndpoint",
             required = false
     )

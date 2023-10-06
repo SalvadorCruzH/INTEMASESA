@@ -47,8 +47,6 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
     }
 
     private static final String VIEW = "/views/resumenanual/form.jsp";
-    private static final String CAT_SELECTED = "catSelected";
-    private static final String CATEGORIES = "categories";
 
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,

@@ -15,7 +15,11 @@ Export-Package: \
     es.emasesa.intranet.sap.resumenanual.service,\
     es.emasesa.intranet.sap.resumenanual.exception,\
     es.emasesa.intranet.sap.marcaje.service,\
-    es.emasesa.intranet.sap.marcaje.exception
+    es.emasesa.intranet.sap.marcaje.exception,\
+    es.emasesa.intranet.sap.datospersona.service,\
+    es.emasesa.intranet.sap.datospersona.exception,\
+    es.emasesa.intranet.sap.jornadadiaria.service,\
+    es.emasesa.intranet.sap.jornadadiaria.exception
 
 
 Import-Package:\*;resolution:=optional

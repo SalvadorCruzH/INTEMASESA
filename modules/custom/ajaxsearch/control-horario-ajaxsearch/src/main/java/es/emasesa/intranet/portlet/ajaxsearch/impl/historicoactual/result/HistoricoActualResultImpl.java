@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.base.model.AjaxMessage;
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
+import es.emasesa.intranet.base.util.CustomDateUtil;
 import es.emasesa.intranet.base.util.CustomJournalUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.base.util.XMLDocumentUtil;
@@ -169,14 +170,12 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 
 			pagedListJson.stream().forEach(j->{
 				try {
-					Date fecha = sdf.parse(j.getString("fecha"));
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(fecha);
-					j.put("dia",calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, themeDisplay.getLocale()));
+					j.put("dia",_customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
+							j.getString("fecha"),"yyyy-MM-dd",Calendar.DAY_OF_WEEK_IN_MONTH));
+					jsonArray.put(j);
 				} catch (java.text.ParseException e) {
-
+					LoggerUtil.info(LOG,e.getMessage());
 				}
-				jsonArray.put(j);
 			});
 		}
 		return totalItems;
@@ -192,24 +191,11 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 		request.setAttribute("disablePagination", config.getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO));
 		return VIEW;
 	}
-
-	@Reference
-	JournalArticleLocalService journalArticleLocalService;
-
 	@Reference
 	AjaxSearchUtil ajaxSearchUtil;
 
 	@Reference
-	XMLDocumentUtil xmlDocumentUtil;
-
-	@Reference
-	CustomJournalUtil customJournalUtil;
-
-	@Reference
-	SearchingJournal searchingJournal;
-
-	@Reference
-	SearchingCommon searchingCommon;
+	CustomDateUtil _customDateUtil;
 
 	@Reference
 	SapServicesUtil _sapServicesUtil;

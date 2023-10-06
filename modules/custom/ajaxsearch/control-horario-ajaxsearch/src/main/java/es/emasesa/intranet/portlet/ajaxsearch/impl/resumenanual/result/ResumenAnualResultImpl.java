@@ -1,6 +1,7 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.result;
 
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
+import es.emasesa.intranet.base.util.CustomDateUtil;
 import es.emasesa.intranet.service.util.SapServicesUtil;
 import java.util.*;
 
@@ -158,7 +159,17 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 				listJson.add(array.getJSONObject(i));
 			}
 
-			listJson.subList(start,end).stream().forEach(j->jsonArray.put(j));
+			listJson.subList(start,end).stream().forEach(j->{
+
+				try {
+					j.put("mes",_customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
+							j.getString("inper"),"yyyyMM",Calendar.MONTH));
+					jsonArray.put(j);
+				} catch (java.text.ParseException e) {
+					LoggerUtil.info(LOG,e.getMessage());
+				}
+
+			});
 		}
 		return totalItems;
 	}
@@ -175,25 +186,12 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 	}
 
 	@Reference
-	JournalArticleLocalService journalArticleLocalService;
-
-	@Reference
 	AjaxSearchUtil ajaxSearchUtil;
 
 	@Reference
-	XMLDocumentUtil xmlDocumentUtil;
-
-	@Reference
-	CustomJournalUtil customJournalUtil;
-
-	@Reference
-	SearchingJournal searchingJournal;
-
-	@Reference
-	SearchingCommon searchingCommon;
-
-	@Reference
 	SapServicesUtil _sapServicesUtil;
+	@Reference
+	CustomDateUtil _customDateUtil;
 	@Reference
 	CustomCacheSingleUtil _cache;
 }

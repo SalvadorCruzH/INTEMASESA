@@ -82,7 +82,7 @@ public class JornadaDiariaService {
             /*******************UserName & Password ******************************/
             Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
-            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.marcajeEndpoint());
+            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.jornadaDiariaEndpoint());
             Map<String, List<String>> headers = new HashMap<String, List<String>>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);

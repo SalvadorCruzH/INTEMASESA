@@ -7,9 +7,26 @@
         </div>
 
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
-            <ul id="as-wrapper" class="ema-publisher__list m-dFlexWrap m-listBaseNoStyles ema-ajaxsearch__list">
-                <!-- -->
-            </ul>
+             <div class="ema-table-wrapper">
+                                <table id="table-id" class="ema-table">
+                                    <caption class="sr-only">Sumario de la tabla</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.date" /></th>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.day" /></th>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="1"/></th>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="1"/></th>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="2"/></th>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="2"/></th>
+                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="3"/></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody  id="as-wrapper">
+                            <!-- -->
+                                  </tbody>
+                                </table>
+                            </div>
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
@@ -32,10 +49,14 @@
 
 
 <template id="as-template">
-    <div class="ema-ajaxsearch__item m-link-accessible-wrapper">
-       <p>#trabajadas#</p>
-       <p>#inper#</p>
-    </div>
+     <tr>
+        <td>#mes#</td>
+        <td>#trabajadas#</td>
+        <td>#dedicacion#</td>
+        <td>#dedicacionFestivo#</td>
+        <td>#horasExtrasComputo#</td>
+        <td>#vacaciones#</td>
+     </tr>
 </template>
 
 <script>
