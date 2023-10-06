@@ -47,6 +47,13 @@ public interface SapServicesConfiguration {
             name = "MarcajeEndpoint",
             required = false
     )
-    String MarcajeEndpoint();
+    String marcajeEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "EmpleadoDatosPersonalesEndpoint",
+            required = false
+    )
+    String empleadoDatosPersonalesEndpoint();
 
 }

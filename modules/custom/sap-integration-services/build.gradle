@@ -42,6 +42,7 @@ war {
 	wsdl = "../META-INF/wsdl/Z_WS_PE_MARCAJES_HISTORICO_ACT.wsdl"
 	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl"
 	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_jornada_diari.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated/java"
 }*/
