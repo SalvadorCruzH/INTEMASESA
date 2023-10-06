@@ -352,6 +352,9 @@
                 a {
                     color: $color-aux-blue;
                     box-shadow: 0 0 10px 0 rgba(0,0,0,0.30);
+                    .layout-logo {
+                        filter: invert(35%) sepia(18%) saturate(5461%) hue-rotate(202deg) brightness(91%) contrast(86%);
+                    }
                 }
             }
             a {
@@ -366,6 +369,10 @@
                 color: black;
                 &.active {
                     box-shadow: 0 0 10px 0 rgba(0,0,0,0.30);
+                }
+                .layout-logo {
+                    max-height: 1.5rem;
+                    max-width: 2rem;
                 }
             }
         }
