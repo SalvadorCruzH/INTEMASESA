@@ -16,7 +16,7 @@
 			<#if nav_item.isSelected()>
 				<#assign
 					nav_item_css_class = "i-mainNavigation__li selected"
-					
+
 				/>
 				<#if nav_item.hasChildren()>
 					<#assign
@@ -25,10 +25,10 @@
 					/>
 				</#if>
 			</#if>
-			
+
 
 			<li class="${nav_item_css_class}" id="layout_${nav_item.getLayoutId()}" role="presentation">
-				
+
 				<#if nav_item.hasChildren()>
 					<a class="i-mainNavigation__link" ${nav_item_attr_has_popup} href="javascript:void(0)" ${nav_item.getTarget()} role="menuitem"><span class="i-mainNavigation__span"><@liferay_theme["layout-icon"] layout=nav_item_layout /> ${nav_item.getName()}</span></a>
 					<div class="i-mainNavigation__submenuContainer">
@@ -43,7 +43,7 @@
 										<#if nav_child.isSelected()>
 											<#assign
 												nav_child_css_class = "i-mainNavigation__submenuLi selected"
-											/>	
+											/>
 										</#if>
 
 										<li class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" role="presentation">
@@ -80,29 +80,24 @@
 									<div class="i-wrapperBR i-wrapperBR--blue">
 									<h2 class="i-title i-title--18 i-title--black">Hemos actualizado</h2>
 									<ul class="m-listBaseNoStyles m-listBaseNoStyles--pm3">
-										<li>
-											<a href="/" class="i-mainNavigation__link2Level">
-												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
-												Información General y Prestaciones
-											</a>
-										</li>	
-										<li>
-											<a href="/" class="i-mainNavigation__link2Level">
-												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
-												Ofertas especiales para el colectivo de Emasesa
-											</a>
-										</li>
-										<li>
-											<a href="/" class="i-mainNavigation__link2Level">
-												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
-												Sistemas de gestión ambiental
-											</a>
-										</li>
-											<a href="/" class="i-mainNavigation__link2Level">
-												<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
-												Sistemas de Gestión de la energía
-											</a>
-										<li>
+										<#if customGetterCategoryLayout.getDescendantsByCategory(nav_item_layout,
+																	global_theme_settings.lastModifiedCategoryId())??>
+											<#assign lastModified = customGetterCategoryLayout.getDescendantsByCategory(nav_item_layout,
+																	global_theme_settings.lastModifiedCategoryId()) >
+											<#if lastModified?has_content>
+												<#list lastModified as nav_child>
+														<#if nav_child?index == 4>
+															<#break>
+														</#if>
+														<li>
+															<a href="${nav_child.friendlyURL}" class="i-mainNavigation__link2Level">
+																<i class="i-icon i-icon--black fa-xs fa-solid fa-angle-right mr-1"></i>
+																${nav_child.name}
+															</a>
+														</li>
+												</#list>
+											</#if>
+										</#if>
 									</ul>
 									<h2 class="i-title i-title--18 i-title--black">Lo más visto</h2>
 									<ul class="m-listBaseNoStyles m-listBaseNoStyles--pm3">

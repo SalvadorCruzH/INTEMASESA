@@ -21,5 +21,10 @@ public interface GlobalThemeConfiguration {
     )
     String mainSiteNavigationMenuId();
 
-
+    @Meta.AD(
+            deflt = "-1",
+            name = "lastModifiedCategoryId",
+            required = false
+    )
+    String lastModifiedCategoryId();
 }

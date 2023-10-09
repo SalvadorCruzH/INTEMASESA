@@ -20,6 +20,9 @@ public class GlobalThemeSettings {
         return configuration.mainSiteNavigationMenuId();
     }
 
+    public String lastModifiedCategoryId() {
+        return configuration.lastModifiedCategoryId();
+    }
 
     @Activate
     @Modified
