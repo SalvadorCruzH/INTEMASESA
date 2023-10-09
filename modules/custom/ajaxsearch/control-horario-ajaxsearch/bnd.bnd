@@ -1,5 +1,5 @@
-Bundle-Name: control-horario-ajaxsearch
-Bundle-SymbolicName: control-horario-ajaxsearch
+Bundle-Name: emasesa-control-horario-ajaxsearch
+Bundle-SymbolicName: es.emasesa.intranet.control.horario.ajaxsearch
 Bundle-Version: 1.0.0
 Export-Package: es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual
 Web-ContextPath: /control-horario-ajaxsearch

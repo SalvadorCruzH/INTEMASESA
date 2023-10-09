@@ -1,5 +1,5 @@
-Bundle-Name: sap-integration-service
-Bundle-SymbolicName: sap.integration.service
+Bundle-Name: emasesa-sap-integration-service
+Bundle-SymbolicName: es.emasesa.intranet.sap.integration.service
 Bundle-Version: 1.0.0
 -metatype: *
 Web-ContextPath: /sap-integration-service
