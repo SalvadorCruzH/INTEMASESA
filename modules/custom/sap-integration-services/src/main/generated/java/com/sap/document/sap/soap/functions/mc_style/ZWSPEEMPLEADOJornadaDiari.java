@@ -17,7 +17,7 @@ import jakarta.xml.ws.ResponseWrapper;
  * Generated source version: 3.0
  * 
  */
-@WebService(name = "Z_WS_PE_EMPLEADO_jornada_diari", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style")
+@WebService(name = "Z_WS_PE_EMPLEADO_JORNADA_DIARI", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style")
 @XmlSeeAlso({
     com.sap.document.sap.rfc.functions.ObjectFactory.class,
     com.sap.document.sap.soap.functions.mc_style.ObjectFactory.class
@@ -33,7 +33,7 @@ public interface ZWSPEEMPLEADOJornadaDiari {
      * @return
      *     returns com.sap.document.sap.rfc.functions.TABLEOFZPESTEMPLEADOJORNADADIARIA
      */
-    @WebMethod(operationName = "ZPeEmpleadoJornadaDiaria", action = "urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest")
+    @WebMethod(operationName = "ZPeEmpleadoJornadaDiaria", action = "urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_JORNADA_DIARI:ZPeEmpleadoJornadaDiariaRequest")
     @WebResult(name = "TEmpleados", targetNamespace = "")
     @RequestWrapper(localName = "ZPeEmpleadoJornadaDiaria", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeEmpleadoJornadaDiaria")
     @ResponseWrapper(localName = "ZPeEmpleadoJornadaDiariaResponse", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeEmpleadoJornadaDiariaResponse")

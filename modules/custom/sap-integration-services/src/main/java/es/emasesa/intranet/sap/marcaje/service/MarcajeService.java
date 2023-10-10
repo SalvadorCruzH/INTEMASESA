@@ -31,7 +31,6 @@ import org.springframework.remoting.soap.SoapFaultException;
 @org.springframework.stereotype.Component("marcajeService")
 public class MarcajeService {
 
-
     public JSONArray obtenerMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) throws MarcajeException {
         JSONArray data = JSONFactoryUtil.createJSONArray();
         try {
@@ -51,7 +50,6 @@ public class MarcajeService {
     private ObjectFactory getObjectFactory() {
         return new ObjectFactory();
     }
-
 
     @PostConstruct
     public void activate(){
@@ -87,7 +85,6 @@ public class MarcajeService {
             requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
 
-
         } catch (Exception e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de MarcajeService");
@@ -99,7 +96,6 @@ public class MarcajeService {
         if (LOG.isDebugEnabled()) {
             LOG.debug("[E] MarcajeServiceMarcajeService");
         }
-
     }
 
     private ZWSPEMARCAJESHISTORICOACT port;

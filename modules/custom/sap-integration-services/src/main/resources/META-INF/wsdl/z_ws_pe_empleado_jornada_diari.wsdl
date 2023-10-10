@@ -349,7 +349,7 @@
     <wsdl:message name="ZPeEmpleadoJornadaDiariaResponse">
         <wsdl:part name="parameter" element="tns:ZPeEmpleadoJornadaDiariaResponse"/>
     </wsdl:message>
-    <wsdl:portType name="Z_WS_PE_EMPLEADO_jornada_diari">
+    <wsdl:portType name="Z_WS_PE_EMPLEADO_JORNADA_DIARI">
         <wsp:Policy>
             <wsp:PolicyReference URI="#IF__Z_WS_PE_EMPLEADO_jornada_diari"/>
         </wsp:Policy>
@@ -361,7 +361,7 @@
             <wsdl:output message="tns:ZPeEmpleadoJornadaDiariaResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="Z_WS_PE_EMPLEADO_JORNADA_DIARI" type="tns:Z_WS_PE_EMPLEADO_jornada_diari">
+    <wsdl:binding name="Z_WS_PE_EMPLEADO_JORNADA_DIARI" type="tns:Z_WS_PE_EMPLEADO_JORNADA_DIARI">
         <wsp:Policy>
             <wsp:PolicyReference URI="#BN__Z_WS_PE_EMPLEADO_JORNADA_DIARI"/>
         </wsp:Policy>
@@ -378,14 +378,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Z_WS_PE_EMPLEADO_JORNADA_DIARI_soap12" type="tns:Z_WS_PE_EMPLEADO_jornada_diari">
+    <wsdl:binding name="Z_WS_PE_EMPLEADO_JORNADA_DIARI_soap12" type="tns:Z_WS_PE_EMPLEADO_JORNADA_DIARI">
         <wsp:Policy>
             <wsp:PolicyReference URI="#BN__Z_WS_PE_EMPLEADO_JORNADA_DIARI_soap12"/>
         </wsp:Policy>
         <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="ZPeEmpleadoJornadaDiaria">
             <wsoap12:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_JORNADA_DIARI:ZPeEmpleadoJornadaDiariaRequest"
                     style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
