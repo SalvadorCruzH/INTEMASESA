@@ -33,7 +33,7 @@ dependencies {
 war {
 	enabled= true
 }
-
+/*
 wsimport {
 	includeDependencies = true
 	//wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
@@ -45,5 +45,5 @@ wsimport {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated/java"
-}
+}*/
 
