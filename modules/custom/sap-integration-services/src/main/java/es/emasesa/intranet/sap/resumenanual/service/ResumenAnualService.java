@@ -13,6 +13,8 @@ import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADARESUM_Se
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT_Service;
 import com.sun.xml.ws.developer.WSBindingProvider;
+import com.sun.xml.ws.fault.ServerSOAPFaultException;
+import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
@@ -35,6 +37,7 @@ public class ResumenAnualService {
 
 
     public JSONArray obtenerResumenAnual(String pernr, String anno) throws MarcajeException {
+
         JSONArray data = JSONFactoryUtil.createJSONArray();
 
         Holder<BigDecimal> computoConFuturo = new Holder<>();
@@ -45,15 +48,13 @@ public class ResumenAnualService {
         try {
              port.zPeEmpleadoJornadaResumen(anno,pernr,computoConFuturo,
                     computoSinFuturo,computoSinFuturoAnnoAnteri,contingenteVacaciones,tEmpleados);
-            if(tEmpleados.value.getItem().size()>0){
+            if(!tEmpleados.value.getItem().isEmpty()){
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEmpleados.value.getItem()));
             }
-        }catch (JSONException e) {
+        }catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
-        }catch (Exception e){
-            LOG.debug(e.getMessage(),e);
-            throw new MarcajeException("Error con el WS:"+e.getMessage());
-
+            LOG.error(e.getMessage(), e);
+            throw new MarcajeException("Error con el WS:"+ e.getMessage());
         }
         return data;
     }
@@ -64,10 +65,10 @@ public class ResumenAnualService {
 
 
     @PostConstruct
-    public void activate() throws MalformedURLException {
+    public void activate() {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[I] Activando EmpleadoEstructuraService");
+            LOG.debug("[I] Activando ResumenAnualService");
         }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -91,7 +92,7 @@ public class ResumenAnualService {
             Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
             requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.marcajeEndpoint());
-            Map<String, List<String>> headers = new HashMap<String, List<String>>();
+            Map<String, List<String>> headers = new HashMap<>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
@@ -99,11 +100,16 @@ public class ResumenAnualService {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Se ha producido un error instanciando el servicio de ResumenAnualService");
+            }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[E] ResumenAnualService");
+        }
     }
 
     private ZWSPEEMPLEADOJORNADARESUM port;

@@ -10,4 +10,7 @@ public class ResumenAnualException extends SapException {
     public ResumenAnualException(Throwable cause) {
         super(cause);
     }
+    public ResumenAnualException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

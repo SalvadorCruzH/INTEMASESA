@@ -88,10 +88,10 @@ public class JornadaNominaService {
 
 
     @PostConstruct
-    public void activate() throws MalformedURLException {
+    public void activate() {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[I] Activando EmpleadoEstructuraService");
+            LOG.debug("[I] Activando JornadaNominaService");
         }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -124,11 +124,16 @@ public class JornadaNominaService {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Se ha producido un error instanciando el servicio de JornadaNominaService");
+            }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[E] JornadaNominaService");
+        }
     }
 
     private ZWSPEACTJORNADANOMINA port;

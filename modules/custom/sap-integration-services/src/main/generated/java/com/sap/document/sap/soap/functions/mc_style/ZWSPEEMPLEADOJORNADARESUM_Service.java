@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_JORNADA_RESUM", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_JORNADA_RESUM", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl")
 public class ZWSPEEMPLEADOJORNADARESUM_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPEEMPLEADOJORNADARESUM_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl");
+            url = new URL("classpath:META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

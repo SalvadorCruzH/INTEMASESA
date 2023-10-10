@@ -1,4 +1,13 @@
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:n1="urn:sap-com:document:sap:rfc:functions" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="urn:sap-com:document:sap:soap:functions:mc-style"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:n1="urn:sap-com:document:sap:rfc:functions">
     <wsdl:documentation>
         <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
     </wsdl:documentation>
@@ -7,10 +16,18 @@
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
-                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
-                <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false
+                </sapattahnd:Enabled>
+                <saptrnbnd:OptimizedMimeSerialization
+                        xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+                        wsp:Optional="true"/>
                 <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
-                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+                                         xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy"
+                                         xmlns:wsa="http://www.w3.org/2005/08/addressing"
+                                         xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"
+                                         xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+                                         xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
                         <wsp:Policy>
                             <sp:TransportToken>
                                 <wsp:Policy>
@@ -37,10 +54,18 @@
             </wsp:All>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
-                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
-                <saptrnbnd:OptimizedXMLTransfer xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" uri="http://xml.sap.com/2006/11/esi/esp/binxml" wsp:Optional="true"/>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false
+                </sapattahnd:Enabled>
+                <saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml"
+                                                xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/"
+                                                wsp:Optional="true"/>
                 <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
-                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+                                         xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy"
+                                         xmlns:wsa="http://www.w3.org/2005/08/addressing"
+                                         xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"
+                                         xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+                                         xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
                         <wsp:Policy>
                             <sp:TransportToken>
                                 <wsp:Policy>
@@ -71,10 +96,18 @@
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
-                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
-                <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false
+                </sapattahnd:Enabled>
+                <saptrnbnd:OptimizedMimeSerialization
+                        xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+                        wsp:Optional="true"/>
                 <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
-                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+                                         xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy"
+                                         xmlns:wsa="http://www.w3.org/2005/08/addressing"
+                                         xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"
+                                         xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+                                         xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
                         <wsp:Policy>
                             <sp:TransportToken>
                                 <wsp:Policy>
@@ -101,10 +134,18 @@
             </wsp:All>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
-                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
-                <saptrnbnd:OptimizedXMLTransfer xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" uri="http://xml.sap.com/2006/11/esi/esp/binxml" wsp:Optional="true"/>
+                <sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false
+                </sapattahnd:Enabled>
+                <saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml"
+                                                xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/"
+                                                wsp:Optional="true"/>
                 <wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
-                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+                    <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+                                         xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy"
+                                         xmlns:wsa="http://www.w3.org/2005/08/addressing"
+                                         xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"
+                                         xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+                                         xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
                         <wsp:Policy>
                             <sp:TransportToken>
                                 <wsp:Policy>
@@ -137,8 +178,11 @@
                 <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
                     <sapsession:enableSession>false</sapsession:enableSession>
                 </sapsession:Session>
-                <sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/" wsp:Optional="true">
-                    <sapcentraladmin:BusinessApplicationID>762C73CC36031EDE95D6D6507F8184D1</sapcentraladmin:BusinessApplicationID>
+                <sapcentraladmin:CentralAdministration
+                        xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/"
+                        wsp:Optional="true">
+                    <sapcentraladmin:BusinessApplicationID>762C73CC36031EDE95D6D6507F8184D1
+                    </sapcentraladmin:BusinessApplicationID>
                 </sapcentraladmin:CentralAdministration>
             </wsp:All>
         </wsp:ExactlyOne>
@@ -146,15 +190,20 @@
     <wsp:Policy wsu:Id="OP__ZPeEmpleadoJornadaDiaria">
         <wsp:ExactlyOne>
             <wsp:All>
-                <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
-                <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
-                <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
-                <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+                <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no
+                </saptrhnw05:required>
+                <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false
+                </sapcomhnd:enableCommit>
+                <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true
+                </sapblock:enableBlocking>
+                <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false
+                </saprmnw05:enableWSRM>
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsdl:types>
-        <xsd:schema xmlns:n0="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
+        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
+                    xmlns:n0="urn:sap-com:document:sap:rfc:functions">
             <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
@@ -198,7 +247,9 @@
                 </xsd:complexType>
             </xsd:element>
         </xsd:schema>
-        <xsd:schema xmlns:tns="urn:sap-com:document:sap:rfc:functions" xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
+        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
+                    xmlns:tns="urn:sap-com:document:sap:rfc:functions"
+                    xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style">
             <xsd:import namespace="urn:sap-com:document:sap:soap:functions:mc-style"/>
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
@@ -286,7 +337,8 @@
             </xsd:complexType>
             <xsd:complexType name="TABLE_OF_ZPE_ST_EMPLEADO_JORNADA_DIARIA">
                 <xsd:sequence>
-                    <xsd:element name="item" type="n1:ZPE_ST_EMPLEADO_JORNADA_DIARIA" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="item" type="n1:ZPE_ST_EMPLEADO_JORNADA_DIARIA" minOccurs="0"
+                                 maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
@@ -315,7 +367,9 @@
         </wsp:Policy>
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="ZPeEmpleadoJornadaDiaria">
-            <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest" style="document"/>
+            <soap:operation
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest"
+                    style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -330,7 +384,9 @@
         </wsp:Policy>
         <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="ZPeEmpleadoJornadaDiaria">
-            <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest" style="document"/>
+            <wsoap12:operation
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest"
+                    style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
             </wsdl:input>
@@ -341,10 +397,12 @@
     </wsdl:binding>
     <wsdl:service name="Z_WS_PE_EMPLEADO_JORNADA_DIARI">
         <wsdl:port name="Z_WS_PE_EMPLEADO_JORNADA_DIARI" binding="tns:Z_WS_PE_EMPLEADO_JORNADA_DIARI">
-            <soap:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_diari/010/z_ws_pe_empleado_jornada_diari/z_ws_pe_empleado_jornada_diari"/>
+            <soap:address
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_diari/010/z_ws_pe_empleado_jornada_diari/z_ws_pe_empleado_jornada_diari"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_JORNADA_DIARI_soap12" binding="tns:Z_WS_PE_EMPLEADO_JORNADA_DIARI_soap12">
-            <wsoap12:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_diari/010/z_ws_pe_empleado_jornada_diari/z_ws_pe_empleado_jornada_diari"/>
+            <wsoap12:address
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_diari/010/z_ws_pe_empleado_jornada_diari/z_ws_pe_empleado_jornada_diari"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

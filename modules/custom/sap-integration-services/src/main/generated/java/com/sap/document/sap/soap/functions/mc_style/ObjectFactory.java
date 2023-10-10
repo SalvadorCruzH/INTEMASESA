@@ -203,4 +203,36 @@ public class ObjectFactory {
         return new ZpeStEmpleadoDatosPersonal();
     }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoDomicilio }
+     *
+     */
+    public ZPeEmpleadoDomicilio createZPeEmpleadoDomicilio() {
+        return new ZPeEmpleadoDomicilio();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoDomicilioResponse }
+     *
+     */
+    public ZPeEmpleadoDomicilioResponse createZPeEmpleadoDomicilioResponse() {
+        return new ZPeEmpleadoDomicilioResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoDomicilio }
+     *
+     */
+    public TableOfZpeStEmpleadoDomicilio createTableOfZpeStEmpleadoDomicilio() {
+        return new TableOfZpeStEmpleadoDomicilio();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoDomicilio }
+     *
+     */
+    public ZpeStEmpleadoDomicilio createZpeStEmpleadoDomicilio() {
+        return new ZpeStEmpleadoDomicilio();
+    }
+
 }

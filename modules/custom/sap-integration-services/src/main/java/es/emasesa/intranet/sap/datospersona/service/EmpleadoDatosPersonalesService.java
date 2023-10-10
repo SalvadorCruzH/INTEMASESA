@@ -28,18 +28,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 @org.springframework.stereotype.Component("empleadoDatosPersonalesService")
 public class EmpleadoDatosPersonalesService {
 
-    public JSONObject getEmpleadoDatosPersonales(String pernr) throws JSONException, EmpleadoDatosPersonalesException {
+    public JSONObject getEmpleadoDatosPersonales(String pernr) throws EmpleadoDatosPersonalesException {
 
         try {
             TableOfZpeStEmpleadoDatosPersonal serviceResult = port.zPeEmpleadoDatosPersonales(pernr);
-            JSONObject serviceJsonResult = JSONFactoryUtil.createJSONObject();
             ZpeStEmpleadoDatosPersonal empleadoDatosPersonal = serviceResult.getItem().stream().findFirst().orElse(null);
 
-            serviceJsonResult = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoDatosPersonal));
-
-            return serviceJsonResult;
-        } catch (ServerSOAPFaultException e) {
-            throw new EmpleadoDatosPersonalesException("Error llamando al WS para el pernr "+ pernr);
+            return JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoDatosPersonal));
+        } catch (JSONException | ServerSOAPFaultException e) {
+            throw new EmpleadoDatosPersonalesException("Error llamando al WS para el pernr "+ pernr, e);
         }
     }
 
@@ -78,14 +75,16 @@ public class EmpleadoDatosPersonalesService {
             Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
             requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.empleadoDatosPersonalesEndpoint());
-            Map<String, List<String>> headers = new HashMap<String, List<String>>();
+            Map<String, List<String>> headers = new HashMap<>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
 
         } catch (Exception e) {
-            e.printStackTrace();
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Se ha producido un error instanciando el servicio de EmpleadoDatosPersonalesService");
+            }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }

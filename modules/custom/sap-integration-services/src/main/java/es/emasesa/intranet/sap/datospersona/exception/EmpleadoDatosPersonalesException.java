@@ -10,4 +10,7 @@ public class EmpleadoDatosPersonalesException extends SapException {
     public EmpleadoDatosPersonalesException(Throwable cause) {
         super(cause);
     }
+    public EmpleadoDatosPersonalesException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
