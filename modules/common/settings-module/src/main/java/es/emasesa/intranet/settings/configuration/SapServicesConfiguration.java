@@ -63,4 +63,10 @@ public interface SapServicesConfiguration {
     )
     String empleadoDatosPersonalesEndpoint();
 
+    @Meta.AD(
+            deflt = "",
+            name = "EmpleadoDatosDomicilioEndpoint",
+            required = false
+    )
+    String empleadoDatosDomicilioEndpoint();
 }

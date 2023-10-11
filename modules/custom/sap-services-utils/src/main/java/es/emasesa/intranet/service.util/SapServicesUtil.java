@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
+import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.base.exception.SapException;
 import es.emasesa.intranet.sap.datospersona.exception.EmpleadoDatosDomicilioException;
 import es.emasesa.intranet.sap.datospersona.exception.EmpleadoDatosPersonalesException;
@@ -20,6 +21,7 @@ import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
+import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
 import java.util.Map;
@@ -55,7 +57,7 @@ public class SapServicesUtil {
                 activate(null);
             }
             resumenAnual = resumenAnualService.obtenerResumenAnual(pernr, anno);
-        } catch (MarcajeException e) {
+        } catch (SapCommunicationException | ResumenAnualException e) {
             LOG.error(e.getMessage());
             LOG.debug(e.getMessage(), e);
         }
@@ -94,7 +96,7 @@ public class SapServicesUtil {
                 activate(null);
             }
             marcajeHistoricoActual = marcajeService.obtenerMarcajeHistoricoActual(pernr, fechaInicio, fechaFin);
-        } catch (MarcajeException e) {
+        } catch (SapCommunicationException | MarcajeException e) {
             LOG.error(e.getMessage());
         }
 
@@ -105,13 +107,20 @@ public class SapServicesUtil {
     public JSONObject getDatosEmpleado(String pernr) {
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
 
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getDatosEmpleado " + pernr);
+        }
         try {
             if(empleadoDatosPersonalesService == null){
                 activate(null);
             }
             datosEmpleado = empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
-        } catch (EmpleadoDatosPersonalesException e) {
+        } catch (SapCommunicationException | EmpleadoDatosPersonalesException e) {
             LOG.error(e.getMessage(), e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getDatosEmpleado " + pernr);
+            }
         }
 
         return datosEmpleado;
@@ -119,13 +128,19 @@ public class SapServicesUtil {
 
     public JSONObject getDatosEmpleadoDomicilio(String pernr) {
 
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getDatosEmpleadoDomicilio " + pernr);
+        }
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
-
         try {
 
             datosEmpleado = empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr);
-        } catch (EmpleadoDatosDomicilioException e) {
+        } catch (SapCommunicationException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getDatosEmpleadoDomicilio " + pernr);
+            }
         }
 
         return datosEmpleado;
@@ -133,6 +148,9 @@ public class SapServicesUtil {
 
     public JSONObject getDatosEmpleadoAndDomicilio(String pernr) {
 
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getDatosEmpleadoAndDomicilio " + pernr);
+        }
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
 
         try {
@@ -141,8 +159,12 @@ public class SapServicesUtil {
             }
             datosEmpleado = empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
             datosEmpleado.put("datosDomicilio", empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr));
-        } catch (EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
+        } catch (SapCommunicationException | EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getDatosEmpleadoAndDomicilio " + pernr);
+            }
         }
 
         return datosEmpleado;
@@ -150,6 +172,9 @@ public class SapServicesUtil {
 
     public JSONArray getMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) {
 
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getMarcajeHistoricoActual " + pernr);
+        }
         JSONArray datosMarcajeHistorico = JSONFactoryUtil.createJSONArray();
 
         try {
@@ -157,10 +182,13 @@ public class SapServicesUtil {
                 activate(null);
             }
             datosMarcajeHistorico = jornadaDiariaService.obtenerMarcajeHistoricoActual (pernr, fechaInicio, fechaFin);
-        } catch (JornadaDiariaException e) {
+        } catch (SapCommunicationException | JornadaDiariaException e) {
             LOG.error(e.getMessage(), e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getMarcajeHistoricoActual " + pernr);
+            }
         }
-
         return datosMarcajeHistorico;
     }
 
@@ -201,8 +229,8 @@ public class SapServicesUtil {
         } catch (InterruptedException e) {
             LOG.error("Se ha producido un error levantando el CustomTracker de Spring");
             throw new RuntimeException(e);
-        } catch (SapException e) {
-            LOG.info("Se ha producido un error validando los servicios en el arranque");
+       } catch (SapException e) {
+            LOG.info("Se ha producido un error validando los servicios en el arranque", e);
         } catch (NullPointerException e) {
             LOG.info("Se ha producido un error accediendo a los servicios");
         }
