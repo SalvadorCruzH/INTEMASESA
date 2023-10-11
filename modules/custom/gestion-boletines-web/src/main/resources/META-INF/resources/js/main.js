@@ -12,3 +12,32 @@ function validarCampoDestinatario(destinatarios){
     }
     return isValid;
 }
+
+var gestionBoletines = (function(){
+    var _initilized;
+    var _portletNamespace;
+
+
+    var _init =  function(portletNamespace){
+        if (!_isInitialized()){
+            _initialized();
+            _portletNamespace = portletNamespace;
+        }
+    }
+
+    var _isInitialized = function(){
+        return _initilized == true;
+    }
+
+    var _initialized = function(){
+        _initilized = true;
+    }
+
+    var _initSelect2 = function (selectId){
+        $('#' + _portletNamespace + selectId).select2();
+    }
+    return {
+        init: _init,
+        initSelect2: _initSelect2
+    }
+}());
