@@ -118,6 +118,19 @@
     },
     {
         "screenName": "aemasesa",
+        "name": "EMA - Boletín tablas",
+        "templateKey": "EMA-BOLETIN-TABLAS",
+        "structureKey": "EMA-BOLETIN",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "boletin-tablas.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para el envío de boletines maquetado con tablas",
+        "uuid": "1fc15671-4db9-f2eb-1a7a-827cdbf4c35e",
+        "structureUuid": "082198cd-c974-7965-1cad-e3f06576cff9"
+    },
+    {
+        "screenName": "aemasesa",
         "name": "EMA - Item relacionado",
         "templateKey": "EMA-ITEM-RELACIONADO",
         "structureKey": "EMA-NOTICIA",
@@ -127,6 +140,19 @@
         "cacheable": true,
         "comment": "Plantilla para los contenidos relacionados al final del bloetín",
         "uuid": "c60eb09c-b06e-39b1-4107-c9475db2d5a7",
+        "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Item relacionado tablas",
+        "templateKey": "EMA-ITEM-RELACIONADO-TABLAS",
+        "structureKey": "EMA-NOTICIA",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "item-relacionado-tablas.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para los contenidos relacionados al final del bloetín maquetado con tablas",
+        "uuid": "5ffdf005-61af-09a5-ef05-eeaf7f544c35",
         "structureUuid": "4951cdcc-22be-2db7-d0bc-63977904e60c"
     },
     {
