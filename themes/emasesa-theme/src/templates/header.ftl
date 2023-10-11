@@ -1,6 +1,6 @@
 <header class="i-header" id="banner" role="banner">
-	<div class="container-fluid">
-		<div class="i-header__wrapper">
+	<div class="container">
+		<div class="i-header__wrapper pr-0">
 			<button id="i-menuButton" aria-label="Menú" class="i-header__btnMenu btn m-btn--noSytles">
 				<i class="fa-solid fa-bars fa-lg"></i>
 			</button>

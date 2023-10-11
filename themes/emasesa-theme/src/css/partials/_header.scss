@@ -50,6 +50,9 @@
         &__navSearch {
             display: flex;
             align-items: center;
+            @include media-breakpoint-up(xl) {
+                margin-left: auto;
+            }
         }
         &__btnAdmin {
             display: none;
@@ -103,5 +106,13 @@
     }
     .heading {
         margin: 0 auto;
+    }
+}
+
+#heading {
+    @include media-breakpoint-up(xl) {
+        position: absolute;
+        left: 2.75%;
+        top: 26px;
     }
 }
