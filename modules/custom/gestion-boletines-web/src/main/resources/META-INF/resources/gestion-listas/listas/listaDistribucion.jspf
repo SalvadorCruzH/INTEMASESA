@@ -1,0 +1,21 @@
+<aui:fieldset label="es.emasesa.intranet.gestionBoletines.listaDistribucion" collapsible="true">
+    <aui:form method="post" action="<%= sendForm %>" name="listaDistribucion">
+        <aui:input type="text"
+                   name="<%=GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_DISTRIBUIDA%>"
+                   label="es.emasesa.intranet.gestionBoletines.input.destinatarios.label"
+                   cssClass="destinatarios"
+                   value="<%=request.getAttribute(GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_LISTA_DISTRIBUCION_VALUE)%>">
+             <aui:validator name="required" />
+             <aui:validator name="custom" errorMessage="es.emasesa.intranet.gestionBoletines.validacion.input.formato">
+                function ( val, fieldNode, ruleValue ) {
+                    return validarCampoDestinatario(val);
+                }
+            </aui:validator>
+        </aui:input>
+        <aui:input type="hidden"
+                   name="<%=GestionBoletinesPortletKeys.INPUT_TIPO_LISTA%>"
+                   value="<%=GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_DISTRIBUCION_VALUE%>">
+        </aui:input>
+        <aui:button type="submit" value="es.emasesa.intranet.gestionBoletines.button.guardar" name="submitDistribucion"/>
+    </aui:form>
+</aui:fieldset>

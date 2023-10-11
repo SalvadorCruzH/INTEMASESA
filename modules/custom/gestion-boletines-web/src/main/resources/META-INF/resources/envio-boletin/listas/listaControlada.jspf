@@ -1,0 +1,27 @@
+<aui:fieldset label="es.emasesa.intranet.gestionBoletines.enviolistacontrolada" collapsible="true">
+    <aui:form method="post" action="<%= sendForm %>" name="enviolistaControlada">
+        <aui:input type="text"
+                   name="<%=GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_CONTROLADA%>"
+                   label="es.emasesa.intranet.gestionBoletines.input.destinatarios.label"
+                   cssClass="destinatarios"
+                   value="<%=request.getAttribute(GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_LISTA_CONTROLADA_VALUE)%>"
+                   disabled="true"
+        />
+        <aui:input type="text"
+                   name="<%=GestionBoletinesPortletKeys.INPUT_ASUNTO_CONTROLADA%>"
+                   label="es.emasesa.intranet.gestionBoletines.input.asunto.label"
+                   value="<%=request.getAttribute(GestionBoletinesPortletKeys.INPUT_ASUNTO_LISTA_CONTROLADA_VALUE)%>">
+             <aui:validator name="required" />
+        </aui:input>
+        <aui:select name="<%=GestionBoletinesPortletKeys.INPUT_BOLETIN_CONTROLADA%>" label="es.emasesa.intranet.gestionBoletines.input.boletin.label" required="true">
+            <c:forEach items="${boletines}" var="boletin">
+                <aui:option value="${boletin.getArticleId()}"><liferay-ui:message key="${boletin.getTitle()}"/></aui:option>
+            </c:forEach>
+        </aui:select>
+        <aui:input type="hidden"
+                   name="<%=GestionBoletinesPortletKeys.INPUT_TIPO_LISTA%>"
+                   value="<%=GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_CONTROLADA_VALUE%>">
+        </aui:input>
+        <aui:button type="submit" value="es.emasesa.intranet.gestionBoletines.button.enviar" name="envioControlada"/>
+    </aui:form>
+</aui:fieldset>

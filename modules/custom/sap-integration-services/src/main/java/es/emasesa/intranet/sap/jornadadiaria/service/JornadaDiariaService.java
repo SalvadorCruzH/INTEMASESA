@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.sap.document.sap.rfc.functions.TABLEOFZPESTEMPLEADOJORNADADIARIA;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari_Service;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT_Service;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -49,7 +50,6 @@ public class JornadaDiariaService {
         return new ObjectFactory();
     }
 
-
     @PostConstruct
     public void activate() {
 
@@ -64,7 +64,7 @@ public class JornadaDiariaService {
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
-            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service();
+            ZWSPEEMPLEADOJornadaDiari_Service service = new ZWSPEEMPLEADOJornadaDiari_Service();
             port = service.getPort(ZWSPEEMPLEADOJornadaDiari.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -87,7 +87,7 @@ public class JornadaDiariaService {
 
         } catch (Exception e) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Se ha producido un error instanciando el servicio de JornadaDiariaService");
+                LOG.info("Se ha producido un error instanciando el servicio de JornadaDiariaService", e);
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
