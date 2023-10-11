@@ -1,6 +1,8 @@
 package es.emasesa.intranet.service.util;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 
 import java.lang.reflect.Method;
@@ -36,13 +38,15 @@ public class CustomServiceTracker<T> {
             this.service = (T) method.invoke(_serviceTracker.getService());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug("Error activando servicios, seguramente sea un problema de redeploy", e);
         }
     }
 
     public T getService() throws InterruptedException {
         return service;
     }
+
+    private static final Log LOG = LogFactoryUtil.getLog(CustomServiceTracker.class);
 
     private static ServiceTracker<SapInterfaceService, SapInterfaceService> _serviceTracker;
 }

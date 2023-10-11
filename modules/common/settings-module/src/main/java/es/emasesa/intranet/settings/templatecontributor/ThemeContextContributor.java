@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import es.emasesa.intranet.settings.osgi.GlobalThemeSettings;
+import es.emasesa.intranet.settings.util.CustomGetterCategoryLayout;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,6 +34,7 @@ public class ThemeContextContributor implements TemplateContextContributor {
 
         contextObjects.put("global_theme_settings", globalThemeSettings);
         contextObjects.put("customGetterUtil",_customGetter);
+        contextObjects.put("customGetterCategoryLayout",customGetterCategoryLayout);
         contextObjects.put("customDateUtil",_customDateUtil);
 
         List<SiteNavigationMenuItem> mainMenuItems =  _siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(Long.parseLong(globalThemeSettings.mainSiteNavigationMenuId()));
@@ -55,6 +57,8 @@ public class ThemeContextContributor implements TemplateContextContributor {
     CustomDateUtil _customDateUtil;
     @Reference
     SiteNavigationMenuItemLocalService _siteNavigationMenuItemLocalService;
+    @Reference
+    CustomGetterCategoryLayout customGetterCategoryLayout;
 
     Log LOG = LoggerUtil.getLog(ThemeContextContributor.class);
 }

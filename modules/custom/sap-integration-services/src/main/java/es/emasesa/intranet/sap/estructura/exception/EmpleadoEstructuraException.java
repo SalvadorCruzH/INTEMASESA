@@ -10,4 +10,7 @@ public class EmpleadoEstructuraException extends SapException {
     public EmpleadoEstructuraException(Throwable cause) {
         super(cause);
     }
+    public EmpleadoEstructuraException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

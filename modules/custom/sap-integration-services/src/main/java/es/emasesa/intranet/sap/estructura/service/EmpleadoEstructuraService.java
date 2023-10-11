@@ -32,18 +32,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 @org.springframework.stereotype.Component("empleadoEstructuraService")
 public class EmpleadoEstructuraService {
 
-    public JSONObject getEmpleadoEstructura(String pernr) throws JSONException, EmpleadoEstructuraException {
+    public JSONObject getEmpleadoEstructura(String pernr) throws EmpleadoEstructuraException {
 
         try {
             TableOfZpeStEmpleadoEstructura result = port.zPeEmpleadoEstructura(pernr);
-            JSONObject jsonResult = JSONFactoryUtil.createJSONObject();
             ZpeStEmpleadoEstructura empleadoEstructura = result.getItem().stream().findFirst().orElse(null);
 
-            jsonResult = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoEstructura));
-
-            return jsonResult;
-        } catch (ServerSOAPFaultException e) {
-            throw new EmpleadoEstructuraException("Error llamando al WS para el pernr "+ pernr);
+            return JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoEstructura));
+        } catch (JSONException | ServerSOAPFaultException e) {
+            throw new EmpleadoEstructuraException("Error llamando al WS para el pernr "+ pernr, e);
         }
     }
 
@@ -65,10 +62,8 @@ public class EmpleadoEstructuraService {
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            String userName = configuration.userPrompt(); //"pe_hrcons"; //TODO: Poner en settings, estan creadas
-            String password = configuration.passwordPrompt(); //"J2iea.117";//TODO: Poner en settings, estan creadas
-
-            URL url = new URL(configuration.empleadoEstructuraEndpoint());
+            String userName = configuration.userPrompt();
+            String password = configuration.passwordPrompt();
 
             ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service();
             port = service.getPort(ZWSPEEMPLEADOESTRUCTURA.class);
@@ -84,14 +79,16 @@ public class EmpleadoEstructuraService {
             Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
             requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.empleadoEstructuraEndpoint());
-            Map<String, List<String>> headers = new HashMap<String, List<String>>();
+            Map<String, List<String>> headers = new HashMap<>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
 
         } catch (Exception e) {
-            e.printStackTrace();
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Se ha producido un error instanciando el servicio de EmpleadoEstructuraService");
+            }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }

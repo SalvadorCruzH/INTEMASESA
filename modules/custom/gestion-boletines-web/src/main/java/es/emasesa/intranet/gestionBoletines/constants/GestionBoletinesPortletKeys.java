@@ -1,7 +1,5 @@
 package es.emasesa.intranet.gestionBoletines.constants;
 
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-
 /**
  * @author jacarmonam
  */

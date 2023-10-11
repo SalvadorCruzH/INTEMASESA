@@ -3,11 +3,15 @@ import { useSyncValue } from 'dynamic-data-mapping-form-field-type/hooks/useSync
 import React, { useEffect, useState, useRef } from 'react';
 
 const Select = ({ name, onChange, predefinedValue, value, options }) => {
+
 	const selectRef = useRef(null);
 	const timeStamp = Date.now();
 	useEffect(() => {
 		if (selectRef.current) {
 			$(selectRef.current).select2();
+			$(selectRef.current).on('select2:selecting', function(e) {
+                onChange(e.params.args.data.id);
+              });
 		}
 
 		return () => {
@@ -73,6 +77,10 @@ const Main = ({	  label,
 			});
 	}, [restUrl]);
 
+    function handleChange(val){
+     setCurrentValue(val);
+    }
+
 
 	return (
 		<FieldBase label={label}
@@ -80,16 +88,14 @@ const Main = ({	  label,
 				   predefinedValue={predefinedValue}
 				   {...otherProps}>
 			<Select
-				name={name}
-				onChange={(event) => {
-					setCurrentValue(event.target.value);
-					onChange(event);
-				}}
+				name={`${name}_field`}
+				onChange={handleChange}
 				readOnly={readOnly}
 				predefinedValue={predefinedValue}
 				value={currentValue}
 				options={options}
 			/>
+			<input name={name} type="hidden" value={currentValue} />
 		</FieldBase>
 	);
 };

@@ -173,6 +173,9 @@
                 padding-bottom:0;
                 border-bottom: none;
             }
+            &__divWrapper {
+                border-radius: m-rem(40px);
+            }
         }
     }
     

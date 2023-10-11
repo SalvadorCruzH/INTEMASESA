@@ -88,10 +88,10 @@ public class JornadaNominaService {
 
 
     @PostConstruct
-    public void activate() throws MalformedURLException {
+    public void activate() {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[I] Activando EmpleadoEstructuraService");
+            LOG.debug("[I] Activando JornadaNominaService");
         }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -99,10 +99,8 @@ public class JornadaNominaService {
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            String userName = configuration.userPrompt(); //"pe_hrcons"; //TODO: Poner en settings, estan creadas
-            String password = configuration.passwordPrompt(); //"J2iea.117";//TODO: Poner en settings, estan creadas
-
-            URL url = new URL(configuration.jornadaNominaEndpoint());
+            String userName = configuration.userPrompt();
+            String password = configuration.passwordPrompt();
 
             ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service();
             port = service.getPort(ZWSPEACTJORNADANOMINA.class);
@@ -126,11 +124,16 @@ public class JornadaNominaService {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Se ha producido un error instanciando el servicio de JornadaNominaService");
+            }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[E] JornadaNominaService");
+        }
     }
 
     private ZWSPEACTJORNADANOMINA port;

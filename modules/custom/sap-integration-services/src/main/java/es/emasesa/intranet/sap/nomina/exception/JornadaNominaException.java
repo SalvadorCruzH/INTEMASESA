@@ -10,4 +10,7 @@ public class JornadaNominaException extends SapException {
     public JornadaNominaException(Throwable cause) {
         super(cause);
     }
+    public JornadaNominaException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

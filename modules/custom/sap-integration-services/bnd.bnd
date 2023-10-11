@@ -1,5 +1,5 @@
-Bundle-Name: sap-integration-service
-Bundle-SymbolicName: sap.integration.service
+Bundle-Name: emasesa-sap-integration-service
+Bundle-SymbolicName: es.emasesa.intranet.sap.integration.service
 Bundle-Version: 1.0.0
 -metatype: *
 Web-ContextPath: /sap-integration-service
@@ -11,7 +11,16 @@ Export-Package: \
     es.emasesa.intranet.sap.estructura.service,\
     es.emasesa.intranet.sap.estructura.exception,\
     es.emasesa.intranet.sap.nomina.service,\
-    es.emasesa.intranet.sap.nomina.exception
+    es.emasesa.intranet.sap.nomina.exception,\
+    es.emasesa.intranet.sap.resumenanual.service,\
+    es.emasesa.intranet.sap.resumenanual.exception,\
+    es.emasesa.intranet.sap.marcaje.service,\
+    es.emasesa.intranet.sap.marcaje.exception,\
+    es.emasesa.intranet.sap.datospersona.service,\
+    es.emasesa.intranet.sap.datospersona.exception,\
+    es.emasesa.intranet.sap.jornadadiaria.service,\
+    es.emasesa.intranet.sap.jornadadiaria.exception
+
 
 Import-Package:\*;resolution:=optional
 

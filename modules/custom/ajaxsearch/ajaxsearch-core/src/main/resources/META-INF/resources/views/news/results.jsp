@@ -32,8 +32,8 @@
 
 
 <template id="as-template">
-    <li class="ema-ajaxsearch__item m-link-accessible-wrapper">
-        #html#
+    <li class="ema-ajaxsearch__item">
+        <div class="ema-ajaxsearch__divWrapper m-link-accessible-wrapper">#html#</div>
 
     </li>
 </template>

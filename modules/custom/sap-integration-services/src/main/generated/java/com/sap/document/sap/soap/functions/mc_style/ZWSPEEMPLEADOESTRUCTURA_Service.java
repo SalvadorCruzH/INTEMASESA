@@ -1,14 +1,11 @@
 
 package com.sap.document.sap.soap.functions.mc_style;
 
+import jakarta.xml.ws.*;
+
+import javax.xml.namespace.QName;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.xml.namespace.QName;
-import jakarta.xml.ws.Service;
-import jakarta.xml.ws.WebEndpoint;
-import jakarta.xml.ws.WebServiceClient;
-import jakarta.xml.ws.WebServiceException;
-import jakarta.xml.ws.WebServiceFeature;
 
 
 /**
@@ -17,7 +14,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_ESTRUCTURA", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_ESTRUCTURA", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl")
 public class ZWSPEEMPLEADOESTRUCTURA_Service
     extends Service
 {
@@ -30,7 +27,7 @@ public class ZWSPEEMPLEADOESTRUCTURA_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl");
+            url = new URL("classpath:META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

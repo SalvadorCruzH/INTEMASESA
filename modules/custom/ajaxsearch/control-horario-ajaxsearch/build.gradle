@@ -1,0 +1,9 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder"
+	compile project (':modules:common:settings-module')
+	compile project (':modules:common:base-module')
+	compile project (':modules:custom:ajaxsearch:ajaxsearch-core')
+	compile project (':modules:common:search-util')
+	compile project (':modules:custom:sap-services-utils')
+}

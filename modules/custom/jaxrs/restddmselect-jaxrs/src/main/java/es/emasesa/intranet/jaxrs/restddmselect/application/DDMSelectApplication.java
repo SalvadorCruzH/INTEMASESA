@@ -42,12 +42,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // PRIVATE SERVICES
@@ -171,12 +166,22 @@ public class DDMSelectApplication extends Application {
 		}
 
 		final List<JournalArticle> journalArticles = _journalArticleLocalService.getStructureArticles(groupId, structure.getStructureId());
+		Map<String, JournalArticle> latestVersionMap = new HashMap<>();
 
-		if(journalArticles == null) {
+		for (JournalArticle article : journalArticles) {
+			String articleId = article.getArticleId();
+			if (!latestVersionMap.containsKey(articleId) ||
+					article.getVersion() > latestVersionMap.get(articleId).getVersion()) {
+				latestVersionMap.put(articleId, article);
+			}
+		}
+
+		List<JournalArticle> latestVersions = new ArrayList<>(latestVersionMap.values());
+		if(latestVersions == null) {
 			return null;
 		} else {
 
-			return journalArticles
+			return latestVersions
 					.stream()
 					.map(ja -> new KeyValuePair(ja.getTitle(LocaleUtil.SPAIN), ja.getArticleId()))
 					.collect(Collectors.toList());

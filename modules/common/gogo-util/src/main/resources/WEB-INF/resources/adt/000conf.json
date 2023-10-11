@@ -46,5 +46,17 @@
         "templateFile":"novedades-listado.ftl",
         "comment": "Listado de 5 novedades de la home.",
         "uuid":"19ea0965-3c16-52d3-03c0-3b13bcd09e38"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Menú de Navegación de Mis Gestiones",
+        "type": "com.liferay.portal.kernel.theme.NavItem",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-MENU-MISGESTIONES",
+        "templateFile":"menuBurbujasMisGestiones.ftl",
+        "comment": "Menú de navegación de Mis Gestiones.",
+        "uuid":"3f2eb45e-5be4-daa3-7173-39f9e8a2c77e"
     }
 ]

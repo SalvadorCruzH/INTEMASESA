@@ -12,9 +12,11 @@
             }
             &.slick-prev {
                 background: transparent url('@theme_image_path@/icons/ico-angle-circle-left.svg') center center no-repeat;
+                left: -30px;
             }
             &.slick-next {
                 background: transparent url('@theme_image_path@/icons/ico-angle-circle-right.svg') center center no-repeat;
+                right: -30px;
             }
             > * {
                 .i-mainWrapper & {
