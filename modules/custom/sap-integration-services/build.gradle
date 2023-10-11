@@ -27,6 +27,7 @@ dependencies {
 	implementation 'com.sun.xml.ws:jaxws-rt:4.0.0'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 
+	compileOnly project(":modules:common:base-module")
 	compileOnly project(":modules:common:settings-module")
 }
 
