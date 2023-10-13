@@ -59,12 +59,21 @@ public class CustomDateUtil {
         return localDateTime.format(DTF);
     }
 
-    public String getDateFieldDisplayName(Locale locale,String date,String format,int field) throws ParseException {
+    public String getDateFieldDisplayName(Locale locale,String date,String format,int field,int style) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);//"yyyy-MM-dd"
         Date fecha = sdf.parse(date);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha);
-        return calendar.getDisplayName(field, Calendar.LONG, locale);
+        return calendar.getDisplayName(field, style, locale);
+
+    }
+
+    public int getDateNumber(Locale locale,String date,String format) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);//"yyyy-MM-dd"
+        Date fecha = sdf.parse(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        return calendar.get(Calendar.DAY_OF_MONTH);
 
     }
 

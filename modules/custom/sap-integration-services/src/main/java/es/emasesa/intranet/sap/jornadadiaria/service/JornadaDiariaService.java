@@ -37,9 +37,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class JornadaDiariaService {
 
 
-    public JSONArray obtenerMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) throws JornadaDiariaException, SapCommunicationException {
+    public JSONArray obtenerJornadaDiaria(String pernr, String fechaInicio, String fechaFin) throws JornadaDiariaException, SapCommunicationException {
 
-        LoggerUtil.debug(LOG, "[B] obtenerMarcajeHistoricoActual");
+        LoggerUtil.debug(LOG, "[B] obtenerJornadaDiaria");
         JSONArray data = JSONFactoryUtil.createJSONArray();
         try {
             TABLEOFZPESTEMPLEADOJORNADADIARIA response = port.zPeEmpleadoJornadaDiaria(fechaFin, fechaInicio, pernr);
@@ -52,7 +52,7 @@ public class JornadaDiariaService {
         } catch (ClientTransportException e) {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
-            LoggerUtil.debug(LOG, "[E] obtenerMarcajeHistoricoActual");
+            LoggerUtil.debug(LOG, "[E] obtenerJornadaDiaria");
         }
         return data;
     }

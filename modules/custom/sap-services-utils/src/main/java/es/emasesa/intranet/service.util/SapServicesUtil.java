@@ -53,10 +53,10 @@ public class SapServicesUtil {
 
         JSONArray resumenAnual = JSONFactoryUtil.createJSONArray();
         try {
-            if(resumenAnualService == null){
+            if(_resumenAnualService == null){
                 activate(null);
             }
-            resumenAnual = resumenAnualService.obtenerResumenAnual(pernr, anno);
+            resumenAnual = _resumenAnualService.obtenerResumenAnual(pernr, anno);
         } catch (SapCommunicationException | ResumenAnualException e) {
             LOG.error(e.getMessage());
             LOG.debug(e.getMessage(), e);
@@ -92,10 +92,10 @@ public class SapServicesUtil {
         JSONArray marcajeHistoricoActual = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(marcajeService == null){
+            if(_marcajeService == null){
                 activate(null);
             }
-            marcajeHistoricoActual = marcajeService.obtenerMarcajeHistoricoActual(pernr, fechaInicio, fechaFin);
+            marcajeHistoricoActual = _marcajeService.obtenerMarcajeHistoricoActual(pernr, fechaInicio, fechaFin);
         } catch (SapCommunicationException | MarcajeException e) {
             LOG.error(e.getMessage());
         }
@@ -111,10 +111,10 @@ public class SapServicesUtil {
             LOG.debug("[B] getDatosEmpleado " + pernr);
         }
         try {
-            if(empleadoDatosPersonalesService == null){
+            if(_empleadoDatosPersonalesService == null){
                 activate(null);
             }
-            datosEmpleado = empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
+            datosEmpleado = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
         } catch (SapCommunicationException | EmpleadoDatosPersonalesException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -134,7 +134,7 @@ public class SapServicesUtil {
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
         try {
 
-            datosEmpleado = empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr);
+            datosEmpleado = _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr);
         } catch (SapCommunicationException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -154,11 +154,11 @@ public class SapServicesUtil {
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
 
         try {
-            if(empleadoDatosPersonalesService == null){
+            if(_empleadoDatosPersonalesService == null){
                 activate(null);
             }
-            datosEmpleado = empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
-            datosEmpleado.put("datosDomicilio", empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr));
+            datosEmpleado = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
+            datosEmpleado.put("datosDomicilio", _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr));
         } catch (SapCommunicationException | EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -178,18 +178,49 @@ public class SapServicesUtil {
         JSONArray datosMarcajeHistorico = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(jornadaDiariaService == null){
+            if(_marcajeService == null){
                 activate(null);
             }
-            datosMarcajeHistorico = jornadaDiariaService.obtenerMarcajeHistoricoActual (pernr, fechaInicio, fechaFin);
-        } catch (SapCommunicationException | JornadaDiariaException e) {
+            datosMarcajeHistorico = _marcajeService.obtenerMarcajeHistoricoActual(pernr, fechaInicio, fechaFin);
+        } catch (SapCommunicationException e) {
             LOG.error(e.getMessage(), e);
+        } catch (MarcajeException e) {
+            throw new RuntimeException(e);
         } finally {
             if(LOG.isDebugEnabled()){
                 LOG.debug("[E] getMarcajeHistoricoActual " + pernr);
             }
         }
         return datosMarcajeHistorico;
+    }
+
+    public JSONArray getJornadaDiaria(User user,String fechaInicio,String fechaFin){
+
+        return getJornadaDiaria(user.getScreenName(),fechaInicio,fechaFin);
+    }
+
+    public JSONArray getJornadaDiaria(String pernr, String fechaInicio, String fechaFin) {
+
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getJornadaDiaria " + pernr);
+        }
+        JSONArray datosJornadaDiaria = JSONFactoryUtil.createJSONArray();
+
+        try {
+            if(_jornadaDiariaService == null){
+                activate(null);
+            }
+            datosJornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria(pernr, fechaInicio, fechaFin);
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (JornadaDiariaException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getJornadaDiaria " + pernr);
+            }
+        }
+        return datosJornadaDiaria;
     }
 
     @Activate
@@ -202,26 +233,31 @@ public class SapServicesUtil {
             CustomServiceTracker<EmpleadoDatosDomicilioService> empleadoDatosPersonalesDomicilioServiceCustomService = new CustomServiceTracker<>(EmpleadoDatosDomicilioService.class, "getEmpleadoDatosDomicilioService");
             CustomServiceTracker<JornadaDiariaService> jornadaDiariaServiceCustomService = new CustomServiceTracker<>(JornadaDiariaService.class, "getJornadaDiariaService");
 
-            this.marcajeService = marcajeServiceCustomServiceTracker.getService();
-            this.resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
-            this.empleadoDatosPersonalesService = empleadoDatosPersonalesServiceCustomService.getService();
-            this.empleadoDatosDomicilioService = empleadoDatosPersonalesDomicilioServiceCustomService.getService();
-            this.jornadaDiariaService = jornadaDiariaServiceCustomService.getService();
+            this._marcajeService = marcajeServiceCustomServiceTracker.getService();
+            this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
+            this._empleadoDatosPersonalesService = empleadoDatosPersonalesServiceCustomService.getService();
+            this._empleadoDatosDomicilioService = empleadoDatosPersonalesDomicilioServiceCustomService.getService();
+            this._jornadaDiariaService = jornadaDiariaServiceCustomService.getService();
 
-            if(jornadaDiariaService != null) {
-                JSONArray marcaje = jornadaDiariaService.obtenerMarcajeHistoricoActual("1002982", "2022-09-10", "2022-10-10");
+            if(_jornadaDiariaService != null) {
+                JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
+                if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
+                    LOG.info("jornadaDiariaService OK");
+                }
+
+                JSONArray marcaje = _marcajeService.obtenerMarcajeHistoricoActual("1002982", "2022-09-10", "2022-10-10");
                 if (marcaje != null && marcaje.length() > 0) {
                     LOG.info("jornadaDiariaService OK");
                 }
-                JSONObject addressData = empleadoDatosDomicilioService.getEmpleadoDatosDomicilio("1002982");
+                JSONObject addressData = _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio("1002982");
                 if (addressData != null) {
                     LOG.info("empleadoDatosDomicilioService OK ");
                 }
-                JSONObject personalData = empleadoDatosPersonalesService.getEmpleadoDatosPersonales("1002982");
+                JSONObject personalData = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales("1002982");
                 if (personalData != null) {
                     LOG.info("empleadoDatosPersonalesService OK");
                 }
-                JSONArray resumenAnualData = resumenAnualService.obtenerResumenAnual("1002982", "2022");
+                JSONArray resumenAnualData = _resumenAnualService.obtenerResumenAnual("1002982", "2022");
                 if (resumenAnualData != null) {
                     LOG.info("resumenAnualService OK");
                 }
@@ -238,11 +274,11 @@ public class SapServicesUtil {
 
     @Reference
     private UserLocalService _userLocalService;
-    private MarcajeService marcajeService;
-    private ResumenAnualService resumenAnualService;
-    private EmpleadoDatosPersonalesService empleadoDatosPersonalesService;
-    private EmpleadoDatosDomicilioService empleadoDatosDomicilioService;
-    private JornadaDiariaService jornadaDiariaService;
+    private MarcajeService _marcajeService;
+    private ResumenAnualService _resumenAnualService;
+    private EmpleadoDatosPersonalesService _empleadoDatosPersonalesService;
+    private EmpleadoDatosDomicilioService _empleadoDatosDomicilioService;
+    private JornadaDiariaService _jornadaDiariaService;
 
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 

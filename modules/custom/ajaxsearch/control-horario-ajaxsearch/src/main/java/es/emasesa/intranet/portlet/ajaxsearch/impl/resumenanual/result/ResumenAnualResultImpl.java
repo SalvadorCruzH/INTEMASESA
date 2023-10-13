@@ -163,7 +163,7 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 
 				try {
 					j.put("mes",_customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
-							j.getString("inper"),"yyyyMM",Calendar.MONTH));
+							j.getString("inper"),"yyyyMM",Calendar.MONTH,Calendar.LONG));
 					jsonArray.put(j);
 				} catch (java.text.ParseException e) {
 					LoggerUtil.info(LOG,e.getMessage());
