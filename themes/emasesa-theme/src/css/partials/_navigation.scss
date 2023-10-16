@@ -95,7 +95,9 @@
             left: 0;
             top: 100px;
             z-index: 3;
-            height: 100%;
+            height: 100vh;
+            background-color: rgba($color-white,.85);
+            box-shadow: inset 0 5px 5px rgba($color-black,.15);
         }
         &__submenuWrapper {
             position: relative;
@@ -203,7 +205,7 @@
     .i-menuMobile {
         padding: m-rem(18px) m-rem(15px) m-rem(18px) m-rem(18px);
         display: block;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         background-color: white;
@@ -215,6 +217,10 @@
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
         overflow-y: scroll;
+        body.has-control-menu & {
+            height: calc(100vh - 56px);
+            top: 56px;
+        }
         @include media-breakpoint-up(sm) {
             width: 25rem;
         }
