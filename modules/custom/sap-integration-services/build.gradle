@@ -11,7 +11,7 @@ sourceSets {
 	main {
 		java {
 			srcDirs 'src/main/java'
-			srcDirs 'src/main/generated/java'
+			srcDirs 'src/main/generated-java'
 		}
 	}
 }
@@ -45,6 +45,6 @@ wsimport {
 	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_domicilio.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
 	generatedClassesRoot = "build/classes"
-	generatedSourceRoot= "../src/main/generated/java"
+	generatedSourceRoot= "..src/main/generated-java"
 }*/
 

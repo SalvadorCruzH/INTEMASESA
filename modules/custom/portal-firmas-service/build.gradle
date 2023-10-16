@@ -9,7 +9,16 @@ buildscript {
 	}
 }
 
-apply plugin: "cz.swsamuraj.jaxws"
+//apply plugin: "cz.swsamuraj.jaxws"
+
+sourceSets {
+	main {
+		java {
+			srcDirs 'src/main/java'
+			srcDirs 'src/main/generated-java'
+		}
+	}
+}
 
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
@@ -27,8 +36,8 @@ jar {
 			'Multi-Release': 'false',
 	)
 }
-
+/*
 jaxws {
 	wsdlDir = 'src/main/resources/META-INF/wsdl'
-	generatedSources = 'soap/service/src/main/java'
-}
+	generatedSources = 'src/main/generated-java'
+}*/
