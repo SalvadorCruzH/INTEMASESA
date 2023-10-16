@@ -1,6 +1,5 @@
-package es.emasesa.intranet.portlet.ajaxsearch.impl.historicoactual.result;
+package es.emasesa.intranet.portlet.ajaxsearch.impl.jornadadiaria.result;
 
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -15,16 +14,13 @@ import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.base.model.AjaxMessage;
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.base.util.CustomDateUtil;
-import es.emasesa.intranet.base.util.CustomJournalUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.base.util.XMLDocumentUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
+import es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.result.ResumenAnualResultImpl;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchJsonModel;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchResult;
 import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
-import es.emasesa.intranet.searchframework.SearchingCommon;
-import es.emasesa.intranet.searchframework.SearchingJournal;
 import es.emasesa.intranet.service.util.SapServicesUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,14 +33,15 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
 @Component(
         immediate = true,
         property = { },
         service = AjaxSearchResult.class
 )
-public class HistoricoActualResultImpl implements AjaxSearchResult {
+public class JornadaDiariaResultImpl implements AjaxSearchResult {
 
-	private final static Log LOG = LoggerUtil.getLog(HistoricoActualResultImpl.class);
+	private final static Log LOG = LoggerUtil.getLog(JornadaDiariaResultImpl.class);
 
 	private static final Properties DFLT_PROPERTIES = new Properties();
 
@@ -57,10 +54,9 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 	private static final String FECHA_HASTA = "fechaHasta";
 
 
-
 	static {
 		DFLT_PROPERTIES.put(AjaxSearchPortletKeys.PROP_BASE_PAGESIZE,
-							AjaxSearchPortletKeys.PROP_BASE_PAGESIZE_DFLT);
+				AjaxSearchPortletKeys.PROP_BASE_PAGESIZE_DFLT);
 
 		DFLT_PROPERTIES.put(TEMPLATE_KEY, "EMA-NOTICIA-TARJETA-TEMPLATE");
 		DFLT_PROPERTIES.put(STRUCTURE_KEY, "EMA-NOTICIA");
@@ -87,14 +83,13 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 			final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
-				String year = ajaxSearchDisplayContext.getString("year");
 			Date fromDate = ajaxSearchDisplayContext.getDate(FECHA_DESDE);
 			Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate(FECHA_HASTA);
-				totalItems = performSearchAndParse(request,
+			totalItems = performSearchAndParse(request,
 					response,
 					ajaxSearchDisplayContext,
-						fromDate,
-						toDate,
+					fromDate,
+					toDate,
 					currentPage,
 					pageSize,
 					disablePagination,
@@ -141,17 +136,16 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 		JSONArray array;
 		int totalItems = 0;
 		if(Validator.isNotNull(fromDate) && Validator.isNotNull(toDate)){
-
-			String from = sdf.format(fromDate);
-			String to = sdf.format(toDate);
-			String cacheKey = "resumenAnual"+from+to+themeDisplay.getUser().getUserId();
+			String startDate = sdf.format(fromDate);
+			String endDate = sdf.format(toDate);
+			String cacheKey = "jornadaDiaria"+startDate+endDate+themeDisplay.getUser().getUserId();
 			Object object = _cache.get(cacheKey);
 
 			if(Validator.isNotNull(object) && ((JSONArray) object).length()>0){
 				array = (JSONArray) object;
 
 			}else{
-				array = _sapServicesUtil.getHistoricoActual(themeDisplay.getUser(),from,to);
+				array = _sapServicesUtil.getJornadaDiaria(themeDisplay.getUser(),startDate,endDate);
 				_cache.put(cacheKey,array,86400);
 
 			}
@@ -166,24 +160,30 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 
 				listJson.add(array.getJSONObject(i));
 			}
-			List<JSONObject> pagedListJson = listJson.subList(start,end);
 
-			pagedListJson.stream().forEach(j->{
+			listJson.subList(start,end).stream().forEach(j->{
+
 				try {
-					j.put("dia",_customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
-							j.getString("fecha"),"yyyy-MM-dd",Calendar.DAY_OF_WEEK,Calendar.SHORT));
-
+					j.put("dia", getDatum(themeDisplay, j));
 					jsonArray.put(j);
 				} catch (java.text.ParseException e) {
 					LoggerUtil.info(LOG,e.getMessage());
 				}
+
 			});
 		}
 		return totalItems;
 	}
 
+	private String getDatum(ThemeDisplay themeDisplay, JSONObject j) throws java.text.ParseException {
+		return _customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
+				j.getString("DATUM"), "yyyy-MM-dd", Calendar.DAY_OF_WEEK,Calendar.SHORT) + StringPool.SPACE+
+				_customDateUtil.getDateNumber(themeDisplay.getLocale(),
+						j.getString("DATUM"), "yyyy-MM-dd");
+	}
 
-	private static final String VIEW = "/views/historicoactual/results.jsp";
+
+	private static final String VIEW = "/views/jornadadiaria/results.jsp";
 
 	@Override
 	public String getResultsView(PortletRequest request, PortletResponse response) {
@@ -192,14 +192,14 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 		request.setAttribute("disablePagination", config.getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO));
 		return VIEW;
 	}
+
 	@Reference
 	AjaxSearchUtil ajaxSearchUtil;
 
 	@Reference
-	CustomDateUtil _customDateUtil;
-
-	@Reference
 	SapServicesUtil _sapServicesUtil;
+	@Reference
+	CustomDateUtil _customDateUtil;
 	@Reference
 	CustomCacheSingleUtil _cache;
 }
