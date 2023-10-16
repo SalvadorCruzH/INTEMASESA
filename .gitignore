@@ -13,3 +13,4 @@ themes/emasesa-theme/package-lock.json
 .yarnrc
 yarn.lock
 package-lock.json
+dist
