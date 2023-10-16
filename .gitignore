@@ -14,3 +14,4 @@ themes/emasesa-theme/package-lock.json
 yarn.lock
 package-lock.json
 dist
+.vscode
