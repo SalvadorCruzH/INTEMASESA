@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:type="urn:juntadeandalucia:cice:pfirma:type:v2.0" targetNamespace="urn:juntadeandalucia:cice:pfirma:type:v2.0">
+	<xsd:element name="exceptionInfo">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="1" minOccurs="1" name="identifier" nillable="false" type="xsd:string">
+				</xsd:element>
+				<xsd:element maxOccurs="1" minOccurs="1" name="description" nillable="false" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="documentType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="identifier" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="description" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="valid" nillable="true" type="xsd:boolean">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentTypeList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documentType" type="type:documentType">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="state">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="identifier" nillable="false" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="stateList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="state" type="type:state">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CSV">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="identifier" nillable="false" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CSVList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="CSV" type="type:CSV">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType abstract="true" name="userJob">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="identifier" nillable="false" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="user">
+		<xsd:complexContent>
+			<xsd:extension base="type:userJob">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="name" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="surname1" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="surname2" nillable="true" type="xsd:string">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="job">
+		<xsd:complexContent>
+			<xsd:extension base="type:userJob">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="description" nillable="true" type="xsd:string">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="detailedJob">
+		<xsd:complexContent>
+			<xsd:extension base="type:userJob">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="description" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="job" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="departament" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="organism" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="main" nillable="true" type="xsd:boolean">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="initDate" nillable="true" type="xsd:dateTime">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="endDate" nillable="true" type="xsd:dateTime">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="userEmail">
+		<xsd:complexContent>
+			<xsd:extension base="type:userJob">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="email" nillable="true" type="xsd:string">
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="notificar" nillable="true" type="xsd:string">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="jobList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="job" type="type:job">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="detailedJobList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="detailedJob" type="type:detailedJob">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="userList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="user" type="type:user">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="parameter">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="identifier" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="value" nillable="false" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="request">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="0" name="identifier" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="subject" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fentry" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fstart" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fexpiration" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="reference" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="text" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="signType" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="application" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="documentList" nillable="true" type="type:documentList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="signLineList" nillable="true" type="type:signLineList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="remitterList" nillable="true" type="type:remitterList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="parameterList" nillable="true" type="type:parameterList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="noticeList" nillable="true" type="type:noticeList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="actionList" nillable="true" type="type:actionList">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="document">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="0" name="identifier" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="mime" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="documentType" nillable="true" type="type:documentType">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="content" nillable="true" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="uri" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="sign" nillable="true" type="xsd:boolean">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="document" type="type:document">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="signLine">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="signerList" nillable="false" type="type:signerList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="signLineList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="signLine" type="type:signLine">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="remitterList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="user" type="type:user">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="signer">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="userJob" nillable="false" type="type:userJob">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="state" nillable="true" type="type:state">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fstate" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="signerList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="signer" type="type:signer">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="parameterList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="type:parameter">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="noticeList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="state" type="type:state">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="action">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="state" nillable="false" type="type:state">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="action" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="actionList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="action" type="type:action">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="comment">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="text" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="user" nillable="false" type="type:user">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fcomment" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="commentList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="comment" type="type:comment">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="historic">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="state" nillable="false" type="type:state">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="fstate" nillable="false" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="text" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="comment" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="userJob" nillable="false" type="type:userJob">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="historicList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="historic" type="type:historic">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Request from sign -->
+	<xsd:complexType name="requestSign">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="0" name="identifier" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="subject" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fentry" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fstart" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="fexpiration" nillable="true" type="xsd:dateTime">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="reference" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="text" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="signType" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="application" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="documentSignList" nillable="false" type="type:documentSignList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="signLineList" nillable="false" type="type:signLineList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="remitterList" nillable="true" type="type:remitterList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="parameterList" nillable="true" type="type:parameterList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="noticeList" nillable="true" type="type:noticeList">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="actionList" nillable="true" type="type:actionList">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="sign">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="0" name="identifier" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="name" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="content" nillable="true" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="format" nillable="false" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="type" nillable="true" type="xsd:string">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="0" name="uri" nillable="true" type="xsd:string">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentSign">
+		<xsd:sequence>
+			<xsd:element maxOccurs="1" minOccurs="1" name="document" nillable="false" type="type:document">
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" name="sign" nillable="false" type="type:sign">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentSignList">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documentSign" type="type:documentSign">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

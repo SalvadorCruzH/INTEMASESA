@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:type="urn:juntadeandalucia:cice:pfirma:type:v2.0" xmlns:request="urn:juntadeandalucia:cice:pfirma:query:request:v2.0" targetNamespace="urn:juntadeandalucia:cice:pfirma:query:request:v2.0">
+	<xsd:import namespace="urn:juntadeandalucia:cice:pfirma:type:v2.0" schemaLocation="type.xsd"/>
+	<xsd:element name="queryRequestResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="request" type="type:request">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryStates">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="query" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryDocumentTypes">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="query" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryUsers">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="query" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="downloadDocument">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="downloadDocumentResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentBinary" type="xsd:base64Binary">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="downloadSignResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="signBinary" type="xsd:base64Binary">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryStatesResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="stateList" type="type:stateList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryJobsResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="jobList" type="type:jobList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="downloadSign">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryUsersResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userList" type="type:userList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryDocumentTypesResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentTypeList" type="type:documentTypeList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryJobs">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="query" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryComments">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryCommentsResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="commentList" type="type:commentList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryHistoric">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryHistoricResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="historicList" type="type:historicList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryJobsUser">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userIdentify" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryJobsUserResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="jobList" type="type:jobList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="queryDetailedJobsUser">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userIdentify" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryDetailedJobsUserResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="detailedJobList" type="type:detailedJobList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryUsersJob">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="jobIdentify" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryUsersJobResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userList" type="type:userList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryUsersApp">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="query" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="appId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryUsersAppResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userList" type="type:userList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryJobsApp">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="query" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="appId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryJobsAppResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="jobList" type="type:jobList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryDocument">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryDocumentResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="document" type="type:document">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="querySign">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="querySignResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="sign" type="type:sign">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="getCSV">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="getCSVResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="csv" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryCSVApp">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="appId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="queryCSVAppResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="listCSVAvailable" type="type:CSVList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

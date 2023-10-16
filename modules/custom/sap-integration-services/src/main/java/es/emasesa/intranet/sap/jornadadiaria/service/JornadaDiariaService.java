@@ -10,7 +10,6 @@ import com.sap.document.sap.rfc.functions.TABLEOFZPESTEMPLEADOJORNADADIARIA;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari_Service;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT_Service;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -21,9 +20,7 @@ import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.Authenticator;
-import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
