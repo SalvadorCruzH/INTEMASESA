@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "upload",
+  "name": "EM - Subir archivo",
+  "typeOptions": {"fieldTypes": ["file"]},
+  "type": "input"
+}

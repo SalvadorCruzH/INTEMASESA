@@ -15,7 +15,9 @@ public class EmasesaConstants {
     public static final String EMASESA_EXPANDO_PROVINCIA = "provincia";
     public static final String EMASESA_EXPANDO_CP = "codigoPostal";
     public static final String EMASESA_EXPANDO_TELEFONO = "telefono";
+    public static final String EMASESA_EXPANDO_APELLIDO1 = "apellido1";
+    public static final String EMASESA_EXPANDO_APELLIDO2 = "apellido2";
+    public static final String EMASESA_EXPANDO_NOMBRE = "nombre";
 
-
-
+    public static final String EMASESA_EXPANDO_USUARIO = "usuario";
 }
