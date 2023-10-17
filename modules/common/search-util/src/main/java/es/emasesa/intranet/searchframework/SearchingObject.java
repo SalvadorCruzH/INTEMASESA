@@ -1,21 +1,14 @@
 package es.emasesa.intranet.searchframework;
 
+import com.liferay.portal.kernel.search.*;
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
+import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 @Component(
 		immediate = true,
@@ -40,6 +33,18 @@ public class SearchingObject {
 	/** Searching **/
 	public Hits searchObject(final String objectDefinitionId, final SearchContext searchContext) throws SearchException {
 		return getObjectIndexer(objectDefinitionId).search(searchContext);
+	}
+
+	/** Searching **/
+	public Hits searchObjects(String[] objectDefinitionIds, SearchContext searchContext) throws SearchException, ParseException {
+		BooleanQuery query = new BooleanQueryImpl();
+
+		for (String objectDefinitionId : objectDefinitionIds) {
+			Indexer<ObjectEntry> indexer = getObjectIndexer(objectDefinitionId);
+			query.add(indexer.getFullQuery(searchContext), BooleanClauseOccur.SHOULD);
+		}
+
+		return indexSearcherHelper.search(searchContext, query);
 	}
 	
 	public Hits searchObject(final String objectDefinitionId, final SearchContext searchContext, String... fieldFilter) throws SearchException {
@@ -73,6 +78,12 @@ public class SearchingObject {
 
 	}
 
+	/** boolean clauses, create more if needed **/
+	public void setMustBooleanClauses(final SearchContext searchContext, final Query query){
+		BooleanClause<Query> booleanClause = BooleanClauseFactoryUtil.create(query, BooleanClauseOccur.MUST.getName());
+		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
+	}
 
-
+	@Reference
+	IndexSearcherHelper indexSearcherHelper;
 }

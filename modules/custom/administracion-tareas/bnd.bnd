@@ -1,0 +1,4 @@
+Bundle-Name: masesa-administracion-tareas
+Bundle-SymbolicName: es.emasesa.intranet.administracion.tarea
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.intranet.administracion.tareas.constants
