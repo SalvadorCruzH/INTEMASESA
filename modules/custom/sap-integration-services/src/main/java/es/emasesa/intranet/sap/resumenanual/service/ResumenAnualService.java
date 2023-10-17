@@ -3,6 +3,7 @@ package es.emasesa.intranet.sap.resumenanual.service;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
@@ -12,10 +13,14 @@ import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADARESUM;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADARESUM_Service;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT_Service;
+import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
+import es.emasesa.intranet.base.util.LoggerUtil;
+import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
+import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 import jakarta.jws.WebParam;
@@ -36,8 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ResumenAnualService {
 
 
-    public JSONArray obtenerResumenAnual(String pernr, String anno) throws MarcajeException {
-
+    public JSONArray obtenerResumenAnual(String pernr, String anno) throws ResumenAnualException, SapCommunicationException {
         JSONArray data = JSONFactoryUtil.createJSONArray();
 
         Holder<BigDecimal> computoConFuturo = new Holder<>();
@@ -46,15 +50,29 @@ public class ResumenAnualService {
         Holder<BigDecimal> contingenteVacaciones= new Holder<>();;
         Holder<TableOfZpeStEmpleadoJornadaResume> tEmpleados= new Holder<>();;
         try {
-             port.zPeEmpleadoJornadaResumen(anno,pernr,computoConFuturo,
+            port.zPeEmpleadoJornadaResumen(anno,pernr,computoConFuturo,
                     computoSinFuturo,computoSinFuturoAnnoAnteri,contingenteVacaciones,tEmpleados);
             if(!tEmpleados.value.getItem().isEmpty()){
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEmpleados.value.getItem()));
+                for(int i=0;i<data.length();i++){
+                    JSONObject jsonObject = data.getJSONObject(i);
+                    jsonObject.put("contingenteVacaciones",contingenteVacaciones.value);
+                    jsonObject.put("computoConFuturo",computoConFuturo.value);
+                    jsonObject.put("computoSinFuturo",computoSinFuturo.value);
+                    jsonObject.put("computoSinFuturoAnnoAnteri",computoSinFuturoAnnoAnteri.value);
+
+
+                }
+
+
             }
         }catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
-            LOG.error(e.getMessage(), e);
-            throw new MarcajeException("Error con el WS:"+ e.getMessage());
+            throw new ResumenAnualException("Error con el WS:" + e.getMessage(), e);
+        } catch (ClientTransportException e) {
+            throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
+        } finally {
+            LoggerUtil.debug(LOG, "[E] obtenerMarcajeHistoricoActual");
         }
         return data;
     }

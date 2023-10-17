@@ -1,16 +1,8 @@
 .i-mainWrapper {
-    padding-top: 152px;
-    @include media-breakpoint-up(xl) {
-        padding-top: 114px;
-    }
     .i-header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background-color: white;
         box-shadow: 0 m-rem(3px) m-rem(6px) rgba(black, 0.16);
         @include media_breakpoint_up(xl) {
-            box-shadow: none;
+            // box-shadow: none;
         }
         &__wrapper {
             display: flex;
@@ -23,7 +15,9 @@
             margin-right: auto;
             @include media_breakpoint_up(xl) {
                 padding: m-rem(27px) m-rem(35px) m-rem(4px);
+                padding-block: 0;
                 border-bottom: none;
+                min-height: 100px;
             }
         }
         &__btnMenu {
@@ -50,6 +44,9 @@
         &__navSearch {
             display: flex;
             align-items: center;
+            @include media-breakpoint-up(xl) {
+                margin-left: auto;
+            }
         }
         &__btnAdmin {
             display: none;
@@ -103,5 +100,27 @@
     }
     .heading {
         margin: 0 auto;
+    }
+}
+
+#banner {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    background-color: $color-white;
+}
+
+#content {
+    padding-top: 152px;
+    transition: padding .3s ease;
+    @include media-breakpoint-up(xl) {
+        padding-top: 100px;
+    }
+}
+
+#heading {
+    @include media-breakpoint-up(xl) {
+        position: absolute;
+        left: 2.75%;
     }
 }

@@ -1,0 +1,14 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM-Entrada de texto solo lectura",
+  "typeOptions": {"fieldTypes": [
+    "long-text",
+    "text",
+    "number"
+  ]},
+  "type": "input"
+}

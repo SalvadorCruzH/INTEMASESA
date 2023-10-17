@@ -1,37 +1,29 @@
+<%@ taglib prefix = "c"
+           uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL var="sendForm" name="sendForm" />
-
-<liferay-ui:success key="<%=GestionBoletinesPortletKeys.MSG_OK_GUARDADO_DATOS%>" message="es.emasesa.intranet.gestionBoletines.msg.ok.guardado"></liferay-ui:success>
 <% String tabSelected = ParamUtil.getString(request, "tabSelected", GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_CONTROLADA_VALUE);
     PortletURL portletURL = renderResponse.createRenderURL();
     portletURL.setParameter("tabSelected", tabSelected);
-    String tabsValues = GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_CONTROLADA_VALUE.concat(",").concat(GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_DISTRIBUCION_VALUE);
+    String tabsValues = GestionBoletinesPortletKeys.TIPO_VISTA_GESTION_BOLETIN.concat(",").concat(GestionBoletinesPortletKeys.TIPO_VISTA_ENVIO_BOLETIN);
 %>
 <div class="container-fluid container-fluid-max-xl">
     <div class="sheet">
         <div class="panel-group panel-group-flush">
-            <liferay-ui:tabs names="es.emasesa.intranet.gestionBoletines.listacontrolada,es.emasesa.intranet.gestionBoletines.lista"
+            <liferay-ui:tabs names="es.emasesa.intranet.vista.gestionlistas,es.emasesa.intranet.vista.envioBoletin"
                              url="<%= portletURL.toString() %>"
                              tabsValues="<%=tabsValues%>"
                              param="tabSelected"
             />
-            <c:if test="<%=tabSelected.equals(GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_CONTROLADA_VALUE)%>">
-                <%@include file="listas/listaControlada.jspf" %>
-            </c:if>
-            <c:if test="<%=tabSelected.equals(GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_DISTRIBUCION_VALUE)%>">
-                <%@include file="listas/listaDistribucion.jspf" %>
-            </c:if>
+
+            <c:choose>
+                <c:when test="<%=tabSelected.equals(GestionBoletinesPortletKeys.TIPO_VISTA_ENVIO_BOLETIN)%>">
+                    <%@include file="/envio-boletin/view.jsp" %>
+                </c:when>
+                <c:otherwise>
+                    <%@include file="/gestion-listas/view.jsp" %>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>
-
-<script>
-    //Invocacion para añadir los tooltips a los label de destinatarios
-    AUI()
-        .use( 'aui-node' , function ( A ) {
-            let label = A.one( '.destinatarios' ).previous();
-            let helpIcon = A.Node.create( `<liferay-ui:icon-help message="es.emasesa.intranet.gestionBoletines.tooltip.formatoInputDestinatarios" />` );
-            label.appendChild( helpIcon );
-        } );
-</script>

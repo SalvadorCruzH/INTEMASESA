@@ -2,6 +2,7 @@ package es.emasesa.intranet.sap.nomina.service;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
@@ -123,7 +124,7 @@ public class JornadaNominaService {
             /**********************************************************************/
 
 
-        } catch (Exception e) {
+        } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de JornadaNominaService");
             }

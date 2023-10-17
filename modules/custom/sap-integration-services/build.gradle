@@ -11,7 +11,7 @@ sourceSets {
 	main {
 		java {
 			srcDirs 'src/main/java'
-			srcDirs 'src/main/generated/java'
+			srcDirs 'src/main/generated-java'
 		}
 	}
 }
@@ -27,6 +27,7 @@ dependencies {
 	implementation 'com.sun.xml.ws:jaxws-rt:4.0.0'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 
+	compileOnly project(":modules:common:base-module")
 	compileOnly project(":modules:common:settings-module")
 }
 
@@ -44,6 +45,6 @@ wsimport {
 	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_domicilio.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
 	generatedClassesRoot = "build/classes"
-	generatedSourceRoot= "../src/main/generated/java"
+	generatedSourceRoot= "..src/main/generated-java"
 }*/
 

@@ -12,10 +12,12 @@
         margin-block: 2rem;
         overflow-x: auto;
     }
+
     table {
         &.ema-table{
             width: 100%;
             border-bottom: 5px solid $color-green;
+
             td,
             th {
                 padding: 1rem;
@@ -30,6 +32,42 @@
                     background-color: transparent;
                 }
             }
+
+            &.last{
+                td {
+                    &:nth-child(even) {
+                        background-color: transparent !important;
+                    }
+                    &:nth-child(odd) {
+                        background-color: transparent !important;
+                    }
+                    &:last-child{
+                        background-color: #e5eecc !important;
+                        text-align: center;
+                    }
+                }
+                th{
+                    background-color: transparent !important;
+                }
+                tr{
+                    border-bottom: 1px solid #e8e8e8;
+                }
+
+                .fa-sort {
+                    padding-right: 0.4rem;
+                    color: #3366cc !important;
+                    cursor: pointer;
+                }
+                .component-action:hover{
+                    color: unset;
+                    background-color: unset;
+                }
+
+                .c-inner{
+                    color: black !important;
+                }
+            }
+
             th {
                 white-space: nowrap;
             }

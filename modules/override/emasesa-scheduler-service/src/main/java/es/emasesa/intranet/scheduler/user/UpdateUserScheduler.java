@@ -38,7 +38,7 @@ public class UpdateUserScheduler implements MessageListener  {
             LoggerUtil.debug(LOG, "Se procede a actualizar el usuario con user id " + pernr);
             JSONObject employerData = _sapServices.getDatosEmpleadoAndDomicilio(pernr);
             long companyId = jsonObject.getLong("companyId");
-            LoggerUtil.debug(LOG, "Datos de empleado :" + employerData);
+            LoggerUtil.info(LOG, "Datos de empleado :" + employerData);
             User user = _userLocalService.fetchUserByScreenName(companyId, pernr);
             Map<String, Serializable> expandoAttributes = user.getExpandoBridge().getAttributes();
 
@@ -53,6 +53,11 @@ public class UpdateUserScheduler implements MessageListener  {
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_LOCALIDAD, addressData.getString("poblacion", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_PROVINCIA, addressData.getString("provinciaDesc", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_TELEFONO, addressData.getString("telefono", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_APELLIDO1, employerData.getString("apellido1", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_APELLIDO2, employerData.getString("apellido2", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_USUARIO, employerData.getString("usuario", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NOMBRE, employerData.getString("nombre", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
             user.getExpandoBridge().setAttributes(expandoAttributes);
             LOG.debug("Usuario user id "+jsonObject.get("pernr") +" actualizado");
         }else{

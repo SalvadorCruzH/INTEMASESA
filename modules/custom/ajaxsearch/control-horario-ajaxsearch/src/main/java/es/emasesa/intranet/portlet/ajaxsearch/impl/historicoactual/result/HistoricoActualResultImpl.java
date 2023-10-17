@@ -171,7 +171,8 @@ public class HistoricoActualResultImpl implements AjaxSearchResult {
 			pagedListJson.stream().forEach(j->{
 				try {
 					j.put("dia",_customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
-							j.getString("fecha"),"yyyy-MM-dd",Calendar.DAY_OF_WEEK_IN_MONTH));
+							j.getString("fecha"),"yyyy-MM-dd",Calendar.DAY_OF_WEEK,Calendar.SHORT));
+
 					jsonArray.put(j);
 				} catch (java.text.ParseException e) {
 					LoggerUtil.info(LOG,e.getMessage());
