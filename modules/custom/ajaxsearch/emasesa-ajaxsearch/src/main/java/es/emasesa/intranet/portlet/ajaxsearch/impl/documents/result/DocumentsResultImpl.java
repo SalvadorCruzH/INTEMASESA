@@ -145,7 +145,6 @@ public class DocumentsResultImpl implements AjaxSearchResult {
 		Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate("fechaHasta");
 		searchingDocuments.addModifiedDateFilter(fromDate, toDate, booleanQuery);
 
-		// Set sort
 		String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
 
 		if(Validator.isNotNull(sortBy)) {

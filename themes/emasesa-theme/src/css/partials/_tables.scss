@@ -1,4 +1,10 @@
 .i-mainWrapper {
+    .ema-table__wrapper {
+        padding-top: m-rem(25px);
+        padding-bottom: m-rem(25px);
+        background-color: white;
+        border-radius: m-rem(30px);
+    }
     .ema-table-wrapper {
         background-color: white;
         border-radius: 30px;
@@ -32,8 +38,7 @@
             }
             &__ajaxsearch {
                 width: 100%;
-                background-color: white;
-                border-radius: m-rem(30px);
+                overflow-x: scroll;
                 thead{
                     @include font_base-bold;
                     border-bottom: m-rem(3px) solid $color-aux-blue;
@@ -41,7 +46,7 @@
                     line-height: m-rem(26px);
                     tr {
                         th {
-                            padding-top: m-rem(45px);
+                            padding-top: m-rem(20px);
                             padding-bottom: m-rem(20px);
                             padding-left: 1rem;
                             padding-right: 1rem;
@@ -56,10 +61,60 @@
                         border-bottom: m-rem(1px) solid $color-border;
                         td {
                             padding: m-rem(20px) 1rem;
+                            &.ema-td-dropdown {
+                                display: inline-block;
+                                position: relative;
+                            }
+                            .ema-button-moreoptions {
+                                background-color: transparent;
+                                border: none;
+                                padding: 0 .5rem;
+                                &:hover {
+                                    background-color: transparent;
+                                    border: none;
+                                }
+                            }
+                            .ema-desplegable-moreoptions {
+                                display: none;
+                                position: absolute;
+                                width: 100%;
+                                background-color: white;
+                                border: 1px solid $color-border;
+                                border-radius: .25rem;
+                                box-shadow: 0 0 10px 0 rgba(0,0,0,0.30);
+                                list-style: none;
+                                padding: 0;
+                                min-width: 7rem;
+                                left: -4rem;
+                                z-index: 1;
+                                &.show {
+                                    display: block;
+                                }
+                                li {
+                                    padding: .5rem;
+                                    a {
+                                        display: flex;
+                                        color: black;
+                                        gap: .5rem;
+                                        &:hover {
+                                            color: black;
+                                            i {
+                                                text-decoration: none;
+                                            }
+                                        }
+                                        i {
+                                            color: $color-aux-blue;
+                                            text-decoration: none;
+                                        }
+                                    }
+                                }
+                            }
+                            .ema-button-visualize {
+                            }
                         }
                     }
                     tr:last-child {
-                        border-bottom: none;
+                        border-bottom: m-rem(3px) solid $color-aux-blue;
                     }
                 }
             }
