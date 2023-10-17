@@ -1,4 +1,4 @@
-package es.emasesa.intranet.administracion.tareas.portlet.actions;
+package es.emasesa.intranet.administracion.tareas.actions;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,7 +28,6 @@ import java.util.*;
                 "mvc.command.name=/"
         },
         service = MVCRenderCommand.class
-
 )
 public class AdministracionTareasMVCRenderCommand implements MVCRenderCommand {
 
@@ -57,28 +56,26 @@ public class AdministracionTareasMVCRenderCommand implements MVCRenderCommand {
     public List<WorkflowTask> getWorkflowTasksAssignedRole(RenderRequest renderRequest) throws PortalException {
         long companyId = PortalUtil.getCompanyId(renderRequest);
         long roleId = _roleLocalService.getRole(companyId, AdministracionTareasPortletKeys.ROLADMINRRHH).getRoleId();
-        List<WorkflowTask> listWorkFlowTaskRole = _workflowTaskManager.getWorkflowTasksByRole(companyId, roleId, false, -1, -1, null);
 
-        return listWorkFlowTaskRole;
+        return _workflowTaskManager.getWorkflowTasksByRole(companyId, roleId, false, -1, -1, null);
     }
 
     public List<WorkflowTask> getWorkflowTasksAssignedUser(RenderRequest renderRequest) throws PortalException {
         long companyId = PortalUtil.getCompanyId(renderRequest);
         ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
         long userIdLoguer = themeDisplay.getUserId();
-        List<WorkflowTask> listWorkFlowTaskUser = _workflowTaskManager.getWorkflowTasksByUser(companyId, userIdLoguer, false, -1, -1, null);
 
-        return listWorkFlowTaskUser;
+        return _workflowTaskManager.getWorkflowTasksByUser(companyId, userIdLoguer, false, -1, -1, null);
     }
 
     public Set<String> getFillSelectorOptions(List<WorkflowTask> listWorkFlowTaskRole, List<WorkflowTask> listWorkFlowTaskUser) {
 
         Set<String> selectOptions = new HashSet<>();
 
-        for (WorkflowTask optionSelector : listWorkFlowTaskRole){
+        for (WorkflowTask optionSelector : listWorkFlowTaskRole) {
             selectOptions.add((String) optionSelector.getOptionalAttributes().get("entryType"));
         }
-        for (WorkflowTask optionSelector : listWorkFlowTaskUser){
+        for (WorkflowTask optionSelector : listWorkFlowTaskUser) {
             selectOptions.add((String) optionSelector.getOptionalAttributes().get("entryType"));
         }
 

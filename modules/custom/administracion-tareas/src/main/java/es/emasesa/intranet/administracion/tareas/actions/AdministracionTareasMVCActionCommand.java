@@ -1,4 +1,4 @@
-package es.emasesa.intranet.administracion.tareas.portlet.actions;
+package es.emasesa.intranet.administracion.tareas.actions;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;

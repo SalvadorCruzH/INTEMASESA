@@ -1,4 +1,4 @@
-package es.emasesa.intranet.administracion.tareas.portlet.actions;
+package es.emasesa.intranet.administracion.tareas.actions;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +30,7 @@ import java.util.Map;
         },
         service = MVCResourceCommand.class
 )
-public class asignarTareasMVCResourceCommand implements MVCResourceCommand{
+public class AsignarTareasMVCResourceCommand implements MVCResourceCommand{
     @Override
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse){
         long workflowTaskId = ParamUtil.getLong(resourceRequest, "workflowTask");
@@ -40,7 +40,7 @@ public class asignarTareasMVCResourceCommand implements MVCResourceCommand{
         } catch (WorkflowException e) {
             LoggerUtil.error(LOG, e);
         }
-        getAssignWorkflowTaskToUser(resourceRequest, workflowTask);
+        workflowTask = getAssignWorkflowTaskToUser(resourceRequest, workflowTask );
 
         return false;
     }

@@ -1,4 +1,4 @@
-package es.emasesa.intranet.administracion.tareas.portlet.actions;
+package es.emasesa.intranet.administracion.tareas.actions;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,7 +25,7 @@ import java.util.List;
         service = MVCRenderCommand.class
 
 )
-public class SinAsignarMVCRenderCommand implements MVCRenderCommand{
+public class SinAsignarMVCRenderCommand implements MVCRenderCommand {
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
