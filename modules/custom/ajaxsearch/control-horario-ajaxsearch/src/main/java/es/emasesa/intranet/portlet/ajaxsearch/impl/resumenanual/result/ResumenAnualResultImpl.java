@@ -143,6 +143,7 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 				array = (JSONArray) object;
 
 			}else{
+
 				array = _sapServicesUtil.getResumenAnual(themeDisplay.getUser(),year);
 				_cache.put(cacheKey,array,86400);
 
