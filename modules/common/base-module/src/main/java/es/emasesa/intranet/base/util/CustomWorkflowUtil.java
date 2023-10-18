@@ -41,29 +41,74 @@ public class CustomWorkflowUtil {
     public List<Role> assignWorkflowRoleAndStatus(Map<String, Serializable> workflowContext, String rolName, String estadoObjeto) {
     	
         List<Role> roles = new ArrayList<>();
-        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         
         try {
+        	LoggerUtil.debug(LOG,"Asignando el rol: " + rolName + " y el estado: " + estadoObjeto);
+        	
 	        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
 	        long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 	       
         	ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
         	
-        	if(Validator.isNotNull(object)) {        		
-            	object.setStatus(1);
-            	 //TODO - pensar como hacer para no actualizar el objeto tantas veces y que a la vez sea todo genérico para reutilizar metodos
-            	changeObjectStatus(object, estadoObjeto);
-            	updateObjectHistory(object.getObjectEntryId(), estadoObjeto, 0, rolName);
+        	if(Validator.isNotNull(object)) {
+            	object = setObjectStatus(object, estadoObjeto);
+            	object = setObjectHistory(object.getObjectEntryId(), estadoObjeto, 0, rolName);
+            	updateObject(object);
             	
             	Role role = _roleLocalService.getRole(companyId, rolName);
             	roles.add(role);
+            	
+            	LoggerUtil.debug(LOG,"Rol y estado asignado");
         	}
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al intentar recuperar el rol por el nombre:  " + rolName, e);
-        } finally {
-            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
         return roles;
+    }
+    
+    
+    /**
+     * Save Object on SIGD
+     * @param workflowContext
+     * 
+     */
+    public void saveObjectOnSIGD(Map<String, Serializable> workflowContext) {
+    	
+    	  LoggerUtil.debug(LOG, "Guardando el objeto en el gestor documnetal SIGD");
+    	  long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+    	  ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
+    	  
+    	//TODO - Hacer el servicio para mandar el documento el gestor documentar en base64
+    }
+    
+    
+    /**
+     * Create PDF
+     * @param workflowContext
+     * 
+     */
+    public void createPDF(Map<String, Serializable> workflowContext) {
+    	//TODO - Hacer el mÃ©todo de crear un PDF con los valores del object. Pensa en generalizarlo y saber que campos vamos a pintar y que campos no
+    }
+    
+    
+    /**
+     * Change status object
+     * @param object
+     * @param estadoObjeto
+     * @return ObjectEntry
+     */
+    public ObjectEntry setObjectStatus(long objectEntryId, String estadoObjeto) {
+    	
+    	ObjectEntry object = null;
+    	try {
+    		LoggerUtil.debug(LOG,"Cambiando el estado del objecto: " + estadoObjeto);
+    		object = _objectEntryLocalService.getObjectEntry(objectEntryId);
+    		setObjectStatus(object, estadoObjeto);
+		} catch (PortalException e) {
+			LOG.error("Error el actualziar el estado del objecto" + e);
+		}
+    	return object;
     }
     
     /**
@@ -72,8 +117,11 @@ public class CustomWorkflowUtil {
      * @param estadoObjeto
      * @return ObjectEntry
      */
-    public void changeObjectStatus(ObjectEntry object, String estadoObjeto) {
+    public ObjectEntry setObjectStatus(ObjectEntry object, String estadoObjeto) {
+    	
     	try {
+    		LoggerUtil.debug(LOG,"Cambiando el estado del objecto: " + estadoObjeto);
+    		
 	    	Map <String,Serializable> map = object.getValues();
 	    	map.put("estadoObjeto", estadoObjeto);
 	    	
@@ -83,6 +131,7 @@ public class CustomWorkflowUtil {
 		} catch (PortalException e) {
 			LOG.error("Error el actualziar el estado del objecto" + e);
 		}
+    	return object;
     }
     
     /**
@@ -93,13 +142,35 @@ public class CustomWorkflowUtil {
      * @param rolName
      * 
      */
-    public void updateObjectHistory(long objectEntryId, String estadoObjeto, long userId, String rolName) {
+    public ObjectEntry setObjectHistory(long objectEntryId, String estadoObjeto, long userId, String rolName) {
     	
+    	ObjectEntry object = null;
+		try {
+			LoggerUtil.debug(LOG,"Cambiando el histÃ³rico del objecto: " + "estado: " + estadoObjeto + " rolName: " + rolName + "userId: " + userId);
+			
+			object = _objectEntryLocalService.getObjectEntry(objectEntryId);
+			setObjectHistory(object, estadoObjeto, userId, rolName);
+			
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+    
+    	return  object;
+    }
+    
+    /**
+     * Update History
+     * @param object
+     * @param estadoObjeto
+     * @param userId
+     * @param rolName
+     * 
+     */
+    public ObjectEntry setObjectHistory(ObjectEntry object, String estadoObjeto, long userId, String rolName) {
+
     	try {
-		
-    		ObjectEntry o = _objectEntryLocalService.getObjectEntry(objectEntryId);
-			Map<String,Serializable> map = o.getValues();
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) o.getValues().get("historicoEstado"));
+			Map<String,Serializable> map = object.getValues();
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("historicoEstado"));
 			JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 			
 			LocalDateTime now = LocalDateTime.now();
@@ -115,16 +186,25 @@ public class CustomWorkflowUtil {
 			datosHistorico.put("fechaCambioEstado", now.format(formatter));
 			jsonArray.put(datosHistorico);
 			
-			map.put("historicoEstado", jsonArray);
-			
-			ServiceContext serviceContext = new ServiceContext();
-			_objectEntryLocalService.updateObjectEntry(
-					o.getUserId(), o.getObjectEntryId(), map, 
-					serviceContext);
-		
+			map.put("historicoEstado", jsonArray);			
+			object.setValues(map);
 		} catch (PortalException e) {
-			LOG.error("Error el actualziar el hitórico del objecto" + e);
+			LOG.error("Error el actualziar el hitï¿½rico del objecto" + e);
 		}
+    	return  object;
+    }
+    
+    /**
+     * Update Object
+     * @param object
+     * 
+     */
+    public void updateObject(ObjectEntry object) {
+    	
+    	LoggerUtil.debug(LOG,"Actualizando el objeto.");
+    	_objectEntryLocalService.updateObjectEntry(object);
+    	LoggerUtil.debug(LOG, "Objeto actualizado");
+    	
     }
     
     
