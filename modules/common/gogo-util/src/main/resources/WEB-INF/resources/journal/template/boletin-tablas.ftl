@@ -37,6 +37,8 @@
             p {
                 display: block;
                 margin: 13px 0;
+                font-size: 14px !important;
+                line-height: 1.15 !important;
             }
         </style>
         <!--[if mso]>

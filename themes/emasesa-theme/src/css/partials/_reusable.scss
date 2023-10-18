@@ -448,5 +448,32 @@
   }
 }
 
-
-
+.ema-wrapper {
+  margin-block: 3rem;
+  @include media-breakpoint-up(lg) {
+    display: flex;
+    &--x2 {
+      gap: 1rem;
+      .ema-wrapper__item {
+        &:first-child {
+          width: 70%;
+        }
+        &:last-child {
+          width: 30%;
+        }
+      }
+    }
+  }
+  @include media-breakpoint-up(xl) {
+    &--x2 {
+      .ema-wrapper__item {
+        &:first-child {
+          width: 75%;
+        }
+        &:last-child {
+          width: 25%;
+        }
+      }
+    }
+  }
+}
