@@ -1,4 +1,4 @@
-<nav class="i-mainNavigation" aria-label="<@liferay.language key="site-pages" />" id="navigation" role="navigation">
+<nav class="i-mainNavigation" aria-label="<@liferay.language key='site-pages' />" id="navigation" role="navigation">
 	<ul class="i-mainNavigation__ul m-listBase m-dFlexSBCenter" role="menubar">
 		<#list navigationItems as nav_item>
 			<#assign
@@ -14,10 +14,7 @@
 			</#if>
 
 			<#if nav_item.isSelected()>
-				<#assign
-					nav_item_css_class = "i-mainNavigation__li selected"
-
-				/>
+				<#assign nav_item_css_class = "i-mainNavigation__li selected" />
 				<#if nav_item.hasChildren()>
 					<#assign
 						nav_item_attr_has_popup = "aria-haspopup='true'"
@@ -25,7 +22,6 @@
 					/>
 				</#if>
 			</#if>
-
 
 			<li class="${nav_item_css_class}" id="layout_${nav_item.getLayoutId()}" role="presentation">
 
@@ -36,14 +32,9 @@
 							<div class="i-mainNavigation__innerWrapper">
 								<ul class="i-mainNavigation__submenuUl m-listBaseNoStyles m-listBaseNoStyles--pm3" role="menu">
 									<#list nav_item.getChildren() as nav_child>
-										<#assign
-											nav_child_css_class = "i-mainNavigation__submenuLi"
-										/>
-
+										<#assign nav_child_css_class = "i-mainNavigation__submenuLi" />
 										<#if nav_child.isSelected()>
-											<#assign
-												nav_child_css_class = "i-mainNavigation__submenuLi selected"
-											/>
+											<#assign nav_child_css_class = "i-mainNavigation__submenuLi selected" />
 										</#if>
 
 										<li class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" role="presentation">
