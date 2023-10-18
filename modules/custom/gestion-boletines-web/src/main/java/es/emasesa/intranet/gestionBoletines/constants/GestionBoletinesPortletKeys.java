@@ -43,4 +43,6 @@ public class GestionBoletinesPortletKeys {
 	public static final String CONFIG_ASUNTO_CONTROLADA = "asuntoListaControlada";
 	public static final String CONFIG_ASUNTO_DISTRIBUIDA = "asuntoListaDistribucion";
 
+    public static final String CONFIG_BOLETINID_DISTRIBUIDA = "boletinIdDistribuida";
+	public static final String CONFIG_BOLETINID_CONTROLADA = "boletinIdControlada";
 }
