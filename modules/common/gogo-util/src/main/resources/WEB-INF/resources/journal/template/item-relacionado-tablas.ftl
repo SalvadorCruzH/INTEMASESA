@@ -23,10 +23,10 @@
 										<tr>
 											<td>
 												<#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
-													<img src="${imagenPrincipal.imgPrincipal.getData()}"
+													<img width="100%" height="125" align="left" src="${imagenPrincipal.imgPrincipal.getData()}"
 														style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" />
 													<#else>
-													<img src="${images_folder}/logos/imagen-generica-noticia.png"
+													<img width="100%" height="125" align="left" src="${images_folder}/logos/imagen-generica-noticia.png"
 														style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" />
 												</#if>
 											</td>
