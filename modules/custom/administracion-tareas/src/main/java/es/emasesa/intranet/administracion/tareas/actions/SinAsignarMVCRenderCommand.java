@@ -6,6 +6,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import es.emasesa.intranet.administracion.tareas.constants.AdministracionTareasPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
@@ -27,14 +29,15 @@ import java.util.List;
 )
 public class SinAsignarMVCRenderCommand implements MVCRenderCommand {
     @Override
-    public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
-
+    public String render(RenderRequest renderRequest, RenderResponse renderResponse) {
         PortletSession session = renderRequest.getPortletSession();
         String select = ParamUtil.getString(renderRequest, "sel_solicitud");
         List<WorkflowTask> listAllWorkflowTask = new ArrayList<>();
+        String nameUser = getNamesUserAssignedTask(renderRequest);
+        long userId = getUserId(renderRequest);
 
-        List<WorkflowTask> listWorkFlowTaskRole = (List<WorkflowTask>) session.getAttribute("listWorkFlowTaskRole", PortletSession.APPLICATION_SCOPE);
-        List<WorkflowTask> listWorkFlowTaskUser = (List<WorkflowTask>) session.getAttribute("listWorkFlowTaskUser", PortletSession.APPLICATION_SCOPE);
+         List<WorkflowTask> listWorkFlowTaskRole = (List<WorkflowTask>) session.getAttribute("listWorkFlowTaskRole", PortletSession.APPLICATION_SCOPE);
+         List<WorkflowTask> listWorkFlowTaskUser = (List<WorkflowTask>) session.getAttribute("listWorkFlowTaskUser", PortletSession.APPLICATION_SCOPE);
         try {
             listAllWorkflowTask = getAllTask(listWorkFlowTaskRole, listWorkFlowTaskUser);
         } catch (PortalException e) {
@@ -43,8 +46,25 @@ public class SinAsignarMVCRenderCommand implements MVCRenderCommand {
 
         renderRequest.setAttribute("select", select);
         renderRequest.setAttribute("listAllWorkflowTask", listAllWorkflowTask);
+        renderRequest.setAttribute("nameUser", nameUser);
+        renderRequest.setAttribute("userId", userId);
 
         return "/tareasSinAsignar.jsp";
+    }
+
+    public String getNamesUserAssignedTask(RenderRequest renderRequest){
+        ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+        String firstName = themeDisplay.getUser().getFirstName();
+        String lastName = themeDisplay.getUser().getLastName();
+
+        return firstName + " " + lastName;
+    }
+
+    public long getUserId(RenderRequest renderRequest){
+        ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+        long userId = themeDisplay.getUser().getUserId();
+
+        return userId;
     }
 
     public List<WorkflowTask> getAllTask(List<WorkflowTask> listWorkFlowTaskRole, List<WorkflowTask> listWorkFlowTaskUser) throws PortalException {
