@@ -34,7 +34,7 @@ var gestionBoletines = (function(){
     }
 
     var _initSelect2 = function (selectId){
-        $('#' + _portletNamespace + selectId).select2();
+        $('#' + _portletNamespace + selectId).select2({ placeholder: 'Selecciona un Boletín'});
     }
     return {
         init: _init,

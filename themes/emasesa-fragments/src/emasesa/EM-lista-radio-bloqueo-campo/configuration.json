@@ -1,0 +1,50 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "Clase padre para el selector del radio",
+					"name": "parentClassSelector",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "Nombre del campo que bloquea para valor 1",
+					"name": "fieldNameControl1",
+					"type": "text",
+					"typeOptions": {
+          	"placeholder": ""
+          }
+				},
+				{
+					"defaultValue": "",
+					"label": "Nombre del campo que bloquea para valor 2",
+					"name": "fieldNameControl2",
+					"type": "text",
+					"typeOptions": {
+          	"placeholder": ""
+          }
+				},
+				{
+					"defaultValue": "",
+					"label": "Nombre del campo que bloquea para valor 3",
+					"name": "fieldNameControl3",
+					"type": "text",
+					"typeOptions": {
+          	"placeholder": ""
+          }
+				},
+				{
+					"defaultValue": "",
+					"label": "Nombre del campo que bloquea para valor 4",
+					"name": "fieldNameControl4",
+					"type": "text",
+					"typeOptions": {
+          	"placeholder": ""
+          }
+				}
+			]
+		}
+	]
+}

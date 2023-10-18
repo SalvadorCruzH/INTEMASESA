@@ -8,7 +8,9 @@ const Select = ({ name, onChange, predefinedValue, value, options }) => {
 	const timeStamp = Date.now();
 	useEffect(() => {
 		if (selectRef.current) {
-			$(selectRef.current).select2();
+			$(selectRef.current).select2({
+				placeholder: 'Selecciona una Noticia'
+			});
 			$(selectRef.current).on('select2:selecting', function(e) {
                 onChange(e.params.args.data.id);
               });
@@ -30,6 +32,7 @@ const Select = ({ name, onChange, predefinedValue, value, options }) => {
 			value={value ? value : predefinedValue}
 			name={name}
 		>
+			<option></option>
 			{options.map((option) => (
 				<option key={option.value} value={option.value}>
 					{option.label}

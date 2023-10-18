@@ -58,5 +58,17 @@
         "templateFile":"menuBurbujasMisGestiones.ftl",
         "comment": "Menú de navegación de Mis Gestiones.",
         "uuid":"3f2eb45e-5be4-daa3-7173-39f9e8a2c77e"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Componente Nueva Solicitud",
+        "type": "com.liferay.portal.kernel.theme.NavItem",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-MENU-NUEVA-SOLICITUD",
+        "templateFile":"menuSolicitudes.ftl",
+        "comment": "Menú de navegación Nuevas Solicitudes.",
+        "uuid":"4169f9ff-c2d5-fc5b-5c57-006189ab3d30"
     }
 ]

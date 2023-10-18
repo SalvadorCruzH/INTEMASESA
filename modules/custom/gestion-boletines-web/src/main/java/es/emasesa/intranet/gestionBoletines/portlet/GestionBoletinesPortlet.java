@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import javax.portlet.*;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Comment;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,16 +69,18 @@ public class GestionBoletinesPortlet extends MVCPortlet {
         ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
         PortletPreferences preferences = renderRequest.getPreferences();
 
-        String destinatariosListaControlada = preferences.getValue(GestionBoletinesPortletKeys.CONFIG_DESTINATARIOS_CONTROLADA, StringPool.BLANK);
-        String destinatariosListaDistribucion = preferences.getValue(GestionBoletinesPortletKeys.CONFIG_DESTINATARIOS_DISTRIBUIDA, StringPool.BLANK);
-        String asuntoListaControlada = preferences.getValue(GestionBoletinesPortletKeys.CONFIG_ASUNTO_CONTROLADA, StringPool.BLANK);
-        String asuntoListaDistribucion = preferences.getValue(GestionBoletinesPortletKeys.CONFIG_ASUNTO_DISTRIBUIDA, StringPool.BLANK);
-
-        //Recuperacion de valores y envio a la jsp
-        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_LISTA_CONTROLADA_VALUE, destinatariosListaControlada);
-        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_LISTA_DISTRIBUCION_VALUE, destinatariosListaDistribucion);
-        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_ASUNTO_LISTA_CONTROLADA_VALUE, asuntoListaControlada);
-        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_ASUNTO_LISTA_DISTRIBUCION_VALUE, asuntoListaDistribucion);
+        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_LISTA_CONTROLADA_VALUE,
+                preferences.getValue(GestionBoletinesPortletKeys.CONFIG_DESTINATARIOS_CONTROLADA, StringPool.BLANK));
+        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_DESTINATARIOS_LISTA_DISTRIBUCION_VALUE,
+                preferences.getValue(GestionBoletinesPortletKeys.CONFIG_DESTINATARIOS_DISTRIBUIDA, StringPool.BLANK));
+        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_ASUNTO_LISTA_CONTROLADA_VALUE,
+                preferences.getValue(GestionBoletinesPortletKeys.CONFIG_ASUNTO_CONTROLADA, StringPool.BLANK));
+        renderRequest.setAttribute(GestionBoletinesPortletKeys.INPUT_ASUNTO_LISTA_DISTRIBUCION_VALUE,
+                preferences.getValue(GestionBoletinesPortletKeys.CONFIG_ASUNTO_DISTRIBUIDA, StringPool.BLANK));
+        renderRequest.setAttribute(GestionBoletinesPortletKeys.CONFIG_BOLETINID_CONTROLADA,
+                preferences.getValue(GestionBoletinesPortletKeys.CONFIG_BOLETINID_CONTROLADA, StringPool.BLANK));
+        renderRequest.setAttribute(GestionBoletinesPortletKeys.CONFIG_BOLETINID_DISTRIBUIDA,
+                preferences.getValue(GestionBoletinesPortletKeys.CONFIG_BOLETINID_DISTRIBUIDA, StringPool.BLANK));
 
         List<JournalArticle> boletines = getBoletines(themeDisplay.getScopeGroupId());
         renderRequest.setAttribute(GestionBoletinesPortletKeys.LISTADO_BOLETINES, boletines);
@@ -151,6 +155,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
             String boletinId = HtmlUtil.escape(ParamUtil.getString(actionRequest, GestionBoletinesPortletKeys.INPUT_BOLETIN_CONTROLADA));
             String asunto = HtmlUtil.escape(ParamUtil.getString(actionRequest, GestionBoletinesPortletKeys.INPUT_ASUNTO_CONTROLADA));
 
+            preferences.setValue(GestionBoletinesPortletKeys.CONFIG_BOLETINID_CONTROLADA, boletinId);
             preferences.setValue(GestionBoletinesPortletKeys.CONFIG_ASUNTO_CONTROLADA, asunto);
             preferences.store();
             String contenidoProcesado = procesadoContenido(actionRequest, actionResponse, boletinId);
@@ -168,6 +173,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
             String boletinId = HtmlUtil.escape(ParamUtil.getString(actionRequest, GestionBoletinesPortletKeys.INPUT_BOLETIN_DISTRIBUIDA));
             String asunto = HtmlUtil.escape(ParamUtil.getString(actionRequest, GestionBoletinesPortletKeys.INPUT_ASUNTO_DISTRIBUIDA));
 
+            preferences.setValue(GestionBoletinesPortletKeys.CONFIG_BOLETINID_DISTRIBUIDA, boletinId);
             preferences.setValue(GestionBoletinesPortletKeys.CONFIG_ASUNTO_DISTRIBUIDA, asunto);
             preferences.store();
             String contenidoProcesado = procesadoContenido(actionRequest, actionResponse, boletinId);
@@ -198,7 +204,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
                         themeDisplay,
                         actionRequest,
                         actionResponse,
-                        "EMA-BOLETIN"
+                        "EMA-BOLETIN-TABLAS"
                 );
 
                 String portalUrl = PortalUtil.getPortalURL(actionRequest);
@@ -232,7 +238,43 @@ public class GestionBoletinesPortlet extends MVCPortlet {
                 String absoluteUrl = portalUrl + src;
                 imgElement.attr("src", absoluteUrl);
             }
+
+            if (src.contains("admin-theme")){
+                String emasesaThemeUrl = src.replace("admin-theme","emasesa-theme");
+                imgElement.attr("src", emasesaThemeUrl);
+            }
         }
+        Elements headElement = document.select("head");
+        Element elementsToHead = document.select("div").first().parent();
+
+        for (Node nodeToHead : elementsToHead.childNodes()) {
+            if (nodeToHead instanceof Comment ||
+                    (nodeToHead instanceof Element &&
+                            (nodeToHead.nodeName().equalsIgnoreCase("noscript")
+                                    || nodeToHead.nodeName().equalsIgnoreCase("style")
+                                    || nodeToHead.nodeName().equalsIgnoreCase("link")
+                                    || nodeToHead.nodeName().equalsIgnoreCase("meta")
+                            )
+                    )
+            ) {
+                if (nodeToHead instanceof Element) {
+                    Element clonedElement = (Element) nodeToHead;
+                    headElement.append(clonedElement.toString());
+                    nodeToHead.remove();
+                } else if (nodeToHead instanceof Comment){
+                    Comment clonedElement = (Comment) nodeToHead;
+                    headElement.append(clonedElement.toString());
+                    nodeToHead.remove();
+                }
+            }
+        }
+
+        Element spanElement = document.select("span").first();
+        Element bodyElement = document.select("body").first();
+
+        String styleSpan = spanElement.attr("style");
+        bodyElement.attr("style", styleSpan);
+        spanElement.remove();
 
         return document.outerHtml();
     }

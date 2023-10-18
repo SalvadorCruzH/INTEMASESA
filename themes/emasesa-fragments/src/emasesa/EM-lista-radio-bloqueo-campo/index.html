@@ -1,0 +1,68 @@
+<div class="select-from-list" id="${fragmentEntryLinkNamespace}-parent" data-targets="${configuration.fieldNameControl1}|${configuration.fieldNameControl2}|${configuration.fieldNameControl3}|${configuration.fieldNameControl4}">
+	<div class="form-group [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-radio-group">
+			${htmlUtil.escape(input.label)}
+			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		<div aria-labelledby="${fragmentEntryLinkNamespace}-label" id="${fragmentEntryLinkNamespace}-radio-group" role="radiogroup">
+			[#assign options=(input.attributes.options)![]]
+			[#assign selectedValueFoundInOptions=false]
+      [#assign targetName=""]
+			
+			[#list options as option]
+			  [#assign actualIndex=option?index]
+				[#if option?index == 10]
+				[#break]
+				[/#if]
+				[#if actualIndex == 0]
+					[#assign targetName=configuration.fieldNameControl1]
+				[#elseif actualIndex == 1]
+					[#assign targetName=configuration.fieldNameControl2]
+				[#elseif actualIndex == 2]
+					[#assign targetName=configuration.fieldNameControl3]
+				[#elseif actualIndex == 3]
+					[#assign targetName=configuration.fieldNameControl4]
+				[/#if]
+				[#assign selectedOption=false]
+
+				[#if input.value?? && option.value == input.value]
+					[#assign selectedOption=true]
+					[#assign selectedValueFoundInOptions=true]
+				[/#if]
+
+				<input data-element-target="${targetName}" [#if selectedOption]aria-selected="true"[/#if] data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-radio-${option.value}" aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text" class="custom-radio-input" id="${fragmentEntryLinkNamespace}-radio" name="${input.name}-1" ${input.required?then('required', '')} type="radio" [#if input.value?? && input.value == 'true']checked[/#if] />
+				<label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
+					${htmlUtil.escape(option.label)}
+				</label>
+				[#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
+				<input data-element-target="${targetName}" [#if selectedOption]aria-selected="true"[/#if] data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-radio-${option.value}" aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text" class="custom-radio-input" id="${fragmentEntryLinkNamespace}-radio" name="${input.name}-1" ${input.required?then('required', '')} type="radio" [#if input.value?? && input.value == 'true']checked[/#if] />	
+				<label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
+					${htmlUtil.escape(input.attributes.selectedOptionLabel)}
+				</label>
+				[/#if]	
+			[/#list]
+
+		</div>
+				
+		<input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
+		<input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
+		
+		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-help-text">
+				${input.helpText}
+			</p>
+		[/#if]
+	</div>
+</div>
