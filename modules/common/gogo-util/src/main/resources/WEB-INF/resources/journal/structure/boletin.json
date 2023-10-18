@@ -149,7 +149,7 @@
             "es_ES": "Columnas"
           },
           "type": "radio",
-          "required": false,
+          "required": true,
           "showLabel": true,
           "indexType": "keyword",
           "fieldNamespace": "",
@@ -200,7 +200,7 @@
           "showLabel": true,
           "restUrl": "/o/ddmselect/get-journal-by-structure/global/EMA-NOTICIA/20119",
           "visibilityExpression": "",
-          "repeatable": true,
+          "repeatable": false,
           "name": "noticia",
           "fieldReference": "noticia",
           "localizable": false,
