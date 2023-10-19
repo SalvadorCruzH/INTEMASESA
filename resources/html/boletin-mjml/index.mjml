@@ -1,0 +1,51 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+		<mj-text font-family="Roboto, Helvetica, Arial"></mj-text>
+	</mj-attributes>
+  </mj-head>
+  <mj-body background-color="#eef1f7">
+    <mj-section padding="30px 0">
+		<mj-column padding="0">
+			<mj-image src="logo-personas.png" width="300px" align="center"></mj-image>
+		</mj-column>
+    </mj-section>
+	<mj-section padding="0">
+		<mj-column padding="0">
+			<mj-image padding="0" border="0" border-radius="15px 15px 0 0" src="cabecera-boletin.jpg"></mj-image>
+		</mj-column>
+	</mj-section>
+	<mj-section padding="0">
+		<mj-column background-color="#0f71ca" padding="10px 0">
+			<mj-text font-size="27px" font-weight="bold" color="#ffffff">Este es el título del primer boletín EMASESA</mj-text>
+		</mj-column>
+	</mj-section>
+	<mj-section padding="0" background-color="#ffffff">
+		<mj-column padding="0" background-color="#d6e7f4">
+			<mj-text font-weight="bold" font-size="14px" color="#555555">23 de marzo de 2023</mj-text>
+		</mj-column>
+	</mj-section>
+	<mj-section padding="0" background-color="#ffffff">
+		<mj-column padding="15px 0">
+			<mj-text font-size="16px" line-height="1.5"><strong>Texto de introducción a las noticias y notas de prensa</strong> dentro del boletín <a href="https://www.emasesa.com/" title="Ir a la web de EMASESA">EMASESA</a>. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</mj-text>
+			<mj-divider border-color="#dcdcdc" border-width="1px"></mj-divider>
+			<mj-text font-size="20px" font-weight="bold">Actualidad EMASESA</mj-text>
+		</mj-column>
+	</mj-section>
+	<mj-section background-color="#d6e7f4" border-radius="0 0 30px 30px" padding="15px 7px">
+		<mj-column padding="0 7px">
+			<mj-image src="test-noticia-1.jpg" height="100px" padding="0"></mj-image>
+			<mj-text font-size="16px" font-weight="bold" padding="10px 0"><a style="text-decoration:none; color: #0f71ca;" href="https://www.emasesa.com/">Aquí tendríamos el primer título de la noticia relacionada</a></mj-text>
+		</mj-column>
+		<mj-column padding="0 7px">
+			<mj-image src="test-noticia-2.jpg" height="100px" padding="0"></mj-image>
+			<mj-text font-size="16px" font-weight="bold" padding="10px 0"><a style="text-decoration:none; color: #0f71ca;" href="https://www.emasesa.com/">Segundo titular de noticia con el que poder hacernos una idea para maquetar</a></mj-text>
+		</mj-column>
+		<mj-column padding="0 7px">
+			<mj-image src="test-noticia-3.jpg" height="100px" padding="0"></mj-image>
+			<mj-text font-size="16px" font-weight="bold" padding="10px 0"><a style="text-decoration:none; color: #0f71ca;" href="https://www.emasesa.com/">Último titular: este tipo de títulos y textos son de mucha ayuda</a></mj-text>
+		</mj-column>
+	</mj-section>
+	<mj-section padding="60px"></mj-section>
+  </mj-body>
+</mjml>
