@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd">
+	<name>92cd9248-cb2a-dca6-e890-5e71a63dd7f5</name>
+	<version>2</version>
+	<state>
+		<name>6613c074-4e10-4b06-8ed9-7eb729e865f7</name>
+		<description>Inicia un flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-581.2179688459104,
+						-203.32407084047418
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="es_ES">Inicio</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Enviada solicitud de compatibilidades</label>
+				</labels>
+				<name>d2ce1478-1f42-42c9-add2-d7389fa7289e</name>
+				<target>8ca9be45-75a5-4a79-9fda-bbc5977e7acd</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>7d809578-f0c1-408f-9999-9e0185f93c1a</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-40.342462859200616,
+						497.80488165316285
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="es_ES">Fin proceso solicitud</label>
+		</labels>
+	</state>
+	<task>
+		<name>8ca9be45-75a5-4a79-9fda-bbc5977e7acd</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-40.22890657537556,
+						-197.92845609498218
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Pendiente</name>
+				<description/>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificar asginación</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de compatibilidad]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>45687</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>45687</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">Administración RRHH</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Solicitud aprobada</label>
+				</labels>
+				<name>f56f0d13-bd94-4c25-aabb-85a0e33de951</name>
+				<target>55fe7897-1b03-4e8a-898a-e6664c19167c</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Rechazo</label>
+				</labels>
+				<name>e8907ece-8c37-4d0d-ba0f-267c1539bf90</name>
+				<target>7d809578-f0c1-408f-9999-9e0185f93c1a</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>55fe7897-1b03-4e8a-898a-e6664c19167c</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						488.2813670756148,
+						-196.59565968291062
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Solicitud aprobada asginada</name>
+				<description/>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>45688</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">Asesoría jurídica</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Fin</label>
+				</labels>
+				<name>0c7bbdae-dd6e-4416-8b95-a62449e3d795</name>
+				<target>7d809578-f0c1-408f-9999-9e0185f93c1a</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>
