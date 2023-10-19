@@ -2,11 +2,11 @@
 <workflow-definition
 	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd">
-	<name>92cd9248-cb2a-dca6-e890-5e71a63dd7f5</name>
-	<version>2</version>
+	<name>58c29814-b874-3eeb-d7d3-c743fc256014</name>
+	<version>119</version>
 	<state>
 		<name>6613c074-4e10-4b06-8ed9-7eb729e865f7</name>
-		<description>Inicia un flujo de trabajo.</description>
+		<description>Se crea una solicitud de compatibilidad de actividades</description>
 		<metadata>
 			<![CDATA[
 				{
@@ -19,7 +19,7 @@
 		</metadata>
 		<initial>true</initial>
 		<labels>
-			<label language-id="es_ES">Inicio</label>
+			<label language-id="es_ES">Creación solicitud compatbilidad</label>
 		</labels>
 		<transitions>
 			<transition>
@@ -39,35 +39,174 @@
 			<![CDATA[
 				{
 					"xy": [
-						-40.342462859200616,
-						497.80488165316285
+						-43.373885199854755,
+						503.8678044283354
 					],
 					"terminal": true
 				}
 			]]>
 		</metadata>
+		<actions>
+			<notification>
+				<name>Solicitud finalizada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud ha sido rechazada ${entryType}]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user/>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
 		<labels>
 			<label language-id="es_ES">Fin proceso solicitud</label>
 		</labels>
 	</state>
-	<task>
-		<name>8ca9be45-75a5-4a79-9fda-bbc5977e7acd</name>
-		<description>Pida a un usuario que trabaje en el elemento.</description>
+	<state>
+		<name>f4b4e451-d7b8-40e2-bd46-02a883dbef6c</name>
+		<description>Solicitud de compatibilidad rechazada por RRHH.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						-40.22890657537556,
-						-197.92845609498218
+						-42.7132514774512,
+						-533.1960896399678
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Guardar en SIGD</name>
+				<description/>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.*;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.saveObjectOnSIGD(workflowContext);
+customWorkflowUtil.setObjectStatus(workflowContext, "rechazada");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">Rechazada y guardada en SIGD</label>
+		</labels>
+	</state>
+	<state>
+		<name>46a2d7fd-4c64-4ab6-911f-8744d1ac51b8</name>
+		<description>A la espera de callback de portaFirmas</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						485.9366454510794,
+						128.960075838328
 					]
 				}
 			]]>
 		</metadata>
 		<actions>
 			<action>
-				<name>Pendiente</name>
+				<name>Portafirmas y SIGD</name>
 				<description/>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.saveObjectOnSIGD(workflowContext);
+customWorkflowUtil.sendObjectPortafirmas(workflowContext);
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteConsejeroDelegado");
+customWorkflowUtilTracker.close();
+]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onExit</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">Pendiente de Consejero Delegado</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Notificar a RRHH</label>
+				</labels>
+				<name>1998dcb5-f0eb-403c-9056-76f217c6eb77</name>
+				<target>0c443e11-9704-4c21-8ea6-6c95db10446f</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<task>
+		<name>8ca9be45-75a5-4a79-9fda-bbc5977e7acd</name>
+		<description>Solicitud enviada lista para asignarse a un usuario con rol Administración de RRHH</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-43.48572450730024,
+						-199.4442155555377
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description>Pendiente de RRHH</description>
 				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description/>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteRRHH");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
 				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
@@ -112,10 +251,18 @@
 			</transition>
 			<transition>
 				<labels>
-					<label language-id="es_ES">Rechazo</label>
+					<label language-id="es_ES">Devuelta para edición</label>
 				</labels>
-				<name>e8907ece-8c37-4d0d-ba0f-267c1539bf90</name>
-				<target>7d809578-f0c1-408f-9999-9e0185f93c1a</target>
+				<name>d1acdb8d-a2fc-4265-8bb2-947e77d0b61b</name>
+				<target>92e9ce71-ab2d-48e8-8397-d9bb92f8c8dc</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Rechazar y guardada en SIGD</label>
+				</labels>
+				<name>e5e6c607-4727-4423-9950-ca1a4eed9954</name>
+				<target>f4b4e451-d7b8-40e2-bd46-02a883dbef6c</target>
 				<default>false</default>
 			</transition>
 		</transitions>
@@ -127,20 +274,62 @@
 			<![CDATA[
 				{
 					"xy": [
-						488.2813670756148,
-						-196.59565968291062
+						488.2812933913592,
+						-197.91516116874055
 					]
 				}
 			]]>
 		</metadata>
 		<actions>
 			<action>
-				<name>Solicitud aprobada asginada</name>
-				<description/>
-				<status>0</status>
+				<name>Cambiar estado workflow</name>
+				<description>pendiente de asesor jurídico</description>
+				<status>1</status>
 				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description/>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAsesoriaJuridica");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificacion aceptacion RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[La solicutud ha sido aceptada por RRHH, queda pendiente de revisión por asesoría jurídica]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>45688</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
 		</actions>
 		<assignments>
 			<roles>
@@ -155,10 +344,142 @@
 		<transitions>
 			<transition>
 				<labels>
-					<label language-id="es_ES">Fin</label>
+					<label language-id="es_ES">Mandar a portafirmas</label>
 				</labels>
-				<name>0c7bbdae-dd6e-4416-8b95-a62449e3d795</name>
+				<name>228f16f7-ff2d-4028-acec-27b2269a9805</name>
+				<target>46a2d7fd-4c64-4ab6-911f-8744d1ac51b8</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>0c443e11-9704-4c21-8ea6-6c95db10446f</name>
+		<description>Pendiente de revisión</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						483.61419677734375,
+						497.2740478515625
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description/>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description/>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+roles = customWorkflowUtil.assignWorkflowRoleAndStatus(workflowContext,"Administracion de RRHH","pendienteRevisionRRHH");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificar a RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Tiene una solicitud pendiente para revisar tras el OK de Consejero delegado]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>45687</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onExit</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>45687</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">Administración RRHH</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Resolución definitiva</label>
+				</labels>
+				<name>6dc94028-20e8-4fd8-8ad2-3978c82480fb</name>
 				<target>7d809578-f0c1-408f-9999-9e0185f93c1a</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>92e9ce71-ab2d-48e8-8397-d9bb92f8c8dc</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-43.088209025380635,
+						164.62243301517353
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<notification>
+				<name>Devuelta por RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se devuelve solicitud para revisión]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user/>
+				</recipients>
+				<execution-type>onExit</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<user/>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">Devuelta por RRHH</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">Devuelta a RHH</label>
+				</labels>
+				<name>62aacc96-de25-4f4d-b6e0-1464585eb97e</name>
+				<target>8ca9be45-75a5-4a79-9fda-bbc5977e7acd</target>
 				<default>true</default>
 			</transition>
 		</transitions>
