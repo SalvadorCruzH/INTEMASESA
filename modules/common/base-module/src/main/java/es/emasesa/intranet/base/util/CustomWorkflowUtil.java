@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CustomWorkflowUtil {
 	
 	  /**
-     * Retrive roles and status object
+     * Retrive roles and status object and update object
      * @param workflowContext
      * @param rolName
      * @param status
@@ -107,14 +106,19 @@ public class CustomWorkflowUtil {
      * Change status object
      * @param workflowContext
      * @param estadoObjeto
-     * @return ObjectEntry
+     * 
      */
-    public void setObjectStatus(Map<String, Serializable> workflowContext, String estadoObjeto) throws PortalException {
+    public void setObjectStatusAndUpdate(Map<String, Serializable> workflowContext, String estadoObjeto) throws PortalException {
     	
     	LoggerUtil.debug(LOG,"Cambiando el estado del objecto: " + estadoObjeto);
 		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		
 		ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
-		setObjectStatus(object, estadoObjeto);
+		Map <String,Serializable> map = object.getValues();
+    	map.put("estadoObjeto", estadoObjeto);
+    	object.setValues(map);
+    	
+    	updateObject(object);
     }
     
     
@@ -145,20 +149,56 @@ public class CustomWorkflowUtil {
      */
     public ObjectEntry setObjectStatus(ObjectEntry object, String estadoObjeto) {
     	
-    	try {
-    		LoggerUtil.debug(LOG,"Cambiando el estado del objecto: " + estadoObjeto);
-    		
-	    	Map <String,Serializable> map = object.getValues();
-	    	map.put("estadoObjeto", estadoObjeto);
-	    	
-	    	ServiceContext serviceContext = new ServiceContext();
-	    	 _objectEntryLocalService.updateObjectEntry(object.getUserId(), object.getObjectEntryId(), map, serviceContext);
-	    	
-		} catch (PortalException e) {
-			LOG.error("Error el actualziar el estado del objecto" + e);
-		}
+    	LoggerUtil.debug(LOG,"Cambiando el estado del objecto: " + estadoObjeto);
+		
+		Map <String,Serializable> map = object.getValues();
+		map.put("estadoObjeto", estadoObjeto);
+		object.setValues(map);
+		
     	return object;
     }
+    
+    
+    /**
+     * Update History and then update object
+     * @param workflowContext
+     * @param estadoObjeto
+     * @param userId
+     * @param rolName
+     * 
+     */
+    public void setObjectHistoryAndUpdate(Map<String, Serializable> workflowContext, String estadoObjeto, long userId, String rolName) {
+
+    	try {
+    		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+    		ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
+			Map<String,Serializable> map = object.getValues();
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("historicoEstado"));
+			JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
+			
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			
+			if(userId != 0) {
+				datosHistorico.put("userId", userId);
+    		}else {
+    			datosHistorico.put("userId", "");
+    		}
+			datosHistorico.put("estadoObjeto", estadoObjeto);
+			datosHistorico.put("rolName", rolName);
+			datosHistorico.put("fechaCambioEstado", now.format(formatter));
+			jsonArray.put(datosHistorico);
+			
+			map.put("historicoEstado", jsonArray);			
+			object.setValues(map);
+			
+			updateObject(object);
+			
+		} catch (PortalException e) {
+			LOG.error("Error el actualziar el hit�rico del objecto" + e);
+		}
+    }
+    
     
     /**
      * Update History
@@ -215,7 +255,7 @@ public class CustomWorkflowUtil {
 			map.put("historicoEstado", jsonArray);			
 			object.setValues(map);
 		} catch (PortalException e) {
-			LOG.error("Error el actualziar el hit�rico del objecto" + e);
+			LOG.error("Error el actualziar el hitórico del objecto" + e);
 		}
     	return  object;
     }
