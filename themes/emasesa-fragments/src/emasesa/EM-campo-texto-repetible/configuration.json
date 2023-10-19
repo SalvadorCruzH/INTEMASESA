@@ -18,6 +18,22 @@
 					"typeOptions": {
 						"displayType": "toggle"
 					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Name HTML",
+					"localizable": true,
+					"name": "fieldName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Añadir",
+					"label": "Nombre del botón añadir",
+					"localizable": true,
+					"name": "buttonName",
+					"type": "text"
 				}
 			]
 		}

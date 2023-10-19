@@ -4,7 +4,7 @@
   "htmlPath": "index.html",
   "cssPath": "index.css",
   "icon": "forms",
-  "name": "EM-telefono-repetible",
+  "name": "EM-campo-texto-repetible",
   "typeOptions": {"fieldTypes": ["text"]},
   "type": "input"
 }

@@ -37,4 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	var primerApellidoExpandoHidden = document.querySelector('input[name="primerApellidoExpandoHidden"]').value;
   var primerApellidoFormInput = document.querySelector('input[name="primerApellido"]');
   primerApellidoFormInput.value = primerApellidoExpandoHidden;
+	
+	var segundoApellidoExpandoHidden = document.querySelector('input[name="segundoApellidoExpandoHidden"]').value;
+  var segundoApellidoFormInput = document.querySelector('input[name="segundoApellido"]');
+  segundoApellidoFormInput.value = segundoApellidoExpandoHidden;
 });
