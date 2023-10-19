@@ -4,7 +4,7 @@
   "htmlPath": "index.html",
   "cssPath": "index.css",
   "icon": "forms",
-  "name": "EM-Datos personales usuario-Gestion compatibilidad",
+  "name": "EM-Obtener valor campo expando",
   "typeOptions": {"fieldTypes": ["text"]},
   "type": "input"
 }
