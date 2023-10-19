@@ -203,7 +203,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteRRHH");
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteDeAdministracionDeRRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -304,7 +304,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAsesoriaJuridica");
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteDeAsesoriaJuridica");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
