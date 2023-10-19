@@ -81,6 +81,18 @@ public class CustomWorkflowUtil {
     	//TODO - Hacer el servicio para mandar el documento el gestor documentar en base64
     }
     
+    /**
+     * Send object portaFirmas
+     * @param workflowContext
+     * 
+     */
+    public void sendObjectPortafirmas(Map<String, Serializable> workflowContext) {
+    	
+    	  LoggerUtil.debug(LOG, "Envio de objeto a portafirmas");
+    	  
+    	//TODO - Hacer el servicio para mandar el objecto a portafirmas en formato PDF
+    }
+    
     
     /**
      * Create PDF
@@ -89,6 +101,20 @@ public class CustomWorkflowUtil {
      */
     public void createPDF(Map<String, Serializable> workflowContext) {
     	//TODO - Hacer el método de crear un PDF con los valores del object. Pensa en generalizarlo y saber que campos vamos a pintar y que campos no
+    }
+    
+    /**
+     * Change status object
+     * @param workflowContext
+     * @param estadoObjeto
+     * @return ObjectEntry
+     */
+    public void setObjectStatus(Map<String, Serializable> workflowContext, String estadoObjeto) throws PortalException {
+    	
+    	LoggerUtil.debug(LOG,"Cambiando el estado del objecto: " + estadoObjeto);
+		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
+		setObjectStatus(object, estadoObjeto);
     }
     
     
