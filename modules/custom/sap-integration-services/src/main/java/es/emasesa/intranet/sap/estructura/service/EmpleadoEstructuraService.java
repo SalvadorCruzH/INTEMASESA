@@ -22,7 +22,9 @@ import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.Authenticator;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,15 +67,18 @@ public class EmpleadoEstructuraService {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service();
+            URL urlEndpoint = new URL(configuration.empleadoEstructuraEndpoint());
+
+            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOESTRUCTURA.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -96,6 +101,10 @@ public class EmpleadoEstructuraService {
        } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de EmpleadoEstructuraService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADOESTRUCTURA_Service --> " + configuration.empleadoEstructuraEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

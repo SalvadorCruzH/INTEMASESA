@@ -59,16 +59,19 @@ public class EmpleadoDatosPersonalesService {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADODATOSPERSONA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            ZWSPEEMPLEADODATOSPERSONA_Service service = new ZWSPEEMPLEADODATOSPERSONA_Service();
+            URL urlEndpoint = new URL(configuration.empleadoDatosPersonalesEndpoint());
+            ZWSPEEMPLEADODATOSPERSONA_Service service = new ZWSPEEMPLEADODATOSPERSONA_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADODATOSPERSONA.class);
+
             Authenticator.setDefault(new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -90,7 +93,11 @@ public class EmpleadoDatosPersonalesService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de EmpleadoDatosPersonalesService");
             }
-        } finally {
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADODATOSPERSONA_Service --> " + configuration.empleadoDatosPersonalesEndpoint());
+            }
+        }finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 

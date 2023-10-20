@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStMarcajesHistoricoActu;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEMARCAJESHISTORICOACT;
@@ -19,7 +20,9 @@ import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.Authenticator;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,15 +67,17 @@ public class MarcajeService {
             LOG.debug("[I] Activando MarcajeService");
         }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEMARCAJESHISTORICOACT.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service();
+            URL urlEndpoint = new URL(configuration.marcajeEndpoint());
+            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service(urlEndpoint);
             port = service.getPort(ZWSPEMARCAJESHISTORICOACT.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -92,9 +97,13 @@ public class MarcajeService {
             requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
 
-        } catch (Exception e) {
+        } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de MarcajeService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEMARCAJESHISTORICOACT_Service --> " + configuration.marcajeEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

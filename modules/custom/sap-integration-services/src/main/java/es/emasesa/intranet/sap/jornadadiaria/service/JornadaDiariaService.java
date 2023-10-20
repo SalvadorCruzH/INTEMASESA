@@ -20,7 +20,9 @@ import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.Authenticator;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,16 +66,19 @@ public class JornadaDiariaService {
         if (LOG.isDebugEnabled()) {
             LOG.debug("[I] Activando JornadaDiariaService");
         }
+
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJornadaDiari.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            ZWSPEEMPLEADOJornadaDiari_Service service = new ZWSPEEMPLEADOJornadaDiari_Service();
+            URL urlEndpoint = new URL(configuration.jornadaDiariaEndpoint());
+            ZWSPEEMPLEADOJornadaDiari_Service service = new ZWSPEEMPLEADOJornadaDiari_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOJornadaDiari.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -97,6 +102,10 @@ public class JornadaDiariaService {
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de JornadaDiariaService", e);
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADOJornadaDiari_Service --> " + configuration.jornadaDiariaEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

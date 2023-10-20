@@ -55,16 +55,17 @@ public class EmpleadoDatosDomicilioService {
         }
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
-
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADODOMICILIO.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service();
+            URL urlEndpoint = new URL(configuration.empleadoDatosDomicilioEndpoint());
+            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADODOMICILIO.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -87,6 +88,10 @@ public class EmpleadoDatosDomicilioService {
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de EmpleadoDatosPersonalesService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADODOMICILIO_Service --> " + configuration.empleadoDatosDomicilioEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
