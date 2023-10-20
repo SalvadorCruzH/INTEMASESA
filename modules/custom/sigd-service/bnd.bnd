@@ -1,0 +1,9 @@
+Bundle-Name: sigd-service
+Bundle-SymbolicName: es.emasesa.intranet.sigd.service
+Bundle-Version: 1.0.0
+-metatype: *
+Export-Package: \
+    es.emasesa.intranet.sigd.*;
+Import-Package:\
+	org.apache.cxf.jaxws.spi,\
+	*;resolution:=optional,
