@@ -81,5 +81,4 @@ public class CustomWorkflowUtil {
     private EmpleadoEstructuraService empleadoEstructuraService;
 
     private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
-
 }

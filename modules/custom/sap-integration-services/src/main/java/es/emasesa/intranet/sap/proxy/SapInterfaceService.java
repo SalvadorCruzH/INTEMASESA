@@ -16,17 +16,17 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
 
     @Autowired
     EmpleadoEstructuraService empleadoEstructuraService;
-    @Autowired
+    @Autowired(required = false)
     JornadaNominaService jornadaNominaService;
-    @Autowired
+    @Autowired(required = false)
     MarcajeService marcajeService;
-    @Autowired
+    @Autowired(required = false)
     ResumenAnualService resumenAnualService;
     @Autowired
     EmpleadoDatosPersonalesService empleadoDatosPersonalesService;
     @Autowired
     EmpleadoDatosDomicilioService empleadoDatosDomicilioService;
-    @Autowired
+    @Autowired(required = false)
     JornadaDiariaService jornadaDiariaService;
 
     public JornadaDiariaService getJornadaDiariaService(){

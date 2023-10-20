@@ -95,15 +95,17 @@ public class JornadaNominaService {
             LOG.debug("[I] Activando JornadaNominaService");
         }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service();
+            URL urlEndpoint = new URL(configuration.jornadaNominaEndpoint());
+            ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service(urlEndpoint);
             port = service.getPort(ZWSPEACTJORNADANOMINA.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -127,6 +129,10 @@ public class JornadaNominaService {
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de JornadaNominaService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEACTJORNADANOMINA_Service --> " + configuration.jornadaNominaEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

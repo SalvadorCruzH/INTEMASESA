@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoJornadaResume;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStMarcajesHistoricoActu;
@@ -29,6 +30,7 @@ import java.math.BigDecimal;
 import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,11 +63,9 @@ public class ResumenAnualService {
                     jsonObject.put("computoSinFuturo",computoSinFuturo.value);
                     jsonObject.put("computoSinFuturoAnnoAnteri",computoSinFuturoAnnoAnteri.value);
 
-
                 }
-
-
             }
+
         }catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
             throw new ResumenAnualException("Error con el WS:" + e.getMessage(), e);
@@ -89,14 +89,17 @@ public class ResumenAnualService {
             LOG.debug("[I] Activando ResumenAnualService");
         }
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        SapServicesConfiguration configuration = null;
         try {
-            SapServicesConfiguration configuration = sapConfigurationUtil.getConfiguration();
+            configuration = sapConfigurationUtil.getConfiguration();
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJORNADARESUM.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
-            ZWSPEEMPLEADOJORNADARESUM_Service service = new ZWSPEEMPLEADOJORNADARESUM_Service();
+
+            URL urlEndpoint = new URL(configuration.jornadaResumenAnual());
+            ZWSPEEMPLEADOJORNADARESUM_Service service = new ZWSPEEMPLEADOJORNADARESUM_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOJORNADARESUM.class);
 
             Authenticator.setDefault(new Authenticator() {
@@ -117,9 +120,13 @@ public class ResumenAnualService {
             /**********************************************************************/
 
 
-        } catch (Exception e) {
+        } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de ResumenAnualService");
+            }
+        }catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADOJORNADARESUM_Service --> " + configuration.marcajeEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
