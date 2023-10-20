@@ -56,7 +56,6 @@ public class EmpleadoDatosPersonalesService {
         if (LOG.isDebugEnabled()) {
             LOG.debug("[I] Activando EmpleadoDatosPersonalesService");
         }
-
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 
         SapServicesConfiguration configuration = null;

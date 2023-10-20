@@ -98,7 +98,7 @@ public class ResumenAnualService {
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            URL urlEndpoint = new URL(configuration.marcajeEndpoint());
+            URL urlEndpoint = new URL(configuration.jornadaResumenAnual());
             ZWSPEEMPLEADOJORNADARESUM_Service service = new ZWSPEEMPLEADOJORNADARESUM_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOJORNADARESUM.class);
 
