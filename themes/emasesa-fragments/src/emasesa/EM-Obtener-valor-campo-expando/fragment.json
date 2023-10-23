@@ -5,6 +5,10 @@
   "cssPath": "index.css",
   "icon": "forms",
   "name": "EM-Obtener valor campo expando",
-  "typeOptions": {"fieldTypes": ["text"]},
+  "typeOptions": {"fieldTypes": [
+    "text",
+    "long-text",
+    "number"
+  ]},
   "type": "input"
 }
