@@ -36,7 +36,7 @@ public class CustomAjaxSearchRegister {
             unbind = "unregisterAjaxSearchForm"
     )
     protected synchronized void registerAjaxSearchForm(final AjaxSearchForm as) {
-        LOG.info(("registering "+getClassName(as));
+        LOG.info("registering "+getClassName(as));
         _customAjaxSearchForms.put(getClassName(as), as);
     }
 

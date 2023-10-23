@@ -1,4 +1,4 @@
-Bundle-Name: sigd-service
+Bundle-Name: emasesa-sigd-service
 Bundle-SymbolicName: es.emasesa.intranet.sigd.service
 Bundle-Version: 1.0.0
 -metatype: *
