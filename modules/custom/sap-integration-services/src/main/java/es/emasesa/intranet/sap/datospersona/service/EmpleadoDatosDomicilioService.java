@@ -64,25 +64,20 @@ public class EmpleadoDatosDomicilioService {
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            URL urlEndpoint = new URL(configuration.empleadoDatosDomicilioEndpoint());
-            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service(urlEndpoint);
-            port = service.getPort(ZWSPEEMPLEADODOMICILIO.class);
-
             Authenticator.setDefault(new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
+            URL urlEndpoint = new URL(configuration.empleadoDatosDomicilioEndpoint());
+            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service(urlEndpoint);
+            port = service.getPort(ZWSPEEMPLEADODOMICILIO.class);
 
             /*******************UserName & Password ******************************/
-            Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
-            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.empleadoDatosDomicilioEndpoint());
-            Map<String, List<String>> headers = new HashMap<>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
-            requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
 
         } catch (ConfigurationException e) {

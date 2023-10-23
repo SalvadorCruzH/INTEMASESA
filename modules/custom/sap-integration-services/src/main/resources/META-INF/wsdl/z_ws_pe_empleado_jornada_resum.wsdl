@@ -330,11 +330,11 @@
     <wsdl:service name="Z_WS_PE_EMPLEADO_JORNADA_RESUM">
         <wsdl:port name="Z_WS_PE_EMPLEADO_JORNADA_RESUM" binding="tns:Z_WS_PE_EMPLEADO_JORNADA_RESUM">
             <soap:address
-                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_resum/010/z_ws_pe_empleado_jornada_resum/z_ws_pe_empleado_jornada_resum"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_resum/010/z_ws_pe_empleado_jornada_resum/z_ws_pe_empleado_jornada_resum"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_JORNADA_RESUM_soap12" binding="tns:Z_WS_PE_EMPLEADO_JORNADA_RESUM_soap12">
             <wsoap12:address
-                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_resum/010/z_ws_pe_empleado_jornada_resum/z_ws_pe_empleado_jornada_resum"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_jornada_resum/010/z_ws_pe_empleado_jornada_resum/z_ws_pe_empleado_jornada_resum"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

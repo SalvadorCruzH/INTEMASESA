@@ -239,7 +239,7 @@ public class SapServicesUtil {
             this._empleadoDatosDomicilioService = empleadoDatosPersonalesDomicilioServiceCustomService.getService();
             this._jornadaDiariaService = jornadaDiariaServiceCustomService.getService();
 
-            if(_jornadaDiariaService != null) {
+            /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
                     LOG.info("jornadaDiariaService OK");
@@ -261,13 +261,13 @@ public class SapServicesUtil {
                 if (resumenAnualData != null) {
                     LOG.info("resumenAnualService OK");
                 }
-            }
+            }*/
         } catch (InterruptedException e) {
             LOG.error("Se ha producido un error levantando el CustomTracker de Spring");
             throw new RuntimeException(e);
-       } catch (SapException e) {
+       /*} catch (SapException e) {
             LOG.info("Se ha producido un error validando los servicios en el arranque", e);
-        } catch (NullPointerException e) {
+        */} catch (NullPointerException e) {
             LOG.info("Se ha producido un error accediendo a los servicios");
         }
     }

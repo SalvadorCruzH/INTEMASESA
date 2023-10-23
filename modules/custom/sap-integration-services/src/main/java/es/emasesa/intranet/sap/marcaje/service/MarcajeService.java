@@ -76,25 +76,20 @@ public class MarcajeService {
             String userName = configuration.userPrompt();
             String password = configuration.passwordPrompt();
 
-            URL urlEndpoint = new URL(configuration.marcajeEndpoint());
-            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service(urlEndpoint);
-            port = service.getPort(ZWSPEMARCAJESHISTORICOACT.class);
-
             Authenticator.setDefault(new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
+            URL urlEndpoint = new URL(configuration.marcajeEndpoint());
+            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service(urlEndpoint);
+            port = service.getPort(ZWSPEMARCAJESHISTORICOACT.class);
 
             /*******************UserName & Password ******************************/
-            Map<String, Object> requestContext = ((WSBindingProvider) port).getRequestContext();
             WSBindingProvider bp = ((WSBindingProvider) port);
-            requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, configuration.marcajeEndpoint());
-            Map<String, List<String>> headers = new HashMap<>();
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
-            requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
             /**********************************************************************/
 
         } catch (ConfigurationException e) {

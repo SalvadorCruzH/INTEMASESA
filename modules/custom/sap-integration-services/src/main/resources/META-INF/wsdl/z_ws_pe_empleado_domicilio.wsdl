@@ -346,11 +346,11 @@
     <wsdl:service name="Z_WS_PE_EMPLEADO_DOMICILIO">
         <wsdl:port name="Z_WS_PE_EMPLEADO_DOMICILIO" binding="tns:Z_WS_PE_EMPLEADO_DOMICILIO">
             <soap:address
-                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_domicilio/010/z_ws_pe_empleado_domicilio/z_ws_pe_empleado_domicilio"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_domicilio/010/z_ws_pe_empleado_domicilio/z_ws_pe_empleado_domicilio"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_DOMICILIO_soap12" binding="tns:Z_WS_PE_EMPLEADO_DOMICILIO_soap12">
             <wsoap12:address
-                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_domicilio/010/z_ws_pe_empleado_domicilio/z_ws_pe_empleado_domicilio"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_domicilio/010/z_ws_pe_empleado_domicilio/z_ws_pe_empleado_domicilio"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
