@@ -1,0 +1,15 @@
+assemble:
+    - from: build/static
+      into: static
+global-module:
+    #cssURLs:
+    #    - css/main.*.css
+    friendlyURLMapping: global-module
+    htmlElementName: global-module
+    instanceable: false
+    name: Modulo de Global que exporta librerías
+    portletCategoryName: category.selaepv
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
