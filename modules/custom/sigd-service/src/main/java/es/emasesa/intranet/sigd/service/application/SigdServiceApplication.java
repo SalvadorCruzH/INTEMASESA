@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
+import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.settings.configuration.SigdServiceConfiguration;
 
 
@@ -42,47 +43,89 @@ import es.emasesa.intranet.settings.configuration.SigdServiceConfiguration;
 public class SigdServiceApplication extends Application {
 
 	
-	//POST
+	 /**
+     * Llamada al servicio para inserdar un documento en SIGD
+     * 
+     */
 	public void insertarDocumento() {
 		try {
 			String url = _configuration.insertarDocumentoEndPoint();
 			
-			// Crear un cliente HTTP
 			CloseableHttpClient httpClient = HttpClients.createDefault();
 			
 			CredentialsProvider provider = new BasicCredentialsProvider();
-	        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("usuario", "contraseña");
+	        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(_configuration.getUser(), _configuration.getPassword());
 	        provider.setCredentials(AuthScope.ANY, credentials);
 	        
-	        // Crear una solicitud POST
+	        LoggerUtil.debug(LOG, "Creacion de HtpPost a la URL: " + url);
 	        HttpPost post = new HttpPost(url);
-	        // Agregar encabezados
 	        post.setHeader("Content-Type", "application/json");
-			
 	       
-	        // Crear un objeto JSON con tus parámetros
 			JSONObject jsonObject = createBody();
 		    
-		    // Crear una entidad de cadena JSON
 		    String json = jsonObject.toString();
 		    StringEntity jsonEntity = new StringEntity(json, ContentType.APPLICATION_JSON);
 			post.setEntity(jsonEntity);
 			
 			// Ejecutar la solicitud POST
+			LoggerUtil.debug(LOG, "Ejecucion de la solicitud post: " + post.toString());
 			CloseableHttpResponse response = httpClient.execute(post);
-			
-			// Obtener la respuesta
+			LoggerUtil.debug(LOG, "Respuesta obtenida: " + response.toString());
 	        HttpEntity responseEntity = response.getEntity();
 	        String responseBody = EntityUtils.toString(responseEntity);
-			LOG.debug("Respuesta obtenida: " + response.toString());
+	        LoggerUtil.debug(LOG, "Entidad obtenida tras la ejecucion del post: " + responseBody);
 			
 			httpClient.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			  LoggerUtil.error(LOG, "Error al ejecutar la llamada post del servicio de insertar documento en SIGD: " + e.toString());
 		}
 	}
 	
+
+	
+	 /**
+	  * Llamada al servicio para obtener los metadatos del documento. L
+	  * tipo=1 y procesarContenidos=false
+	  * 
+	 */
+	public void obtenerElemento() {
+		String url = _configuration.obtenerElementoEndPoint();
+		HttpGet get = new HttpGet(url);
+	}
+	
+	 /**
+	  * Llamada al servicio para obtener el contenido del documento en base 64
+	  * 
+	 */
+	public void obtenerContenido() {
+		
+		try {
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			String url = _configuration.obtenerContenidoEndPoint();
+			HttpGet get = new HttpGet(url);
+			CloseableHttpResponse response;
+			response = httpClient.execute(get);
+			LoggerUtil.debug(LOG,"Respuesta obtenida" + response.toString());
+			
+			String json = EntityUtils.toString(response.getEntity());
+			if (json != null) {
+				JSONArray data = JSONFactoryUtil.createJSONArray(json);
+			}
+			
+			 response.close();
+			 httpClient.close();
+		} catch (IOException e) {
+			LoggerUtil.error(LOG, "Error al ejecutar la llamada get del servicio de obtener contenido de SIGD: " + e.toString());
+		} catch (JSONException e) {
+			LoggerUtil.error(LOG, "Error al intentar crear un JSON array a partir de un string en el mÃ©todo de obtener contenido de SIGD: " + e.toString());
+		}
+	    
+	}
+	
+	 /**
+	  * CreaciÃ³n del JSON que se debe enviar en la llamada al servicio de insertarDocumento
+	  * 
+	 */
 	 public JSONObject createBody() {
 		 
 		 JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -96,7 +139,7 @@ public class SigdServiceApplication extends Application {
 	        // Crea un JSONArray para "campos"
 	        JSONArray camposArray = JSONFactoryUtil.createJSONArray();
 
-	        // Crea un JSONObject para cada campo y agrégalo al JSONArray
+	        // Crea un JSONObject para cada campo y agrï¿½galo al JSONArray
 	        JSONObject campo1 = JSONFactoryUtil.createJSONObject();
 	        campo1.put("nombreOrigen", "NumeroExpediente");
 	        campo1.put("tipoOrigen", "java.lang.String");
@@ -116,7 +159,7 @@ public class SigdServiceApplication extends Application {
 	        // Crea un JSONArray para "ficheros"
 	        JSONArray ficherosArray = JSONFactoryUtil.createJSONArray();
 
-	        // Crea un JSONObject para "ficheros" y agrégalo al JSONArray
+	        // Crea un JSONObject para "ficheros" y agrï¿½galo al JSONArray
 	        JSONObject fichero1 = JSONFactoryUtil.createJSONObject();
 	        fichero1.put("numeroOrden", "1");
 	        fichero1.put("extension", "png");
@@ -127,42 +170,7 @@ public class SigdServiceApplication extends Application {
 	        json.put("ficheros", ficherosArray);
 	 
 	        return json;
-		 
 	 }
-	
-	//GET
-	public void obtenerElemento() {
-		String url = _configuration.obtenerElementoEndPoint();
-		HttpGet get = new HttpGet(url);
-	}
-	
-	//GET
-	public void obtenerContenido() {
-		
-		try {
-			CloseableHttpClient httpClient = HttpClients.createDefault();
-			String url = _configuration.obtenerContenidoEndPoint();
-			HttpGet get = new HttpGet(url);
-			CloseableHttpResponse response;
-			response = httpClient.execute(get);
-			LOG.debug("Respuesta obtenida" + response.toString());
-			
-			String json = EntityUtils.toString(response.getEntity());
-			if (json != null) {
-				JSONArray data = JSONFactoryUtil.createJSONArray(json);
-			}
-			
-			
-			 response.close();
-			 httpClient.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	}
 	
 	
 	private volatile SigdServiceConfiguration _configuration;

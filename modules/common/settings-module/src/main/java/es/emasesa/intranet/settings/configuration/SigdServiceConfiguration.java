@@ -34,5 +34,19 @@ public interface SigdServiceConfiguration {
             required = false
     )
     String obtenerContenidoEndPoint();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "usuario",
+            required = false
+    )
+    String getUser();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "contraseña",
+            required = false
+    )
+    String getPassword();
 
 }

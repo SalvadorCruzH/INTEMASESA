@@ -3,8 +3,11 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "select-from-list",
-  "name": "EM - Lista con radio y bloqueo de campo",
-  "typeOptions": {"fieldTypes": ["select"]},
+  "icon": "forms",
+  "name": "EM-lista-radio-bloqueo-campo",
+  "typeOptions": {"fieldTypes": [
+    "select",
+    "text"
+  ]},
   "type": "input"
 }
