@@ -20,7 +20,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.MessageContext;
 
 import com.sap.document.sap.soap.functions.mc_style.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +110,7 @@ public class JornadaNominaService {
                 }
             });
             URL urlEndpoint = new URL(configuration.jornadaNominaEndpoint());
-            ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service(urlEndpoint);
+            ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service();
             port = service.getPort(ZWSPEACTJORNADANOMINA.class);
 
             /*******************UserName & Password ******************************/

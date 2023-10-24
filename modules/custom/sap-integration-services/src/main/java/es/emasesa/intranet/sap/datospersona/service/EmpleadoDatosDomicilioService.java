@@ -19,14 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.MessageContext;
 import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @org.springframework.stereotype.Component("empleadoDatosPersonalesDomicilioService")
 public class EmpleadoDatosDomicilioService {
@@ -71,7 +67,7 @@ public class EmpleadoDatosDomicilioService {
                 }
             });
             URL urlEndpoint = new URL(configuration.empleadoDatosDomicilioEndpoint());
-            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service(urlEndpoint);
+            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service();
             port = service.getPort(ZWSPEEMPLEADODOMICILIO.class);
 
             /*******************UserName & Password ******************************/
