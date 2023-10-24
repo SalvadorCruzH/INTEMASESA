@@ -8,12 +8,12 @@
 		<div aria-labelledby="${fragmentEntryLinkNamespace}-label" id="${fragmentEntryLinkNamespace}-radio-group" role="radiogroup">
 			[#assign options=(input.attributes.options)![]]
 			[#assign selectedValueFoundInOptions=false]
-      [#assign targetName=""]
-			
+      		[#assign targetName=""]
+
 			[#list options as option]
-			  [#assign actualIndex=option?index]
+			  	[#assign actualIndex=option?index]
 				[#if option?index == 10]
-				[#break]
+					[#break]
 				[/#if]
 				[#if actualIndex == 0]
 					[#assign targetName=configuration.fieldNameControl1]
@@ -31,31 +31,30 @@
 					[#assign selectedValueFoundInOptions=true]
 				[/#if]
 
-				<input data-element-target="${targetName}" [#if selectedOption]aria-selected="true"[/#if] data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-radio-${option.value}" aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text" class="custom-radio-input" id="${fragmentEntryLinkNamespace}-radio" name="${input.name}-1" ${input.required?then('required', '')} type="radio" [#if input.value?? && input.value == 'true']checked[/#if] />
 				<label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
+					<input data-element-target="${targetName}" [#if selectedOption]aria-selected="true"[/#if] data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-radio-${option.value}" aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text" class="custom-radio-input" id="${fragmentEntryLinkNamespace}-radio" name="${input.name}-1" ${input.required?then('required', '')} type="radio" [#if input.value?? && input.value == 'true']checked[/#if] />
 					${htmlUtil.escape(option.label)}
 				</label>
+
 				[#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
-				<input data-element-target="${targetName}" [#if selectedOption]aria-selected="true"[/#if] data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-radio-${option.value}" aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text" class="custom-radio-input" id="${fragmentEntryLinkNamespace}-radio" name="${input.name}-1" ${input.required?then('required', '')} type="radio" [#if input.value?? && input.value == 'true']checked[/#if] />	
-				<label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
-					${htmlUtil.escape(input.attributes.selectedOptionLabel)}
-				</label>
-				[/#if]	
+					<label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
+						<input data-element-target="${targetName}" [#if selectedOption]aria-selected="true"[/#if] data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-radio-${option.value}" aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text" class="custom-radio-input" id="${fragmentEntryLinkNamespace}-radio" name="${input.name}-1" ${input.required?then('required', '')} type="radio" [#if input.value?? && input.value == 'true']checked[/#if] />
+						${htmlUtil.escape(input.attributes.selectedOptionLabel)}
+					</label>
+				[/#if]
 			[/#list]
 
 		</div>
-				
+
 		<input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
 		<input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
-		
+
 		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
 			<p class="font-weight-semi-bold mt-1 text-danger">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />
 				</svg>
-				<span>
-					${input.errorMessage}
-				</span>
+				<span>${input.errorMessage}</span>
 			</p>
 		[/#if]
 
