@@ -69,7 +69,7 @@ public class EmpleadoDatosPersonalesService {
                 }
             });
             URL urlEndpoint = new URL(configuration.empleadoDatosPersonalesEndpoint());
-            ZWSPEEMPLEADODATOSPERSONA_Service service = new ZWSPEEMPLEADODATOSPERSONA_Service(urlEndpoint);
+            ZWSPEEMPLEADODATOSPERSONA_Service service = new ZWSPEEMPLEADODATOSPERSONA_Service();
             port = service.getPort(ZWSPEEMPLEADODATOSPERSONA.class);
 
             /*******************UserName & Password ******************************/
