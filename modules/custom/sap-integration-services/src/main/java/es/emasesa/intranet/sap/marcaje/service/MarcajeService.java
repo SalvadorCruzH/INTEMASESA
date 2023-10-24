@@ -23,12 +23,8 @@ import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.MessageContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -83,7 +79,7 @@ public class MarcajeService {
                 }
             });
             URL urlEndpoint = new URL(configuration.marcajeEndpoint());
-            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service(urlEndpoint);
+            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service();
             port = service.getPort(ZWSPEMARCAJESHISTORICOACT.class);
 
             /*******************UserName & Password ******************************/

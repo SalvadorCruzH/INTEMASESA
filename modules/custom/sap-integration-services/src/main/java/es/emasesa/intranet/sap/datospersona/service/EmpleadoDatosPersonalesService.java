@@ -17,13 +17,8 @@ import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
 import java.net.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.ws.rs.ClientErrorException;
 import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.MessageContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component("empleadoDatosPersonalesService")

@@ -25,12 +25,8 @@ import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.MessageContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -83,7 +79,7 @@ public class EmpleadoEstructuraService {
                 }
             });
             URL urlEndpoint = new URL(configuration.empleadoEstructuraEndpoint());
-            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service(urlEndpoint);
+            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service();
             port = service.getPort(ZWSPEEMPLEADOESTRUCTURA.class);
 
             /*******************UserName & Password ******************************/

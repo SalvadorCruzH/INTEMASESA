@@ -1,5 +1,8 @@
 package es.emasesa.intranet.base.util;
 
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -10,17 +13,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import es.emasesa.intranet.base.constant.EmasesaConstants;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -98,9 +105,48 @@ public class CustomWorkflowUtil {
      * @param workflowContext
      * 
      */
-    public void createPDF(Map<String, Serializable> workflowContext) {
-    	//TODO - Hacer el método de crear un PDF con los valores del object. Pensa en generalizarlo y saber que campos vamos a pintar y que campos no
-    }
+    public void createPDF(Map<String, Serializable> workflowContext) throws IOException, PortalException {
+
+		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		long userId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+		long groupId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+		String entryType = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
+		String fileName = entryType + "_" + classPK;
+		String sourceFileName = fileName + ".pdf";
+		Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
+		DLFolder folderPDF = dlFolderLocalService.getFolder(groupId, 0, EmasesaConstants.EMASESA_FOLDER_COMPATIBILITY);
+
+		PDDocument document = new PDDocument();
+		PDPage page = new PDPage();
+		document.addPage(page);
+		PDPageContentStream contentStream = new PDPageContentStream(document, page);
+		contentStream.setFont(PDType1Font.HELVETICA, 12);
+		contentStream.beginText();
+		contentStream.setLeading(15f);
+		contentStream.newLineAtOffset(25, 750);
+
+		objectValues.forEach((clave, valor) ->{
+			try {
+				contentStream.showText(clave + ": " + valor.toString());
+				contentStream.newLine();
+			} catch (IOException e) {
+				LOG.error("Se ha producido un error al añadir texto al PDF", e);
+			}
+		});
+
+		contentStream.endText();
+		contentStream.close();
+
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		document.save(byteArrayOutputStream);
+		byte[] pdfByte = byteArrayOutputStream.toByteArray();
+		InputStream is = new ByteArrayInputStream(pdfByte);
+		document.close();
+
+		ServiceContext serviceContext = new ServiceContext();
+		dlAppLocalService.addFileEntry(fileName, userId, folderPDF.getRepositoryId(), folderPDF.getFolderId(), sourceFileName, EmasesaConstants.EMASESA_MIMETYPE,
+				fileName, sourceFileName, "", "", is, pdfByte.length, null, null, serviceContext);
+	}
     
     /**
      * Change status object
@@ -280,5 +326,10 @@ public class CustomWorkflowUtil {
     @Reference
     private RoleLocalService _roleLocalService;
 
-    private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
+	@Reference
+	private DLFolderLocalService dlFolderLocalService;
+
+	@Reference
+	private DLAppLocalService dlAppLocalService;
+	private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
 }
