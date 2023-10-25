@@ -49,6 +49,10 @@
         border-radius: 30px;
         padding: 30px 60px;
         margin: 0 0 30px;
+        @include media-breakpoint-down(sm) {
+            padding: 15px;
+            border-radius: 15px;
+        }
     }
     .custom-radio-label {
         display: inline-flex;
@@ -58,6 +62,19 @@
     }
     label .reference-mark {
         color: $color-required;
+    }
+    .file-upload {
+        opacity: 1;
+        height: auto;
+        overflow: initial;
+        transition: all .3s ease;
+        cursor: pointer;
+        &[disabled="disabled"] {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            cursor: not-allowed;
+        }
     }
 }
 
@@ -81,6 +98,7 @@
         padding: 14.5px 15px;
         background-color: $color-green;
         border-radius: 0 10px 10px 0;
+        white-space: nowrap;
     }
 }
 
@@ -104,4 +122,8 @@
             }
         }
     }
+}
+
+#fieldRepetibleContainer input {
+    margin: 7.5px 0;
 }
