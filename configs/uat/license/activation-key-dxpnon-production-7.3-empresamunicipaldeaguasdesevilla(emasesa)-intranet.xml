@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<license>
+	<account-name>Empresa Municipal de Aguas de Sevilla (Emasesa) - Intranet</account-name>
+	<owner>Empresa Municipal de Aguas de Sevilla (Emasesa) - Intranet</owner>
+	<description>Empresa Municipal de Aguas de Sevilla (Emasesa) - Intranet</description>
+	<product-name>DXP Non-Production</product-name>
+	<product-version>7.3</product-version>
+	<license-name>DXP Non-Production</license-name>
+	<license-type>production</license-type>
+	<license-version>6</license-version>
+	<start-date>Tuesday, March 1, 2022 12:00:00 AM GMT</start-date>
+	<expiration-date>Thursday, May 6, 2123 12:00:00 AM GMT</expiration-date>
+	<max-servers>1</max-servers>
+	<instance-size>Sizing 1</instance-size>
+	<host-names>
+		<host-name>tb0028.emasesa.com</host-name>
+	</host-names>
+	<ip-addresses>
+		<ip-address>10.1.125.122</ip-address>
+	</ip-addresses>
+	<mac-addresses>
+		<mac-address>00:50:56:bc:6a:a6</mac-address>
+	</mac-addresses>
+	<key>46d93f09409c670769365d469ef6c1b3ca1a469afc09973bd99696ed959d2d38db90935a271dcf6abed65aaffd7ac0c77c7877f49dca50dfe6d34ac06135365a84a812f6303da91b3e0bcd8e11d8b4c28de0bbc2d83364d1ca680aaa89344044c426d5a9b453e33cff3066bee6b2a63fd2e02b208c3f00ea423b0fd36827c61919b432ec</key>
+</license>
