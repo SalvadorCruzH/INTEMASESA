@@ -51,7 +51,7 @@
         <td>#fechaDesde#</td>
         <td>#fechaHasta#</td>
         <td>#fechaSolicitud#</td>
-        <td>#estado#</td>
+        <td><span class="ema-pill-estado #estado-code#">#estado#</span></td>
         <td class="ema-td-dropdown">
             <button class="ema-button-moreoptions">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -64,12 +64,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#urlBorrar#">
+                    <a href="#urlEliminar#">
                         <i class="fa-solid fa-trash"></i>
                         <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.delete" />
                     </a>
                 </li>
             </ul>
+            <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>
         </td>
     </tr>
 </template>
@@ -109,7 +110,6 @@ $(document).ready(function () {
 
 var addClickFunctionality = function () {
     var moreOptionsTd = $('.ema-td-dropdown');
-    console.log(moreOptionsTd)
     moreOptionsTd.each(function() {
         $(this).children('.ema-button-moreoptions').on('click', function () {
             $(this).siblings('.ema-desplegable-moreoptions').toggleClass('show');
@@ -118,13 +118,16 @@ var addClickFunctionality = function () {
 }
 
 var checkStatus = function () {
-    $('.ema-ajaxsearch__item').each(function() {
-        var estado = $(this).find('td:nth-child(5)').text();
-        if (estado == 'Completado' || estado == 'Rechazado') {
-            //TODO cambiar estado por estado final y terminar
-            $(this).find('.ema-button-moreoptions').remove();
-            $(this).find('.ema-desplegable-moreoptions').remove();
-            $(this).find('td:nth-child(6)').append('<a class="ema-button-visualize" href="#urlVisualizar#"><i class="fa-solid fa-eye"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.view" /></a>');
+    $('tbody#as-wrapper tr').each(function() {
+        var estado = $(this).find('.ema-pill-estado');
+        if(estado.hasClass("success")) {
+            $(this).find(".ema-button-moreoptions").remove();
+            $(this).find(".ema-desplegable-moreoptions").remove();
+        } else if (estado.hasClass("danger") ) {
+            $(this).find(".ema-button-moreoptions").remove();
+            $(this).find(".ema-desplegable-moreoptions").remove();
+        } else {
+            $(this).find('.ema-enlace-visualizar').remove();
         }
     });
 }
