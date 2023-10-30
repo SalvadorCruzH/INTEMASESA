@@ -1,6 +1,8 @@
 package es.emasesa.intranet.searchframework;
 
 import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.object.model.ObjectEntry;
@@ -8,6 +10,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import org.osgi.service.component.annotations.Reference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component(
@@ -26,7 +29,7 @@ public class SearchingObject {
 	/** INDEX **/
 
 	public final  Indexer<ObjectEntry> getObjectIndexer(final String objectDefinitionId){
-		return IndexerRegistryUtil.getIndexer("com.liferay.object.model.ObjectDefinition#" + objectDefinitionId);
+		return indexerRegistry.getIndexer("com.liferay.object.model.ObjectDefinition#" + objectDefinitionId);
 	}
 
 
@@ -36,15 +39,21 @@ public class SearchingObject {
 	}
 
 	/** Searching **/
-	public Hits searchObjects(String[] objectDefinitionIds, SearchContext searchContext) throws SearchException, ParseException {
-		BooleanQuery query = new BooleanQueryImpl();
+	public List<Document> searchObjects(String[] objectDefinitionIds, SearchContext searchContext) throws SearchException, ParseException {
+
+		List<Document> listDocuments = new ArrayList<>();
 
 		for (String objectDefinitionId : objectDefinitionIds) {
-			Indexer<ObjectEntry> indexer = getObjectIndexer(objectDefinitionId);
-			query.add(indexer.getFullQuery(searchContext), BooleanClauseOccur.SHOULD);
+			BooleanQuery query = new BooleanQueryImpl();
+			MatchQuery objectDefinitionQuery = new MatchQuery("objectDefinitionId", objectDefinitionId);
+			query.add(objectDefinitionQuery, BooleanClauseOccur.MUST.getName());
+			MatchQuery statusbyUserIdQuery = new MatchQuery("statusByUserId", "" + ServiceContextThreadLocal.getServiceContext().getUserId());
+			query.add(statusbyUserIdQuery, BooleanClauseOccur.MUST.getName());
+			Hits hits = indexSearcherHelper.search(searchContext, query);
+			List<Document> hitsList = hits.toList();
+            listDocuments.addAll(hitsList);
 		}
-
-		return indexSearcherHelper.search(searchContext, query);
+		return listDocuments;
 	}
 	
 	public Hits searchObject(final String objectDefinitionId, final SearchContext searchContext, String... fieldFilter) throws SearchException {
@@ -86,4 +95,7 @@ public class SearchingObject {
 
 	@Reference
 	IndexSearcherHelper indexSearcherHelper;
+
+	@Reference
+	IndexerRegistry indexerRegistry;
 }

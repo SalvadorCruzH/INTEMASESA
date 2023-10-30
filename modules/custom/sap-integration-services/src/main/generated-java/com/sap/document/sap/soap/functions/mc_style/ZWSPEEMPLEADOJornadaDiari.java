@@ -17,7 +17,7 @@ import jakarta.xml.ws.ResponseWrapper;
  * Generated source version: 3.0
  * 
  */
-@WebService(name = "Z_WS_PE_EMPLEADO_jornada_diari", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style")
+@WebService(name = "Z_WS_PE_EMPLEADO_JORNADA_DIARI", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style")
 @XmlSeeAlso({
     com.sap.document.sap.rfc.functions.ObjectFactory.class,
     com.sap.document.sap.soap.functions.mc_style.ObjectFactory.class

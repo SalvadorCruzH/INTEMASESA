@@ -39,7 +39,7 @@ subprojects { subproject ->
 
 	dependencyManagement {
 		dependencies {
-			dependency "com.liferay.portal:release.dxp.api:7.4.13.u91"
+			dependency "com.liferay.portal:release.dxp.api:7.4.13.u92"
 			dependency "javax.mail:mail:1.4.7"
 		}
 	}
@@ -60,23 +60,34 @@ distributions {
 	main {
 		distributionBaseName = 'portalempleado'
 		contents {
+			//Copiamos los despliegues
 			into('deploy/') {
 				from 'bundles/deploy'
 			}
 			into('osgi/modules') {
 				from 'bundles/osgi/modules'
 			}
+			//Copiamos las configuraciones comunes y propias del entorno
 			into('osgi/configs') {
 				from 'configs/common/osgi/configs'
 			}
 			into('osgi/configs') {
 				from 'configs/'+env+'/osgi/configs'
 			}
+			//Copiamos las propiedades
 			into('.') {
 				from 'configs/common/portal-setup-wizard.properties'
 			}
 			into('.') {
 				from 'configs/'+env+'/portal-emasesa.properties'
+			}
+			//Copiamos la licencia al deploy
+			into('deploy/') {
+				from 'configs/'+env+'/license/'
+			}
+			//Copiamos la licencia al deploy
+			into('patching/') {
+				from 'configs/common/patching/'
 			}
 			into('tomcat/webapps/ROOT/WEB-INF/shielded-container-lib') {
 				from 'shielded-lib'

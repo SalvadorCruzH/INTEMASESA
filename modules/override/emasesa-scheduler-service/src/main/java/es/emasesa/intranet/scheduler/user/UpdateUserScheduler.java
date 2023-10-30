@@ -38,7 +38,7 @@ public class UpdateUserScheduler implements MessageListener  {
             LoggerUtil.debug(LOG, "Se procede a actualizar el usuario con user id " + pernr);
             JSONObject employerData = _sapServices.getDatosEmpleadoAndDomicilio(pernr);
             long companyId = jsonObject.getLong("companyId");
-            LoggerUtil.info(LOG, "Datos de empleado :" + employerData);
+            LoggerUtil.debug(LOG, "Datos de empleado :" + employerData);
             User user = _userLocalService.fetchUserByScreenName(companyId, pernr);
             Map<String, Serializable> expandoAttributes = user.getExpandoBridge().getAttributes();
 
@@ -58,7 +58,7 @@ public class UpdateUserScheduler implements MessageListener  {
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_USUARIO, employerData.getString("usuario", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NOMBRE, employerData.getString("nombre", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
-            user.getExpandoBridge().setAttributes(expandoAttributes);
+            user.getExpandoBridge().setAttributes(expandoAttributes, false);
             LOG.debug("Usuario user id "+jsonObject.get("pernr") +" actualizado");
         }else{
             LoggerUtil.debug(LOG, "El usuario no es numérico "+ pernr);

@@ -1,12 +1,16 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.*;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,6 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -84,10 +89,6 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
             final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
             if (!Validator.isBlank(solicitudesId)) {
-
-                //Date fromDate = ajaxSearchDisplayContext.getDate(FECHA_DESDE);
-                //Date toDate = ajaxSearchDisplayContext.getOneMoreDayDate(FECHA_HASTA);
-
                 totalItems = performSearchAndParse(request,
                         response,
                         ajaxSearchDisplayContext,
@@ -142,16 +143,8 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
             searchingCommon.addCompanyIdFilter(searchContext, PortalUtil.getDefaultCompanyId());
         }
 
-        String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
-        if(Validator.isNotNull(sortBy)) {
-            if(sortBy[0].equals("date")) {
-                searchContext.setSorts(sortFactory.create(Field.MODIFIED_DATE, Sort.INT_TYPE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
-            } else if(sortBy[0].equals("name")) {
-                searchContext.setSorts(sortFactory.create("objectDefinitionName", Sort.STRING_TYPE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE));
-            }
-        } else {
-            searchContext.setSorts(sortFactory.create("objectDefinitionName", Sort.STRING_TYPE, Boolean.FALSE));
-        }
+        QueryConfig queryConfig = searchContext.getQueryConfig();
+        queryConfig.addSelectedFieldNames(Field.ANY);
 
         if (!ajaxSearchDisplayContext.getQueryText().isBlank()) {
             booleanQuery.addTerm("objectDefinitionName", ajaxSearchDisplayContext.getQueryText(), Boolean.TRUE, BooleanClauseOccur.MUST);
@@ -159,10 +152,19 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
 
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
-        final Hits hits = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
-        final int totalItems = hits.getLength();
+        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+        final int totalItems = documents.size();
 
-        final List<Document> documents = hits.toList();
+        String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
+        if(Validator.isNotNull(sortBy)) {
+            if(sortBy[0].equals("date")) {
+                sortDocuments(documents, themeDisplay.getLocale(), Field.CREATE_DATE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE);
+            } else if(sortBy[0].equals("name")) {
+                sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE);
+            }
+        } else {
+            sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE);
+        }
         JSONObject jsonObject;
 
         for (Document document : documents) {
@@ -175,9 +177,20 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         return totalItems;
     }
 
+    private void sortDocuments(List<Document> documents, Locale locale, String sortingField, Boolean descending) {
+        documents.sort((Document d1, Document d2) -> {
+            String fieldDocument1 = d1.get(locale, sortingField);
+            String fieldDocument2 = d2.get(locale, sortingField);
+            if(descending) {
+                return fieldDocument2.compareTo(fieldDocument1);
+            }else {
+                return fieldDocument1.compareTo(fieldDocument2);
+            }
+        });
+    }
     private JSONObject getResultJson(final Document document,
                                      final ThemeDisplay themeDisplay) {
-        final JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+        final JSONObject jsonObject = jsonFactory.createJSONObject();
         jsonObject.put("nombreObjeto", document.get(themeDisplay.getLocale(), "objectDefinitionName"));
 
         String fechaDesde = document.get(themeDisplay.getLocale(), "fechaDesde");
@@ -189,12 +202,40 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         String fechaSolicitud = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
         jsonObject.put("fechaSolicitud", formatDate(fechaSolicitud));
 
-        jsonObject.put("estado", document.get(themeDisplay.getLocale(), Field.STATUS));
-
-
+        String objectEntryContent = document.get(themeDisplay.getLocale(), "objectEntryContent");
+        Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
+        if (objectEntryContent.contains("estadoObjeto:")) {
+            String estadoObjeto = getValueFromObject(objectClassPK, "estadoObjeto");
+            jsonObject.put("estado", estadoObjeto);
+            switch (estadoObjeto) {
+                case "aceptada":
+                    jsonObject.put("estado-code", "success");
+                    break;
+                case "rechazada":
+                    jsonObject.put("estado-code", "danger");
+                    break;
+                default:
+                    jsonObject.put("estado-code", "pending");
+                    break;
+            }
+        } else {
+            jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
+            jsonObject.put("estado-code", "unknown");
+        }
+        jsonObject.put("urlVisualizar", "");
+        jsonObject.put("urlEditar", "");
+        jsonObject.put("urlEliminar", "");
         return jsonObject;
     }
 
+    private String getValueFromObject(Long objectClassPK, String key) {
+        try {
+            ObjectEntry objetoEntry = objectEntryLocalService.getObjectEntry(objectClassPK);
+            return objetoEntry.getValues().get(key).toString();
+        } catch (PortalException e) {
+            return StringPool.BLANK;
+        }
+    }
     /**
      * Formatea la fecha de la solicitud
      *
@@ -226,6 +267,12 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
 
     @Reference
     protected SortFactory sortFactory;
+
+    @Reference
+    ObjectEntryLocalService objectEntryLocalService;
+
+    @Reference
+    JSONFactory jsonFactory;
 
     @Reference
     IndexSearcher indexSearcher;

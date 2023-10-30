@@ -163,21 +163,21 @@
               "label": {
                 "es_ES": "1 sola columna"
               },
-              "value": "Opción49995400"
+              "value": "mj-column-per-33-333333333333336"
             },
             {
               "reference": "boletin__related__item--2col",
               "label": {
                 "es_ES": "2 columnas"
               },
-              "value": "Opción99888833"
+              "value": "mj-column-per-66-6666666667"
             },
             {
               "reference": "boletin__related__item--3col",
               "label": {
                 "es_ES": "3 columnas"
               },
-              "value": "Opción19664591"
+              "value": "mj-column-per-100"
             }
           ],
           "localizable": true,

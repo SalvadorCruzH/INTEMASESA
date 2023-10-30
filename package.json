@@ -2,6 +2,8 @@
     "private": true,
     "workspaces": {
         "packages": [
+            "client-extensions/administrador-tareas-module",
+            "client-extensions/global-module",
             "modules/override/rest-ddmfieldextender",
             "themes/emasesa-fragments",
             "themes/emasesa-theme"

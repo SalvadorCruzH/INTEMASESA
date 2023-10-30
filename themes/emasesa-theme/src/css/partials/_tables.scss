@@ -156,6 +156,31 @@
                             }
                             .ema-button-visualize {
                             }
+
+                            .ema-pill-estado {
+                                border-radius: m-rem(18px);
+                                padding: .5rem;
+                                
+                                &.pending {
+                                    background-color: #EEE;
+                                    color: black;
+                                }
+                                
+                                &.danger {
+                                    background-color: #FDE2E3;
+                                    color: #B33333;
+                                }
+                                
+                                &.success {
+                                    background-color: #ECF4DB;
+                                    color: #1A5F12;
+                                }
+
+                                &.unknown {
+                                    background-color: #EEE;
+                                    color: black;
+                                }
+                            }
                         }
                     }
                     tr:last-child {
