@@ -8,7 +8,7 @@ global-module:
     htmlElementName: global-module
     instanceable: false
     name: Modulo de Global que exporta librerías
-    portletCategoryName: category.selaepv
+    portletCategoryName: category.emasesa
     type: customElement
     urls:
         - js/main.*.js

@@ -8,7 +8,7 @@ administrador-tareas-module:
     htmlElementName: administrador-tareas-module
     instanceable: false
     name: Modulo administrador de tareas
-    portletCategoryName: category.sample
+    portletCategoryName: category.emasesa
     type: customElement
     urls:
         - js/main.*.js
