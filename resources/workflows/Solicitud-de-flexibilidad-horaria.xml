@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
-	<version>17</version>
+	<version>28</version>
 	<state>
 		<name>4a366907-deba-425c-8bfc-d40aa6c164f7</name>
 		<description>Se crea una solicitud de flexibilidad horaria</description>
@@ -184,21 +184,31 @@ customWorkflowUtilTracker.close();]]>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<roles>
-						<role>
-							<role-id>75276</role-id>
-						</role>
-					</roles>
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-id>75276</role-id>
-				</role>
-			</roles>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -235,8 +245,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						390.566387458659,
-						-285.762249025703
+						385.2883555417544,
+						-287.0817914212719
 					]
 				}
 			]]>
@@ -270,7 +280,7 @@ customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>Notificar asginación</name>
@@ -283,21 +293,31 @@ customWorkflowUtilTracker.close();]]>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<roles>
-						<role>
-							<role-id>75282</role-id>
-						</role>
-					</roles>
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-id>75282</role-id>
-				</role>
-			</roles>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -334,8 +354,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						794.9088458087009,
-						-279.23115890987367
+						767.1991580383941,
+						-284.50925837440525
 					]
 				}
 			]]>
@@ -481,21 +501,31 @@ customWorkflowUtilTracker.close();]]>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<roles>
-						<role>
-							<role-id>75287</role-id>
-						</role>
-					</roles>
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-id>75287</role-id>
-				</role>
-			</roles>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
