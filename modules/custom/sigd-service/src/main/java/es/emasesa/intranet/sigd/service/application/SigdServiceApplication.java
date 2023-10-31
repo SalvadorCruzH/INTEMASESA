@@ -11,11 +11,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -34,10 +30,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -54,66 +46,6 @@ import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
 		service = SigdServiceApplication.class
 )
 public class SigdServiceApplication extends Application {
-	
-	// METODOS PARA PRUEBAS
-	
-			/**
-		     * Create PDF
-		     * @param workflowContext
-		     * 
-		     */
-		    public PDDocument createPDF() throws IOException, PortalException {
-				String fileName = "prueba";
-				String sourceFileName = fileName + ".pdf";
-				Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(44940l).getValues();
-				
-				PDDocument document = new PDDocument();
-				PDPage page = new PDPage();
-				document.addPage(page);
-				PDPageContentStream contentStream = new PDPageContentStream(document, page);
-				contentStream.setFont(PDType1Font.HELVETICA, 12);
-				contentStream.beginText();
-				contentStream.setLeading(15f);
-				contentStream.newLineAtOffset(25, 750);
-
-				objectValues.forEach((clave, valor) ->{
-					try {
-						contentStream.showText(clave + ": " + valor.toString());
-						contentStream.newLine();
-					} catch (IOException e) {
-						LOG.error("Se ha producido un error al añadir texto al PDF", e);
-					}
-				});
-
-				contentStream.endText();
-				contentStream.close();
-
-				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-				document.save(byteArrayOutputStream);
-				byte[] pdfByte = byteArrayOutputStream.toByteArray();
-				InputStream is = new ByteArrayInputStream(pdfByte);
-//				document.close();
-				return document;
-			}
-		    public String pdfBase64(PDDocument pdfDocument) {
-		    	 String base64PDF = "";
-		    	try {
-		            // Convertir PDDocument a bytes
-		            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		            pdfDocument.save(byteArrayOutputStream);
-		            pdfDocument.close();
-
-		            // Convertir a base64
-		            base64PDF = Base64.encodeBase64String(byteArrayOutputStream.toByteArray());
-
-		            System.out.println(base64PDF);
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		    	return base64PDF;
-		    }
-		    // FIN METODOS PARA PRUEBAS
-
 	
 	/**
      * Llamada al servicio para recuperar los metadatos que hay que rellenar dada una serie y tipo documental.
