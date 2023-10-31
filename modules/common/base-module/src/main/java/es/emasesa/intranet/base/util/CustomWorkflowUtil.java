@@ -5,6 +5,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,7 +25,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import es.emasesa.intranet.base.constant.EmasesaConstants;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -74,17 +78,17 @@ public class CustomWorkflowUtil {
     
     
     /**
-     * Save Object on SIGD
-     * @param workflowContext
+     * Save document on SIGD
+     * @param pdf
+     * @param objectName
+     * @param tipoDocumental
      * 
      */
-    public void saveObjectOnSIGD(Map<String, Serializable> workflowContext) {
+    public void saveDocumentOnSIGD(String pdf, String objectName,String tipoDocumental) {
     	
-    	  LoggerUtil.debug(LOG, "Guardando el objeto en el gestor documnetal SIGD");
-    	  long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-    	  ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
-    	  
-    	//TODO - Hacer el servicio para mandar el documento el gestor documentar en base64
+    	LoggerUtil.debug(LOG, "Guardando el documento en el gestor documnetal SIGD. Para el formulario: " + objectName + " y el tipo documental: " + tipoDocumental);
+    	_sigdServiceApplication.insertarDocumento(pdf, objectName, tipoDocumental);
+    	LoggerUtil.debug(LOG, "Documento almacenado");
     }
     
     /**
@@ -147,6 +151,29 @@ public class CustomWorkflowUtil {
 		dlAppLocalService.addFileEntry(fileName, userId, folderPDF.getRepositoryId(), folderPDF.getFolderId(), sourceFileName, EmasesaConstants.EMASESA_MIMETYPE,
 				fileName, sourceFileName, "", "", is, pdfByte.length, null, null, serviceContext);
 	}
+    
+    /**
+     * Transform PDF Base64
+     * @param pdfDocument
+     * 
+     * @return String pdfBase64
+     * 
+     */
+    public String pdfBase64(PDDocument pdfDocument) {
+   	 String base64PDF = StringPool.BLANK;
+   	try {
+   		   LoggerUtil.debug(LOG, "Se inicia el proceso para convertir un PDF a base64.");
+           ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+           pdfDocument.save(byteArrayOutputStream);
+           pdfDocument.close();
+           base64PDF = Base64.encodeBase64String(byteArrayOutputStream.toByteArray());
+
+           LoggerUtil.debug(LOG, "Convertido PDF a base64: " + base64PDF);
+       } catch (IOException e) {
+    	   LoggerUtil.error(LOG, "Error al intenar convertir PDF a base64: " + e.toString());
+       }
+   	return base64PDF;
+   }
     
     /**
      * Change status object
@@ -331,5 +358,9 @@ public class CustomWorkflowUtil {
 
 	@Reference
 	private DLAppLocalService dlAppLocalService;
+	
+	@Reference
+	private SigdServiceApplication _sigdServiceApplication;
+	
 	private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
 }
