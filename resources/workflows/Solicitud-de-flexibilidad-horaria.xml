@@ -1,0 +1,528 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
+	<version>17</version>
+	<state>
+		<name>4a366907-deba-425c-8bfc-d40aa6c164f7</name>
+		<description>Se crea una solicitud de flexibilidad horaria</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-94.05074173684812,
+						-6.154380596187083
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="es_ES">
+				Creación solicitud flexibilidad horaria
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Etiqueta de transición
+					</label>
+				</labels>
+				<name>d7e8b787-e002-40c3-a7da-4445c47141b0</name>
+				<target>59bad819-d835-4485-834d-c01308793c46</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>485aafa5-dac9-41cd-875c-7068d80a244c</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						1215.7774658203125,
+						-12.27911376953125
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Guardar en SIGD</name>
+				<description>aprobada</description>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Solicitud finalizada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud ha finalizado, ${entryType}]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Fin proceso solicitud
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>1e041ac5-366f-41ff-bce2-bd209e5721f6</name>
+		<description>Solicitud de flexibilidad horaria rechazada.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						532.4475708007812,
+						2.784423828125
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Guardar en SIGD</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.*;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.saveObjectOnSIGD(workflowContext);
+customWorkflowUtil.setObjectStatus(workflowContext, "rechazada");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Rechazada y guardada en SIGD
+			</label>
+		</labels>
+	</state>
+	<task>
+		<name>59bad819-d835-4485-834d-c01308793c46</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-15.841171395876975,
+						-285.9410938848482
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description>pendiente jefe de departamento</description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado de objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAprobacion");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificar asginación</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de flexibilidad horaria]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>75276</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>75276</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Jefe de Departamento del usuario
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>4330e277-0584-48e2-9c9e-eeef35e49ed7</name>
+				<target>c8114964-5a5f-4431-94d2-76229d1b744a</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazar y guardada en SIGD
+					</label>
+				</labels>
+				<name>d778cd87-38ac-44c1-8803-662ff874cadd</name>
+				<target>1e041ac5-366f-41ff-bce2-bd209e5721f6</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>c8114964-5a5f-4431-94d2-76229d1b744a</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						390.566387458659,
+						-285.762249025703
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "jefeDeDivision");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificar asginación</name>
+				<description>
+					<![CDATA[pendiente aprobación de jefe de división]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de flexibilidad horaria]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>75282</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>75282</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Jefe de División
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>927b96fd-c06e-46fe-aee8-6741f064ae28</name>
+				<target>2ced3bea-8983-4ec8-9bb2-a92bd2e6fc8e</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazar y guardada en SIGD
+					</label>
+				</labels>
+				<name>f1a074ff-10b4-4503-bd8a-0095b3d070d2</name>
+				<target>1e041ac5-366f-41ff-bce2-bd209e5721f6</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>2ced3bea-8983-4ec8-9bb2-a92bd2e6fc8e</name>
+		<description>Pida a un usuario que trabaje en el elemento.Solicitud enviada lista para asignarse a un usuario con rol Administración de RRHH</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						794.9088458087009,
+						-279.23115890987367
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description>Pendiente de RRHH</description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "asignadaRRHH");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificar asginación</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de flexibilidad horaria]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>47798</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>47798</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Administración de RRHH
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>d8753656-db3a-4c25-a8c9-4d0b916a6bef</name>
+				<target>211c17de-677c-4ac1-af72-3074f279703d</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazar y guardada en SIGD
+					</label>
+				</labels>
+				<name>82836781-0769-4d06-b53e-63bdce5ec612</name>
+				<target>1e041ac5-366f-41ff-bce2-bd209e5721f6</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>211c17de-677c-4ac1-af72-3074f279703d</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						1213.3138720170914,
+						-288.2725026818501
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "jefeDivisionPersonas");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Notificar asginación</name>
+				<description>
+					<![CDATA[pendiente aprobación de jefe de división de personas]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de flexibilidad horaria]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>75287</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>75287</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Jefe de División de Personas
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Resolución definitiva
+					</label>
+				</labels>
+				<name>04e9620c-cbbe-4c07-90d4-b97be3296757</name>
+				<target>485aafa5-dac9-41cd-875c-7068d80a244c</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazar y guardada en SIGD
+					</label>
+				</labels>
+				<name>389fe33c-3c84-432e-8f5d-4148dc023d49</name>
+				<target>1e041ac5-366f-41ff-bce2-bd209e5721f6</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

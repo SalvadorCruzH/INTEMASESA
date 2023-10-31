@@ -1,0 +1,577 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
+	<version>28</version>
+	<state>
+		<name>0ef0454a-80c8-4e4d-aff5-eb419fc05027</name>
+		<description>Inicia un flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-338,
+						-2
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="es_ES">
+				Envio solicitud de excedencia
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud enviada
+					</label>
+				</labels>
+				<name>d17c5e8d-aabc-4904-a3d2-f2c873d1a72c</name>
+				<target>8c058c94-a9bd-4777-a011-558bd9b85fd5</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>3fc51e44-cdff-42b8-b318-5a9def3c8c8f</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						832.199951171875,
+						483.99993896484375
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto y guardar</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.saveObjectOnSIGD(workflowContext);
+customWorkflowUtil.sendObjectPortafirmas(workflowContext);
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "aprobada");
+customWorkflowUtilTracker.close();
+]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Aprobación solicitud y guardar SIGD
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>53213fa2-5e05-4738-9514-ef613d121698</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						49.546875,
+						337.5
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Guardar en SIGD</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.saveObjectOnSIGD(workflowContext);
+customWorkflowUtil.sendObjectPortafirmas(workflowContext);
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "rechazada");
+customWorkflowUtilTracker.close();
+]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Rechazada y guardada en SIGD
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>cae94017-e0cf-4984-bcb7-d0e5be856906</name>
+		<description>Ejecuta las acciones en el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						448.546875,
+						-0.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteJefeDepartamento");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha creado una solicitud de excedencia]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Jefe Departamento
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>502fd2ee-6341-4607-8501-83405976d017</name>
+				<target>9978aeee-81cb-419a-a5f7-4b0d85e5aec5</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>9978aeee-81cb-419a-a5f7-4b0d85e5aec5</name>
+		<description>Ejecuta las acciones en el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						825.546875,
+						0.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteJefeDivisionArea");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha creado una solicitud de excedencia]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				jefe division area
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>99f7146b-de13-4875-8981-3f31aa35568b</name>
+				<target>ff123649-02d8-47fc-b91b-4f616109812e</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>ff123649-02d8-47fc-b91b-4f616109812e</name>
+		<description>Ejecuta las acciones en el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						828.546875,
+						163.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteJefeDivisionRRHH");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha creado una solicitud de excedencia]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				jefe division RRHH
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>06ef5441-ad07-4ccc-a52d-c999094fb448</name>
+				<target>9c98f664-72fb-4613-9946-bd08fa235079</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<task>
+		<name>8c058c94-a9bd-4777-a011-558bd9b85fd5</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						48.546875,
+						-0.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAdminRRHH");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha creado una solicitud de excedencia]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>47798</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>47798</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				admin RRHH
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>43601163-2417-4b02-a839-b205539a17c0</name>
+				<target>cae94017-e0cf-4984-bcb7-d0e5be856906</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud rechazada
+					</label>
+				</labels>
+				<name>321a5ca1-e52c-4468-bc0b-23f9afb2dea0</name>
+				<target>53213fa2-5e05-4738-9514-ef613d121698</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>9c98f664-72fb-4613-9946-bd08fa235079</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						829.546875,
+						336.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteDireccionRRHH");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha creado una solicitud de excedencia]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>47798</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>47798</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Director de RRHH
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>c27fbb31-4edf-403b-ae6f-e2539ca67e45</name>
+				<target>3fc51e44-cdff-42b8-b318-5a9def3c8c8f</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud rechazada
+					</label>
+				</labels>
+				<name>e7b009d1-07aa-48d5-a818-e6a9d9dc8c05</name>
+				<target>53213fa2-5e05-4738-9514-ef613d121698</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>
