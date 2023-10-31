@@ -69,11 +69,11 @@ public class SigdServiceApplication extends Application {
             builder.addParameter(SidgServiceKeys.CREAR_DOCUMENTO_SERIE_DOCUMENTAL, getConfigurationValue(objectName, SidgServiceKeys.CREAR_DOCUMENTO_SERIE_DOCUMENTAL));
             builder.addParameter(SidgServiceKeys.CREAR_DOCUMENTO_TIPO_DOCUMENTAL, getConfigurationValue(objectName, tipoDocumental));
             builder.addParameter(SidgServiceKeys.CREAR_DOCUMENTO_USUARIO_INDEXACION, "LoginUsuario");
-            LoggerUtil.info(LOG,"Se añaden parámetros a : " + builder.build());
+            LoggerUtil.debug(LOG,"Se añaden parámetros a : " + builder.build());
 			
 			HttpGet get = new HttpGet(builder.build());
 			get.addHeader(HttpHeaders.AUTHORIZATION, getBasicAuthentication());
-			LoggerUtil.info(LOG,"Peticion GET construida: " + get.toString());
+			LoggerUtil.debug(LOG,"Peticion GET construida: " + get.toString());
 			
 			CloseableHttpResponse response = httpClient.execute(get);
 			LoggerUtil.debug(LOG,"Respuesta obtenida" + response.toString());
@@ -273,24 +273,24 @@ public class SigdServiceApplication extends Application {
 	 */
 	 public JSONObject createBody(String pdf,  String objectName, String tipoDocumental){
 		 
-		LoggerUtil.info(LOG, "Creando el JSON del body" );
+		LoggerUtil.debug(LOG, "Creando el JSON del body" );
 		/*Creamos la cabecera del JSON*/
 		JSONObject json = JSONFactoryUtil.createJSONObject();
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_ID_ORIGEN, "1");
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_SERIE_DOCUMENTAL, getConfigurationValue(objectName, SidgServiceKeys.CREAR_DOCUMENTO_SERIE_DOCUMENTAL));
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_TIPO_DOCUMENTAL, getConfigurationValue(objectName, tipoDocumental));
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_USUARIO_INDEXACION, "LoginUsuario");
-		LoggerUtil.info(LOG, "Cabecera creada: " + json.toString());	
+		LoggerUtil.debug(LOG, "Cabecera creada: " + json.toString());	
 		 
 		 /*Agrega el JSONArray "campos" al JSON principal*/
-		LoggerUtil.info(LOG, "Añadiendo los campos con los metadatos" );
+		LoggerUtil.debug(LOG, "Añadiendo los campos con los metadatos" );
 		String metadatos = getConfigurationValue(objectName, SidgServiceKeys.FORM_METADATOS);
-		LoggerUtil.info(LOG, "Se recuperan los metadatos en forma de String de la configuracion del sistema: " + metadatos );
+		LoggerUtil.debug(LOG, "Se recuperan los metadatos en forma de String de la configuracion del sistema: " + metadatos );
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_CAMPOS, obtainMetadatosWithService(objectName, tipoDocumental));
-		LoggerUtil.info(LOG, "Añadido campos de los metadatos: " + json.toString());	
+		LoggerUtil.debug(LOG, "Añadido campos de los metadatos: " + json.toString());	
 		 
 		 /*Agrega el JSONArray "ficheros" al JSON principal*/
-		LoggerUtil.info(LOG, "Añadiendo los ficheros" );
+		LoggerUtil.debug(LOG, "Añadiendo los ficheros" );
 		JSONArray ficherosArray = JSONFactoryUtil.createJSONArray();
 		JSONObject fichero = JSONFactoryUtil.createJSONObject();
 		fichero.put(SidgServiceKeys.CREAR_DOCUMENTO_NUMERO_ORDEN, "1");
@@ -298,9 +298,9 @@ public class SigdServiceApplication extends Application {
 		fichero.put(SidgServiceKeys.CREAR_DOCUMENTO_FICHERO, pdf);
 		ficherosArray.put(fichero);
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_FICHEROS, ficherosArray);
-		LoggerUtil.info(LOG, "Añadido ficheros: " + json.toString());	
+		LoggerUtil.debug(LOG, "Añadido ficheros: " + json.toString());	
 			
-		LoggerUtil.info(LOG, "Creado el JSON del body: "+  json);	
+		LoggerUtil.debug(LOG, "Creado el JSON del body: "+  json);	
 		
 		return json;
 	 }
@@ -318,11 +318,11 @@ public class SigdServiceApplication extends Application {
 		 JSONArray camposArray = null;
 		 try {
 			 String jsonStr = crearDocumentoOrigen(objectName, tipoDocumental);
-			 LoggerUtil.info(LOG, "Respuesta del servicio: "+  jsonStr);
+			 LoggerUtil.debug(LOG, "Respuesta del servicio: "+  jsonStr);
 	         JSONObject jsonObject = JSONFactoryUtil.createJSONObject(jsonStr);
 	         JSONObject crearDocumentoOrigenResponse = jsonObject.getJSONObject(SidgServiceKeys.CREAR_DOCUMENTO_RESPONSE);
 	         camposArray = crearDocumentoOrigenResponse.getJSONArray(SidgServiceKeys.CREAR_DOCUMENTO_CAMPOS);
-	         LoggerUtil.info(LOG, "Obtenidos metadatos: "+  camposArray.toString());
+	         LoggerUtil.debug(LOG, "Obtenidos metadatos: "+  camposArray.toString());
 
 	        } catch (JSONException e) {
 	        	LoggerUtil.error(LOG, "Error al crear el objecto JSON a partir de la respeusta del servicio de crearDocumentoOrigen: " + e.toString());
@@ -340,15 +340,15 @@ public class SigdServiceApplication extends Application {
 	 */
 	 public static JSONArray createJSONMedadatos(String metadatosCondifguracion) {
 	    JSONArray metadatosResult = JSONFactoryUtil.createJSONArray();
-	    LoggerUtil.info(LOG, "Se crea el JSON con los metadatos obtenidos de la configuracion del sistema: " + metadatosCondifguracion);
+	    LoggerUtil.debug(LOG, "Se crea el JSON con los metadatos obtenidos de la configuracion del sistema: " + metadatosCondifguracion);
 
 	    try {
 	    	// Crea un objeto JSON a partir de la cadena de entrada
 	    	JSONObject metadatosConfig = JSONFactoryUtil.createJSONObject(metadatosCondifguracion.replace("\n", ""));
-	        LoggerUtil.info(LOG, "Crea un objeto JSON a partir de la cadena de entrada: " + metadatosConfig.toString());
+	        LoggerUtil.debug(LOG, "Crea un objeto JSON a partir de la cadena de entrada: " + metadatosConfig.toString());
 
 	       for (String clave : metadatosConfig.keySet()) {
-	          LoggerUtil.info(LOG, "clave: " + clave);
+	          LoggerUtil.debug(LOG, "clave: " + clave);
 	          JSONObject objetoTransformado = JSONFactoryUtil.createJSONObject();
 	          objetoTransformado.put(SidgServiceKeys.FORM_METADATO_NOMBRE_ORIGEN, clave);
 	          objetoTransformado.put(SidgServiceKeys.FORM_METADATO_TIPO_ORIGEN, metadatosConfig.getString(clave));
@@ -363,7 +363,7 @@ public class SigdServiceApplication extends Application {
 
 	          metadatosResult.put(objetoTransformado);
 	       }
-	       LoggerUtil.info(LOG, "Creado el objeto JSON con los metadatos: " + metadatosResult);
+	       LoggerUtil.debug(LOG, "Creado el objeto JSON con los metadatos: " + metadatosResult);
 	   } catch (Exception e) {
 	       LoggerUtil.error(LOG, "Error al crear el objecto JSON a partir del string de la configuracion: " + metadatosCondifguracion + e.toString());
 	   }
@@ -379,11 +379,11 @@ public class SigdServiceApplication extends Application {
 	     */
 		public String getConfigurationValue(String objectName, String key) {
 			
-			LoggerUtil.info(LOG, "Se obtiene el valor de la configuración");
+			LoggerUtil.debug(LOG, "Se obtiene el valor de la configuración");
 			JSONObject jsonObject = getJSONObjectConfiguration(objectName);
-			LoggerUtil.info(LOG, "jsonObject obtenido con valor: " + jsonObject);
+			LoggerUtil.debug(LOG, "jsonObject obtenido con valor: " + jsonObject);
 			String value = extractValue(jsonObject, key);
-			LoggerUtil.info(LOG, "value obtenido para el key: "+ key + " con valor: " + value);
+			LoggerUtil.debug(LOG, "value obtenido para el key: "+ key + " con valor: " + value);
 			return value;
 		}
 
@@ -396,11 +396,11 @@ public class SigdServiceApplication extends Application {
 	     */
 		public String extractValue(JSONObject jsonObject, String key) {
 		    String jsonValue = StringPool.BLANK;
-		    LoggerUtil.info(LOG, "Extrayendo el value con key: " + key +" del JSONObject: " + jsonObject.toString());
+		    LoggerUtil.debug(LOG, "Extrayendo el value con key: " + key +" del JSONObject: " + jsonObject.toString());
 		    for (String jsonKey : jsonObject.keySet()) {
 		        if (jsonKey.equals(key)) {
 		            jsonValue = jsonObject.getString(key);
-		            LoggerUtil.info(LOG, "El valor de jsonValue es: " + jsonValue);
+		            LoggerUtil.debug(LOG, "El valor de jsonValue es: " + jsonValue);
 		            break;
 		        } else if (jsonObject.get(jsonKey) instanceof JSONObject) {
 		            jsonValue = extractValue(jsonObject.getJSONObject(jsonKey), key);
@@ -421,11 +421,11 @@ public class SigdServiceApplication extends Application {
 		public JSONObject getJSONObjectConfiguration(String objectName) {
 			JSONObject jsonObject =  null;
 		    try {
-		        LoggerUtil.info(LOG, "Obteniendo los valores del objectName: " + objectName);
+		        LoggerUtil.debug(LOG, "Obteniendo los valores del objectName: " + objectName);
 		        String formConfiguration = getJSONConfigurationForm(objectName).replace("\n", "");
-		        LoggerUtil.info(LOG, "Se obtiene la configuracion del formulario: " + formConfiguration);
+		        LoggerUtil.debug(LOG, "Se obtiene la configuracion del formulario: " + formConfiguration);
 		        jsonObject = JSONFactoryUtil.createJSONObject(formConfiguration);
-		        LoggerUtil.info(LOG, "Creado el JSONObject a partir del String obtenido en la configuracion: " + jsonObject.toString());
+		        LoggerUtil.debug(LOG, "Creado el JSONObject a partir del String obtenido en la configuracion: " + jsonObject.toString());
 		    } catch (Exception e) {
 		        LoggerUtil.error(LOG, "Error al ejecutar la llamada get del servicio de crear documento origen de SIGD: " + e.toString());
 		    }
