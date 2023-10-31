@@ -25,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import es.emasesa.intranet.base.constant.EmasesaConstants;
-import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.commons.codec.binary.Base64;
@@ -76,20 +75,6 @@ public class CustomWorkflowUtil {
         return roles;
     }
     
-    
-    /**
-     * Save document on SIGD
-     * @param pdf
-     * @param objectName
-     * @param tipoDocumental
-     * 
-     */
-    public void saveDocumentOnSIGD(String pdf, String objectName,String tipoDocumental) {
-    	
-    	LoggerUtil.debug(LOG, "Guardando el documento en el gestor documnetal SIGD. Para el formulario: " + objectName + " y el tipo documental: " + tipoDocumental);
-    	_sigdServiceApplication.insertarDocumento(pdf, objectName, tipoDocumental);
-    	LoggerUtil.debug(LOG, "Documento almacenado");
-    }
     
     /**
      * Send object portaFirmas
@@ -358,9 +343,6 @@ public class CustomWorkflowUtil {
 
 	@Reference
 	private DLAppLocalService dlAppLocalService;
-	
-	@Reference
-	private SigdServiceApplication _sigdServiceApplication;
 	
 	private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
 }

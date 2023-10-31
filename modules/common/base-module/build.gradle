@@ -3,5 +3,4 @@ dependencies {
 	compileOnly "javax.mail:mail"
 	compileOnly group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.29'
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5"
-	compileOnly project(":modules:custom:sigd-service")
 }
