@@ -16,8 +16,12 @@ export const WORKFLOWTASKS = {
 }
 
 export const OBJECT_MAPPING = {
-    Compatibilidad : `${oauthUserAgent.URL_DEFAULT}/compatibilidads`
+    Compatibilidad : { url: `${oauthUserAgent.URL_DEFAULT}/compatibilidads`,id:39770},
 
+}
+
+export const OBJECT_CONSTANTS = {
+    VIEW_URL: '/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_objectDefinitionId=--objectDefinitionId--&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_externalReferenceCode=--externalReferenceCode--'
 }
 
 export function getLanguageLocal() {

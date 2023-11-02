@@ -1,6 +1,7 @@
 import React from 'react'
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import TareasApi from '../services/TareasApi';
+import {OBJECT_MAPPING,OBJECT_CONSTANTS} from "../js/Constants"
 
 let onlyonce = true;
 
@@ -8,10 +9,13 @@ class Actions extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            assigneePerson:props.tarea.assigneePerson,
             actions: props.tarea.actions,
             tareaid: props.tarea.id,
             transitions: props.tarea.transitions,
             refresh: props.refresh,
+            objectReviewed: props.tarea.objectReviewed,
+            externalReferenceCode:props.tarea.objectData.externalReferenceCode,
             loading: true,
         }
         console.log(this);
@@ -56,6 +60,30 @@ class Actions extends React.Component {
         onlyonce = false;
     }
 
+    openModal = (event) => {
+        let objectReviewed = this.state.objectReviewed;
+        let objectDefinition = OBJECT_MAPPING[objectReviewed.assetType];
+        if(objectDefinition){
+           let url = themeDisplay.getPortalURL()+OBJECT_CONSTANTS.VIEW_URL.replaceAll("--objectDefinitionId--",objectDefinition.id)
+           .replaceAll("--externalReferenceCode--",this.state.externalReferenceCode);
+           console.log(url);
+            Liferay.Util.openWindow({
+                dialog: {
+                    destroyOnHide: true,
+                    modal: true,
+                    after: {
+                        render: function(event) {
+                            //
+                        }
+                    }
+                },
+                id: 'EditInfoIntDialog',
+                refreshWindow: window,
+                title: 'Consultar',
+                uri: url
+            });
+        }
+    }
 
     render() {
 
@@ -70,24 +98,21 @@ class Actions extends React.Component {
             		id="dropdownAction1"
             		role="button"
             	>
-            		<svg
-            			class="lexicon-icon lexicon-icon-ellipsis-v"
-            			focusable="false"
-            			role="presentation"
-            		>
-            			<use href="/images/icons/icons.svg#ellipsis-v"></use>
-            		</svg>
+            		<i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i>
             	</a>
             	<ul aria-labelledby="dropdownAction1" class="dropdown-menu">
             		<li><a class="dropdown-item" data-action="assignToMe" onClick={this.callAction}>Asignar a mi</a></li>
-            		{this.state.transitions.map((transition) => {
-            		        return(
-                                <>
-                                    <li><a class="dropdown-item" data-name={transition.name} >{transition.label}</a></li>
-                                </>
-            		        )
+            		<li><a class="dropdown-item"  onClick={this.openModal}>Consultar</a></li>
+            		{(this.state.assigneePerson && this.state.assigneePerson.id == Liferay.ThemeDisplay.getUserId()) &&
+                        this.state.transitions.map((transition) => {
+                                return(
+                                    <>
+                                        <li><a class="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>{transition.label}</a></li>
+                                    </>
+                                )
 
-            		})}
+                        })
+                    }
 
             	</ul>
             </div>

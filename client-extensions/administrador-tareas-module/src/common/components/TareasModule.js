@@ -8,11 +8,18 @@ let onlyonce = true;
 
 class TareasModule extends React.Component {
     constructor() {
-        super()
+        super();
+        let columns = [];
+        columns.push({name: "objectData.numeroDeMatricula",label:Liferay.Language.get("objectData.numeroDeMatricula"), order: "asc"});
+        columns.push({name: "objectData.name",label:Liferay.Language.get("objectData.name"), order: "asc"});
+        columns.push({name: "objectReviewed.assetType",label:Liferay.Language.get("objectReviewed.assetType"), order: "asc"});
+        columns.push({name: "dateCreated",label:Liferay.Language.get("dateCreated"), order: "asc"});
+        columns.push({name: "assigneePerson.name",label:Liferay.Language.get("assigneePerson.name"), order: "asc"});
+
         this.state = {
             tareas: [],
             loading: true,
-            itemsDropDownLocal: []
+            columns: columns
         }
         console.log(this);
     }
@@ -23,61 +30,63 @@ class TareasModule extends React.Component {
     }
 
     loadDependencies = async () => {
-    this.state.tareas =[];
-     this.setState({loading:true});
-                setTimeout(() => {
-                    TareasApi.getWorkflowTasksMe(
-                        Liferay.ThemeDisplay.getScopeGroupId(),
-                        this.setTasks,
-                        this.errorHandler
-                    )
-                    TareasApi.getWorkflowTasksByUserRole(
-                        Liferay.ThemeDisplay.getScopeGroupId(),
-                        this.setTasks,
-                        this.errorHandler
-                    )
+        this.state.tareas =[];
+        this.setState({loading:true});
+            setTimeout(() => {
+                TareasApi.getWorkflowTasksMe(
+                    Liferay.ThemeDisplay.getScopeGroupId(),
+                    this.setTasks,
+                    this.errorHandler
+                )
+                TareasApi.getWorkflowTasksByUserRole(
+                    Liferay.ThemeDisplay.getScopeGroupId(),
+                    this.setTasks,
+                    this.errorHandler
+                )
 
-                }, 100)
-            }
+            }, 100)
+    }
 
+    addTareaExtraData = (tarea) =>{
+            let objectMapping = OBJECT_MAPPING[tarea.objectReviewed.assetType];
+            if(objectMapping){
+                let urlObject = objectMapping.url;
+                let objectId = tarea.objectReviewed.id;
+                if(urlObject){
 
-    addTareaUser = (tarea) =>{
-            let urlObject = OBJECT_MAPPING[tarea.objectReviewed.assetType];
-            let objectId = tarea.objectReviewed.id;
-            if(urlObject){
+                    let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
+                    if (client) {
+                        let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
+                        let url = urlObject+"/"+objectId+"?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido%2CexternalReferenceCode";
 
-                let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
-                if (client) {
-                    let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
-                    let url = urlObject+"/"+objectId+"?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido";
+                        const config = {
+                            method: 'GET',
+                            timeout: 5000,
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'accept': 'application/json',
+                                'x-csrf-token': Liferay.authToken
+                            }
+                        };
+                    oAuth2Client?.fetch(url, config)
+                        .then((response) => {
+                            let result = "";
+                            try {
+                                result = JSON.parse(JSON.stringify(response));
+                                tarea.objectData = result;
+                                this.addTareaTransition(tarea);
 
-                    const config = {
-                        method: 'GET',
-                        timeout: 5000,
-                        dataType: "json",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'accept': 'application/json',
-                            'x-csrf-token': Liferay.authToken
-                        }
-                    };
-                oAuth2Client?.fetch(url, config)
-                    .then((response) => {
-                        let result = "";
-                        try {
-                            result = JSON.parse(JSON.stringify(response));
-                            tarea.requestUser = result;
-                            this.addTareaTransition(tarea);
-
-                        } catch (e) {
-                            console.error(e)
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
+                            } catch (e) {
+                                console.error(e)
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                    }
                 }
-            }
+             }
     }
 
     addTareaTransition = (tarea) =>{
@@ -126,7 +135,7 @@ class TareasModule extends React.Component {
         if (result && result.items != null && result.items.length > 0) {
                 result.items.forEach((tarea) => {
 
-                    this.addTareaUser(tarea);
+                    this.addTareaExtraData(tarea);
 
                 });
 
@@ -179,27 +188,73 @@ class TareasModule extends React.Component {
         onlyonce = false;
     }
 
-    setHandlerReturnFooter = (result) => {
-        this.setState({
-            loading: false
-        });
-        Liferay.Util.openToast({
-            message: Liferay.Language.get('global.ok.default'),
-            title: Liferay.Language.get('global.success'),
-            toastProps: {
-                autoClose: 5000,
-            },
-            type: 'success',
-        });
+    orderBy = (column) => {
+        let tareas = this.state.tareas;
+        let order =column.order;
+        let type = column.name;
+        console.log(tareas);
+        console.log(column);
 
-    }
+        column.order = order === "asc" ? "desc" : "asc";
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.setState({
-            loading: true
-        });
+        if(type === "objectData.numeroDeMatricula"){
+           tareas =  tareas.sort((a, b) => {
+                 let numeroDeMatriculaA = a.objectData.numeroDeMatricula;
+                 let numeroDeMatriculaB = b.objectData.numeroDeMatricula;
 
+                 let result = order === "asc" ? numeroDeMatriculaA.localeCompare(numeroDeMatriculaB) : numeroDeMatriculaB.localeCompare(numeroDeMatriculaA);
+
+                 return result;
+
+            })
+        }
+
+        if(type === "objectData.name"){
+                   tareas =  tareas.sort((a, b) => {
+                     let nameUserA = a.objectData.nombre;
+                     let nameUserB = b.objectData.nombre;
+
+                     let result = order === "asc" ? nameUserA.localeCompare(nameUserB) : nameUserB.localeCompare(nameUserA);
+
+                     return result;
+
+                    })
+                }
+        if(type === "objectReviewed.assetType"){
+            tareas = tareas.sort((a, b) => {
+                let assetTypeA = a.objectReviewed.assetType;
+                let assetTypeB =  b.objectReviewed.assetType;
+
+                let result = order === "asc" ? assetTypeA.localeCompare(assetTypeB) : assetTypeB.localeCompare(assetTypeA);
+                return result;
+            });
+        }
+
+        if(type === "dateCreated"){
+
+             tareas =  tareas.sort((a, b) => {
+                let dateCreatedA = a.dateCreated ;
+                let dateCreatedB =  b.dateCreated ;
+
+                let result = order === "asc" ? dateCreatedA.localeCompare(dateCreatedB) : dateCreatedB.localeCompare(dateCreatedA);
+                return result;
+
+            });
+        }
+        if(type === "assigneePerson.name"){
+           tareas =  tareas.sort((a, b) =>{
+                let assigneePersonA = a.assigneePerson ? a.assigneePerson.name : "";
+                let assigneePersonB = b.assigneePerson ? b.assigneePerson.name : "";
+
+                let result = order === "asc" ? assigneePersonA.localeCompare(assigneePersonB) : assigneePersonB.localeCompare(assigneePersonA);
+
+                return result;
+            });
+        }
+
+
+        console.log(tareas);
+        this.setState({tareas: tareas});
     }
 
     render() {
@@ -212,20 +267,24 @@ class TareasModule extends React.Component {
                            <caption class="sr-only">Sumario de la tabla</caption>
                            <thead>
                                <tr>
-                                   <th scope="col"><i class="fa-solid fa-sort fa-lg"></i>Matrícula</th>
-                                   <th scope="col"><i class="fa-solid fa-sort fa-lg"></i>Nombre</th>
-                                   <th scope="col"><i class="fa-solid fa-sort fa-lg"></i>Tipo</th>
-                                   <th scope="col"><i class="fa-solid fa-sort fa-lg"></i>Fecha solicitud</th>
-                                   <th scope="col"><i class="fa-solid fa-sort fa-lg"></i>Asignado a:</th>
-                                   <th scope="col"><i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
+                               {this.state.columns.map((column, i) =>{
+                                      return(
+                                      <>
+                                      <th scope="col"><span class="order"  onClick={()=>this.orderBy(column)}><i class="fa-solid fa-sort fa-lg"></i></span>{column.label}</th>
+                                      </>)
+
+                               })}
+                                <th scope="col"><i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
+
+
                                </tr>
                            </thead>
                                   <tbody>
                                       {this.state.tareas.map((tarea, i) =>{
                                          return( <>
                                           <tr>
-                                                <td>{tarea.requestUser.numeroDeMatricula}</td>
-                                                <td>{tarea.requestUser.nombre} {tarea.requestUser.primerApellido} {tarea.requestUser.segundoApellido}</td>
+                                                <td>{tarea.objectData.numeroDeMatricula}</td>
+                                                <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
                                                 <td>{tarea.objectReviewed.assetType}</td>
                                                 <td>{tarea.dateCreated}</td>
                                                 <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
