@@ -10,5 +10,5 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-roles = customWorkflowUtil.assignWorkflowRoleAndStatus(workflowContext,rolName,status);
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, statusObject, userId, rolName);
 customWorkflowUtilTracker.close();
