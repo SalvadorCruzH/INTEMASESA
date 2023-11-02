@@ -2,7 +2,6 @@ package es.emasesa.intranet.sigd.service.application;
 
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -14,9 +13,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-
-import javax.ws.rs.core.Application;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
@@ -30,13 +26,11 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.settings.configuration.SigdServiceConfiguration;
+import es.emasesa.intranet.settings.osgi.SigdServicesSettings;
 import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
 
 @Component(
@@ -45,7 +39,8 @@ import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
 		property = {}, 
 		service = SigdServiceApplication.class
 )
-public class SigdServiceApplication extends Application {
+public class SigdServiceApplication{
+	
 	
 	/**
      * Llamada al servicio para recuperar los metadatos que hay que rellenar dada una serie y tipo documental.
@@ -89,7 +84,6 @@ public class SigdServiceApplication extends Application {
 		} catch (URISyntaxException e) {
 			LoggerUtil.error(LOG, "Error al construir la URI con parámetros en el servicio de crear documento origen de SIGD: " + e.toString());
 		}
-		
 		return responseBody;
 	}
 	
@@ -109,8 +103,7 @@ public class SigdServiceApplication extends Application {
 			CloseableHttpClient httpClient = HttpClients.createDefault();
 	        HttpPost post = new HttpPost(url);
 	        post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-	        LoggerUtil.debug(LOG, "Creacion de HtpPost a la URL: " + url);
-	        
+	        LoggerUtil.debug(LOG, "Creacion de HtpPost a la URL: " + url);	        
 	        
 			JSONObject jsonObject = createBody(pdf, objectName, tipoDocumental);
 			
@@ -442,102 +435,95 @@ public class SigdServiceApplication extends Application {
 			   
 			   String formConfiguration = StringPool.BLANK;
 			   
-			   switch (objectName) {
-			    case SidgServiceKeys.FORM_COMPATIBILDIAD:
-			    	formConfiguration = _configuration.getCompatibilidadesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_NOMINAS:
-			    	formConfiguration = _configuration.getNominasConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_PENSIONES:
-			    	formConfiguration = _configuration.getPensionesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_HORAS_EXTRAS:
-			    	formConfiguration = _configuration.getHorasExtrasConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_VACACIONES:
-			    	formConfiguration = _configuration.getVacacionesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_MERCAJES:
-			    	formConfiguration = _configuration.getMercajesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_TRASLADOS:
-			    	formConfiguration = _configuration.getTrasladosConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_JUBILADOS:
-			    	formConfiguration = _configuration.getJubiladosConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_FLEXIBILIDAD_HORARIA:
-			    	formConfiguration = _configuration.getFlexibilidadHorariaConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_REDUCCION_JORNADA:
-			    	formConfiguration = _configuration.getReduccionJornadaConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_LICENCIAS:
-			    	formConfiguration = _configuration.getLicenciasConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_EXEDENCIAS:
-			    	formConfiguration = _configuration.getExedenciasConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_TURNOS:
-			    	formConfiguration = _configuration.getTurnosConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_ANTICIPOS_VACACIONES:
-			    	formConfiguration = _configuration.getAnticiposVacacionesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_ANTICIPOS_REINTEGRABLES:
-			    	formConfiguration = _configuration.getAnticiposReintegrablesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_DOMICILIACION_BANCARIA:
-			    	formConfiguration = _configuration.getDomiciliacionBancariaConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_IRPF:
-			    	formConfiguration = _configuration.getIRPFConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_PRESTAMOS_VIVIENDA:
-			    	formConfiguration = _configuration.getPrestamosViviendaConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_AYUDA_ESCOLAR:
-			    	formConfiguration = _configuration.getAyudaEscolarConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_HISTORIAL_ACADEMICO:
-			    	formConfiguration = _configuration.getHistorialAcademicoConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_SATISFACCION:
-			    	formConfiguration = _configuration.getSatisfaccionConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_DATOS_PERSONALES:
-			    	formConfiguration = _configuration.getDatosPersonalesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_CONCURSOS_PROCESOS:
-			    	formConfiguration = _configuration.getConcursosConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_TRIBUNALES:
-			    	formConfiguration = _configuration.getTribunalesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_SINDICALES:
-			    	formConfiguration = _configuration.getSindicalesConfiguration();
-			        break;
-			    case SidgServiceKeys.FORM_FORMATIVAS:
-			    	formConfiguration = _configuration.getFormativasConfiguration();
-			        break;
-			    default:
-			    	LoggerUtil.debug(LOG, "No se ha encontrado la configuracion del formulario con nombre: " + objectName);
-			}
-			   
+				 switch (objectName) {
+				    case SidgServiceKeys.FORM_COMPATIBILDIAD:
+				    	formConfiguration = _configuration.getCompatibilidadesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_NOMINAS:
+				    	formConfiguration = _configuration.getNominasConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_PENSIONES:
+				    	formConfiguration = _configuration.getPensionesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_HORAS_EXTRAS:
+				    	formConfiguration = _configuration.getHorasExtrasConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_VACACIONES:
+				    	formConfiguration = _configuration.getVacacionesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_MERCAJES:
+				    	formConfiguration = _configuration.getMercajesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_TRASLADOS:
+				    	formConfiguration = _configuration.getTrasladosConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_JUBILADOS:
+				    	formConfiguration = _configuration.getJubiladosConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_FLEXIBILIDAD_HORARIA:
+				    	formConfiguration = _configuration.getFlexibilidadHorariaConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_REDUCCION_JORNADA:
+				    	formConfiguration = _configuration.getReduccionJornadaConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_LICENCIAS:
+				    	formConfiguration = _configuration.getLicenciasConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_EXEDENCIAS:
+				    	formConfiguration = _configuration.getExedenciasConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_TURNOS:
+				    	formConfiguration = _configuration.getTurnosConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_ANTICIPOS_VACACIONES:
+				    	formConfiguration = _configuration.getAnticiposVacacionesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_ANTICIPOS_REINTEGRABLES:
+				    	formConfiguration = _configuration.getAnticiposReintegrablesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_DOMICILIACION_BANCARIA:
+				    	formConfiguration = _configuration.getDomiciliacionBancariaConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_IRPF:
+				    	formConfiguration = _configuration.getIRPFConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_PRESTAMOS_VIVIENDA:
+				    	formConfiguration = _configuration.getPrestamosViviendaConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_AYUDA_ESCOLAR:
+				    	formConfiguration = _configuration.getAyudaEscolarConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_HISTORIAL_ACADEMICO:
+				    	formConfiguration = _configuration.getHistorialAcademicoConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_SATISFACCION:
+				    	formConfiguration = _configuration.getSatisfaccionConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_DATOS_PERSONALES:
+				    	formConfiguration = _configuration.getDatosPersonalesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_CONCURSOS_PROCESOS:
+				    	formConfiguration = _configuration.getConcursosConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_TRIBUNALES:
+				    	formConfiguration = _configuration.getTribunalesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_SINDICALES:
+				    	formConfiguration = _configuration.getSindicalesConfiguration();
+				        break;
+				    case SidgServiceKeys.FORM_FORMATIVAS:
+				    	formConfiguration = _configuration.getFormativasConfiguration();
+				        break;
+				    default:
+				    	LoggerUtil.debug(LOG, "No se ha encontrado la configuracion del formulario con nombre: " + objectName);
+				}			   
 			   return formConfiguration;
 		   }
 	
 	
-	private volatile SigdServiceConfiguration _configuration;
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-
-	        _configuration = ConfigurableUtil.createConfigurable(
-	        		SigdServiceConfiguration.class, properties);
-	    }
+	@Reference
+	private SigdServicesSettings _configuration;
+	
 	private static final Log LOG = LogFactoryUtil.getLog(
 			SigdServiceApplication.class);
 	

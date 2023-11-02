@@ -1,6 +1,5 @@
 package es.emasesa.intranet.base.util;
 
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectEntry;
@@ -180,13 +179,13 @@ public class CustomWorkflowUtil {
     	//TODO - Pensar si vamos a guardar el PDF en algun sitio
 
 		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-		long userId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
-		long groupId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+	//	long userId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+	//	long groupId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
 		String entryType = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
 		String fileName = entryType + "_" + classPK;
-		String sourceFileName = fileName + ".pdf";
+	//	String sourceFileName = fileName + ".pdf";
 		Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
-		DLFolder folderPDF = dlFolderLocalService.getFolder(groupId, 0, EmasesaConstants.EMASESA_FOLDER_COMPATIBILITY);
+		//DLFolder folderPDF = dlFolderLocalService.getFolder(groupId, 0, EmasesaConstants.EMASESA_FOLDER_COMPATIBILITY);
 
 		PDDocument document = new PDDocument();
 		PDPage page = new PDPage();
