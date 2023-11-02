@@ -58,10 +58,10 @@
             </button>
             <ul class="ema-desplegable-moreoptions">
                 <li>
-                    <a href="#urlEditar#">
+                    <button onclick="openEditDialog('#urlEditar#')">
                         <i class="fa-solid fa-edit"></i>
                         <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.edit" />
-                    </a>
+                    </button>
                 </li>
                 <li>
                     <a href="#urlEliminar#">
@@ -129,6 +129,25 @@ var checkStatus = function () {
         } else {
             $(this).find('.ema-enlace-visualizar').remove();
         }
+    });
+}
+
+
+var openEditDialog = function (url) {
+    Liferay.Util.openWindow({
+        dialog: {
+            destroyOnHide: true,
+            modal: true,
+            after: {
+                render: function(event) {
+                    //
+                }
+            }
+        },
+        id: 'EditInfoIntDialog',
+        refreshWindow: window,
+        title: 'Consultar',
+        uri: url
     });
 }
 </script>

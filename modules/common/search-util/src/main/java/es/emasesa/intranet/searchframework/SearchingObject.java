@@ -45,10 +45,10 @@ public class SearchingObject {
 
 		for (String objectDefinitionId : objectDefinitionIds) {
 			BooleanQuery query = new BooleanQueryImpl();
-			MatchQuery objectDefinitionQuery = new MatchQuery("objectDefinitionId", objectDefinitionId);
-			query.add(objectDefinitionQuery, BooleanClauseOccur.MUST.getName());
-			MatchQuery statusbyUserIdQuery = new MatchQuery("statusByUserId", "" + ServiceContextThreadLocal.getServiceContext().getUserId());
-			query.add(statusbyUserIdQuery, BooleanClauseOccur.MUST.getName());
+			MatchQuery entryClassNameQuery = new MatchQuery("entryClassName", "com.liferay.object.model.ObjectDefinition#" + objectDefinitionId);
+			query.add(entryClassNameQuery, BooleanClauseOccur.MUST.getName());
+			MatchQuery userIdQuery = new MatchQuery("userId", "" + ServiceContextThreadLocal.getServiceContext().getUserId());
+			query.add(userIdQuery, BooleanClauseOccur.MUST.getName());
 			Hits hits = indexSearcherHelper.search(searchContext, query);
 			List<Document> hitsList = hits.toList();
             listDocuments.addAll(hitsList);

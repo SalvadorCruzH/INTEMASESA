@@ -1,0 +1,176 @@
+{
+  "Compatibilidad": {
+    "objectDefinitionId": "45708",
+    "objectName": "Compatibilidad",
+    "serieDocumental": "929",
+    "tipoDocumental": {
+      "solicitud": "7873",
+      "certificacion": "7958",
+      "declaracion": "7959",
+      "resolucion": "7960"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "Excedencias": {
+    "objectDefinitionId": "",
+    "objectName": "Excedencias",
+    "serieDocumental": "142",
+    "tipoDocumental": {
+      "excedencias": "",
+      "solicitud": "3050"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Sociedad": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "Vacaciones": {
+    "objectDefinitionId": "",
+    "objectName": "Vacaciones",
+    "serieDocumental": "257",
+    "tipoDocumental": {
+      "licencias": "257",
+      "solicitud": "3757",
+	  "justificante": "5427"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "Anticipos": {
+    "objectDefinitionId": "",
+    "objectName": "Anticipos",
+    "serieDocumental": "159",
+    "tipoDocumental": {
+      "anticipos": "4300"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+	  "Sociedad": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+   "Domiciliacion": {
+    "objectDefinitionId": "",
+    "objectName": "Domiciliacion",
+    "serieDocumental": "609",
+    "tipoDocumental": {
+      "domiciliacion": "3985"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "IRPF": {
+    "objectDefinitionId": "",
+    "objectName": "IRPF",
+    "serieDocumental": "930",
+    "tipoDocumental": {
+      "irpf": "7875"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "Prestamos": {
+    "objectDefinitionId": "",
+    "objectName": "Prestamos",
+    "serieDocumental": "121",
+    "tipoDocumental": {
+      "prestamos": "121",
+	  "solicitud": "2985"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "Historial": {
+    "objectDefinitionId": "",
+    "objectName": "Historial",
+    "serieDocumental": "934",
+    "tipoDocumental": {
+      "titulacion": "7882",
+	  "permiso": "3983",
+	  "formacion": "7883",
+	  "innovacion": "7492"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+  "Modificación": {
+    "objectDefinitionId": "",
+    "objectName": "Modificación",
+    "serieDocumental": "933",
+    "tipoDocumental": {
+      "modificacion": "7876"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+	  "Sociedad": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+   "Sindicales": {
+    "objectDefinitionId": "",
+    "objectName": "Sindicales",
+    "serieDocumental": "610",
+    "tipoDocumental": {
+      "afiliaciones": "6437",
+	  "anexo": "7874"
+    },
+    "metadatos": {
+      "numeroPersonal": "java.lang.Integer",
+      "DNI/NIF": "java.lang.String",
+      "Nombre": "java.lang.String",
+      "Observaciones": "java.lang.String",
+      "Fecha Documento": "java.util.Date"
+    }
+  },
+   "Formativas": {
+    "objectDefinitionId": "",
+    "objectName": "Formativas",
+    "serieDocumental": "365",
+    "tipoDocumental": {
+      "formativas": "4316"
+    },
+    "metadatos": {
+    }
+  }
+}

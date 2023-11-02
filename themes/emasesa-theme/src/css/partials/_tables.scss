@@ -137,6 +137,26 @@
                                 }
                                 li {
                                     padding: .5rem;
+                                    button {
+                                        background: none;
+                                        border: none;
+                                        width: 100%;
+                                        padding: 0;
+                                        display: flex;
+                                        gap: .5rem;
+                                        color: black;
+                                        &:hover {
+                                            color: black;
+                                            text-decoration: underline;
+                                            i {
+                                                text-decoration: none;
+                                            }
+                                        }
+                                        i {
+                                            color: $color-aux-blue;
+                                            text-decoration: none;
+                                        }
+                                    }
                                     a {
                                         display: flex;
                                         color: black;

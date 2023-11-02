@@ -156,14 +156,14 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         final int totalItems = documents.size();
 
         String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
-        if(Validator.isNotNull(sortBy)) {
-            if(sortBy[0].equals("date")) {
-                sortDocuments(documents, themeDisplay.getLocale(), Field.CREATE_DATE, sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE);
-            } else if(sortBy[0].equals("name")) {
-                sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE);
+        if (Validator.isNotNull(sortBy)) {
+            if (sortBy[0].equals("date")) {
+                sortDocuments(documents, themeDisplay.getLocale(), Field.CREATE_DATE, sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
+            } else if (sortBy[0].equals("name")) {
+                sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
             }
         } else {
-            sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc")?Boolean.FALSE:Boolean.TRUE);
+            sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
         }
         JSONObject jsonObject;
 
@@ -181,13 +181,14 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         documents.sort((Document d1, Document d2) -> {
             String fieldDocument1 = d1.get(locale, sortingField);
             String fieldDocument2 = d2.get(locale, sortingField);
-            if(descending) {
+            if (descending) {
                 return fieldDocument2.compareTo(fieldDocument1);
-            }else {
+            } else {
                 return fieldDocument1.compareTo(fieldDocument2);
             }
         });
     }
+
     private JSONObject getResultJson(final Document document,
                                      final ThemeDisplay themeDisplay) {
         final JSONObject jsonObject = jsonFactory.createJSONObject();
@@ -202,39 +203,60 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         String fechaSolicitud = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
         jsonObject.put("fechaSolicitud", formatDate(fechaSolicitud));
 
-        String objectEntryContent = document.get(themeDisplay.getLocale(), "objectEntryContent");
+        //String objectEntryContent = document.get(themeDisplay.getLocale(), "objectEntryContent");
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
-        if (objectEntryContent.contains("estadoObjeto:")) {
-            String estadoObjeto = getValueFromObject(objectClassPK, "estadoObjeto");
-            jsonObject.put("estado", estadoObjeto);
-            switch (estadoObjeto) {
-                case "aceptada":
-                    jsonObject.put("estado-code", "success");
-                    break;
-                case "rechazada":
-                    jsonObject.put("estado-code", "danger");
-                    break;
-                default:
-                    jsonObject.put("estado-code", "pending");
-                    break;
+        ObjectEntry objectEntry = getObject(objectClassPK);
+        if (objectEntry != null) {
+            String estadoObjeto = objectEntry.getValues().get("estadoObjeto").toString();
+            if (estadoObjeto != null) {
+                jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));
+                switch (estadoObjeto) {
+                    case "aceptada":
+                        jsonObject.put("estado-code", "success");
+                        break;
+                    case "rechazada":
+                        jsonObject.put("estado-code", "danger");
+                        break;
+                    default:
+                        jsonObject.put("estado-code", "pending");
+                        break;
+                }
+                String externalReferenceCode = objectEntry.getExternalReferenceCode();
+                String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
+                jsonObject.put("urlVisualizar", "");
+                jsonObject.put("urlEditar", formatEditUrl(themeDisplay.getPortalURL(), externalReferenceCode, objectDefinitionId));
+                jsonObject.put("urlEliminar", formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
+
+            } else {
+                jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
+                jsonObject.put("estado-code", "unknown");
+
             }
-        } else {
-            jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
-            jsonObject.put("estado-code", "unknown");
         }
-        jsonObject.put("urlVisualizar", "");
-        jsonObject.put("urlEditar", "");
-        jsonObject.put("urlEliminar", "");
         return jsonObject;
     }
 
-    private String getValueFromObject(Long objectClassPK, String key) {
+    private ObjectEntry getObject(Long objectClassPK) {
         try {
             ObjectEntry objetoEntry = objectEntryLocalService.getObjectEntry(objectClassPK);
-            return objetoEntry.getValues().get(key).toString();
+            return objetoEntry;
         } catch (PortalException e) {
-            return StringPool.BLANK;
+            return null;
         }
+    }
+
+    private String formatEditUrl(String portalUrl, String externalReferenceCode, String objectDefinitionId) {
+        String url = portalUrl + "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_objectDefinitionId=--objectDefinitionId--&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_externalReferenceCode=--externalReferenceCode--";
+        url = url.replace("--objectDefinitionId--", objectDefinitionId)
+                .replace("--externalReferenceCode--", externalReferenceCode);
+        return url;
+    }
+
+    private String formatDeleteUrl(String portalUrl, String externalReferenceCode, String groupId) {
+        String url = portalUrl + "/o/c/compatibilidads/scopes/--groupId--/by-external-reference-code/--externalReferenceCode--";
+        url = url.replace("--groupId--", groupId)
+                .replace("--externalReferenceCode--", externalReferenceCode);
+        return url;
     }
     /**
      * Formatea la fecha de la solicitud

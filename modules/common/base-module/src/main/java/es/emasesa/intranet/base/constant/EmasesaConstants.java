@@ -22,4 +22,7 @@ public class EmasesaConstants {
     public static final String EMASESA_EXPANDO_USUARIO = "usuario";
     public static final String EMASESA_FOLDER_COMPATIBILITY = "PDF Compatibilidad";
     public static final String EMASESA_MIMETYPE = "application/pdf";
+    
+    public static final String EMASESA_OBJECT_STATUS = "estadoObjeto";
+    public static final String EMASESA_OBJECT_HISTORY = "historicoEstado";
 }

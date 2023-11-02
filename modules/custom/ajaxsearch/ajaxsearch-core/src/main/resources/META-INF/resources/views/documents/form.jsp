@@ -58,19 +58,19 @@
             </div>
             <div class="ema-ajaxsearch-filtros__dateTo">
                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.to-date"></liferay-ui:message></label>
-                <!--<input name="<portlet:namespace />fechaHasta"
+                <input name="<portlet:namespace />fechaHasta"
                         type="date"
                         value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
                         data-as-id="fechaHasta"
                         class="m-searchAjax__input date"
                         id="fechaHasta"
-                />-->
-                <duet-date-picker name="<portlet:namespace />fechaHasta"
+                />
+                <!--<duet-date-picker name="<portlet:namespace />fechaHasta"
                 type="date"
                 value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
                 data-as-id="fechaHasta"
                 class="m-searchAjax__input date"
-                id="fechaHasta"></duet-date-picker>
+                id="fechaHasta"></duet-date-picker>-->
             </div>
         </div>
         <div class="ema-ajaxsearch-filtros__buttons">
