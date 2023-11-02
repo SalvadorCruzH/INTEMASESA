@@ -8,28 +8,36 @@
 
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
              <div class="ema-table-wrapper">
-                                <table id="table-id" class="ema-table">
-                                    <caption class="sr-only">Sumario de la tabla</caption>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.date" /></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.day" /></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="1"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="1"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="2"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="2"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="3"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="3"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="4"/></th>
-                                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="4"/></th>
+            <table id="table-id" class="ema-table">
+                <caption class="sr-only">Sumario de la tabla</caption>
+                <thead>
+                    <tr>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.type" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.total" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.icono" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.incidencia" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.dia.actual" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.dia.semana" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.dec.exlusiva" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.he.computo" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.he.diurna" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.he.nocturna" /></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="1"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="1"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="2"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="2"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="3"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="3"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.ent" arguments="4"/></th>
+                        <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sal" arguments="4"/></th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody  id="as-wrapper">
-                            <!-- -->
-                                  </tbody>
-                                </table>
-                            </div>
+                    </tr>
+                </thead>
+                <tbody  id="as-wrapper">
+        <!-- -->
+              </tbody>
+            </table>
+        </div>
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
@@ -53,10 +61,16 @@
 
 <template id="as-template">
      <tr>
-        <td>#dia#</td>
         <td>#TTEXT#</td>
         <td>#HTRAB#</td>
         <td>#SEMAFORO#</td>
+        <td></td>
+        <td>#DATUM#</td>
+        <td>#dia#</td>
+        <td>#HDEXC#</td>
+        <td>#HEXTC#</td>
+        <td>#HEXND#</td>
+        <td>#HEXNN#</td>
         <td>#ENT1#</td>
         <td>#SAL1#</td>
         <td>#ENT2#</td>

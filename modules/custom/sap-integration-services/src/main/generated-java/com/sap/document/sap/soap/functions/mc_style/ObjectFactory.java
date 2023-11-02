@@ -235,4 +235,36 @@ public class ObjectFactory {
         return new ZpeStEmpleadoDomicilio();
     }
 
+    /**
+     * Create an instance of {@link ZPeSubordinados }
+     *
+     */
+    public ZPeSubordinados createZPeSubordinados() {
+        return new ZPeSubordinados();
+    }
+
+    /**
+     * Create an instance of {@link ZPeSubordinadosResponse }
+     *
+     */
+    public ZPeSubordinadosResponse createZPeSubordinadosResponse() {
+        return new ZPeSubordinadosResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStSubordinados }
+     *
+     */
+    public TableOfZpeStSubordinados createTableOfZpeStSubordinados() {
+        return new TableOfZpeStSubordinados();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStSubordinados }
+     *
+     */
+    public ZpeStSubordinados createZpeStSubordinados() {
+        return new ZpeStSubordinados();
+    }
+
 }

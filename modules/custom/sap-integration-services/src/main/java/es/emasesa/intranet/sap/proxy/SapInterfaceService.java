@@ -8,6 +8,7 @@ import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
+import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,9 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     EmpleadoDatosDomicilioService empleadoDatosDomicilioService;
     @Autowired(required = false)
     JornadaDiariaService jornadaDiariaService;
+
+    @Autowired(required = false)
+    SubordinadosService subordinadosService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -53,5 +57,9 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
 
     public ResumenAnualService  getResumenAnualService(){
         return resumenAnualService;
+    }
+
+    public SubordinadosService  getSubordinadosService(){
+        return subordinadosService;
     }
 }

@@ -4,6 +4,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.DateUtil;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import org.osgi.service.component.annotations.Component;
 
@@ -48,6 +50,24 @@ public class CustomDateUtil {
         }
 
         return date;
+    }
+
+    public String atStartOfDay(Date date,String format) {
+        LocalDateTime localDateTime = dateToLocalDateTime(date);
+        LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
+        return startOfDay.format(DateTimeFormatter.ofPattern(format));
+    }
+
+    public String atEndOfDay(Date date,String format) {
+        LocalDateTime localDateTime = dateToLocalDateTime(date);
+        LocalDateTime endOfDay = localDateTime.with(LocalTime.MAX);
+
+        return endOfDay.format(DateTimeFormatter.ofPattern(format));
+    }
+
+
+    public LocalDateTime dateToLocalDateTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     public String getDateStrFromTimestamp(long timestamp){

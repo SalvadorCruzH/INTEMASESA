@@ -76,4 +76,10 @@ public interface SapServicesConfiguration {
             required = false
     )
     String jornadaResumenAnual();
+    @Meta.AD(
+            deflt = "",
+            name = "subordinadosEndpoint",
+            required = false
+    )
+    String subordinadosEndpoint();
 }
