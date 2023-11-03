@@ -207,8 +207,8 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
         ObjectEntry objectEntry = getObject(objectClassPK);
         if (objectEntry != null) {
-            String estadoObjeto = objectEntry.getValues().get("estadoObjeto").toString();
-            if (estadoObjeto != null) {
+            String estadoObjeto = objectEntry.getValues().getOrDefault("estadoObjeto", StringPool.BLANK).toString();
+            if (!estadoObjeto.equals(StringPool.BLANK)) {
                 jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));
                 switch (estadoObjeto) {
                     case "aceptada":
@@ -221,17 +221,16 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
                         jsonObject.put("estado-code", "pending");
                         break;
                 }
-                String externalReferenceCode = objectEntry.getExternalReferenceCode();
-                String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
-                jsonObject.put("urlVisualizar", "");
-                jsonObject.put("urlEditar", formatEditUrl(themeDisplay.getPortalURL(), externalReferenceCode, objectDefinitionId));
-                jsonObject.put("urlEliminar", formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
 
             } else {
                 jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
                 jsonObject.put("estado-code", "unknown");
-
             }
+            String externalReferenceCode = objectEntry.getExternalReferenceCode();
+            String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
+            jsonObject.put("urlVisualizar", "");
+            jsonObject.put("urlEditar", formatEditUrl(themeDisplay.getPortalURL(), externalReferenceCode, objectDefinitionId));
+            jsonObject.put("urlEliminar", formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
         }
         return jsonObject;
     }

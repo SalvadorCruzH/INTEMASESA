@@ -3,8 +3,7 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
-  "name": "EM-validacion-otp-solicitud",
-  "typeOptions": {"fieldTypes": ["text"]},
-  "type": "input"
+  "icon": "code",
+  "name": "EM - Objeto OTP",
+  "type": "component"
 }
