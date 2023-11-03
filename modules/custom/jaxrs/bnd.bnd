@@ -1,5 +1,5 @@
-Bundle-Name: emasesa-restddmselect-jaxrs
-Bundle-SymbolicName: es.emasesa.intranet.jaxrs.restddmselect
+Bundle-Name: emasesa-jaxrs
+Bundle-SymbolicName: es.emasesa.intranet.jaxrs
 Bundle-Version: 1.0.0
 Liferay-Configuration-Path: /configuration
 Export-Package: es.emasesa.intranet.jaxrs.restddmselect.application
