@@ -2,6 +2,7 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.historicomarcajes.result;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -64,6 +65,8 @@ public class HistoricoMarcajesResultImpl implements AjaxSearchResult {
 	private static final String FECHA_UNICA = "fechaUnica";
 	private static final String MATRICULA = "matricula";
 
+	private static final String TIME_TO_LIVE="time_to_live";
+
 
 
 	static {
@@ -74,6 +77,7 @@ public class HistoricoMarcajesResultImpl implements AjaxSearchResult {
 		DFLT_PROPERTIES.put(STRUCTURE_KEY, "");
 		DFLT_PROPERTIES.put(CSS_WRAPPER_CLASS, "");
 		DFLT_PROPERTIES.put(DISABLE_PAGINATION, "0");
+		DFLT_PROPERTIES.put(TIME_TO_LIVE, 0);
 
 	}
 
@@ -102,22 +106,22 @@ public class HistoricoMarcajesResultImpl implements AjaxSearchResult {
 			String screenName = ajaxSearchDisplayContext.getString(MATRICULA);
 			String fromDateDB = "";
 			String toDateDB = "";
-
-			if(Validator.isNotNull(uniqueDate)){
-				fromDateDB = _customDateUtil.atStartOfDay(uniqueDate,EmasesaConstants.FORMAT_DATE_DB);
-				toDateDB = _customDateUtil.atEndOfDay(uniqueDate,EmasesaConstants.FORMAT_DATE_DB);
-			}else{
-				if(Validator.isNotNull(fromDate)){
-					 fromDateDB = _customDateUtil.atStartOfDay(fromDate,EmasesaConstants.FORMAT_DATE_DB);
+			if(Validator.isNotNull(uniqueDate) || Validator.isNotNull(fromDate) ||Validator.isNotNull(toDate) || Validator.isNotNull(screenName)) {
+				if(Validator.isNotNull(uniqueDate)){
+					fromDateDB = _customDateUtil.atStartOfDay(uniqueDate,EmasesaConstants.FORMAT_DATE_DB);
+					toDateDB = _customDateUtil.atEndOfDay(uniqueDate,EmasesaConstants.FORMAT_DATE_DB);
 				}else{
-					fromDateDB = EmasesaConstants.INIT_DATE_DB;
+					if(Validator.isNotNull(fromDate)){
+						 fromDateDB = _customDateUtil.atStartOfDay(fromDate,EmasesaConstants.FORMAT_DATE_DB);
+					}else{
+						fromDateDB = EmasesaConstants.INIT_DATE_DB;
+					}
+					if(Validator.isNotNull(toDate)){
+						 toDateDB = _customDateUtil.atEndOfDay(toDate,EmasesaConstants.FORMAT_DATE_DB);
+					}else{
+						toDateDB = EmasesaConstants.FINAL_DATE_DB;
+					}
 				}
-				if(Validator.isNotNull(toDate)){
-					 toDateDB = _customDateUtil.atEndOfDay(toDate,EmasesaConstants.FORMAT_DATE_DB);
-				}else{
-					toDateDB = EmasesaConstants.FINAL_DATE_DB;
-				}
-			}
 
 				totalItems = performSearchAndParse(request,
 						response,
@@ -129,7 +133,7 @@ public class HistoricoMarcajesResultImpl implements AjaxSearchResult {
 						pageSize,
 						disablePagination,
 						jsonArray);
-
+			}
 			final int totalPages = (((int) totalItems + pageSize - 1) / pageSize);
 			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(
 					currentPage,
@@ -167,20 +171,48 @@ public class HistoricoMarcajesResultImpl implements AjaxSearchResult {
 									   final JSONArray jsonArray) throws ParseException, SearchException {
 		final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 
-		JSONArray array;
+		JSONArray array = JSONFactoryUtil.createJSONArray();
 		int totalItems = 0;
 		List<JSONObject> listJson;
+		String cacheKey = "Historico"+fromDate+toDate+screenName;
 
-		listJson = _specUtil.dbSPECSearch(fromDate,toDate,screenName);
- 		_specUtil.orderByDateAndTime(listJson);
-		Map<String,List<JSONObject>> groupedRows = _specUtil.groupRows(listJson);
-		_specUtil.processData(jsonArray, themeDisplay, groupedRows);
+		int timeToLive = 0;
+		if(Validator.isNumber(ajaxSearchDisplayContext.getConfigOrDefault(TIME_TO_LIVE,"0"))){
+			timeToLive = Integer.parseInt(ajaxSearchDisplayContext.getConfigOrDefault(TIME_TO_LIVE,"0"));
+		}
+
+		if(Validator.isNotNull(_cache.get(cacheKey))){
+			try {
+				array = JSONFactoryUtil.createJSONArray((String) _cache.get(cacheKey));
+			} catch (JSONException e) {
+				LoggerUtil.debug(LOG,e);
+			}
+
+		}else{
+			listJson = _specUtil.dbSPECSearch(fromDate,toDate,screenName);
+			_specUtil.orderByDateAndTime(listJson);
+			Map<String,List<JSONObject>> groupedRows = _specUtil.groupRows(listJson);
+			_specUtil.processData(array, themeDisplay, groupedRows);
+			_cache.put(cacheKey, array.toString(), timeToLive);
+
+		}
 
 		final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
-		int count = (currentPage * pageSize) > 1 ? 1 : (currentPage * pageSize);
+		int count = (currentPage * pageSize) > array.length() ? array.length() : (currentPage * pageSize);
 		final int end = disablePagination ? pageSize : count;
 
-		totalItems = 1;
+		List<JSONObject> paginatedJson = new ArrayList<>();
+		for(int i = 0;i<array.length();i++){
+
+			paginatedJson.add(array.getJSONObject(i));
+		}
+
+		paginatedJson.subList(start,end).stream().forEach(j->{
+				jsonArray.put(j);
+
+		});
+
+		totalItems = array.length();
 
 
 		return totalItems;

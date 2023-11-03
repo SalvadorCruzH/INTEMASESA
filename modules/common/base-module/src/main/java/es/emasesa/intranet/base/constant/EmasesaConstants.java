@@ -36,4 +36,9 @@ public class EmasesaConstants {
     public static final String  FORMAT_DATE_DB = "yyyyMMddHHmm";
     public static final String  INIT_DATE_DB = "0";
     public static final String  FINAL_DATE_DB = "999999999999";
+    public static final String REGEX_STARTDATE = "--startDate--";
+    public static final String REGEX_ENDDATE = "--endDate--";
+    public static final String REGEX_SCREENNAME = "--screenNameFilter--";
+    public static final String MARC_PERS = "MARC_PERS";
+    public static final String EDIT_NAME = "EDIT_NAME";
 }

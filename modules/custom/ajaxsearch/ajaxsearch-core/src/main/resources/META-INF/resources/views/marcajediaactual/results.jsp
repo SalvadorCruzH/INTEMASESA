@@ -54,8 +54,8 @@
 
 <template id="as-template">
          <tr>
-            <td>#marcPers#</td>
-            <td>#editName#</td>
+            <td>#MARC_PERS#</td>
+            <td>#EDIT_NAME#</td>
             <td>#date#</td>
             <td>#dia#</td>
             <td>#0#</td>

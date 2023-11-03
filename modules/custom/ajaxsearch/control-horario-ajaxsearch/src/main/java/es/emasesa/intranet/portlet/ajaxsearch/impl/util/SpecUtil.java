@@ -46,10 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SpecUtil {
 
-    private static final String REGEX_STARTDATE = "--startDate--";
-    private static final String REGEX_ENDDATE = "--endDate--";
-    private static final String REGEX_SCREENNAME = "--screenNameFilter--";
-
     public List<JSONObject> dbSPECSearch(String startDate, String endDate, String screenName) {
         Connection con = null;
         List<JSONObject> historico = new ArrayList<>();
@@ -63,9 +59,9 @@ public class SpecUtil {
                 marcPers = "AND MARC_PERS IN(" + screenName + ")";
             }
 
-            query = query.replaceAll(REGEX_STARTDATE, StringPool.APOSTROPHE + startDate + StringPool.APOSTROPHE);
-            query = query.replaceAll(REGEX_ENDDATE, StringPool.APOSTROPHE + endDate + StringPool.APOSTROPHE);
-            query = query.replaceAll(REGEX_SCREENNAME, marcPers);
+            query = query.replaceAll(EmasesaConstants.REGEX_STARTDATE, StringPool.APOSTROPHE + startDate + StringPool.APOSTROPHE);
+            query = query.replaceAll(EmasesaConstants.REGEX_ENDDATE, StringPool.APOSTROPHE + endDate + StringPool.APOSTROPHE);
+            query = query.replaceAll(EmasesaConstants.REGEX_SCREENNAME, marcPers);
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             LoggerUtil.debug(LOG, "Oracle JDBC driver loaded ok.");
 
@@ -121,14 +117,17 @@ public class SpecUtil {
             } catch (java.text.ParseException e) {
                 jsonObject.put(EmasesaConstants.DIA, StringPool.BLANK);
             }
-            String marcPers = list.get(0).getString("MARC_PERS");
-            String editName = list.get(0).getString("EDIT_NAME");
-            jsonObject.put("marcPers", marcPers);
-            jsonObject.put("editName", editName);
+            String marcPers = list.get(0).getString(EmasesaConstants.MARC_PERS);
+            String editName = list.get(0).getString(EmasesaConstants.EDIT_NAME);
+            jsonObject.put(EmasesaConstants.MARC_PERS, marcPers);
+            jsonObject.put(EmasesaConstants.EDIT_NAME, editName);
             JSONArray jsonArrayAux = JSONFactoryUtil.createJSONArray();
             for (int i = 0; i < 8; i++) {
                 if (i < list.size()) {
-                    jsonObject.put(String.valueOf(i), list.get(i).getString(EmasesaConstants.SUBSTR_MARC_TMP_9_4));
+
+                    LocalTime time = LocalTime.parse(list.get(i).getString(EmasesaConstants.SUBSTR_MARC_TMP_9_4), DateTimeFormatter.ofPattern("HHmm"));
+                    String timeString = time.format(DateTimeFormatter.ofPattern("HH:mm"));
+                    jsonObject.put(String.valueOf(i), timeString);
                 } else {
                     jsonObject.put(String.valueOf(i), StringPool.BLANK);
                 }
@@ -145,7 +144,7 @@ public class SpecUtil {
         List<JSONObject> auxList;
         for(JSONObject json : listJson){
             auxList = new ArrayList<>();
-            String key = json.getString("MARC_PERS")+json.getString(EmasesaConstants.SUBSTR_MARC_TMP_1_8);
+            String key = json.getString(EmasesaConstants.MARC_PERS)+json.getString(EmasesaConstants.SUBSTR_MARC_TMP_1_8);
             if(mapGroupedByName.containsKey(key)){
                 auxList =mapGroupedByName.get(key);
                 auxList.add(json);
