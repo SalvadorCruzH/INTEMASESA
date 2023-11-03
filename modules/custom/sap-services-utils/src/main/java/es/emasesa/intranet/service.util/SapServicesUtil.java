@@ -2,7 +2,6 @@ package es.emasesa.intranet.service.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -11,7 +10,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
-import es.emasesa.intranet.sap.base.exception.SapException;
 import es.emasesa.intranet.sap.datospersona.exception.EmpleadoDatosDomicilioException;
 import es.emasesa.intranet.sap.datospersona.exception.EmpleadoDatosPersonalesException;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioService;
@@ -20,10 +18,11 @@ import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
-import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
+import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
+import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.*;
@@ -223,6 +222,35 @@ public class SapServicesUtil {
         return datosJornadaDiaria;
     }
 
+    public JSONArray getSubordinados(User user,String directorioOTodos) {
+
+        return getSubordinados(user.getScreenName(),directorioOTodos);
+    }
+
+    public JSONArray getSubordinados(String pernr,String directorioOTodos) {
+
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getSubordinados " + pernr);
+        }
+        JSONArray datosSubordinados = JSONFactoryUtil.createJSONArray();
+
+        try {
+            if(_subordinadosService == null){
+                activate(null);
+            }
+            datosSubordinados = _subordinadosService.getSubordinados(directorioOTodos,pernr);
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (SubordinadosException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getSubordinados " + pernr);
+            }
+        }
+        return datosSubordinados;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -232,12 +260,14 @@ public class SapServicesUtil {
             CustomServiceTracker<EmpleadoDatosPersonalesService> empleadoDatosPersonalesServiceCustomService = new CustomServiceTracker<>(EmpleadoDatosPersonalesService.class, "getEmpleadoDatosPersonalesService");
             CustomServiceTracker<EmpleadoDatosDomicilioService> empleadoDatosPersonalesDomicilioServiceCustomService = new CustomServiceTracker<>(EmpleadoDatosDomicilioService.class, "getEmpleadoDatosDomicilioService");
             CustomServiceTracker<JornadaDiariaService> jornadaDiariaServiceCustomService = new CustomServiceTracker<>(JornadaDiariaService.class, "getJornadaDiariaService");
+            CustomServiceTracker<SubordinadosService> subordinadosServiceTracker = new CustomServiceTracker<>(SubordinadosService.class, "getSubordinadosService");
 
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
             this._empleadoDatosPersonalesService = empleadoDatosPersonalesServiceCustomService.getService();
             this._empleadoDatosDomicilioService = empleadoDatosPersonalesDomicilioServiceCustomService.getService();
             this._jornadaDiariaService = jornadaDiariaServiceCustomService.getService();
+            this._subordinadosService = subordinadosServiceTracker.getService();
 
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
@@ -279,7 +309,7 @@ public class SapServicesUtil {
     private EmpleadoDatosPersonalesService _empleadoDatosPersonalesService;
     private EmpleadoDatosDomicilioService _empleadoDatosDomicilioService;
     private JornadaDiariaService _jornadaDiariaService;
-
+    private SubordinadosService _subordinadosService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 
 }

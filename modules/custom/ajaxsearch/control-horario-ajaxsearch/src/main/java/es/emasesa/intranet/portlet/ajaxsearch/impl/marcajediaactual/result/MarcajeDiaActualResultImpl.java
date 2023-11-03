@@ -1,4 +1,4 @@
-package es.emasesa.intranet.portlet.ajaxsearch.impl.jornadadiaria.result;
+package es.emasesa.intranet.portlet.ajaxsearch.impl.marcajediaactual.result;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import es.emasesa.intranet.base.constant.StringConstants;
@@ -17,19 +18,23 @@ import es.emasesa.intranet.base.util.CustomDateUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
-import es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.result.ResumenAnualResultImpl;
+import es.emasesa.intranet.portlet.ajaxsearch.impl.util.SpecUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchJsonModel;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchResult;
 import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import es.emasesa.intranet.service.util.SapServicesUtil;
-import java.text.SimpleDateFormat;
+import es.emasesa.intranet.settings.osgi.SPECServicesSettings;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.YearMonth;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +49,9 @@ import org.osgi.service.component.annotations.Reference;
         property = { },
         service = AjaxSearchResult.class
 )
-public class JornadaDiariaResultImpl implements AjaxSearchResult {
+public class MarcajeDiaActualResultImpl implements AjaxSearchResult {
 
-	private final static Log LOG = LoggerUtil.getLog(JornadaDiariaResultImpl.class);
+	private final static Log LOG = LoggerUtil.getLog(MarcajeDiaActualResultImpl.class);
 
 	private static final Properties DFLT_PROPERTIES = new Properties();
 
@@ -54,10 +59,16 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 	public static final String STRUCTURE_KEY = "structure-key";
 	public static final String CSS_WRAPPER_CLASS = "css-wrapper-class";
 	public static final String DISABLE_PAGINATION = "disable-pagination";
-	private static final String MONTH_SELECTED = "monthSelected";
+	public static final String DIRECTO_TODOS = "directo-todos";
+	public static final String DIRECTO= "D";
+	public static final String TODOS= "T";
 	private static final String FECHA_DESDE = "fechaDesde";
 	private static final String FECHA_HASTA = "fechaHasta";
-
+	private static final String MATRICULA = "matricula";
+	private static final String REGEX_STARTDATE = "--startDate--";
+	private static final String REGEX_ENDDATE = "--endDate--";
+	private static final String REGEX_SCREENNAME= "--screenName--";
+	private static final String  FORMAT_DATE_DB = "yyyyMMddHHmm";
 
 
 	static {
@@ -68,6 +79,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 		DFLT_PROPERTIES.put(STRUCTURE_KEY, "EMA-NOTICIA");
 		DFLT_PROPERTIES.put(CSS_WRAPPER_CLASS, "");
 		DFLT_PROPERTIES.put(DISABLE_PAGINATION, "0");
+		DFLT_PROPERTIES.put(DIRECTO_TODOS, DIRECTO);
 	}
 
 	@Override
@@ -89,11 +101,18 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
-			String monthSelected = ajaxSearchDisplayContext.getString(MONTH_SELECTED);
+
+			LocalDateTime startOfDay = LocalDateTime.now().with(LocalTime.MIN);
+			LocalDateTime endOfDay = LocalDateTime.now().with(LocalTime.MAX);
+
+			String fromDateDB = startOfDay.format(DateTimeFormatter.ofPattern(FORMAT_DATE_DB));
+			String toDateDB = endOfDay.format(DateTimeFormatter.ofPattern(FORMAT_DATE_DB));
+
 			totalItems = performSearchAndParse(request,
 					response,
 					ajaxSearchDisplayContext,
-					monthSelected,
+					fromDateDB,
+					toDateDB,
 					currentPage,
 					pageSize,
 					disablePagination,
@@ -127,74 +146,50 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 	private long performSearchAndParse(final PortletRequest request,
 									   final PortletResponse response,
 									   final AjaxSearchDisplayContext ajaxSearchDisplayContext,
-									   final String monthSelected,
+									   final String fromDate,
+									   final String toDate,
 									   final int currentPage,
 									   final int pageSize,
 									   final boolean disablePagination,
 									   final JSONArray jsonArray) throws ParseException, SearchException {
-
 		final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		JSONArray array;
 		int totalItems = 0;
-		if(Validator.isNotNull(monthSelected)){
-			String startDate ="";
-			String endDate ="";
+		String directoTodos = ajaxSearchDisplayContext.getConfig(DIRECTO_TODOS);
+		//TODO: Obtener subordinados
+		JSONArray subordinados = _sapServicesUtil.getSubordinados(themeDisplay.getUser(),directoTodos);
+		//Obtener pernr de subordinados
+		String pernrListStr = extractPernr(subordinados);
 
-			YearMonth yearMonth = YearMonth.parse(monthSelected, DateTimeFormatter.ofPattern("MMyyyy"));
-			LocalDate month= yearMonth.atEndOfMonth();
-			LocalDate firstDay = month.with(TemporalAdjusters.firstDayOfMonth());
-			LocalDate lastDay = month.with(TemporalAdjusters.lastDayOfMonth());
-			startDate = firstDay.format(sdf);
-			endDate = lastDay.format(sdf);
+		List<JSONObject> listJson = _specUtil.dbSPECSearch(fromDate,toDate,pernrListStr);
+		_specUtil.orderByDateAndTime(listJson);
+		Map<String,List<JSONObject>> groupedRows= _specUtil.groupRows(listJson);
+		_specUtil.processData(
+				jsonArray,themeDisplay,groupedRows);
+		final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
+		int count = (currentPage * pageSize) > 1 ? 1 : (currentPage * pageSize);
+		final int end = disablePagination ? pageSize : count;
 
-			String cacheKey = "jornadaDiaria"+monthSelected+themeDisplay.getUser().getUserId();
-			Object object = _cache.get(cacheKey);
+		totalItems = 1;
 
-			if(Validator.isNotNull(object) && ((JSONArray) object).length()>0){
-				array = (JSONArray) object;
 
-			}else{
-				array = _sapServicesUtil.getJornadaDiaria(themeDisplay.getUser(),startDate,endDate);
-				_cache.put(cacheKey,array,86400);
-
-			}
-
-			final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
-			int count = (currentPage * pageSize) > array.length() ? array.length() : (currentPage * pageSize);
-			final int end = disablePagination ? pageSize : count;
-
-			totalItems = array.length();
-			List<JSONObject> listJson = new ArrayList<>();
-			for(int i = 0;i<array.length();i++){
-
-				listJson.add(array.getJSONObject(i));
-			}
-
-			listJson.subList(start,end).stream().forEach(j->{
-
-				try {
-					j.put("dia", getDatum(themeDisplay, j));
-					jsonArray.put(j);
-				} catch (java.text.ParseException e) {
-					LoggerUtil.info(LOG,e.getMessage());
-				}
-
-			});
-		}
 		return totalItems;
 	}
 
-	private String getDatum(ThemeDisplay themeDisplay, JSONObject j) throws java.text.ParseException {
-		return _customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
-				j.getString("DATUM"), "yyyy-MM-dd", Calendar.DAY_OF_WEEK,Calendar.SHORT) + StringPool.SPACE+
-				_customDateUtil.getDateNumber(themeDisplay.getLocale(),
-						j.getString("DATUM"), "yyyy-MM-dd");
+	private String extractPernr(JSONArray subordinados) {
+		List<String> pernrList = new ArrayList<>();
+		for (int i = 0; i < subordinados.length(); i++) {
+			JSONObject subordinado = subordinados.getJSONObject(i);
+			pernrList.add(StringPool.APOSTROPHE+subordinado.getString("pernr")+StringPool.APOSTROPHE);
+		}
+
+
+		return ListUtil.toString(pernrList,"",StringPool.COMMA);
 	}
 
 
-	private static final String VIEW = "/views/jornadadiaria/results.jsp";
+	private static final String VIEW = "/views/marcajediaactual/results.jsp";
 
 	@Override
 	public String getResultsView(PortletRequest request, PortletResponse response) {
@@ -206,11 +201,15 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 
 	@Reference
 	AjaxSearchUtil ajaxSearchUtil;
-
 	@Reference
 	SapServicesUtil _sapServicesUtil;
 	@Reference
 	CustomDateUtil _customDateUtil;
 	@Reference
 	CustomCacheSingleUtil _cache;
+	@Reference
+	SPECServicesSettings _specServicesSettings;
+	@Reference
+	SpecUtil _specUtil;
+
 }

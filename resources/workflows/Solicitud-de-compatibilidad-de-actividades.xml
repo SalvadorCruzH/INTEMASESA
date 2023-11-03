@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>92</version>
+	<version>94</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -18,11 +18,16 @@
 			</label>
 		</labels>
 		<transitions>
-            <transition>
-                <name>bbe4da74-616c-468a-9429-c37938655e90</name>
-                <target>Asignar-admin-RRHH</target>
-                <default>true</default>
-            </transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Enviada solicitud de compatibilidades
+					</label>
+				</labels>
+				<name>bbe4da74-616c-468a-9429-c37938655e90</name>
+				<target>Asignar-admin-RRHH</target>
+				<default>true</default>
+			</transition>
 		</transitions>
 	</state>
 	<state>
@@ -189,11 +194,16 @@ sigdServiceTracker.close();]]>
 			</label>
 		</labels>
 		<transitions>
-            <transition>
-                <name>Notificar-a-rrhh</name>
-                <target>revision-rrhh</target>
-                <default>true</default>
-            </transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Notificar a RRHH
+					</label>
+				</labels>
+				<name>Notificar-a-rrhh</name>
+				<target>revision-rrhh</target>
+				<default>true</default>
+			</transition>
 		</transitions>
 	</state>
 	<state>
@@ -224,7 +234,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", 0, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -293,7 +303,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>

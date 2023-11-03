@@ -144,6 +144,7 @@ public class AjaxSearchDisplayContext {
                 ParamUtil.getDate(getOriginalRequest(), param, AjaxSearchPortletKeys.DFLT_SIMPLE_DATE_FORMAT, defaultValue));
     }
 
+
     public final Date getOneMoreDayDate(String param, Date defaultValue) {
         Date date = getDate(param, defaultValue);
 

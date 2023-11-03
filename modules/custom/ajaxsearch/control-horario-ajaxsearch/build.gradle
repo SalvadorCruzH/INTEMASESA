@@ -1,5 +1,6 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: 'com.oracle.database.jdbc', name: 'ojdbc10', version: '19.19.0.0'
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder"
 	compile project (':modules:common:settings-module')
 	compile project (':modules:common:base-module')

@@ -25,4 +25,15 @@ public class EmasesaConstants {
     
     public static final String EMASESA_OBJECT_STATUS = "estadoObjeto";
     public static final String EMASESA_OBJECT_HISTORY = "historicoEstado";
+
+    //SPEC
+    public static final String SUBSTR_MARC_TMP_1_8 = "SUBSTR(MARC_TMP,1,8)";
+    public static final String SUBSTR_MARC_TMP_9_4 = "SUBSTR(MARC_TMP,9,4)";
+    public static final String YYYY_M_MDD = "yyyyMMdd";
+    public static final String DD_MM_YYYY = "dd-MM-yyyy";
+    public static final String DIA = "dia";
+
+    public static final String  FORMAT_DATE_DB = "yyyyMMddHHmm";
+    public static final String  INIT_DATE_DB = "0";
+    public static final String  FINAL_DATE_DB = "999999999999";
 }
