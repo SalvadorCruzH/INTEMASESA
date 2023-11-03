@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>6</version>
+	<version>8</version>
 	<state>
 		<name>d447b28d-155f-4d95-9e05-f35825a66b95</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -216,7 +216,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAprobacionResponsable");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAprobacionResponsable", 0, "jefe Departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -325,7 +325,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAdminRRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdminRRHH", 0, "Admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>

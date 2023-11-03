@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
-	<version>28</version>
+	<version>37</version>
 	<state>
 		<name>4a366907-deba-425c-8bfc-d40aa6c164f7</name>
 		<description>Se crea una solicitud de flexibilidad horaria</description>
@@ -166,7 +166,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAprobacion");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAprobacion", 0, "Jefe Departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -190,25 +190,9 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>jefe@liferay.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -275,7 +259,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "jefeDeDivision");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "jefeDeDivision", 0, "Jefe Division");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -299,25 +283,9 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>division@liferay.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -384,7 +352,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "asignadaRRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "asignadaRRHH", 0, "RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -483,7 +451,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "jefeDivisionPersonas");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "jefeDivisionPersonas", 0, "jefe Division Personas");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -507,25 +475,9 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>personas@liferay.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
