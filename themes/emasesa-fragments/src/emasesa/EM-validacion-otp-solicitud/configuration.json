@@ -9,6 +9,14 @@
 					"localizable": true,
 					"name": "placeholder",
 					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Tipo de Solicitud",
+					"localizable": true,
+					"name": "tipoObjeto",
+					"type": "text"
 				}
 			]
 		}
