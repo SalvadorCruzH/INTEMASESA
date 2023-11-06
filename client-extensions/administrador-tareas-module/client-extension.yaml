@@ -2,8 +2,8 @@ assemble:
     - from: build/static
       into: static
 administrador-tareas-module:
-    cssURLs:
-        - css/main.*.css
+    #cssURLs:
+    #    - css/main.*.css
     friendlyURLMapping: administrador-tareas-module
     htmlElementName: administrador-tareas-module
     instanceable: false
@@ -13,8 +13,3 @@ administrador-tareas-module:
     urls:
         - js/main.*.js
     useESM: true
-administrador-tareas-settings:
-    type: instanceSettings
-    pid: es.emasesa.intranet.settings.configuration.CustomWorkflowTasksConfiguration
-    apiKey : 1234
-    objectMapping: a|b, c|d

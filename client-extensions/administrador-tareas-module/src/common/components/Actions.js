@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import TareasApi from '../services/TareasApi';
-import {OBJECT_MAPPING,OBJECT_CONSTANTS} from "../js/Constants"
+import {OBJECT_MAPPING,OBJECT_CONSTANTS} from "../js/Constants";
 
 let onlyonce = true;
 
@@ -16,7 +16,7 @@ class Actions extends React.Component {
             refresh: props.refresh,
             objectReviewed: props.tarea.objectReviewed,
             externalReferenceCode:props.tarea.objectData.externalReferenceCode,
-            loading: true,
+            loading: true
         }
         console.log(this);
     }

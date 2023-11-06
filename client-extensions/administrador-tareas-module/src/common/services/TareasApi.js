@@ -1,5 +1,5 @@
-import * as Constants from "../js/Constants"
-import {WORKFLOWTASKS} from "../js/Constants"
+import * as Constants from "../js/Constants";
+import {WORKFLOWTASKS} from "../js/Constants";
 
 
 const TareasApi = {
@@ -30,7 +30,7 @@ const TareasApi = {
             );
         },
 
-        changeTransitionTask: (actionUrl,data,callback, errorHandler) => {
+        changeTransition: (actionUrl,data,callback, errorHandler) => {
              LiferayApi.post(
                 Constants.oauthUserAgent.CLIENT_ID,
                 actionUrl,

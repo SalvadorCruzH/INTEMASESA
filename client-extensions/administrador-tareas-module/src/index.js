@@ -3,9 +3,6 @@ import { createRoot } from 'react-dom/client';
 
 import TareasModule from './common/components/TareasModule.js';
 
-import './css/module-footer.scss';
-
-
 const App = (props) => {
 console.log(props);
 	return (

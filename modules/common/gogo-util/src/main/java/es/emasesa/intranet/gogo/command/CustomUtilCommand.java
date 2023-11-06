@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import es.emasesa.intranet.gogo.util.ClientExtensionCleanDatabase;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,7 +44,9 @@ import java.util.stream.Collectors;
                 "osgi.command.function=getStructureInfo",
                 "osgi.command.function=getTemplateType",
                 "osgi.command.function=removePREUsers",
-                "osgi.command.function=removeActivitiesByParentGroup"
+                "osgi.command.function=removeActivitiesByParentGroup",
+                "osgi.command.function=cleanClientExtensionDatabase"
+
 
 
         },
@@ -238,6 +241,10 @@ public class CustomUtilCommand {
 
         }
 
+        public void cleanClientExtensionDatabase() throws Exception {
+               _clientExtensionCleanDatabase.doCleanClientExtensionFromDatabase();
+        }
+
         @Reference
         ClassNameLocalService _classNameLocalService;
 
@@ -257,5 +264,7 @@ public class CustomUtilCommand {
         GroupLocalService _groupLocalService;
         @Reference
         SocialActivityLocalService _socialActivityLocalService;
+        @Reference
+        ClientExtensionCleanDatabase _clientExtensionCleanDatabase;
 
 }
