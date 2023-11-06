@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>19</version>
+	<version>25</version>
 	<state>
 		<name>8eab626c-a786-4d84-9abd-e1136e3afa89</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -170,7 +170,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteDeAprobar");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAprobar", 0, "jefe Departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -263,6 +263,29 @@ customWorkflowUtilTracker.close();]]>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivArea", 0, "jefe Division de area");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
 			<notification>
 				<name>Notificación de solicitud</name>
 				<description>
@@ -280,25 +303,9 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>division@liferay.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -365,7 +372,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "pendienteAdmRRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdmRRHH", 0, "admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -464,7 +471,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "jefeDivPersonas");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "jefeDivPersonas", 0, "jefe Division Personas");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
