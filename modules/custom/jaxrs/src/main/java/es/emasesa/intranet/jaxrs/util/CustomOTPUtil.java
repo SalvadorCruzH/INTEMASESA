@@ -5,6 +5,8 @@ import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -14,12 +16,15 @@ import es.emasesa.intranet.base.util.CustomCacheMultiUtil;
 import es.emasesa.intranet.base.util.CustomMailUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.jaxrs.constant.JaxrsConstants;
+import es.emasesa.intranet.settings.osgi.FormsSettings;
+import es.emasesa.intranet.webservices.jaxrs.beans.ResponseData;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -59,8 +64,8 @@ public class CustomOTPUtil extends Application {
     @Produces(ContentTypes.APPLICATION_JSON)
     @Path("/generate-otp/{typeObject}/{userId}/{length}")
     public boolean generateOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
-                               @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
-                               @DefaultValue("0") @PathParam("length")int length){
+                                @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
+                                @DefaultValue("0") @PathParam("length") int length){
         boolean isGenerated = Boolean.FALSE;
         String digits = JaxrsConstants.DIGITS;
         String otp;
@@ -100,20 +105,19 @@ public class CustomOTPUtil extends Application {
                 PrefsPropsUtil.getPreferences(companyId).getValue("admin.email.from.address", PropsUtil.get("admin.email.from.address")):
                 mailDetails.get(JaxrsConstants.EMAIL_FROM);
         sendOtp = _customMailUtil.createAndSendMail(from, to, subject, body);
-
         if (!sendOtp) LoggerUtil.error(_log, "Ha ocurrido un error al enviar el Correo Electronico");
-
         return sendOtp;
     }
 
     @GET
     @Produces(ContentTypes.APPLICATION_JSON)
     @Path("/generate-send-otp/{typeObject}/{userId}/{length}/{companyId}/{to}")
-    public boolean generateSendOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
-                                   @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
-                                   @DefaultValue("0") @PathParam("length")int length,
-                                   @DefaultValue("0") @PathParam("companyId") long companyId,
-                                   @DefaultValue(StringPool.BLANK) @PathParam("to") String to){
+    public Response generateSendOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
+                                    @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
+                                    @DefaultValue("0") @PathParam("length")int length,
+                                    @DefaultValue("0") @PathParam("companyId") long companyId,
+                                    @DefaultValue(StringPool.BLANK) @PathParam("to") String to){
+        Response.ResponseBuilder builder;
         boolean isOk;
 
         isOk = generateOTP(typeObject,userId,length);
@@ -121,8 +125,20 @@ public class CustomOTPUtil extends Application {
             LoggerUtil.debug(_log, "Se ha generado la OTP");
             isOk = sendOTP(typeObject, userId, companyId, to);
         }
+        JSONObject json = JSONFactoryUtil.createJSONObject();
 
-        return isOk;
+        json.put("isOk", isOk);
+
+        if (_formSettings.debugOtp()){
+            json.put("opt", getOTPCache(typeObject, userId));
+        }
+        builder = Response.ok(new ResponseData(
+                false,
+                json.toString(),
+                null,
+                null));
+
+        return builder.build();
     }
 
     private Map<String,String> getMailDetails(String otp){
@@ -177,6 +193,9 @@ public class CustomOTPUtil extends Application {
 
     @Reference
     private NotificationTemplateLocalService _notificationTemplateLocalService;
+
+    @Reference
+    FormsSettings _formSettings;
 
     private static final Log _log = LoggerUtil.getLog(CustomOTPUtil.class);
 }
