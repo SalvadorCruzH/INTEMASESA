@@ -2,7 +2,22 @@ $(document).ready(function() {
 	$('[id^="fragment-"][id$="-submit-button"]').prop('disabled', true);
 	$('[id^="fragment-"][id$="-submit-button"]').attr('aria-disabled', true);
 });
-
+var showHtmlComponent = function(query) {
+	$(query).removeClass('d-none');
+	$(query).removeAttr('aria-hidden');
+}
+var hideHtmlComponent = function(query) {
+	$(query).addClass('d-none');
+	$(query).attr('aria-hidden', true);
+}
+var enableHtmlComponent = function(query) {
+	$(query).prop('disabled', false);
+	$(query).removeAttr('aria-disabled');
+}
+var disableHtmlComponent = function(query) {
+	$(query).prop('disabled', true);
+	$(query).attr('aria-disabled', true);
+}
 $("#generate-otp-button").on('click', () => {
 	$("#fragment-otp").removeClass('d-none');
 	$("#fragment-otp").removeAttr('aria-hidden');
@@ -28,35 +43,34 @@ $("#generate-otp-button").on('click', () => {
 		return response.json();
 	})
 	.then(data => {
-		console.log(data);
-		if (data) {
-			console.log("OTP generado y enviado, esperando validación");
-
-			$("#otp-input").removeClass('d-none');
-			$("#otp-input").removeAttr('aria-hidden');
+		let parseJsonData = JSON.parse(data.data);
+		if(parseJsonData.otp && !parseJsonData.isOk) {
+			console.debug("DEBUG: El correo no se ha podido enviar, el OTP es: " + parseJsonData.otp);
+		}
+		if (data.data) {
+			hideHtmlComponent("#error-envio-otp");
 	
-			$("#generate-otp-button").prop('disabled', true);
-			$("#generate-otp-button").attr('aria-disabled', true);
-		
-			$("#validate-otp-button").prop('disabled', false);
-			$("#validate-otp-button").removeAttr('aria-disabled');
+			disableHtmlComponent("#generate-otp-button");
+
+			showHtmlComponent("#input-wrapper");
+			enableHtmlComponent("#otp-input");
+			enableHtmlComponent("#validate-otp-button");
 		
 			setTimeout(() => {
 				$("#generate-otp-button").prop('disabled', false);
 				$("#generate-otp-button").removeAttr('aria-disabled');
 			}, 30000);
 		} else {
-			console.log("No se ha podido enviar el correo con el OTP, vuelva a intentarlo");
+			showHtmlComponent("#error-envio-otp");
 		}
 	})
 	.catch(error => {
+		showHtmlComponent("#error-envio-otp");
 		console.error('Hubo un error:', error);
 	});
 });
 
-$("#validate-otp-button").on('click', () => {
-	console.log($(this));
-	
+$("#validate-otp-button").on('click', () => {	
 	const otp = $("#otp-input").val();
 	const typeObject = configuration.tipoObjeto;
 	const userId = themeDisplay.getUserId();
@@ -76,17 +90,17 @@ $("#validate-otp-button").on('click', () => {
 		return response.json();
 	})
 	.then(data => {
-		console.log(data);
 		if (data) {
-			console.log("OTP validado, submit activado");
-			$('[id^="fragment-"][id$="-submit-button"]').prop('disabled', false);
-			$('[id^="fragment-"][id$="-submit-button"]').removeAttr('aria-disabled');
+			enableHtmlComponent('[id^="fragment-"][id$="-submit-button"]');
+			showHtmlComponent("#validacion-otp-correcto");
+			hideHtmlComponent("#fragment-otp");
 		} else {
-			console.log("OTP no válido, submit desactivado");
+			showHtmlComponent("#error-validacion-otp");
 		
 		}
 	})
 	.catch(error => {
+		showHtmlComponent("#error-validacion-otp");
 		console.error('Hubo un error:', error);
 	});
 });
