@@ -13,3 +13,52 @@ Liferay.on("allPortletsReady",function(){
         head.appendChild(linkSelect2);
     });
 });
+
+$(function() {
+
+    if($("#portlet_com_liferay_document_library_web_portlet_DLAdminPortlet #_com_liferay_document_library_web_portlet_DLAdminPortlet_file")){
+        $("#portlet_com_liferay_document_library_web_portlet_DLAdminPortlet #_com_liferay_document_library_web_portlet_DLAdminPortlet_fileName").parent().hide();
+        $("#portlet_com_liferay_document_library_web_portlet_DLAdminPortlet #_com_liferay_document_library_web_portlet_DLAdminPortlet_publishButton").attr("disabled",true);
+        $(document).on("change","#portlet_com_liferay_document_library_web_portlet_DLAdminPortlet #_com_liferay_document_library_web_portlet_DLAdminPortlet_file",function(){
+            var value = $(this).val();
+            if(value){
+                $("#portlet_com_liferay_document_library_web_portlet_DLAdminPortlet #_com_liferay_document_library_web_portlet_DLAdminPortlet_publishButton").removeAttr("disabled");
+            }
+
+        });
+    }
+
+    if($("#_com_liferay_journal_web_portlet_JournalPortlet_ddmTemplateName").val() == "EMA - videosCorporativos"){
+        $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").attr("disabled",true);
+        $(document).on("change", "[id*='_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text62556116$']",function(){
+            var value = $(this).val();
+            if(value){
+                $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").removeAttr("disabled");
+            }else{
+                $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").attr("disabled",true);
+            }
+
+        });
+        $(document).on("blur", "[id*='_com_liferay_journal_web_portlet_JournalPortlet_ddm$$DocumentLibrary64907280$']",function(){
+            var value = $(this).val();
+            if(value){
+                $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").removeAttr("disabled");
+            }else{
+                $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").attr("disabled",true);
+            }
+        });
+    }
+    $(document).on("click", function() {
+        if($("input[id*='_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text62556116$']").length > 0 ||
+            $("input[id*='_com_liferay_journal_web_portlet_JournalPortlet_ddm$$DocumentLibrary64907280$']").length > 0){
+
+            var value1 = $("input[id*='_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text62556116$']").val();
+            var value2 = $("input[id*='_com_liferay_journal_web_portlet_JournalPortlet_ddm$$DocumentLibrary64907280$']").val();
+            if(value1 || value2){
+                $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").removeAttr("disabled");
+            }else{
+                $("#_com_liferay_journal_web_portlet_JournalPortlet_publishButton").attr("disabled",true);
+            }
+        }
+    });
+})
