@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>94</version>
+	<version>97</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -116,11 +116,24 @@ sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+//Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+if(pdf != null && pdf != ""){
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+}
+//Subir fichero certificacion o decalracion responsable
+String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
+String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
+
+if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "solicitud");
+}else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "solicitud");
+}	
 
 customWorkflowUtilTracker.close();
-sigdServiceTracker.close();]]>
+sigdServiceTracker.close();
+]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -177,8 +190,16 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", 0, "Consejero Delegado");
 //Recuperar anexo introducido en el campo anterior
+String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
+if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "solicitud");
+}
+
+//Subir formulario de solicitud
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+if(pdf != null && pdf != ""){
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>

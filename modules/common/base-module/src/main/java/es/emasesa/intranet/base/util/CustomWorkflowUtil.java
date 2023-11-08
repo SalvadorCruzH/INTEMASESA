@@ -19,7 +19,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -57,20 +62,20 @@ public class CustomWorkflowUtil {
 		try {
 			if(Validator.isNotNull(object)) {
 				Map <String,Serializable> map = object.getValues();
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("historicoEstado"));
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get(EmasesaConstants.WORKFLOW_HISTORICO));
 				JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 				
 				LocalDateTime now = LocalDateTime.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DD_MM_YYYY_HH_mm_ss);
 				
 				if(userId != 0) {
-					datosHistorico.put("userId", userId);
+					datosHistorico.put(EmasesaConstants.WORKFLOW_USER_ID, userId);
 	    		}else {
-	    			datosHistorico.put("userId", StringPool.BLANK);
+	    			datosHistorico.put(EmasesaConstants.WORKFLOW_USER_ID, StringPool.BLANK);
 	    		}
 				datosHistorico.put(EmasesaConstants.EMASESA_OBJECT_STATUS, estadoObjeto);
-				datosHistorico.put("rolName", rolName);
-				datosHistorico.put("fechaCambioEstado", now.format(formatter));
+				datosHistorico.put(EmasesaConstants.WORKFLOW_ROL, rolName);
+				datosHistorico.put(EmasesaConstants.WORKFLOW_FECHA, now.format(formatter));
 				jsonArray.put(datosHistorico);
 				
 				map.put(EmasesaConstants.EMASESA_OBJECT_HISTORY, jsonArray);
@@ -125,23 +130,24 @@ public class CustomWorkflowUtil {
     		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
     		ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
 			Map<String,Serializable> map = object.getValues();
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("historicoEstado"));
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get(EmasesaConstants.WORKFLOW_HISTORICO));
 			JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 			
 			LocalDateTime now = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DD_MM_YYYY_HH_mm_ss);
 			
 			if(userId != 0) {
-				datosHistorico.put("userId", userId);
+				datosHistorico.put(EmasesaConstants.WORKFLOW_USER_ID, userId);
     		}else {
-    			datosHistorico.put("userId", StringPool.BLANK);
+    			datosHistorico.put(EmasesaConstants.WORKFLOW_USER_ID, StringPool.BLANK);
     		}
 			datosHistorico.put(EmasesaConstants.EMASESA_OBJECT_STATUS, estadoObjeto);
-			datosHistorico.put("rolName", rolName);
-			datosHistorico.put("fechaCambioEstado", now.format(formatter));
+			datosHistorico.put(EmasesaConstants.WORKFLOW_ROL, rolName);
+			datosHistorico.put(EmasesaConstants.WORKFLOW_FECHA, now.format(formatter));
 			jsonArray.put(datosHistorico);
 			
 			map.put(EmasesaConstants.EMASESA_OBJECT_HISTORY, jsonArray);
+			map.put(EmasesaConstants.EMASESA_OBJECT_STATUS, estadoObjeto);
 			
 			ServiceContext serviceContext = new ServiceContext();
 			_objectEntryLocalService.updateObjectEntry(
@@ -241,36 +247,33 @@ public class CustomWorkflowUtil {
    }
 
 	/**
-	 * Recover file
+	 * Obtain document base64 by document name
 	 * @param workflowContext
+	 * @param documentName
+	 * 
+	 * @return documentBase64
 	 *
 	 */
-	public void recoverFile(Map<String, Serializable> workflowContext){
+	public String getDocumentToLoad(Map<String, Serializable> workflowContext, String documentName){
 		long entryClassPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-		long certificacionDeLaEmpresa = 0, declaracionResponsable= 0, anexoAsesoriaJuridica = 0;
+		long idDocumentoToLoad = 0;
+		String documentBase64 = StringPool.BLANK;
 
 		try {
-			certificacionDeLaEmpresa = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get("certificacionDeLaEmpresa");
-			declaracionResponsable = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get("declaracionResponsable");
-			anexoAsesoriaJuridica = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get("anexoAsesoriaJuridica");
-			if (certificacionDeLaEmpresa != 0) {
-				DLFileEntry certificacionDeLaEmpresaFileEntry = _dlFileEntryLocalService.getDLFileEntry(certificacionDeLaEmpresa);
-				downloadFile(certificacionDeLaEmpresaFileEntry);
+			 LoggerUtil.debug(LOG, "Obteniendo el documento con nombre: " + documentName);
+			idDocumentoToLoad = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get(documentName);
+			LoggerUtil.debug(LOG, "Recuperamos el ID del documento: " + idDocumentoToLoad);
+			if (idDocumentoToLoad != 0) {
+				LoggerUtil.debug(LOG, "ID obtenido, buscar el DLFile a partir del ID... " );
+				DLFileEntry documentFileEntry = _dlFileEntryLocalService.getDLFileEntry(idDocumentoToLoad);
+				LoggerUtil.debug(LOG, "Se recupera el DLFILE... " );
+				documentBase64 = convertFileBase64(documentFileEntry);
+				LoggerUtil.debug(LOG, "Convertido a Base64 " );
 			}
-
-			if (declaracionResponsable != 0) {
-				DLFileEntry declaracionResponsableFileEntry = _dlFileEntryLocalService.getDLFileEntry(declaracionResponsable);
-				downloadFile(declaracionResponsableFileEntry);
-			}
-
-			if (anexoAsesoriaJuridica != 0) {
-				DLFileEntry anexoAsesoriaJuridicaFileEntry = _dlFileEntryLocalService.getDLFileEntry(anexoAsesoriaJuridica);
-				downloadFile(anexoAsesoriaJuridicaFileEntry);
-			}
-
-		} catch (IOException | PortalException e) {
+		} catch (PortalException e) {
 			LoggerUtil.error(LOG, "Error al intenar recuperar el documento: " + e.toString());
 		}
+		return documentBase64;
 	}
 
 	/**

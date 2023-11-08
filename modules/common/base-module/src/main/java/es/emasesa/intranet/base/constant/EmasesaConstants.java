@@ -41,4 +41,11 @@ public class EmasesaConstants {
     public static final String REGEX_SCREENNAME = "--screenNameFilter--";
     public static final String MARC_PERS = "MARC_PERS";
     public static final String EDIT_NAME = "EDIT_NAME";
+    
+    //WORKFLOW
+    public static final String WORKFLOW_USER_ID= "userId";
+    public static final String WORKFLOW_HISTORICO= "historicoEstado";
+    public static final String WORKFLOW_ROL= "rolName";
+    public static final String WORKFLOW_FECHA= "fechaCambioEstado";
+    public static final String DD_MM_YYYY_HH_mm_ss= "dd-MM-yyyy HH:mm:ss";
 }
