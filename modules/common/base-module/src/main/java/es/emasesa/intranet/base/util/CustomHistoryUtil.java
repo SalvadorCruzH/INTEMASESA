@@ -1,19 +1,26 @@
 package es.emasesa.intranet.base.util;
 
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.log.Log;
 
-@Component(
+@Component( 
         immediate = true,
         service = CustomHistoryUtil.class
 )
 public class CustomHistoryUtil {
 
     public String getHistoryState(long objectId) throws PortalException {
-         return (String) _objectEntryLocalService.getObjectEntry(objectId).getValues().get("historicoEstado");
+    	ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectId);
+    	LoggerUtil.info(LOG,"Se obtiene el object a partir de su id");
+    	String historico = object.getValues().get("historicoEstado").toString();
+    	LoggerUtil.info(LOG,"Se obtiene el historico: " + historico);
+         return historico;
     }
 
     public String getUserAssigned(long userId) throws PortalException {
@@ -26,5 +33,7 @@ public class CustomHistoryUtil {
     ObjectEntryLocalService _objectEntryLocalService;
     @Reference
     UserLocalService _userLocalService;
+    
+    private static final Log LOG = LogFactoryUtil.getLog(CustomHistoryUtil.class);
 
 }
