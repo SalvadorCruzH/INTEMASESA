@@ -99,14 +99,19 @@ public class CustomOTPUtil extends Application {
         String otpCache = getOTPCache(typeObject, userId);
 
         Map<String,String> mailDetails = getMailDetails(otpCache);
-        String subject = mailDetails.get(JaxrsConstants.EMAIL_SUBJECT);
-        String body = mailDetails.get(JaxrsConstants.EMAIL_BODY);
-        String from = mailDetails.get(JaxrsConstants.EMAIL_FROM).isEmpty()?
-                PrefsPropsUtil.getPreferences(companyId).getValue("admin.email.from.address", PropsUtil.get("admin.email.from.address")):
-                mailDetails.get(JaxrsConstants.EMAIL_FROM);
-        sendOtp = _customMailUtil.createAndSendMail(from, to, subject, body);
-        if (!sendOtp) LoggerUtil.error(_log, "Ha ocurrido un error al enviar el Correo Electronico");
-        return sendOtp;
+        if (!mailDetails.isEmpty()){
+            String subject = mailDetails.get(JaxrsConstants.EMAIL_SUBJECT);
+            String body = mailDetails.get(JaxrsConstants.EMAIL_BODY);
+            String from = mailDetails.get(JaxrsConstants.EMAIL_FROM).isEmpty()?
+                    PrefsPropsUtil.getPreferences(companyId).getValue("admin.email.from.address", PropsUtil.get("admin.email.from.address")):
+                    mailDetails.get(JaxrsConstants.EMAIL_FROM);
+            sendOtp = _customMailUtil.createAndSendMail(from, to, subject, body);
+            if (!sendOtp) LoggerUtil.error(_log, "Ha ocurrido un error al enviar el Correo Electronico");
+            return sendOtp;
+
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
     @GET
@@ -130,7 +135,7 @@ public class CustomOTPUtil extends Application {
         json.put("isOk", isOk);
 
         if (_formSettings.debugOtp()){
-            json.put("opt", getOTPCache(typeObject, userId));
+            json.put("otp", getOTPCache(typeObject, userId));
         }
         builder = Response.ok(new ResponseData(
                 false,
@@ -146,16 +151,22 @@ public class CustomOTPUtil extends Application {
         String body, from;
         NotificationTemplate notificationTemplate = getNotificationTemplate();
 
-        body = notificationTemplate.getBody(JaxrsConstants.LOCALE_SPANISH);
-        body = body.replace("#otpGenerada#", otp);
-        mailDetails.put(JaxrsConstants.EMAIL_BODY, body );
+        if(!Validator.isNull(notificationTemplate)) {
+            body = notificationTemplate.getBody(JaxrsConstants.LOCALE_SPANISH);
+            body = body.replace("#otpGenerada#", otp);
+            mailDetails.put(JaxrsConstants.EMAIL_BODY, body );
 
-        from = Objects.requireNonNull(notificationTemplate.getNotificationRecipient().getNotificationRecipientSettings().stream().filter(element -> element.getName().equals("from")).findFirst().orElse(null)).getValue();
-        mailDetails.put(JaxrsConstants.EMAIL_FROM, from);
+            from = Objects.requireNonNull(notificationTemplate.getNotificationRecipient().getNotificationRecipientSettings().stream().filter(element -> element.getName().equals("from")).findFirst().orElse(null)).getValue();
+            mailDetails.put(JaxrsConstants.EMAIL_FROM, from);
 
-        mailDetails.put(JaxrsConstants.EMAIL_SUBJECT, notificationTemplate.getSubject(JaxrsConstants.LOCALE_SPANISH));
+            mailDetails.put(JaxrsConstants.EMAIL_SUBJECT, notificationTemplate.getSubject(JaxrsConstants.LOCALE_SPANISH));
 
-        return mailDetails;
+            return mailDetails;
+
+        } else {
+            LoggerUtil.warn(_log, "No se ha encontrado la plantilla de Correo Electronico. getMailDetails");
+            return mailDetails;
+        }
     }
 
     private NotificationTemplate getNotificationTemplate (){
@@ -165,8 +176,14 @@ public class CustomOTPUtil extends Application {
         dynamicQuery.add(RestrictionsFactoryUtil.ilike(JaxrsConstants.QUERY_PARAM_NAME,JaxrsConstants.EMAIL_TEMPLATE_NAME))
                 .add(RestrictionsFactoryUtil.ilike(JaxrsConstants.QUERY_PARAM_RECIPIENT_TYPE,"email"));
 
-        notificationTemplate = (NotificationTemplate) _notificationTemplateLocalService.dynamicQuery(dynamicQuery).get(0);
-        return notificationTemplate;
+        List <NotificationTemplate> notificationTemplates = _notificationTemplateLocalService.dynamicQuery(dynamicQuery);
+        if(notificationTemplates.isEmpty())  {
+            LoggerUtil.warn(_log, "No se ha encontrado la plantilla de Correo Electronico. getNotificationTemplate");
+            return null;
+        } else {
+            notificationTemplate = notificationTemplates.get(0);
+            return notificationTemplate;
+        }
     }
 
 
@@ -196,6 +213,7 @@ public class CustomOTPUtil extends Application {
 
     @Reference
     FormsSettings _formSettings;
+
 
     private static final Log _log = LoggerUtil.getLog(CustomOTPUtil.class);
 }

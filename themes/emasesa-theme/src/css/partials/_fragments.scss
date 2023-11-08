@@ -116,3 +116,17 @@
     }
   }
 }
+
+.ema-fragment-otp {
+  margin: 2rem auto;
+  .ema-input-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    .btn {
+      margin-top: 2rem;
+      max-height: 3.5rem;
+    }
+  }
+}

@@ -1,13 +1,18 @@
-<div class="d-flex text-truncate">
-
-    <input id="otp-input" class="form-control d-none" aria-hidden="true" placeholder="${configuration.placeholder}">
-        
+<div id="fragment-otp" class="ema-fragment-otp text-truncate">
     <button id="generate-otp-button" type="button" class="btn btn-nm btn-secondary">
-        Request OTP
+        ${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.generar")}
     </button>
-        
-
-    <button id="validate-otp-button" type="button" class="btn btn-nm btn-primary" disabled aria-disabled="true">
-        Validar OTP
-    </button>
+    <p id="error-envio-otp" class="text-danger d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.error-envio-generacion")}Error envío OTP, vuelve a probar</p>
+    <div id="input-wrapper" class="ema-input-wrapper text-truncate d-none" aria-hidden="true">
+        <div>
+            <label class="" id="qtts-text-input-label">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.codigo")}</label>
+            <input id="otp-input" class="form-control" placeholder="${configuration.placeholder}" type="text" disabled aria-disabled="true">
+            <p id="error-validacion-otp" class="text-danger d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.invalido")}</p>
+        </div>
+        <button id="validate-otp-button" type="button" class="btn btn-nm btn-primary" disabled aria-disabled="true">
+            ${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.validar")}
+        </button>
+    </div>
 </div>
+
+<h3 id="validacion-otp-correcto" class="otp-success d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.validado")}</h3>
