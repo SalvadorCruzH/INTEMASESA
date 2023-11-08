@@ -1,6 +1,8 @@
 package es.emasesa.intranet.base.util;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -17,11 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -241,9 +239,92 @@ public class CustomWorkflowUtil {
        }
    	return base64PDF;
    }
-   
-    
-    @Reference
+
+	/**
+	 * Recover file
+	 * @param workflowContext
+	 *
+	 */
+	public void recoverFile(Map<String, Serializable> workflowContext){
+		long entryClassPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		long certificacionDeLaEmpresa = 0, declaracionResponsable= 0, anexoAsesoriaJuridica = 0;
+
+		try {
+			certificacionDeLaEmpresa = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get("certificacionDeLaEmpresa");
+			declaracionResponsable = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get("declaracionResponsable");
+			anexoAsesoriaJuridica = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get("anexoAsesoriaJuridica");
+			if (certificacionDeLaEmpresa != 0) {
+				DLFileEntry certificacionDeLaEmpresaFileEntry = _dlFileEntryLocalService.getDLFileEntry(certificacionDeLaEmpresa);
+				downloadFile(certificacionDeLaEmpresaFileEntry);
+			}
+
+			if (declaracionResponsable != 0) {
+				DLFileEntry declaracionResponsableFileEntry = _dlFileEntryLocalService.getDLFileEntry(declaracionResponsable);
+				downloadFile(declaracionResponsableFileEntry);
+			}
+
+			if (anexoAsesoriaJuridica != 0) {
+				DLFileEntry anexoAsesoriaJuridicaFileEntry = _dlFileEntryLocalService.getDLFileEntry(anexoAsesoriaJuridica);
+				downloadFile(anexoAsesoriaJuridicaFileEntry);
+			}
+
+		} catch (IOException | PortalException e) {
+			LoggerUtil.error(LOG, "Error al intenar recuperar el documento: " + e.toString());
+		}
+	}
+
+	/**
+	 * Download file
+	 * @param fileEntry
+	 *
+	 */
+	private void downloadFile(DLFileEntry fileEntry) throws IOException, PortalException {
+		try (InputStream inputStream = fileEntry.getContentStream();
+			 FileOutputStream outputStream = new FileOutputStream("C:/Dev/" + fileEntry.getFileName())) {
+			byte[] buffer = new byte[4096];
+			int len;
+
+			while ((len = inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, len);
+			}
+		}
+		if (fileEntry.getExtension().equalsIgnoreCase("PDF")){
+			convertDLFileEntryToPDDocument(fileEntry);
+		}else {
+			convertFileBase64(fileEntry);
+		}
+	}
+
+	/**
+	 * Convert file to Pddocument
+	 * @param fileEntry
+	 *
+	 */
+	public void convertDLFileEntryToPDDocument(DLFileEntry fileEntry) throws PortalException, IOException {
+		InputStream inputStream = fileEntry.getContentStream();
+		pdfBase64(PDDocument.load(inputStream));
+	}
+
+	/**
+	 * Convert file to base64
+	 * @param fileEntry
+	 *
+	 */
+	public String convertFileBase64(DLFileEntry fileEntry){
+		String base64 = StringPool.BLANK;
+
+		try (InputStream inputStream = fileEntry.getContentStream()) {
+			byte[] fileContent = inputStream.readAllBytes();
+			base64 = java.util.Base64.getEncoder().encodeToString(fileContent);
+		} catch (IOException | PortalException e) {
+			throw new RuntimeException(e);
+		}
+
+		return base64;
+	}
+
+
+	@Reference
     private ObjectEntryLocalService _objectEntryLocalService;
     
     @Reference
@@ -254,6 +335,9 @@ public class CustomWorkflowUtil {
 
 	@Reference
 	private DLAppLocalService dlAppLocalService;
+
+	@Reference
+	DLFileEntryLocalService _dlFileEntryLocalService;
 	
 	private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
 }
