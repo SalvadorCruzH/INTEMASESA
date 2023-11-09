@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8'?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:type="urn:juntadeandalucia:cice:pfirma:type:v2.0" xmlns:request="urn:juntadeandalucia:cice:pfirma:modify:request:v2.0" targetNamespace="urn:juntadeandalucia:cice:pfirma:modify:request:v2.0">
+	<xsd:import namespace="urn:juntadeandalucia:cice:pfirma:type:v2.0" schemaLocation="type.xsd"/>
+	<xsd:element name="createRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="request" type="type:request">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="createRequestResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="updateRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="request" type="type:request">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="updateRequestResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="deleteRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="deleteRequestResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="sendRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="sendRequestResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="insertDocument">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="document" type="type:document">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="insertDocumentResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="deleteDocument">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="deleteDocumentResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="insertSigners">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="signLine" type="xsd:int">
+				</xsd:element>
+				<xsd:element name="signerList" type="type:signerList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="insertSignersResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="deleteSigners">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="signerList" type="type:signerList">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="deleteSignersResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="createRequestFromSign">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestSign" type="type:requestSign">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="createRequestFromSignResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="updateDocumentAccess">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="accessLevel" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="updateDocumentAccessResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="documentId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="updateDateNextSigner">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+				<xsd:element name="date" type="xsd:dateTime">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="updateDateNextSignerResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestId" type="xsd:string">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	
+
+</xsd:schema>

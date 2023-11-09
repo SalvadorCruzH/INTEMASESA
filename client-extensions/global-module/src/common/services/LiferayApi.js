@@ -99,4 +99,5 @@ const callServiceDEL = (clientId, url, method, data, callback) => {
     }
 }
 
+
 export default LiferayApi;

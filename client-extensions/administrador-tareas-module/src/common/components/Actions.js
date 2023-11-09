@@ -16,6 +16,7 @@ class Actions extends React.Component {
             refresh: props.refresh,
             objectReviewed: props.tarea.objectReviewed,
             externalReferenceCode:props.tarea.objectData.externalReferenceCode,
+            completed: props.tarea.completed,
             loading: true
         }
         console.log(this);
@@ -101,9 +102,11 @@ class Actions extends React.Component {
             		<i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i>
             	</a>
             	<ul aria-labelledby="dropdownAction1" class="dropdown-menu">
-            		<li><a class="dropdown-item" data-action="assignToMe" onClick={this.callAction}>Asignar a mi</a></li>
+            	    {!this.state.completed &&
+            		    <li><a class="dropdown-item" data-action="assignToMe" onClick={this.callAction}>Asignar a mi</a></li>
+            		}
             		<li><a class="dropdown-item"  onClick={this.openModal}>Consultar</a></li>
-            		{(this.state.assigneePerson && this.state.assigneePerson.id == Liferay.ThemeDisplay.getUserId()) &&
+            		{(this.state.assigneePerson &&  this.state.transitions && this.state.assigneePerson.id == Liferay.ThemeDisplay.getUserId()) &&
                         this.state.transitions.map((transition) => {
                                 return(
                                     <>

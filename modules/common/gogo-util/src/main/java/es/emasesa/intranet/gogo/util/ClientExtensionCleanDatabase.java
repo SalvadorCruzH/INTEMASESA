@@ -27,7 +27,7 @@ public class ClientExtensionCleanDatabase {
 
        boolean result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~administrador-tareas-module'");
         LOG.info("Borrado de Module "+ result);
-        result = executeSQL("c");
+        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-module'");
         LOG.info("Borrado de Global "+ result);
 
         LOG.info("[E] PORTAL_INITIALIZED");
