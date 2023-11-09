@@ -16,9 +16,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CustomEmasesaUtil {
 
-	private final static Log LOG = LoggerUtil.getLog(CustomEmasesaUtil.class);
+	private static final Log LOG = LoggerUtil.getLog(CustomEmasesaUtil.class);
 
 	public User getEmasesaAdmin(final long companyId) throws PortalException {
+		LoggerUtil.debug(LOG, "getEmasesaAdmin");
 		return userLocalService.fetchUserByScreenName(companyId, EmasesaConstants.EMASESA_ADMIN_SCREENNAME);
 	}
 

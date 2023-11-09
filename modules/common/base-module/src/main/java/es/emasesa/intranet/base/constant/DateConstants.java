@@ -10,5 +10,5 @@ public class DateConstants {
         return new Date();
     }
 
-
+    private DateConstants(){}
 }

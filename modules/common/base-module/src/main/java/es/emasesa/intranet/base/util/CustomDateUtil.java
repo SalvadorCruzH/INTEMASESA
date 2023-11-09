@@ -46,7 +46,7 @@ public class CustomDateUtil {
 
             date = sdfTo.format(sdf.parse(dateString));
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            LoggerUtil.error(_log, "Error parsing "+dateString);
         }
 
         return date;
@@ -71,15 +71,15 @@ public class CustomDateUtil {
     }
 
     public String getDateStrFromTimestamp(long timestamp){
-      DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime localDateTime =
                     LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp),
                             TimeZone.getDefault().toZoneId());
 
-        return localDateTime.format(DTF);
+        return localDateTime.format(dtf);
     }
 
-    public String getDateFieldDisplayName(Locale locale,String date,String format,int field,int style) throws ParseException {
+    public String getDateFieldDisplayName(Locale locale, String date, String format, int field, int style) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);//"yyyy-MM-dd"
         Date fecha = sdf.parse(date);
         Calendar calendar = Calendar.getInstance();
@@ -88,7 +88,7 @@ public class CustomDateUtil {
 
     }
 
-    public int getDateNumber(Locale locale,String date,String format) throws ParseException {
+    public int getDateNumber(String date, String format) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);//"yyyy-MM-dd"
         Date fecha = sdf.parse(date);
         Calendar calendar = Calendar.getInstance();

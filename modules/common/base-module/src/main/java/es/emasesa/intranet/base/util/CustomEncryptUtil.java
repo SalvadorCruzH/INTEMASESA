@@ -3,6 +3,7 @@ package es.emasesa.intranet.base.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -22,7 +23,7 @@ public class CustomEncryptUtil {
         try {
             result = _encryptor.encrypt(themeDisplay.getCompany().getKeyObj(),text);
         } catch (EncryptorException e) {
-            throw new RuntimeException(e);
+            LoggerUtil.error(LOG, "error encrypt ", e);
         }
 
         return result;
@@ -35,12 +36,10 @@ public class CustomEncryptUtil {
         try {
             result = _encryptor.decrypt(themeDisplay.getCompany().getKeyObj(),textEncrypted);
         } catch (EncryptorException e) {
-            throw new RuntimeException(e);
+            LoggerUtil.error(LOG, "error decrypt ", e);
         }
 
-
         return result;
-
     }
 
     public String encrypt(Key key, String text) throws EncryptorException {
@@ -58,4 +57,5 @@ public class CustomEncryptUtil {
     @Reference
     Encryptor _encryptor;
 
+    private static final Log LOG = LoggerUtil.getLog(CustomEncryptUtil.class);
 }

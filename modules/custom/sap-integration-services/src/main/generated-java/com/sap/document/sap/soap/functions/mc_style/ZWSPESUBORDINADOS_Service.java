@@ -17,7 +17,7 @@ import javax.xml.namespace.QName;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_SUBORDINADOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl")
+@WebServiceClient(name = "Z_WS_PE_SUBORDINADOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl")
 public class ZWSPESUBORDINADOS_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPESUBORDINADOS_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/vmosuna/Proyectos/Emasesa/git/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl");
+            url = new URL("classpath:META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

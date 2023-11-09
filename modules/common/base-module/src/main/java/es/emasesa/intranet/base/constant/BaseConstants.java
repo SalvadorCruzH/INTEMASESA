@@ -22,4 +22,6 @@ public class BaseConstants {
      */
     public static final String MAIL_DEFAULT_USER = "no-reply@emasesa.com";
 
+
+    private BaseConstants(){}
 }

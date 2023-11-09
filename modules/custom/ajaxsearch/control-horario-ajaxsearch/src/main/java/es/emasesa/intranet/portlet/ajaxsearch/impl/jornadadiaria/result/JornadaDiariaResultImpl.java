@@ -189,8 +189,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 	private String getDatum(ThemeDisplay themeDisplay, JSONObject j) throws java.text.ParseException {
 		return _customDateUtil.getDateFieldDisplayName(themeDisplay.getLocale(),
 				j.getString("DATUM"), "yyyy-MM-dd", Calendar.DAY_OF_WEEK,Calendar.SHORT) + StringPool.SPACE+
-				_customDateUtil.getDateNumber(themeDisplay.getLocale(),
-						j.getString("DATUM"), "yyyy-MM-dd");
+				_customDateUtil.getDateNumber(j.getString("DATUM"), "yyyy-MM-dd");
 	}
 
 

@@ -44,9 +44,7 @@ public class ADTComponentTemplateHandler
 
 	@Override
 	public Map<String, Object> getCustomContextObjects() {
-		Map<String, Object> contextObjects = new HashMap<>(1);
-//		contextObjects.put("assetPublisherHelper", new AssetPublisherHelper());
-		return contextObjects;
+		return new HashMap<>(1);
 	}
 	
 	@Override
