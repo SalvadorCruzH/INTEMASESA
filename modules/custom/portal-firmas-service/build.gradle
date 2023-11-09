@@ -27,6 +27,8 @@ dependencies {
 	compileOnly 'javax.xml.ws:jaxws-api:2.3.1'
 	compileOnly 'javax.jws:javax.jws-api:1.1'
 	compileOnly 'org.apache.cxf:cxf-rt-frontend-jaxws:3.4.10'
+	compileOnly project (':modules:common:base-module')
+	compileOnly project (':modules:common:settings-module')
 
 
 }
@@ -36,8 +38,8 @@ jar {
 			'Multi-Release': 'false',
 	)
 }
-/*
-jaxws {
+
+/*jaxws {
 	wsdlDir = 'src/main/resources/META-INF/wsdl'
 	generatedSources = 'src/main/generated-java'
 }*/

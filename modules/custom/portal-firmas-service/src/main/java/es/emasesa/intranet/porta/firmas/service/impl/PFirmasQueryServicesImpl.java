@@ -1,6 +1,6 @@
-package es.emasesa.intranet.porta.firmas.service;
+package es.emasesa.intranet.porta.firmas.service.impl;
 
-import es.emasesa.intranet.porta.firmas.service.impl.PFirmasQueryServices;
+import es.emasesa.intranet.porta.firmas.service.model.PFirmasQueryServices;
 import java.io.File;
 import java.net.URL;
 import java.util.Dictionary;
@@ -87,7 +87,7 @@ public class PFirmasQueryServicesImpl implements PFirmasQueryServices {
         Action action = new Action();
         action.setType(objectFactory.createRequestText("WEB"));
         /**
-         * TODO: URL de web que será invocada al ejecutar la acción de la petición, meter en sytem settings
+         * TODO: URL de web que será invocada al ejecutar la acción de la petición
          *
          */
         action.setAction("");
@@ -98,7 +98,7 @@ public class PFirmasQueryServicesImpl implements PFirmasQueryServices {
         actionList.getAction().add(action);
 
         Request req = new Request();
-        //TODO: ¿A que application va? Meter en system settings en caso de ser fijo
+        //TODO: ¿A que application va?
         req.setApplication(objectFactory.createRequestApplication(""));
         req.setDocumentList(objectFactory.createRequestDocumentList(docList));
         req.setReference(objectFactory.createRequestReference("Referencia"));

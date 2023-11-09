@@ -1,4 +1,4 @@
-package es.emasesa.intranet.porta.firmas.service.impl;
+package es.emasesa.intranet.porta.firmas.service.model;
 
 import java.io.File;
 import juntadeandalucia.cice.pfirma.query.v2.PfirmaException;

@@ -1,0 +1,5 @@
+{
+  "FIRMADO": "http://localhost:8080/portalfirmas/firmado?workflowTaskId=--workflowTaskId--&status=aprobadoPF&HASHPET",
+  "DEVUELTO": "http://localhost:8080/portalfirmas/firmado?workflowTaskId=--workflowTaskId--&status=devueltoPF&HASHPET",
+  "RECHAZADO": "http://localhost:8080/portalfirmas/firmado?workflowTaskId=--workflowTaskId--&status=rechazadoPF&HASHPET"
+}
