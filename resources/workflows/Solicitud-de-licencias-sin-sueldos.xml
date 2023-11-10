@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>25</version>
+	<version>26</version>
 	<state>
 		<name>8eab626c-a786-4d84-9abd-e1136e3afa89</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -63,16 +63,25 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.*;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.saveObjectOnSIGD(workflowContext);
-customWorkflowUtil.setObjectStatus(workflowContext, "rechazada");
-customWorkflowUtilTracker.close();]]>
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "licencia sin sueldo", "solicitud");
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>

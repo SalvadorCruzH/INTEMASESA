@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>8</version>
+	<version>9</version>
 	<state>
 		<name>d447b28d-155f-4d95-9e05-f35825a66b95</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -141,17 +141,24 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.saveObjectOnSIGD(workflowContext);
-customWorkflowUtil.sendObjectPortafirmas(workflowContext);
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "rechazada");
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "cambio de turno", "solicitud");
+
 customWorkflowUtilTracker.close();
-]]>
+sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>

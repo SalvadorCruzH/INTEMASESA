@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
-	<version>37</version>
+	<version>38</version>
 	<state>
 		<name>4a366907-deba-425c-8bfc-d40aa6c164f7</name>
 		<description>Se crea una solicitud de flexibilidad horaria</description>
@@ -107,16 +107,25 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.*;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.saveObjectOnSIGD(workflowContext);
-customWorkflowUtil.setObjectStatus(workflowContext, "rechazada");
-customWorkflowUtilTracker.close();]]>
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "flexibilidad horaria", "solicitud");
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -322,8 +331,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						767.1991580383941,
-						-284.50925837440525
+						769.1991577148438,
+						-286.5092468261719
 					]
 				}
 			]]>
