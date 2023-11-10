@@ -29,6 +29,14 @@
         padding: 14.5px 15px;
         height: auto;
     }
+    select {
+        background: $color-white url('@theme_image_path@/icons/angle-down.svg') calc(100% - 15px) center no-repeat;
+        background-size: 10px auto;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+    }
     input {
         accent-color: $color-aux-blue;
         &[type="checkbox"],
