@@ -48,13 +48,11 @@ public class EmasesaConstants {
     public static final String WORKFLOW_ROL= "rolName";
     public static final String WORKFLOW_FECHA= "fechaCambioEstado";
     public static final String DDMMYYYYHHmmss= "dd-MM-yyyy HH:mm:ss";
-
     public static final String USERS_GROUP="usersGroup";
 
-    
     public static final String OBJECT_ENTRY_ID="objectEntryId";
     public static final String WORKFLOW_TASK_ID="workflowTaskId";
     public static final String ROLE_NAME_ASSIGN="roleNameAssign";
-
+    public static final String NUMERO_MATRICULA="numeroDeMatricula";
     private EmasesaConstants(){}
 }
