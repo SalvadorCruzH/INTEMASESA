@@ -34,15 +34,6 @@ public class CustomDocSizeUtil {
 
     private static final String DOC_FILENAME_FTL= "/doc/docSize.ftl";
 
-    @Activate
-    protected void activate(Map<String, Serializable> properties) {
-
-    }
-    @Deactivate
-    public void deactivate() {
-    }
-
-
     public String getDocSize(final String title, final String url, final ThemeDisplay themeDisplay) {
         String docSize;
         final String template = GetterUtil.getString(customCacheSingleUtil.get(getCacheName(url, title)), StringPool.BLANK);
@@ -55,16 +46,21 @@ public class CustomDocSizeUtil {
                 final long groupId = Long.parseLong(datosDoc[2]);
                 final String uuid = datosDoc[5].substring(0, datosDoc[5].indexOf(StringPool.QUESTION));
                 final DLFileEntry file = dlFileEntryLocalService.fetchDLFileEntryByUuidAndGroupId(uuid, groupId);
-                if (Validator.isNotNull(file)){
+                if (Validator.isNotNull(file)) {
                     final Map<String, Object> properties = new HashMap<>();
                     properties.put("themeDisplay", themeDisplay);
                     properties.put("docFileSize", language.formatStorageSize(file.getSize(), themeDisplay.getLocale()));
                     properties.put("docFileUrl", url);
                     properties.put("docFileExtension", file.getExtension().toLowerCase());
-                    properties.put("docFileName", Validator.isBlank(title)?
-                            (Validator.isBlank(file.getDescription())?
-                            file.getTitle():
-                            file.getDescription()):title);
+                    if (Validator.isBlank(title)){
+                        if(Validator.isBlank(file.getDescription())){
+                            properties.put("docFileName",file.getTitle());
+                        }else{
+                            properties.put("docFileName", file.getDescription());
+                        }
+                    }else {
+                        properties.put("docFileName", title);
+                    }
                     properties.put("docFileExtensionSrOnly",
                             language.get(themeDisplay.getLocale(), "es.emasesa.intranet.common.template.documents.filesize.sronly-description"));
                     properties.put("request", themeDisplay.getRequest());

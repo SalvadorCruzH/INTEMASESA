@@ -10,23 +10,23 @@ public class AjaxMessage {
     private JSONObject payload;
 
     public static final class KEYS {
-        public static String STATUS_CODE = "status";
-        public static String STATUS_MESSAGE = "message";
-        public static String PAYLOAD = "payload";
+        public static final String STATUS_CODE = "status";
+        public static final String STATUS_MESSAGE = "message";
+        public static final String PAYLOAD = "payload";
     }
 
     public static final class STATUS {
-        public static int OK = 0;
-        public static int UNKNOWN = 1;
-        public static int ERROR_GENERAL = 2;
-        public static int ERROR_SPECIFIC = 3;
+        public static final int OK = 0;
+        public static final int UNKNOWN = 1;
+        public static final int ERROR_GENERAL = 2;
+        public static final int ERROR_SPECIFIC = 3;
     }
 
     public static final class MESSAGES_DEFAULT {
-        public static String OK = "ok";
-        public static String UNKNOWN = "unknown";
-        public static String ERROR_GENERAL = "error";
-        public static String ERROR_SPECIFIC = "specific error";
+        public static final String OK = "ok";
+        public static final String UNKNOWN = "unknown";
+        public static final String ERROR_GENERAL = "error";
+        public static final String ERROR_SPECIFIC = "specific error";
     }
 
     public AjaxMessage() {
@@ -52,6 +52,7 @@ public class AjaxMessage {
         this.statusMsg = statusMsg;
         this.payload = payload;
     }
+
 
     public int getStatusCode() {
         return statusCode;

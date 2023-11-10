@@ -32,9 +32,9 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
-import es.emasesa.intranet.base.constant.CamaraConstants;
 import java.text.SimpleDateFormat;
 
+import es.emasesa.intranet.base.constant.EmasesaConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -197,7 +197,7 @@ public class CustomGetterUtil {
 
             BooleanQuery booleanQuery = queries.booleanQuery();
             booleanQuery.addMustQueryClauses(queries.term("expando__keyword__custom_fields__isWorkGroup",true));
-            booleanQuery.addMustQueryClauses(queries.match(CamaraConstants.USERS_GROUP,themeDisplay.getUserId()));
+            booleanQuery.addMustQueryClauses(queries.match(EmasesaConstants.USERS_GROUP,themeDisplay.getUserId()));
             SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.builder();
             searchRequestBuilder.emptySearchEnabled(true);
             searchRequestBuilder.entryClassNames(Group.class.getName());
@@ -269,7 +269,7 @@ public class CustomGetterUtil {
             SiteNavigationMenuItem siteNavigationMenuItem) {
 
         if (siteNavigationMenuItem == null) {
-            return null;
+            return new UnicodeProperties();
         }
 
         return UnicodePropertiesBuilder.fastLoad(

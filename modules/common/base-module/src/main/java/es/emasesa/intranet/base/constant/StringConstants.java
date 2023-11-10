@@ -3,6 +3,7 @@ package es.emasesa.intranet.base.constant;
 public class StringConstants {
 
     public static final String EMPTY = "";
+
     public static final String ERROR = "error";
     public static final String SUCCESS = "success";
     public final static String MODEL = "model";
@@ -27,4 +28,5 @@ public class StringConstants {
     public static final String MINUS_EIGHT = "-8";
     public static final String MINUS_NINE = "-9";
 
+    private StringConstants(){}
 }

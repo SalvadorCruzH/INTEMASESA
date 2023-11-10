@@ -1,17 +1,11 @@
 package es.emasesa.intranet.base.util;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.FileUtil;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 @Component(
 immediate = true,
@@ -22,25 +16,13 @@ public class CustomFileUtil {
 
 	private final static Log LOG = LoggerUtil.getLog(CustomFileUtil.class);
 
-	@SuppressWarnings("unchecked")
-	@Activate
-    @Modified
-    protected void activate(Map<String, Object> properties) {
-
-    }
-	
-	@Deactivate
-    public void deactivate() {
-
-    }
-
     public File createFile(final String path){
 		File file;
 		try {
 			file = new File(path);
 		}catch (Exception e) {
 			file = null;
-			LoggerUtil.error(_log, e.getMessage());
+			LoggerUtil.error(LOG, e.getMessage());
 		}
 		return file;
 	}
@@ -54,7 +36,7 @@ public class CustomFileUtil {
 			}
 		}catch (Exception e) {
 			file = null;
-			LoggerUtil.error(_log, e.getMessage());
+			LoggerUtil.error(LOG, e.getMessage());
 		}
 		return file;
 	}
@@ -67,12 +49,10 @@ public class CustomFileUtil {
 			FileUtil.copyFile(uploadFile, tempFile);
 		}
 		catch (IOException e) {
-			_log.error("Error saving file to temp folder", e);
+			LOG.error("Error saving file to temp folder", e);
 		}
 
 		return tempFile;
 	}
-
-	private static final Log _log = LoggerUtil.getLog(CustomMailUtil.class);
 
 }

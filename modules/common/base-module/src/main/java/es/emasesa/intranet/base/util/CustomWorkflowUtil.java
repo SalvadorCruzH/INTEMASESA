@@ -66,7 +66,7 @@ public class CustomWorkflowUtil {
 				JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 				
 				LocalDateTime now = LocalDateTime.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DD_MM_YYYY_HH_mm_ss);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DDMMYYYYHHmmss);
 				
 				if(userId != 0) {
 					datosHistorico.put(EmasesaConstants.WORKFLOW_USER_ID, userId);
@@ -134,7 +134,7 @@ public class CustomWorkflowUtil {
 			JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 			
 			LocalDateTime now = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DD_MM_YYYY_HH_mm_ss);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DDMMYYYYHHmmss);
 			
 			if(userId != 0) {
 				datosHistorico.put(EmasesaConstants.WORKFLOW_USER_ID, userId);

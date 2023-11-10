@@ -281,13 +281,13 @@ public class CustomDLUtil {
 
             } catch (PortalException e) {
                 LoggerUtil.error(_log, e);
-                currentFolderId = -1l;
+                currentFolderId = -1L;
             }
         }
         return currentFolderId;
     }
 
-    public final static List<String> getFolderNamesByPath(final String path) {
+    public static final List<String> getFolderNamesByPath(final String path) {
         String[] splitFolderByPath = new String[]{};
         String fixedPath = path;
 

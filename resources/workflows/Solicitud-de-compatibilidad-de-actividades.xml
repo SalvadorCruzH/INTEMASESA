@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>97</version>
+	<version>101</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -58,7 +58,7 @@
 				<recipients receptionType="to">
 					<roles>
 						<role>
-							<role-id>52324</role-id>
+							<role-id>35183</role-id>
 						</role>
 					</roles>
 				</recipients>
@@ -160,72 +160,6 @@ sigdServiceTracker.close();
 				Rechazada y guardada en SIGD
 			</label>
 		</labels>
-	</state>
-	<state>
-		<name>Enviar-a-portafirmas</name>
-		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[707,379],"transitions":{"Notificar-a-rrhh":{"bendpoints":[]}}}]]></metadata>
-		<actions>
-			<action>
-				<name>Enviar a portafirmas</name>
-				<description></description>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
-import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
-
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-
-Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
-ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
-sigdServiceTracker.open();
-SigdServiceApplication sigdService = sigdServiceTracker.getService();
-
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", 0, "Consejero Delegado");
-//Recuperar anexo introducido en el campo anterior
-String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
-if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "solicitud");
-}
-
-//Subir formulario de solicitud
-String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
-}
-
-customWorkflowUtilTracker.close();
-sigdServiceTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
-		</actions>
-		<labels>
-			<label language-id="es_ES">
-				Pendiente de Consejero Delegado
-			</label>
-		</labels>
-		<transitions>
-			<transition>
-				<labels>
-					<label language-id="es_ES">
-						Notificar a RRHH
-					</label>
-				</labels>
-				<name>Notificar-a-rrhh</name>
-				<target>revision-rrhh</target>
-				<default>true</default>
-			</transition>
-		</transitions>
 	</state>
 	<state>
 		<name>aceptar-solicitud</name>
@@ -368,7 +302,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[239,175],"transitions":{"Devolver-a-usuario-para-edicion":{"bendpoints":[]}}}]]></metadata>
+		<metadata><![CDATA[{"xy":[239,173],"transitions":{"Devolver-a-usuario-para-edicion":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -413,7 +347,7 @@ customWorkflowUtilTracker.close();]]>
 				<recipients receptionType="to">
 					<roles>
 						<role>
-							<role-id>52324</role-id>
+							<role-id>35183</role-id>
 						</role>
 					</roles>
 				</recipients>
@@ -423,7 +357,7 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>52324</role-id>
+					<role-id>35183</role-id>
 				</role>
 			</roles>
 		</assignments>
@@ -506,7 +440,7 @@ customWorkflowUtilTracker.close();]]>
 				<recipients receptionType="to">
 					<roles>
 						<role>
-							<role-id>53304</role-id>
+							<role-id>35185</role-id>
 						</role>
 					</roles>
 				</recipients>
@@ -516,7 +450,7 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>53304</role-id>
+					<role-id>35185</role-id>
 				</role>
 			</roles>
 		</assignments>
@@ -533,7 +467,7 @@ customWorkflowUtilTracker.close();]]>
 					</label>
 				</labels>
 				<name>Mandar-a-portafirmas</name>
-				<target>Enviar-a-portafirmas</target>
+				<target>portafirma-consejero-delegado</target>
 				<default>true</default>
 			</transition>
 		</transitions>
@@ -644,7 +578,7 @@ customWorkflowUtilTracker.close();]]>
 				<recipients receptionType="to">
 					<roles>
 						<role>
-							<role-id>52324</role-id>
+							<role-id>35183</role-id>
 						</role>
 					</roles>
 				</recipients>
@@ -654,7 +588,7 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>52324</role-id>
+					<role-id>35183</role-id>
 				</role>
 			</roles>
 		</assignments>
@@ -683,6 +617,79 @@ customWorkflowUtilTracker.close();]]>
 				<name>rechazar</name>
 				<target>rechazar-solicitud</target>
 				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>portafirma-consejero-delegado</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata><![CDATA[{"xy":[712,365],"transitions":{"Notificar-a-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Enviar a portafirmas</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", 0, "Consejero Delegado");
+//Recuperar anexo introducido en el campo anterior
+String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
+if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "solicitud");
+}
+
+//Subir formulario de solicitud
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+}
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>49026</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Consejero delegado
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Notificar a RRHH
+					</label>
+				</labels>
+				<name>Notificar-a-rrhh</name>
+				<target>revision-rrhh</target>
+				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
