@@ -1,5 +1,5 @@
 export const oauthUserAgent = {
-    CLIENT_ID: 'id-ab7afa54-9e9d-61d6-7916-fe121a45203b',
+    CLIENT_ID: 'id-4f91d5c1-fbbe-42f9-045b-9a73f645624',
     URL_DEFAULT: '/o/c',
     URL_DEFAULT_NATIVE: '/o'
 }
@@ -16,8 +16,12 @@ export const WORKFLOWTASKS = {
 }
 
 export const OBJECT_MAPPING = {
-    Compatibilidad : { url: `${oauthUserAgent.URL_DEFAULT}/compatibilidads`,id:39770},
-
+    Compatibilidad : { url: `${oauthUserAgent.URL_DEFAULT}/compatibilidads`,id:39213},
+    Excedencia : { url: `${oauthUserAgent.URL_DEFAULT}/excedenciases`,id:35707},
+    Flexibilidad : { url: `${oauthUserAgent.URL_DEFAULT}/flexibilidads`,id:38910},
+    Licencias : { url: `${oauthUserAgent.URL_DEFAULT}/licenciases`,id:34848},
+    Reduccion : { url: `${oauthUserAgent.URL_DEFAULT}/reduccions`,id:36560},
+    Turnos : { url: `${oauthUserAgent.URL_DEFAULT}/turnoses`,id:34910},
 }
 
 export const OBJECT_CONSTANTS = {
