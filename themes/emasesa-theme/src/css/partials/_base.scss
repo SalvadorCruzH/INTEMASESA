@@ -17,7 +17,6 @@
     margin-bottom: 0;
   }
 
-
   h1,
   h2,
   h3,
@@ -109,6 +108,9 @@
   .linkify a:focus {
       outline: none;
       box-shadow: none !important;
+  }
+  #main-content {
+    padding-top: 3rem;
   }
 }
 body {
