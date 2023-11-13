@@ -1,6 +1,14 @@
 $(document).ready(function() {
 	$('[id^="fragment-"][id$="-submit-button"]').prop('disabled', true);
 	$('[id^="fragment-"][id$="-submit-button"]').attr('aria-disabled', true);
+	var otpGenerado = false;
+	var otpValidado = false;
+	$('[id^="fragment-"][id$="-submit-button"]').on('click', (e) => {
+		e.preventDefault();
+		if(otpGenerado && otpValidado) {
+			$("#fragment-otp").parent("form").submit();
+		}
+	});
 });
 var showHtmlComponent = function(query) {
 	$(query).removeClass('d-none');
@@ -44,7 +52,7 @@ $("#generate-otp-button").on('click', () => {
 	})
 	.then(data => {
 		let parseJsonData = JSON.parse(data.data);
-		if(parseJsonData.otp && !parseJsonData.isOk) {
+		if(parseJsonData.otp) {
 			console.debug("DEBUG: El correo no se ha podido enviar, el OTP es: " + parseJsonData.otp);
 		}
 		if (data.data) {
@@ -55,7 +63,7 @@ $("#generate-otp-button").on('click', () => {
 			showHtmlComponent("#input-wrapper");
 			enableHtmlComponent("#otp-input");
 			enableHtmlComponent("#validate-otp-button");
-		
+			otpGenerado = true;
 			setTimeout(() => {
 				$("#generate-otp-button").prop('disabled', false);
 				$("#generate-otp-button").removeAttr('aria-disabled');
@@ -90,13 +98,13 @@ $("#validate-otp-button").on('click', () => {
 		return response.json();
 	})
 	.then(data => {
+		otpValidado = data;
 		if (data) {
 			enableHtmlComponent('[id^="fragment-"][id$="-submit-button"]');
 			showHtmlComponent("#validacion-otp-correcto");
 			hideHtmlComponent("#fragment-otp");
 		} else {
 			showHtmlComponent("#error-validacion-otp");
-		
 		}
 	})
 	.catch(error => {
@@ -104,3 +112,5 @@ $("#validate-otp-button").on('click', () => {
 		console.error('Hubo un error:', error);
 	});
 });
+
+
