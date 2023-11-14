@@ -12,15 +12,15 @@ public class EmasesaMessageBusEventListener
 
     @Override
     public void destinationAdded(Destination destination) {
-        if (_log.isInfoEnabled()) {
-            _log.info("Added destination " + destination.getName());
+        if (_log.isDebugEnabled()) {
+            _log.debug("Added destination " + destination.getName());
         }
     }
 
     @Override
     public void destinationRemoved(Destination destination) {
-        if (_log.isInfoEnabled()) {
-            _log.info("Removed destination " + destination.getName());
+        if (_log.isDebugEnabled()) {
+            _log.debug("Removed destination " + destination.getName());
         }
     }
 
