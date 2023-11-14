@@ -1,5 +1,5 @@
 .breadcrumbs {
-    margin: 2rem 0 1rem;
+    margin: 0 0 2rem;
     padding-bottom: .5rem;
     border-bottom: 1px solid $color-dashed;
     &__items {
@@ -10,11 +10,11 @@
     }
     &__item {
         display: flex;
-        a {
+        > a,
+        > span {
             display: block;
             color: $color-black;
             font-size: m-rem(14px);
-            @include font_base-bold;
             &[aria-current="location"] {
                 @include font_base;
                 + span {
@@ -24,6 +24,29 @@
         }
         span {
             margin: 0 1rem;
+            position: relative;
+            &::after {
+                content: '';
+                rotate: -90deg;
+                position: absolute;
+                bottom: 5px;
+                right: -22.5px;
+                width: 10px;
+                height: 10px;
+                background: transparent url('@theme_image_path@/icons/angle-down.svg') center center no-repeat;
+            }
+        }
+        &:first-child {
+            span {
+                margin-left: 0;
+            }
+        }
+        &:last-child {
+            span {
+                &::after {
+                    content: none;
+                }
+            }
         }
     }
 }
