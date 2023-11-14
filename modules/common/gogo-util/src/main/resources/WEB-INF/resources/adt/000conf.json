@@ -70,5 +70,17 @@
         "templateFile":"menuSolicitudes.ftl",
         "comment": "Menú de navegación Nuevas Solicitudes.",
         "uuid":"4169f9ff-c2d5-fc5b-5c57-006189ab3d30"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - ADT para el breadcrumb del portal",
+        "type": "com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-BREADCRUMB",
+        "templateFile": "breadcrumbs.ftl",
+        "comment": "Breadcrumb para EMASESA.",
+        "uuid": "d5b4e27c-9310-136d-bdce-bc52208b33c9"
     }
 ]
