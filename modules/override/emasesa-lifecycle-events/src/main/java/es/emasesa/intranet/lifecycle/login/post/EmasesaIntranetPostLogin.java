@@ -1,4 +1,4 @@
-package es.emasesa.intranet.lifecycle.postlogin;
+package es.emasesa.intranet.lifecycle.login.post;
 
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
