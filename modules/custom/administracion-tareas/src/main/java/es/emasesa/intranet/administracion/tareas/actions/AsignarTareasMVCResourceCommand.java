@@ -58,6 +58,7 @@ public class AsignarTareasMVCResourceCommand implements MVCResourceCommand{
         String comment = (String) workflowTask.getOptionalAttributes().get("taskComments");
         Date dueDate = workflowTask.getDueDate();
         Map<String, Serializable> workflowContext = null;
+        LoggerUtil.debug(LOG, "Asignando tarea " + workflowTaskId + " a usuario " + assigneeUserId + ". getAssignWorkflowTaskToUser");
 
         try {
             assignedTask = _workflowTaskManager.assignWorkflowTaskToUser(
@@ -70,8 +71,9 @@ public class AsignarTareasMVCResourceCommand implements MVCResourceCommand{
                     workflowContext
             );
         } catch (PortalException e) {
-            LoggerUtil.error(LOG, e);
+            LoggerUtil.error(LOG, "Error asignando tarea" + workflowTaskId + " a usuario" + assigneeUserId + ". getAssignWorkflowTaskToUser", e);
         }
+        LoggerUtil.debug(LOG, "Tarea " + workflowTaskId + " asignada a usuario " + assigneeUserId + "correctamente. getAssignWorkflowTaskToUser");
 
         return assignedTask;
     }
