@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
-	<version>36</version>
+	<version>19</version>
 	<state>
 		<name>e8e2ea43-7abe-4dbf-abf8-1bbeca478484</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -14,7 +14,7 @@
 			<![CDATA[
 				{
 					"xy": [
-						-348,
+						-361,
 						-27
 					]
 				}
@@ -30,7 +30,7 @@
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						solicitud enviada
 					</label>
 				</labels>
 				<name>c776482b-663f-49dc-a7bf-2ce20f0b77fa</name>
@@ -55,9 +55,42 @@
 		</metadata>
 		<actions>
 			<action>
-				<name>Cambiar estado workflow</name>
+				<name>Cambiar estado workflow y guardar en SIGD</name>
 				<description></description>
-				<status>0</status>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Director RRHH");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if (pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Exedencias", "solicitud");
+}
+String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
+
+if(pdfFichero != null && pdfFichero != ""){
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(pdfFichero, "Exedencias", "solicitud");
+}
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
@@ -90,8 +123,8 @@
 			<![CDATA[
 				{
 					"xy": [
-						24.68925352363001,
-						319.3705760794088
+						29.689239501953125,
+						319.37060546875
 					],
 					"terminal": true
 				}
@@ -120,9 +153,17 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "excedencias", "solicitud");
+if(pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Exedencias", "solicitud");
+}
+
+String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
+
+if(pdfFichero != null && pdfFichero != ""){
+	String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(pdfFichero, "Exedencias", "solicitud");
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -131,6 +172,21 @@ sigdServiceTracker.close();]]>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
+			<notification>
+				<name>Notificacion de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud de excedencia ha sido rechaza]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
 		</actions>
 		<labels>
 			<label language-id="es_ES">
@@ -175,12 +231,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdminRRHH", 0, "Admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdminRRHH", userId, "Admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificar asginación</name>
@@ -195,7 +251,7 @@ customWorkflowUtilTracker.close();]]>
 				<recipients receptionType="to">
 					<roles>
 						<role>
-							<role-id>47798</role-id>
+							<role-id>35183</role-id>
 						</role>
 					</roles>
 				</recipients>
@@ -205,7 +261,7 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>47798</role-id>
+					<role-id>35183</role-id>
 				</role>
 			</roles>
 		</assignments>
@@ -218,7 +274,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>ac993a67-5639-4fda-9994-e5ad61ef4f51</name>
@@ -228,7 +284,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>ec821831-3091-44e5-936e-c81fca43bdd8</name>
@@ -274,12 +330,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDireccionRRHH", 0, "Director RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDireccionRRHH", userId, "Director RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificar asginación</name>
@@ -292,21 +348,31 @@ customWorkflowUtilTracker.close();]]>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<roles>
-						<role>
-							<role-id>47798</role-id>
-						</role>
-					</roles>
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-id>47798</role-id>
-				</role>
-			</roles>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -317,7 +383,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Resolución definitiva
+						Aprobar Solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>79baa748-d09c-4e4a-ac53-8c2f7b211394</name>
@@ -327,7 +393,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>b44d237b-3b8d-48d5-a4cc-5e6eeb366ef3</name>
@@ -366,12 +432,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDepartamento", 0, "Jefe Departamento");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDepartamento", userId, "Jefe Departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificación de aprobación</name>
@@ -390,9 +456,25 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>jefe@liferay.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -403,7 +485,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Etiqueta de transición
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>07d04dd2-0c93-46b4-939e-013ab36d43e0</name>
@@ -442,12 +524,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivisionArea", 0, "Jefe Division área");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivisionArea", userId, "Jefe Division área");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificación de aprobación</name>
@@ -466,9 +548,25 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>division@liferay.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -479,7 +577,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>0594a7d6-8344-4380-be67-44d67053d747</name>
@@ -518,12 +616,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivisionRRHH", 0, "Jefe RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivisionRRHH", userId, "Jefe RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificación de aprobación</name>
@@ -542,9 +640,25 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>personas@liferay.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId);
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -555,7 +669,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>939deff1-7967-44db-a7a8-5dcc9b2502ba</name>
