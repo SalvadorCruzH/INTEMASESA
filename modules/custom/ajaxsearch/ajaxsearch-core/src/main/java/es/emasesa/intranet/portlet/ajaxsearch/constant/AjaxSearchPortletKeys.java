@@ -1,6 +1,7 @@
 package es.emasesa.intranet.portlet.ajaxsearch.constant;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Field;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,5 +51,27 @@ public class AjaxSearchPortletKeys {
 	public static final String XML_READ_INIT = "/root/dynamic-element[@name='";
 	public static final String XML_READ_END = "']/dynamic-content";
 
+
+	/** CAMPOS DE OBJETOS **/
+	public static final String OBJECT_DEFINITION_NAME = "objectDefinitionName";
+	public static final String NOMBRE_OBJETO = "nombreObjeto";
+	public static final String TIPO_OBJETO = "tipoObjeto";
+	public static final String TIPO_AUSENCIA = "tipoAusencia";
+	public static final String ASUNTO = "asunto";
+	public static final String JUSTIFICACION = "justificacion";
+	public static final String CAUSA = "causa";
+	public static final String TIPO_RETRIBUCION = "tipoRetribucion";
+	public static final String DURACION = "duracion";
+	public static final String HORAS = "horas";
+	public static final String FECHA_ACTIVIDAD = "fechaActividad";
+	public static final String FECHA_DESDE = "fechaDesde";
+	public static final String FECHA_HASTA = "fechaHasta";
+	public static final String FECHA_ENVIO = "fechaEnvio";
+	public static final String ESTADO = "estado";
+	public static final String ESTADO_OBJETO = "estadoObjeto";
+	public static final String ESTADO_CODE = "estado-code";
+	public static final String URL_VISUALIZAR = "urlVisualizar";
+	public static final String URL_EDITAR = "urlEditar";
+	public static final String URL_ELIMINAR = "urlEliminar";
 
 }

@@ -11,9 +11,10 @@
                 <table class="ema-table__ajaxsearch">
                     <thead>
                      <tr>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.type" /></th>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.subject" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.name" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.justification" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.dateactivity" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.hours" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.status" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.datesent" /></th>
                       <th></th>
@@ -47,9 +48,10 @@
 
 <template id="as-template">
     <tr>
-        <td>#tipoObjeto#</td>
         <td>#asunto#</td>
         <td>#justificacion#</td>
+        <td>#fechaActividad#</td>
+        <td>#horas#</td>
         <td><span class="ema-pill-estado #estado-code#">#estado#</span></td>
         <td>#fechaEnvio#</td>
         <td class="ema-td-dropdown">

@@ -3,8 +3,11 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.message.boards.util.comparator.CategoryTitleComparator;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import es.emasesa.intranet.base.constant.LongConstants;
 import org.osgi.service.component.annotations.Component;
@@ -54,6 +57,7 @@ public class ServicesUtil {
         }
         return assetCategories;
     }
+
 
     @Reference
     AssetCategoryLocalService assetCategoryLocalService;

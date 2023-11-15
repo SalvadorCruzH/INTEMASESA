@@ -17,10 +17,10 @@ import java.util.Properties;
         property = {},
         service = AjaxSearchForm.class
 )
-public class SolicitudesFormImpl implements AjaxSearchForm {
+public class PermisosFormImpl implements AjaxSearchForm {
 
     private static final Properties DFLT_PROPERTIES = new Properties();
-    private final static Log LOG = LoggerUtil.getLog(SolicitudesFormImpl.class);
+    private final static Log LOG = LoggerUtil.getLog(PermisosFormImpl.class);
 
     public static final String CATEGORY_ID = "category-id";
 
@@ -39,7 +39,7 @@ public class SolicitudesFormImpl implements AjaxSearchForm {
         return Boolean.TRUE;
     }
 
-    private static final String VIEW = "/views/solicitudes/form.jsp";
+    private static final String VIEW = "/views/solicitudes/permisos/form.jsp";
 
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,

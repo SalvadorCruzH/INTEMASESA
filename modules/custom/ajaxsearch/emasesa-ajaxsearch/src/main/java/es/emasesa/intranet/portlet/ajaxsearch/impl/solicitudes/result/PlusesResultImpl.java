@@ -42,9 +42,9 @@ import java.util.Properties;
         property = {},
         service = AjaxSearchResult.class
 )
-public class SolicitudesResultImpl implements AjaxSearchResult {
+public class PlusesResultImpl implements AjaxSearchResult {
 
-    private final static Log LOG = LoggerUtil.getLog(SolicitudesResultImpl.class);
+    private final static Log LOG = LoggerUtil.getLog(PlusesResultImpl.class);
 
     private static final Properties DFLT_PROPERTIES = new Properties();
     public static final String DISABLE_PAGINATION = "disable-pagination";
@@ -65,7 +65,7 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         return DFLT_PROPERTIES;
     }
 
-    private static final String VIEW = "/views/solicitudes/results.jsp";
+    private static final String VIEW = "/views/solicitudes/pluses/results.jsp";
 
     @Override
     public String getResultsView(PortletRequest request, PortletResponse response) {
@@ -147,12 +147,12 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
         queryConfig.addSelectedFieldNames(Field.ANY);
 
         if (!ajaxSearchDisplayContext.getQueryText().isBlank()) {
-            booleanQuery.addTerm("objectDefinitionName", ajaxSearchDisplayContext.getQueryText(), Boolean.TRUE, BooleanClauseOccur.MUST);
+            booleanQuery.addTerm(AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME, ajaxSearchDisplayContext.getQueryText(), Boolean.TRUE, BooleanClauseOccur.MUST);
         }
 
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
-        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(StringPool.COMMA), searchContext);
         final int totalItems = documents.size();
 
         String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
@@ -160,10 +160,10 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
             if (sortBy[0].equals("date")) {
                 sortDocuments(documents, themeDisplay.getLocale(), Field.CREATE_DATE, sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
             } else if (sortBy[0].equals("name")) {
-                sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
+                sortDocuments(documents, themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME, sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
             }
         } else {
-            sortDocuments(documents, themeDisplay.getLocale(), "objectDefinitionName", sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
+            sortDocuments(documents, themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME, sortBy[1].equals("asc") ? Boolean.FALSE : Boolean.TRUE);
         }
         JSONObject jsonObject;
 
@@ -192,83 +192,54 @@ public class SolicitudesResultImpl implements AjaxSearchResult {
     private JSONObject getResultJson(final Document document,
                                      final ThemeDisplay themeDisplay) {
         final JSONObject jsonObject = jsonFactory.createJSONObject();
-        jsonObject.put("nombreObjeto", document.get(themeDisplay.getLocale(), "objectDefinitionName"));
+        jsonObject.put(AjaxSearchPortletKeys.NOMBRE_OBJETO, document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME));
 
-        String fechaDesde = document.get(themeDisplay.getLocale(), "fechaDesde");
-        jsonObject.put("fechaDesde", formatDate(fechaDesde));
-
-        String fechaHasta = document.get(themeDisplay.getLocale(), "fechaHasta");
-        jsonObject.put("fechaHasta", formatDate(fechaHasta));
-
-        String fechaSolicitud = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
-        jsonObject.put("fechaSolicitud", formatDate(fechaSolicitud));
+        String fechaEnvio = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
+        jsonObject.put(AjaxSearchPortletKeys.FECHA_ENVIO, ajaxSearchUtil.formatDate(fechaEnvio));
 
         //String objectEntryContent = document.get(themeDisplay.getLocale(), "objectEntryContent");
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
-        ObjectEntry objectEntry = getObject(objectClassPK);
+        ObjectEntry objectEntry = ajaxSearchUtil.getObject(objectClassPK);
         if (objectEntry != null) {
-            String estadoObjeto = objectEntry.getValues().getOrDefault("estadoObjeto", StringPool.BLANK).toString();
+            String asunto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ASUNTO, StringPool.DASH).toString();
+            jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
+
+            String justificacion = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.JUSTIFICACION, StringPool.DASH).toString();
+            jsonObject.put(AjaxSearchPortletKeys.JUSTIFICACION, justificacion);
+
+            String fechaActividad = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.FECHA_ACTIVIDAD, StringPool.DASH).toString();
+            jsonObject.put(AjaxSearchPortletKeys.FECHA_ACTIVIDAD, ajaxSearchUtil.formatDate(fechaActividad));
+
+            String horas = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.HORAS, StringPool.DASH).toString();
+            jsonObject.put(AjaxSearchPortletKeys.HORAS, horas);
+
+
+            String estadoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ESTADO_OBJETO, StringPool.BLANK).toString();
             if (!estadoObjeto.equals(StringPool.BLANK)) {
-                jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));
+                jsonObject.put(AjaxSearchPortletKeys.ESTADO, LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));
                 switch (estadoObjeto) {
                     case "aceptada":
-                        jsonObject.put("estado-code", "success");
+                        jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "success");
                         break;
                     case "rechazada":
-                        jsonObject.put("estado-code", "danger");
+                        jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "danger");
                         break;
                     default:
-                        jsonObject.put("estado-code", "pending");
+                        jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "pending");
                         break;
                 }
 
             } else {
-                jsonObject.put("estado", LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
-                jsonObject.put("estado-code", "unknown");
+                jsonObject.put(AjaxSearchPortletKeys.ESTADO, LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
+                jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "unknown");
             }
             String externalReferenceCode = objectEntry.getExternalReferenceCode();
             String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
-            jsonObject.put("urlVisualizar", "");
-            jsonObject.put("urlEditar", formatEditUrl(themeDisplay.getPortalURL(), externalReferenceCode, objectDefinitionId));
-            jsonObject.put("urlEliminar", formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
+            jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, "");
+            jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(themeDisplay.getPortalURL(), externalReferenceCode, objectDefinitionId));
+            jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
         }
         return jsonObject;
-    }
-
-    private ObjectEntry getObject(Long objectClassPK) {
-        try {
-            ObjectEntry objetoEntry = objectEntryLocalService.getObjectEntry(objectClassPK);
-            return objetoEntry;
-        } catch (PortalException e) {
-            return null;
-        }
-    }
-
-    private String formatEditUrl(String portalUrl, String externalReferenceCode, String objectDefinitionId) {
-        String url = portalUrl + "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_objectDefinitionId=--objectDefinitionId--&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_externalReferenceCode=--externalReferenceCode--";
-        url = url.replace("--objectDefinitionId--", objectDefinitionId)
-                .replace("--externalReferenceCode--", externalReferenceCode);
-        return url;
-    }
-
-    private String formatDeleteUrl(String portalUrl, String externalReferenceCode, String groupId) {
-        String url = portalUrl + "/o/c/compatibilidads/scopes/--groupId--/by-external-reference-code/--externalReferenceCode--";
-        url = url.replace("--groupId--", groupId)
-                .replace("--externalReferenceCode--", externalReferenceCode);
-        return url;
-    }
-    /**
-     * Formatea la fecha de la solicitud
-     *
-     * @param date con formato YYYYMMDD....
-     * @return String con la fecha formateada DD/MM/YYYY
-     */
-    private String formatDate(String date) {
-        if (!date.isBlank()) {
-            return date.substring(6, 8) + StringPool.SLASH + date.substring(4, 6) + StringPool.SLASH + date.substring(0, 4);
-        } else {
-            return StringPool.DASH;
-        }
     }
 
     @Reference

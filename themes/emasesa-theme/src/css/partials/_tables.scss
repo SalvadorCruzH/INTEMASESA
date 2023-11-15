@@ -107,7 +107,7 @@
                         td {
                             padding: m-rem(20px) 1rem;
                             &.ema-td-dropdown {
-                                display: inline-block;
+                                //display: inline-block;
                                 position: relative;
                             }
                             .ema-button-moreoptions {
@@ -180,6 +180,7 @@
                             .ema-pill-estado {
                                 border-radius: m-rem(18px);
                                 padding: .5rem;
+                                //display: block;
                                 
                                 &.pending {
                                     background-color: #EEE;

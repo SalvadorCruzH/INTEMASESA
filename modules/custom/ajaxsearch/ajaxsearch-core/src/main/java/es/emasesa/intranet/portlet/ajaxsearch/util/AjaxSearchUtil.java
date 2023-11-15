@@ -5,7 +5,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -222,6 +225,45 @@ public class AjaxSearchUtil {
         }
         return friendlyURL;
     }
+
+    public final ObjectEntry getObject(Long objectClassPK) {
+        try {
+            ObjectEntry objetoEntry = objectEntryLocalService.getObjectEntry(objectClassPK);
+            return objetoEntry;
+        } catch (PortalException e) {
+            return null;
+        }
+    }
+
+    public final String formatEditUrl(String portalUrl, String externalReferenceCode, String objectDefinitionId) {
+        String url = portalUrl + "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_objectDefinitionId=--objectDefinitionId--&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_--objectDefinitionId--_externalReferenceCode=--externalReferenceCode--";
+        url = url.replace("--objectDefinitionId--", objectDefinitionId)
+                .replace("--externalReferenceCode--", externalReferenceCode);
+        return url;
+    }
+
+    public final String formatDeleteUrl(String portalUrl, String externalReferenceCode, String groupId) {
+        String url = portalUrl + "/o/c/compatibilidads/scopes/--groupId--/by-external-reference-code/--externalReferenceCode--";
+        url = url.replace("--groupId--", groupId)
+                .replace("--externalReferenceCode--", externalReferenceCode);
+        return url;
+    }
+    /**
+     * Formatea la fecha de la solicitud
+     *
+     * @param date con formato YYYYMMDD....
+     * @return String con la fecha formateada DD/MM/YYYY
+     */
+    public final String formatDate(String date) {
+        if (!date.isBlank() && !date.equals(StringPool.DASH)) {
+            return date.substring(6, 8) + StringPool.SLASH + date.substring(4, 6) + StringPool.SLASH + date.substring(0, 4);
+        } else {
+            return StringPool.DASH;
+        }
+    }
+
+    @Reference
+    ObjectEntryLocalService objectEntryLocalService;
 
     @Reference
     CustomPropertiesUtil _customPropertiesUtil;
