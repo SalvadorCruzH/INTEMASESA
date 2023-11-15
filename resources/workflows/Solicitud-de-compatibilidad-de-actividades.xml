@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>101</version>
+	<version>9</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-309,168],"transitions":{"bbe4da74-616c-468a-9429-c37938655e90":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-309.29319956507396,
+						168.61442898491455
+					]
+				}
+			]]>
+		</metadata>
 		<initial>true</initial>
 		<labels>
 			<label language-id="es_ES">
@@ -115,7 +124,7 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Administrador RRHH");
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
@@ -129,7 +138,7 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "solicitud");
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
 	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "solicitud");
-}	
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
@@ -164,7 +173,16 @@ sigdServiceTracker.close();
 	<state>
 		<name>aceptar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[529,994],"transitions":{"772540d0-247a-45f3-aa8c-4e7ae4042c2b":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						529.1366832212416,
+						994.9496702729289
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -189,7 +207,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -233,7 +251,16 @@ customWorkflowUtilTracker.close();]]>
 	<state>
 		<name>rechazar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[951,992],"transitions":{"525106a5-b369-4f3e-bb16-08376dc059ac":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						950.3536376953125,
+						993.8009643554688
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -258,7 +285,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -302,7 +329,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[239,173],"transitions":{"Devolver-a-usuario-para-edicion":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						239.89244673721592,
+						173.5671556788145
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -320,12 +356,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAdministracionDeRRHH", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAdministracionDeRRHH", userId, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -402,7 +438,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-asesoria-juridica</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[709,181],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						709.4450880245005,
+						181.44353567969696
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -420,12 +465,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAsesoriaJuridica", 0, "Asesor jurídico");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAsesoriaJuridica", userId, "Asesor jurídico");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificacion aceptacion RRHH</name>
@@ -475,7 +520,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Devolver-solicitud</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[238,449],"transitions":{"Devolver-a-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						238.86638007473806,
+						449.49999448810627
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -540,7 +594,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>revision-rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[703,588],"transitions":{"rechazar":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						703.5228438180645,
+						588.0923539282425
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -558,12 +621,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRevisionRRHH", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRevisionRRHH", userId, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Solicitud procedente de portafirmas pendiente de revisión</name>
@@ -623,7 +686,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-consejero-delegado</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[712,365],"transitions":{"Notificar-a-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						712.3799674990595,
+						365.9026416878472
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Enviar a portafirmas</name>
@@ -647,7 +719,7 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", 0, "Consejero Delegado");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", userId, "Consejero Delegado");
 //Recuperar anexo introducido en el campo anterior
 String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
 if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
@@ -665,7 +737,7 @@ sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 		</actions>
 		<assignments>
