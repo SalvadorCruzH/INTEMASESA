@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>26</version>
+	<version>15</version>
 	<state>
 		<name>8eab626c-a786-4d84-9abd-e1136e3afa89</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -76,9 +76,11 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", 0, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "licencia sin sueldo", "solicitud");
+if (pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Licencias", "solicitud");
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -87,6 +89,21 @@ sigdServiceTracker.close();]]>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
+			<notification>
+				<name>Notificacion de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud de licensia sin sueldo ha sido rechaza]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
 		</actions>
 		<labels>
 			<label language-id="es_ES">
@@ -119,22 +136,46 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.saveObjectOnSIGD(workflowContext);
-customWorkflowUtil.sendObjectPortafirmas(workflowContext);
-customWorkflowUtil.setObjectStatusAndUpdate(workflowContext, "aprobar");
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Jefe división Personas");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if (pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Licencias", "solicitud");
+}
+
 customWorkflowUtilTracker.close();
-]]>
+sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
+			<notification>
+				<name>Notificacion de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud de licensia sin sueldo ha sido aprobada]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
 		</actions>
 		<labels>
 			<label language-id="es_ES">
@@ -179,12 +220,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAprobar", 0, "jefe Departamento");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAprobar", userId, "jefe Departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>notificación asignación</name>
@@ -232,7 +273,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>28a10977-90dd-4274-9a8c-40684de27d4f</name>
@@ -242,7 +283,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>5fa455e5-1c60-4c5d-b4fd-bfdc48bba0e3</name>
@@ -288,12 +329,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivArea", 0, "jefe Division de area");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivArea", userId, "jefe Division de area");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificación de solicitud</name>
@@ -312,9 +353,7 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>division@liferay.com</email-address>
-			</user>
+			<user />
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -325,7 +364,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>188ecab7-4abf-43a0-bd4a-130a72502cb1</name>
@@ -335,7 +374,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>8d0e0319-55e7-4cc7-9da4-79e77b14ccd3</name>
@@ -381,12 +420,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdmRRHH", 0, "admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdmRRHH", userId, "admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificación de solicitud</name>
@@ -401,7 +440,7 @@ customWorkflowUtilTracker.close();]]>
 				<recipients receptionType="to">
 					<roles>
 						<role>
-							<role-id>47798</role-id>
+							<role-id>35183</role-id>
 						</role>
 					</roles>
 				</recipients>
@@ -411,7 +450,7 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>47798</role-id>
+					<role-id>35183</role-id>
 				</role>
 			</roles>
 		</assignments>
@@ -424,7 +463,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>780163b3-f6bd-44e3-95a3-5a75abf512f3</name>
@@ -434,7 +473,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
 				<name>cc13cf11-4bcb-4c38-bb76-b4c2ff671b9c</name>
@@ -480,12 +519,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "jefeDivPersonas", 0, "jefe Division Personas");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "jefeDivPersonas", userId, "jefe Division Personas");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onExit</execution-type>
 			</action>
 			<notification>
 				<name>Notificación de solicitud</name>
@@ -533,7 +572,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud aprobada
+						Aprobar Solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>f5687012-34e7-4852-890e-bf7b4ba60cc5</name>
@@ -543,7 +582,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
 				<name>16fa44f8-e758-4d1e-981b-4e966d87c057</name>

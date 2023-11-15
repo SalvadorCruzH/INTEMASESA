@@ -15,7 +15,7 @@ class TareasModule extends React.Component {
         columns.push({name: "objectReviewed.assetType",label:Liferay.Language.get("objectReviewed.assetType"), order: "asc"});
         columns.push({name: "dateCreated",label:Liferay.Language.get("dateCreated"), order: "asc"});
         columns.push({name: "assigneePerson.name",label:Liferay.Language.get("assigneePerson.name"), order: "asc"});
-
+        columns.push({name: "objectData.estadoObjeto",label:Liferay.Language.get("objectData.estadoObjeto"), order: "asc"});
         this.state = {
             tareas: [],
             loading: true,
@@ -57,7 +57,7 @@ class TareasModule extends React.Component {
                     let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
                     if (client) {
                         let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
-                        let url = urlObject+"/"+objectId+"?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido%2CexternalReferenceCode";
+                        let url = urlObject+"/"+objectId+"?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido%2CexternalReferenceCode%2CestadoObjeto";
 
                         const config = {
                             method: 'GET',
@@ -251,6 +251,17 @@ class TareasModule extends React.Component {
                 return result;
             });
         }
+        
+        if(type === "objectData.estadoObjeto"){
+            tareas =  tareas.sort((a, b) =>{
+                 let estadoObjetoA = a.objectData.estadoObjeto.name;
+                 let estadoObjetoB = b.objectData.estadoObjeto.name;
+
+                 let result = order === "asc" ? estadoObjetoA.localeCompare(estadoObjetoB) : estadoObjetoB.localeCompare(estadoObjetoA);
+
+                 return result;
+             });
+         }
 
 
         console.log(tareas);
@@ -288,6 +299,7 @@ class TareasModule extends React.Component {
                                                 <td>{tarea.objectReviewed.assetType}</td>
                                                 <td>{tarea.dateCreated}</td>
                                                 <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
+                                                <td>{tarea.objectData.estadoObjeto.name}</td>
                                                 <td><Actions tarea={tarea} refresh={this.loadDependencies} /></td>
                                             </tr>
                                           </>
