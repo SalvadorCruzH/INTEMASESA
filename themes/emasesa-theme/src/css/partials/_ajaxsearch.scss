@@ -51,11 +51,11 @@
                         gap: 1rem;
                         max-width: 100%;
                     }
-                    .ema-ajaxsearch-filtros__buttons {     
+                    .ema-ajaxsearch-filtros__buttons {
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
-                        justify-content: flex-end;                       
+                        justify-content: flex-end;
                         button.search{
                             width: m-rem(55px);
                             height: m-rem(55px);
@@ -87,15 +87,6 @@
                             font-size: m-rem(20px);
                         }
                         .m-searchAjax__input {
-                            &.select {
-
-                            }
-                            &.date {
-                                
-                            }
-                            &.text {
-                                
-                            }  
                             width: 100%;
                             min-width: 1rem;
                             max-width: 100%;
@@ -104,7 +95,7 @@
                             border-radius: .25rem;
                             background: $color-white 0% 0% no-repeat padding-box;
                             padding: .5rem 1rem;
-                            
+
                             @include media-breakpoint-up(lg) {
                                 padding: 1rem 1.5rem;
                             }
@@ -128,16 +119,27 @@
                         }
                         select {
                             width: 100%;
-                            min-width: 1rem;
-                            max-width: 100%;
-                            height: m-rem(55px);
-                            border: 1px solid $color-border;
-                            border-radius: .25rem;
-                            background: $color-white 0% 0% no-repeat padding-box;
-                            padding: .5rem 1rem;
-                            @include media-breakpoint-up(lg) {
-                                padding: 1rem 1.5rem;
-                            }
+                            // min-width: 1rem;
+                            // max-width: 100%;
+                            // height: m-rem(55px);
+                            // border: 1px solid $color-border;
+                            // border-radius: .25rem;
+                            // background: $color-white 0% 0% no-repeat padding-box;
+                            // padding: .5rem 1rem;
+                            // @include media-breakpoint-up(lg) {
+                            //     padding: 1rem 1.5rem;
+                            // }
+
+                            border: 1px solid $color-grey;
+                            border-radius: 10px;
+                            height: auto;
+                            background: $color-white url('@theme_image_path@/icons/angle-down.svg') calc(100% - 15px) center no-repeat;
+                            background-size: 10px auto;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            -ms-appearance: none;
+                            appearance: none;
+                            padding: 14.5px 30px 14.5px 15px;
                         }
                     }
                 }
@@ -152,15 +154,9 @@
                 line-height: m-rem(24px);
                 margin-bottom: 2rem;
             }
-            .ema-documentos-ajax {
-                overflow: scroll;
-            }
         }
         .ema-ajaxsearch {
             margin-bottom: 2rem;
-            &__list {
-                
-            }
             &__item:first-child {
                 padding-top: 0;
             }
@@ -178,7 +174,7 @@
             }
         }
     }
-    
+
     .results-pagination-wrapper {
         display: flex;
         flex-direction: column;
@@ -240,6 +236,6 @@
                     }
                 }
             }
-        }  
+        }
     }
 }

@@ -4,6 +4,8 @@
         padding-bottom: m-rem(25px);
         background-color: white;
         border-radius: m-rem(30px);
+        margin-block: 2rem;
+        overflow-x: auto;
     }
     .ema-table-wrapper {
         background-color: white;
@@ -83,7 +85,7 @@
             }
             &__ajaxsearch {
                 width: 100%;
-                overflow-x: scroll;
+                white-space: nowrap;
                 thead{
                     @include font_base-bold;
                     border-bottom: m-rem(3px) solid $color-aux-blue;
@@ -174,24 +176,20 @@
                                     }
                                 }
                             }
-                            .ema-button-visualize {
-                            }
-
                             .ema-pill-estado {
                                 border-radius: m-rem(18px);
                                 padding: .5rem;
-                                //display: block;
-                                
+
                                 &.pending {
                                     background-color: #EEE;
                                     color: black;
                                 }
-                                
+
                                 &.danger {
                                     background-color: #FDE2E3;
                                     color: #B33333;
                                 }
-                                
+
                                 &.success {
                                     background-color: #ECF4DB;
                                     color: #1A5F12;

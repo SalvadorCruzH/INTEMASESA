@@ -5,12 +5,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.PortalUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
 @Component(
         immediate = true,
         property = {},
@@ -22,14 +25,13 @@ public class ClientExtensionCleanDatabase {
     private ModuleServiceLifecycle _portalInitialized;
 
     @Activate
-    public void doCleanClientExtensionFromDatabase(){
+    public void doCleanClientExtensionFromDatabase() {
 
-
-       boolean result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~administrador-tareas-module'");
-        LOG.info("Borrado de Module "+ result);
-        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-module'");
-        LOG.info("Borrado de Global "+ result);
-
+        LOG.info("[I] PORTAL_INITIALIZED");
+        boolean result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~administrador-tareas-module' ");
+        LOG.info("Borrado de Module " + result);
+        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-module' ");
+        LOG.info("Borrado de Global " + result);
         LOG.info("[E] PORTAL_INITIALIZED");
     }
 
