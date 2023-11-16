@@ -3,7 +3,6 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,6 +26,7 @@ import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import es.emasesa.intranet.searchframework.SearchingCommon;
 import es.emasesa.intranet.searchframework.SearchingJournal;
 import es.emasesa.intranet.searchframework.SearchingObject;
+import es.emasesa.intranet.settings.osgi.ObjectsGroupsSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -83,7 +83,7 @@ public class HorasExtraResultImpl implements AjaxSearchResult {
             final int currentPage = ajaxSearchDisplayContext.getCurrentPage();
             final int pageSize = ajaxSearchDisplayContext.getPageSize();
             final JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-            final String solicitudesId = ajaxSearchDisplayContext.getConfig().getOrDefault(SOLICITUDES_ID, StringPool.BLANK);
+            final String solicitudesId = objectsGroupsSettings.getSolicitudesIds(ajaxSearchDisplayContext.getConfig().getOrDefault(SOLICITUDES_ID, StringPool.BLANK));
 
             final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
             final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
@@ -277,5 +277,8 @@ public class HorasExtraResultImpl implements AjaxSearchResult {
 
     @Reference
     IndexSearcher indexSearcher;
+
+    @Reference
+    ObjectsGroupsSettings objectsGroupsSettings;
 
 }

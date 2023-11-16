@@ -1,9 +1,7 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,6 +25,9 @@ import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import es.emasesa.intranet.searchframework.SearchingCommon;
 import es.emasesa.intranet.searchframework.SearchingJournal;
 import es.emasesa.intranet.searchframework.SearchingObject;
+import es.emasesa.intranet.settings.configuration.ObjectsTypeConfiguration;
+import es.emasesa.intranet.settings.osgi.ObjectsGroupsSettings;
+import es.emasesa.intranet.settings.osgi.ObjectsTypeSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -83,7 +84,7 @@ public class TodasResultImpl implements AjaxSearchResult {
             final int currentPage = ajaxSearchDisplayContext.getCurrentPage();
             final int pageSize = ajaxSearchDisplayContext.getPageSize();
             final JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-            final String solicitudesId = ajaxSearchDisplayContext.getConfig().getOrDefault(SOLICITUDES_ID, StringPool.BLANK);
+            final String solicitudesId = objectsGroupsSettings.getSolicitudesIds(ajaxSearchDisplayContext.getConfig().getOrDefault(SOLICITUDES_ID, StringPool.BLANK));
 
             final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
             final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
@@ -201,10 +202,11 @@ public class TodasResultImpl implements AjaxSearchResult {
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
         ObjectEntry objectEntry = ajaxSearchUtil.getObject(objectClassPK);
         if (objectEntry != null) {
-            String tipoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.TIPO_OBJETO, StringPool.DASH).toString();
-            jsonObject.put(AjaxSearchPortletKeys.TIPO_OBJETO, tipoObjeto);
+            String tipoObjeto = objectsTypeSettings.getType(String.valueOf(objectEntry.getObjectDefinitionId()));
+            jsonObject.put(AjaxSearchPortletKeys.TIPO_OBJETO, LanguageUtil.get(themeDisplay.getLocale(), tipoObjeto));
 
-            String asunto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ASUNTO, StringPool.DASH).toString();
+            //String asunto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ASUNTO, StringPool.DASH).toString();
+            String asunto = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
             jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
 
             String justificacion = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.JUSTIFICACION, StringPool.DASH).toString();
@@ -261,6 +263,12 @@ public class TodasResultImpl implements AjaxSearchResult {
 
     @Reference
     IndexSearcher indexSearcher;
+
+    @Reference
+    ObjectsGroupsSettings objectsGroupsSettings;
+
+    @Reference
+    ObjectsTypeSettings objectsTypeSettings;
 
 
 }
