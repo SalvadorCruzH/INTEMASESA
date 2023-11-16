@@ -82,5 +82,17 @@
         "templateFile": "breadcrumbs.ftl",
         "comment": "Breadcrumb para EMASESA.",
         "uuid": "d5b4e27c-9310-136d-bdce-bc52208b33c9"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Botón Crear Solicitud",
+        "type": "com.liferay.portal.kernel.theme.NavItem",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-BOTON-NUEVA-SOLICITUD",
+        "templateFile":"menu.ftl",
+        "comment": "Menú de navegación Nuevas Solicitudes.",
+        "uuid":"4169f9ff-c2d5-fc5b-5c57-006189ab3d30"
     }
 ]
