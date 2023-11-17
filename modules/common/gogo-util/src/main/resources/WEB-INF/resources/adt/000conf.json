@@ -91,8 +91,8 @@
         "companyWebId":"liferay.com",
         "groupFriendlyUrl":"/global",
         "templateKey":"EMA-BOTON-NUEVA-SOLICITUD",
-        "templateFile":"menu.ftl",
+        "templateFile":"menuCrearSolicitud.ftl",
         "comment": "Menú de navegación Nuevas Solicitudes.",
-        "uuid":"4169f9ff-c2d5-fc5b-5c57-006189ab3d30"
+        "uuid":"337b4712-2f8f-e834-0b56-0180aee2d914"
     }
 ]
