@@ -205,7 +205,6 @@ public class TodasResultImpl implements AjaxSearchResult {
             String tipoObjeto = objectsTypeSettings.getType(String.valueOf(objectEntry.getObjectDefinitionId()));
             jsonObject.put(AjaxSearchPortletKeys.TIPO_OBJETO, LanguageUtil.get(themeDisplay.getLocale(), tipoObjeto));
 
-            //String asunto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ASUNTO, StringPool.DASH).toString();
             String asunto = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
             jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
 

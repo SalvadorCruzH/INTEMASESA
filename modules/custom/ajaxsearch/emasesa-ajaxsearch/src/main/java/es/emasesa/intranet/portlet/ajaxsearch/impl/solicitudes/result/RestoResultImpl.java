@@ -200,7 +200,7 @@ public class RestoResultImpl implements AjaxSearchResult {
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
         ObjectEntry objectEntry = ajaxSearchUtil.getObject(objectClassPK);
         if (objectEntry != null) {
-            String asunto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ASUNTO, StringPool.DASH).toString();
+            String asunto = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
             jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
 
             String fechaActividad = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.FECHA_ACTIVIDAD, StringPool.DASH).toString();

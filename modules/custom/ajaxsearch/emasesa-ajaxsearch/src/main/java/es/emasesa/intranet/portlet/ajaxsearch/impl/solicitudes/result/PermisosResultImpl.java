@@ -204,7 +204,7 @@ public class PermisosResultImpl implements AjaxSearchResult {
             String tipoAusencia = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.TIPO_AUSENCIA, StringPool.DASH).toString();
             jsonObject.put(AjaxSearchPortletKeys.TIPO_AUSENCIA, tipoAusencia);
 
-            String asunto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ASUNTO, StringPool.DASH).toString();
+            String asunto = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
             jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
 
             String justificacion = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.JUSTIFICACION, StringPool.DASH).toString();
