@@ -14,7 +14,7 @@
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.subject" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.dateactivity" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.status" /></th>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.dateobject" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.datesent" /></th>
                       <th></th>
                      </tr>
                     </thead>
