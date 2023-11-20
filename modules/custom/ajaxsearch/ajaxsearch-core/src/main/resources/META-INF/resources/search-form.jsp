@@ -14,12 +14,12 @@ var button = $('button.ema-ajaxsearch-form__filterbutton');
 var filters = $('div.ema-ajaxsearch-form__filters');
 button.on('click', function() {
     filters.fadeToggle();
-    if (filters.attr('aria-hidden') === 'false') {
+    if (filters.attr('aria-hidden') === 'true') {
         button.find('i.fa-chevron-down').toggleClass('fa-chevron-down fa-chevron-up');
-        filters.attr('aria-hidden', 'true');
+        filters.attr('aria-hidden', 'false');
     } else {
         button.find('i.fa-chevron-up').toggleClass('fa-chevron-up fa-chevron-down');
-        filters.attr('aria-hidden', 'false');
+        filters.attr('aria-hidden', 'true');
     }
 });
 

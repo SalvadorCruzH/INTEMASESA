@@ -18,7 +18,7 @@
 		<#list navItems as navItem>
 			<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
 
-			<#if navItems.isBrowsable() || showChildrenNavItems>
+			<#if navItem.isBrowsable() || showChildrenNavItems>
 				<div class="btn-wrapper">
 					<a class="btn btn-primary pe-none" href='${navItem.getURL()}'>
 						<span class="text-truncate"><@liferay.language key='es.emasesa.intranet.common.menu.create-solicitud' /></span>
