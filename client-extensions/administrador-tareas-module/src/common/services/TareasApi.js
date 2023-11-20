@@ -30,10 +30,10 @@ const TareasApi = {
             );
         },
 
-        changeTransition: (actionUrl,data,callback, errorHandler) => {
+        changeTransition: (workflowTaskId,data,callback, errorHandler) => {
              LiferayApi.post(
                 Constants.oauthUserAgent.CLIENT_ID,
-                actionUrl,
+                URL_POST_CHANGE_TRANSITION.replace("--workflowTaskId--", workflowTaskId),
                 data,
                 callback,
                 errorHandler
