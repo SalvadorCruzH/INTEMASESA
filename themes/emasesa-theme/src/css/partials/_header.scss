@@ -53,19 +53,37 @@
             @include media_breakpoint_up(xl) {
                 display: block;
                 position: absolute;
-                right: 0;
-                border-radius: 30px 0% 0% 30px;
-                padding: 12px 12px 13px 31px;
-                color: #A8C855;
-                background-color: #000;
-                border: none;
-                box-shadow: 0px 3px 6px #00000029;
                 top: 210px;
+                right: -150px;
                 z-index: 1;
-                -webkit-transition: all 0.3s ease;
-                -moz-transition: all 0.3s ease;
-                -o-transition: all 0.3s ease;
-                transition: all 0.3s ease;
+                background: black url('@theme_image_path@/icons/ico-folder-closed.svg') 30px center no-repeat;
+                background-size: auto;
+                background-size: 20px auto;
+                border: none;
+                border-radius: 30px 0 0 30px;
+                padding: 12px 12px 13px 70px;
+                color: $color-white;
+                box-shadow: 0px 3px 6px #00000029;
+                -webkit-transition: all .3s ease;
+                -moz-transition: all .3s ease;
+                -o-transition: all .3s ease;
+                transition: all .3s ease;
+                &:hover,
+                &:focus {
+                    right: 0;
+                }
+                &--goAdmin {
+                    body.administrador-tareas-page & {
+                        display: none;
+                    }
+                }
+                &--salir {
+                    display: none;
+                    body.administrador-tareas-page & {
+                        display: block;
+                        right: 0;
+                    }
+                }
             }
             &:hover {
                 .i-header__btnOut {
