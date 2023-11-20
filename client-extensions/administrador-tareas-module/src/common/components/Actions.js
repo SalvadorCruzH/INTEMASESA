@@ -41,7 +41,7 @@ class Actions extends React.Component {
      let transitionName = event.target.dataset.name;
        let data =  {
           "comment": "",
-          "transitionName": "transitionName",
+          "transitionName": transitionName,
           "workflowTaskId": workflowTaskId
         }
      TareasApi.changeTransition(workflowTaskId,data,this.props.refresh,this.errorHandler);
