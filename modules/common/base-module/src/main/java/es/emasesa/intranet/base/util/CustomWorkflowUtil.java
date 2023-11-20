@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -55,7 +56,9 @@ public class CustomWorkflowUtil {
      * 
      */
     public void updateObjectHistoryAndStatus(Map<String, Serializable> workflowContext, String estadoObjeto, long userId, String rolName) {
-        
+		if (ServiceContextThreadLocal.getServiceContext() != null) {
+			userId = ServiceContextThreadLocal.getServiceContext().getUserId();
+		}
         LoggerUtil.debug(LOG,"Cambiando el status y la historico del object. Con el rol: " + rolName + " y el estado: " + estadoObjeto);
 		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
       

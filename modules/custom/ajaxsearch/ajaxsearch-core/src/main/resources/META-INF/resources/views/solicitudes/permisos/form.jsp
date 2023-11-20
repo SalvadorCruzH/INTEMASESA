@@ -90,5 +90,7 @@
         }
     });
 
-	
+    $('select#sortby').on('change', function() {
+        ajaxSearchFeature.doSearch(true, false);
+    });
 </script>

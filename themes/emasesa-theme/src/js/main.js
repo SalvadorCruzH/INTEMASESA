@@ -1,12 +1,9 @@
-
 $(function() {
     menuFuntion.init();
 	menuDesktop.init();
-	changeBtnAdminTareas.init();
 	accFeature.init();
 
 });
-
 
  /**
  * Menu mobile
@@ -212,37 +209,6 @@ var menuDesktop = (function () {
 	};
 })();
 
-
-/**
- * Open close Portlet admin tareas
- */
-
-var changeBtnAdminTareas = (function () {
-	var _btnAdminTask = document.querySelector('#i-btnAdminTareas');
-
-	var _btnAdminToggle = function() {
-		if(_btnAdminTask){
-			_btnAdminTask.addEventListener("click", function () {
-				_btnAdminTask.classList.toggle('open');
-				document.body.classList.toggle('tareas-opened')
-				// llamar al portlet admin tareas
-
-			});
-		}
-	}
-
-
-
-	var _init = function () {
-        _btnAdminToggle();
-	}
-
-	return {
-		init: _init,
-	};
-
-})();
-
 /**
  * Link accessible
  */
@@ -278,4 +244,6 @@ var accFeature = (function () {
 		init: _init,
 		fixBoxLinks: _fixBoxLinks
 	 };
-  })();
+})();
+
+ready

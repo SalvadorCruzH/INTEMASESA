@@ -79,10 +79,7 @@
     });
 
     $("#m-searchAjax__clean__button").on("click", function (e){
-        $('#category').val('');
         $('#queryText').val('');
-        $('#fechaDesde').val('');
-        $('#fechaHasta').val('');
          ajaxSearchFeature.doSearch();
     });
 
@@ -93,71 +90,8 @@
         }
     });
 
-	$('input#fechaDesde').on('change', function() {
-		$('input#fechaHasta').attr("min", $(this).val());
-	});
-
-	$('input#fechaHasta').on('change', function() {
-		$('input#fechaDesde').attr("max", $(this).val());
-	});
-    
     $('select#sortby').on('change', function() {
         ajaxSearchFeature.doSearch(true, false);
     });
-
-    //cuando todo se haya cargado
-    $(document).ready(function() {
-        if($('#subCategory option').length <= 1) {
-            $('#subCategory').prop("disabled", "disabled");
-        } else {
-            $('#subCategory').prop("disabled", false);
-        }
-
-        $('#p_p_id<portlet:namespace/> #buscador-categoria-select select').change(function(){
-            let categoriaSelected = $(this).children("option:selected").val();
-
-            let subCategorias = $('#p_p_id<portlet:namespace/> #buscador-subcategoria-select select');
-            
-            if(categoriaSelected != '') {
-                $.ajax({
-                    url:"${getSubCategoriasURL}",
-                    type:"POST",
-                    dataType:"json",
-                    data:{"<portlet:namespace/>categoryId":categoriaSelected},
-                    cache: false,
-                    success: function(subcats) {
-                        
-                        subCategorias.find('option')
-                        .remove()
-                        .end()
-                        .append('<option value="" selected><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.subcategorias" /></option>')
-                        .val('');
-                        
-                        if(subcats != null && subcats.length > 0) {
-                            subcats.forEach( subcat => {
-                                subCategorias.append('<option value="' + subcat.subCategoryId +'">' + subcat.titleCurrentValue +'</option>')
-                            });
-                            
-                            subCategorias.prop("disabled", false);
-                        } else {
-                            subCategorias.prop("disabled", "disabled");
-                        }
-                        
-                    },
-                    error:function(data) {
-                        console.log("ERROR");
-                    }
-                });
-            } else {
-                subCategorias.find('option')
-                .remove()
-                .end()
-                .append('<option value=""><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.subcategorias" /></option>')
-                .val('');
-                
-                subCategorias.prop("disabled", "disabled");
-            }
-        });
-    })
 
 </script>

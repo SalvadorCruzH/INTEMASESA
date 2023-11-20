@@ -3,8 +3,10 @@ import { createRoot } from 'react-dom/client';
 
 import TareasModule from './common/components/TareasModule.js';
 
+document.body.classList.add('administrador-tareas-page')
+
 const App = (props) => {
-console.log(props);
+	console.log(props);
 	return (
 		<>
 			{Liferay.ThemeDisplay.isSignedIn() &&
