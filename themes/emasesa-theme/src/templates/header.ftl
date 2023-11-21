@@ -21,7 +21,7 @@
 				</#if>
 				<button class="btn m-btn--noSytles"aria-label="Abrir busqueda"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
 			</div>
-			<a href="/group/emasesa/administrar-tareas" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />" id="i-btnAdminTareas" class="i-header__btnAdmin i-header__btnAdmin--goAdmin btn">
+			<a href="/group/guest/administrar-tareas" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />" id="i-btnAdminTareas" class="i-header__btnAdmin i-header__btnAdmin--goAdmin btn">
 				<@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/>
 			</a>
 			<a href="${themeDisplay.getURLHome()}" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />" id="i-btnAdminTareas" class="i-header__btnAdmin i-header__btnAdmin--salir btn">
