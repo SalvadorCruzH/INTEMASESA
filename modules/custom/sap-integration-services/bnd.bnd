@@ -21,7 +21,9 @@ Export-Package: \
     es.emasesa.intranet.sap.jornadadiaria.service,\
     es.emasesa.intranet.sap.jornadadiaria.exception,\
     es.emasesa.intranet.sap.subordinados.service,\
-    es.emasesa.intranet.sap.subordinados.exception
+    es.emasesa.intranet.sap.subordinados.exception,\
+    es.emasesa.intranet.sap.empleadoPrestamos.service,\
+    es.emasesa.intranet.sap.empleadoPrestamos.exception
 
 
 Import-Package:\*;resolution:=optional
