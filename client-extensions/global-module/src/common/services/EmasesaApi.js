@@ -4,9 +4,9 @@ import LiferayApi from "./LiferayApi";
 
 const EmasesaApi = {
 
-    getConfiguration: (companyId, callback, errorHandler) => {
+    getConfiguration: (callback, errorHandler) => {
         LiferayApi.get(Constants.oauthUserAgent.CLIENT_ID,
-            CONFIGURATION_BASE.URL_DEFAULT+companyId,
+            CONFIGURATION_BASE.URL_DEFAULT,
             callback, errorHandler);
     },
 
