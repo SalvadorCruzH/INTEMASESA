@@ -17,7 +17,8 @@ public interface ClientExtensionsConfiguration {
     @Meta.AD(
             deflt = "-1",
             name = "guestGroupId",
-            required = false
+            required = false,
+            description = "guestGroupId.desc"
     )
     long guestGroupId();
 
