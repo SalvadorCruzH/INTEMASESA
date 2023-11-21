@@ -19,7 +19,8 @@ class TareasModule extends React.Component {
         this.state = {
             tareas: [],
             loading: true,
-            columns: columns
+            columns: columns,
+            configuration: {}
         }
         console.log(this);
     }
@@ -33,6 +34,7 @@ class TareasModule extends React.Component {
         this.state.tareas =[];
         this.setState({loading:true});
             setTimeout(() => {
+                EmasesaApi.getConfiguration(Liferay.ThemeDisplay.getCompanyId(), this.loadConfiguration, this.errorHandler)
                 TareasApi.getWorkflowTasksMe(
                     Liferay.ThemeDisplay.getScopeGroupId(),
                     this.setTasks,
@@ -45,6 +47,16 @@ class TareasModule extends React.Component {
                 )
 
             }, 100)
+    }
+
+    loadConfiguration = (result) => {
+        if (result) {
+            console.debug("configurationData");
+            console.debug(result);
+            this.setState({
+                configuration: result
+            });
+        }
     }
 
     addTareaExtraData = (tarea) =>{

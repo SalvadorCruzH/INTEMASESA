@@ -82,4 +82,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String subordinadosEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "empleadoPrestamosEndpoint",
+            required = false
+    )
+    String empleadoPrestamosEndpoint();
 }

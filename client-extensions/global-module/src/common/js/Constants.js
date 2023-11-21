@@ -4,6 +4,9 @@ export const oauthUserAgent = {
     URL_DEFAULT_NATIVE: '/o'
 }
 
+export const CONFIGURATION_BASE = {
+    URL_DEFAULT: 'o/emasesa/v1.0/intranet/configuration/',
+}
 
 
 export function getLanguageLocal() {

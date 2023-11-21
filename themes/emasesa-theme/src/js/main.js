@@ -245,5 +245,3 @@ var accFeature = (function () {
 		fixBoxLinks: _fixBoxLinks
 	 };
 })();
-
-ready

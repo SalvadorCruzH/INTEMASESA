@@ -267,4 +267,36 @@ public class ObjectFactory {
         return new ZpeStSubordinados();
     }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoPrestamos }
+     *
+     */
+    public ZPeEmpleadoPrestamos createZPeEmpleadoPrestamos() {
+        return new ZPeEmpleadoPrestamos();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoPrestamosResponse }
+     *
+     */
+    public ZPeEmpleadoPrestamosResponse createZPeEmpleadoPrestamosResponse() {
+        return new ZPeEmpleadoPrestamosResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoPrestamos }
+     *
+     */
+    public TableOfZpeStEmpleadoPrestamos createTableOfZpeStEmpleadoPrestamos() {
+        return new TableOfZpeStEmpleadoPrestamos();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoPrestamos }
+     *
+     */
+    public ZpeStEmpleadoPrestamos createZpeStEmpleadoPrestamos() {
+        return new ZpeStEmpleadoPrestamos();
+    }
+
 }

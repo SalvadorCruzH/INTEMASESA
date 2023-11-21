@@ -1,0 +1,11 @@
+Bundle-Name: emasesa-rest-application
+Bundle-SymbolicName: es.emasesa.intranet.rest.application
+Bundle-Version: 1.0.0
+Liferay-Configuration-Path: /configuration
+-sources: true
+
+-dsannotations-options: inherit
+
+Require-Capability:\
+	osgi.contract;\
+		filter:="(&(osgi.contract=JavaJAXRS)(version=2))"

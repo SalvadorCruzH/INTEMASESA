@@ -20,5 +20,12 @@ public interface PortalFirmasServiceConfiguration {
             required = false
     )
     String actionsJSON();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "posicionIdConsejeroDelegado",
+            required = false
+    )
+    String posicionIdConsejeroDelegado();
 
 }
