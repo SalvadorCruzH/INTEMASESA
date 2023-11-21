@@ -43,7 +43,8 @@ public class PortalFirmasUtil {
 	        LoggerUtil.debug(LOG, "Se procede a enviar el documento al portafirmas." );
 	        
 	        if(workflowContext.size()>0){
-	            ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry((long) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+	        	long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+	    		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(classPK);
 	            Map<String,Serializable> values = objectEntry.getValues();
 	            
 	            LoggerUtil.debug(LOG, "Obteniendo los valores del workflowContext..." );

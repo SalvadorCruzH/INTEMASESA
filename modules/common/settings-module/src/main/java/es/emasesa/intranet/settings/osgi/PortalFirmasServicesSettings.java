@@ -1,13 +1,15 @@
 package es.emasesa.intranet.settings.osgi;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import es.emasesa.intranet.settings.configuration.PortalFirmasServiceConfiguration;
-import es.emasesa.intranet.settings.configuration.SPECServiceConfiguration;
+
 import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+
+import es.emasesa.intranet.settings.configuration.PortalFirmasServiceConfiguration;
 
 @Component(
         immediate = true,
@@ -18,6 +20,10 @@ public class PortalFirmasServicesSettings {
 
     public String actionsJSON() {
         return configuration.actionsJSON();
+    }
+    
+    public String posicionIdConsejeroDelegado() {
+        return configuration.posicionIdConsejeroDelegado();
     }
 
     @Activate
