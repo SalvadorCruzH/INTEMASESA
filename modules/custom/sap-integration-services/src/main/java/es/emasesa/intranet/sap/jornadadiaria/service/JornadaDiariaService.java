@@ -30,7 +30,7 @@ import javax.xml.ws.BindingProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-@org.springframework.stereotype.Component("jornadaDiaria")
+@org.springframework.stereotype.Component("jornadaDiariaService")
 public class JornadaDiariaService {
 
 

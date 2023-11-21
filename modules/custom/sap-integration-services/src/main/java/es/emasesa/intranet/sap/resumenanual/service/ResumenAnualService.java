@@ -29,7 +29,7 @@ import javax.annotation.PostConstruct;
 import javax.xml.ws.BindingProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@org.springframework.stereotype.Component("resumenAnual")
+@org.springframework.stereotype.Component("resumenAnualService")
 public class ResumenAnualService {
 
 
@@ -94,7 +94,7 @@ public class ResumenAnualService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            URL urlEndpoint = new URL(configuration.jornadaResumenAnual());
+
             ZWSPEEMPLEADOJORNADARESUM_Service service = new ZWSPEEMPLEADOJORNADARESUM_Service();
             port = service.getPort(ZWSPEEMPLEADOJORNADARESUM.class);
 
@@ -108,11 +108,7 @@ public class ResumenAnualService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de ResumenAnualService");
             }
-        }catch (MalformedURLException e) {
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Error en el WSDL de ZWSPEEMPLEADOJORNADARESUM_Service --> " + configuration.marcajeEndpoint());
-            }
-        } finally {
+        }finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 

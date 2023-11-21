@@ -66,7 +66,8 @@ public class JornadaDiariaFormImpl implements AjaxSearchForm {
 
         for(int i=0;i<lastMonthCount;i++){
             month = JSONFactoryUtil.createJSONObject();
-            localDate = localDate.minusMonths(1);
+            localDate = LocalDate.now();
+            localDate = localDate.minusMonths(i);
             String value = localDate.format(DateTimeFormatter.ofPattern("MMyyyy"));
             String label = localDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
             month.put("value",value);

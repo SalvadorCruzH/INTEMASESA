@@ -20,6 +20,7 @@ import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
+import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
@@ -53,11 +54,12 @@ public class SapServicesUtil {
     public JSONArray getResumenAnual(String pernr, String anno) {
 
         JSONArray resumenAnual = JSONFactoryUtil.createJSONArray();
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if(_resumenAnualService == null){
-                activate(null);
-            }
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             resumenAnual = _resumenAnualService.obtenerResumenAnual(pernr, anno);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         } catch (SapCommunicationException | ResumenAnualException e) {
             LOG.error(e.getMessage());
             LOG.debug(e.getMessage(), e);
