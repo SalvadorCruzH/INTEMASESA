@@ -76,6 +76,8 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
 
         documents.getDocument().add(document);
 
+
+
         SignLineList signLineList= objectFactory.createSignLineList();
         SignLine signLine = objectFactory.createSignLine();
         signLine.setType(objectFactory.createSignLineType(TYPE_FIRMA));
@@ -92,10 +94,12 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
         signLine.setSignerList(signerList);
         signLineList.getSignLine().add(signLine);
 
+
         RemitterList remitterList = objectFactory.createRemitterList();
         User user = objectFactory.createUser();
         user.setIdentifier(remitterNIF);
         remitterList.getUser().add(user);
+
 
         NoticeList noticeList = objectFactory.createNoticeList();
         ActionList actionList = objectFactory.createActionList();
@@ -115,9 +119,16 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
             noticeList.getState().add(stateObj);
         }
 
-            String requestId = modifyService.createRequest(request);
-            Holder<String> requestIdHolder = new Holder<>(requestId);
-            modifyService.sendRequest(requestIdHolder);
+        request.setDocumentList(getObjectFactory().createRequestDocumentList(documents));
+        request.setSignLineList(getObjectFactory().createRequestSignLineList(signLineList));
+        request.setRemitterList(getObjectFactory().createRequestRemitterList(remitterList));
+        request.setActionList(getObjectFactory().createRequestActionList(actionList));
+        request.setNoticeList(getObjectFactory().createRequestNoticeList(noticeList));
+
+        String requestId = modifyService.createRequest(request);
+        Holder<String> requestIdHolder = new Holder<>(requestId);
+        modifyService.sendRequest(requestIdHolder);
+
 
     }
 
