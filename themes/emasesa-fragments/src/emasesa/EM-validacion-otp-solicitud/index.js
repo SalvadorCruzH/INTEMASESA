@@ -1,12 +1,14 @@
+let otpGenerado = false;
+let otpValidado = false;
+
 $(document).ready(function() {
 	$('[id^="fragment-"][id$="-submit-button"]').prop('disabled', true);
 	$('[id^="fragment-"][id$="-submit-button"]').attr('aria-disabled', true);
-	var otpGenerado = false;
-	var otpValidado = false;
+
 	$('[id^="fragment-"][id$="-submit-button"]').on('click', (e) => {
 		e.preventDefault();
 		if(otpGenerado && otpValidado) {
-			$("#fragment-otp").parent("form").submit();
+			$("#fragment-otp").closest("form").submit();
 		}
 	});
 });
@@ -106,7 +108,7 @@ $("#generate-otp-button").on('click', () => {
 		if(parseJsonData.otp) {
 			console.debug("DEBUG: El OTP es: " + parseJsonData.otp);
 		}
-		if (data.data) {
+		if (parseJsonData.isOk) {
 			hideHtmlComponent("#error-envio-otp");
 	
 			disableHtmlComponent("#generate-otp-button");

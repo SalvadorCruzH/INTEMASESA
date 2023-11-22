@@ -22,4 +22,12 @@ public interface ClientExtensionsConfiguration {
     )
     long guestGroupId();
 
+    @Meta.AD(
+            deflt = "",
+            name = "objectMapping.name",
+            required = false,
+            description = "objectMapping.desc"
+    )
+    String objectMapping();
+
 }
