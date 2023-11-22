@@ -1,25 +1,42 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>9</version>
+	<version>34</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-309.29319956507396,
-						168.61442898491455
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-309,168],"transitions":{"bbe4da74-616c-468a-9429-c37938655e90":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "Usuario");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
 		<initial>true</initial>
 		<labels>
 			<label language-id="es_ES">
@@ -124,7 +141,9 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
+//Modificar historico y estado
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Administrador RRHH");
+
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
@@ -138,7 +157,7 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "solicitud");
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
 	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "solicitud");
-}
+}	
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
@@ -173,16 +192,7 @@ sigdServiceTracker.close();
 	<state>
 		<name>aceptar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						529.1366832212416,
-						994.9496702729289
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[529,994],"transitions":{"772540d0-247a-45f3-aa8c-4e7ae4042c2b":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -251,16 +261,7 @@ customWorkflowUtilTracker.close();]]>
 	<state>
 		<name>rechazar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						950.3536376953125,
-						993.8009643554688
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[950,993],"transitions":{"525106a5-b369-4f3e-bb16-08376dc059ac":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -329,16 +330,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						239.89244673721592,
-						173.5671556788145
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[239,173],"transitions":{"Devolver-a-usuario-para-edicion":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -361,7 +353,7 @@ customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onExit</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -438,16 +430,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-asesoria-juridica</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						709.4450880245005,
-						181.44353567969696
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[709,181],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -470,7 +453,7 @@ customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onExit</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>Notificacion aceptacion RRHH</name>
@@ -520,16 +503,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Devolver-solicitud</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						238.86638007473806,
-						449.49999448810627
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[238,449],"transitions":{"Devolver-a-rrhh":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -594,16 +568,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>revision-rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						703.5228438180645,
-						588.0923539282425
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[703,589],"transitions":{"rechazar":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -621,12 +586,12 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRevisionRRHH", userId, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRevisionRRHH", 0, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onExit</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>Solicitud procedente de portafirmas pendiente de revisión</name>
@@ -686,16 +651,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-consejero-delegado</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						712.3799674990595,
-						365.9026416878472
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[717,365],"transitions":{"Notificar-a-rrhh":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Enviar a portafirmas</name>
@@ -708,6 +664,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+import es.emasesa.intranet.porta.firmas.service.util.PortalFirmasUtil;
 
 Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
@@ -719,33 +676,56 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", userId, "Consejero Delegado");
-//Recuperar anexo introducido en el campo anterior
-String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
-if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "solicitud");
-}
 
-//Subir formulario de solicitud
+Bundle bundlePortaFirma = FrameworkUtil.getBundle(PortalFirmasUtil.class);
+ServiceTracker portaFirmaServiceTracker = new ServiceTracker(bundlePortaFirma.getBundleContext(),PortalFirmasUtil.class, null);
+portaFirmaServiceTracker.open();
+PortalFirmasUtil portaFirmaService = portaFirmaServiceTracker.getService();
+
+//Cambiar status e histórico
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", userId, "Consejero Delegado");
+
+//Subir formulario de solicitud al SIGD
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
 	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Compatibilidad", false);
+}
+
+//Subir fichero certificacion o decalracion responsable
+String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
+String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
+
+if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "solicitud");
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Certificación de la empresa", false);
+}else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "solicitud");
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Declaración responsable", false);
+}	
+
+//Recuperar anexo introducido por Asesor Jurídico y subir al SIGD y portafirmas
+String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
+String idDocumentoAsesoriaJuridica = "";
+if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
+	idDocumentoAsesoriaJuridica = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "solicitud");
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoAsesoriaJuridica, "Anexo asesoría jurídica", true);
+	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoInstanceToken);
 }
 
 customWorkflowUtilTracker.close();
-sigdServiceTracker.close();]]>
+sigdServiceTracker.close();
+portaFirmaServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onExit</execution-type>
+				<execution-type>onAssignment</execution-type>
 			</action>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-id>49026</role-id>
-				</role>
-			</roles>
+			<user>
+				<email-address>consejerodelegado@mail.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
