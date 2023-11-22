@@ -20,6 +20,10 @@ public class FormsSettings {
         return configuration.debugOtp();
     }
 
+    public int getTtlOtp() {
+        return configuration.ttlOtp();
+    }
+
     @Activate
     @Modified
     protected void activate(Map<String, Object> properties) {

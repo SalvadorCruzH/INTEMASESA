@@ -14,17 +14,19 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import es.emasesa.intranet.base.constant.StringConstants;
+import org.apache.commons.codec.binary.Base64;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import java.io.File;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component(
         immediate = true,
@@ -205,6 +207,62 @@ public class CustomMailUtil {
         sb.append("<p style='>").append(pStyle).append("'>").append(content).append("</p>");
         sb.append("</td></tr>");
         return sb.toString();
+    }
+
+    public String parseImgsOnBodyToBase64(String body){
+        Document doc = Jsoup.parse(body);
+
+        List<String> imageUrls = extractImageUrls(doc);
+        imageUrls = imageUrls.stream().map(CustomMailUtil::parseImgToBase64).collect(Collectors.toList());
+
+        return replaceImageUrlsWithBase64(doc,imageUrls);
+    }
+
+    private static String parseImgToBase64(String imageUrl){
+        String base64IMG = StringPool.BLANK;
+        try {
+            LoggerUtil.debug(_log, "Se inicia el proceso para convertir una Imagen a base64.");
+            URL url = new URL(imageUrl);
+            try (InputStream inputStream = url.openStream()) {
+                byte[] bytes = inputStream.readAllBytes();
+                base64IMG = Base64.encodeBase64String(bytes);
+
+                LoggerUtil.debug(_log, "Convertida Imagen a base64: " + base64IMG);
+            }
+
+        } catch (IOException e) {
+            LoggerUtil.error(_log, "Error al intentar convertir una Imagen a base64: " + e);
+        }
+
+        return base64IMG;
+    }
+
+    private List<String> extractImageUrls(Document doc) {
+        List<String> imageUrls = new ArrayList<>();
+        Elements imgElements = doc.select("img");
+
+        for (Element imgElement : imgElements) {
+            String imageUrl = imgElement.attr("src");
+            imageUrls.add(imageUrl);
+        }
+
+        return imageUrls;
+    }
+
+    private String replaceImageUrlsWithBase64(Document doc, List<String> base64Images) {
+        Elements imgElements = doc.select("img");
+
+        for (int i = 0; i < imgElements.size(); i++) {
+            Element imgElement = imgElements.get(i);
+
+            if (i < base64Images.size()) {
+                String base64Image = base64Images.get(i);
+                imgElement.attr("src", "data:image/jpeg;base64," + base64Image);
+            } else {
+                LoggerUtil.error(_log, "Hay mas imagenes en el html que en el listado de imagenes obtenidas");
+            }
+        }
+        return doc.outerHtml();
     }
 
 	@Reference

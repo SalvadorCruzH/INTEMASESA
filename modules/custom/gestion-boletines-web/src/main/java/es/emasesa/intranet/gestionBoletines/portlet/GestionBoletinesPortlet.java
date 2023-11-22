@@ -209,6 +209,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
 
                 String portalUrl = PortalUtil.getPortalURL(actionRequest);
                 htmlContenido = postProcesadoContenido(htmlContenido, portalUrl);
+                htmlContenido = _customMailUtil.parseImgsOnBodyToBase64(htmlContenido);
             }
         } catch (PortalException e) {
             LoggerUtil.error(LOG, e);

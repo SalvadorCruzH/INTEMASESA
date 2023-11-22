@@ -21,4 +21,11 @@ public interface FormsConfiguration {
     )
     boolean debugOtp();
 
+    @Meta.AD(
+            deflt = "0",
+            name = "Tiempo de Vida de la OTP (segundos)",
+            required = false
+    )
+    int ttlOtp();
+
 }
