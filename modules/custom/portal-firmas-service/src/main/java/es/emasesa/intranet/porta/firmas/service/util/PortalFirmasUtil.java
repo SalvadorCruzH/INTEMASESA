@@ -6,7 +6,9 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -74,9 +76,9 @@ public class PortalFirmasUtil {
 	            LoggerUtil.debug(LOG, "nifs: " + nifs.toString());
 	            LoggerUtil.debug(LOG, "remitterNIF: " + remitterNIF);
 	            LoggerUtil.debug(LOG, "workflowTaskId: " + workflowTaskId);
-				
-	            _pFirmasModifyServices.sendSign(subject, reference, 
-							documentName, documentSIGDID, nifs, remitterNIF, workflowTaskId);
+				JSONArray documentos = JSONFactoryUtil.createJSONArray(); //TODO: meter los documentos del object
+	            _pFirmasModifyServices.sendSign(subject, reference,
+						documentos, nifs, remitterNIF, workflowTaskId);
 	            LoggerUtil.debug(LOG, "Docuemnto enviado a portal firmas." );
 	        }
     	} catch (JSONException | PfirmaException e) {
