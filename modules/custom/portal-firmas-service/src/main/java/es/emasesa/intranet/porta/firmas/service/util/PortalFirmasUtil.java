@@ -111,7 +111,6 @@ public class PortalFirmasUtil {
 		    }else {
 		    	LoggerUtil.debug(LOG, "No se ha encontrado ningun usuario en liferay con el screem name: "  + screemNameConsejeroDelegado);
 		    }
-	    
     	} catch (PortalException e) {
     		LoggerUtil.error(LOG, "Error al recuperar el NIF del Consejero Delegado para el envío de portafirmas: " + e.toString());
 		}

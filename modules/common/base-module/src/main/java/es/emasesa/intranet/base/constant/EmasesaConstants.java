@@ -25,6 +25,7 @@ public class EmasesaConstants {
     
     public static final String EMASESA_OBJECT_STATUS = "estadoObjeto";
     public static final String EMASESA_OBJECT_HISTORY = "historicoEstado";
+    public static final String EMASESA_OBJECT_SIGD_IDS = "sIGDIds";
 
     //SPEC
     public static final String SUBSTR_MARC_TMP_1_8 = "SUBSTR(MARC_TMP,1,8)";
