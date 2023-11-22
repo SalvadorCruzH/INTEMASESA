@@ -158,6 +158,7 @@ public class CustomOTPUtil extends Application {
         if(!Validator.isNull(notificationTemplate)) {
             body = notificationTemplate.getBody(JaxrsConstants.LOCALE_SPANISH);
             body = body.replace("#otpGenerada#", otp);
+            body = _customMailUtil.parseImgsOnBodyToBase64(body);
             mailDetails.put(JaxrsConstants.EMAIL_BODY, body );
 
             from = Objects.requireNonNull(notificationTemplate.getNotificationRecipient().getNotificationRecipientSettings().stream().filter(element -> element.getName().equals("from")).findFirst().orElse(null)).getValue();
