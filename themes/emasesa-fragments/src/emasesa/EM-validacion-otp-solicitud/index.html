@@ -7,11 +7,15 @@
         <div>
             <label class="" id="qtts-text-input-label">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.codigo")}</label>
             <input id="otp-input" class="form-control" placeholder="${configuration.placeholder}" type="text" disabled aria-disabled="true">
-            <p id="error-validacion-otp" class="text-danger d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.invalido")}</p>
+            <input id="timestampGeneration-input" type="hidden">
         </div>
         <button id="validate-otp-button" type="button" class="btn btn-nm btn-primary" disabled aria-disabled="true">
             ${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.validar")}
         </button>
+    </div>
+    <div class="error-messages">
+       <p id="error-validacion-otp-invalido" class="text-danger d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.invalido")}</p>
+       <p id="error-validacion-otp-expirado" class="text-danger d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.expirado")}</p>
     </div>
 </div>
 
