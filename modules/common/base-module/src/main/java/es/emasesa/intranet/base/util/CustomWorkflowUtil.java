@@ -245,9 +245,9 @@ public class CustomWorkflowUtil {
 		byte[] pdfByte = byteArrayOutputStream.toByteArray();
 		InputStream is = new ByteArrayInputStream(pdfByte);
 
-		ServiceContext serviceContext = new ServiceContext();
+		/*ServiceContext serviceContext = new ServiceContext();
 		dlAppLocalService.addFileEntry(fileName, userId, folderPDF.getRepositoryId(), folderPDF.getFolderId(), sourceFileName, EmasesaConstants.EMASESA_MIMETYPE,
-				fileName, sourceFileName, "", "", is, pdfByte.length, null, null, serviceContext);
+				fileName, sourceFileName, "", "", is, pdfByte.length, null, null, serviceContext);*/
 		return document;
 	}
     
