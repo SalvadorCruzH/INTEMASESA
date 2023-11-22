@@ -88,7 +88,7 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
             Signer signer = objectFactory.createSigner();
             UserJob userJob = objectFactory.createJob();
             userJob.setIdentifier(nif);
-
+            signer.setUserJob(userJob);
             signerList.getSigner().add(signer);
         });
         signLine.setSignerList(signerList);
