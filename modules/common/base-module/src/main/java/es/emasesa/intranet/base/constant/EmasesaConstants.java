@@ -55,5 +55,14 @@ public class EmasesaConstants {
     public static final String WORKFLOW_TASK_ID="workflowTaskId";
     public static final String ROLE_NAME_ASSIGN="roleNameAssign";
     public static final String NUMERO_MATRICULA="numeroDeMatricula";
+    
+    //SIGD
+    public static final String SIGD_DOCUMENT_NAME="documentName";
+    public static final String SIGD_ID="idSIGD";
+    
+    //PORTAFIRMAS
+    public static final String PORTAFIRMAS_SIGN="sign";
+    
+    
     private EmasesaConstants(){}
 }

@@ -6,6 +6,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import es.emasesa.intranet.base.constant.EmasesaConstants;
 import es.emasesa.intranet.porta.firmas.service.model.PFirmasModifyServices;
 import es.emasesa.intranet.settings.osgi.PortalFirmasServicesSettings;
 import java.net.URL;
@@ -71,11 +73,11 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
 
         for(int i=0;i<documentos.length();i++){
             Document document = objectFactory.createDocument();
-            document.setName(documentos.getJSONObject(i).getString("documentName"));
+            document.setName(documentos.getJSONObject(i).getString(EmasesaConstants.SIGD_DOCUMENT_NAME));
             document.setMime(APPLICATION_PDF);
-            document.setUri(objectFactory.createDocumentUri(documentos.getJSONObject(i).getString("idSIGD")));
+            document.setUri(objectFactory.createDocumentUri(documentos.getJSONObject(i).getString(EmasesaConstants.SIGD_ID)));
             document.setType(objectFactory.createDocumentType(SIGDV2));
-            document.setSign(getObjectFactory().createDocumentSign(documentos.getJSONObject(i).getBoolean("sign")));
+            document.setSign(getObjectFactory().createDocumentSign(documentos.getJSONObject(i).getBoolean(EmasesaConstants.PORTAFIRMAS_SIGN)));
             documents.getDocument().add(document);
         }
 

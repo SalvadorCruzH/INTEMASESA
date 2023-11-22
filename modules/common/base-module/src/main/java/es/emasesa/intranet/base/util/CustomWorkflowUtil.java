@@ -116,9 +116,9 @@ public class CustomWorkflowUtil {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS));
 				JSONObject sigdIDs = JSONFactoryUtil.createJSONObject();
 				
-				sigdIDs.put("documentName", documentName);
-				sigdIDs.put("idSIGD", idSIGD);
-				sigdIDs.put("sign", sign);
+				sigdIDs.put(EmasesaConstants.SIGD_DOCUMENT_NAME, documentName);
+				sigdIDs.put(EmasesaConstants.SIGD_ID, idSIGD);
+				sigdIDs.put(EmasesaConstants.PORTAFIRMAS_SIGN, sign);
 				jsonArray.put(sigdIDs);
 				
 				map.put(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS, jsonArray);

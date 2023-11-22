@@ -42,7 +42,7 @@ public class PortalFirmasUtil {
      * @employeeType kaleoInstanceToken
      * 
      */
-    public void enviarPortalFirmas(Map<String, Serializable> workflowContext,  String documentSIGDID, KaleoInstanceToken kaleoInstanceToken){
+    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoInstanceToken kaleoInstanceToken){
     	try {    		
 	        String subject; // NOMBRE OBJETO + NOMBRE USUARIO
 	        String reference; // NOMBRE OBJETO
@@ -72,11 +72,10 @@ public class PortalFirmasUtil {
 	            LoggerUtil.debug(LOG, "subject: " + subject);
 	            LoggerUtil.debug(LOG, "reference: " + reference);
 	            LoggerUtil.debug(LOG, "documentName: " + documentName);
-	            LoggerUtil.debug(LOG, "documentSIGDID: " + documentSIGDID);
 	            LoggerUtil.debug(LOG, "nifs: " + nifs.toString());
 	            LoggerUtil.debug(LOG, "remitterNIF: " + remitterNIF);
 	            LoggerUtil.debug(LOG, "workflowTaskId: " + workflowTaskId);
-				JSONArray documentos = JSONFactoryUtil.createJSONArray(); //TODO: meter los documentos del object
+				JSONArray documentos = JSONFactoryUtil.createJSONArray((String) objectEntry.getValues().get(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS));
 	            _pFirmasModifyServices.sendSign(subject, reference,
 						documentos, nifs, remitterNIF, workflowTaskId);
 	            LoggerUtil.debug(LOG, "Docuemnto enviado a portal firmas." );
