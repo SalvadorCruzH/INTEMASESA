@@ -26,6 +26,57 @@ var disableHtmlComponent = function(query) {
 	$(query).prop('disabled', true);
 	$(query).attr('aria-disabled', true);
 }
+
+var setValue = function(query, value) {
+	$(query).val(value);
+}
+
+var validateOtp = function(){
+	const otp = $("#otp-input").val();
+	const typeObject = configuration.tipoObjeto;
+	const userId = themeDisplay.getUserId();
+	const timestampGeneration = $("#timestampGeneration-input").val();
+
+	const url = `/o/customotputil/validate-otp/${typeObject}/${userId}/${otp}/${timestampGeneration}`;
+
+	fetch(url, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Error en la solicitud');
+			}
+			return response.json();
+		})
+		.then(data => {
+			let parseJsonData = JSON.parse(data.data);
+			otpValidado = parseJsonData.isOk;
+			if (otpValidado) {
+				enableHtmlComponent('[id^="fragment-"][id$="-submit-button"]');
+				showHtmlComponent("#validacion-otp-correcto");
+				hideHtmlComponent("#fragment-otp");
+			} else {
+				if (parseJsonData.reason === "expired"){
+					hideHtmlComponent("#error-validacion-otp-invalido");
+					showHtmlComponent("#error-validacion-otp-expirado");
+
+					$("#generate-otp-button").prop('disabled', false);
+					$("#generate-otp-button").removeAttr('aria-disabled');
+				} else {
+					hideHtmlComponent("#error-validacion-otp-expirado");
+					showHtmlComponent("#error-validacion-otp-invalido");
+				}
+
+			}
+		})
+		.catch(error => {
+			showHtmlComponent("#error-validacion-otp-invalido");
+			console.error('Hubo un error:', error);
+		});
+}
 $("#generate-otp-button").on('click', () => {
 	$("#fragment-otp").removeClass('d-none');
 	$("#fragment-otp").removeAttr('aria-hidden');
@@ -53,12 +104,14 @@ $("#generate-otp-button").on('click', () => {
 	.then(data => {
 		let parseJsonData = JSON.parse(data.data);
 		if(parseJsonData.otp) {
-			console.debug("DEBUG: El correo no se ha podido enviar, el OTP es: " + parseJsonData.otp);
+			console.debug("DEBUG: El OTP es: " + parseJsonData.otp);
 		}
 		if (data.data) {
 			hideHtmlComponent("#error-envio-otp");
 	
 			disableHtmlComponent("#generate-otp-button");
+
+			setValue("#timestampGeneration-input", parseJsonData.timestampGeneration);
 
 			showHtmlComponent("#input-wrapper");
 			enableHtmlComponent("#otp-input");
@@ -78,39 +131,11 @@ $("#generate-otp-button").on('click', () => {
 	});
 });
 
-$("#validate-otp-button").on('click', () => {	
-	const otp = $("#otp-input").val();
-	const typeObject = configuration.tipoObjeto;
-	const userId = themeDisplay.getUserId();
-
-	const url = `/o/customotputil/validate-otp/${typeObject}/${userId}/${otp}`;	
-
-	fetch(url, {
-	method: 'GET',
-	headers: {
-		'Content-Type': 'application/json'
-	},
-	})
-	.then(response => {
-		if (!response.ok) {
-			throw new Error('Error en la solicitud');
-		}
-		return response.json();
-	})
-	.then(data => {
-		otpValidado = data;
-		if (data) {
-			enableHtmlComponent('[id^="fragment-"][id$="-submit-button"]');
-			showHtmlComponent("#validacion-otp-correcto");
-			hideHtmlComponent("#fragment-otp");
-		} else {
-			showHtmlComponent("#error-validacion-otp");
-		}
-	})
-	.catch(error => {
-		showHtmlComponent("#error-validacion-otp");
-		console.error('Hubo un error:', error);
-	});
+$("#validate-otp-button").on('click', validateOtp);
+$("#otp-input").on('keypress', (event) => {
+	if(event.which === 13){
+		validateOtp();
+	}
 });
 
 
