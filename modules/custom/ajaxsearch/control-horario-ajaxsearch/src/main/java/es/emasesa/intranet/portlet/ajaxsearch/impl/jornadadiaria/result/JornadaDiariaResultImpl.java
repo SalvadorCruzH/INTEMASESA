@@ -5,6 +5,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -141,7 +143,17 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 
 		JSONArray array;
 		int totalItems = 0;
-		if(Validator.isNotNull(monthSelected)){
+
+		String usuario = ajaxSearchDisplayContext.getString("usuarioSelected", StringPool.BLANK);
+		boolean isValidUser;
+		if (usuario.isBlank()){
+			usuario = themeDisplay.getUser().getScreenName();
+			isValidUser = Boolean.TRUE;
+		} else {
+			isValidUser = checkUsuarioSelected(usuario,request,themeDisplay.getUser());
+		}
+
+		if(Validator.isNotNull(monthSelected) && isValidUser){
 			String startDate ="";
 			String endDate ="";
 
@@ -152,14 +164,15 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			startDate = firstDay.format(sdf);
 			endDate = lastDay.format(sdf);
 
-			String cacheKey = "jornadaDiaria"+monthSelected+themeDisplay.getUser().getUserId();
+
+			String cacheKey = "jornadaDiaria"+monthSelected+usuario;
 			Object object = _cache.get(cacheKey);
 
 			if(Validator.isNotNull(object) && ((JSONArray) object).length()>0){
 				array = (JSONArray) object;
 
 			}else{
-				array = _sapServicesUtil.getJornadaDiaria(themeDisplay.getUser(),startDate,endDate);
+				array = _sapServicesUtil.getJornadaDiaria(usuario, startDate, endDate);
 				_cache.put(cacheKey,array,86400);
 
 			}
@@ -223,7 +236,28 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 				_customDateUtil.getDateNumber(j.getString("DATUM"), "yyyy-MM-dd");
 	}
 
+	private boolean checkUsuarioSelected(String usuarioSelected, PortletRequest request, User user) {
 
+		List<Role> listUserRoles = user.getRoles();
+		for (Role role : listUserRoles) {
+			if(role.getName().equals("administradorRRHH")){
+				request.setAttribute("role", "administradorRRHH");
+				return Boolean.TRUE;
+			}
+		}
+		JSONArray subordinados = _sapServicesUtil.getSubordinados(user, "T");
+		if (subordinados.length() > 0){
+			request.setAttribute("role", "responsable");
+
+			for (int i = 0; i < subordinados.length(); i++) {
+				String subordinado = subordinados.getJSONObject(i).getString("pernr");
+				if(subordinado.equals(usuarioSelected)){
+					return Boolean.TRUE;
+				}
+			}
+		}
+		return Boolean.FALSE;
+	}
 
 	private static final String VIEW = "/views/jornadadiaria/results.jsp";
 
