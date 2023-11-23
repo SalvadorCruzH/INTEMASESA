@@ -182,10 +182,9 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 		return totalItems;
 	}
 
-	private JSONArray getVacaciones(ThemeDisplay themeDisplay, String year) {
+	private JSONObject getVacaciones(ThemeDisplay themeDisplay, String year) {
 
 		String cacheKeyYear = "resumenAnual"+year+themeDisplay.getUser().getUserId();
-		JSONArray vacaciones = JSONFactoryUtil.createJSONArray();
 		Object objectYear = _cache.get(cacheKeyYear);
 		JSONArray arrayYear;
 		if(Validator.isNotNull(objectYear) && ((JSONArray) objectYear).length()>0){
@@ -202,9 +201,8 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 			vacacionesYear.put("computoConFuturo", arrayYear.getJSONObject(0).getString("computoConFuturo"));
 			vacacionesYear.put("computoSinFuturo", arrayYear.getJSONObject(0).getString("computoSinFuturo"));
 			vacacionesYear.put("contingenteVacaciones", arrayYear.getJSONObject(0).getString("contingenteVacaciones"));
-			vacaciones.put(vacacionesYear);
 		}
-		return vacaciones;
+		return vacacionesYear;
 	}
 	private static final String VIEW = "/views/resumenanual/results.jsp";
 

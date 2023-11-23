@@ -197,7 +197,6 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 	private JSONObject getVacaciones(ThemeDisplay themeDisplay, String year) {
 
 		String cacheKeyYear = "resumenAnual"+year+themeDisplay.getUser().getUserId();
-		JSONArray vacaciones = JSONFactoryUtil.createJSONArray();
 		Object objectYear = _cache.get(cacheKeyYear);
 		JSONArray arrayYear;
 		if(Validator.isNotNull(objectYear) && ((JSONArray) objectYear).length()>0){
@@ -211,7 +210,6 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 		}
 		JSONObject vacacionesYear = JSONFactoryUtil.createJSONObject();
 		if (arrayYear.length() > 0) {
-			//vacacionesYear = arrayYear.getJSONObject(0);
 			vacacionesYear.put("computoConFuturo", arrayYear.getJSONObject(0).getString("computoConFuturo"));
 			vacacionesYear.put("computoSinFuturo", arrayYear.getJSONObject(0).getString("computoSinFuturo"));
 			vacacionesYear.put("contingenteVacaciones", arrayYear.getJSONObject(0).getString("contingenteVacaciones"));
