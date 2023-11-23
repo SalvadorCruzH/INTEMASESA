@@ -48,7 +48,7 @@
 						 <tr>
 							<td align="left" style="font-size:0px;padding:0;word-break:break-word;">
 								<div style="font-family:Roboto, Helvetica, Arial;text-align:left;color:#000000;">
-									<style></style
+									<style></style>
 									<#if (entradilla.getData())??>
 										${entradilla.getData()?truncate(90, '&hellip;')}
 									</#if>

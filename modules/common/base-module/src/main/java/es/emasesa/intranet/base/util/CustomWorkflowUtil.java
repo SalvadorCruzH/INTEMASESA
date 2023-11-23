@@ -96,6 +96,44 @@ public class CustomWorkflowUtil {
 			LOG.error("Error el actualziar el hitórico del objecto" + e);
 		}
     }
+    
+    /**
+     * Update field sIGDIds to the object
+     * @param workflowContext
+     * @param idSIGD
+     * @param documentName
+     * @param sign
+     * 
+     */
+    public void updateIdsSIGD(Map<String, Serializable> workflowContext, String idSIGD, String documentName, Boolean sign) {
+    	
+    	LoggerUtil.debug(LOG,"Modificando el ID obtenido por SIGD en el campo del objecto.");
+		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
+		try {
+			if(Validator.isNotNull(object)) {
+				Map <String,Serializable> map = object.getValues();
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS));
+				JSONObject sigdIDs = JSONFactoryUtil.createJSONObject();
+				
+				sigdIDs.put(EmasesaConstants.SIGD_DOCUMENT_NAME, documentName);
+				sigdIDs.put(EmasesaConstants.SIGD_ID, idSIGD);
+				sigdIDs.put(EmasesaConstants.PORTAFIRMAS_SIGN, sign);
+				jsonArray.put(sigdIDs);
+				
+				map.put(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS, jsonArray);
+				
+				ServiceContext serviceContext = new ServiceContext();
+				_objectEntryLocalService.updateObjectEntry(
+							object.getUserId(), object.getObjectEntryId(), map, 
+							serviceContext);
+				
+				LoggerUtil.debug(LOG,"Modificado IDs del SIGD");
+			}
+		} catch (PortalException e) {
+			LOG.error("Error el actualziar los IDs del SIGD del objecto" + e);
+		}
+    }
    
     
     /**
@@ -164,18 +202,6 @@ public class CustomWorkflowUtil {
     }
     
     
-    /**
-     * Send object portaFirmas
-     * @param workflowContext
-     * 
-     */
-    public void sendObjectPortafirmas(Map<String, Serializable> workflowContext) {
-    	
-    	  LoggerUtil.debug(LOG, "Envio de objeto a portafirmas");
-    	  
-    	//TODO - Hacer el servicio para mandar el objecto a portafirmas en formato PDF
-    }
-    
     
     /**
      * Create PDF
@@ -184,8 +210,6 @@ public class CustomWorkflowUtil {
      */
     public PDDocument createPDF(Map<String, Serializable> workflowContext) throws IOException, PortalException {
     	
-    	//TODO - Pensar si vamos a guardar el PDF en algun sitio
-
 		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 		long userId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 		long groupId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
@@ -220,11 +244,10 @@ public class CustomWorkflowUtil {
 		document.save(byteArrayOutputStream);
 		byte[] pdfByte = byteArrayOutputStream.toByteArray();
 		InputStream is = new ByteArrayInputStream(pdfByte);
-//		document.close();
 
-		ServiceContext serviceContext = new ServiceContext();
+		/*ServiceContext serviceContext = new ServiceContext();
 		dlAppLocalService.addFileEntry(fileName, userId, folderPDF.getRepositoryId(), folderPDF.getFolderId(), sourceFileName, EmasesaConstants.EMASESA_MIMETYPE,
-				fileName, sourceFileName, "", "", is, pdfByte.length, null, null, serviceContext);
+				fileName, sourceFileName, "", "", is, pdfByte.length, null, null, serviceContext);*/
 		return document;
 	}
     
@@ -268,12 +291,14 @@ public class CustomWorkflowUtil {
 			 LoggerUtil.debug(LOG, "Obteniendo el documento con nombre: " + documentName);
 			idDocumentoToLoad = (long) _objectEntryLocalService.getObjectEntry(entryClassPK).getValues().get(documentName);
 			LoggerUtil.debug(LOG, "Recuperamos el ID del documento: " + idDocumentoToLoad);
-			if (idDocumentoToLoad != 0) {
+			if (Validator.isNotNull(idDocumentoToLoad) && idDocumentoToLoad != 0) {
 				LoggerUtil.debug(LOG, "ID obtenido, buscar el DLFile a partir del ID... " );
 				DLFileEntry documentFileEntry = _dlFileEntryLocalService.getDLFileEntry(idDocumentoToLoad);
 				LoggerUtil.debug(LOG, "Se recupera el DLFILE... " );
 				documentBase64 = convertFileBase64(documentFileEntry);
 				LoggerUtil.debug(LOG, "Convertido a Base64 " );
+			}else {
+				LoggerUtil.debug(LOG, "No hay PDF subido por asesoría juridica");
 			}
 		} catch (PortalException e) {
 			LoggerUtil.error(LOG, "Error al intenar recuperar el documento: " + e.toString());

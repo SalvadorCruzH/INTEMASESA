@@ -41,15 +41,24 @@ public class PortalFirmasFirmadoServlet extends HttpServlet {
         String status = ParamUtil.getString(req, "status");
         long workflowTaskId = ParamUtil.getLong(req, EmasesaConstants.WORKFLOW_TASK_ID);
         long companyId = CompanyThreadLocal.getCompanyId();
+        LoggerUtil.debug(LOG,"CALLBACK PORTALFIRMAS");
+        LoggerUtil.debug(LOG,"workflowTaskId: "+workflowTaskId+" con estado: "+status);
         try {
             WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
                     workflowTaskId);
             Map<String, Serializable> workflowContext = getWorkFlowContext(workflowTask,companyId);
             List<String> transitions = getNextTransitions(workflowTask);
             String nextTransition;
+            LoggerUtil.debug(LOG,"transitions size: "+transitions.size());
+
+            if(LOG.isDebugEnabled()){
+
+                transitions.forEach(transition -> LoggerUtil.debug(LOG,"transition: "+transition));
+            }
 
             nextTransition = transitions.stream().filter(transition -> transition.equalsIgnoreCase(status)).findFirst()
                     .orElseThrow(() -> new WorkflowException("Transition not found"));
+            LoggerUtil.debug(LOG,"nextTransition: "+nextTransition);
 
             _workflowTaskManager.completeWorkflowTask(companyId, workflowTask.getAssigneeUserId(),
                     workflowTask.getWorkflowTaskId(), nextTransition, "", workflowContext);

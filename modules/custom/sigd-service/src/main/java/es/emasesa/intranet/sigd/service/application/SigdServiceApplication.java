@@ -144,11 +144,12 @@ public class SigdServiceApplication{
      * @param tipoDocumental
      * 
      */
-    public void saveDocumentOnSIGD(String pdf, String objectName,String tipoDocumental) {
+    public String saveDocumentOnSIGD(String pdf, String objectName,String tipoDocumental) {
     	
     	LoggerUtil.debug(LOG, "Guardando el documento en el gestor documnetal SIGD. Para el formulario: " + objectName + " y el tipo documental: " + tipoDocumental);
-    	insertarDocumento(pdf, objectName, tipoDocumental);
-    	LoggerUtil.debug(LOG, "Documento almacenado");
+    	String idDocument = insertarDocumento(pdf, objectName, tipoDocumental);
+    	LoggerUtil.debug(LOG, "Documento almacenado: " + idDocument);
+    	return idDocument;
     }
 	
 	 /**

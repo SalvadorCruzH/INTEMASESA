@@ -21,6 +21,9 @@ public class ClientExtensionsSettings {
     public long guestGroupId(){
         return configuration.guestGroupId();
     }
+    public String objectMapping(){
+        return configuration.objectMapping();
+    }
     
     @Activate
     @Modified

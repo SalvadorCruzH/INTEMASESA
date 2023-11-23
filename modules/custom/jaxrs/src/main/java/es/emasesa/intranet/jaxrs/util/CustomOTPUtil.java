@@ -8,10 +8,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.*;
 import es.emasesa.intranet.base.util.CustomCacheMultiUtil;
 import es.emasesa.intranet.base.util.CustomMailUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
@@ -44,74 +41,35 @@ public class CustomOTPUtil extends Application {
 
     @GET
     @Produces(ContentTypes.APPLICATION_JSON)
-    @Path("/validate-otp/{typeObject}/{userId}/{otpUser}")
-    public boolean validateOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
+    @Path("/validate-otp/{typeObject}/{userId}/{otpUser}/{timestampGeneration}")
+    public Response validateOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
                                @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
-                               @DefaultValue(StringPool.BLANK) @PathParam("otpUser") String otpUser){
+                               @DefaultValue(StringPool.BLANK) @PathParam("otpUser") String otpUser,
+                               @DefaultValue("0") @PathParam("timestampGeneration") long timestampGeneration ){
+        Response.ResponseBuilder builder;
+        JSONObject json = JSONFactoryUtil.createJSONObject();
         boolean isValid = Boolean.FALSE;
+        String reason = JaxrsConstants.REASON_INVALID;
 
         String otpCache =  getOTPCache(typeObject, userId);
-
-        if ((Validator.isNotNull(otpCache) && !otpCache.isEmpty()) && otpCache.equals(otpUser)){
+        boolean isExpireOTP = isOTPExpired(timestampGeneration);
+        if ((Validator.isNotNull(otpCache) && !otpCache.isEmpty()) && otpCache.equals(otpUser) && !isExpireOTP){
             isValid = Boolean.TRUE;
             removeElementCache(typeObject, userId);
+
+        } else if (isExpireOTP){
+            reason = JaxrsConstants.REASON_EXPIRED;
         }
+        json.put("isOk", isValid);
+        if (!isValid) json.put("reason",reason);
 
-        return isValid;
-    }
+        builder = Response.ok(new ResponseData(
+                false,
+                json.toString(),
+                null,
+                null));
 
-    @GET
-    @Produces(ContentTypes.APPLICATION_JSON)
-    @Path("/generate-otp/{typeObject}/{userId}/{length}")
-    public boolean generateOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
-                                @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
-                                @DefaultValue("0") @PathParam("length") int length){
-        boolean isGenerated = Boolean.FALSE;
-        String digits = JaxrsConstants.DIGITS;
-        String otp;
-        SecureRandom random = new SecureRandom();
-        StringBuilder password = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(digits.length());
-            char randomDigit = digits.charAt(randomIndex);
-            password.append(randomDigit);
-        }
-
-        otp = password.toString();
-        if (!otp.isEmpty() && otp.length() == length){
-            setOTPCache(typeObject, userId, otp);
-            isGenerated = Boolean.TRUE;
-        } else {
-            LoggerUtil.error(_log, "Ha ocurrido un error al generar la OTP");
-        }
-
-        return isGenerated;
-    }
-
-    @GET
-    @Produces(ContentTypes.APPLICATION_JSON)
-    @Path("/send-otp/{typeObject}/{userId}/{companyId}/{to}")
-    public boolean sendOTP(@DefaultValue(StringPool.BLANK) @PathParam("typeObject") String typeObject,
-                           @DefaultValue(StringPool.BLANK) @PathParam("userId") String userId,
-                           @DefaultValue("0") @PathParam("companyId") long companyId,
-                           @DefaultValue(StringPool.BLANK) @PathParam("to") String to){
-        boolean sendOtp;
-        String otpCache = getOTPCache(typeObject, userId);
-
-        Map<String,String> mailDetails = getMailDetails(otpCache);
-        if (!mailDetails.isEmpty()){
-            String subject = mailDetails.get(JaxrsConstants.EMAIL_SUBJECT);
-            String body = mailDetails.get(JaxrsConstants.EMAIL_BODY);
-            String from = mailDetails.get(JaxrsConstants.EMAIL_FROM).isEmpty()?
-                    PrefsPropsUtil.getPreferences(companyId).getValue("admin.email.from.address", PropsUtil.get("admin.email.from.address")):
-                    mailDetails.get(JaxrsConstants.EMAIL_FROM);
-            sendOtp = _customMailUtil.createAndSendMail(from, to, subject, body);
-            if (!sendOtp) LoggerUtil.error(_log, "Ha ocurrido un error al enviar el Correo Electronico");
-            return sendOtp;
-
-        } else {
-            return Boolean.FALSE;
-        }
+        return builder.build();
     }
 
     @GET
@@ -134,9 +92,11 @@ public class CustomOTPUtil extends Application {
 
         json.put("isOk", isOk);
 
-        if (_formSettings.debugOtp()){
-            json.put("otp", getOTPCache(typeObject, userId));
-        }
+        if (isOk) json.put("ttl", getTTL());
+        if (isOk) json.put("timestampGeneration", System.currentTimeMillis());
+
+        if (_formSettings.debugOtp()) json.put("otp", getOTPCache(typeObject, userId));
+
         builder = Response.ok(new ResponseData(
                 false,
                 json.toString(),
@@ -144,6 +104,50 @@ public class CustomOTPUtil extends Application {
                 null));
 
         return builder.build();
+    }
+
+    private boolean generateOTP(String typeObject, String userId, int length){
+        boolean isGenerated = Boolean.FALSE;
+        String digits = JaxrsConstants.DIGITS;
+        String otp;
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(digits.length());
+            char randomDigit = digits.charAt(randomIndex);
+            password.append(randomDigit);
+        }
+
+        otp = password.toString();
+        if (!otp.isEmpty() && otp.length() == length){
+            int ttl = getTTL();
+            setOTPCache(typeObject, userId, otp, ttl);
+            isGenerated = Boolean.TRUE;
+        } else {
+            LoggerUtil.error(_log, "Ha ocurrido un error al generar la OTP");
+        }
+
+        return isGenerated;
+    }
+
+    private boolean sendOTP(String typeObject, String userId,  long companyId, String to){
+        boolean sendOtp;
+        String otpCache = getOTPCache(typeObject, userId);
+
+        Map<String,String> mailDetails = getMailDetails(otpCache);
+        if (!mailDetails.isEmpty()){
+            String subject = mailDetails.get(JaxrsConstants.EMAIL_SUBJECT);
+            String body = mailDetails.get(JaxrsConstants.EMAIL_BODY);
+            String from = mailDetails.get(JaxrsConstants.EMAIL_FROM).isEmpty()?
+                    PrefsPropsUtil.getPreferences(companyId).getValue("admin.email.from.address", PropsUtil.get("admin.email.from.address")):
+                    mailDetails.get(JaxrsConstants.EMAIL_FROM);
+            sendOtp = _customMailUtil.createAndSendMail(from, to, subject, body);
+            if (!sendOtp) LoggerUtil.error(_log, "Ha ocurrido un error al enviar el Correo Electronico");
+            return sendOtp;
+
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
     private Map<String,String> getMailDetails(String otp){
@@ -154,6 +158,7 @@ public class CustomOTPUtil extends Application {
         if(!Validator.isNull(notificationTemplate)) {
             body = notificationTemplate.getBody(JaxrsConstants.LOCALE_SPANISH);
             body = body.replace("#otpGenerada#", otp);
+            body = _customMailUtil.parseImgsOnBodyToBase64(body);
             mailDetails.put(JaxrsConstants.EMAIL_BODY, body );
 
             from = Objects.requireNonNull(notificationTemplate.getNotificationRecipient().getNotificationRecipientSettings().stream().filter(element -> element.getName().equals("from")).findFirst().orElse(null)).getValue();
@@ -186,10 +191,9 @@ public class CustomOTPUtil extends Application {
         }
     }
 
-
-    private void setOTPCache(String typeObject, String userId, String otp){
+    private void setOTPCache(String typeObject, String userId, String otp, int ttl){
         String elementToSave = JaxrsConstants.CACHE_PREFIX_OTP + typeObject + StringPool.UNDERLINE + userId;
-        _customCacheMultiUtil.put(elementToSave, otp);
+        _customCacheMultiUtil.put(elementToSave, otp, ttl);
     }
 
     private String getOTPCache(String typeObject, String userId){
@@ -202,6 +206,20 @@ public class CustomOTPUtil extends Application {
         _customCacheMultiUtil.remove(elementToRemove);
     }
 
+    private int getTTL(){
+        int ttl = Math.max(_formSettings.getTtlOtp(), 0);
+        LoggerUtil.debug(_log, "Valor TTL: " + ttl);
+
+        return ttl;
+    }
+
+    private boolean isOTPExpired(long timestampGeneration) {
+        long expirationTime = timestampGeneration + (getTTL() * 1000L);
+        long currentTime = System.currentTimeMillis();
+
+        return expirationTime < currentTime;
+    }
+
     @Reference
     private CustomMailUtil _customMailUtil;
 
@@ -212,8 +230,7 @@ public class CustomOTPUtil extends Application {
     private NotificationTemplateLocalService _notificationTemplateLocalService;
 
     @Reference
-    FormsSettings _formSettings;
-
+    private FormsSettings _formSettings;
 
     private static final Log _log = LoggerUtil.getLog(CustomOTPUtil.class);
 }

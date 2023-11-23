@@ -1,0 +1,15 @@
+assemble:
+    - from: build/static
+      into: static
+global-object-module:
+    #cssURLs:
+    #    - css/main.*.css
+    friendlyURLMapping: global-object-module
+    htmlElementName: global-object-module
+    instanceable: false
+    name: Modulo de Global para cargar objectos
+    portletCategoryName: category.emasesa
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true

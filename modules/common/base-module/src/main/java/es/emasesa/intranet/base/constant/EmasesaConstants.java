@@ -25,6 +25,7 @@ public class EmasesaConstants {
     
     public static final String EMASESA_OBJECT_STATUS = "estadoObjeto";
     public static final String EMASESA_OBJECT_HISTORY = "historicoEstado";
+    public static final String EMASESA_OBJECT_SIGD_IDS = "sIGDIds";
 
     //SPEC
     public static final String SUBSTR_MARC_TMP_1_8 = "SUBSTR(MARC_TMP,1,8)";
@@ -54,5 +55,14 @@ public class EmasesaConstants {
     public static final String WORKFLOW_TASK_ID="workflowTaskId";
     public static final String ROLE_NAME_ASSIGN="roleNameAssign";
     public static final String NUMERO_MATRICULA="numeroDeMatricula";
+    
+    //SIGD
+    public static final String SIGD_DOCUMENT_NAME="documentName";
+    public static final String SIGD_ID="idSIGD";
+    
+    //PORTAFIRMAS
+    public static final String PORTAFIRMAS_SIGN="sign";
+    
+    
     private EmasesaConstants(){}
 }

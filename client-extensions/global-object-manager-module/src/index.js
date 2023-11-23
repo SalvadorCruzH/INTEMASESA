@@ -1,24 +1,20 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
+import GlobalObjectModule from "./common/components/GlobalObjectModule";
 
-import TareasModule from './common/components/TareasModule.js';
 
-document.body.classList.add('administrador-tareas-page')
-
-const App = (props) => {
-	console.log(props);
+const App = () => {
 	return (
 		<>
-			{Liferay.ThemeDisplay.isSignedIn() &&
-                <TareasModule/>
-			}
+			{Liferay.ThemeDisplay.isSignedIn() && (
+                <GlobalObjectModule />
+			)}
 		</>
 	);
 };
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
-
         createRoot(this).render(
             <App />,
             this
@@ -29,7 +25,7 @@ class WebComponent extends HTMLElement {
         }
 }
 
-const ELEMENT_ID = 'administrador-tareas-module';
+const ELEMENT_ID = 'global-object-module';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, WebComponent);

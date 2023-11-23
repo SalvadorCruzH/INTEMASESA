@@ -16,4 +16,9 @@ public class JaxrsConstants {
     public static final String QUERY_PARAM_NAME= "name";
     public static final String QUERY_PARAM_RECIPIENT_TYPE= "recipientType";
     public static final String EMAIL_FROM = "from";
+
+    public static final String REASON_INVALID = "invalid";
+    public static final String REASON_EXPIRED = "expired";
+
+
 }

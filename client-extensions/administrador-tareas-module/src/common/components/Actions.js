@@ -17,6 +17,7 @@ class Actions extends React.Component {
             objectReviewed: props.tarea.objectReviewed,
             externalReferenceCode:props.tarea.objectData.externalReferenceCode,
             completed: props.tarea.completed,
+            configuration: props.configuration,
             loading: true
         }
         console.log(this);
@@ -63,26 +64,15 @@ class Actions extends React.Component {
 
     openModal = (event) => {
         let objectReviewed = this.state.objectReviewed;
-        let objectDefinition = OBJECT_MAPPING[objectReviewed.assetType];
-        if(objectDefinition){
-           let url = themeDisplay.getPortalURL()+OBJECT_CONSTANTS.VIEW_URL.replaceAll("--objectDefinitionId--",objectDefinition.id)
-           .replaceAll("--externalReferenceCode--",this.state.externalReferenceCode);
-           console.log(url);
-            Liferay.Util.openWindow({
-                dialog: {
-                    destroyOnHide: true,
-                    modal: true,
-                    after: {
-                        render: function(event) {
-                            //
-                        }
-                    }
-                },
-                id: 'EditInfoIntDialog',
-                refreshWindow: window,
-                title: 'Consultar',
-                uri: url
-            });
+        var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        let objectMapping = jsonObjectMapping[objectReviewed.assetType];
+        if(objectMapping){
+           let display = objectMapping.display;
+           display+="?objectEntryId="+objectReviewed.id;
+           display+="&objectType="+objectReviewed.assetType;
+           display+="&mode=1";
+           let url = themeDisplay.getPortalURL()+display;
+           window.open(url, "_blank")
         }
     }
 

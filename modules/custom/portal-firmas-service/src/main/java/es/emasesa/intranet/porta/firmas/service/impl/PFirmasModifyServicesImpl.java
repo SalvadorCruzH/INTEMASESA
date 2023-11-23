@@ -1,10 +1,14 @@
 package es.emasesa.intranet.porta.firmas.service.impl;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import es.emasesa.intranet.base.constant.EmasesaConstants;
+import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.porta.firmas.service.model.PFirmasModifyServices;
 import es.emasesa.intranet.settings.osgi.PortalFirmasServicesSettings;
 import java.net.URL;
@@ -55,8 +59,9 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
     private static final boolean SIGN = true;
 
 
-    public void sendSign(String subject, String reference, String documentName, String documentSIGDID, List<String> nifs,
-                         String remitterNIF,String workflowTaskId) throws JSONException, PfirmaException {
+    public void sendSign(String subject, String reference, JSONArray documentos, List<String> nifs,
+                         String remitterNIF, String workflowTaskId) throws JSONException, PfirmaException {
+        LoggerUtil.debug(LOG,"SOAP PORTALFIRMAS INICIO");
         ModifyService modifyService = getPort();
 
         ObjectFactory objectFactory = getObjectFactory();
@@ -68,15 +73,17 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
 
         DocumentList documents = objectFactory.createDocumentList();
 
-        Document document = objectFactory.createDocument();
-        document.setName(documentName);
-        document.setMime(APPLICATION_PDF);
-        document.setUri(objectFactory.createDocumentUri(documentSIGDID));
-        document.setType(objectFactory.createDocumentType(SIGDV2));
-
-        documents.getDocument().add(document);
-
-
+        for(int i=0;i<documentos.length();i++) {
+            Document document = objectFactory.createDocument();
+            document.setName(documentos.getJSONObject(i).getString(EmasesaConstants.SIGD_DOCUMENT_NAME));
+            document.setMime(APPLICATION_PDF);
+            document.setUri(objectFactory.createDocumentUri(documentos.getJSONObject(i).getString(EmasesaConstants.SIGD_ID)));
+            document.setType(objectFactory.createDocumentType(SIGDV2));
+            document.setSign(getObjectFactory().createDocumentSign(documentos.getJSONObject(i).getBoolean(EmasesaConstants.PORTAFIRMAS_SIGN)));
+            LoggerUtil.debug(LOG,"DOCUMENTOS:");
+            LoggerUtil.debug(LOG,"Documento: "+document.getName()+" SIGID: "+document.getUri().getValue()+" Firma: "+document.getSign().getValue());
+            documents.getDocument().add(document);
+        }
 
         SignLineList signLineList= objectFactory.createSignLineList();
         SignLine signLine = objectFactory.createSignLine();
@@ -88,18 +95,18 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
             Signer signer = objectFactory.createSigner();
             UserJob userJob = objectFactory.createJob();
             userJob.setIdentifier(nif);
-
+            signer.setUserJob(userJob);
+            LoggerUtil.debug(LOG,"FIRMANTES:");
+            LoggerUtil.debug(LOG,"NIF: "+nif);
             signerList.getSigner().add(signer);
         });
         signLine.setSignerList(signerList);
         signLineList.getSignLine().add(signLine);
 
-
         RemitterList remitterList = objectFactory.createRemitterList();
         User user = objectFactory.createUser();
         user.setIdentifier(remitterNIF);
         remitterList.getUser().add(user);
-
 
         NoticeList noticeList = objectFactory.createNoticeList();
         ActionList actionList = objectFactory.createActionList();
@@ -113,10 +120,12 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
             action.setState(stateObj);
             action.setType(objectFactory.createActionType(TYPE_WEB));
             String urlCallback = actionsJson.getString(state);
-            urlCallback.replaceAll("--workflowTaskId--",workflowTaskId);
+            urlCallback = urlCallback.replaceAll("--workflowTaskId--",workflowTaskId);
             action.setAction(urlCallback);
             actionList.getAction().add(action);
             noticeList.getState().add(stateObj);
+            LoggerUtil.debug(LOG,"ESTADOS/CALLBACK:");
+            LoggerUtil.debug(LOG,"Estado: "+state+" URL: "+urlCallback);
         }
 
         request.setDocumentList(getObjectFactory().createRequestDocumentList(documents));
@@ -126,8 +135,10 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
         request.setNoticeList(getObjectFactory().createRequestNoticeList(noticeList));
 
         String requestId = modifyService.createRequest(request);
+        LoggerUtil.debug(LOG,"REQUESTID: "+requestId);
         Holder<String> requestIdHolder = new Holder<>(requestId);
         modifyService.sendRequest(requestIdHolder);
+        LoggerUtil.debug(LOG,"SOAP PORTALFIRMAS FINALIZADO");
 
 
     }
