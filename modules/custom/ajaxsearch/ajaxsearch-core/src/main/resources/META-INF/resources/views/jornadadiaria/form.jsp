@@ -7,7 +7,7 @@
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
 
     <div class="ema-ajaxsearch-filtros__category" id="buscador-categoria-select">
-                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.month"></liferay-ui:message></label>
+                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectOption"></liferay-ui:message></label>
                 <select name="<portlet:namespace />month"
                         type="text"
                         value='<%=ajaxSearchDisplayContext.getString("monthSelected") %>'
@@ -80,6 +80,14 @@
             } else {
                 ajaxSearchFeature.doSearch(true, false);
             }
+        }
+    });
+    //on document ready
+    $(document).ready(function() {
+        //if #month is resumenanual add param to current url and refresh
+        if($("#month").val() == 'resumenanual'){
+            window.location.href = window.location.href.split('?')[0] +"?monthSelected="+(new Date().getMonth()+1) +""+ new Date().getFullYear();
+            
         }
     });
 

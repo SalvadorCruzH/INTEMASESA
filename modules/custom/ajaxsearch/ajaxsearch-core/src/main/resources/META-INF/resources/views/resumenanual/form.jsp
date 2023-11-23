@@ -22,7 +22,7 @@
             </div>
     </div>
     <div class="ema-ajaxsearch-filtros__category" id="buscador-categoria-select">
-                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.month"></liferay-ui:message></label>
+                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectOption"></liferay-ui:message></label>
                 <select name="<portlet:namespace />month"
                         type="text"
                         value='<%=ajaxSearchDisplayContext.getString("monthSelected") %>'
