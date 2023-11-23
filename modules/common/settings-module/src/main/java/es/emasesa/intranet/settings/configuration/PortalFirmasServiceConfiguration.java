@@ -27,5 +27,61 @@ public interface PortalFirmasServiceConfiguration {
             required = false
     )
     String posicionIdConsejeroDelegado();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "direccionResponsableId",
+            required = false
+    )
+    String direccionResponsableId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "subdireccionResponsableId",
+            required = false
+    )
+    String subdireccionResponsableId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "divisionResponsableId",
+            required = false
+    )
+    String divisionResponsableId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "dptoResponsableId",
+            required = false
+    )
+    String dptoResponsableId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "unidadResponsableId",
+            required = false
+    )
+    String unidadResponsableId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "seccionResponsableId",
+            required = false
+    )
+    String seccionResponsableId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "subdirectorRRHHId",
+            required = false
+    )
+    String subdirectorRRHHId();
+	
+	@Meta.AD(
+            deflt = "",
+            name = "directorRRHHId",
+            required = false
+    )
+    String directorRRHHId();
 
 }

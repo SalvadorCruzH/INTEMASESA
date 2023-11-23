@@ -25,6 +25,38 @@ public class PortalFirmasServicesSettings {
     public String posicionIdConsejeroDelegado() {
         return configuration.posicionIdConsejeroDelegado();
     }
+    
+    public String direccionResponsableId() {
+        return configuration.direccionResponsableId();
+    }
+    
+    public String subdireccionResponsableId() {
+        return configuration.subdireccionResponsableId();
+    }
+    
+    public String divisionResponsableId() {
+        return configuration.divisionResponsableId();
+    }
+    
+    public String dptoResponsableId() {
+        return configuration.dptoResponsableId();
+    }
+    
+    public String unidadResponsableId() {
+        return configuration.unidadResponsableId();
+    }
+    
+    public String seccionResponsableId() {
+        return configuration.seccionResponsableId();
+    }
+    
+    public String subdirectorRRHHId() {
+        return configuration.subdirectorRRHHId();
+    }
+    
+    public String directorRRHHId() {
+        return configuration.directorRRHHId();
+    }
 
     @Activate
     @Modified
