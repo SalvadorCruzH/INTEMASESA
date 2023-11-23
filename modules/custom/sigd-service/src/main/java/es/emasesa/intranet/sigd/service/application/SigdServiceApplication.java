@@ -80,9 +80,9 @@ public class SigdServiceApplication{
 			 response.close();
 			 httpClient.close();
 		} catch (IOException e) {
-			LoggerUtil.error(LOG, "Error al ejecutar la llamada get del servicio de crear documento origen de SIGD: " + e.toString());
+			LoggerUtil.error(LOG, "Error al ejecutar la llamada get del servicio de crear documento origen de SIGD: ", e);
 		} catch (URISyntaxException e) {
-			LoggerUtil.error(LOG, "Error al construir la URI con parámetros en el servicio de crear documento origen de SIGD: " + e.toString());
+			LoggerUtil.error(LOG, "Error al construir la URI con parámetros en el servicio de crear documento origen de SIGD: ", e);
 		}
 		return responseBody;
 	}
@@ -129,9 +129,9 @@ public class SigdServiceApplication{
 	        response.close();
 			httpClient.close();
 		} catch (IOException e) {
-			  LoggerUtil.error(LOG, "Error al ejecutar la llamada post del servicio de insertar documento en SIGD: " + e.toString());
+			  LoggerUtil.error(LOG, "Error al ejecutar la llamada post del servicio de insertar documento en SIGD: ", e);
 		} catch (PortalException e) {
-			 LoggerUtil.error(LOG, "Error al ejecutar la llamada post del servicio de insertar documento en SIGD: " + e.toString());
+			 LoggerUtil.error(LOG, "Error al ejecutar la llamada post del servicio de insertar documento en SIGD: ", e);
 		}
 		
 		return idElemento;
@@ -191,9 +191,9 @@ public class SigdServiceApplication{
 			 httpClient.close();
         
 		} catch (URISyntaxException e) {
-			 LoggerUtil.error(LOG, "Error al intentar construir la URI en el servicio de obtener Elemento en SIGD: " + e.toString());
+			 LoggerUtil.error(LOG, "Error al intentar construir la URI en el servicio de obtener Elemento en SIGD: ", e);
 		} catch (IOException e) {
-			 LoggerUtil.error(LOG, "Error en el servicio de obtener Elemento en SIGD: " + e.toString());
+			 LoggerUtil.error(LOG, "Error en el servicio de obtener Elemento en SIGD: ", e);
 		}
 	}
 	
@@ -319,7 +319,7 @@ public class SigdServiceApplication{
 	         LoggerUtil.debug(LOG, "Obtenidos metadatos: "+  camposArray.toString());
 
 	        } catch (JSONException e) {
-	        	LoggerUtil.error(LOG, "Error al crear el objecto JSON a partir de la respeusta del servicio de crearDocumentoOrigen: " + e.toString());
+	        	LoggerUtil.error(LOG, "Error al crear el objecto JSON a partir de la respeusta del servicio de crearDocumentoOrigen: ", e);
 	        }
 		 return camposArray;
 	 }
@@ -359,7 +359,7 @@ public class SigdServiceApplication{
 	       }
 	       LoggerUtil.debug(LOG, "Creado el objeto JSON con los metadatos: " + metadatosResult);
 	   } catch (Exception e) {
-	       LoggerUtil.error(LOG, "Error al crear el objecto JSON a partir del string de la configuracion: " + metadatosCondifguracion + e.toString());
+	       LoggerUtil.error(LOG, "Error al crear el objecto JSON a partir del string de la configuracion: " + metadatosCondifguracion, e);
 	   }
 	   return metadatosResult;
 	}
@@ -421,7 +421,7 @@ public class SigdServiceApplication{
 		        jsonObject = JSONFactoryUtil.createJSONObject(formConfiguration);
 		        LoggerUtil.debug(LOG, "Creado el JSONObject a partir del String obtenido en la configuracion: " + jsonObject.toString());
 		    } catch (Exception e) {
-		        LoggerUtil.error(LOG, "Error al ejecutar la llamada get del servicio de crear documento origen de SIGD: " + e.toString());
+		        LoggerUtil.error(LOG, "Error al ejecutar la llamada get del servicio de crear documento origen de SIGD: ", e);
 		    }
 		    return jsonObject;
 		}
