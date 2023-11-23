@@ -36,9 +36,11 @@ public class JornadaDiariaFormImpl implements AjaxSearchForm {
     private final static Log LOG = LoggerUtil.getLog(JornadaDiariaFormImpl.class);
 
     public static final String LAST_MONTH_COUNT = "lastMonthsCount";
+    public static final String RESUMEN_ANUAL_URL = "resumenAnualUrl";
 
     static {
         DFLT_PROPERTIES.put(LAST_MONTH_COUNT, "12");
+        DFLT_PROPERTIES.put(RESUMEN_ANUAL_URL, "/resumen-anual");
     }
 
     @Override
@@ -59,6 +61,9 @@ public class JornadaDiariaFormImpl implements AjaxSearchForm {
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
 
         LocalDate localDate = LocalDate.now();
+        request.setAttribute("year", localDate.getYear());
+        request.setAttribute("resumenAnualUrl",ajaxSearchDisplayContext.getConfig().getOrDefault(RESUMEN_ANUAL_URL,"/resumen-anual"));
+
         String lastMonthCountstr = ajaxSearchDisplayContext.getConfig().getOrDefault(LAST_MONTH_COUNT,"12");
         int lastMonthCount = Integer.parseInt(lastMonthCountstr);
         JSONArray months = JSONFactoryUtil.createJSONArray();
@@ -76,7 +81,7 @@ public class JornadaDiariaFormImpl implements AjaxSearchForm {
 
         }
 
-
+        request.setAttribute("monthSelected", ajaxSearchDisplayContext.getString("monthSelected"));
         request.setAttribute("months", months);
 
         return VIEW;

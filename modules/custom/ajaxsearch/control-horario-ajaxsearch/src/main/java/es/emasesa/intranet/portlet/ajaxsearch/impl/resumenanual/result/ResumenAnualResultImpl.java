@@ -3,6 +3,9 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.result;
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.base.util.CustomDateUtil;
 import es.emasesa.intranet.service.util.SapServicesUtil;
+
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.portlet.PortletRequest;
@@ -87,16 +90,17 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 			final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
-				String year = ajaxSearchDisplayContext.getString("year");
+            Calendar calendar = Calendar.getInstance();
+            String year = ajaxSearchDisplayContext.getString("year", calendar.get(Calendar.YEAR)+"");
 
-				totalItems = performSearchAndParse(request,
-					response,
-					ajaxSearchDisplayContext,
-						year,
-					currentPage,
-					pageSize,
-					disablePagination,
-					jsonArray);
+            totalItems = performSearchAndParse(request,
+                response,
+                ajaxSearchDisplayContext,
+                    year,
+                currentPage,
+                pageSize,
+                disablePagination,
+                jsonArray);
 
 			final int totalPages = (((int) totalItems + pageSize - 1) / pageSize);
 			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(
@@ -171,11 +175,37 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 				}
 
 			});
+
+			jsonArray.getJSONObject(0).put("vacacionesYear",getVacaciones(themeDisplay, year));
+			jsonArray.getJSONObject(0).put("vacacionesLastYear",getVacaciones(themeDisplay, String.valueOf(Integer.parseInt(year)-1)));
 		}
 		return totalItems;
 	}
 
+	private JSONArray getVacaciones(ThemeDisplay themeDisplay, String year) {
 
+		String cacheKeyYear = "resumenAnual"+year+themeDisplay.getUser().getUserId();
+		JSONArray vacaciones = JSONFactoryUtil.createJSONArray();
+		Object objectYear = _cache.get(cacheKeyYear);
+		JSONArray arrayYear;
+		if(Validator.isNotNull(objectYear) && ((JSONArray) objectYear).length()>0){
+			arrayYear = (JSONArray) objectYear;
+
+		}else{
+
+			arrayYear = _sapServicesUtil.getResumenAnual(themeDisplay.getUser(),year);
+			_cache.put(cacheKeyYear,arrayYear,86400);
+
+		}
+		JSONObject vacacionesYear = JSONFactoryUtil.createJSONObject();
+		if (arrayYear.length() > 0) {
+			vacacionesYear.put("computoConFuturo", arrayYear.getJSONObject(0).getString("computoConFuturo"));
+			vacacionesYear.put("computoSinFuturo", arrayYear.getJSONObject(0).getString("computoSinFuturo"));
+			vacacionesYear.put("contingenteVacaciones", arrayYear.getJSONObject(0).getString("contingenteVacaciones"));
+			vacaciones.put(vacacionesYear);
+		}
+		return vacaciones;
+	}
 	private static final String VIEW = "/views/resumenanual/results.jsp";
 
 	@Override

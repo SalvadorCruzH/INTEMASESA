@@ -15,6 +15,9 @@
                         class="m-searchAjax__input select"
                         id="month"
                     >
+                   <option value='resumenanual'>
+                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanual"></liferay-ui:message>
+                    </option>
                     <c:forEach begin="0" end="${months.length() -1}" var="index">
                            <option value='${months.getJSONObject(index).getString("value")}' ${months.getJSONObject(index).getString("value") == monthSelected ? "selected" : ""}>
                              ${months.getJSONObject(index).getString("label")}
@@ -56,7 +59,11 @@
     // search
     $("#m-searchAjax__button").on("click", function (e){
         e.preventDefault();
-        ajaxSearchFeature.doSearch();
+        if($("#month").val() == 'resumenanual'){
+            window.location.href = "${resumenAnualUrl}?year="+new Date().getFullYear();
+        } else {
+            ajaxSearchFeature.doSearch(true, false);
+        }
     });
 
     $("#m-searchAjax__clean__button").on("click", function (e){
@@ -67,8 +74,12 @@
 
     $("#m-searchAjax__button").on("keypress", function (e){
         if(e.which == 13) {
-            event.preventDefault();
-            ajaxSearchFeature.doSearch(true, false);
+            e.preventDefault();
+            if($("#month").val() == 'resumenanual'){
+                window.location.href = "${resumenAnualUrl}?year="+new Date().getFullYear();
+            } else {
+                ajaxSearchFeature.doSearch(true, false);
+            }
         }
     });
 

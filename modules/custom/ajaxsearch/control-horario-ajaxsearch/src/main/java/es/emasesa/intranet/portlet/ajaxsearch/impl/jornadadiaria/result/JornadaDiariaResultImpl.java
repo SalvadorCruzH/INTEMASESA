@@ -24,6 +24,7 @@ import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import es.emasesa.intranet.service.util.SapServicesUtil;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjuster;
@@ -90,14 +91,16 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
 			String monthSelected = ajaxSearchDisplayContext.getString(MONTH_SELECTED);
-			totalItems = performSearchAndParse(request,
-					response,
-					ajaxSearchDisplayContext,
-					monthSelected,
-					currentPage,
-					pageSize,
-					disablePagination,
-					jsonArray);
+			if(!monthSelected.equals("resumenanual")){
+				totalItems = performSearchAndParse(request,
+						response,
+						ajaxSearchDisplayContext,
+						monthSelected,
+						currentPage,
+						pageSize,
+						disablePagination,
+						jsonArray);
+			}
 
 			final int totalPages = (((int) totalItems + pageSize - 1) / pageSize);
 			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(
@@ -182,8 +185,38 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 				}
 
 			});
+
+			Year year = Year.parse(monthSelected, DateTimeFormatter.ofPattern("MMyyyy"));
+
+			jsonArray.getJSONObject(0).put("vacacionesYear",getVacaciones(themeDisplay, String.valueOf(year)));
+			jsonArray.getJSONObject(0).put("vacacionesLastYear",getVacaciones(themeDisplay, String.valueOf(year.minusYears(1))));
 		}
 		return totalItems;
+	}
+
+	private JSONObject getVacaciones(ThemeDisplay themeDisplay, String year) {
+
+		String cacheKeyYear = "resumenAnual"+year+themeDisplay.getUser().getUserId();
+		JSONArray vacaciones = JSONFactoryUtil.createJSONArray();
+		Object objectYear = _cache.get(cacheKeyYear);
+		JSONArray arrayYear;
+		if(Validator.isNotNull(objectYear) && ((JSONArray) objectYear).length()>0){
+			arrayYear = (JSONArray) objectYear;
+
+		}else{
+
+			arrayYear = _sapServicesUtil.getResumenAnual(themeDisplay.getUser(),year);
+			_cache.put(cacheKeyYear,arrayYear,86400);
+
+		}
+		JSONObject vacacionesYear = JSONFactoryUtil.createJSONObject();
+		if (arrayYear.length() > 0) {
+			//vacacionesYear = arrayYear.getJSONObject(0);
+			vacacionesYear.put("computoConFuturo", arrayYear.getJSONObject(0).getString("computoConFuturo"));
+			vacacionesYear.put("computoSinFuturo", arrayYear.getJSONObject(0).getString("computoSinFuturo"));
+			vacacionesYear.put("contingenteVacaciones", arrayYear.getJSONObject(0).getString("contingenteVacaciones"));
+		}
+		return vacacionesYear;
 	}
 
 	private String getDatum(ThemeDisplay themeDisplay, JSONObject j) throws java.text.ParseException {
@@ -191,6 +224,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 				j.getString("DATUM"), "yyyy-MM-dd", Calendar.DAY_OF_WEEK,Calendar.SHORT) + StringPool.SPACE+
 				_customDateUtil.getDateNumber(j.getString("DATUM"), "yyyy-MM-dd");
 	}
+
 
 
 	private static final String VIEW = "/views/jornadadiaria/results.jsp";

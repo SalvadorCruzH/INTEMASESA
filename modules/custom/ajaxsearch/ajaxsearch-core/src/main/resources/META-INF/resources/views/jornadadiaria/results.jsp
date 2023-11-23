@@ -7,6 +7,44 @@
         </div>
 
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
+            <div id="wrapper-resum-lastyear" class="resum">
+                <span>
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
+                </span>
+                <span class="m-searchAjax pdt-disfrutar">
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                    <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                </span>
+
+                <span class="m-searchAjax sin-planificar">
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                    <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                </span>
+
+                <span class="m-searchAjax vacaciones">
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                    <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                </span>
+            </div>
+            <div id="wrapper-resum" class="resum">
+                <span>
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
+                </span>
+                <span class="m-searchAjax pdt-disfrutar">
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                    <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                </span>
+
+                <span class="m-searchAjax sin-planificar">
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                    <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                </span>
+
+                <span class="m-searchAjax vacaciones">
+                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                    <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                </span>
+            </div>
              <div class="ema-table-wrapper">
             <table id="table-id" class="ema-table">
                 <caption class="sr-only">Sumario de la tabla</caption>
@@ -87,6 +125,29 @@ ajaxSearchGlobalConfig = {
     _preAppendItem : function (newItem, jsonItem) {return newItem},
     _postdrawItem : function (jsonItem) {},
     _predrawAll : function (payload) {},
-    _postdrawAll : function (payload) {}
+    _postdrawAll : function (payload) {
+
+        if(payload.totalItems > 0){
+            let item = payload.content[0];
+            if(item.vacacionesYear) {
+                document.getElementById("pdtDisfrutar").value = item.vacacionesYear.computoConFuturo;
+                document.getElementById("sinPlanificar").value = item.vacacionesYear.computoSinFuturo;
+                document.getElementById("vacaciones").value = item.vacacionesYear.contingenteVacaciones;
+            } else {
+                document.getElementById("wrapper-resum").classList.add("d-none");
+            }
+            //if january, show last year
+            let currentMonth = new Date().getMonth();
+            if(item.vacacionesLastYear && currentMonth == 0) {
+                document.getElementById("pdtDisfrutarLastYear").value = item.vacacionesLastYear.computoConFuturo;
+                document.getElementById("sinPlanificarLastYear").value = item.vacacionesLastYear.computoSinFuturo;
+                document.getElementById("vacacionesLastYear").value = item.vacacionesLastYear.contingenteVacaciones;
+            } else {
+                document.getElementById("wrapper-resum-lastyear").classList.add("d-none");
+            }
+
+        }
+
+    }
 }
 </script>
