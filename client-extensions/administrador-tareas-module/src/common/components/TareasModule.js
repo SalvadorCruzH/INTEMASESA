@@ -34,7 +34,7 @@ class TareasModule extends React.Component {
         this.state.tareas =[];
         this.setState({loading:true});
             setTimeout(() => {
-                EmasesaApi.getConfiguration(Liferay.ThemeDisplay.getCompanyId(), this.loadConfiguration, this.errorHandler)
+                EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
                 TareasApi.getWorkflowTasksMe(
                     Liferay.ThemeDisplay.getScopeGroupId(),
                     this.setTasks,
@@ -60,7 +60,8 @@ class TareasModule extends React.Component {
     }
 
     addTareaExtraData = (tarea) =>{
-            let objectMapping = OBJECT_MAPPING[tarea.objectReviewed.assetType];
+            var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+            let objectMapping = jsonObjectMapping[tarea.objectReviewed.assetType];
             if(objectMapping){
                 let urlObject = objectMapping.url;
                 let objectId = tarea.objectReviewed.id;
@@ -69,7 +70,7 @@ class TareasModule extends React.Component {
                     let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
                     if (client) {
                         let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
-                        let url = urlObject+"/"+objectId+"?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido%2CexternalReferenceCode%2CestadoObjeto";
+                        let url = oauthUserAgent.URL_DEFAULT+"/"+urlObject+"/"+objectId+"?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido%2CexternalReferenceCode%2CestadoObjeto";
 
                         const config = {
                             method: 'GET',
@@ -312,7 +313,7 @@ class TareasModule extends React.Component {
                                                 <td>{tarea.dateCreated}</td>
                                                 <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
                                                 <td>{tarea.objectData.estadoObjeto.name}</td>
-                                                <td><Actions tarea={tarea} refresh={this.loadDependencies} /></td>
+                                                <td><Actions tarea={tarea} configuration={this.state.configuration} refresh={this.loadDependencies} /></td>
                                             </tr>
                                           </>
                                           )

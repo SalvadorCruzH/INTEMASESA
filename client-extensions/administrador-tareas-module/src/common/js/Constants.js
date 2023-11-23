@@ -1,5 +1,5 @@
 export const oauthUserAgent = {
-    CLIENT_ID: 'id-4f91d5c1-fbbe-42f9-045b-9a73f645624',
+    CLIENT_ID: 'id-ab4b5594-7e2e-4bdb-bd47-f9c4c3175111',
     URL_DEFAULT: '/o/c',
     URL_DEFAULT_NATIVE: '/o'
 }
@@ -13,15 +13,6 @@ export const WORKFLOWTASKS = {
  URL_POST_CHANGE_TRANSITION: `${oauthUserAgent.URL_DEFAULT_NATIVE}/headless-admin-workflow/v1.0/workflow-tasks/--workflowTaskId--/change-transition`,
  URL_DEFAULT: `${oauthUserAgent.URL_DEFAULT}`
 
-}
-
-export const OBJECT_MAPPING = {
-    Compatibilidad : { url: `${oauthUserAgent.URL_DEFAULT}/compatibilidads`,id:39213},
-    Excedencia : { url: `${oauthUserAgent.URL_DEFAULT}/excedenciases`,id:35707},
-    Flexibilidad : { url: `${oauthUserAgent.URL_DEFAULT}/flexibilidads`,id:38910},
-    Licencias : { url: `${oauthUserAgent.URL_DEFAULT}/licenciases`,id:34848},
-    Reduccion : { url: `${oauthUserAgent.URL_DEFAULT}/reduccions`,id:36560},
-    Turnos : { url: `${oauthUserAgent.URL_DEFAULT}/turnoses`,id:34910},
 }
 
 export const OBJECT_CONSTANTS = {

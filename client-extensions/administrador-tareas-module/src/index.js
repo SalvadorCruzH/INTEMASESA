@@ -24,6 +24,9 @@ class WebComponent extends HTMLElement {
             this
         );
     }
+    disconnectedCallback() {
+           this.root.unmount();
+        }
 }
 
 const ELEMENT_ID = 'administrador-tareas-module';

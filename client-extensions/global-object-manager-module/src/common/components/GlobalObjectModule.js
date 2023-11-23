@@ -23,8 +23,10 @@ class GlobalObjectModule extends React.Component {
       var searchParams = new URLSearchParams(window.location.search);
       var mode = searchParams.get("mode");
 
-      if(!mode && mode>3){
+      if(!mode || mode == null){
          mode = 1;
+      }else if(mode>3){
+        mode = 1;
       }
 
       var objectEntryId;
@@ -48,6 +50,8 @@ class GlobalObjectModule extends React.Component {
 
         if(this.state.mode==1){
             document.querySelectorAll(".form-control").forEach(((element) => element.readOnly = true));
+            document.querySelector(".lfr-layout-structure-item-inputs-submit-button").classList.add("d-none");
+            document.querySelectorAll(".btn-secondary").disabled = true;
 
         }else if(this.state.mode==2){
             var input = document.createElement("input");
