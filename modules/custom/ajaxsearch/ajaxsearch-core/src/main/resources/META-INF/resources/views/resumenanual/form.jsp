@@ -20,7 +20,7 @@
                     </option>
                     <c:forEach begin="0" end="${subordinados.length() -1}" var="index">
                             <option value='${subordinados.getJSONObject(index).getString("pernr")}' ${subordinados.getJSONObject(index).getString("pernr") == usuarioSelected ? "selected" : ""}>
-                                ${subordinados.getJSONObject(index).getString("pernr")} - ${subordinados.getJSONObject(index).getString("nombre")} ${subordinados.getJSONObject(index).getString("appellido1")} ${subordinados.getJSONObject(index).getString("appellido2")}
+                                ${subordinados.getJSONObject(index).getString("pernr")} - ${subordinados.getJSONObject(index).getString("nombre")} ${subordinados.getJSONObject(index).getString("apellido1")} ${subordinados.getJSONObject(index).getString("apellido2")}
                             </option>
                     </c:forEach>
 
