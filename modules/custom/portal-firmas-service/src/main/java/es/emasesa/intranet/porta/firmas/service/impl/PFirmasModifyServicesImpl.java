@@ -120,7 +120,7 @@ public class PFirmasModifyServicesImpl implements PFirmasModifyServices {
             action.setState(stateObj);
             action.setType(objectFactory.createActionType(TYPE_WEB));
             String urlCallback = actionsJson.getString(state);
-            urlCallback.replaceAll("--workflowTaskId--",workflowTaskId);
+            urlCallback = urlCallback.replaceAll("--workflowTaskId--",workflowTaskId);
             action.setAction(urlCallback);
             actionList.getAction().add(action);
             noticeList.getState().add(stateObj);
