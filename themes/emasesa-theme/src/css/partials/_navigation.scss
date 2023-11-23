@@ -116,19 +116,26 @@
         }
         &__innerWrapper {
             display: flex;
-            justify-content: space-between;
+            .i-wrapperRight {
+                * {
+                    white-space: nowrap;
+                }
+                > .btn {
+                    width: 100%;
+                }
+            }
 
         }
         &__submenuUl {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             column-gap: 2rem;
-
+            padding-left: 0;
+            width: 100%;
         }
         &__submenuLi {
-            margin-bottom: m-rem(10px);
             border-right: 1px solid $color-light-grey;
-            padding-right: 2rem;
+            padding-right: m-rem(15px);
             &:nth-of-type(3n) {
                 border-right: none;
             }
@@ -136,7 +143,7 @@
         }
         &__link2 {
             @include font_base-black;
-            font-size: m-rem(18px);
+            font-size: m-rem(16px);
             color: $color-text;
             &:hover {
                 color: $color-text;
@@ -144,7 +151,7 @@
         }
         &__link2Level {
             @include font_base;
-            font-size: 1rem;
+            font-size: .95rem;
             color: $color-text;
             &:hover {
                 color: $color-text;
