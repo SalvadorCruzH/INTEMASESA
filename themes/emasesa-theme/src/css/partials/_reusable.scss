@@ -477,4 +477,13 @@
       }
     }
   }
+
+  &--x1 {
+    .ema-wrapper__item {
+      flex: 1;
+    }
+    .hola-portlet__user__inner {
+      margin-bottom: 30px;
+    }
+  }
 }

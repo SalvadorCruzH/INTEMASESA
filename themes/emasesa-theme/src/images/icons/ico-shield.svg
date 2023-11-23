@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3c63ad;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Capa_1-2" data-name="Capa 1">
+    <g>
+      <circle id="Ellipse_87" data-name="Ellipse 87" class="cls-1" cx="17" cy="17" r="17"/>
+      <path id="shield-halved" class="cls-2" d="m17,8.56c.15,0,.3.04.44.1l6.25,2.65c.77.32,1.27,1.07,1.27,1.9-.02,3.29-1.37,9.31-7.08,12.05-.55.27-1.2.27-1.75,0-5.72-2.74-7.07-8.76-7.09-12.05,0-.83.5-1.58,1.27-1.9l6.25-2.64c.14-.06.29-.1.44-.1Zm0,2.22v12.54c4.58-2.22,5.81-7.12,5.84-10.06l-5.84-2.47Z"/>
+    </g>
+  </g>
+</svg>
