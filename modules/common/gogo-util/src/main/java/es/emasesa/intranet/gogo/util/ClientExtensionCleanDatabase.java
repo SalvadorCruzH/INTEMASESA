@@ -28,10 +28,12 @@ public class ClientExtensionCleanDatabase {
     public void doCleanClientExtensionFromDatabase() {
 
         LOG.info("[I] PORTAL_INITIALIZED");
-        boolean result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~administrador-tareas-module' ");
+        boolean result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~administrador-tareas-module'");
         LOG.info("Borrado de Module " + result);
-        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-module' ");
+        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-module'");
         LOG.info("Borrado de Global " + result);
+        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-object-module'");
+        LOG.info("Borrado de Global Objetos " + result);
         LOG.info("[E] PORTAL_INITIALIZED");
     }
 
