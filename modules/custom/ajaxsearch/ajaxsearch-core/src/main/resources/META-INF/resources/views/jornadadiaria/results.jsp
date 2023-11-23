@@ -126,6 +126,11 @@ ajaxSearchGlobalConfig = {
     _postdrawItem : function (jsonItem) {},
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
+        
+        if($("#month").find(":selected").length == 0){
+            //get second option and select it
+            $("#month option:eq(1)").prop('selected', true);
+        }
 
         if(payload.totalItems > 0){
             let item = payload.content[0];
