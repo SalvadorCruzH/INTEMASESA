@@ -81,7 +81,7 @@ public class PortalFirmasUtil {
 	            LoggerUtil.debug(LOG, "Docuemnto enviado a portal firmas." );
 	        }
     	} catch (JSONException | PfirmaException e) {
-    		LoggerUtil.error(LOG, "Error al enviar a portal firmas: " + e.toString());
+    		LoggerUtil.error(LOG, "Error al enviar a portal firmas: ", e);
 		}
     }
     
@@ -113,7 +113,7 @@ public class PortalFirmasUtil {
 		    	LoggerUtil.debug(LOG, "No se ha encontrado ningun usuario en liferay con el screem name: "  + screemNameConsejeroDelegado);
 		    }
     	} catch (PortalException e) {
-    		LoggerUtil.error(LOG, "Error al recuperar el NIF del Consejero Delegado para el envío de portafirmas: " + e.toString());
+    		LoggerUtil.error(LOG, "Error al recuperar el NIF del Consejero Delegado para el envío de portafirmas: ", e);
 		}
     	return nifs;
      }

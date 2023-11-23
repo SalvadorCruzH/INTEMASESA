@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -35,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
         service = Servlet.class
 )
 public class PortalFirmasFirmadoServlet extends HttpServlet {
-    private static final Log LOG = LogFactoryUtil.getLog(PFirmasModifyServicesImpl.class);
+    private static final Log LOG = LogFactoryUtil.getLog(PortalFirmasFirmadoServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String status = ParamUtil.getString(req, "status");
@@ -46,6 +47,12 @@ public class PortalFirmasFirmadoServlet extends HttpServlet {
         try {
             WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
                     workflowTaskId);
+
+            if(workflowTask.isCompleted()){
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                ServletResponseUtil.write(resp,"Tarea ya completada");
+            }
+
             Map<String, Serializable> workflowContext = getWorkFlowContext(workflowTask,companyId);
             List<String> transitions = getNextTransitions(workflowTask);
             String nextTransition;
@@ -63,11 +70,16 @@ public class PortalFirmasFirmadoServlet extends HttpServlet {
             _workflowTaskManager.completeWorkflowTask(companyId, workflowTask.getAssigneeUserId(),
                     workflowTask.getWorkflowTaskId(), nextTransition, "", workflowContext);
         } catch (WorkflowException e) {
+
             LoggerUtil.error(LOG,e.getMessage());
             LoggerUtil.debug(LOG,e);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletResponseUtil.write(resp,e.getMessage());
         } catch (PortalException e) {
             LoggerUtil.error(LOG,e.getMessage());
             LoggerUtil.debug(LOG,e);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletResponseUtil.write(resp,e.getMessage());
         }
 
         super.doGet(req, resp);
