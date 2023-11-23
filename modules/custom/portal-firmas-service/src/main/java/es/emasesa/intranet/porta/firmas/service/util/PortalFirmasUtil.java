@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class PortalFirmasUtil {
      * @employeeType kaleoInstanceToken
      * 
      */
-    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoInstanceToken kaleoInstanceToken){
+    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoTaskInstanceToken kaleoTaskInstanceToken){
     	try {    		
 	        String subject; // NOMBRE OBJETO + NOMBRE USUARIO
 	        String reference; // NOMBRE OBJETO
@@ -65,8 +65,8 @@ public class PortalFirmasUtil {
 	            remitterNIF = GetterUtil.getString(values.get(EmasesaConstants.EMASESA_EXPANDO_NIF));
 	            nifs = getNifConsjeroDelegado(workflowContext);
 	            
-	            if(Validator.isNotNull(kaleoInstanceToken.getKaleoInstanceTokenId())) {
-	            	workflowTaskId =  String.valueOf(kaleoInstanceToken.getKaleoInstanceTokenId());
+	            if(Validator.isNotNull(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId())) {
+	            	workflowTaskId =  String.valueOf(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 	            }
 	            
 	            LoggerUtil.debug(LOG, "subject: " + subject);
