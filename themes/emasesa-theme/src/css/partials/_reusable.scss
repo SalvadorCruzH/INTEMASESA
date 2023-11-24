@@ -484,6 +484,9 @@
     }
     .hola-portlet__user__inner {
       margin-bottom: 30px;
+      background: transparent url('@theme_image_path@/decorative/background-comunicacion.svg') calc(100% - 15px) 15px no-repeat;
+      background-size: 325px;
+      background-position-y: -75px;
     }
   }
 }
