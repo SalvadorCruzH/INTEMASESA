@@ -134,7 +134,8 @@
 
   .i-wrapperBR {
     border-radius: 30px;
-    padding: 26px 30px 42px;
+    padding: 15px 20px 15px;
+    margin-bottom: auto;
     &--blue {
       background-color: $color-light-blue;
       color: $color-text;
@@ -474,6 +475,18 @@
           width: 25%;
         }
       }
+    }
+  }
+
+  &--x1 {
+    .ema-wrapper__item {
+      flex: 1;
+    }
+    .hola-portlet__user__inner {
+      margin-bottom: 30px;
+      background: transparent url('@theme_image_path@/decorative/background-comunicacion.svg') calc(100% - 15px) 15px no-repeat;
+      background-size: 325px;
+      background-position-y: -75px;
     }
   }
 }

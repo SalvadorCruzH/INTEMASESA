@@ -126,6 +126,11 @@ ajaxSearchGlobalConfig = {
     _postdrawItem : function (jsonItem) {},
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
+        
+        if($("#month").find(":selected").length == 0){
+            //get second option and select it
+            $("#month option:eq(1)").prop('selected', true);
+        }
 
         if(payload.totalItems > 0){
             let item = payload.content[0];
@@ -138,7 +143,7 @@ ajaxSearchGlobalConfig = {
             }
             //if january, show last year
             let currentMonth = new Date().getMonth();
-            if(item.vacacionesLastYear && currentMonth == 0) {
+            if(item.vacacionesLastYear && currentMonth == 10) {
                 document.getElementById("pdtDisfrutarLastYear").value = item.vacacionesLastYear.computoConFuturo;
                 document.getElementById("sinPlanificarLastYear").value = item.vacacionesLastYear.computoSinFuturo;
                 document.getElementById("vacacionesLastYear").value = item.vacacionesLastYear.contingenteVacaciones;
