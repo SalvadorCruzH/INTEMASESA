@@ -5,8 +5,42 @@
         <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message><i class="fa-solid fa-chevron-down fa-2xs" aria-hidden="true"></i>
     </button>
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
+        <c:if test="${role == 'responsable'}">
+            <div class="ema-ajaxsearch-filtros__category" id="buscador-subordinado-select">
+                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectSubordinado"></liferay-ui:message></label>
+                <select name="<portlet:namespace />usuario"
+                        type="text"
+                        value='<%=ajaxSearchDisplayContext.getString("usuarioSelected") %>'
+                        data-as-id="usuarioSelected"
+                        class="m-searchAjax__input select"
+                        id="usuario"
+                    >
+                    <option value=''>
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.selecciona-subordinado"></liferay-ui:message>
+                    </option>
+                    <c:forEach begin="0" end="${subordinados.length() -1}" var="index">
+                            <option value='${subordinados.getJSONObject(index).getString("pernr")}' ${subordinados.getJSONObject(index).getString("pernr") == usuarioSelected ? "selected" : ""}>
+                                ${subordinados.getJSONObject(index).getString("pernr")} - ${subordinados.getJSONObject(index).getString("nombre")} ${subordinados.getJSONObject(index).getString("apellido1")} ${subordinados.getJSONObject(index).getString("apellido2")}
+                            </option>
+                    </c:forEach>
 
-    <div class="ema-ajaxsearch-filtros__category d-none" id="buscador-year-input">
+                </select>
+            </div>
+        </c:if>
+        <c:if test="${role == 'administradorRRHH'}">
+            <div class="ema-ajaxsearch-filtros__category" id="buscador-usuario-input">
+                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.inputPERNR"></liferay-ui:message></label>
+                <input  name="<portlet:namespace />usuario"
+                        data-as-id="usuarioSelected"
+                        class="m-searchAjax__input select"
+                        id="usuario"
+                        type="text"
+                        value='<%=ajaxSearchDisplayContext.getString("usuarioSelected") %>'
+                    />
+            </div>
+        </c:if>
+
+        <div class="ema-ajaxsearch-filtros__category d-none" id="buscador-year-input">
             <div class="ema-ajaxsearch-filtros__category">
                 <label><liferay-ui:message key="year"></liferay-ui:message></label>
                 <input  name="<portlet:namespace />year"
@@ -20,8 +54,8 @@
                     value='<%=ajaxSearchDisplayContext.getString("year") %>'
                 />
             </div>
-    </div>
-    <div class="ema-ajaxsearch-filtros__category" id="buscador-categoria-select">
+        </div>  
+        <div class="ema-ajaxsearch-filtros__category" id="buscador-categoria-select">
                 <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectOption"></liferay-ui:message></label>
                 <select name="<portlet:namespace />month"
                         type="text"
@@ -75,7 +109,7 @@
     $("#m-searchAjax__button").on("click", function (e){
         e.preventDefault();
         if($("#month").val() != 'resumenanual'){
-            window.location.href = "${jornadaDiariaUrl}?monthSelected=" + $("#month").val();
+            window.location.href = "${jornadaDiariaUrl}?usuarioSelected"+$("#usuario").val()+"&monthSelected=" + $("#month").val();
         } else {
             ajaxSearchFeature.doSearch(true, false);
         }
@@ -91,7 +125,7 @@
         if(e.which == 13) {
             e.preventDefault();
             if($("#month").val() != 'resumenanual'){
-                window.location.href = "${jornadaDiariaUrl}?monthSelected=" + $("#month").val();
+                window.location.href = "${jornadaDiariaUrl}?usuarioSelected"+$("#usuario").val()+"&monthSelected=" + $("#month").val();
             } else {
                 ajaxSearchFeature.doSearch(true, false);
             }

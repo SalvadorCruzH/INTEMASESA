@@ -1,45 +1,37 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.result;
 
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.base.util.CustomDateUtil;
 import es.emasesa.intranet.service.util.SapServicesUtil;
 
 import java.time.Year;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchJsonModel;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchResult;
 import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
-import es.emasesa.intranet.searchframework.SearchingCommon;
-import es.emasesa.intranet.searchframework.SearchingJournal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.*;
-import com.liferay.portal.kernel.util.GetterUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import es.emasesa.intranet.base.model.AjaxMessage;
-import es.emasesa.intranet.base.util.CustomJournalUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.base.util.XMLDocumentUtil;
 @Component(
         immediate = true,
         property = { },
@@ -93,6 +85,9 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
             Calendar calendar = Calendar.getInstance();
             String year = ajaxSearchDisplayContext.getString("year", calendar.get(Calendar.YEAR)+"");
 
+			if(year.isBlank()){
+				year = String.valueOf(Year.now().getValue());
+			}
             totalItems = performSearchAndParse(request,
                 response,
                 ajaxSearchDisplayContext,
@@ -137,10 +132,22 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 									   final JSONArray jsonArray) throws ParseException, SearchException {
 
 		final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		String cacheKey = "resumenAnual"+year+themeDisplay.getUser().getUserId();
 		JSONArray array;
 		int totalItems = 0;
-		if(Validator.isNotNull(year)){
+
+		String usuario = ajaxSearchDisplayContext.getString("usuarioSelected", StringPool.BLANK);
+		boolean isValidUser;
+		if (usuario.isBlank()){
+			usuario = themeDisplay.getUser().getScreenName();
+			isValidUser = Boolean.TRUE;
+		} else {
+			isValidUser = checkUsuarioSelected(usuario,request,themeDisplay.getUser());
+		}
+
+
+		if(Validator.isNotNull(year) && isValidUser){
+
+			String cacheKey = "resumenAnual"+year+usuario;
 			Object object = _cache.get(cacheKey);
 
 			if(Validator.isNotNull(object) && ((JSONArray) object).length()>0){
@@ -203,6 +210,29 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 			vacacionesYear.put("contingenteVacaciones", arrayYear.getJSONObject(0).getString("contingenteVacaciones"));
 		}
 		return vacacionesYear;
+	}
+
+	private boolean checkUsuarioSelected(String usuarioSelected, PortletRequest request, User user) {
+
+		List<Role> listUserRoles = user.getRoles();
+		for (Role role : listUserRoles) {
+			if(role.getName().equals("administradorRRHH")){
+				request.setAttribute("role", "administradorRRHH");
+				return Boolean.TRUE;
+			}
+		}
+		JSONArray subordinados = _sapServicesUtil.getSubordinados(user, "T");
+		if (subordinados.length() > 0){
+			request.setAttribute("role", "responsable");
+
+			for (int i = 0; i < subordinados.length(); i++) {
+				String subordinado = subordinados.getJSONObject(i).getString("pernr");
+				if(subordinado.equals(usuarioSelected)){
+					return Boolean.TRUE;
+				}
+			}
+		}
+		return Boolean.FALSE;
 	}
 	private static final String VIEW = "/views/resumenanual/results.jsp";
 

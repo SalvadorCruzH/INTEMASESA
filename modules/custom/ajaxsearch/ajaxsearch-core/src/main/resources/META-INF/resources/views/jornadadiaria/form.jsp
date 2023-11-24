@@ -5,27 +5,62 @@
         <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message><i class="fa-solid fa-chevron-down fa-2xs" aria-hidden="true"></i>
     </button>
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
-
-    <div class="ema-ajaxsearch-filtros__category" id="buscador-categoria-select">
-                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectOption"></liferay-ui:message></label>
-                <select name="<portlet:namespace />month"
+        
+        <c:if test="${role == 'responsable'}">
+            <div class="ema-ajaxsearch-filtros__category" id="buscador-subordinado-select">
+                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectSubordinado"></liferay-ui:message></label>
+                <select name="<portlet:namespace />usuario"
                         type="text"
-                        value='<%=ajaxSearchDisplayContext.getString("monthSelected") %>'
-                        data-as-id="monthSelected"
+                        value='<%=ajaxSearchDisplayContext.getString("usuarioSelected") %>'
+                        data-as-id="usuarioSelected"
                         class="m-searchAjax__input select"
-                        id="month"
+                        id="usuario"
                     >
-                   <option value='resumenanual'>
-                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanual"></liferay-ui:message>
+                    <option value=''>
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.selecciona-subordinado"></liferay-ui:message>
                     </option>
-                    <c:forEach begin="0" end="${months.length() -1}" var="index">
-                           <option value='${months.getJSONObject(index).getString("value")}' ${months.getJSONObject(index).getString("value") == monthSelected ? "selected" : ""}>
-                             ${months.getJSONObject(index).getString("label")}
+                    <c:forEach begin="0" end="${subordinados.length() -1}" var="index">
+                            <option value='${subordinados.getJSONObject(index).getString("pernr")}' ${subordinados.getJSONObject(index).getString("pernr") == usuarioSelected ? "selected" : ""}>
+                                ${subordinados.getJSONObject(index).getString("pernr")} - ${subordinados.getJSONObject(index).getString("nombre")} ${subordinados.getJSONObject(index).getString("apellido1")} ${subordinados.getJSONObject(index).getString("apellido2")}
                             </option>
                     </c:forEach>
 
                 </select>
             </div>
+        </c:if>
+        <c:if test="${role == 'administradorRRHH'}">
+            <div class="ema-ajaxsearch-filtros__category" id="buscador-usuario-input">
+                <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.inputPERNR"></liferay-ui:message></label>
+                <input  name="<portlet:namespace />usuario"
+                        data-as-id="usuarioSelected"
+                        class="m-searchAjax__input select"
+                        id="usuario"
+                        type="text"
+                        value='<%=ajaxSearchDisplayContext.getString("usuarioSelected") %>'
+                    />
+            </div>
+        </c:if>
+
+        <div class="ema-ajaxsearch-filtros__category" id="buscador-categoria-select">
+            <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.selectOption"></liferay-ui:message></label>
+            <select name="<portlet:namespace />month"
+                    type="text"
+                    value='<%=ajaxSearchDisplayContext.getString("monthSelected") %>'
+                    data-as-id="monthSelected"
+                    class="m-searchAjax__input select"
+                    id="month"
+                >
+                <option value='resumenanual'>
+                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanual"></liferay-ui:message>
+                </option>
+                <c:forEach begin="0" end="${months.length() -1}" var="index">
+                        <option value='${months.getJSONObject(index).getString("value")}' ${months.getJSONObject(index).getString("value") == monthSelected ? "selected" : ""}>
+                            ${months.getJSONObject(index).getString("label")}
+                        </option>
+                </c:forEach>
+
+            </select>
+        </div>
         <div class="ema-ajaxsearch-filtros__buttons">
             <button type="button"
                     class="btn btn-primary search"
@@ -60,7 +95,7 @@
     $("#m-searchAjax__button").on("click", function (e){
         e.preventDefault();
         if($("#month").val() == 'resumenanual'){
-            window.location.href = "${resumenAnualUrl}?year="+new Date().getFullYear();
+            window.location.href = "${resumenAnualUrl}?usuarioSelected"+$("#usuario").val()+"&year="+new Date().getFullYear();
         } else {
             ajaxSearchFeature.doSearch(true, false);
         }
@@ -76,7 +111,7 @@
         if(e.which == 13) {
             e.preventDefault();
             if($("#month").val() == 'resumenanual'){
-                window.location.href = "${resumenAnualUrl}?year="+new Date().getFullYear();
+                window.location.href = "${resumenAnualUrl}?usuarioSelected"+$("#usuario").val()+"&year="+new Date().getFullYear();
             } else {
                 ajaxSearchFeature.doSearch(true, false);
             }
