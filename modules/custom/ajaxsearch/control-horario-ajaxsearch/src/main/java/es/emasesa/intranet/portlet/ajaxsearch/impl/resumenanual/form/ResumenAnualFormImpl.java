@@ -11,13 +11,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchForm;
 import java.time.LocalDate;
 
 import es.emasesa.intranet.service.util.SapServicesUtil;
+import es.emasesa.intranet.settings.osgi.RolesSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -93,25 +96,56 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
 
         ThemeDisplay themeDisplay =  (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
         User user = themeDisplay.getUser();
-        List<Role> listUserRoles = user.getRoles();
+        LoggerUtil.debug(LOG, "[D] Consiguiendo rol del usuario: " + user.getScreenName());
+        long[] userRoleIds = user.getRoleIds();
+
         boolean isAdministradorRRHH = false;
-        for (Role role : listUserRoles) {
-            if(role.getName().equals("administradorRRHH")){
+        for (long roleId : userRoleIds) {
+            if(roleId == _rolesSettings.administradorRRHHId()){
                 request.setAttribute("role", "administradorRRHH");
                 isAdministradorRRHH = true;
             }
         }
+
         boolean isResponsable = false;
         JSONArray subordinadosData = JSONFactoryUtil.createJSONArray();
+        JSONArray subordinadosPernrs;
         if (!isAdministradorRRHH) {
-            JSONArray subordinados = _sapServicesUtil.getSubordinados(user, "T");
-            if (subordinados.length() > 0){
+
+            String subordinadosCacheKey = "subordinados" + user.getUserId();
+            Object subordinadosCache = _cache.get(subordinadosCacheKey);
+
+            if (Validator.isNotNull(subordinadosCache) && ((JSONArray) subordinadosCache).length() > 0) {
+                LoggerUtil.debug(LOG, "[D] Consiguiendo subordinados del usuario mediante CACHE: " + user.getScreenName());
+                subordinadosPernrs = (JSONArray) subordinadosCache;
+            } else {
+                LoggerUtil.debug(LOG, "[D] Consiguiendo subordinados del usuario mediante SAP: " + user.getScreenName());
+                subordinadosPernrs = _sapServicesUtil.getSubordinados(user, "T");
+                LoggerUtil.debug(LOG, "[D] Conseguidos subordinados del usuario mediante SAP: " + user.getScreenName());
+                _cache.put(subordinadosCacheKey, subordinadosPernrs, 86400);
+            }
+
+            if (subordinadosPernrs.length() > 0){
                 request.setAttribute("role", "responsable");
                 isResponsable = true;
 
-                for (int i = 0; i < subordinados.length(); i++) {
-                    JSONObject subordinado = subordinados.getJSONObject(i);
-                    JSONObject subordinadoData = _sapServicesUtil.getDatosEmpleado(subordinado.getString("pernr"));
+                for (int i = 0; i < subordinadosPernrs.length(); i++) {
+                    JSONObject subordinado = subordinadosPernrs.getJSONObject(i);
+
+                    String datosSubordinadoCacheKey = "datosSubordinado" + subordinado.getString("pernr");
+                    Object datosSubordinadoCache = _cache.get(datosSubordinadoCacheKey);
+
+                    JSONObject subordinadoData;
+                    if (Validator.isNotNull(datosSubordinadoCache)) {
+                        LoggerUtil.debug(LOG, "[D] Consiguiendo datos del subordinado mediante CACHE: " + subordinado.getString("pernr"));
+                        subordinadoData = (JSONObject) datosSubordinadoCache;
+                    } else {
+                        LoggerUtil.debug(LOG, "[D] Consiguiendo datos del subordinado mediante SAP: " + subordinado.getString("pernr"));
+                        subordinadoData = _sapServicesUtil.getDatosEmpleado(subordinado.getString("pernr"));
+                        LoggerUtil.debug(LOG, "[D] Conseguidos datos del subordinado mediante SAP: " + subordinado.getString("pernr"));
+                        _cache.put(datosSubordinadoCacheKey, subordinadoData, 86400);
+                    }
+
                     subordinadosData.put(subordinadoData);
                 }
             }
@@ -131,4 +165,9 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
     @Reference
     AssetCategoryLocalService assetCategoryLocalService;
 
+    @Reference
+    CustomCacheSingleUtil _cache;
+
+    @Reference
+    RolesSettings _rolesSettings;
 }

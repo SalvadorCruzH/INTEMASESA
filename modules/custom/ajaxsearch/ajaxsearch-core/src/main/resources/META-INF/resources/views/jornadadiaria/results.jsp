@@ -101,7 +101,7 @@
      <tr>
         <td>#TTEXT#</td>
         <td>#HTRAB#</td>
-        <td>#SEMAFORO#</td>
+        <td class="sap-respuesta-icono"><span class="#SEMAFORO#">#SEMAFORO#</td>
         <td></td>
         <td>#DATUM#</td>
         <td>#dia#</td>
@@ -143,7 +143,7 @@ ajaxSearchGlobalConfig = {
             }
             //if january, show last year
             let currentMonth = new Date().getMonth();
-            if(item.vacacionesLastYear && currentMonth == 10) {
+            if(item.vacacionesLastYear && currentMonth == 0) {
                 document.getElementById("pdtDisfrutarLastYear").value = item.vacacionesLastYear.computoConFuturo;
                 document.getElementById("sinPlanificarLastYear").value = item.vacacionesLastYear.computoSinFuturo;
                 document.getElementById("vacacionesLastYear").value = item.vacacionesLastYear.contingenteVacaciones;

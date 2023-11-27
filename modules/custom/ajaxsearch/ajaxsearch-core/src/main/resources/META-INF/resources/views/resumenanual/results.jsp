@@ -114,7 +114,7 @@ ajaxSearchGlobalConfig = {
             }
             //if january, show last year
             let currentMonth = new Date().getMonth();
-            if(item.vacacionesLastYear && currentMonth == 10) {
+            if(item.vacacionesLastYear && currentMonth == 0) {
                 document.getElementById("pdtDisfrutarLastYear").value = item.vacacionesLastYear.computoConFuturo;
                 document.getElementById("sinPlanificarLastYear").value = item.vacacionesLastYear.computoSinFuturo;
                 document.getElementById("vacacionesLastYear").value = item.vacacionesLastYear.contingenteVacaciones;
