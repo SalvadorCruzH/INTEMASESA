@@ -150,7 +150,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
         PortletPreferences preferences = actionRequest.getPreferences();
 
         if (tipoLista.equals(GestionBoletinesPortletKeys.INPUT_TIPO_LISTA_CONTROLADA_VALUE)) { //Boletin Lista Controlada
-            LoggerUtil.debug(LOG, "Entra en la condicion de Envio de Lista Distribuida");
+            LoggerUtil.debug(LOG, "Entra en la condicion de Envio de Lista Controlada");
             String to = preferences.getValue(GestionBoletinesPortletKeys.CONFIG_DESTINATARIOS_CONTROLADA, StringPool.BLANK);
             String boletinId = HtmlUtil.escape(ParamUtil.getString(actionRequest, GestionBoletinesPortletKeys.INPUT_BOLETIN_CONTROLADA));
             String asunto = HtmlUtil.escape(ParamUtil.getString(actionRequest, GestionBoletinesPortletKeys.INPUT_ASUNTO_CONTROLADA));
@@ -232,40 +232,45 @@ public class GestionBoletinesPortlet extends MVCPortlet {
         Document document = Jsoup.parse(contenido);
         Elements imgElements = document.select("img");
 
-        for (Element imgElement : imgElements) {
-            String src = imgElement.attr("src");
+        if (Validator.isNotNull(imgElements)){
+            for (Element imgElement : imgElements) {
+                String src = imgElement.attr("src");
 
-            if (!src.startsWith("http") && !src.startsWith("https")) {
-                String absoluteUrl = portalUrl + src;
-                imgElement.attr("src", absoluteUrl);
-            }
+                if (!src.startsWith("http") && !src.startsWith("https")) {
+                    String absoluteUrl = portalUrl + src;
+                    imgElement.attr("src", absoluteUrl);
+                }
 
-            if (src.contains("admin-theme")){
-                String emasesaThemeUrl = src.replace("admin-theme","emasesa-theme");
-                imgElement.attr("src", emasesaThemeUrl);
+                if (src.contains("admin-theme")){
+                    String emasesaThemeUrl = src.replace("admin-theme","emasesa-theme");
+                    imgElement.attr("src", emasesaThemeUrl);
+                }
             }
         }
+
         Elements headElement = document.select("head");
         Element elementsToHead = document.select("div").first().parent();
 
-        for (Node nodeToHead : elementsToHead.childNodes()) {
-            if (nodeToHead instanceof Comment ||
-                    (nodeToHead instanceof Element &&
-                            (nodeToHead.nodeName().equalsIgnoreCase("noscript")
-                                    || nodeToHead.nodeName().equalsIgnoreCase("style")
-                                    || nodeToHead.nodeName().equalsIgnoreCase("link")
-                                    || nodeToHead.nodeName().equalsIgnoreCase("meta")
-                            )
-                    )
-            ) {
-                if (nodeToHead instanceof Element) {
-                    Element clonedElement = (Element) nodeToHead;
-                    headElement.append(clonedElement.toString());
-                    nodeToHead.remove();
-                } else if (nodeToHead instanceof Comment){
-                    Comment clonedElement = (Comment) nodeToHead;
-                    headElement.append(clonedElement.toString());
-                    nodeToHead.remove();
+        if (Validator.isNotNull(headElement) && Validator.isNotNull(elementsToHead) ){
+            for (Node nodeToHead : elementsToHead.childNodes()) {
+                if (nodeToHead instanceof Comment ||
+                        (nodeToHead instanceof Element &&
+                                (nodeToHead.nodeName().equalsIgnoreCase("noscript")
+                                        || nodeToHead.nodeName().equalsIgnoreCase("style")
+                                        || nodeToHead.nodeName().equalsIgnoreCase("link")
+                                        || nodeToHead.nodeName().equalsIgnoreCase("meta")
+                                )
+                        )
+                ) {
+                    if (nodeToHead instanceof Element) {
+                        Element clonedElement = (Element) nodeToHead;
+                        headElement.append(clonedElement.toString());
+                        nodeToHead.remove();
+                    } else if (nodeToHead instanceof Comment){
+                        Comment clonedElement = (Comment) nodeToHead;
+                        headElement.append(clonedElement.toString());
+                        nodeToHead.remove();
+                    }
                 }
             }
         }
@@ -273,9 +278,11 @@ public class GestionBoletinesPortlet extends MVCPortlet {
         Element spanElement = document.select("span").first();
         Element bodyElement = document.select("body").first();
 
-        String styleSpan = spanElement.attr("style");
-        bodyElement.attr("style", styleSpan);
-        spanElement.remove();
+        if (Validator.isNotNull(spanElement) && Validator.isNotNull(bodyElement) ){
+            String styleSpan = spanElement.attr("style");
+            bodyElement.attr("style", styleSpan);
+            spanElement.remove();
+        }
 
         return document.outerHtml();
     }
