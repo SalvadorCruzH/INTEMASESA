@@ -1,12 +1,13 @@
 import React from 'react'
 import TareasApi from '../services/TareasApi'
-import Actions from './Actions'
+import Actions from './Actions.js'
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {OBJECT_MAPPING,oauthUserAgent,WORKFLOWTASKS} from "../js/Constants"
 
 let onlyonce = true;
 
 class TareasModule extends React.Component {
+
     constructor() {
         super();
         let columns = [];
@@ -20,6 +21,7 @@ class TareasModule extends React.Component {
             tareas: [],
             loading: true,
             columns: columns,
+            view:1,
             configuration: {}
         }
         console.log(this);
@@ -35,18 +37,43 @@ class TareasModule extends React.Component {
         this.setState({loading:true});
             setTimeout(() => {
                 EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
-                TareasApi.getWorkflowTasksMe(
-                    Liferay.ThemeDisplay.getScopeGroupId(),
-                    this.setTasks,
-                    this.errorHandler
-                )
-                TareasApi.getWorkflowTasksByUserRole(
-                    Liferay.ThemeDisplay.getScopeGroupId(),
-                    this.setTasks,
-                    this.errorHandler
-                )
 
-            }, 100)
+                if(this.state.view==1){
+                    this.getAssignedToMe();
+                }else{
+                    this.getAssignedToUserRol();
+                }
+
+            },100)
+    }
+
+    getAssignedToMe = () => {
+        this.setState({
+           view: 1
+        });
+        setTimeout(() => {
+            TareasApi.getWorkflowTasksMe(
+                Liferay.ThemeDisplay.getScopeGroupId(),
+                this.setTasks,
+                this.errorHandler
+            )
+        }, 100)
+
+    }
+    getAssignedToUserRol = () => {
+        this.setState({
+          view: 2
+        });
+        setTimeout(() => {
+
+              TareasApi.getWorkflowTasksByUserRole(
+                Liferay.ThemeDisplay.getScopeGroupId(),
+                this.setTasks,
+                this.errorHandler
+             )
+         }, 100)
+
+
     }
 
     loadConfiguration = (result) => {
@@ -128,7 +155,6 @@ class TareasModule extends React.Component {
                                      tarea.transitions =  result.items;
 
                                 }
-
                                 this.setState(previousState =>({
                                     tareas: previousState.tareas.concat(tarea)
                                 }));
@@ -145,6 +171,9 @@ class TareasModule extends React.Component {
 
 
     setTasks = (result) => {
+        this.setState({
+            tareas:[]
+          });
         if (result && result.items != null && result.items.length > 0) {
                 result.items.forEach((tarea) => {
 
@@ -285,8 +314,13 @@ class TareasModule extends React.Component {
 
         return (
             <div>
-                {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>):(
-                    <>
+                {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>):(<>
+
+                    <div class="button-holder">
+                        <a href id="toMe" class="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true" onClick={this.getAssignedToMe}>Asignadas a mi</a>
+                        <a href id="toRole" class="btn btn-primary" aria-label="Asignadas a mi rol" aria-disabled="true" onClick={this.getAssignedToUserRol}>Asignadas a mi rol</a>
+                    </div>
+
                         <table id="table-id" class="ema-table last">
                            <caption class="sr-only">Sumario de la tabla</caption>
                            <thead>
@@ -303,6 +337,7 @@ class TareasModule extends React.Component {
 
                                </tr>
                            </thead>
+                           {this.state.tareas.length != 0 ?(   <>
                                   <tbody>
                                       {this.state.tareas.map((tarea, i) =>{
                                          return( <>
@@ -319,6 +354,10 @@ class TareasModule extends React.Component {
                                           )
                                       })}
                                </tbody>
+                                </>
+                           ):(<div class="alert alert-info" role="alert">
+                                  No se han encontrado tareas nuevas
+                              </div>)}
                        </table>
                     </>
                  )}

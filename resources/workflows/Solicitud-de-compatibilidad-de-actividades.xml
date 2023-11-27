@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>34</version>
+	<version>46</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -154,9 +154,9 @@ String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "
 String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
 
 if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
-	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "solicitud");
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "certificacion");
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "solicitud");
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "declaracion");
 }	
 
 customWorkflowUtilTracker.close();
@@ -327,6 +327,100 @@ customWorkflowUtilTracker.close();]]>
 			</transition>
 		</transitions>
 	</state>
+	<state>
+		<name>aprobada-consejero</name>
+		<description>Ejecuta las acciones en el flujo de trabajo.</description>
+		<metadata><![CDATA[{"xy":[550,578],"transitions":{"aprobada-consejero-delegado":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objecto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobadaPorConsejeroDelegado", userId, "Consejero Delegado");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Aprobado por Consejero Delegado
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud aprobada
+					</label>
+				</labels>
+				<name>aprobada-consejero-delegado</name>
+				<target>revision-rrhh</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>recahzada-consejero</name>
+		<description>Ejecuta las acciones en el flujo de trabajo.</description>
+		<metadata><![CDATA[{"xy":[872,576],"transitions":{"rechazada-consejero-delegado":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objecto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazadaPorConsejeroDelegado", userId, "Consejero Delegado");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Rechazada por Consejero Delegado
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud rechazada
+					</label>
+				</labels>
+				<name>rechazada-consejero-delegado</name>
+				<target>revision-rrhh</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
@@ -348,7 +442,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteDeAdministracionDeRRHH", userId, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", userId, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -568,7 +662,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>revision-rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[703,589],"transitions":{"rechazar":{"bendpoints":[]}}}]]></metadata>
+		<metadata><![CDATA[{"xy":[729,755],"transitions":{"rechazar":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -651,7 +745,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-consejero-delegado</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[717,365],"transitions":{"Notificar-a-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<metadata><![CDATA[{"xy":[717,365],"transitions":{"rechazadoPF":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Enviar a portafirmas</name>
@@ -697,10 +791,10 @@ String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "
 String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
 
 if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
-	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "solicitud");
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "certificacion");
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Certificación de la empresa", false);
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "solicitud");
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "declaracion");
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Declaración responsable", false);
 }	
 
@@ -708,9 +802,9 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
 String idDocumentoAsesoriaJuridica = "";
 if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
-	idDocumentoAsesoriaJuridica = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "solicitud");
-	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoAsesoriaJuridica, "Anexo asesoría jurídica", true);
-	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoInstanceToken);
+	idDocumentoAsesoriaJuridica = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "resolucion");
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoAsesoriaJuridica, "Escrito asesoría jurídica", true);
+	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken);
 }
 
 customWorkflowUtilTracker.close();
@@ -736,12 +830,22 @@ portaFirmaServiceTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Notificar a RRHH
+						Aprobado
 					</label>
 				</labels>
-				<name>Notificar-a-rrhh</name>
-				<target>revision-rrhh</target>
+				<name>aprobadoPF</name>
+				<target>aprobada-consejero</target>
 				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazado
+					</label>
+				</labels>
+				<name>rechazadoPF</name>
+				<target>recahzada-consejero</target>
+				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
