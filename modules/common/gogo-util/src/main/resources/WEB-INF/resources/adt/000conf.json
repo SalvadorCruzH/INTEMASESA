@@ -94,5 +94,17 @@
         "templateFile":"menuCrearSolicitud.ftl",
         "comment": "Menú de navegación Nuevas Solicitudes.",
         "uuid":"337b4712-2f8f-e834-0b56-0180aee2d914"
+    },
+    {
+        "screenName": "aemasesa",
+        "name":"EMA - Carrusel noticias",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId":"liferay.com",
+        "groupFriendlyUrl":"/global",
+        "templateKey":"EMA-CARRUSEL-NOTICIAS",
+        "templateFile":"carrusel-noticias.ftl",
+        "comment": "Carrusel de noticias.",
+        "uuid":"b8a88d0e-0ed3-9c3c-3231-45c652e695eb"
     }
 ]
