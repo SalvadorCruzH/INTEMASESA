@@ -18,8 +18,8 @@
       },
       "requireConfirmation": false,
       "type": "text",
-      "required": true,
       "showLabel": true,
+      "required": true,
       "displayStyle": "singleline",
       "ddmDataProviderInstanceOutput": [],
       "repeatable": false,
@@ -56,9 +56,9 @@
       "label": {
         "es_ES": "Título"
       },
-      "indexType": "keyword",
       "fieldNamespace": "",
       "visibilityExpression": "",
+      "indexType": "keyword",
       "name": "Text89626710",
       "localizable": true,
       "dataSourceType": "manual"
@@ -70,11 +70,11 @@
         "es_ES": "Imagen de cabecera"
       },
       "type": "image",
-      "required": true,
       "showLabel": true,
-      "indexType": "text",
+      "required": true,
       "fieldNamespace": "",
       "visibilityExpression": "",
+      "indexType": "text",
       "repeatable": false,
       "requiredDescription": false,
       "name": "Image56862516",
@@ -92,15 +92,15 @@
         "es_ES": "Fecha"
       },
       "type": "date",
-      "required": true,
       "showLabel": true,
-      "indexType": "keyword",
+      "required": true,
       "fieldNamespace": "",
       "visibilityExpression": "",
+      "indexType": "keyword",
       "repeatable": false,
       "name": "Date58667956",
-      "localizable": true,
       "nativeField": false,
+      "localizable": true,
       "fieldReference": "boletinFecha",
       "tip": {
         "es_ES": "Fecha del boletín"
@@ -113,17 +113,70 @@
         "es_ES": "Índice"
       },
       "type": "rich_text",
-      "required": false,
       "showLabel": true,
-      "indexType": "text",
+      "required": false,
       "fieldNamespace": "",
       "visibilityExpression": "",
+      "indexType": "text",
       "repeatable": false,
       "name": "RichText34341541",
       "localizable": true,
       "fieldReference": "boletinIndice",
       "tip": {
         "es_ES": ""
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "string",
+      "predefinedValue": {
+        "es_ES": "[]"
+      },
+      "readOnly": false,
+      "label": {
+        "es_ES": "Columnas"
+      },
+      "type": "radio",
+      "showLabel": true,
+      "required": true,
+      "fieldNamespace": "",
+      "requiredErrorMessage": {
+        "es_ES": ""
+      },
+      "visibilityExpression": "",
+      "indexType": "keyword",
+      "objectFieldName": "",
+      "inline": true,
+      "repeatable": false,
+      "name": "Radio34281451",
+      "options": [
+        {
+          "reference": "one-col",
+          "label": {
+            "es_ES": "1 columna"
+          },
+          "value": "Opción86055859"
+        },
+        {
+          "reference": "two-col",
+          "label": {
+            "es_ES": "2 columnas"
+          },
+          "value": "Opción55404336"
+        },
+        {
+          "reference": "three-col",
+          "label": {
+            "es_ES": "Tres columnas"
+          },
+          "value": "Opción31949545"
+        }
+      ],
+      "nativeField": false,
+      "localizable": true,
+      "fieldReference": "columnas",
+      "tip": {
+        "es_ES": "Columnas que ocuparán las noticias"
       }
     },
     {
@@ -136,57 +189,11 @@
         "es_ES": "Noticia adjunta"
       },
       "type": "fieldset",
-      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Radio87931178\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"noticia\"]}]}]",
-      "collapsible": true,
-      "required": false,
+      "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"noticia\"]}]}]",
+      "collapsible": false,
       "showLabel": true,
+      "required": false,
       "nestedFields": [
-        {
-          "labelAtStructureLevel": true,
-          "dataType": "string",
-          "readOnly": false,
-          "label": {
-            "es_ES": "Columnas"
-          },
-          "type": "radio",
-          "required": true,
-          "showLabel": true,
-          "indexType": "keyword",
-          "fieldNamespace": "",
-          "visibilityExpression": "",
-          "inline": true,
-          "repeatable": false,
-          "name": "Radio87931178",
-          "options": [
-            {
-              "reference": "boletin__related__item--1col",
-              "label": {
-                "es_ES": "1 sola columna"
-              },
-              "value": "mj-column-per-33-333333333333336"
-            },
-            {
-              "reference": "boletin__related__item--2col",
-              "label": {
-                "es_ES": "2 columnas"
-              },
-              "value": "mj-column-per-66-6666666667"
-            },
-            {
-              "reference": "boletin__related__item--3col",
-              "label": {
-                "es_ES": "3 columnas"
-              },
-              "value": "mj-column-per-100"
-            }
-          ],
-          "localizable": true,
-          "nativeField": false,
-          "fieldReference": "columnas",
-          "tip": {
-            "es_ES": "Columnas que ocupará la nota de prensa"
-          }
-        },
         {
           "restKey": "k",
           "restValue": "v",
@@ -196,13 +203,12 @@
             "es_ES": "Noticia"
           },
           "type": "RestSelect",
-          "required": false,
           "showLabel": true,
+          "required": false,
           "restUrl": "/o/ddmselect/get-journal-by-structure/global/EMA-NOTICIA/20119",
           "visibilityExpression": "",
           "repeatable": false,
           "name": "noticia",
-          "fieldReference": "noticia",
           "localizable": false,
           "tip": {
             "es_ES": ""
