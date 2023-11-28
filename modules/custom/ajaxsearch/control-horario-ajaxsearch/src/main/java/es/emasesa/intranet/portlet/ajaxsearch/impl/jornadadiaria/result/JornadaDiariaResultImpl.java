@@ -39,6 +39,8 @@ import java.util.Map;
 import java.util.Properties;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import es.emasesa.intranet.settings.osgi.RolesSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -150,7 +152,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			usuario = themeDisplay.getUser().getScreenName();
 			isValidUser = Boolean.TRUE;
 		} else {
-			isValidUser = checkUsuarioSelected(usuario,request,themeDisplay.getUser());
+			isValidUser = checkUsuarioSelected(usuario, themeDisplay.getUser());
 		}
 
 		if(Validator.isNotNull(monthSelected) && isValidUser){
@@ -200,6 +202,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			});
 
 			Year year = Year.parse(monthSelected, DateTimeFormatter.ofPattern("MMyyyy"));
+			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + year);
 
 			jsonArray.getJSONObject(0).put("vacacionesYear",getVacaciones(themeDisplay, String.valueOf(year)));
 			jsonArray.getJSONObject(0).put("vacacionesLastYear",getVacaciones(themeDisplay, String.valueOf(year.minusYears(1))));
@@ -223,8 +226,10 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 		}
 		JSONObject vacacionesYear = JSONFactoryUtil.createJSONObject();
 		if (arrayYear.length() > 0) {
-			vacacionesYear.put("computoConFuturo", arrayYear.getJSONObject(0).getString("computoConFuturo"));
-			vacacionesYear.put("computoSinFuturo", arrayYear.getJSONObject(0).getString("computoSinFuturo"));
+			String diasComputoConFuturo = calculateDays(arrayYear.getJSONObject(0).getString("computoConFuturo", "0"), arrayYear.getJSONObject(0).getString("DURACION_JORNADA_TEORICA", "7.25"));
+			String diasComputoSinFuturo = calculateDays(arrayYear.getJSONObject(0).getString("computoSinFuturo", "0"), arrayYear.getJSONObject(0).getString("DURACION_JORNADA_TEORICA", "7.25"));
+			vacacionesYear.put("computoConFuturo", diasComputoConFuturo);
+			vacacionesYear.put("computoSinFuturo", diasComputoSinFuturo);
 			vacacionesYear.put("contingenteVacaciones", arrayYear.getJSONObject(0).getString("contingenteVacaciones"));
 		}
 		return vacacionesYear;
@@ -236,18 +241,39 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 				_customDateUtil.getDateNumber(j.getString("DATUM"), "yyyy-MM-dd");
 	}
 
-	private boolean checkUsuarioSelected(String usuarioSelected, PortletRequest request, User user) {
+	private String calculateDays(String horasTotales, String horasDia) {
 
-		List<Role> listUserRoles = user.getRoles();
-		for (Role role : listUserRoles) {
-			if(role.getName().equals("administradorRRHH")){
-				request.setAttribute("role", "administradorRRHH");
+		double horasOriginal = Double.parseDouble(horasTotales);
+		double horasAlDia = Double.parseDouble(horasDia);
+
+		// Calcular días, horas y minutos
+		int dias = (int) (horasOriginal / horasAlDia);
+		int horas = (int) (horasOriginal % horasAlDia);
+		int minutos = (int) ((horasOriginal % horasAlDia - horas) * 60);
+		return dias + "d " + horas + "h " + minutos + "m";
+	}
+
+	private boolean checkUsuarioSelected(String usuarioSelected, User user) {
+		String cacheKey = "checkUsuarioSelected" + usuarioSelected + user.getUserId();
+		Object object = _cache.get(cacheKey);
+		if(Validator.isNotNull(object)){
+			return (Boolean) object;
+		} else {
+			Boolean isValidUser = checkUsuarioSelectedAux(usuarioSelected, user);
+			_cache.put(cacheKey, isValidUser, 86400);
+			return isValidUser;
+		}
+	}
+
+	private Boolean checkUsuarioSelectedAux(String usuarioSelected, User user) {
+		long[] userRoleIds = user.getRoleIds();
+		for (long roleId : userRoleIds) {
+			if(roleId == _rolesSettings.administradorRRHHId()){
 				return Boolean.TRUE;
 			}
 		}
 		JSONArray subordinados = _sapServicesUtil.getSubordinados(user, "T");
 		if (subordinados.length() > 0){
-			request.setAttribute("role", "responsable");
 
 			for (int i = 0; i < subordinados.length(); i++) {
 				String subordinado = subordinados.getJSONObject(i).getString("pernr");
@@ -278,4 +304,6 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 	CustomDateUtil _customDateUtil;
 	@Reference
 	CustomCacheSingleUtil _cache;
+	@Reference
+	RolesSettings _rolesSettings;
 }

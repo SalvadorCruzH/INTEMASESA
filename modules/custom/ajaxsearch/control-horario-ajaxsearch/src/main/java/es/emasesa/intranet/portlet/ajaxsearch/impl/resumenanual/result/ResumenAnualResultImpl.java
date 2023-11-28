@@ -21,6 +21,7 @@ import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchResult;
 import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.*;
+import es.emasesa.intranet.settings.osgi.RolesSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -141,7 +142,7 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 			usuario = themeDisplay.getUser().getScreenName();
 			isValidUser = Boolean.TRUE;
 		} else {
-			isValidUser = checkUsuarioSelected(usuario,request,themeDisplay.getUser());
+			isValidUser = checkUsuarioSelected(usuario, themeDisplay.getUser());
 		}
 
 
@@ -182,8 +183,10 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 				}
 
 			});
+			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + year);
 
 			jsonArray.getJSONObject(0).put("vacacionesYear",getVacaciones(themeDisplay, year));
+			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + (Integer.parseInt(year) - 1));
 			jsonArray.getJSONObject(0).put("vacacionesLastYear",getVacaciones(themeDisplay, String.valueOf(Integer.parseInt(year)-1)));
 		}
 		return totalItems;
@@ -212,18 +215,27 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 		return vacacionesYear;
 	}
 
-	private boolean checkUsuarioSelected(String usuarioSelected, PortletRequest request, User user) {
+	private boolean checkUsuarioSelected(String usuarioSelected, User user) {
+		String cacheKey = "checkUsuarioSelected" + usuarioSelected + user.getUserId();
+		Object object = _cache.get(cacheKey);
+		if(Validator.isNotNull(object)){
+			return (Boolean) object;
+		} else {
+			Boolean isValidUser = checkUsuarioSelectedAux(usuarioSelected, user);
+			_cache.put(cacheKey, isValidUser, 86400);
+			return isValidUser;
+		}
+	}
 
-		List<Role> listUserRoles = user.getRoles();
-		for (Role role : listUserRoles) {
-			if(role.getName().equals("administradorRRHH")){
-				request.setAttribute("role", "administradorRRHH");
+	private Boolean checkUsuarioSelectedAux(String usuarioSelected, User user) {
+		long[] userRoleIds = user.getRoleIds();
+		for (long roleId : userRoleIds) {
+			if(roleId == _rolesSettings.administradorRRHHId()){
 				return Boolean.TRUE;
 			}
 		}
 		JSONArray subordinados = _sapServicesUtil.getSubordinados(user, "T");
 		if (subordinados.length() > 0){
-			request.setAttribute("role", "responsable");
 
 			for (int i = 0; i < subordinados.length(); i++) {
 				String subordinado = subordinados.getJSONObject(i).getString("pernr");
@@ -253,4 +265,6 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 	CustomDateUtil _customDateUtil;
 	@Reference
 	CustomCacheSingleUtil _cache;
+	@Reference
+	RolesSettings _rolesSettings;
 }
