@@ -23,9 +23,14 @@
 						<#assign navItems=entries />
 						<#list navItems as navItem>
 							<#if navItem.isBrowsable()>
-								<option value='${navItem.getURL()}'>
-									${navItem.getName()}
-								</option>
+								<#if navItem.hasBrowsableChildren()>
+									<#assign childNavItem=navItem.getChildren()>
+									<#list childNavItem as childItem>
+										<option value='${childItem.getURL()}'>
+											${childItem.getName()}
+										</option>
+									</#list>
+								</#if>
 							</#if>
 						</#list>
 					</select>
