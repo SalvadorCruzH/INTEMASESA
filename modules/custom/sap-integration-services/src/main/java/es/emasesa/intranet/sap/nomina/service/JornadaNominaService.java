@@ -3,10 +3,18 @@ package es.emasesa.intranet.sap.nomina.service;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.sap.document.sap.soap.functions.mc_style.Bapireturn1;
+import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
+import com.sap.document.sap.soap.functions.mc_style.ZPeActJornadaNomina;
+import com.sap.document.sap.soap.functions.mc_style.ZPeActJornadaNominaResponse;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEACTJORNADANOMINA;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEACTJORNADANOMINA_Service;
+import com.sap.document.sap.soap.functions.mc_style.ZpeStActJornadaNomina;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
+import java.math.BigDecimal;
 import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
@@ -21,13 +29,30 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
 
-import com.sap.document.sap.soap.functions.mc_style.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component("jornadaNominaService")
 public class JornadaNominaService {
 
+    public String guardarIRPF(String pernr, String fechaInicio, double IRPF_Solicitado){
+        try {
+            ZPeActJornadaNomina zpeStActJornadaNominaParent = getObjectFactory().createZPeActJornadaNomina();
+            ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
+            zpeStActJornadaNomina.setPernr(pernr);
+            zpeStActJornadaNomina.setFechaInicio(fechaInicio);
+            zpeStActJornadaNomina.setIrpfSolicitado(BigDecimal.valueOf(IRPF_Solicitado));
+            zpeStActJornadaNominaParent.setTEmpleados(zpeStActJornadaNomina);
+            ZPeActJornadaNominaResponse result = getObjectFactory().createZPeActJornadaNominaResponse();
 
+            Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
+
+            return datos.toString();
+
+        } catch (Exception e) {
+            LOG.error("Se ha producido un error al intentar acceder a WS de jornadaNomina", e);
+        }
+        return null;
+    }
     public Bapireturn1 peticionHorasExtras(String idEmpleado, String fechaInicio, String fechaFin, String tipoRetribucion) {
 
         try {
@@ -97,7 +122,7 @@ public class JornadaNominaService {
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEACTJORNADANOMINA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
@@ -141,6 +166,6 @@ public class JornadaNominaService {
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
-    private static final Log LOG = LogFactoryUtil.getLog(JornadaNominaService.class);
+    private static final Log LOG = LogFactoryUtil.getLog(es.emasesa.intranet.sap.nomina.service.JornadaNominaService.class);
 
 }
