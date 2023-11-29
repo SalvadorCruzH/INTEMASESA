@@ -1,5 +1,14 @@
 {
-	"fieldSets": [
-		
-	]
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "defaultValue": "true",
+          "label": "Solo lectura",
+          "name": "readonly",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
 }

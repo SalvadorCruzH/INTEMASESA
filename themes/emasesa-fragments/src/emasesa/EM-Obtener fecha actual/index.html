@@ -2,7 +2,7 @@
   <div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
     <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-    <input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" name="${input.name}"  type="text" readonly="readonly" [#if input.value??]value="${input.value}"[/#if] />
-    
+    <input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" name="${input.name}"  type="text" [#if input.value??]value="${input.value}"[/#if] />
+
   </div>
 </div>
