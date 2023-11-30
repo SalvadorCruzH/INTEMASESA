@@ -1,4 +1,4 @@
-<div class="select-from-list" id="${fragmentEntryLinkNamespace}-parent" data-mode="" data-targets="${configuration.fieldNameControl1}|${configuration.fieldNameControl2}|${configuration.fieldNameControl3}|${configuration.fieldNameControl4}">
+<div class="select-from-list" id="${fragmentEntryLinkNamespace}-parent" data-mode="" data-targets="${configuration.fieldNameControl1}|${configuration.fieldNameControl2}|${configuration.fieldNameControl3}|${configuration.fieldNameControl4}|${configuration.fieldNameControl5}">
     <div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
         <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-radio-group">
             ${htmlUtil.escape(input.label)}
@@ -23,6 +23,8 @@
                     [#assign targetName=configuration.fieldNameControl3]
                 [#elseif actualIndex == 3]
                     [#assign targetName=configuration.fieldNameControl4]
+                [#elseif actualIndex == 4]
+                    [#assign targetName=configuration.fieldNameControl5]
                 [/#if]
                 [#assign selectedOption=false]
                 [#if input.value?? && option.value == input.value]
