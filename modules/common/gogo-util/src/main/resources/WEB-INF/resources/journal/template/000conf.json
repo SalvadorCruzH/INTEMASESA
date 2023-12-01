@@ -167,5 +167,18 @@
         "comment": "Plantilla para los contenidos relacionados al final del bloetín",
         "uuid": "255ac4e7-a631-5fd4-856b-1d1a66d38d41",
         "structureUuid": "157cd7ee-fb43-0bbf-22f4-4756b02f328a"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Documentos",
+        "templateKey": "EMA-DOCUMENTOS-TEMPLATE",
+        "structureKey": "EMA-DOCUMENTOS",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "documentos.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para los documentos en la sección Servicios - Recursos",
+        "uuid": "232e8386-ec63-de81-e8d2-d78d4070a826",
+        "structureUuid": "045d40f2-0f52-e7e1-a0cd-1643aae0a734"
     }
 ]

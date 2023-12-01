@@ -1,0 +1,132 @@
+{
+    "definitionSchemaVersion": "2.0",
+    "availableLanguageIds": [
+        "es_ES"
+    ],
+    "successPage": {
+        "body": {},
+        "title": {},
+        "enabled": false
+    },
+    "defaultLanguageId": "es_ES",
+    "fields": [
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": true,
+            "displayStyle": "singleline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción20567176",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción20567176"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "docTitle",
+            "tip": {
+                "es_ES": "Título que se mostrará en listados y detalles"
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "hideField": false,
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Título del documento"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text64694353",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "dataType": "document-library",
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "readOnly": false,
+            "label": {
+                "es_ES": "Adjuntar documento"
+            },
+            "type": "document_library",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "objectFieldName": "",
+            "repeatable": true,
+            "allowGuestUsers": false,
+            "name": "DocumentLibrary45748903",
+            "localizable": true,
+            "fieldReference": "docAttached",
+            "tip": {
+                "es_ES": "Documentos adjunto"
+            }
+        },
+        {
+            "labelAtStructureLevel": true,
+            "dataType": "date",
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "readOnly": false,
+            "label": {
+                "es_ES": "Fecha del documento"
+            },
+            "type": "date",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "objectFieldName": "",
+            "repeatable": false,
+            "name": "Date88698232",
+            "nativeField": false,
+            "localizable": true,
+            "fieldReference": "Date88698232",
+            "tip": {
+                "es_ES": ""
+            }
+        }
+    ]
+}
