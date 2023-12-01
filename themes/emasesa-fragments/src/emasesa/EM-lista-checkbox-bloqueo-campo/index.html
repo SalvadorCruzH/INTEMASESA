@@ -1,12 +1,12 @@
 <div class="select-from-list" id="${fragmentEntryLinkNamespace}-parent" data-mode=""
      data-targets="${configuration.fieldNameControl1}|${configuration.fieldNameControl2}|${configuration.fieldNameControl3}|${configuration.fieldNameControl4}|${configuration.fieldNameControl5}|${configuration.fieldNameControl6}|${configuration.fieldNameControl7}|${configuration.fieldNameControl8}|${configuration.fieldNameControl9}">
     <div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-        <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-radio-group">
+        <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-checkbox-group">
             ${htmlUtil.escape(input.label)}
             [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
         </label>
 
-        <div aria-labelledby="${fragmentEntryLinkNamespace}-label" id="${fragmentEntryLinkNamespace}-radio-group" role="radiogroup">
+        <div aria-labelledby="${fragmentEntryLinkNamespace}-label" id="${fragmentEntryLinkNamespace}-checkbox-group" role="checkboxgroup">
             [#assign options=(input.attributes.options)![]]
             [#assign selectedValueFoundInOptions=false]
             [#assign targetName=""]
@@ -42,36 +42,34 @@
                     [#assign selectedValueFoundInOptions=true]
                 [/#if]
 
-                <label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
+                <label class="custom-checkbox-label" for="${fragmentEntryLinkNamespace}-checkbox">
                     <input
                         data-element-target="${targetName}"
                         [#if selectedOption]aria-selected="true" [/#if]
                         data-option-value="${option.value}"
-                        id="${fragmentEntryLinkNamespace}-radio-${option.value}"
-                        aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text"
-                        class="custom-radio-input"
-                        id="${fragmentEntryLinkNamespace}-radio"
+                        id="${fragmentEntryLinkNamespace}-checkbox-${option.value}"
+                        aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text"
+                        class="custom-checkbox-input"
+                        id="${fragmentEntryLinkNamespace}-checkbox"
                         name="${input.name}-1"
-                        ${input.required?then('required', '' )}
-                        type="radio"
+                        type="checkbox"
                         [#if input.value?? && input.value=='true' ]checked[/#if]
                     />
                     ${htmlUtil.escape(option.label)}
                 </label>
 
                 [#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
-                <label class="custom-radio-label" for="${fragmentEntryLinkNamespace}-radio">
+                <label class="custom-checkbox-label" for="${fragmentEntryLinkNamespace}-checkbox">
                     <input
                         data-element-target="${targetName}"
                         [#if selectedOption]aria-selected="true" [/#if]
                         data-option-value="${option.value}"
-                        id="${fragmentEntryLinkNamespace}-radio-${option.value}"
-                        aria-describedby="${fragmentEntryLinkNamespace}-radio-help-text"
-                        class="custom-radio-input"
-                        id="${fragmentEntryLinkNamespace}-radio"
+                        id="${fragmentEntryLinkNamespace}-checkbox-${option.value}"
+                        aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text"
+                        class="custom-checkbox-input"
+                        id="${fragmentEntryLinkNamespace}-checkbox"
                         name="${input.name}-1"
-                        ${input.required?then('required', '' )}
-                        type="radio"
+                        type="checkbox"
                         [#if input.value?? && input.value=='true' ]checked[/#if]
                     />
                     ${htmlUtil.escape(input.attributes.selectedOptionLabel)}
@@ -79,9 +77,6 @@
                 [/#if]
             [/#list]
         </div>
-
-        <input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}" [/#if] />
-        <input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}" [/#if] />
 
         [#if input.errorMessage?has_content]
             <p class="font-weight-semi-bold mt-1 text-danger">
