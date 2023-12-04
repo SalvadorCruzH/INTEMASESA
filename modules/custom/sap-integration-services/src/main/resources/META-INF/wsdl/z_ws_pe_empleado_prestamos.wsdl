@@ -315,11 +315,11 @@
     <wsdl:service name="Z_WS_PE_EMPLEADO_PRESTAMOS">
         <wsdl:port name="Z_WS_PE_EMPLEADO_PRESTAMOS" binding="tns:Z_WS_PE_EMPLEADO_PRESTAMOS">
             <soap:address
-                    location="http://http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_prestamos/010/z_ws_pe_empleado_prestamos/z_ws_pe_empleado_prestamos"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_prestamos/010/z_ws_pe_empleado_prestamos/z_ws_pe_empleado_prestamos"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_PRESTAMOS_soap12" binding="tns:Z_WS_PE_EMPLEADO_PRESTAMOS_soap12">
             <wsoap12:address
-                    location="http://http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_prestamos/010/z_ws_pe_empleado_prestamos/z_ws_pe_empleado_prestamos"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_prestamos/010/z_ws_pe_empleado_prestamos/z_ws_pe_empleado_prestamos"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

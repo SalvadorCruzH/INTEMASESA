@@ -7,7 +7,9 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.*;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,7 +31,9 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -354,6 +358,37 @@ public class CustomWorkflowUtil {
 		}
 
 		return base64;
+	}
+
+	public boolean isAnotherUnfinishedUserObject (long objectEntryId, long userId){
+	boolean existsOther = false;
+		try {
+			long objectDefinitionId = ObjectEntryLocalServiceUtil.getObjectEntry(objectEntryId).getObjectDefinitionId();
+			List<ObjectEntry> objects = null;
+			DynamicQuery dynamicQuery = ObjectEntryLocalServiceUtil.dynamicQuery();
+
+			Property userIdProperty = PropertyFactoryUtil.forName("userId");
+			Property objectDefinitionIdProperty = PropertyFactoryUtil.forName("objectDefinitionId");
+
+			dynamicQuery.add(userIdProperty.eq(userId));
+			dynamicQuery.add(objectDefinitionIdProperty.eq(objectDefinitionId));
+
+			objects = ObjectEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+			if (!objects.isEmpty()){
+				for(ObjectEntry objectEntry : objects){
+					String status = objectEntry.getValues().get("estadoObjeto").toString();
+					if (objectEntryId != objectEntry.getObjectEntryId() && !Objects.equals(status, "aceptada") && !Objects.equals(status, "rechazada")) {
+						existsOther = true;
+					}
+				}
+			}
+		}
+		catch (PortalException e) {
+			LoggerUtil.error(LOG, e.getMessage());
+		}
+
+		return existsOther;
 	}
 
 

@@ -1,4 +1,3 @@
-
 const inputElement = document.getElementById(`${fragmentNamespace}-text-input`);
 
 function main() {
@@ -10,6 +9,12 @@ function main() {
   var year = dateNow.getFullYear();
   var dateFormatted = day + '/' + month + '/' + year;
   inputElement.value = dateFormatted;
+
+  if(configuration.readonly){
+    inputElement.readOnly = true;
+  }else{
+    inputElement.readonly = false;
+  }
 }
 
 main();
