@@ -1,0 +1,41 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "show-characters-count",
+					"name": "showCharactersCount",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+					{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Nombre expando",
+					"localizable": true,
+					"name": "expandoName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Clase input userId",
+					"localizable": true,
+					"name": "inputUserIdClass",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "select-from-list",
+  "name": "EM-Seleccionar de lista",
+  "typeOptions": {"fieldTypes": [
+    "relationship",
+    "select"
+  ]},
+  "type": "input"
+}

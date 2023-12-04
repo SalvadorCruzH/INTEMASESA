@@ -1,0 +1,14 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM-Obtener valor campo expando Ajeno",
+  "typeOptions": {"fieldTypes": [
+    "text",
+    "long-text",
+    "number"
+  ]},
+  "type": "input"
+}
