@@ -10,8 +10,6 @@ ServiceTracker customObjectUtilTracker = new ServiceTracker(bundleObject.getBund
 customObjectUtilTracker.open();
 CustomObjectUtil customObjectUtil = customObjectUtilTracker.getService();
 
-//boolean isValidIBAN = customObjectUtil.(new CustomObjectUtil().validarIBAN(iBAN));
-
 boolean isValidIBAN = customObjectUtil.validarIBAN(iBAN);
 
 if(isValidIBAN){
