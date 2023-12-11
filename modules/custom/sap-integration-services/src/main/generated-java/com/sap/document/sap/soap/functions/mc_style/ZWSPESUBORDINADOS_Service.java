@@ -1,14 +1,14 @@
 
 package com.sap.document.sap.soap.functions.mc_style;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.xml.namespace.QName;
 import jakarta.xml.ws.Service;
 import jakarta.xml.ws.WebEndpoint;
 import jakarta.xml.ws.WebServiceClient;
 import jakarta.xml.ws.WebServiceException;
 import jakarta.xml.ws.WebServiceFeature;
-import java.net.MalformedURLException;
-import java.net.URL;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -17,7 +17,7 @@ import javax.xml.namespace.QName;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_SUBORDINADOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl")
+@WebServiceClient(name = "Z_WS_PE_SUBORDINADOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_subordinados.wsdl")
 public class ZWSPESUBORDINADOS_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPESUBORDINADOS_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("classpath:META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl");
+            url = new URL("classpath:META-INF/wsdl/z_ws_pe_subordinados.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -75,7 +75,7 @@ public class ZWSPESUBORDINADOS_Service
     /**
      * 
      * @param features
-     *     A list of {@link WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
+     *     A list of {@link jakarta.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
      *     returns ZWSPESUBORDINADOS
      */

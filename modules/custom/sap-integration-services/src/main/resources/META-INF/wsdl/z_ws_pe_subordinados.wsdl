@@ -12,7 +12,7 @@
         <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
     </wsdl:documentation>
     <wsp:UsingPolicy wsdl:required="true"/>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_EMPLEADO_DATOS_PERSONA">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_SUBORDINADOS">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -92,7 +92,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_SUBORDINADOS_soap12">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -172,7 +172,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="IF__Z_WS_PE_EMPLEADO_DATOS_PERSONA">
+    <wsp:Policy wsu:Id="IF__Z_WS_PE_SUBORDINADOS">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
@@ -187,7 +187,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="OP__ZPeEmpleadoDatosPersonales">
+    <wsp:Policy wsu:Id="OP__ZPeSubordinados">
         <wsp:ExactlyOne>
             <wsp:All>
                 <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no
@@ -202,136 +202,11 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsdl:types>
-        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
-                    xmlns:n0="urn:sap-com:document:sap:rfc:functions">
-            <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
+        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
+                    xmlns:tns="urn:sap-com:document:sap:rfc:functions">
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="1"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char15">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="15"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char20">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="20"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char3">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="3"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char40">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="40"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char6">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="6"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char60">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="60"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="decimal3.0">
-                <xsd:restriction base="xsd:decimal">
-                    <xsd:totalDigits value="3"/>
-                    <xsd:fractionDigits value="0"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="string">
-                <xsd:restriction base="xsd:string"/>
-            </xsd:simpleType>
-            <xsd:complexType name="ZpeStEmpleadoDatosPersonal">
-                <xsd:sequence>
-                    <xsd:element name="Pernr" type="n0:numeric8"/>
-                    <xsd:element name="Nombre" type="n0:char40"/>
-                    <xsd:element name="Apellido1" type="n0:char40"/>
-                    <xsd:element name="Apellido2" type="n0:char25"/>
-                    <xsd:element name="NifE" type="n0:char9"/>
-                    <xsd:element name="GeneroId" type="tns:char1"/>
-                    <xsd:element name="GeneroDesc" type="tns:char60"/>
-                    <xsd:element name="EstadoCivilId" type="tns:char1"/>
-                    <xsd:element name="EstadoCivilDesc" type="tns:char6"/>
-                    <xsd:element name="NumeroHijos" type="tns:decimal3.0"/>
-                    <xsd:element name="FechaNacimiento" type="n0:date10"/>
-                    <xsd:element name="PoblacionNacimiento" type="tns:char40"/>
-                    <xsd:element name="ProvinciaNacimientoId" type="tns:char3"/>
-                    <xsd:element name="ProvinciaNacimientoDesc" type="tns:char20"/>
-                    <xsd:element name="NacionalidadId" type="tns:char3"/>
-                    <xsd:element name="NacionalidadDesc" type="tns:char15"/>
-                    <xsd:element name="NroSs" type="n0:numeric12"/>
-                    <xsd:element name="Usuario" type="n0:char30"/>
-                    <xsd:element name="Email" type="n0:char241"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStEmpleadoDatosPersonal">
-                <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStEmpleadoDatosPersonal" minOccurs="0" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:element name="ZPeEmpleadoDatosPersonales">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="Pernr" type="n0:numeric8"/>
-                        <xsd:element name="Usrid" type="tns:string" minOccurs="0"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ZPeEmpleadoDatosPersonalesResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="TEmpleados" type="tns:TableOfZpeStEmpleadoDatosPersonal"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:schema>
-        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
-                    xmlns:tns="urn:sap-com:document:sap:rfc:functions"
-                    xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style">
-            <xsd:import namespace="urn:sap-com:document:sap:soap:functions:mc-style"/>
-            <xsd:simpleType name="char241">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="241"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char25">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="25"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char30">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="30"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char40">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="40"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char9">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="9"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="date10">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="10"/>
-                    <xsd:pattern value="\d\d\d\d-\d\d-\d\d"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="numeric12">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="12"/>
-                    <xsd:pattern value="\d*"/>
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="numeric8">
@@ -341,33 +216,62 @@
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:schema>
+        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
+                    xmlns:n0="urn:sap-com:document:sap:rfc:functions">
+            <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
+            <xsd:complexType name="ZpeStSubordinados">
+                <xsd:sequence>
+                    <xsd:element name="Pernr" type="n0:numeric8"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStSubordinados">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStSubordinados" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ZPeSubordinados">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="DirectosTodos" type="n0:char1"/>
+                        <xsd:element name="Pernr" type="n0:numeric8"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ZPeSubordinadosResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="TEmpleados" type="tns:TableOfZpeStSubordinados"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="ZPeEmpleadoDatosPersonales">
-        <wsdl:part name="parameters" element="tns:ZPeEmpleadoDatosPersonales"/>
+    <wsdl:message name="ZPeSubordinados">
+        <wsdl:part name="parameters" element="tns:ZPeSubordinados"/>
     </wsdl:message>
-    <wsdl:message name="ZPeEmpleadoDatosPersonalesResponse">
-        <wsdl:part name="parameter" element="tns:ZPeEmpleadoDatosPersonalesResponse"/>
+    <wsdl:message name="ZPeSubordinadosResponse">
+        <wsdl:part name="parameter" element="tns:ZPeSubordinadosResponse"/>
     </wsdl:message>
-    <wsdl:portType name="Z_WS_PE_EMPLEADO_DATOS_PERSONA">
+    <wsdl:portType name="Z_WS_PE_SUBORDINADOS">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#IF__Z_WS_PE_EMPLEADO_DATOS_PERSONA"/>
+            <wsp:PolicyReference URI="#IF__Z_WS_PE_SUBORDINADOS"/>
         </wsp:Policy>
-        <wsdl:operation name="ZPeEmpleadoDatosPersonales">
+        <wsdl:operation name="ZPeSubordinados">
             <wsp:Policy>
-                <wsp:PolicyReference URI="#OP__ZPeEmpleadoDatosPersonales"/>
+                <wsp:PolicyReference URI="#OP__ZPeSubordinados"/>
             </wsp:Policy>
-            <wsdl:input message="tns:ZPeEmpleadoDatosPersonales"/>
-            <wsdl:output message="tns:ZPeEmpleadoDatosPersonalesResponse"/>
+            <wsdl:input message="tns:ZPeSubordinados"/>
+            <wsdl:output message="tns:ZPeSubordinadosResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="Z_WS_PE_EMPLEADO_DATOS_PERSONA" type="tns:Z_WS_PE_EMPLEADO_DATOS_PERSONA">
+    <wsdl:binding name="Z_WS_PE_SUBORDINADOS" type="tns:Z_WS_PE_SUBORDINADOS">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_EMPLEADO_DATOS_PERSONA"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_SUBORDINADOS"/>
         </wsp:Policy>
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeEmpleadoDatosPersonales">
+        <wsdl:operation name="ZPeSubordinados">
             <soap:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_DATOS_PERSONA:ZPeEmpleadoDatosPersonalesRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_SUBORDINADOS:ZPeSubordinadosRequest"
                     style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
@@ -377,14 +281,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12" type="tns:Z_WS_PE_EMPLEADO_DATOS_PERSONA">
+    <wsdl:binding name="Z_WS_PE_SUBORDINADOS_soap12" type="tns:Z_WS_PE_SUBORDINADOS">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_SUBORDINADOS_soap12"/>
         </wsp:Policy>
         <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeEmpleadoDatosPersonales">
+        <wsdl:operation name="ZPeSubordinados">
             <wsoap12:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_DATOS_PERSONA:ZPeEmpleadoDatosPersonalesRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_SUBORDINADOS:ZPeSubordinadosRequest"
                     style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
@@ -394,14 +298,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="Z_WS_PE_EMPLEADO_DATOS_PERSONA">
-        <wsdl:port name="Z_WS_PE_EMPLEADO_DATOS_PERSONA" binding="tns:Z_WS_PE_EMPLEADO_DATOS_PERSONA">
+    <wsdl:service name="Z_WS_PE_SUBORDINADOS">
+        <wsdl:port name="Z_WS_PE_SUBORDINADOS" binding="tns:Z_WS_PE_SUBORDINADOS">
             <soap:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_datos_persona/010/z_ws_pe_empleado_datos_persona/z_ws_pe_empleado_datos_persona"/>
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
         </wsdl:port>
-        <wsdl:port name="Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12" binding="tns:Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12">
+        <wsdl:port name="Z_WS_PE_SUBORDINADOS_soap12" binding="tns:Z_WS_PE_SUBORDINADOS_soap12">
             <wsoap12:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_datos_persona/010/z_ws_pe_empleado_datos_persona/z_ws_pe_empleado_datos_persona"/>
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

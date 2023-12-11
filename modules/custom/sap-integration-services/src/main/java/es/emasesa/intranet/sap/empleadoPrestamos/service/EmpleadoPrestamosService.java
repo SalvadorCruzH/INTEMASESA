@@ -60,7 +60,7 @@ public class EmpleadoPrestamosService {
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJORNADARESUM.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOPRESTAMOS.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();

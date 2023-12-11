@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_PRESTAMOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/C:/Dev/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_prestamos.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_PRESTAMOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_prestamos.wsdl")
 public class ZWSPEEMPLEADOPRESTAMOS_Service
     extends Service
 {
@@ -75,7 +75,7 @@ public class ZWSPEEMPLEADOPRESTAMOS_Service
     /**
      * 
      * @param features
-     *     A list of {@link WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
+     *     A list of {@link jakarta.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
      *     returns ZWSPEEMPLEADOPRESTAMOS
      */

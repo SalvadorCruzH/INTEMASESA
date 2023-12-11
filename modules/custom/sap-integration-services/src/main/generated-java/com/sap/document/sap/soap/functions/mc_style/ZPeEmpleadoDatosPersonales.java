@@ -19,6 +19,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="Pernr" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
+ *         &lt;element name="Usrid" type="{urn:sap-com:document:sap:soap:functions:mc-style}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -29,13 +30,16 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "pernr"
+    "pernr",
+    "usrid"
 })
 @XmlRootElement(name = "ZPeEmpleadoDatosPersonales")
 public class ZPeEmpleadoDatosPersonales {
 
     @XmlElement(name = "Pernr", required = true)
     protected String pernr;
+    @XmlElement(name = "Usrid")
+    protected String usrid;
 
     /**
      * Obtiene el valor de la propiedad pernr.
@@ -59,6 +63,30 @@ public class ZPeEmpleadoDatosPersonales {
      */
     public void setPernr(String value) {
         this.pernr = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad usrid.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUsrid() {
+        return usrid;
+    }
+
+    /**
+     * Define el valor de la propiedad usrid.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUsrid(String value) {
+        this.usrid = value;
     }
 
 }

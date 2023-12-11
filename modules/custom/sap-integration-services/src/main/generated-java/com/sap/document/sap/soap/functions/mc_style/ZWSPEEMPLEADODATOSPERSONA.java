@@ -26,6 +26,7 @@ public interface ZWSPEEMPLEADODATOSPERSONA {
     /**
      * 
      * @param pernr
+     * @param usrid
      * @return
      *     returns com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoDatosPersonal
      */
@@ -35,6 +36,8 @@ public interface ZWSPEEMPLEADODATOSPERSONA {
     @ResponseWrapper(localName = "ZPeEmpleadoDatosPersonalesResponse", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeEmpleadoDatosPersonalesResponse")
     public TableOfZpeStEmpleadoDatosPersonal zPeEmpleadoDatosPersonales(
         @WebParam(name = "Pernr", targetNamespace = "")
-        String pernr);
+        String pernr,
+        @WebParam(name = "Usrid", targetNamespace = "")
+        String usrid);
 
 }

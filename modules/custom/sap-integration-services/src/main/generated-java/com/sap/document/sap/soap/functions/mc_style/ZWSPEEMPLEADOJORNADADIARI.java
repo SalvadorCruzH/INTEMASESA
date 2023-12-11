@@ -22,7 +22,7 @@ import jakarta.xml.ws.ResponseWrapper;
     com.sap.document.sap.rfc.functions.ObjectFactory.class,
     com.sap.document.sap.soap.functions.mc_style.ObjectFactory.class
 })
-public interface ZWSPEEMPLEADOJornadaDiari {
+public interface ZWSPEEMPLEADOJORNADADIARI {
 
 
     /**
@@ -33,7 +33,7 @@ public interface ZWSPEEMPLEADOJornadaDiari {
      * @return
      *     returns com.sap.document.sap.rfc.functions.TABLEOFZPESTEMPLEADOJORNADADIARIA
      */
-    @WebMethod(operationName = "ZPeEmpleadoJornadaDiaria", action = "urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_JORNADA_DIARI:ZPeEmpleadoJornadaDiariaRequest")
+    @WebMethod(operationName = "ZPeEmpleadoJornadaDiaria", action = "urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_jornada_diari:ZPeEmpleadoJornadaDiariaRequest")
     @WebResult(name = "TEmpleados", targetNamespace = "")
     @RequestWrapper(localName = "ZPeEmpleadoJornadaDiaria", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeEmpleadoJornadaDiaria")
     @ResponseWrapper(localName = "ZPeEmpleadoJornadaDiariaResponse", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeEmpleadoJornadaDiariaResponse")

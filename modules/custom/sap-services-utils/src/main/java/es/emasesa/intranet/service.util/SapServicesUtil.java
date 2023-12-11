@@ -160,8 +160,9 @@ public class SapServicesUtil {
             if(_empleadoDatosPersonalesService == null){
                 activate(null);
             }
+
             datosEmpleado = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
-            datosEmpleado.put("datosDomicilio", _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(pernr));
+            datosEmpleado.put("datosDomicilio", _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(datosEmpleado.getString("perser")));
         } catch (SapCommunicationException | EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -344,5 +345,4 @@ public class SapServicesUtil {
     private SubordinadosService _subordinadosService;
     private EmpleadoPrestamosService _empleadoPrestamsoService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
-
 }

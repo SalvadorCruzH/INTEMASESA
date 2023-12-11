@@ -39,13 +39,13 @@ war {
 	includeDependencies = true
 	//wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
-	//wsdl = "../META-INF/wsdl/Z_WS_PE_MARCAJES_HISTORICO_ACT.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_marcajes_historico_act.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_jornada_diari.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_domicilio.wsdl"
-	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
-	//wsdl = "../META-INF/wsdl/Z_WS_PE_SUBORDINADOS.wsdl"
-	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_prestamos.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_subordinados.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_prestamos.wsdl"
 	generatedClassesRoot = "build/classes"
-	generatedSourceRoot= "..src/main/generated-java"
+	generatedSourceRoot= "../src/main/generated-java"
 }*/

@@ -28,7 +28,7 @@ public class EmpleadoDatosPersonalesService {
 
         LoggerUtil.debug(LOG, "[B] getEmpleadoDatosPersonales");
         try {
-            TableOfZpeStEmpleadoDatosPersonal serviceResult = port.zPeEmpleadoDatosPersonales(pernr);
+            TableOfZpeStEmpleadoDatosPersonal serviceResult = port.zPeEmpleadoDatosPersonales("", pernr);
             ZpeStEmpleadoDatosPersonal empleadoDatosPersonal = serviceResult.getItem().stream().findFirst().orElse(null);
 
             return JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoDatosPersonal));

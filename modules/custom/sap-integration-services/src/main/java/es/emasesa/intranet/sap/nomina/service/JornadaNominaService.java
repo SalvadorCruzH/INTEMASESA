@@ -35,14 +35,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class JornadaNominaService {
 
     public String guardarIRPF(String pernr, String fechaInicio, double IRPF_Solicitado){
+
         try {
-            ZPeActJornadaNomina zpeStActJornadaNominaParent = getObjectFactory().createZPeActJornadaNomina();
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(pernr);
             zpeStActJornadaNomina.setFechaInicio(fechaInicio);
             zpeStActJornadaNomina.setIrpfSolicitado(BigDecimal.valueOf(IRPF_Solicitado));
-            zpeStActJornadaNominaParent.setTEmpleados(zpeStActJornadaNomina);
-            ZPeActJornadaNominaResponse result = getObjectFactory().createZPeActJornadaNominaResponse();
 
             Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
 
@@ -69,7 +67,6 @@ public class JornadaNominaService {
 
     public Bapireturn1 peticionHorasExtras(String idEmpleado, LocalDateTime fechaInicio, LocalDateTime fechaFin, String tipoRetribucion) {
         try {
-            ZPeActJornadaNomina zpeStActJornadaNominaParent = getObjectFactory().createZPeActJornadaNomina();
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(idEmpleado);
             zpeStActJornadaNomina.setHeInicio(getXMLGregorianCalendar(fechaInicio));
@@ -77,8 +74,6 @@ public class JornadaNominaService {
             zpeStActJornadaNomina.setHeTipoRetribucion(tipoRetribucion);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             zpeStActJornadaNomina.setFechaInicio(fechaInicio.format(dtf));
-            zpeStActJornadaNominaParent.setTEmpleados(zpeStActJornadaNomina);
-            ZPeActJornadaNominaResponse result = getObjectFactory().createZPeActJornadaNominaResponse();
 
             Bapireturn1 result1 = port.zPeActJornadaNomina(zpeStActJornadaNomina);
 

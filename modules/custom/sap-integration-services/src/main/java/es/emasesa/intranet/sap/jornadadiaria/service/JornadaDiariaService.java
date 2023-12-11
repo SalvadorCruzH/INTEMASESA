@@ -1,7 +1,5 @@
 package es.emasesa.intranet.sap.jornadadiaria.service;
 
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -10,8 +8,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.rfc.functions.TABLEOFZPESTEMPLEADOJORNADADIARIA;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJornadaDiari_Service;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADADIARI;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADADIARI_Service;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -69,7 +67,7 @@ public class JornadaDiariaService {
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJornadaDiari.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJORNADADIARI.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
@@ -82,8 +80,8 @@ public class JornadaDiariaService {
                 }
             });
             URL urlEndpoint = new URL(configuration.jornadaDiariaEndpoint());
-            ZWSPEEMPLEADOJornadaDiari_Service service = new ZWSPEEMPLEADOJornadaDiari_Service();
-            port = service.getPort(ZWSPEEMPLEADOJornadaDiari.class);
+            ZWSPEEMPLEADOJORNADADIARI_Service service = new ZWSPEEMPLEADOJORNADADIARI_Service();
+            port = service.getPort(ZWSPEEMPLEADOJORNADADIARI.class);
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
@@ -110,7 +108,7 @@ public class JornadaDiariaService {
 
     }
 
-    private ZWSPEEMPLEADOJornadaDiari port;
+    private ZWSPEEMPLEADOJORNADADIARI port;
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
