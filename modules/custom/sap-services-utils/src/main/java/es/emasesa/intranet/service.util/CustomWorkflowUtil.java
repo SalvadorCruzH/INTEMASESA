@@ -1,5 +1,6 @@
 package es.emasesa.intranet.service.util;
 
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -46,9 +47,10 @@ public class CustomWorkflowUtil {
         try {
             User user = _userLocalService.getUser(userId);
 
+            String matricula  = _expandoValueLocalService.getData(companyId, "com.liferay.portal.kernel.model.User", "CUSTOM_FIELDS", "matricula", userId, "");
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(user.getScreenName());
+            JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matricula);
             Thread.currentThread().setContextClassLoader(actualClassLoader);
             screenName = json.getString(employeeType);
             LOG.debug("Tipo de empleado: "+employeeType);
@@ -102,6 +104,8 @@ public class CustomWorkflowUtil {
         }
     }
 
+    @Reference
+    private ExpandoValueLocalService _expandoValueLocalService;
 
     @Reference
     private UserLocalService _userLocalService;

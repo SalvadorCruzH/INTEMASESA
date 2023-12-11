@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+        xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+    <name>7bb1bf32-49f0-1875-dcf3-a60fdf4f1842</name>
+    <version>12</version>
+    <state>
+        <name>35e23d24-283f-4f8b-8419-08c071097df7</name>
+        <description>Inicia un flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						-274,
+						66
+					]
+				}
+			]]>
+        </metadata>
+        <initial>true</initial>
+        <labels>
+            <label language-id="es_ES">
+                Creación Solicitud anticipo reintegrable
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        envio de solicitud
+                    </label>
+                </labels>
+                <name>3d40641c-f2f6-4c35-9a11-81e87db71fc8</name>
+                <target>1a93d5de-c85f-4f6a-a5ce-6b2ebbcf6c36</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </state>
+    <state>
+        <name>648fa0be-540a-4f04-92ba-2b50277f34c7</name>
+        <description>Finaliza el flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						728,
+						71
+					],
+					"terminal": true
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Aprobada y guargar en SIGD</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Admin RRHH");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposReintegrables", "solicitud");
+}
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <notification>
+                <name>Se ha finalizado su solicitud</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Su solicitud de Anticipo Reintegrable ha sido aprobada.]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <user />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <labels>
+            <label language-id="es_ES">
+                Fin proceso solicitud
+            </label>
+        </labels>
+    </state>
+    <state>
+        <name>d1c3cf48-a0f4-4042-9a58-93db4248b6c0</name>
+        <description>Finaliza el flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						235.546875,
+						280.5
+					],
+					"terminal": true
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Guardar en SIGD</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Admin RRHH");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposReintegrables", "solicitud");
+}
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <notification>
+                <name>Notificación de rechazo solicitud anticipo reintegrable</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Solicitud de anticipo reintegrable rechazada.]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <user />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <labels>
+            <label language-id="es_ES">
+                Rechazada y guardada en SIGD
+            </label>
+        </labels>
+    </state>
+    <task>
+        <name>1a93d5de-c85f-4f6a-a5ce-6b2ebbcf6c36</name>
+        <description>Pida a un usuario que trabaje en el elemento.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						236.546875,
+						70.5
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Cambiar estado objeto</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", userId, "Admin RRHH");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onExit</execution-type>
+            </action>
+            <notification>
+                <name>Notificación de Solicitud de anticipo reintegrable</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Se ha creado una solicitud de anticipo reintegrable.]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <assignees />
+                </recipients>
+                <execution-type>onAssignment</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-id>47798</role-id>
+                </role>
+            </roles>
+        </assignments>
+        <labels>
+            <label language-id="es_ES">
+                admin RRHH
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Aprobar solicitud y guardar en SIGD
+                    </label>
+                </labels>
+                <name>18038393-0821-49c3-a0be-56c5715978fa</name>
+                <target>648fa0be-540a-4f04-92ba-2b50277f34c7</target>
+                <default>true</default>
+            </transition>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Rechazar solicitud y guardar en SIGD
+                    </label>
+                </labels>
+                <name>dcba4593-32f3-494b-8ea5-fa67fbe83f4c</name>
+                <target>d1c3cf48-a0f4-4042-9a58-93db4248b6c0</target>
+                <default>false</default>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>
