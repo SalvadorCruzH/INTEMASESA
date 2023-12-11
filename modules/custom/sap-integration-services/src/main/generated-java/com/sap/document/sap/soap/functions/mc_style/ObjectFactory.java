@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
  * type definitions, element declarations and model 
  * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -24,14 +24,59 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.sap.document.sap.soap.functions.mc_style
-     *
+     * 
      */
     public ObjectFactory() {
     }
+
     /**
      * Create an instance of {@link ZPeEmpleadoEstructura }
+     * 
+     */
+    public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
+        return new ZPeEmpleadoEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoEstructuraResponse }
+     * 
+     */
+    public ZPeEmpleadoEstructuraResponse createZPeEmpleadoEstructuraResponse() {
+        return new ZPeEmpleadoEstructuraResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoEstructura }
+     * 
+     */
+    public TableOfZpeStEmpleadoEstructura createTableOfZpeStEmpleadoEstructura() {
+        return new TableOfZpeStEmpleadoEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoEstructura }
+     * 
+     */
+    public ZpeStEmpleadoEstructura createZpeStEmpleadoEstructura() {
+        return new ZpeStEmpleadoEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZPeConsultaCertRetPdf }
      *
      */
+    public ZPeConsultaCertRetPdf createZPeConsultaCertRetPdf() {
+        return new ZPeConsultaCertRetPdf();
+    }
+
+    /**
+     * Create an instance of {@link ZPeConsultaCertRetPdfResponse }
+     *
+     */
+    public ZPeConsultaCertRetPdfResponse createZPeConsultaCertRetPdfResponse() {
+        return new ZPeConsultaCertRetPdfResponse();
+    }
+
     public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
         return new ZPeEmpleadoEstructura();
     }

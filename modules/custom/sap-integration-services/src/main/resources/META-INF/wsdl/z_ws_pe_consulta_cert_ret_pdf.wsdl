@@ -12,7 +12,7 @@
         <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
     </wsdl:documentation>
     <wsp:UsingPolicy wsdl:required="true"/>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_EMPLEADO_ESTRUCTURA">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_CONSULTA_CERT_RET_PDF">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -92,7 +92,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_EMPLEADO_ESTRUCTURA_soap12">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_CONSULTA_CERT_RET_PDF_soap12">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -172,7 +172,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="IF__Z_WS_PE_EMPLEADO_ESTRUCTURA">
+    <wsp:Policy wsu:Id="IF__Z_WS_PE_CONSULTA_CERT_RET_PDF">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
@@ -187,7 +187,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="OP__ZPeEmpleadoEstructura">
+    <wsp:Policy wsu:Id="OP__ZPeConsultaCertRetPdf">
         <wsp:ExactlyOne>
             <wsp:All>
                 <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no
@@ -203,12 +203,10 @@
     </wsp:Policy>
     <wsdl:types>
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
-                    xmlns:tns="urn:sap-com:document:sap:rfc:functions"
-                    xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style">
-            <xsd:import namespace="urn:sap-com:document:sap:soap:functions:mc-style"/>
-            <xsd:simpleType name="char40">
+                    xmlns:tns="urn:sap-com:document:sap:rfc:functions">
+            <xsd:simpleType name="char14">
                 <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="40"/>
+                    <xsd:maxLength value="14"/>
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="numeric8">
@@ -221,111 +219,50 @@
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                     xmlns:n0="urn:sap-com:document:sap:rfc:functions">
             <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
-            <xsd:simpleType name="char1">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="1"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char12">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="12"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char4">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="4"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="numeric8">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="8"/>
-                    <xsd:pattern value="\d*"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:complexType name="ZpeStEmpleadoEstructura">
-                <xsd:sequence>
-                    <xsd:element name="Pernr" type="n0:numeric8"/>
-                    <xsd:element name="EsResponsable" type="tns:char1"/>
-                    <xsd:element name="ResponsableId" type="n0:numeric8"/>
-                    <xsd:element name="UnidadOrgId" type="tns:numeric8"/>
-                    <xsd:element name="UnidadOrgDesc" type="n0:char40"/>
-                    <xsd:element name="UnidadOrgSigla" type="tns:char12"/>
-                    <xsd:element name="SeccionId" type="tns:numeric8"/>
-                    <xsd:element name="SeccionDesc" type="n0:char40"/>
-                    <xsd:element name="SeccionRespId" type="n0:numeric8"/>
-                    <xsd:element name="UnidadId" type="tns:numeric8"/>
-                    <xsd:element name="UnidadDesc" type="n0:char40"/>
-                    <xsd:element name="UnidadRespId" type="n0:numeric8"/>
-                    <xsd:element name="DptoId" type="tns:numeric8"/>
-                    <xsd:element name="DptoDesc" type="n0:char40"/>
-                    <xsd:element name="DptoRespId" type="n0:numeric8"/>
-                    <xsd:element name="DivisionId" type="tns:numeric8"/>
-                    <xsd:element name="DivisionDesc" type="n0:char40"/>
-                    <xsd:element name="DivisionRespId" type="n0:numeric8"/>
-                    <xsd:element name="SubdireccionId" type="tns:numeric8"/>
-                    <xsd:element name="SubdireccionDesc" type="n0:char40"/>
-                    <xsd:element name="SubdireccionRespId" type="n0:numeric8"/>
-                    <xsd:element name="DireccionId" type="tns:numeric8"/>
-                    <xsd:element name="DireccionDesc" type="n0:char40"/>
-                    <xsd:element name="DireccionRespId" type="n0:numeric8"/>
-                    <xsd:element name="ConsejeroId" type="tns:numeric8"/>
-                    <xsd:element name="ConsejeroDesc" type="n0:char40"/>
-                    <xsd:element name="ConsejeroRespId" type="n0:numeric8"/>
-                    <xsd:element name="CentroId" type="tns:char4"/>
-                    <xsd:element name="CentroDesc" type="n0:char40"/>
-                    <xsd:element name="PosicionId" type="tns:numeric8"/>
-                    <xsd:element name="PosicionDesc" type="n0:char40"/>
-                    <xsd:element name="FuncionId" type="tns:numeric8"/>
-                    <xsd:element name="FuncionDesc" type="n0:char40"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStEmpleadoEstructura">
-                <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStEmpleadoEstructura" minOccurs="0" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:element name="ZPeEmpleadoEstructura">
+            <xsd:element name="ZPeConsultaCertRetPdf">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="Pernr" type="n0:numeric8"/>
+                        <xsd:element name="ImPernr" type="n0:numeric8"/>
+                        <xsd:element name="ImVariante" type="n0:char14" minOccurs="0"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
-            <xsd:element name="ZPeEmpleadoEstructuraResponse">
+            <xsd:element name="ZPeConsultaCertRetPdfResponse">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="TEmpleados" type="tns:TableOfZpeStEmpleadoEstructura"/>
+                        <xsd:element name="ExData" type="xsd:base64Binary"/>
+                        <xsd:element name="ExResult" type="xsd:int"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
         </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="ZPeEmpleadoEstructura">
-        <wsdl:part name="parameters" element="tns:ZPeEmpleadoEstructura"/>
+    <wsdl:message name="ZPeConsultaCertRetPdf">
+        <wsdl:part name="parameters" element="tns:ZPeConsultaCertRetPdf"/>
     </wsdl:message>
-    <wsdl:message name="ZPeEmpleadoEstructuraResponse">
-        <wsdl:part name="parameter" element="tns:ZPeEmpleadoEstructuraResponse"/>
+    <wsdl:message name="ZPeConsultaCertRetPdfResponse">
+        <wsdl:part name="parameter" element="tns:ZPeConsultaCertRetPdfResponse"/>
     </wsdl:message>
-    <wsdl:portType name="Z_WS_PE_EMPLEADO_ESTRUCTURA">
+    <wsdl:portType name="Z_WS_PE_CONSULTA_CERT_RET_PDF">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#IF__Z_WS_PE_EMPLEADO_ESTRUCTURA"/>
+            <wsp:PolicyReference URI="#IF__Z_WS_PE_CONSULTA_CERT_RET_PDF"/>
         </wsp:Policy>
-        <wsdl:operation name="ZPeEmpleadoEstructura">
+        <wsdl:operation name="ZPeConsultaCertRetPdf">
             <wsp:Policy>
-                <wsp:PolicyReference URI="#OP__ZPeEmpleadoEstructura"/>
+                <wsp:PolicyReference URI="#OP__ZPeConsultaCertRetPdf"/>
             </wsp:Policy>
-            <wsdl:input message="tns:ZPeEmpleadoEstructura"/>
-            <wsdl:output message="tns:ZPeEmpleadoEstructuraResponse"/>
+            <wsdl:input message="tns:ZPeConsultaCertRetPdf"/>
+            <wsdl:output message="tns:ZPeConsultaCertRetPdfResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="Z_WS_PE_EMPLEADO_ESTRUCTURA" type="tns:Z_WS_PE_EMPLEADO_ESTRUCTURA">
+    <wsdl:binding name="Z_WS_PE_CONSULTA_CERT_RET_PDF" type="tns:Z_WS_PE_CONSULTA_CERT_RET_PDF">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_EMPLEADO_ESTRUCTURA"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_CONSULTA_CERT_RET_PDF"/>
         </wsp:Policy>
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeEmpleadoEstructura">
+        <wsdl:operation name="ZPeConsultaCertRetPdf">
             <soap:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_ESTRUCTURA:ZPeEmpleadoEstructuraRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_CONSULTA_CERT_RET_PDF:ZPeConsultaCertRetPdfRequest"
                     style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
@@ -335,14 +272,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Z_WS_PE_EMPLEADO_ESTRUCTURA_soap12" type="tns:Z_WS_PE_EMPLEADO_ESTRUCTURA">
+    <wsdl:binding name="Z_WS_PE_CONSULTA_CERT_RET_PDF_soap12" type="tns:Z_WS_PE_CONSULTA_CERT_RET_PDF">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_EMPLEADO_ESTRUCTURA_soap12"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_CONSULTA_CERT_RET_PDF_soap12"/>
         </wsp:Policy>
         <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeEmpleadoEstructura">
+        <wsdl:operation name="ZPeConsultaCertRetPdf">
             <wsoap12:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_EMPLEADO_ESTRUCTURA:ZPeEmpleadoEstructuraRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_CONSULTA_CERT_RET_PDF:ZPeConsultaCertRetPdfRequest"
                     style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
@@ -352,14 +289,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="Z_WS_PE_EMPLEADO_ESTRUCTURA">
-        <wsdl:port name="Z_WS_PE_EMPLEADO_ESTRUCTURA" binding="tns:Z_WS_PE_EMPLEADO_ESTRUCTURA">
+    <wsdl:service name="Z_WS_PE_CONSULTA_CERT_RET_PDF">
+        <wsdl:port name="Z_WS_PE_CONSULTA_CERT_RET_PDF" binding="tns:Z_WS_PE_CONSULTA_CERT_RET_PDF">
             <soap:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_estructura/010/z_ws_pe_empleado_estructura/z_ws_pe_empleado_estructura"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_consulta_cert_ret_pdf/010/z_ws_pe_consulta_cert_ret_pdf/z_ws_pe_consulta_cert_ret_pdf"/>
         </wsdl:port>
-        <wsdl:port name="Z_WS_PE_EMPLEADO_ESTRUCTURA_soap12" binding="tns:Z_WS_PE_EMPLEADO_ESTRUCTURA_soap12">
+        <wsdl:port name="Z_WS_PE_CONSULTA_CERT_RET_PDF_soap12" binding="tns:Z_WS_PE_CONSULTA_CERT_RET_PDF_soap12">
             <wsoap12:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_estructura/010/z_ws_pe_empleado_estructura/z_ws_pe_empleado_estructura"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_consulta_cert_ret_pdf/010/z_ws_pe_consulta_cert_ret_pdf/z_ws_pe_consulta_cert_ret_pdf"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

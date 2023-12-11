@@ -14,7 +14,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SapServicesConfiguration {
 
-
     @Meta.AD(
             deflt = "",
             name = "userPrompt",
@@ -89,4 +88,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String empleadoPrestamosEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "certificadoRetencionesEndpoint",
+            required = false
+    )
+    String certificadoRetencionesEndpoint();
 }

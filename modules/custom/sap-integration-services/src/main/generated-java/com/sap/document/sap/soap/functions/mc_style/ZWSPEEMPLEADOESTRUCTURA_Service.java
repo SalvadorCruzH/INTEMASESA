@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_ESTRUCTURA", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_ESTRUCTURA", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/stejeros/Developer/source/emasesa/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl")
 public class ZWSPEEMPLEADOESTRUCTURA_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPEEMPLEADOESTRUCTURA_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("classpath:META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl");
+            url = new URL("file:/Users/stejeros/Developer/source/emasesa/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

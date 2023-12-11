@@ -59,7 +59,7 @@ public class UpdateUserScheduler implements MessageListener  {
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NOMBRE, employerData.getString("nombre", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, employerData.getString("perser", StringConstants.EMPTY));
-            
+
             user.getExpandoBridge().setAttributes(expandoAttributes, false);
             LOG.debug("Usuario user id "+jsonObject.get("pernr") +" actualizado");
         }else{

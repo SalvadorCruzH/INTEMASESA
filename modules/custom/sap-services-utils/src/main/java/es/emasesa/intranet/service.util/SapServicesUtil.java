@@ -24,6 +24,8 @@ import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
+import es.emasesa.intranet.sap.retenciones.exception.CertificadoRetencionesException;
+import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 import java.util.Map;
@@ -162,8 +164,10 @@ public class SapServicesUtil {
             }
 
             datosEmpleado = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
-            datosEmpleado.put("datosDomicilio", _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(datosEmpleado.getString("perser")));
-        } catch (SapCommunicationException | EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
+            datosEmpleado.put("datosDomicilio", _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(datosEmpleado.getString("pernr")));
+
+            _certificadoRetencionesService.getCertificadoRetenciones(datosEmpleado.getString("pernr"), "");
+        } catch (SapCommunicationException | EmpleadoDatosPersonalesException | CertificadoRetencionesException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             if(LOG.isDebugEnabled()){
@@ -293,6 +297,7 @@ public class SapServicesUtil {
             CustomServiceTracker<JornadaDiariaService> jornadaDiariaServiceCustomService = new CustomServiceTracker<>(JornadaDiariaService.class, "getJornadaDiariaService");
             CustomServiceTracker<SubordinadosService> subordinadosServiceTracker = new CustomServiceTracker<>(SubordinadosService.class, "getSubordinadosService");
             CustomServiceTracker<EmpleadoPrestamosService> empleadoPrestamosServiceTracker = new CustomServiceTracker<>(EmpleadoPrestamosService.class, "getEmpleadoPrestamosService");
+            CustomServiceTracker<CertificadoRetencionesService> certificadoRetencionesServiceTracker = new CustomServiceTracker<>(CertificadoRetencionesService.class, "getCertificadoRetencionesService");
 
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
@@ -301,6 +306,7 @@ public class SapServicesUtil {
             this._jornadaDiariaService = jornadaDiariaServiceCustomService.getService();
             this._subordinadosService = subordinadosServiceTracker.getService();
             this._empleadoPrestamsoService = empleadoPrestamosServiceTracker.getService();
+            this._certificadoRetencionesService = certificadoRetencionesServiceTracker.getService();
 
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
@@ -344,5 +350,6 @@ public class SapServicesUtil {
     private JornadaDiariaService _jornadaDiariaService;
     private SubordinadosService _subordinadosService;
     private EmpleadoPrestamosService _empleadoPrestamsoService;
+    private CertificadoRetencionesService _certificadoRetencionesService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }
