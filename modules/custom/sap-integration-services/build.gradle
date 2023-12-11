@@ -35,10 +35,10 @@ war {
 	enabled= true
 }
 
-wsimport {
+/*wsimport {
 	includeDependencies = true
 	//wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
-	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_marcajes_historico_act.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_jornada_resum.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_jornada_diari.wsdl"
@@ -49,4 +49,4 @@ wsimport {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated-java"
-}
+}*/

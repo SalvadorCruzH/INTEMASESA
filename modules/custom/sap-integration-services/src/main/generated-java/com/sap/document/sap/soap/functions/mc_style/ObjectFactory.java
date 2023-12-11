@@ -77,34 +77,6 @@ public class ObjectFactory {
         return new ZPeConsultaCertRetPdfResponse();
     }
 
-    public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
-        return new ZPeEmpleadoEstructura();
-    }
-
-    /**
-     * Create an instance of {@link ZPeEmpleadoEstructuraResponse }
-     *
-     */
-    public ZPeEmpleadoEstructuraResponse createZPeEmpleadoEstructuraResponse() {
-        return new ZPeEmpleadoEstructuraResponse();
-    }
-
-    /**
-     * Create an instance of {@link TableOfZpeStEmpleadoEstructura }
-     *
-     */
-    public TableOfZpeStEmpleadoEstructura createTableOfZpeStEmpleadoEstructura() {
-        return new TableOfZpeStEmpleadoEstructura();
-    }
-
-    /**
-     * Create an instance of {@link ZpeStEmpleadoEstructura }
-     *
-     */
-    public ZpeStEmpleadoEstructura createZpeStEmpleadoEstructura() {
-        return new ZpeStEmpleadoEstructura();
-    }
-
     /**
      * Create an instance of {@link ZPeActJornadaNomina }
      *
