@@ -95,4 +95,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String certificadoRetencionesEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "distanciaCentrosEndpoint",
+            required = false
+    )
+    String distanciaCentrosEndpoint();
 }

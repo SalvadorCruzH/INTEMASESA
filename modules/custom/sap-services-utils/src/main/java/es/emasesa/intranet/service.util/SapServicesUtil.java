@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
+import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
+import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.empleadoPrestamos.exception.EmpleadoPrestamosException;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
@@ -176,6 +178,33 @@ public class SapServicesUtil {
         return datosEmpleado;
     }
 
+    public JSONArray getDistanciaCentros(String origen, String destino) {
+
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getDistanciaCentros " + origen + " - "+ destino);
+        }
+        JSONArray distanciaCentros = JSONFactoryUtil.createJSONArray();
+
+        try {
+            if(_distanciaCentrosService == null){
+                activate(null);
+            }
+
+            distanciaCentros = _distanciaCentrosService.getDistanciaEntreCentros(origen, destino);
+            if(!origen.equals("") && !destino.equals("")){
+
+            }
+        } catch (SapCommunicationException | DistanciaCentrosException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getDistanciaCentros " + origen);
+            }
+        }
+
+        return distanciaCentros;
+    }
+
     public JSONArray getMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) {
 
         if(LOG.isDebugEnabled()){
@@ -296,6 +325,7 @@ public class SapServicesUtil {
             CustomServiceTracker<SubordinadosService> subordinadosServiceTracker = new CustomServiceTracker<>(SubordinadosService.class, "getSubordinadosService");
             CustomServiceTracker<EmpleadoPrestamosService> empleadoPrestamosServiceTracker = new CustomServiceTracker<>(EmpleadoPrestamosService.class, "getEmpleadoPrestamosService");
             CustomServiceTracker<CertificadoRetencionesService> certificadoRetencionesServiceTracker = new CustomServiceTracker<>(CertificadoRetencionesService.class, "getCertificadoRetencionesService");
+            CustomServiceTracker<DistanciaCentrosService> distanciaCentrosServiceTracker = new CustomServiceTracker<>(DistanciaCentrosService.class, "getDistanciaCentrosService");
 
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
@@ -305,7 +335,7 @@ public class SapServicesUtil {
             this._subordinadosService = subordinadosServiceTracker.getService();
             this._empleadoPrestamsoService = empleadoPrestamosServiceTracker.getService();
             this._certificadoRetencionesService = certificadoRetencionesServiceTracker.getService();
-
+            this._distanciaCentrosService = distanciaCentrosServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -349,5 +379,7 @@ public class SapServicesUtil {
     private SubordinadosService _subordinadosService;
     private EmpleadoPrestamosService _empleadoPrestamsoService;
     private CertificadoRetencionesService _certificadoRetencionesService;
+
+    private DistanciaCentrosService _distanciaCentrosService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }

@@ -1,5 +1,6 @@
 package es.emasesa.intranet.sap.proxy;
 
+import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioService;
@@ -37,6 +38,9 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     EmpleadoPrestamosService empleadoPrestamosService;
     @Autowired(required = false)
     CertificadoRetencionesService certificadoRetencionesService;
+    @Autowired(required = false)
+    DistanciaCentrosService distanciaCentrosService;
+
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -73,5 +77,9 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public CertificadoRetencionesService getCertificadoRetencionesService() {
         return certificadoRetencionesService;
+    }
+
+    public DistanciaCentrosService getDistanciaCentrosService() {
+        return distanciaCentrosService;
     }
 }

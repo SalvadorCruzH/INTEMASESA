@@ -47,6 +47,7 @@ war {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_subordinados.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_prestamos.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_centros_distancias.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated-java"
 }*/

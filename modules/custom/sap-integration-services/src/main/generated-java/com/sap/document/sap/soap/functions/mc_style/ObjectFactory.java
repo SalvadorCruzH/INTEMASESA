@@ -30,8 +30,40 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZPeEmpleadoEstructura }
+     * Create an instance of {@link ZPeCentrosDistancias }
      * 
+     */
+    public ZPeCentrosDistancias createZPeCentrosDistancias() {
+        return new ZPeCentrosDistancias();
+    }
+
+    /**
+     * Create an instance of {@link ZPeCentrosDistanciasResponse }
+     * 
+     */
+    public ZPeCentrosDistanciasResponse createZPeCentrosDistanciasResponse() {
+        return new ZPeCentrosDistanciasResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStCentrosDistancias }
+     * 
+     */
+    public TableOfZpeStCentrosDistancias createTableOfZpeStCentrosDistancias() {
+        return new TableOfZpeStCentrosDistancias();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStCentrosDistancias }
+     * 
+     */
+    public ZpeStCentrosDistancias createZpeStCentrosDistancias() {
+        return new ZpeStCentrosDistancias();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoEstructura }
+     *
      */
     public ZPeEmpleadoEstructura createZPeEmpleadoEstructura() {
         return new ZPeEmpleadoEstructura();
@@ -39,7 +71,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeEmpleadoEstructuraResponse }
-     * 
+     *
      */
     public ZPeEmpleadoEstructuraResponse createZPeEmpleadoEstructuraResponse() {
         return new ZPeEmpleadoEstructuraResponse();
@@ -47,7 +79,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStEmpleadoEstructura }
-     * 
+     *
      */
     public TableOfZpeStEmpleadoEstructura createTableOfZpeStEmpleadoEstructura() {
         return new TableOfZpeStEmpleadoEstructura();
@@ -55,7 +87,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStEmpleadoEstructura }
-     * 
+     *
      */
     public ZpeStEmpleadoEstructura createZpeStEmpleadoEstructura() {
         return new ZpeStEmpleadoEstructura();
@@ -283,5 +315,4 @@ public class ObjectFactory {
     public ZpeStSubordinados createZpeStSubordinados() {
         return new ZpeStSubordinados();
     }
-
 }
