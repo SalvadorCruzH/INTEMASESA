@@ -165,9 +165,7 @@ public class SapServicesUtil {
 
             datosEmpleado = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
             datosEmpleado.put("datosDomicilio", _empleadoDatosDomicilioService.getEmpleadoDatosDomicilio(datosEmpleado.getString("pernr")));
-
-            _certificadoRetencionesService.getCertificadoRetenciones(datosEmpleado.getString("pernr"), "");
-        } catch (SapCommunicationException | EmpleadoDatosPersonalesException | CertificadoRetencionesException | EmpleadoDatosDomicilioException e) {
+        } catch (SapCommunicationException | EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             if(LOG.isDebugEnabled()){

@@ -37,7 +37,7 @@ public class CertificadoRetencionesService {
             Holder<Integer> exResult = new Holder<>();
             ClassLoader objectFactoryClassLoader = ZWSPECONSULTACERTRETPDF.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            port.zPeConsultaCertRetPdf(pernr, "", out, exResult);
+            port.zPeConsultaCertRetPdf(pernr, imVariante, out, exResult);
             String decoded = new String(Base64.getDecoder().decode(out.value));
             JSONObject certificado = JSONFactoryUtil.createJSONObject("");
             certificado.put("pdf", decoded);
