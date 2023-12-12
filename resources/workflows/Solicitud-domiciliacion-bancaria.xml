@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>30d8f10b-1b9e-3866-117a-57ea10872adc</name>
-	<version>10</version>
+	<version>14</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -252,8 +252,8 @@ sigdServiceTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						308.86639404296875,
-						185.5
+						307.71771355484583,
+						185.50003418085126
 					]
 				}
 			]]>
@@ -300,7 +300,11 @@ customWorkflowUtilTracker.close();]]>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<user />
+					<roles>
+						<role>
+							<role-id>35183</role-id>
+						</role>
+					</roles>
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
@@ -331,7 +335,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aceptar solicitud
+						Rechazar solicitud
 					</label>
 				</labels>
 				<name>rechazar</name>
