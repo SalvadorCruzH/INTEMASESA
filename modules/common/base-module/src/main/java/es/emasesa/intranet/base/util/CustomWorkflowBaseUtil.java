@@ -47,9 +47,9 @@ import es.emasesa.intranet.base.constant.EmasesaConstants;
 
 @Component(
         immediate = true,
-        service = CustomWorkflowUtil.class
+        service = CustomWorkflowBaseUtil.class
 )
-public class CustomWorkflowUtil {
+public class CustomWorkflowBaseUtil {
 	    
     /**
      * Retrive roles and status object and update object
@@ -63,7 +63,7 @@ public class CustomWorkflowUtil {
 		if (ServiceContextThreadLocal.getServiceContext() != null) {
 			userId = ServiceContextThreadLocal.getServiceContext().getUserId();
 		}
-        LoggerUtil.debug(LOG,"Cambiando el status y la historico del object. Con el rol: " + rolName + " y el estado: " + estadoObjeto);
+        LoggerUtil.debug(LOG,"Cambiando el status y la historico del object. Con el rol : " + rolName + " y el estado: " + estadoObjeto);
 		long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
       
 		ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(classPK);
@@ -407,5 +407,5 @@ public class CustomWorkflowUtil {
 	@Reference
 	DLFileEntryLocalService _dlFileEntryLocalService;
 	
-	private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
+	private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowBaseUtil.class);
 }
