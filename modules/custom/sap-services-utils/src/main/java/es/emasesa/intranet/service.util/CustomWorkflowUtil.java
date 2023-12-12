@@ -2,6 +2,7 @@ package es.emasesa.intranet.service.util;
 
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -87,6 +88,39 @@ public class CustomWorkflowUtil {
         }
 
         return i;
+    }
+    
+    /**
+     * Cambio de domiciliación Bancaria de un empleado. Deberá rellenarse el campo de entrada IBAN, con la matricula del empleado y la fecha de solicitud
+     * 
+     * @param workflowContext
+     * @return datosServicio
+     */
+    public String cambioDomiciliacionBancaria(Map<String, Serializable> workflowContext) {
+    	String datosServicio = StringPool.BLANK;
+        String pernr = StringPool.BLANK;
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+        	 LOG.debug("Se procede con el cambio de domiciliacion bancaria...");
+            long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            String fechaSolicitud = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("createDate");
+            String iban = (String)_objectEntryLocalService.getObjectEntry(classPK).getValues().get("iBAN");
+            pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+            LOG.debug("fechaSolicitud: " + fechaSolicitud);
+            LOG.debug("iban: " + iban);
+            LOG.debug("pernr: " + pernr);
+
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            datosServicio = jornadaNominaService.cambioDomiciliacionBancaria(pernr, fechaSolicitud, iban);
+            LOG.debug("Se ha guardado el cambio de iban: "+iban + " para el usuario " +pernr);
+            LOG.debug("Los datosServicio son: " + datosServicio);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        } catch (PortalException e) {
+            LOG.error("Se ha producido un error al modificar de cambio de domiciliacion bancaria para "+ pernr, e);
+        }
+
+        return datosServicio;
     }
 
 
