@@ -85,6 +85,24 @@ public class JornadaNominaService {
 
         return null;
     }
+    
+    public String cambioDomiciliacionBancaria(String pernr, String fechaInicio, String iban){
+
+        try {
+            ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
+            zpeStActJornadaNomina.setPernr(pernr);
+            zpeStActJornadaNomina.setFechaInicio(fechaInicio);
+            zpeStActJornadaNomina.setIban(iban);
+
+            Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
+
+            return datos.toString();
+
+        } catch (Exception e) {
+            LOG.error("Se ha producido un error al intentar acceder a WS de jornadaNomina", e);
+        }
+        return null;
+    }
 
     private XMLGregorianCalendar getXMLGregorianCalendar(LocalDateTime localDateTime) throws DatatypeConfigurationException {
         ZoneId zoneId = ZoneId.systemDefault();
