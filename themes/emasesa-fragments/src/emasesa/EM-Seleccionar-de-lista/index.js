@@ -258,6 +258,23 @@ function filterRemoteOptions(query, abortController) {
 		.then((result) => {
 			return result.items.map((entry) => {
 				let label = entry[input.attributes.relationshipLabelFieldName];
+				if(configuration.campoLista == "usuarioAjeno") {
+					let nombre, apellido1, apellido2, matricula;
+					let customFields = entry.customFields;
+					customFields.forEach((customField) => {
+						if(customField.name == "nombre") {
+							nombre = customField.customValue.data;
+						} else if(customField.name == "apellido1") {
+							apellido1 = customField.customValue.data;
+						} else if(customField.name == "apellido2") {
+							apellido2 = customField.customValue.data;
+						} else if(customField.name == "matricula") {
+							matricula = customField.customValue.data;
+						}
+					});
+					label = `${nombre} ${apellido1} ${apellido2} (${matricula})`;
+				}
+
 
 				if (Array.isArray(label)) {
 					label = label.map((label) => label.name).join(', ');

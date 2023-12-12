@@ -1,0 +1,25 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+                {
+                    "dataType": "string",
+                    "defaultValue": "usuarioAjeno",
+                    "label": "Campo de lista",
+                    "name": "campoLista",
+                    "type": "select",
+                    "typeOptions": {
+                        "validValues": [
+                            {
+                                "value": "usuarioAjeno"
+                            },
+                            {
+                                "value": "otro"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

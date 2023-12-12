@@ -5,7 +5,7 @@
     "Licencia sin sueldo" : { "url": "licenciases","id":34848,"display":"/group/guest/mis-gestiones/situacion-laboral/licencia-sin-sueldo/solicitud"},
     "Reduccion de jornada" : { "url": "reduccions","id":36560,"display":"/group/guest/mis-gestiones/situacion-laboral/reduccion-de-jornada-laboral/solicitud"},
     "Cambio turnos" : { "url": "turnoses","id":34910,"display":"/group/guest/mis-gestiones/situacion-laboral/fijacion-turno-por-estudios/solicitud"},
-    "Asunto Sindical" : { "url": "asuntosindicals","id":67767,"display":"/group/guest/asuntos-sindicales"},
+    "Asunto Sindical" : { "url": "asuntosindicals","id":67767,"display":"/group/guest/mis-gestiones/nomina/asunto-sindical/solicitud"},
     "Pluses" : { "url": "pluseses","id":67437,"display":"/group/guest/mis-gestiones/mi-jornada/pluses/solicitud"},
     "Anticipo Reintegrable" : { "url": "anticiposreintegrableses","id":59917,"display":"/group/guest/mis-gestiones/nomina/anticipo-reintegrable/solicitud"},
     "Anticipo Vacaciones" : { "url": "anticipovacacioneses","id":67502,"display":"/group/guest/mis-gestiones/nomina/anticipo-de-vacaciones/solicitud"},
