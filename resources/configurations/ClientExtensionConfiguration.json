@@ -1,0 +1,16 @@
+{
+    "Compatibilidad" : { "url": "compatibilidads","id":39213,"display":"/group/guest/mis-gestiones/situacion-laboral/compatibilidad-de-actividades/solicitud"},
+    "Excedencia" : { "url": "excedenciases","id":35707,"display":"/group/guest/mis-gestiones/situacion-laboral/excedencias/solicitud"},
+    "Flexibilidad horaria" : { "url": "flexibilidads","id":38910,"display":"/group/guest/mis-gestiones/situacion-laboral/flexibilidad-horaria/solicitud"},
+    "Licencia sin sueldo" : { "url": "licenciases","id":34848,"display":"/group/guest/mis-gestiones/situacion-laboral/licencia-sin-sueldo/solicitud"},
+    "Reduccion de jornada" : { "url": "reduccions","id":36560,"display":"/group/guest/mis-gestiones/situacion-laboral/reduccion-de-jornada-laboral/solicitud"},
+    "Cambio turnos" : { "url": "turnoses","id":34910,"display":"/group/guest/mis-gestiones/situacion-laboral/fijacion-turno-por-estudios/solicitud"},
+    "Asunto Sindical" : { "url": "asuntosindicals","id":67767,"display":"/group/guest/asuntos-sindicales"},
+    "Pluses" : { "url": "pluseses","id":67437,"display":"/group/guest/mis-gestiones/mi-jornada/pluses/solicitud"},
+    "Anticipo Reintegrable" : { "url": "anticiposreintegrableses","id":59917,"display":"/group/guest/mis-gestiones/nomina/anticipo-reintegrable/solicitud"},
+    "Anticipo Vacaciones" : { "url": "anticipovacacioneses","id":67502,"display":"/group/guest/mis-gestiones/nomina/anticipo-de-vacaciones/solicitud"},
+    "Ayuda Escolar" : { "url": "ayudaescolars","id":67728,"display":"/group/guest/mis-gestiones/nomina/ayuda-escolar/solicitud"},
+    "Préstamo de Vivienda" : { "url": "prestamodeviviendas","id":67689,"display":"/group/guest/mis-gestiones/nomina/préstamo-vivienda/solicitud"},
+    "Modificación de IRPF" : { "url": "modificaciondeirpfs","id":67620,"display":"/group/guest/mis-gestiones/nomina/retención-irpf/solicitud"},
+    "Domiciliación Bancaria" : { "url": "domiciliacionbancarias","id":67588,"display":"/group/guest/mis-gestiones/nomina/cambio-de-domiciliación-bancaria/solicitud"}
+}
