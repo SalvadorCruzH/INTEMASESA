@@ -72,7 +72,7 @@
     "objectName": "Domiciliacion",
     "serieDocumental": "609",
     "tipoDocumental": {
-      "domiciliacion": "3985"
+      "solicitud": "3985"
     },
     "metadatos": {
       "numeroPersonal": "java.lang.Integer",
