@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_CONSULTA_CERT_RET_PDF", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath://META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl")
+@WebServiceClient(name = "Z_WS_PE_CONSULTA_CERT_RET_PDF", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl")
 public class ZWSPECONSULTACERTRETPDF_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPECONSULTACERTRETPDF_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("classpath://META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl");
+            url = new URL("classpath:META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
