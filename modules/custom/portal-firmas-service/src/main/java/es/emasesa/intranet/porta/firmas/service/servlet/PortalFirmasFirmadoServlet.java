@@ -1,6 +1,5 @@
 package es.emasesa.intranet.porta.firmas.service.servlet;
 
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,21 +11,23 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import es.emasesa.intranet.base.constant.EmasesaConstants;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
-import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.porta.firmas.service.impl.PFirmasModifyServicesImpl;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import es.emasesa.intranet.base.constant.EmasesaConstants;
+import es.emasesa.intranet.base.util.LoggerUtil;
 
 @Component(
         property = {
@@ -103,7 +104,5 @@ public class PortalFirmasFirmadoServlet extends HttpServlet {
 
     @Reference
     WorkflowTaskManager _workflowTaskManager;
-    @Reference
-    CustomWorkflowUtil _customWorkflowUtil;
 
 }
