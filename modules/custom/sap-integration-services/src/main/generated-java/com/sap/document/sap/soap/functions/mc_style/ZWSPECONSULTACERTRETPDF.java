@@ -26,18 +26,18 @@ public interface ZWSPECONSULTACERTRETPDF {
     /**
      * 
      * @param exResult
-     * @param imVariante
      * @param imPernr
      * @param exData
+     * @param imEjercicio
      */
     @WebMethod(operationName = "ZPeConsultaCertRetPdf", action = "urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_CONSULTA_CERT_RET_PDF:ZPeConsultaCertRetPdfRequest")
     @RequestWrapper(localName = "ZPeConsultaCertRetPdf", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeConsultaCertRetPdf")
     @ResponseWrapper(localName = "ZPeConsultaCertRetPdfResponse", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeConsultaCertRetPdfResponse")
     public void zPeConsultaCertRetPdf(
+        @WebParam(name = "ImEjercicio", targetNamespace = "")
+        String imEjercicio,
         @WebParam(name = "ImPernr", targetNamespace = "")
         String imPernr,
-        @WebParam(name = "ImVariante", targetNamespace = "")
-        String imVariante,
         @WebParam(name = "ExData", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<byte[]> exData,
         @WebParam(name = "ExResult", targetNamespace = "", mode = WebParam.Mode.OUT)

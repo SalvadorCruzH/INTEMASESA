@@ -31,7 +31,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeCiertosDatosEstructura }
-     * 
+     *
      */
     public ZPeCiertosDatosEstructura createZPeCiertosDatosEstructura() {
         return new ZPeCiertosDatosEstructura();
@@ -39,7 +39,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeCiertosDatosEstructuraResponse }
-     * 
+     *
      */
     public ZPeCiertosDatosEstructuraResponse createZPeCiertosDatosEstructuraResponse() {
         return new ZPeCiertosDatosEstructuraResponse();
@@ -438,4 +438,5 @@ public class ObjectFactory {
     public ZpeStSubordinados createZpeStSubordinados() {
         return new ZpeStSubordinados();
     }
+
 }
