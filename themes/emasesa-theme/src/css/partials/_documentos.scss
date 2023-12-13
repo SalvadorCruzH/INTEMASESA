@@ -24,11 +24,26 @@
             }
         }
         @include media-breakpoint-up(xl) {
-            flex-basis: calc(33.3333% - 15px);
+            flex-basis: calc(20% - 15px);
         }
         &__title {
             border-bottom: 1px solid $color-light-grey;
             padding-bottom: .875rem;
+            .i-mainWrapper & {
+                font-size: 1.25rem;
+                line-height: 1.25;
+            }
+            > span {
+                display: -moz-box;
+                display: -webkit-box;
+                display: box;
+                -moz-box-orient: vertical;
+                -webkit-box-orient: vertical;
+                box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
         &__date {
             #wrapper & {
