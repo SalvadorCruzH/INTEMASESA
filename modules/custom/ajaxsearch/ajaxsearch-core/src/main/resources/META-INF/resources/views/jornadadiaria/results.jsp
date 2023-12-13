@@ -2,9 +2,6 @@
 
 <div class="m-searchAjax m-searchAjax--results">
     <div>
-        <div id="as-total-items">
-            <!-- EMPTY BY DEFAULT -->
-        </div>
 
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
             <div id="wrapper-resum-lastyear" class="resum">
@@ -79,6 +76,9 @@
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
+            <div id="as-total-items">
+                <!-- EMPTY BY DEFAULT -->
+            </div>
         </div>
 
     </div>
@@ -102,7 +102,7 @@
         <td>#TTEXT#</td>
         <td>#HTRAB#</td>
         <td class="sap-respuesta-icono"><span class="#SEMAFORO#">#SEMAFORO#</td>
-        <td></td>
+        <td>#ATEXT#</td>
         <td>#DATUM#</td>
         <td>#dia#</td>
         <td>#HDEXC#</td>
