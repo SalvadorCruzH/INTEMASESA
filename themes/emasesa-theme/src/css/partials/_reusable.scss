@@ -1,8 +1,10 @@
 /* Clases reusables del portal */
 
 .i-mainWrapper {
-  /* Listados */
+  scroll-padding-right: 0;
+  overflow-y: auto;
 
+  /* Listados */
   .m-listBase {
     align-items: center;
     display: flex;
@@ -280,6 +282,171 @@
         height: m-rem(26px);
         margin-right: m-rem(10px);
       }
+    }
+  }
+  .taglib-page-iterator {
+    margin-bottom: 3rem;
+    .lfr-pagination-config .lfr-pagination-delta-selector,
+    .search-results {
+      display: none;
+    }
+    .lfr-pagination-buttons {
+      gap: 1rem;
+      a {
+        display: block;
+        border: 2px solid $color-aux-blue;
+        border-radius: 20px;
+        padding: 6px 20px;
+      }
+      .first,
+      .last {
+        text-indent: -9999px;
+        position: relative;
+        a {
+          padding: 6px 18px;
+          position: relative;
+          display: block;
+        }
+      }
+      .last {
+        &::before {
+          content: '';
+          width: 2px;
+          height: 15px;
+          background-color: $color-aux-blue;
+          position: absolute;
+          top: calc(50% - 7.5px);
+          left: 24px;
+        }
+        a {
+          &::before {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% + 3px);
+            left: calc(50% - 6px);
+            rotate: -45deg;
+          }
+          &::after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% - 3px);
+            left: calc(50% - 6px);
+            rotate: 45deg;
+          }
+        }
+      }
+      .first {
+        &::before {
+          content: '';
+          width: 2px;
+          height: 15px;
+          background-color: $color-aux-blue;
+          position: absolute;
+          top: calc(50% - 7.5px);
+          left: 14px;
+        }
+        a {
+          &::before {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% + 3px);
+            left: calc(50% - 3px);
+            rotate: 45deg;
+          }
+          &::after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% - 3px);
+            left: calc(50% - 3px);
+            rotate: -45deg;
+          }
+        }
+      }
+      li {
+        &.disabled {
+          opacity: .5;
+          a {
+            cursor: not-allowed;
+          }
+        }
+        &:nth-child(2),
+        &:nth-last-child(2) {
+          position: relative;
+          text-indent: -9999px;
+          a {
+            padding: 6px 18px;
+            position: relative;
+          }
+        }
+        &:nth-child(2) a {
+          &::before {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% + 3px);
+            left: calc(50% - 6px);
+            rotate: 45deg;
+          }
+          &::after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% - 3px);
+            left: calc(50% - 6px);
+            rotate: -45deg;
+          }
+        }
+        &:nth-last-child(2) a {
+          &::before {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% + 3px);
+            left: calc(50% - 4px);
+            rotate: -45deg;
+          }
+          &::after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background-color: $color-aux-blue;
+            position: absolute;
+            top: calc(46% - 3px);
+            left: calc(50% - 4px);
+            rotate: 45deg;
+          }
+        }
+      }
+    }
+  }
+  .current-page-menu {
+    .lfr-icon-menu-text::after {
+      content: url('@theme_image_path@/icons/angle-down.svg');
+      width: 12.5px;
+      display: inline-block;
+      margin-left: 10px;
+      transition: rotate .3s ease;
+    }
+    a[aria-expanded="true"] .lfr-icon-menu-text::after {
+      rotate: 180deg;
     }
   }
 }

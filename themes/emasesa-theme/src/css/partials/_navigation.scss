@@ -422,8 +422,6 @@
 
 
 body  {
-    scroll-padding-right: 0;
-    overflow-y: auto;
     &.menu-open {
         overflow: hidden;
         &:after {

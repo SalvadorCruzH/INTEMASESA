@@ -16,7 +16,7 @@
 <#if docAttached.getSiblings()?has_content>
     <div class="ema-docsADT__item__documents">
         <#list docAttached.getSiblings() as cur_docAttached>
-            <a href="${cur_docAttached.getData()}" class="ema-docsADT__item__documents__link">${languageUtil.format(locale, "download-x", "Adjuntar documento", false)}</a>
+            <a href="${cur_docAttached.getData()}" class="ema-docsADT__item__documents__link">Descargar</a>
         </#list>
     </div>
 </#if>
