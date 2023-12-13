@@ -52,6 +52,10 @@ class GlobalObjectModule extends React.Component {
             document.querySelectorAll(".form-control").forEach(((element) => element.readOnly = true));
             document.querySelector(".lfr-layout-structure-item-inputs-submit-button").classList.add("d-none");
             document.querySelectorAll(".btn-secondary").disabled = true;
+            if(document.getElementById("generate-otp-button")){
+                document.getElementById("generate-otp-button").classList.add("d-none");
+            }
+
 
         }else if(this.state.mode==2){
             var input = document.createElement("input");

@@ -46,8 +46,10 @@ war {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_datos_persona.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_subordinados.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_prestamos.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_ayuda_escolar.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_consulta_cert_ret_pdf.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_centros_distancias.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_ciertos_datos_estructu.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated-java"
 }*/

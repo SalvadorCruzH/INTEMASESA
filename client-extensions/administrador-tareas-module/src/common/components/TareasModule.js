@@ -88,6 +88,7 @@ class TareasModule extends React.Component {
 
     addTareaExtraData = (tarea) =>{
             var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+            console.log(jsonObjectMapping);
             let objectMapping = jsonObjectMapping[tarea.objectReviewed.assetType];
             if(objectMapping){
                 let urlObject = objectMapping.url;
@@ -114,6 +115,7 @@ class TareasModule extends React.Component {
                             let result = "";
                             try {
                                 result = JSON.parse(JSON.stringify(response));
+                                console.log(result);
                                 tarea.objectData = result;
                                 this.addTareaTransition(tarea);
 
@@ -150,6 +152,7 @@ class TareasModule extends React.Component {
                             let result = "";
                             try {
                                 result = JSON.parse(JSON.stringify(response));
+                                console.log(result);
                                 if(result.totalCount > 0){
 
                                      tarea.transitions =  result.items;

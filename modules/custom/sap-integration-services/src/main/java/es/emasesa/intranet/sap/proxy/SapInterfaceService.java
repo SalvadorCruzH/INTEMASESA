@@ -1,5 +1,6 @@
 package es.emasesa.intranet.sap.proxy;
 
+import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
@@ -11,6 +12,7 @@ import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
+import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,7 +42,10 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     CertificadoRetencionesService certificadoRetencionesService;
     @Autowired(required = false)
     DistanciaCentrosService distanciaCentrosService;
-
+    @Autowired(required = false)
+    AyudaEscolarService ayudaEscolarService;
+    @Autowired(required = false)
+    CiertosDatosEstructuraService ciertosDatosEstructuraService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -81,5 +86,13 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
 
     public DistanciaCentrosService getDistanciaCentrosService() {
         return distanciaCentrosService;
+    }
+
+    public AyudaEscolarService getAyudaEscolarService() {
+        return ayudaEscolarService;
+    }
+
+    public CiertosDatosEstructuraService getCiertosDatosEstructuraService() {
+        return ciertosDatosEstructuraService;
     }
 }
