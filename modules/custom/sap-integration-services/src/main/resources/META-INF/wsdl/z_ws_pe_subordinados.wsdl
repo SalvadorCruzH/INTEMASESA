@@ -301,11 +301,11 @@
     <wsdl:service name="Z_WS_PE_SUBORDINADOS">
         <wsdl:port name="Z_WS_PE_SUBORDINADOS" binding="tns:Z_WS_PE_SUBORDINADOS">
             <soap:address
-                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_SUBORDINADOS_soap12" binding="tns:Z_WS_PE_SUBORDINADOS_soap12">
             <wsoap12:address
-                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

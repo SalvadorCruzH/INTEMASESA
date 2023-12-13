@@ -1,41 +1,32 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-        xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-    <name>87ca54ba-9b30-1ea0-6b34-71ff5d0364d3</name>
-    <version>18</version>
-    <condition>
-        <name>d292d2f5-9289-46fb-a8b6-16e2a568636e</name>
-        <description>Ejecute una lógica condicional.</description>
-        <metadata>
-            <![CDATA[
-				{
-					"xy": [
-						280.4793028575604,
-						180.0074385194558
-					]
-				}
-			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Cambiar estado workflow</name>
-                <description></description>
-                <status>1</status>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-        </actions>
-        <labels>
-            <label language-id="es_ES">
-                Validacion Vacaciones planificadas o Solicitadas
-            </label>
-        </labels>
-        <script>
-            <![CDATA[import es.emasesa.intranet.service.util.SapServicesUtil;
+	<name>87ca54ba-9b30-1ea0-6b34-71ff5d0364d3</name>
+	<version>18</version>
+	<condition>
+		<name>d292d2f5-9289-46fb-a8b6-16e2a568636e</name>
+		<description>Ejecute una lógica condicional.</description>
+		<metadata><![CDATA[{"xy":[280,180],"transitions":{"existen vacaciones":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Validacion Vacaciones planificadas o Solicitadas
+			</label>
+		</labels>
+		<script>
+			<![CDATA[import es.emasesa.intranet.service.util.SapServicesUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 
 import org.osgi.framework.Bundle;
@@ -84,155 +75,137 @@ if (fechaFin.equals("0000-00-00") && fechaInicio.equals("0000-00-00")){
     return
 }
 ]]>
-        </script>
-        <script-language>groovy</script-language>
-        <transitions>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        No Existe
-                    </label>
-                </labels>
-                <name>no existen vacaciones</name>
-                <target>denegado-inexistencia-vacaciones</target>
-                <default>false</default>
-            </transition>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        Existe
-                    </label>
-                </labels>
-                <name>existen vacaciones</name>
-                <target>1bc97986-ba14-46fd-8690-509815aaee4c</target>
-                <default>true</default>
-            </transition>
-        </transitions>
-    </condition>
-    <condition>
-        <name>1bc97986-ba14-46fd-8690-509815aaee4c</name>
-        <description>Ejecute una lógica condicional.</description>
-        <metadata>
-            <![CDATA[
-				{
-					"xy": [
-						612.046875,
-						174
-					]
-				}
-			]]>
-        </metadata>
-        <labels>
-            <label language-id="es_ES">
-                Validacion otro anticipo en curso
-            </label>
-        </labels>
-        <script>
-            <![CDATA[import org.osgi.framework.Bundle;
+		</script>
+		<script-language>groovy</script-language>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						No Existe
+					</label>
+				</labels>
+				<name>no existen vacaciones</name>
+				<target>denegado-inexistencia-vacaciones</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Existe
+					</label>
+				</labels>
+				<name>existen vacaciones</name>
+				<target>1bc97986-ba14-46fd-8690-509815aaee4c</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</condition>
+	<condition>
+		<name>1bc97986-ba14-46fd-8690-509815aaee4c</name>
+		<description>Ejecute una lógica condicional.</description>
+		<metadata><![CDATA[{"xy":[612,174],"transitions":{"existe otro anticipo":{"bendpoints":[]}}}]]></metadata>
+		<labels>
+			<label language-id="es_ES">
+				Validacion otro anticipo en curso
+			</label>
+		</labels>
+		<script>
+			<![CDATA[import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
 returnValue = "no existe otro anticipo"
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 def existsOther = customWorkflowUtil.isAnotherUnfinishedUserObject(entryClassPK.toLong(),userId.toLong());
 customWorkflowUtilTracker.close();
 
 if (existsOther) returnValue = "existe otro anticipo"]]>
-        </script>
-        <script-language>groovy</script-language>
-        <transitions>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        No Existe
-                    </label>
-                </labels>
-                <name>no existe otro anticipo</name>
-                <target>envio-rrhh</target>
-                <default>true</default>
-            </transition>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        Existe
-                    </label>
-                </labels>
-                <name>existe otro anticipo</name>
-                <target>a42319c9-1c1c-40ab-b690-e857c126e66b</target>
-                <default>false</default>
-            </transition>
-        </transitions>
-    </condition>
-    <state>
-        <name>773483cc-a7ad-4a49-b6a9-a0872315d24d</name>
-        <description>Inicia un flujo de trabajo.</description>
-        <metadata>
-            <![CDATA[
-				{
-					"xy": [
-						-120.88851727978685,
-						177.85130183297727
-					]
-				}
-			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Cambiar estado objeto</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.template.*;
+		</script>
+		<script-language>groovy</script-language>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						No Existe
+					</label>
+				</labels>
+				<name>no existe otro anticipo</name>
+				<target>envio-rrhh</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Existe
+					</label>
+				</labels>
+				<name>existe otro anticipo</name>
+				<target>a42319c9-1c1c-40ab-b690-e857c126e66b</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</condition>
+	<state>
+		<name>773483cc-a7ad-4a49-b6a9-a0872315d24d</name>
+		<description>Inicia un flujo de trabajo.</description>
+		<metadata><![CDATA[{"xy":[-120,177],"transitions":{"8fa810bf-c22c-4893-9edc-9ee5e659a586":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "");
 customWorkflowUtilTracker.close();]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-        </actions>
-        <initial>true</initial>
-        <labels>
-            <label language-id="es_ES">
-                Creacion Solicitud Anticipo de Vacaciones
-            </label>
-        </labels>
-        <transitions>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        Envio Solicitud
-                    </label>
-                </labels>
-                <name>8fa810bf-c22c-4893-9edc-9ee5e659a586</name>
-                <target>d292d2f5-9289-46fb-a8b6-16e2a568636e</target>
-                <default>true</default>
-            </transition>
-        </transitions>
-    </state>
-    <state>
-        <name>daa0f5db-6aaa-49b1-bb5f-4415c1c045a1</name>
-        <description>Finaliza el flujo de trabajo.</description>
-        <metadata>
-            <![CDATA[
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<initial>true</initial>
+		<labels>
+			<label language-id="es_ES">
+				Creacion Solicitud Anticipo de Vacaciones
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Envio Solicitud
+					</label>
+				</labels>
+				<name>8fa810bf-c22c-4893-9edc-9ee5e659a586</name>
+				<target>d292d2f5-9289-46fb-a8b6-16e2a568636e</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>daa0f5db-6aaa-49b1-bb5f-4415c1c045a1</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
 				{
 					"xy": [
 						1327.940743427138,
@@ -241,24 +214,24 @@ customWorkflowUtilTracker.close();]]>
 					"terminal": true
 				}
 			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Aprobacion y Guardado en GISD</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.template.*;
+		</metadata>
+		<actions>
+			<action>
+				<name>Aprobacion y Guardado en GISD</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
 ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
@@ -273,45 +246,45 @@ if(pdf != null && pdf != ""){
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <action>
-                <name>Cambiar estado workflow</name>
-                <description></description>
-                <status>0</status>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <notification>
-                <name>Se ha finalizado la solicitud</name>
-                <description>
-                    <![CDATA[]]>
-                </description>
-                <template>
-                    <![CDATA[Su solicitud de Anticipo de Vacaciones ha sido aprobada.]]>
-                </template>
-                <template-language>text</template-language>
-                <notification-type>user-notification</notification-type>
-                <recipients receptionType="to">
-                    <user />
-                </recipients>
-                <execution-type>onEntry</execution-type>
-            </notification>
-        </actions>
-        <labels>
-            <label language-id="es_ES">
-                Aprobación de la Solicitud
-            </label>
-        </labels>
-    </state>
-    <state>
-        <name>denegado-inexistencia-vacaciones</name>
-        <description>Finaliza el flujo de trabajo.</description>
-        <metadata>
-            <![CDATA[
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Se ha finalizado la solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud de Anticipo de Vacaciones ha sido aprobada.]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Aprobación de la Solicitud
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>denegado-inexistencia-vacaciones</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
 				{
 					"xy": [
 						274.1815115802391,
@@ -320,31 +293,31 @@ sigdServiceTracker.close();]]>
 					"terminal": true
 				}
 			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Cambiar estado workflow</name>
-                <description></description>
-                <status>4</status>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <action>
-                <name>Cambiar estado objeto</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.template.*;
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>4</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
 ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
@@ -363,38 +336,38 @@ if(pdf != null && pdf != ""){
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
 ]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <notification>
-                <name>Notificación solicitud denegada</name>
-                <description>
-                    <![CDATA[]]>
-                </description>
-                <template>
-                    <![CDATA[Su Solicitud de Anticipo de Vacaciones ha sido denegada por no existir vacaciones planificadas para la fecha indicada.]]>
-                </template>
-                <template-language>freemarker</template-language>
-                <notification-type>user-notification</notification-type>
-                <recipients receptionType="to">
-                    <user />
-                </recipients>
-                <execution-type>onEntry</execution-type>
-            </notification>
-        </actions>
-        <labels>
-            <label language-id="es_ES">
-                Muestra aviso y acaba
-            </label>
-        </labels>
-    </state>
-    <state>
-        <name>denegado-anticipo-existente</name>
-        <description>Finaliza el flujo de trabajo.</description>
-        <metadata>
-            <![CDATA[
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación solicitud denegada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su Solicitud de Anticipo de Vacaciones ha sido denegada por no existir vacaciones planificadas para la fecha indicada.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Muestra aviso y acaba
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>denegado-anticipo-existente</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
 				{
 					"xy": [
 						618.721435546875,
@@ -403,31 +376,31 @@ sigdServiceTracker.close();
 					"terminal": true
 				}
 			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Cambiar estado workflow</name>
-                <description></description>
-                <status>4</status>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <action>
-                <name>Cambiar estado objeto</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.template.*;
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>4</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
 ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
@@ -446,38 +419,38 @@ if(pdf != null && pdf != ""){
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
 ]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <notification>
-                <name>Notificacion al usuario</name>
-                <description>
-                    <![CDATA[]]>
-                </description>
-                <template>
-                    <![CDATA[Se ha detectado una solicitud de Anticipo de Vacaciones anterior por lo que se ha procedido a avisar al departamento de Recursos Humanos para su resolución y se ha procedido a la denegación de esta solicitud.]]>
-                </template>
-                <template-language>text</template-language>
-                <notification-type>user-notification</notification-type>
-                <recipients receptionType="to">
-                    <user />
-                </recipients>
-                <execution-type>onEntry</execution-type>
-            </notification>
-        </actions>
-        <labels>
-            <label language-id="es_ES">
-                Notifica al usuario
-            </label>
-        </labels>
-    </state>
-    <state>
-        <name>31273493-1643-423e-aa68-41cefa20eadd</name>
-        <description>Finaliza el flujo de trabajo.</description>
-        <metadata>
-            <![CDATA[
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificacion al usuario</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha detectado una solicitud de Anticipo de Vacaciones anterior por lo que se ha procedido a avisar al departamento de Recursos Humanos para su resolución y se ha procedido a la denegación de esta solicitud.]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Notifica al usuario
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>31273493-1643-423e-aa68-41cefa20eadd</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
 				{
 					"xy": [
 						972.5597833887703,
@@ -486,31 +459,31 @@ sigdServiceTracker.close();
 					"terminal": true
 				}
 			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Cambiar estado workflow</name>
-                <description></description>
-                <status>4</status>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <action>
-                <name>Cambiar estado objeto</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.template.*;
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>4</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
 ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
@@ -529,144 +502,126 @@ if(pdf != null && pdf != ""){
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
 ]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <notification>
-                <name>Notificación solicitud rechazada</name>
-                <description>
-                    <![CDATA[]]>
-                </description>
-                <template>
-                    <![CDATA[Su Solicitud de Anticipo de Vacaciones ha sido rechazada por el departamento de Recursos Humanos]]>
-                </template>
-                <template-language>text</template-language>
-                <notification-type>user-notification</notification-type>
-                <recipients receptionType="to">
-                    <user />
-                </recipients>
-                <execution-type>onEntry</execution-type>
-            </notification>
-        </actions>
-        <labels>
-            <label language-id="es_ES">
-                Muestra aviso y acaba
-            </label>
-        </labels>
-    </state>
-    <task>
-        <name>envio-rrhh</name>
-        <description>Pida a un usuario que trabaje en el elemento.</description>
-        <metadata>
-            <![CDATA[
-				{
-					"xy": [
-						970.140625,
-						168.5
-					]
-				}
-			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Cambiar estado objeto</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.template.*;
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación solicitud rechazada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su Solicitud de Anticipo de Vacaciones ha sido rechazada por el departamento de Recursos Humanos]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Muestra aviso y acaba
+			</label>
+		</labels>
+	</state>
+	<task>
+		<name>envio-rrhh</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata><![CDATA[{"xy":[970,168],"transitions":{"d1d05cc0-b359-4bfd-9325-02d9e870f9e5":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", userId, "Admin RRHH");
 customWorkflowUtilTracker.close();]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onAssignment</execution-type>
-            </action>
-            <notification>
-                <name>Aviso a RRHH</name>
-                <description>
-                    <![CDATA[]]>
-                </description>
-                <template>
-                    <![CDATA[Se le ha asignado una solicitud de Anticipo de Vacaciones]]>
-                </template>
-                <template-language>text</template-language>
-                <notification-type>user-notification</notification-type>
-                <recipients receptionType="to">
-                    <roles>
-                        <role>
-                            <role-id>35183</role-id>
-                        </role>
-                    </roles>
-                </recipients>
-                <execution-type>onEntry</execution-type>
-            </notification>
-        </actions>
-        <assignments>
-            <roles>
-                <role>
-                    <role-id>35183</role-id>
-                </role>
-            </roles>
-        </assignments>
-        <labels>
-            <label language-id="es_ES">
-                Envio a RRHH (Nominas)
-            </label>
-        </labels>
-        <transitions>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        Aprobada
-                    </label>
-                </labels>
-                <name>fec2de4a-d4a1-4ab9-bc46-2e5c6b0f73da</name>
-                <target>daa0f5db-6aaa-49b1-bb5f-4415c1c045a1</target>
-                <default>true</default>
-            </transition>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        No Aprobada
-                    </label>
-                </labels>
-                <name>d1d05cc0-b359-4bfd-9325-02d9e870f9e5</name>
-                <target>31273493-1643-423e-aa68-41cefa20eadd</target>
-                <default>false</default>
-            </transition>
-        </transitions>
-    </task>
-    <task>
-        <name>a42319c9-1c1c-40ab-b690-e857c126e66b</name>
-        <description>Pida a un usuario que trabaje en el elemento.</description>
-        <metadata>
-            <![CDATA[
-				{
-					"xy": [
-						619.171875,
-						300.5
-					]
-				}
-			]]>
-        </metadata>
-        <actions>
-            <action>
-                <name>Completar tarea</name>
-                <description></description>
-                <script>
-                    <![CDATA[import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>Aviso a RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de Anticipo de Vacaciones]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>35183</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>35183</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Envio a RRHH (Nominas)
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Aprobada
+					</label>
+				</labels>
+				<name>fec2de4a-d4a1-4ab9-bc46-2e5c6b0f73da</name>
+				<target>daa0f5db-6aaa-49b1-bb5f-4415c1c045a1</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						No Aprobada
+					</label>
+				</labels>
+				<name>d1d05cc0-b359-4bfd-9325-02d9e870f9e5</name>
+				<target>31273493-1643-423e-aa68-41cefa20eadd</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>a42319c9-1c1c-40ab-b690-e857c126e66b</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata><![CDATA[{"xy":[619,300],"transitions":{"finalizar-flujo-aviso-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<actions>
+			<action>
+				<name>Completar tarea</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil
 import com.liferay.portal.kernel.service.ServiceContext
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal
 
@@ -675,18 +630,18 @@ try {
 } catch (Exception e) {
     println "Failed to complete workflow task: " + e.getMessage()
 }]]>
-                </script>
-                <script-language>groovy</script-language>
-                <priority>1</priority>
-                <execution-type>onEntry</execution-type>
-            </action>
-            <notification>
-                <name>Notificacion a RRHH</name>
-                <description>
-                    <![CDATA[]]>
-                </description>
-                <template>
-                    <![CDATA[<#assign UserLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificacion a RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[<#assign UserLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")>
 <#assign expandoAPI = staticUtil["com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil"]>
 <#assign user = UserLocalService.getUserById(userId)>
 <#assign expandoBridge = expandoAPI.getExpandoBridge(user.getCompanyId(), user.getModelClassName(), userId)>
@@ -695,38 +650,38 @@ try {
 <#assign segundoApellido = expandoBridge.getAttribute("apellido2")>
 
 El empleado ${nombre} ${primerApellido} ${segundoApellido} con PERNR ${ user.getScreenName() } ha registrado una nueva Solicitud de Anticipo de Vacaciones pero se ha denegado al existir otra petición en curso.]]>
-                </template>
-                <template-language>freemarker</template-language>
-                <notification-type>user-notification</notification-type>
-                <recipients receptionType="to">
-                    <roles>
-                        <role>
-                            <role-id>35183</role-id>
-                        </role>
-                    </roles>
-                </recipients>
-                <execution-type>onEntry</execution-type>
-            </notification>
-        </actions>
-        <assignments>
-            <user />
-        </assignments>
-        <labels>
-            <label language-id="es_ES">
-                Tarea
-            </label>
-        </labels>
-        <transitions>
-            <transition>
-                <labels>
-                    <label language-id="es_ES">
-                        Finaliza el Flujo
-                    </label>
-                </labels>
-                <name>finalizar-flujo-aviso-rrhh</name>
-                <target>denegado-anticipo-existente</target>
-                <default>true</default>
-            </transition>
-        </transitions>
-    </task>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>35183</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<user />
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Tarea
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Finaliza el Flujo
+					</label>
+				</labels>
+				<name>finalizar-flujo-aviso-rrhh</name>
+				<target>denegado-anticipo-existente</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
 </workflow-definition>

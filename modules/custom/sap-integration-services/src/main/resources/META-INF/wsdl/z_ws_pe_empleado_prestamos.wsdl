@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -181,7 +181,7 @@
                 <sapcentraladmin:CentralAdministration
                         xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/"
                         wsp:Optional="true">
-                    <sapcentraladmin:BusinessApplicationID>762C761B19021EDC8DF99DA763D8C1C4
+                    <sapcentraladmin:BusinessApplicationID>762C73CC36031EDE95D6D6507F8184D1
                     </sapcentraladmin:BusinessApplicationID>
                 </sapcentraladmin:CentralAdministration>
             </wsp:All>
@@ -203,7 +203,9 @@
     </wsp:Policy>
     <wsdl:types>
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
-                    xmlns:tns="urn:sap-com:document:sap:rfc:functions">
+                    xmlns:tns="urn:sap-com:document:sap:rfc:functions"
+                    xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style">
+            <xsd:import namespace="urn:sap-com:document:sap:soap:functions:mc-style"/>
             <xsd:simpleType name="date10">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="10"/>
@@ -226,6 +228,12 @@
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                     xmlns:n0="urn:sap-com:document:sap:rfc:functions">
             <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
+            <xsd:simpleType name="curr13.2">
+                <xsd:restriction base="xsd:decimal">
+                    <xsd:totalDigits value="13"/>
+                    <xsd:fractionDigits value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
             <xsd:complexType name="ZpeStEmpleadoPrestamos">
                 <xsd:sequence>
                     <xsd:element name="Pernr" type="n0:numeric8"/>
@@ -236,6 +244,10 @@
                     <xsd:element name="MaximoReforma" type="n0:decimal7.2"/>
                     <xsd:element name="FiniVacaciones" type="n0:date10"/>
                     <xsd:element name="FfinVacaciones" type="n0:date10"/>
+                    <xsd:element name="FiniPrestamoVacaciones" type="n0:date10"/>
+                    <xsd:element name="FfinPrestamoVacaciones" type="n0:date10"/>
+                    <xsd:element name="SalarioBase" type="tns:curr13.2"/>
+                    <xsd:element name="Antiguedad" type="tns:curr13.2"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="TableOfZpeStEmpleadoPrestamos">

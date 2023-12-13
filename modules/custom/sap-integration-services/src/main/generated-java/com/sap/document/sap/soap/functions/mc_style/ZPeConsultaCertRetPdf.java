@@ -18,8 +18,8 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="ImEjercicio" type="{urn:sap-com:document:sap:soap:functions:mc-style}char4"/&gt;
  *         &lt;element name="ImPernr" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
- *         &lt;element name="ImVariante" type="{urn:sap-com:document:sap:rfc:functions}char14" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,16 +30,40 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "imPernr",
-    "imVariante"
+    "imEjercicio",
+    "imPernr"
 })
 @XmlRootElement(name = "ZPeConsultaCertRetPdf")
 public class ZPeConsultaCertRetPdf {
 
+    @XmlElement(name = "ImEjercicio", required = true)
+    protected String imEjercicio;
     @XmlElement(name = "ImPernr", required = true)
     protected String imPernr;
-    @XmlElement(name = "ImVariante")
-    protected String imVariante;
+
+    /**
+     * Obtiene el valor de la propiedad imEjercicio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getImEjercicio() {
+        return imEjercicio;
+    }
+
+    /**
+     * Define el valor de la propiedad imEjercicio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setImEjercicio(String value) {
+        this.imEjercicio = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad imPernr.
@@ -63,30 +87,6 @@ public class ZPeConsultaCertRetPdf {
      */
     public void setImPernr(String value) {
         this.imPernr = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad imVariante.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getImVariante() {
-        return imVariante;
-    }
-
-    /**
-     * Define el valor de la propiedad imVariante.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setImVariante(String value) {
-        this.imVariante = value;
     }
 
 }

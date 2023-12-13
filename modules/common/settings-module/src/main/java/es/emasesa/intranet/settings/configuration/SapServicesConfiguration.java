@@ -102,4 +102,18 @@ public interface SapServicesConfiguration {
             required = false
     )
     String distanciaCentrosEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ayudaEscolarEndpoint",
+            required = false
+    )
+    String ayudaEscolarEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ciertosDatosEstructuraEndpoint",
+            required = false
+    )
+    String ciertosDatosEstructuraEndpoint();
 }

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,14 +43,20 @@ public class PortalFirmasUtil {
      * @employeeType kaleoInstanceToken
      * 
      */
-    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoTaskInstanceToken kaleoTaskInstanceToken){
-    	try {    		
+    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoTaskInstanceToken kaleoTaskInstanceToken, long userId){
+    	try {    	
+    		if (ServiceContextThreadLocal.getServiceContext() != null) {
+    			userId = ServiceContextThreadLocal.getServiceContext().getUserId();
+    		}
+    		LoggerUtil.debug(LOG, "userId: " + userId);
+    		
 	        String subject; // NOMBRE OBJETO + NOMBRE USUARIO
 	        String reference; // NOMBRE OBJETO
 	        String documentName; // NOMBRE DOCUMENTO SIGD
 	        List<String> nifs = new ArrayList<String>(); // NIFs de los firmantes - Obtener quien es el consejero delegado con el servicio SAP de estructura recoger positionId, y obtener el dni de Liferay o del servicio de datos
-	        String remitterNIF = StringPool.BLANK; // NIF del remitente
+	        String remitterNIF = StringPool.BLANK; // NIF de la persona que manda al portafirmas
 	        String workflowTaskId = StringPool.BLANK;
+	        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
 	        LoggerUtil.debug(LOG, "Se procede a enviar el documento al portafirmas." );
 	        
 	        if(workflowContext.size()>0){
@@ -62,7 +69,7 @@ public class PortalFirmasUtil {
 	            reference = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
 	            documentName = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE))+
 	                    GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-	            remitterNIF = GetterUtil.getString(values.get(EmasesaConstants.EMASESA_EXPANDO_NIF));
+	            remitterNIF = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NIF, userId).getString();
 	            nifs = getNifConsjeroDelegado(workflowContext);
 	            
 	            if(Validator.isNotNull(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId())) {
@@ -82,6 +89,8 @@ public class PortalFirmasUtil {
 	        }
     	} catch (JSONException | PfirmaException e) {
     		LoggerUtil.error(LOG, "Error al enviar a portal firmas: ", e);
+		} catch (PortalException e) {
+			LoggerUtil.error(LOG, "Error al obtener el usaurio que envia al portal firmas: ", e);
 		}
     }
     

@@ -1,25 +1,16 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
-	<version>30</version>
+	<version>31</version>
 	<state>
 		<name>4a366907-deba-425c-8bfc-d40aa6c164f7</name>
 		<description>Se crea una solicitud de flexibilidad horaria</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-18.838787601400924,
-						-8.793360315786133
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-18,-8],"transitions":{"d7e8b787-e002-40c3-a7da-4445c47141b0":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -30,13 +21,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "Usuario");
 customWorkflowUtilTracker.close();]]>
@@ -89,13 +80,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
 ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
@@ -167,13 +158,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
 ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
@@ -224,16 +215,7 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>59bad819-d835-4485-834d-c01308793c46</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-15.8411865234375,
-						-286.94110107421875
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-15,-286],"transitions":{"d778cd87-38ac-44c1-8803-662ff874cadd":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -251,13 +233,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAprobacion", userId, "Jefe Departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
@@ -333,16 +315,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>c8114964-5a5f-4431-94d2-76229d1b744a</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						383.9689080147523,
-						-288.40130671442944
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[383,-288],"transitions":{"f1a074ff-10b4-4503-bd8a-0095b3d070d2":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -360,13 +333,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "asignadaJefeDeDivision", userId, "Jefe Division");
 customWorkflowUtilTracker.close();]]>
 				</script>
@@ -442,16 +415,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>2ced3bea-8983-4ec8-9bb2-a92bd2e6fc8e</name>
 		<description>Pida a un usuario que trabaje en el elemento.Solicitud enviada lista para asignarse a un usuario con rol Administración de RRHH</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						769.1991577148438,
-						-286.5092468261719
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[769,-286],"transitions":{"82836781-0769-4d06-b53e-63bdce5ec612":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -469,13 +433,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
@@ -541,16 +505,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>211c17de-677c-4ac1-af72-3074f279703d</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						1214.6334463405512,
-						-289.59199669897663
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[1214,-289],"transitions":{"389fe33c-3c84-432e-8f5d-4148dc023d49":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -568,13 +523,13 @@ import com.liferay.portal.util.*;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 
 customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "asignadaJefeDivisionPersonas", userId, "jefe Division Personas");
 customWorkflowUtilTracker.close();]]>
 				</script>
