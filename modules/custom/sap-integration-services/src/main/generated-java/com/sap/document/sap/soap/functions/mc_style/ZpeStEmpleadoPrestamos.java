@@ -26,6 +26,10 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="MaximoReforma" type="{urn:sap-com:document:sap:rfc:functions}decimal7.2"/&gt;
  *         &lt;element name="FiniVacaciones" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
  *         &lt;element name="FfinVacaciones" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
+ *         &lt;element name="FiniPrestamoVacaciones" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
+ *         &lt;element name="FfinPrestamoVacaciones" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
+ *         &lt;element name="SalarioBase" type="{urn:sap-com:document:sap:soap:functions:mc-style}curr13.2"/&gt;
+ *         &lt;element name="Antiguedad" type="{urn:sap-com:document:sap:soap:functions:mc-style}curr13.2"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -43,7 +47,11 @@ import jakarta.xml.bind.annotation.XmlType;
     "maximoAdquisicion",
     "maximoReforma",
     "finiVacaciones",
-    "ffinVacaciones"
+    "ffinVacaciones",
+    "finiPrestamoVacaciones",
+    "ffinPrestamoVacaciones",
+    "salarioBase",
+    "antiguedad"
 })
 public class ZpeStEmpleadoPrestamos {
 
@@ -63,6 +71,14 @@ public class ZpeStEmpleadoPrestamos {
     protected String finiVacaciones;
     @XmlElement(name = "FfinVacaciones", required = true)
     protected String ffinVacaciones;
+    @XmlElement(name = "FiniPrestamoVacaciones", required = true)
+    protected String finiPrestamoVacaciones;
+    @XmlElement(name = "FfinPrestamoVacaciones", required = true)
+    protected String ffinPrestamoVacaciones;
+    @XmlElement(name = "SalarioBase", required = true)
+    protected BigDecimal salarioBase;
+    @XmlElement(name = "Antiguedad", required = true)
+    protected BigDecimal antiguedad;
 
     /**
      * Obtiene el valor de la propiedad pernr.
@@ -254,6 +270,102 @@ public class ZpeStEmpleadoPrestamos {
      */
     public void setFfinVacaciones(String value) {
         this.ffinVacaciones = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad finiPrestamoVacaciones.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFiniPrestamoVacaciones() {
+        return finiPrestamoVacaciones;
+    }
+
+    /**
+     * Define el valor de la propiedad finiPrestamoVacaciones.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFiniPrestamoVacaciones(String value) {
+        this.finiPrestamoVacaciones = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad ffinPrestamoVacaciones.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFfinPrestamoVacaciones() {
+        return ffinPrestamoVacaciones;
+    }
+
+    /**
+     * Define el valor de la propiedad ffinPrestamoVacaciones.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFfinPrestamoVacaciones(String value) {
+        this.ffinPrestamoVacaciones = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad salarioBase.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSalarioBase() {
+        return salarioBase;
+    }
+
+    /**
+     * Define el valor de la propiedad salarioBase.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSalarioBase(BigDecimal value) {
+        this.salarioBase = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad antiguedad.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getAntiguedad() {
+        return antiguedad;
+    }
+
+    /**
+     * Define el valor de la propiedad antiguedad.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setAntiguedad(BigDecimal value) {
+        this.antiguedad = value;
     }
 
 }

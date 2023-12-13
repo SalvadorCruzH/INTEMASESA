@@ -12,7 +12,7 @@
         <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl"/>
     </wsdl:documentation>
     <wsp:UsingPolicy wsdl:required="true"/>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_SUBORDINADOS">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_AYUDA_ESCOLAR">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -92,7 +92,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="BN__Z_WS_PE_SUBORDINADOS_soap12">
+    <wsp:Policy wsu:Id="BN__Z_WS_PE_AYUDA_ESCOLAR_soap12">
         <wsp:ExactlyOne>
             <wsp:All>
                 <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
@@ -172,7 +172,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="IF__Z_WS_PE_SUBORDINADOS">
+    <wsp:Policy wsu:Id="IF__Z_WS_PE_AYUDA_ESCOLAR">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
@@ -187,7 +187,7 @@
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
-    <wsp:Policy wsu:Id="OP__ZPeSubordinados">
+    <wsp:Policy wsu:Id="OP__ZPeAyudaEscolar">
         <wsp:ExactlyOne>
             <wsp:All>
                 <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no
@@ -209,6 +209,71 @@
                     <xsd:maxLength value="1"/>
                 </xsd:restriction>
             </xsd:simpleType>
+            <xsd:simpleType name="char2">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char20">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="20"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char200">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="200"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char220">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="220"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char4">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="4"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char40">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="40"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char50">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="50"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="curr9.2">
+                <xsd:restriction base="xsd:decimal">
+                    <xsd:totalDigits value="9"/>
+                    <xsd:fractionDigits value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="date10">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="10"/>
+                    <xsd:pattern value="\d\d\d\d-\d\d-\d\d"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="numeric2">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="2"/>
+                    <xsd:pattern value="\d*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="numeric3">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="3"/>
+                    <xsd:pattern value="\d*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="numeric6">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="6"/>
+                    <xsd:pattern value="\d*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
             <xsd:simpleType name="numeric8">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="8"/>
@@ -219,59 +284,130 @@
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                     xmlns:n0="urn:sap-com:document:sap:rfc:functions">
             <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
-            <xsd:complexType name="ZpeStSubordinados">
+            <xsd:complexType name="ZpeStEstudios">
+                <xsd:sequence>
+                    <xsd:element name="EstudioId" type="n0:numeric3"/>
+                    <xsd:element name="EstudioDesc" type="n0:char200"/>
+                    <xsd:element name="Importe" type="n0:curr9.2"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ZpeStBeneficiarios">
                 <xsd:sequence>
                     <xsd:element name="Pernr" type="n0:numeric8"/>
+                    <xsd:element name="TipoId" type="n0:char4"/>
+                    <xsd:element name="TipoDesc" type="n0:char40"/>
+                    <xsd:element name="Numero" type="n0:char2"/>
+                    <xsd:element name="Nombre" type="n0:char40"/>
+                    <xsd:element name="Apellido1" type="n0:char40"/>
+                    <xsd:element name="Apellido2" type="n0:char40"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStSubordinados">
+            <xsd:complexType name="ZpeStAyudasSolicitadas">
                 <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStSubordinados" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="Pernr" type="n0:numeric8"/>
+                    <xsd:element name="TipoId" type="n0:char4"/>
+                    <xsd:element name="TipoDesc" type="n0:char40"/>
+                    <xsd:element name="Numero" type="n0:char2"/>
+                    <xsd:element name="Nombre" type="n0:char40"/>
+                    <xsd:element name="Apellido1" type="n0:char40"/>
+                    <xsd:element name="Apellido2" type="n0:char40"/>
+                    <xsd:element name="EstudioDesc" type="n0:char200"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:element name="ZPeSubordinados">
+            <xsd:complexType name="ZpeStInsAyudaEscolar">
+                <xsd:sequence>
+                    <xsd:element name="Pernr" type="n0:numeric8"/>
+                    <xsd:element name="TipoId" type="n0:char4"/>
+                    <xsd:element name="Numero" type="n0:char2"/>
+                    <xsd:element name="EstudioId" type="n0:numeric3"/>
+                    <xsd:element name="EstudioNivel" type="n0:numeric2"/>
+                    <xsd:element name="Centro" type="n0:char50"/>
+                    <xsd:element name="Comentario" type="n0:char50"/>
+                    <xsd:element name="FamNumerosa" type="n0:char1"/>
+                    <xsd:element name="FamMonoparental" type="n0:char1"/>
+                    <xsd:element name="Fecha" type="n0:date10"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Bapireturn1">
+                <xsd:sequence>
+                    <xsd:element name="Type" type="n0:char1"/>
+                    <xsd:element name="Id" type="n0:char20"/>
+                    <xsd:element name="Number" type="n0:numeric3"/>
+                    <xsd:element name="Message" type="n0:char220"/>
+                    <xsd:element name="LogNo" type="n0:char20"/>
+                    <xsd:element name="LogMsgNo" type="n0:numeric6"/>
+                    <xsd:element name="MessageV1" type="n0:char50"/>
+                    <xsd:element name="MessageV2" type="n0:char50"/>
+                    <xsd:element name="MessageV3" type="n0:char50"/>
+                    <xsd:element name="MessageV4" type="n0:char50"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStEstudios">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStEstudios" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStBeneficiarios">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStBeneficiarios" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStAyudasSolicitadas">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStAyudasSolicitadas" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStInsAyudaEscolar">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStInsAyudaEscolar" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ZPeAyudaEscolar">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="DirectosTodos" type="n0:char1"/>
                         <xsd:element name="Pernr" type="n0:numeric8"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
-            <xsd:element name="ZPeSubordinadosResponse">
+            <xsd:element name="ZPeAyudaEscolarResponse">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="TEmpleados" type="tns:TableOfZpeStSubordinados"/>
+                        <xsd:element name="Return" type="tns:Bapireturn1"/>
+                        <xsd:element name="TAyudasSolicitadas" type="tns:TableOfZpeStAyudasSolicitadas"/>
+                        <xsd:element name="TBeneficiarios" type="tns:TableOfZpeStBeneficiarios"/>
+                        <xsd:element name="TEstudios" type="tns:TableOfZpeStEstudios"/>
+                        <xsd:element name="TInsAyudaEscolar" type="tns:TableOfZpeStInsAyudaEscolar"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
         </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="ZPeSubordinados">
-        <wsdl:part name="parameters" element="tns:ZPeSubordinados"/>
+    <wsdl:message name="ZPeAyudaEscolar">
+        <wsdl:part name="parameters" element="tns:ZPeAyudaEscolar"/>
     </wsdl:message>
-    <wsdl:message name="ZPeSubordinadosResponse">
-        <wsdl:part name="parameter" element="tns:ZPeSubordinadosResponse"/>
+    <wsdl:message name="ZPeAyudaEscolarResponse">
+        <wsdl:part name="parameter" element="tns:ZPeAyudaEscolarResponse"/>
     </wsdl:message>
-    <wsdl:portType name="Z_WS_PE_SUBORDINADOS">
+    <wsdl:portType name="Z_WS_PE_AYUDA_ESCOLAR">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#IF__Z_WS_PE_SUBORDINADOS"/>
+            <wsp:PolicyReference URI="#IF__Z_WS_PE_AYUDA_ESCOLAR"/>
         </wsp:Policy>
-        <wsdl:operation name="ZPeSubordinados">
+        <wsdl:operation name="ZPeAyudaEscolar">
             <wsp:Policy>
-                <wsp:PolicyReference URI="#OP__ZPeSubordinados"/>
+                <wsp:PolicyReference URI="#OP__ZPeAyudaEscolar"/>
             </wsp:Policy>
-            <wsdl:input message="tns:ZPeSubordinados"/>
-            <wsdl:output message="tns:ZPeSubordinadosResponse"/>
+            <wsdl:input message="tns:ZPeAyudaEscolar"/>
+            <wsdl:output message="tns:ZPeAyudaEscolarResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="Z_WS_PE_SUBORDINADOS" type="tns:Z_WS_PE_SUBORDINADOS">
+    <wsdl:binding name="Z_WS_PE_AYUDA_ESCOLAR" type="tns:Z_WS_PE_AYUDA_ESCOLAR">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_SUBORDINADOS"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_AYUDA_ESCOLAR"/>
         </wsp:Policy>
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeSubordinados">
+        <wsdl:operation name="ZPeAyudaEscolar">
             <soap:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_SUBORDINADOS:ZPeSubordinadosRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_AYUDA_ESCOLAR:ZPeAyudaEscolarRequest"
                     style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
@@ -281,14 +417,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Z_WS_PE_SUBORDINADOS_soap12" type="tns:Z_WS_PE_SUBORDINADOS">
+    <wsdl:binding name="Z_WS_PE_AYUDA_ESCOLAR_soap12" type="tns:Z_WS_PE_AYUDA_ESCOLAR">
         <wsp:Policy>
-            <wsp:PolicyReference URI="#BN__Z_WS_PE_SUBORDINADOS_soap12"/>
+            <wsp:PolicyReference URI="#BN__Z_WS_PE_AYUDA_ESCOLAR_soap12"/>
         </wsp:Policy>
         <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="ZPeSubordinados">
+        <wsdl:operation name="ZPeAyudaEscolar">
             <wsoap12:operation
-                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_SUBORDINADOS:ZPeSubordinadosRequest"
+                    soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_AYUDA_ESCOLAR:ZPeAyudaEscolarRequest"
                     style="document"/>
             <wsdl:input>
                 <wsoap12:body use="literal"/>
@@ -298,14 +434,14 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="Z_WS_PE_SUBORDINADOS">
-        <wsdl:port name="Z_WS_PE_SUBORDINADOS" binding="tns:Z_WS_PE_SUBORDINADOS">
+    <wsdl:service name="Z_WS_PE_AYUDA_ESCOLAR">
+        <wsdl:port name="Z_WS_PE_AYUDA_ESCOLAR" binding="tns:Z_WS_PE_AYUDA_ESCOLAR">
             <soap:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_ayuda_escolar/010/z_ws_pe_ayuda_escolar/z_ws_pe_ayuda_escolar"/>
         </wsdl:port>
-        <wsdl:port name="Z_WS_PE_SUBORDINADOS_soap12" binding="tns:Z_WS_PE_SUBORDINADOS_soap12">
+        <wsdl:port name="Z_WS_PE_AYUDA_ESCOLAR_soap12" binding="tns:Z_WS_PE_AYUDA_ESCOLAR_soap12">
             <wsoap12:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_subordinados/010/z_ws_pe_subordinados/z_ws_pe_subordinados"/>
+                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_ayuda_escolar/010/z_ws_pe_ayuda_escolar/z_ws_pe_ayuda_escolar"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
