@@ -30,6 +30,7 @@ import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.exception.CertificadoRetencionesException;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
+import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 import java.util.Map;
 
@@ -328,6 +329,7 @@ public class SapServicesUtil {
             CustomServiceTracker<CertificadoRetencionesService> certificadoRetencionesServiceTracker = new CustomServiceTracker<>(CertificadoRetencionesService.class, "getCertificadoRetencionesService");
             CustomServiceTracker<DistanciaCentrosService> distanciaCentrosServiceTracker = new CustomServiceTracker<>(DistanciaCentrosService.class, "getDistanciaCentrosService");
             CustomServiceTracker<AyudaEscolarService> ayudaEscolarServiceTracker = new CustomServiceTracker<>(AyudaEscolarService.class, "getAyudaEscolarService");
+            CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraServiceTracker = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
 
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
@@ -339,6 +341,7 @@ public class SapServicesUtil {
             this._certificadoRetencionesService = certificadoRetencionesServiceTracker.getService();
             this._distanciaCentrosService = distanciaCentrosServiceTracker.getService();
             this._ayudaEscolarService = ayudaEscolarServiceTracker.getService();
+            this._ciertosDatosEstructuraService = ciertosDatosEstructuraServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -384,5 +387,6 @@ public class SapServicesUtil {
     private CertificadoRetencionesService _certificadoRetencionesService;
     private AyudaEscolarService _ayudaEscolarService;
     private DistanciaCentrosService _distanciaCentrosService;
+    private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }

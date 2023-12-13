@@ -30,8 +30,24 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZPeAyudaEscolar }
+     * Create an instance of {@link ZPeCiertosDatosEstructura }
      * 
+     */
+    public ZPeCiertosDatosEstructura createZPeCiertosDatosEstructura() {
+        return new ZPeCiertosDatosEstructura();
+    }
+
+    /**
+     * Create an instance of {@link ZPeCiertosDatosEstructuraResponse }
+     * 
+     */
+    public ZPeCiertosDatosEstructuraResponse createZPeCiertosDatosEstructuraResponse() {
+        return new ZPeCiertosDatosEstructuraResponse();
+    }
+
+    /**
+     * Create an instance of {@link ZPeAyudaEscolar }
+     *
      */
     public ZPeAyudaEscolar createZPeAyudaEscolar() {
         return new ZPeAyudaEscolar();
@@ -39,7 +55,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeAyudaEscolarResponse }
-     * 
+     *
      */
     public ZPeAyudaEscolarResponse createZPeAyudaEscolarResponse() {
         return new ZPeAyudaEscolarResponse();
@@ -47,7 +63,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStAyudasSolicitadas }
-     * 
+     *
      */
     public TableOfZpeStAyudasSolicitadas createTableOfZpeStAyudasSolicitadas() {
         return new TableOfZpeStAyudasSolicitadas();
@@ -55,7 +71,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStBeneficiarios }
-     * 
+     *
      */
     public TableOfZpeStBeneficiarios createTableOfZpeStBeneficiarios() {
         return new TableOfZpeStBeneficiarios();
@@ -63,7 +79,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStEstudios }
-     * 
+     *
      */
     public TableOfZpeStEstudios createTableOfZpeStEstudios() {
         return new TableOfZpeStEstudios();
@@ -71,7 +87,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStInsAyudaEscolar }
-     * 
+     *
      */
     public TableOfZpeStInsAyudaEscolar createTableOfZpeStInsAyudaEscolar() {
         return new TableOfZpeStInsAyudaEscolar();
@@ -79,7 +95,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStEstudios }
-     * 
+     *
      */
     public ZpeStEstudios createZpeStEstudios() {
         return new ZpeStEstudios();
@@ -87,7 +103,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStBeneficiarios }
-     * 
+     *
      */
     public ZpeStBeneficiarios createZpeStBeneficiarios() {
         return new ZpeStBeneficiarios();
@@ -95,7 +111,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStAyudasSolicitadas }
-     * 
+     *
      */
     public ZpeStAyudasSolicitadas createZpeStAyudasSolicitadas() {
         return new ZpeStAyudasSolicitadas();
@@ -103,7 +119,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStInsAyudaEscolar }
-     * 
+     *
      */
     public ZpeStInsAyudaEscolar createZpeStInsAyudaEscolar() {
         return new ZpeStInsAyudaEscolar();
