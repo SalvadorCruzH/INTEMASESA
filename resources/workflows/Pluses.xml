@@ -5,12 +5,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>20</version>
+	<name>2a78f74c-fa92-6923-7d62-533ee0af8044</name>
+	<version>24</version>
 	<state>
-		<name>d447b28d-155f-4d95-9e05-f35825a66b95</name>
+		<name>envioSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-356,-12],"transitions":{"5d55dfd0-1965-402d-a5ef-84e19bc56d41":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-372,
+						150
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -40,44 +49,37 @@ customWorkflowUtilTracker.close();]]>
 		<initial>true</initial>
 		<labels>
 			<label language-id="es_ES">
-				Envio solicitud cambio turno
+				Envio de solicitud
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Envio de solicitud
+						envio de solicitud
 					</label>
 				</labels>
-				<name>5d55dfd0-1965-402d-a5ef-84e19bc56d41</name>
-				<target>a5e883d4-7b8a-4eac-a7c1-3c25b192ea56</target>
+				<name>solicitudEnviada</name>
+				<target>jefeDepartamento</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>105a97d0-8529-4512-bc83-df7e89b84dde</name>
+		<name>Aprobación de la solicitud</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						890,
-						-15
+						971,
+						152
 					],
 					"terminal": true
 				}
 			]]>
 		</metadata>
 		<actions>
-			<action>
-				<name>Cambiar estado workflow</name>
-				<description></description>
-				<status>0</status>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
 			<action>
 				<name>Cambiar estado objeto</name>
 				<description></description>
@@ -88,43 +90,29 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
-import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
 Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
-Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
-ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
-sigdServiceTracker.open();
-SigdServiceApplication sigdService = sigdServiceTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Admin RRHH");
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobado", 0, "Admin RRHH");
-String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-
-if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Turnos", "solicitud");
-}
-
-String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
-if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Turnos", "solicitud");
-}
 customWorkflowUtilTracker.close();
-sigdServiceTracker.close();]]>
+
+]]>
 				</script>
-				<script-language>groovy</script-language>
+				<script-language>java</script-language>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>notificacion de aprobacion</name>
+				<name>Notificación de aprobación</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Su solicitud de cambio de turno ha sido aprobada]]>
+					<![CDATA[Se ha aprobado su solicitud de pluses]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -136,25 +124,49 @@ sigdServiceTracker.close();]]>
 		</actions>
 		<labels>
 			<label language-id="es_ES">
-				Solicitud aprobada
+				Aprobación de la solicitud
 			</label>
 		</labels>
 	</state>
 	<state>
-		<name>3fb23196-fde0-4d4d-a24d-870d7f4d3bf3</name>
+		<name>solicitudRechazada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						59.546875,
-						257.5
+						62.546875,
+						-64.5
 					],
 					"terminal": true
 				}
 			]]>
 		</metadata>
 		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Responsable");
+
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
 			<action>
 				<name>Cambiar estado workflow</name>
 				<description></description>
@@ -162,53 +174,13 @@ sigdServiceTracker.close();]]>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
-			<action>
-				<name>Cambiar estado objeto</name>
-				<description></description>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
-import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
-
-Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
-customWorkflowUtilTracker.open();
-CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-
-Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
-ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
-sigdServiceTracker.open();
-SigdServiceApplication sigdService = sigdServiceTracker.getService();
-
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", 0, "");
-String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-
-if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Turnos", "solicitud");
-}
-
-String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
-if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Turnos", "solicitud");
-}
-customWorkflowUtilTracker.close();
-sigdServiceTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
 			<notification>
-				<name>Notificacion de rechazo</name>
+				<name>Notificación de solicitud rechazada</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Su solicitud de cambio de turno ha sido rechazada]]>
+					<![CDATA[Se ha rechazado su solicitud de pluses]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -220,22 +192,24 @@ sigdServiceTracker.close();]]>
 		</actions>
 		<labels>
 			<label language-id="es_ES">
-				Rechazada y guardada en SIGD
+				Solicitud rechazada
 			</label>
 		</labels>
 	</state>
 	<task>
-		<name>a5e883d4-7b8a-4eac-a7c1-3c25b192ea56</name>
+		<name>jefeDepartamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[21,-13],"transitions":{"9ae3bf78-42ec-40fd-ae40-a874416813eb":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						58.546875,
+						149.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
-			<action>
-				<name>Cambiar estado workflow</name>
-				<description></description>
-				<status>1</status>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
 			<action>
 				<name>Cambiar estado objeto</name>
 				<description></description>
@@ -252,20 +226,28 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAprobacion", userId, "jefe Departamento");
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDepartamento", userId, "Jefe de departamento");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
 			<notification>
-				<name>notificacion asignacion</name>
+				<name>Notificación de solicitud</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se le ha asignado una solicitud de cambio de turno]]>
+					<![CDATA[Se le ha asignado una solicitud de Pluses]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -276,25 +258,9 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId");
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>jefedepartarmento@mail.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -305,37 +271,39 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar solicitud
 					</label>
 				</labels>
-				<name>0c32779c-942b-42ea-a249-9c5cbadb816e</name>
-				<target>7a06644e-3652-4cfa-bd43-6d7444bf3056</target>
+				<name>aprobarSolicitudResponsable</name>
+				<target>adminRRHH</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar solicitud
 					</label>
 				</labels>
-				<name>9ae3bf78-42ec-40fd-ae40-a874416813eb</name>
-				<target>3fb23196-fde0-4d4d-a24d-870d7f4d3bf3</target>
+				<name>rechazarSolicitudResponsable</name>
+				<target>solicitudRechazada</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>7a06644e-3652-4cfa-bd43-6d7444bf3056</name>
+		<name>adminRRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[412,-14],"transitions":{"Devolver-a-usuario-para-edicion":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						503.546875,
+						150.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
-			<action>
-				<name>Cambiar estado workflow</name>
-				<description></description>
-				<status>1</status>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
 			<action>
 				<name>Cambiar estado objeto</name>
 				<description></description>
@@ -352,29 +320,33 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Notificacion de asignacion</name>
+				<name>Notificación de solicitud</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se ha creado una solicitud de cambio de turno]]>
+					<![CDATA[Se le ha asignado una solicitud de pluses]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<roles>
-						<role>
-							<role-id>35183</role-id>
-						</role>
-					</roles>
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
@@ -388,49 +360,48 @@ customWorkflowUtilTracker.close();]]>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
-				adminRRHH
+				Admin RRHH
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud y guardar en SIGD
+						Aprobar solicitud
 					</label>
 				</labels>
-				<name>0c12fb45-e208-4c06-bffc-ce2caa2a407a</name>
-				<target>105a97d0-8529-4512-bc83-df7e89b84dde</target>
+				<name>aprobarSolicitudRRHH</name>
+				<target>Aprobación de la solicitud</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Devolver a usuario
 					</label>
 				</labels>
-				<name>4d4d9c3d-375b-48f4-bdbf-4ecf22c99f65</name>
-				<target>3fb23196-fde0-4d4d-a24d-870d7f4d3bf3</target>
-				<default>false</default>
-			</transition>
-			<transition>
-				<labels>
-					<label language-id="es_ES">
-						Devuelta para edición
-					</label>
-				</labels>
-				<name>Devolver-a-usuario-para-edicion</name>
-				<target>Devolver-solicitud</target>
+				<name>devolverUsuario</name>
+				<target>usuario</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Devolver-solicitud</name>
+		<name>usuario</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[435,263],"transitions":{"Devolver-a-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						507.546875,
+						412.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
-				<name>Cambiar estado objeto</name>
+				<name>Cambiar estado workflow</name>
 				<description></description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
@@ -445,7 +416,8 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "devueltoAUsuarioSolicitante", userId, "User");
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "devueltoAUsuarioSolicitante", userId, "Usuario");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -460,19 +432,19 @@ customWorkflowUtilTracker.close();]]>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Devuelta por RRHH</name>
+				<name>Notificación devolución de solicitud</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se devuelve solicitud para revisión]]>
+					<![CDATA[Se le ha devuelto la solicitud de pluses para su corrección.]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
 				</recipients>
-				<execution-type>onEntry</execution-type>
+				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
 		<assignments>
@@ -480,18 +452,18 @@ customWorkflowUtilTracker.close();]]>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
-				Devuelta por RRHH
+				Usuario
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Devuelta a RHH
+						Volver a enviar
 					</label>
 				</labels>
-				<name>Devolver-a-rrhh</name>
-				<target>7a06644e-3652-4cfa-bd43-6d7444bf3056</target>
+				<name>reenviar</name>
+				<target>adminRRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>

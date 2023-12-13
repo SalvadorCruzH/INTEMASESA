@@ -5,68 +5,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>7608c7dc-4f77-0262-c6e9-ca53f45ec239</name>
-	<version>12</version>
+	<name>a77d955e-e716-7ce6-cbc4-a3ae2750b9b1</name>
+	<version>17</version>
 	<state>
-		<name>0449b7f6-f107-4b0e-973d-aee5ad0e2d2b</name>
+		<name>ed44c245-0e5f-46e6-873b-228b2b58005f</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-178,67],"transitions":{"d5fab070-0747-4e3d-b964-3d45643d15f4":{"bendpoints":[]}}}]]></metadata>
-		<actions>
-			<action>
-				<name>Cambiar estado objeto</name>
-				<description></description>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.base.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "Usuario");
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
-		</actions>
-		<initial>true</initial>
-		<labels>
-			<label language-id="es_ES">
-				Envio de solicitud
-			</label>
-		</labels>
-		<transitions>
-			<transition>
-				<labels>
-					<label language-id="es_ES">
-						Solicitud enviada
-					</label>
-				</labels>
-				<name>d5fab070-0747-4e3d-b964-3d45643d15f4</name>
-				<target>7328cf10-5ddb-4c2e-b161-c495282eb052</target>
-				<default>true</default>
-			</transition>
-		</transitions>
-	</state>
-	<state>
-		<name>6712ecd3-72b8-42c9-be64-5dc91ad57e91</name>
-		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						311,
-						294
-					],
-					"terminal": true
+						-355.453125,
+						122.5
+					]
 				}
 			]]>
 		</metadata>
@@ -88,51 +38,42 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "Usuario");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
-			<action>
-				<name>Cambiar estado workflow</name>
-				<description></description>
-				<status>4</status>
-				<priority>1</priority>
-				<execution-type>onEntry</execution-type>
-			</action>
-			<notification>
-				<name>Solicitud rechazada</name>
-				<description>
-					<![CDATA[]]>
-				</description>
-				<template>
-					<![CDATA[Su solicitud de modificación de IRPF ha sido rechazada.]]>
-				</template>
-				<template-language>text</template-language>
-				<notification-type>user-notification</notification-type>
-				<recipients receptionType="to">
-					<user />
-				</recipients>
-				<execution-type>onEntry</execution-type>
-			</notification>
 		</actions>
+		<initial>true</initial>
 		<labels>
 			<label language-id="es_ES">
-				Solicitud rechazada
+				Envio de la solicitud
 			</label>
 		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						solicitud enviada
+					</label>
+				</labels>
+				<name>9c7d500f-81a1-4829-9efe-85cad22e6420</name>
+				<target>0be24609-6c43-4d67-9ecc-f613b0b91dd2</target>
+				<default>true</default>
+			</transition>
+		</transitions>
 	</state>
 	<state>
-		<name>0b0208d8-cce3-442b-a253-265b22ff25bb</name>
+		<name>181c5390-5904-4aaf-92f0-e839fdc87623</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						752.546875,
-						65.5
+						925.546875,
+						121.5
 					],
 					"terminal": true
 				}
@@ -167,7 +108,25 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", use
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "IRPF", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "PrestamosVivienda", "solicitud");
+}
+//Subir fichero certificacion o decalracion responsable
+String pdfPresupuesto = customWorkflowUtil.getDocumentToLoad(workflowContext, "presupuesto");
+String pdfContrato = customWorkflowUtil.getDocumentToLoad(workflowContext, "contratoCompraventa");
+String pdfEscritura = customWorkflowUtil.getDocumentToLoad(workflowContext, "escrituraDePropiedad");
+String pdfOtros = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarOtros");
+
+if(pdfContrato != null && pdfContrato != ""){
+    String idDocumentoContratoSigd = sigdService.saveDocumentOnSIGD(pdfContrato, "PrestamosVivienda", "solicitud");
+}
+if(pdfEscritura != null && pdfEscritura != ""){
+    String idDocumentoEscrituraSigd = sigdService.saveDocumentOnSIGD(pdfEscritura, "PrestamosVivienda", "solicitud");
+}
+if(pdfOtros != null && pdfOtros != ""){
+    String idDocumentoOtrosSigd = sigdService.saveDocumentOnSIGD(pdfOtros, "PrestamosVivienda", "solicitud");
+}
+if(pdfPresupuesto != null && pdfPresupuesto != ""){
+    String idDocumentoPresupuestoSigd = sigdService.saveDocumentOnSIGD(pdfPresupuesto, "PrestamosVivienda", "solicitud");
 }
 
 customWorkflowUtilTracker.close();
@@ -186,12 +145,12 @@ sigdServiceTracker.close();
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Solicitud aprobada</name>
+				<name>notidicación de aprobación</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Su solicitud de modificación de IRPF ha sido aprobada.]]>
+					<![CDATA[Su solicitud de préstamo de vivienda ha sido aprobada]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -207,10 +166,20 @@ sigdServiceTracker.close();
 			</label>
 		</labels>
 	</state>
-	<task>
-		<name>7328cf10-5ddb-4c2e-b161-c495282eb052</name>
-		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[310,65],"transitions":{"267c1419-876e-4502-a123-2187be3b0b3f":{"bendpoints":[]}}}]]></metadata>
+	<state>
+		<name>620ab41a-b474-4972-acc6-8d5db0ea8a7c</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						449.546875,
+						339.5
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -222,34 +191,110 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
-
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
-customWorkflowUtilTracker.close();]]>
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+//Modificar historico y estado
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Administrador RRHH");
+
+//Subir el object en PDF
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "PrestamosVivienda", "solicitud");
+}
+//Subir fichero certificacion o decalracion responsable
+String pdfPresupuesto = customWorkflowUtil.getDocumentToLoad(workflowContext, "presupuesto");
+String pdfContrato = customWorkflowUtil.getDocumentToLoad(workflowContext, "contratoCompraventa");
+String pdfEscritura = customWorkflowUtil.getDocumentToLoad(workflowContext, "escrituraDePropiedad");
+String pdfOtros = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarOtros");
+
+if(pdfContrato != null && pdfContrato != ""){
+    String idDocumentoContratoSigd = sigdService.saveDocumentOnSIGD(pdfContrato, "PrestamosVivienda", "solicitud");
+}
+if(pdfEscritura != null && pdfEscritura != ""){
+    String idDocumentoEscrituraSigd = sigdService.saveDocumentOnSIGD(pdfEscritura, "PrestamosVivienda", "solicitud");
+}
+if(pdfOtros != null && pdfOtros != ""){
+    String idDocumentoOtrosSigd = sigdService.saveDocumentOnSIGD(pdfOtros, "PrestamosVivienda", "solicitud");
+}
+if(pdfPresupuesto != null && pdfPresupuesto != ""){
+    String idDocumentoPresupuestoSigd = sigdService.saveDocumentOnSIGD(pdfPresupuesto, "PrestamosVivienda", "solicitud");
+}
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();
+]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>4</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación solicitud rechazada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud de préstamo de vivienda ha sido rechazada]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Rechazada y guardada en SIGD
+			</label>
+		</labels>
+	</state>
+	<task>
+		<name>f9efb950-2eed-41be-8820-8730d1a61f6f</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						451.546875,
+						122.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
 				<description></description>
 				<status>1</status>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Notificación de solicitud</name>
+				<name>notificación de solicitud</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se le ha asignado una solicitud de modificación de IRPF.]]>
+					<![CDATA[Se le ha asignado una solicitud de préstamo de vivienda]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -275,11 +320,11 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud
+						Aprobación de la solicitud
 					</label>
 				</labels>
-				<name>0bfe2a64-7c61-4e18-a776-9f683860d22e</name>
-				<target>0b0208d8-cce3-442b-a253-265b22ff25bb</target>
+				<name>929deb3b-3b63-429d-bee1-e82c5a580d44</name>
+				<target>181c5390-5904-4aaf-92f0-e839fdc87623</target>
 				<default>true</default>
 			</transition>
 			<transition>
@@ -288,9 +333,94 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud
 					</label>
 				</labels>
-				<name>267c1419-876e-4502-a123-2187be3b0b3f</name>
-				<target>6712ecd3-72b8-42c9-be64-5dc91ad57e91</target>
+				<name>aeef7efd-fe1a-4ca5-950c-6582d0a07156</name>
+				<target>620ab41a-b474-4972-acc6-8d5db0ea8a7c</target>
 				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>0be24609-6c43-4d67-9ecc-f613b0b91dd2</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						52.546875,
+						121.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAsistenteSocial", 0, "Asistente social");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<notification>
+				<name>notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de préstamo de vivienda]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>79230</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Asistente social
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Aprobar solicitud
+					</label>
+				</labels>
+				<name>6bccfd01-7a87-491d-b547-84a5b168b79a</name>
+				<target>f9efb950-2eed-41be-8820-8730d1a61f6f</target>
+				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
