@@ -84,7 +84,6 @@ class GlobalObjectModule extends React.Component {
                     $('.volante').hide();
                     $('.text-input.attach-listadoSolicitudes').hide();
 
-                     // this.insertColumns(object[key]);
                     input.value = object[key];
                     if (key == "listadoSolicitudes"){
                         var tbody = $("#table-solicitudes tbody");
@@ -107,34 +106,6 @@ class GlobalObjectModule extends React.Component {
             }
         });
 
-    }
-
-   insertColumns = (data) => {
-       $('.component-button.text-break').hide();
-       $('.seleccionParte').hide();
-       $('.penoso').hide();
-       $('.locomocion').hide();
-       $('.toxico').hide();
-       $('.trabajoPantalla').hide();
-       $('.volante').hide();
-       $('.text-input.attach-listadoSolicitudes').hide();
-       if (key == "listadoSolicitudes"){
-           var tbody = $("#table-solicitudes tbody");
-           var data = JSON.parse(object[key]);
-           $.each(data, function(index, item) {
-               var newRow = $('<tr>');
-
-               newRow.append('<td></td>');
-               newRow.append('<td></td>');
-               newRow.append('<td>' + item.solicitante + '</td>');
-               newRow.append('<td>' + item.parte + '</td>');
-               newRow.append('<td>' + item.fechaactividad + '</td>');
-               newRow.append('<td>' + item.valor + '</td>');
-               newRow.append('<td>' + item.detalles + '</td>');
-
-               tbody.append(newRow);
-           });
-       }
     }
 
     loadConfiguration = (result) => {
