@@ -204,11 +204,6 @@
     <wsdl:types>
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
                     xmlns:tns="urn:sap-com:document:sap:rfc:functions">
-            <xsd:simpleType name="char14">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="14"/>
-                </xsd:restriction>
-            </xsd:simpleType>
             <xsd:simpleType name="numeric8">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="8"/>
@@ -219,11 +214,16 @@
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                     xmlns:n0="urn:sap-com:document:sap:rfc:functions">
             <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
+            <xsd:simpleType name="char4">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="4"/>
+                </xsd:restriction>
+            </xsd:simpleType>
             <xsd:element name="ZPeConsultaCertRetPdf">
                 <xsd:complexType>
                     <xsd:sequence>
+                        <xsd:element name="ImEjercicio" type="tns:char4"/>
                         <xsd:element name="ImPernr" type="n0:numeric8"/>
-                        <xsd:element name="ImVariante" type="n0:char14" minOccurs="0"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
