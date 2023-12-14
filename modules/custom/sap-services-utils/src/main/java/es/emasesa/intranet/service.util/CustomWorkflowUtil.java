@@ -1,6 +1,5 @@
 package es.emasesa.intranet.service.util;
 
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -10,6 +9,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import es.emasesa.intranet.sap.base.exception.SapException;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
@@ -26,6 +26,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
+import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
+
 @Component(
         immediate = true,
         service = CustomWorkflowUtil.class
@@ -36,37 +39,70 @@ public class CustomWorkflowUtil {
      * @param workflowContext
      * @param userId
      * @employeeType employeeType
-     * @return
+     * @return users
      */
     public List<User> assignWorkflowUser(Map<String, Serializable> workflowContext, long userId, String employeeType) {
         List<User> users = new ArrayList<>();
         long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-
-        String screenName = ""; //TODO - think on a default user, when the service fail
-
+        String matriculaSAPUser = StringPool.BLANK;
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        User user = null;
         try {
-            User user = _userLocalService.getUser(userId);
-
-            String matricula  = _expandoValueLocalService.getData(companyId, "com.liferay.portal.kernel.model.User", "CUSTOM_FIELDS", "matricula", userId, "");
+            String matriculaActualUser  = customExpandoUtil.getDataValueByUser(userId, companyId, "matricula");
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matricula);
+            JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matriculaActualUser);
             Thread.currentThread().setContextClassLoader(actualClassLoader);
-            screenName = json.getString(employeeType);
+            matriculaSAPUser = json.getString(employeeType);
             LOG.debug("Tipo de empleado: "+employeeType);
-            LOG.debug("Nombre del empleado: "+screenName);
-            users.add(_userLocalService.getUserByScreenName(companyId, screenName));
+            LOG.debug("Nombre del empleado: "+matriculaSAPUser);
+            user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaSAPUser);
+            if(Validator.isNotNull(user)) {
+                LOG.debug("Se ha encontrado en Liferay un usuario con la matricula: " + matriculaSAPUser);
+                users.add(user);
+            }else {
+                LOG.debug("No existe en Liferay un usuario con la matricula: " + matriculaSAPUser);
+            }
         } catch (SapException e) {
-            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+screenName, e);
-        } catch (PortalException e) {
-            LOG.error("Se ha producido un error a general para "+screenName, e);
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+matriculaSAPUser, e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return users;
     }
+
+    /**
+     * Devuelve usuarios de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
+     * @param workflowContext
+     * @param userType
+     * @return user
+     */
+    public User getUserSap(Map<String, Serializable> workflowContext, String userType) {
+        User user = null;
+        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+        String matriculaUser = StringPool.BLANK;
+
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+
+            matriculaUser = json.getString(userType);
+            LOG.debug("La matrícula del usuario es: " + matriculaUser);
+            user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
+
+        } catch (SapException e) {
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+matriculaUser, e);
+
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        }
+        return user;
+    }
+
 
     public String modificarIRPF(Map<String, Serializable> workflowContext) {
         String i = "";
@@ -89,19 +125,19 @@ public class CustomWorkflowUtil {
 
         return i;
     }
-    
+
     /**
      * Cambio de domiciliación Bancaria de un empleado. Deberá rellenarse el campo de entrada IBAN, con la matricula del empleado y la fecha de solicitud
-     * 
+     *
      * @param workflowContext
      * @return datosServicio
      */
     public String cambioDomiciliacionBancaria(Map<String, Serializable> workflowContext) {
-    	String datosServicio = StringPool.BLANK;
+        String datosServicio = StringPool.BLANK;
         String pernr = StringPool.BLANK;
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-        	 LOG.debug("Se procede con el cambio de domiciliacion bancaria...");
+            LOG.debug("Se procede con el cambio de domiciliacion bancaria...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             String fechaSolicitud = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("createDate");
             String iban = (String)_objectEntryLocalService.getObjectEntry(classPK).getValues().get("iBAN");
@@ -123,7 +159,6 @@ public class CustomWorkflowUtil {
         return datosServicio;
     }
 
-
     @Activate
     @Modified
     protected void activate(Map<String, Object> properties) {
@@ -137,15 +172,13 @@ public class CustomWorkflowUtil {
             throw new RuntimeException(e);
         }
     }
-
-    @Reference
-    private ExpandoValueLocalService _expandoValueLocalService;
-
+    private CustomExpandoUtil customExpandoUtil;
     @Reference
     private UserLocalService _userLocalService;
     @Reference
     SapInterfaceService _sapService;
     private EmpleadoEstructuraService empleadoEstructuraService;
+    private CiertosDatosEstructuraService ciertosDatosEstructuraService;
     @Reference
     ObjectEntryLocalService _objectEntryLocalService;
     private JornadaNominaService jornadaNominaService;
