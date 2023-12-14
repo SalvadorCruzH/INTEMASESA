@@ -163,11 +163,16 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			LocalDate month= yearMonth.atEndOfMonth();
 			LocalDate firstDay = month.with(TemporalAdjusters.firstDayOfMonth());
 			LocalDate lastDay = month.with(TemporalAdjusters.lastDayOfMonth());
+			LocalDate today = LocalDate.now();
+
+			if (lastDay.isAfter(today)){
+				lastDay = today;
+			}
 			startDate = firstDay.format(sdf);
 			endDate = lastDay.format(sdf);
 
 
-			String cacheKey = "jornadaDiaria"+monthSelected+usuario;
+			String cacheKey = "jornadaDiaria_" + startDate + StringPool.DASH + endDate + StringPool.UNDERLINE + usuario;
 			Object object = _cache.get(cacheKey);
 
 			if(Validator.isNotNull(object) && ((JSONArray) object).length()>0){
@@ -185,7 +190,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 
 			totalItems = array.length();
 			List<JSONObject> listJson = new ArrayList<>();
-			for(int i = 0;i<array.length();i++){
+			for(int i = array.length()-1;i>=0;i--){
 
 				listJson.add(array.getJSONObject(i));
 			}
