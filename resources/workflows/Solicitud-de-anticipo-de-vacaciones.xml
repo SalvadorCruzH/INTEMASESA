@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>87ca54ba-9b30-1ea0-6b34-71ff5d0364d3</name>
-	<version>18</version>
+	<version>37</version>
 	<condition>
 		<name>d292d2f5-9289-46fb-a8b6-16e2a568636e</name>
 		<description>Ejecute una lógica condicional.</description>
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,33 +47,38 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 Log log = LogFactoryUtil.getLog("es.emasesa.groovy.anticipoVacaciones")
 Bundle bundle = FrameworkUtil.getBundle(SapServicesUtil.class)
 ServiceTracker customSapServiceUtilTracker = new ServiceTracker(bundle.getBundleContext(), SapServicesUtil.class, null)
-def userScreenName = ""
+def userScreenName = "", matricula = ""
 
 try {
     def user = UserLocalServiceUtil.getUserById(userId)
-    userScreenName = user.getScreenName()
-    LoggerUtil.debug(log, "ScreenName: " + userScreenName)
+    def expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(user.getCompanyId(), user.getModelClassName(), userId)
+    matricula = expandoBridge.getAttribute("matricula")
+    LoggerUtil.debug(log, "matricula: " + matricula)
 } catch (Exception e) {
-    LoggerUtil.error(log, "No se ha encontrado usuario con userId: " + userId)
+    LoggerUtil.error(log, "No se ha encontrado usuario con matricula: " + matricula)
 }
 returnValue = "existen vacaciones"
 def fechaComienzoVacaciones = ObjectEntryLocalServiceUtil.getObjectEntry(entryClassPK.toLong()).getValues().get("fechaComienzoVacaciones")
 
 customSapServiceUtilTracker.open()
 SapServicesUtil customSapServiceUtil = customSapServiceUtilTracker.getService()
-JSONArray jsonArray = customSapServiceUtil.getempleadoPrestamos(userScreenName, fechaComienzoVacaciones)
+JSONArray jsonArray = customSapServiceUtil.getempleadoPrestamos(matricula, fechaComienzoVacaciones)
 customSapServiceUtilTracker.close()
 
 LoggerUtil.debug(log, "Resultado de la llamada: " + jsonArray.toString())
-def fechaFin = jsonArray.getJSONObject(0).get("ffinVacaciones")
-def fechaInicio = jsonArray.getJSONObject(0).get("finiVacaciones")
+if (jsonArray.length() > 0){
+    def fechaFin = jsonArray.getJSONObject(0).get("ffinVacaciones")
+    def fechaInicio = jsonArray.getJSONObject(0).get("finiVacaciones")
 
-returnValue = "existen vacaciones"
+    returnValue = "existen vacaciones"
 
-if (fechaFin.equals("0000-00-00") && fechaInicio.equals("0000-00-00")){
-    LoggerUtil.debug(log, "La llamada ha devuelto fechas no validas")
-    returnValue = "no existen vacaciones"
-    return
+    if (fechaFin.equals("0000-00-00") && fechaInicio.equals("0000-00-00")){
+        LoggerUtil.debug(log, "La llamada ha devuelto fechas no validas")
+       returnValue = "no existen vacaciones"
+        return
+    }
+} else {
+    LoggerUtil.error(log, "La llamada no ha devuelto ningun dato")
 }
 ]]>
 		</script>
@@ -242,7 +248,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", use
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 
 if(pdf != null && pdf != ""){
-    //String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -330,7 +336,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	//String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
 }
 
 customWorkflowUtilTracker.close();
@@ -413,7 +419,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	//TODO descomentar String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
 }
 
 customWorkflowUtilTracker.close();
@@ -496,7 +502,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	//TODO descomentar String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
 }
 
 customWorkflowUtilTracker.close();
