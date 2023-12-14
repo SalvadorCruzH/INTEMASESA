@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM - Selector centros",
+  "typeOptions": {"fieldTypes": [
+    "relationship",
+    "select"
+  ]},
+  "type": "input"
+}

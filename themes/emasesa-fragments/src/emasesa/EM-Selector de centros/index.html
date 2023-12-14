@@ -1,0 +1,19 @@
+
+<div class="select-from-list">
+    <label class="" id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
+        ${htmlUtil.escape(input.label)}
+
+        [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+    </label>
+
+
+    <select id="${fragmentEntryLinkNamespace}-select-from-list-input" class="form-control" name="${configuration.nameConfig}" placeholder="${languageUtil.get(locale, "choose-an-option")}">
+        <option value="">Selecciona una opcion</option>
+    </select>
+
+    <input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden"
+           value="" />
+    <input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden"
+           value="" />
+
+</div>

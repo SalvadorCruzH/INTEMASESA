@@ -1,0 +1,18 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				
+				{
+					"defaultValue": "",
+					"label": "Nombre campo name",
+					"name": "nameConfig",
+					"type": "text",
+					"typeOptions": {
+          	"placeholder": ""
+          }
+				}
+			]
+		}
+	]
+}
