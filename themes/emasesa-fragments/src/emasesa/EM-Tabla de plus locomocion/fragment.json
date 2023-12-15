@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM - Tabla pluses",
+  "typeOptions": {"fieldTypes": [
+    "number",
+    "text"
+  ]},
+  "type": "input"
+}
