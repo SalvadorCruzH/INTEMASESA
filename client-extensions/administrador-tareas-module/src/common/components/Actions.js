@@ -96,7 +96,7 @@ class Actions extends React.Component {
             		    <li><a class="dropdown-item" data-action="assignToMe" onClick={this.callAction}>Asignar a mi</a></li>
             		}
             		<li><a class="dropdown-item"  onClick={this.openModal}>Consultar</a></li>
-            		{(this.state.assigneePerson &&  this.state.transitions && this.state.assigneePerson.id == Liferay.ThemeDisplay.getUserId()) &&
+            		{(this.state.assigneePerson &&  this.state.transitions && this.state.assigneePerson.id == Liferay.ThemeDisplay.getUserId() && this.state.transitions.map) &&
                         this.state.transitions.map((transition) => {
                                 return(
                                     <>

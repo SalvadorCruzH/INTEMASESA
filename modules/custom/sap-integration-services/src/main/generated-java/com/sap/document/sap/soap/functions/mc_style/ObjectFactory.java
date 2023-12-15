@@ -30,6 +30,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ZPeEmpleadoRelacLaboral }
+     * 
+     */
+    public ZPeEmpleadoRelacLaboral createZPeEmpleadoRelacLaboral() {
+        return new ZPeEmpleadoRelacLaboral();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoRelacLaboralResponse }
+     * 
+     */
+    public ZPeEmpleadoRelacLaboralResponse createZPeEmpleadoRelacLaboralResponse() {
+        return new ZPeEmpleadoRelacLaboralResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoRelacLaboral }
+     * 
+     */
+    public TableOfZpeStEmpleadoRelacLaboral createTableOfZpeStEmpleadoRelacLaboral() {
+        return new TableOfZpeStEmpleadoRelacLaboral();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoRelacLaboral }
+     * 
+     */
+    public ZpeStEmpleadoRelacLaboral createZpeStEmpleadoRelacLaboral() {
+        return new ZpeStEmpleadoRelacLaboral();
+    }
+
+    /**
      * Create an instance of {@link ZPeCiertosDatosEstructura }
      *
      */
@@ -438,5 +470,4 @@ public class ObjectFactory {
     public ZpeStSubordinados createZpeStSubordinados() {
         return new ZpeStSubordinados();
     }
-
 }

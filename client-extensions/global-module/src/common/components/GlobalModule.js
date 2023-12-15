@@ -11,6 +11,17 @@ class GlobalModule extends React.Component {
         window.LiferayApi = LiferayApi;
         window.EmasesaApi = EmasesaApi;
         window.GlobalExtensionConstants = Constants;
+        window.simulateGlobalClick = function (elem) {
+            // Create our event (with options)
+            var evt = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            // If cancelled, don't dispatch our event
+            var canceled = !elem.dispatchEvent(evt);
+            evt.stopPropagation()
+        };
         LiferayApi.test();
 
         this.state = {

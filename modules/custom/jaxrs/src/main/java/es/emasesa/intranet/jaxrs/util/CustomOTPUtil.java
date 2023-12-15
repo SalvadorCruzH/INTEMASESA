@@ -134,6 +134,7 @@ public class CustomOTPUtil extends Application {
         boolean sendOtp;
         String otpCache = getOTPCache(typeObject, userId);
 
+        _log.error(otpCache);
         Map<String,String> mailDetails = getMailDetails(otpCache);
         if (!mailDetails.isEmpty()){
             String subject = mailDetails.get(JaxrsConstants.EMAIL_SUBJECT);

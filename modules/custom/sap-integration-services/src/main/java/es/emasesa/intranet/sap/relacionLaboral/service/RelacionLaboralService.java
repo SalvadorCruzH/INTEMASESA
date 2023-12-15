@@ -1,4 +1,4 @@
-package es.emasesa.intranet.sap.retenciones.service;
+package es.emasesa.intranet.sap.relacionLaboral.service;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -12,7 +12,7 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
-import es.emasesa.intranet.sap.retenciones.exception.RelacionLaboralException;
+import es.emasesa.intranet.sap.relacionLaboral.exception.RelacionLaboralException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 import jakarta.xml.ws.Holder;
@@ -26,10 +26,10 @@ import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.Base64;
 
-@org.springframework.stereotype.Component("certificadoRetencionesService")
-public class CertificadoRetencionesService {
+@org.springframework.stereotype.Component("relacionLaboralService")
+public class RelacionLaboralService {
 
-    public JSONObject getCertificadoRetenciones(String pernr, String imVariante) throws RelacionLaboralException, SapCommunicationException {
+    public JSONObject getRelacionLaboralEmpleado(String pernr) throws RelacionLaboralException, SapCommunicationException {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -37,11 +37,9 @@ public class CertificadoRetencionesService {
             Holder<Integer> exResult = new Holder<>();
             ClassLoader objectFactoryClassLoader = ZWSPECONSULTACERTRETPDF.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            port.zPeConsultaCertRetPdf(imVariante, pernr , out, exResult);
-            String decoded = new String(Base64.getDecoder().decode(out.value));
-            JSONObject certificado = JSONFactoryUtil.createJSONObject("");
-            certificado.put("pdf", decoded);
-            return certificado;
+            TableOfZpeStEmpleadoRelacLaboral serviceResult = port.zPeEmpleadoRelacLaboral(pernr);
+            ZpeStEmpleadoRelacLaboral empleadoRelacionLaboral = serviceResult.getItem().stream().findFirst().orElse(null);
+            return JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoRelacionLaboral));
         } catch (JSONException | ServerSOAPFaultException e) {
             throw new RelacionLaboralException("Error llamando al WS para el pernr "+ pernr, e);
         } catch (ClientTransportException e) {
@@ -63,7 +61,7 @@ public class CertificadoRetencionesService {
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPECONSULTACERTRETPDF.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADORELACLABORAL.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
@@ -75,9 +73,16 @@ public class CertificadoRetencionesService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            URL urlEndpoint = new URL(configuration.certificadoRetencionesEndpoint());
-            ZWSPECONSULTACERTRETPDF_Service service = new ZWSPECONSULTACERTRETPDF_Service();
-            port = service.getPort(ZWSPECONSULTACERTRETPDF.class);
+            try{
+                URL urlEndpoint = new URL(configuration.relacionLaboralEndpoint());
+            }catch (MalformedURLException e) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Error en el WSDL de ZWSPEEMPLEADORELACLABORAL --> " + configuration.relacionLaboralEndpoint());
+                }
+            }
+
+            ZWSPEEMPLEADORELACLABORAL_Service service = new ZWSPEEMPLEADORELACLABORAL_Service();
+            port = service.getPort(ZWSPEEMPLEADORELACLABORAL.class);
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
@@ -89,11 +94,7 @@ public class CertificadoRetencionesService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de CertificadoRetencionesService");
             }
-        } catch (MalformedURLException e) {
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Error en el WSDL de ZWSPECONSULTACERTRETPDF_Service --> " + configuration.certificadoRetencionesEndpoint());
-            }
-        } finally {
+        }  finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
@@ -102,10 +103,10 @@ public class CertificadoRetencionesService {
         }
     }
 
-    protected ZWSPECONSULTACERTRETPDF port;
+    protected ZWSPEEMPLEADORELACLABORAL port;
 
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
-    private static final Log LOG = LogFactoryUtil.getLog(RelacionLaboralRetencionesService.class);
+    private static final Log LOG = LogFactoryUtil.getLog(RelacionLaboralService.class);
 }

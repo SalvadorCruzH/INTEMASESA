@@ -109,7 +109,7 @@ public class CustomExpandoUtil {
     
     /**
      * Obtener el classPk de un expando por su valor
-     * @param expandoTable
+     * @param companyId
      * @param columnName
      * @param columnValue
      * 
@@ -162,7 +162,7 @@ public class CustomExpandoUtil {
 		        user = UserLocalServiceUtil.getUser(userId);
 		        _log.debug("Encontrado usuario con el valor: " + expandoValue + ". El usuario es: " + user.getScreenName());
 	        }else {
-	        	_log.debug("No se ha encontrado ningún usuario con el valor: " + expandoValue);
+	        	_log.debug("No se ha encontrado ningï¿½n usuario con el valor: " + expandoValue);
 	        }
         } catch (PortalException e) {
         	_log.error("Error al obtener el usuario", e);

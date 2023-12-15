@@ -70,8 +70,9 @@ class GlobalObjectModule extends React.Component {
                 document.querySelector(".lfr-layout-structure-item-form").appendChild(input);
             }
         }
-
+        console.debug(object);
         Object.keys(object).forEach(function(key) {
+            console.debug(key);
             if(object[key] != null){
             var input = document.querySelector("[name='"+key+"']");
                 if(input){
@@ -84,7 +85,40 @@ class GlobalObjectModule extends React.Component {
                     $('.volante').hide();
                     $('.text-input.attach-listadoSolicitudes').hide();
 
-                    input.value = object[key];
+                    if(input.type === 'file') {
+                        console.debug(object[key]);
+                        let parentInput = input.closest('div');
+                        parentInput = parentInput.closest('div');
+                        parentInput.setAttribute('style', 'display: none !important');
+                        parentInput.nextElementSibling.setAttribute('style', 'display: none !important');
+                        let parentParentInput = parentInput.parentNode;
+                        let linkDocument = document.createElement("a");
+                        linkDocument.setAttribute('href', object[key]['link']['href']);
+                        linkDocument.setAttribute('class', 'linkAsButton');
+                        linkDocument.setAttribute('target', '_blank');
+                        linkDocument.innerHTML= object[key]['link']['label'];
+                        console.log(linkDocument);
+                        parentParentInput.appendChild(linkDocument);
+                    }else if(input.type === 'hidden'){
+                        let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
+                        if(inputsRadio){
+                            let keyRadioChecked = object[key]['key'];
+                            inputsRadio.forEach(function(inputRadio) {
+                                if(inputRadio.dataset.optionValue === keyRadioChecked){
+                                    inputRadio.checked = 'checked';
+                                    simulateGlobalClick(inputRadio);
+                                }
+                                inputRadio.disabled = 'disabled';
+                            });
+                            input.value = keyRadioChecked;
+                            console.debug(object[key]);
+                        }
+                    }else if(input.type === 'button'){
+                        input.style.display = 'none';
+                    }else{
+                        input.value = object[key];
+                    }
+
                     if (key == "listadoSolicitudes"){
                         var tbody = $("#table-solicitudes tbody");
                         var data = JSON.parse(object[key]);
@@ -105,7 +139,9 @@ class GlobalObjectModule extends React.Component {
                 }
             }
         });
-
+        document.querySelectorAll(".lfr-layout-structure-item-form button").forEach(function(buttonInput) {
+            buttonInput.style.display = 'none';
+        });
     }
 
     loadConfiguration = (result) => {

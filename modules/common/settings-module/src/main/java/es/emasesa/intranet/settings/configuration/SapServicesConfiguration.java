@@ -116,4 +116,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String ciertosDatosEstructuraEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "relacionLaboralEndpoint",
+            required = false
+    )
+    String relacionLaboralEndpoint();
 }
