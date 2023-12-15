@@ -28,7 +28,6 @@ import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
-import es.emasesa.intranet.sap.retenciones.service.RelacionLaboralRetencionesService;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;

@@ -12,7 +12,7 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
-import es.emasesa.intranet.sap.retenciones.exception.RelacionLaboralException;
+import es.emasesa.intranet.sap.retenciones.exception.CertificadoRetencionesException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 import jakarta.xml.ws.Holder;
@@ -29,7 +29,7 @@ import java.util.Base64;
 @org.springframework.stereotype.Component("certificadoRetencionesService")
 public class CertificadoRetencionesService {
 
-    public JSONObject getCertificadoRetenciones(String pernr, String imVariante) throws RelacionLaboralException, SapCommunicationException {
+    public JSONObject getCertificadoRetenciones(String pernr, String imVariante) throws CertificadoRetencionesException, SapCommunicationException {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -43,7 +43,7 @@ public class CertificadoRetencionesService {
             certificado.put("pdf", decoded);
             return certificado;
         } catch (JSONException | ServerSOAPFaultException e) {
-            throw new RelacionLaboralException("Error llamando al WS para el pernr "+ pernr, e);
+            throw new CertificadoRetencionesException("Error llamando al WS para el pernr "+ pernr, e);
         } catch (ClientTransportException e) {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
@@ -107,5 +107,5 @@ public class CertificadoRetencionesService {
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
-    private static final Log LOG = LogFactoryUtil.getLog(RelacionLaboralRetencionesService.class);
+    private static final Log LOG = LogFactoryUtil.getLog(CertificadoRetencionesService.class);
 }
