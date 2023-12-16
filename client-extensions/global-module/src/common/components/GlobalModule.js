@@ -22,6 +22,39 @@ class GlobalModule extends React.Component {
             var canceled = !elem.dispatchEvent(evt);
             evt.stopPropagation()
         };
+        window.transitionsLabel = [];
+        window.transitionsLabel["Devolver-a-usuario-para-edicion"] = Liferay.Language.get("es.emasesa.transition.label.Devolver-a-usuario-para-edicion");
+        window.transitionsLabel["Rechazar-y-guardar-en-sigd"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-y-guardar-en-sigd");
+        window.transitionsLabel["Aprobada-enviar-asesor-juridico"] = Liferay.Language.get("es.emasesa.transition.label.Aprobada-enviar-asesor-juridico");
+        window.transitionsLabel["assignToMe"] = Liferay.Language.get("es.emasesa.transition.label.assignToMe");
+        window.transitionsLabel["consultar"] = Liferay.Language.get("es.emasesa.transition.label.consultar");
+        window.objToString = function(obj) {
+            var str = '';
+            for (var p in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, p)) {
+                    str += p + '::' + obj[p] + '\n';
+                }
+            }
+            return str;
+        }
+        window.formatDateToDdMmYyyy = function (dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        };
+
+        window.formatDateToDdMmYyyyHhMMss = function (dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hour = date.getHours();
+            const minutes = date.getMinutes();
+            return `${day}/${month}/${year} - ${hour}:${minutes}`;
+        };
+
         LiferayApi.test();
 
         this.state = {

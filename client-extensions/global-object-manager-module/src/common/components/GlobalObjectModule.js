@@ -35,7 +35,7 @@ class GlobalObjectModule extends React.Component {
             var objectType = searchParams.get("objectType");
             var objectMapping = JSON.parse(this.state.configuration.objectMapping);
             var objectCallUrl = Constants.oauthUserAgent.URL_DEFAULT+objectMapping[objectType].url;
-            console.log(objectCallUrl);
+            console.debug(objectCallUrl);
             ObjectApi.getObject(objectEntryId,objectCallUrl, this.setObject, this.errorHandler);
 
         }
@@ -47,23 +47,18 @@ class GlobalObjectModule extends React.Component {
     }
 
     setObject = (object) => {
-
-        if(this.state.mode==1){
+        console.log(this.state.mode);
+        if(this.state.mode === 1){
             document.querySelectorAll(".form-control").forEach(((element) => element.readOnly = true));
             document.querySelector(".lfr-layout-structure-item-inputs-submit-button").classList.add("d-none");
             document.querySelectorAll(".btn-secondary").disabled = true;
             if(document.getElementById("generate-otp-button")){
                 document.getElementById("generate-otp-button").classList.add("d-none");
             }
-
-
-        }else if(this.state.mode==2){
+        }else if(this.state.mode === 2){
             var input = document.createElement("input");
-
             input.setAttribute("type", "hidden");
-
             input.setAttribute("name", "classPK");
-
             input.setAttribute("value", this.state.objectEntryId);
 
             if(document.querySelector(".lfr-layout-structure-item-form")){
@@ -71,8 +66,10 @@ class GlobalObjectModule extends React.Component {
             }
         }
         console.debug(object);
+        let modeOpened = this.state.mode;
         Object.keys(object).forEach(function(key) {
             console.debug(key);
+            console.debug(modeOpened);
             if(object[key] != null){
             var input = document.querySelector("[name='"+key+"']");
                 if(input){
@@ -97,7 +94,7 @@ class GlobalObjectModule extends React.Component {
                         linkDocument.setAttribute('class', 'linkAsButton');
                         linkDocument.setAttribute('target', '_blank');
                         linkDocument.innerHTML= object[key]['link']['label'];
-                        console.log(linkDocument);
+                        console.debug(linkDocument);
                         parentParentInput.appendChild(linkDocument);
                     }else if(input.type === 'hidden'){
                         let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
@@ -113,13 +110,13 @@ class GlobalObjectModule extends React.Component {
                             input.value = keyRadioChecked;
                             console.debug(object[key]);
                         }
-                    }else if(input.type === 'button'){
+                    }else if(input.type === 'button' && modeOpened !== 2){
                         input.style.display = 'none';
                     }else{
                         input.value = object[key];
                     }
 
-                    if (key == "listadoSolicitudes"){
+                    if (key === "listadoSolicitudes"){
                         var tbody = $("#table-solicitudes tbody");
                         var data = JSON.parse(object[key]);
                         $.each(data, function(index, item) {
@@ -139,9 +136,13 @@ class GlobalObjectModule extends React.Component {
                 }
             }
         });
-        document.querySelectorAll(".lfr-layout-structure-item-form button").forEach(function(buttonInput) {
-            buttonInput.style.display = 'none';
-        });
+        console.debug(modeOpened);
+        console.debug((modeOpened !== 2));
+        if(modeOpened !== 2){
+            document.querySelectorAll(".lfr-layout-structure-item-form button").forEach(function(buttonInput) {
+                buttonInput.style.display = 'none';
+            });
+        }
     }
 
     loadConfiguration = (result) => {

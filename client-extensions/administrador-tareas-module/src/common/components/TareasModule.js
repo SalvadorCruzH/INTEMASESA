@@ -24,7 +24,7 @@ class TareasModule extends React.Component {
             view:1,
             configuration: {}
         }
-        console.log(this);
+        console.debug(this);
     }
 
     componentDidMount() {
@@ -88,7 +88,7 @@ class TareasModule extends React.Component {
 
     addTareaExtraData = (tarea) =>{
             var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
-            console.log(jsonObjectMapping);
+            console.debug(jsonObjectMapping);
             let objectMapping = jsonObjectMapping[tarea.objectReviewed.assetType];
             if(objectMapping){
                 let urlObject = objectMapping.url;
@@ -115,7 +115,7 @@ class TareasModule extends React.Component {
                             let result = "";
                             try {
                                 result = JSON.parse(JSON.stringify(response));
-                                console.log(result);
+                                console.debug(result);
                                 tarea.objectData = result;
                                 this.addTareaTransition(tarea);
 
@@ -152,7 +152,7 @@ class TareasModule extends React.Component {
                             let result = "";
                             try {
                                 result = JSON.parse(JSON.stringify(response));
-                                console.log(result);
+                                console.debug(result);
                                 if(result.totalCount > 0){
 
                                      tarea.transitions =  result.items;
@@ -237,8 +237,8 @@ class TareasModule extends React.Component {
         let tareas = this.state.tareas;
         let order =column.order;
         let type = column.name;
-        console.log(tareas);
-        console.log(column);
+        console.debug(tareas);
+        console.debug(column);
 
         column.order = order === "asc" ? "desc" : "asc";
 
@@ -309,7 +309,7 @@ class TareasModule extends React.Component {
          }
 
 
-        console.log(tareas);
+        console.debug(tareas);
         this.setState({tareas: tareas});
     }
 
@@ -348,7 +348,7 @@ class TareasModule extends React.Component {
                                                 <td>{tarea.objectData.numeroDeMatricula}</td>
                                                 <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
                                                 <td>{tarea.objectReviewed.assetType}</td>
-                                                <td>{tarea.dateCreated}</td>
+                                                <td>{window.formatDateToDdMmYyyyHhMMss(tarea.dateCreated)}</td>
                                                 <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
                                                 <td>{tarea.objectData.estadoObjeto.name}</td>
                                                 <td><Actions tarea={tarea} configuration={this.state.configuration} refresh={this.loadDependencies} /></td>

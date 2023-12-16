@@ -389,7 +389,6 @@ public class SapServicesUtil {
     private AyudaEscolarService _ayudaEscolarService;
     private DistanciaCentrosService _distanciaCentrosService;
     private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
-
     private CiertosDatosEstructuraService _relacionLaboralService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }

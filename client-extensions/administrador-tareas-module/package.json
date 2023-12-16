@@ -20,7 +20,8 @@
 		"@clayui/button": "3.92.0",
 		"@clayui/modal": "3.96.0",
 		"@clayui/form": "3.96.0",
-		"@clayui/drop-down": "3.105.0"
+		"@clayui/drop-down": "3.105.0",
+		"@clayui/loading-indicator": "3.60.0"
 	},
 	"name": "administrador-tareas-module",
 	"private": true,
