@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM-empleado-relacion-laboral",
+  "typeOptions": {"fieldTypes": ["text"]},
+  "type": "input"
+}
