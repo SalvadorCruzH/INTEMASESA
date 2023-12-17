@@ -321,6 +321,48 @@ public class SapServicesUtil {
         return datosEmpleadoPrestamos;
     }
     
+    /**
+     * Llamada al servicio de empleado-prestamos para obtener datos de prestamo de un usuario.
+     *
+     * @param User
+     * @return JSONArray
+     */
+    public JSONArray getEmpleadoPrestamos(User user) {
+
+        if(LOG.isDebugEnabled()){
+            LOG.debug("[B] getempleadoPrestamos " + user.getUserId());
+        }
+        JSONArray datosEmpleadoPrestamos = JSONFactoryUtil.createJSONArray();
+        String pernr = StringPool.BLANK;
+        try {
+			//TODO: Intentar coger la matricula del m�todo de la clase expando. El servicio viene a null
+	//		pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+			pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
+			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+			if(_empleadoPrestamsoService == null){
+                activate(null);
+            }
+            datosEmpleadoPrestamos = _empleadoPrestamsoService.obtenerPrestamoEmpleados(pernr, StringPool.BLANK);
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (EmpleadoPrestamosException e) {
+            throw new RuntimeException(e);
+        } catch (PortalException e) {
+        	LOG.error("Error al intentar obtener la matricula del campo expando para getRelacionLaboralService", e);
+		} finally {
+            if(LOG.isDebugEnabled()){
+                LOG.debug("[E] getempleadoPrestamos " + user.getUserId());
+            }
+        }
+        return datosEmpleadoPrestamos;
+    }
+    
+    /**
+     * Llamada al servicio de empleado-relc-laboral para obtener datos laborales de un usuario.
+     *
+     * @param User
+     * @return JSONObject
+     */
 	 public JSONObject getEmpleadoRelacionLaboral(User user) {
 		 if(LOG.isDebugEnabled()){
 		       LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
@@ -330,7 +372,7 @@ public class SapServicesUtil {
 			//TODO: Intentar coger la matricula del m�todo de la clase expando. El servicio viene a null
 	//		String pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
 			String pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
-			LOG.debug("Obtenida matr�cula del usuario que hace la petici�n" + pernr);
+			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
 			
 			 try {
 		            if(_relacionLaboralService == null){
