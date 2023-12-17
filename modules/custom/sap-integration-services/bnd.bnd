@@ -30,7 +30,9 @@ Export-Package: \
     es.emasesa.intranet.sap.centros.service,\
     es.emasesa.intranet.sap.centros.exception,\
     es.emasesa.intranet.sap.ayudaEscolar.service,\
-    es.emasesa.intranet.sap.ayudaEscolar.exception
+    es.emasesa.intranet.sap.ayudaEscolar.exception,\
+    es.emasesa.intranet.sap.relacionLaboral.service,\
+    es.emasesa.intranet.sap.relacionLaboral.exception
 
 
 

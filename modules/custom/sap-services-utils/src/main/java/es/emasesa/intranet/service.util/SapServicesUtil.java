@@ -1,5 +1,8 @@
 package es.emasesa.intranet.service.util;
 
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -9,6 +12,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
+
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
@@ -24,6 +29,8 @@ import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
+import es.emasesa.intranet.sap.relacionLaboral.exception.RelacionLaboralException;
+import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
@@ -31,6 +38,8 @@ import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
+
+import java.io.Serializable;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.*;
@@ -311,8 +320,39 @@ public class SapServicesUtil {
         }
         return datosEmpleadoPrestamos;
     }
-
-
+    
+	 public JSONObject getEmpleadoRelacionLaboral(User user) {
+		 if(LOG.isDebugEnabled()){
+		       LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
+		     }
+			JSONObject datosEmpleadoRelacionLaboral = JSONFactoryUtil.createJSONObject();
+		try {
+			//TODO: Intentar coger la matricula del método de la clase expando. El servicio viene a null
+	//		String pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+			String pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
+			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+			
+			 try {
+		            if(_relacionLaboralService == null){
+		                activate(null);
+		            }
+		            datosEmpleadoRelacionLaboral = _relacionLaboralService.getRelacionLaboralEmpleado(pernr);
+		            LOG.debug("Obtenida la relacion laboral del empleado" + datosEmpleadoRelacionLaboral.toJSONString());
+		        } catch (SapCommunicationException e) {
+		            LOG.error(e.getMessage(), e);
+		        } catch (RelacionLaboralException e) {
+		            throw new RuntimeException(e);
+		        } finally {
+		            if(LOG.isDebugEnabled()){
+		                LOG.debug("[E] getempleadoPrestamos " + pernr);
+		            }
+		        }
+		}catch (Exception e) {
+			LOG.error("Error al intentar obtener la matricula del campo expando para getRelacionLaboralService", e);
+		}
+		 return datosEmpleadoRelacionLaboral;
+	 }
+	 
 
     @Activate
     protected void activate(Map<String, Object> properties) {
@@ -329,7 +369,8 @@ public class SapServicesUtil {
             CustomServiceTracker<DistanciaCentrosService> distanciaCentrosServiceTracker = new CustomServiceTracker<>(DistanciaCentrosService.class, "getDistanciaCentrosService");
             CustomServiceTracker<AyudaEscolarService> ayudaEscolarServiceTracker = new CustomServiceTracker<>(AyudaEscolarService.class, "getAyudaEscolarService");
             CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraServiceTracker = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
-            CustomServiceTracker<CiertosDatosEstructuraService> relacionLaboralServiceTracker = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
+            CustomServiceTracker<RelacionLaboralService> relacionLaboralServiceTracker = new CustomServiceTracker<>(RelacionLaboralService.class, "getRelacionLaboralService");
+            CustomServiceTracker<CustomExpandoUtil> customExpandoUtilTracker = new CustomServiceTracker<>(CustomExpandoUtil.class, "getCustomExpandoUtil");
 
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
@@ -343,6 +384,7 @@ public class SapServicesUtil {
             this._ayudaEscolarService = ayudaEscolarServiceTracker.getService();
             this._ciertosDatosEstructuraService = ciertosDatosEstructuraServiceTracker.getService();
             this._relacionLaboralService = relacionLaboralServiceTracker.getService();
+            this.customExpandoUtil = customExpandoUtilTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -389,6 +431,9 @@ public class SapServicesUtil {
     private AyudaEscolarService _ayudaEscolarService;
     private DistanciaCentrosService _distanciaCentrosService;
     private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
-    private CiertosDatosEstructuraService _relacionLaboralService;
+    private RelacionLaboralService _relacionLaboralService;
+    private CustomExpandoUtil customExpandoUtil;
+    @Reference
+    private ExpandoValueLocalService _expandoValueLocalService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }

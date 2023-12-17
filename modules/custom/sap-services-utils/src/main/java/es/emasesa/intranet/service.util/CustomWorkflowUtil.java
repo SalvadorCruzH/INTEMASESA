@@ -91,7 +91,7 @@ public class CustomWorkflowUtil {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
 
             matriculaUser = json.getString(userType);
-            LOG.debug("La matrícula del usuario es: " + matriculaUser);
+            LOG.debug("La matrÃ­cula del usuario es: " + matriculaUser);
             user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
 
         } catch (SapException e) {
@@ -158,6 +158,7 @@ public class CustomWorkflowUtil {
 
         return datosServicio;
     }
+    
 
     @Activate
     @Modified
