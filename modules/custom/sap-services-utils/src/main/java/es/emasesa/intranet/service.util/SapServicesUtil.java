@@ -327,10 +327,10 @@ public class SapServicesUtil {
 		     }
 			JSONObject datosEmpleadoRelacionLaboral = JSONFactoryUtil.createJSONObject();
 		try {
-			//TODO: Intentar coger la matricula del método de la clase expando. El servicio viene a null
+			//TODO: Intentar coger la matricula del mï¿½todo de la clase expando. El servicio viene a null
 	//		String pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
 			String pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
-			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+			LOG.debug("Obtenida matrï¿½cula del usuario que hace la peticiï¿½n" + pernr);
 			
 			 try {
 		            if(_relacionLaboralService == null){
@@ -407,7 +407,7 @@ public class SapServicesUtil {
                 if (resumenAnualData != null) {
                     LOG.info("resumenAnualService OK");
                 }
-            }*/
+            } */
         } catch (InterruptedException e) {
             LOG.error("Se ha producido un error levantando el CustomTracker de Spring");
             throw new RuntimeException(e);
