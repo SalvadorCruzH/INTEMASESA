@@ -62,6 +62,14 @@ public interface SigdServiceConfiguration {
 	/* Configuraciones de los formularios. Serie, tipo documental y metadatos */
 	@Meta.AD(
             deflt = "",
+            name = "Usuario indexacion",
+            description = "Usuario indexacion. En DES será: P8DesPortal y en PRO será: P8Portal",
+            required = false
+    )
+	String getUsuarioIndexacion();
+	
+	@Meta.AD(
+            deflt = "",
             name = "Nominas",
             description = "Configuraciones del formulario Nominas para llamadas a los servicios del SIGD. Serie, tipo documental y metadatos",
             required = false

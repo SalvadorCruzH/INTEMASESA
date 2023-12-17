@@ -42,6 +42,10 @@ public class SigdServicesSettings {
 		return configuration.crearDocumentoOrigenEndPoint();
 	}
 	
+	public String getUsuarioIndexacion() {
+		return configuration.getUsuarioIndexacion();
+	}
+	
 	public String getNominasConfiguration(){
 		return configuration.getNominasConfiguration();
 	}
