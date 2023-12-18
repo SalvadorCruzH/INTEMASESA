@@ -334,55 +334,54 @@ class TareasModule extends React.Component {
             <div>
                 {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
 
-                        <div class="button-holder">
+                        <div class="button-holder btn-wrapper btn-wrapper--inline">
                             <a href id="toMe" class="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true"
                                onClick={this.getAssignedToMe}>Asignadas a mi</a>
                             <a href id="toRole" class="btn btn-primary" aria-label="Asignadas a mi rol"
                                aria-disabled="true" onClick={this.getAssignedToUserRol}>Asignadas a mi rol</a>
                         </div>
 
-                        <table id="table-id" class="ema-table last">
-                            <caption class="sr-only">Sumario de la tabla</caption>
-                            <thead>
-                            <tr>
-                                {this.state.columns.map((column, i) => {
-                                    return (
-                                        <>
-                                            <th scope="col"><span class="order" onClick={() => this.orderBy(column)}><i
-                                                class="fa-solid fa-sort fa-lg"></i></span>{column.label}</th>
-                                        </>)
-
-                                })}
-                                <th scope="col"><i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
-
-
-                            </tr>
-                            </thead>
-                            {this.state.tareas.length != 0 ? (<>
-                                    <tbody>
-                                    {this.state.tareas.map((tarea, i) => {
-                                        console.debug('Tarea')
-                                        console.debug(tarea);
-                                        return (<>
-                                                <tr data-objectId="{tarea.id}">
-                                                    <td>{tarea.objectData.numeroDeMatricula}</td>
-                                                    <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
-                                                    <td>{tarea.objectReviewed.assetType}</td>
-                                                    <td>{window.formatDateToDdMmYyyyHhMMss(tarea.dateCreated)}</td>
-                                                    <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
-                                                    <td>{tarea.objectData.estadoObjeto.name}</td>
-                                                    <td><Actions tarea={tarea} configuration={this.state.configuration}
-                                                                 refresh={this.loadDependencies}/></td>
-                                                </tr>
-                                            </>
-                                        )
+                        <div class="ema-table-wrapper">
+                            <table id="table-id" class="ema-table last">
+                                <caption class="sr-only">Sumario de la tabla</caption>
+                                <thead>
+                                <tr>
+                                    {this.state.columns.map((column, i) => {
+                                        return (
+                                            <>
+                                                <th scope="col"><span class="order" onClick={() => this.orderBy(column)}><i
+                                                    class="fa-solid fa-sort fa-lg"></i></span>{column.label}</th>
+                                            </>)
                                     })}
-                                    </tbody>
-                                </>
-                            ) : (<div class="alert alert-info" role="alert">
-                                No se han encontrado tareas nuevas
-                            </div>)}
-                        </table>
+                                    <th scope="col"><i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
+                                </tr>
+                                </thead>
+                                {this.state.tareas.length != 0 ? (<>
+                                        <tbody>
+                                        {this.state.tareas.map((tarea, i) => {
+                                            console.debug('Tarea')
+                                            console.debug(tarea);
+                                            return (<>
+                                                    <tr data-objectId="{tarea.id}">
+                                                        <td>{tarea.objectData.numeroDeMatricula}</td>
+                                                        <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
+                                                        <td>{tarea.objectReviewed.assetType}</td>
+                                                        <td>{window.formatDateToDdMmYyyyHhMMss(tarea.dateCreated)}</td>
+                                                        <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
+                                                        <td>{tarea.objectData.estadoObjeto.name}</td>
+                                                        <td><Actions tarea={tarea} configuration={this.state.configuration}
+                                                                     refresh={this.loadDependencies}/></td>
+                                                    </tr>
+                                                </>
+                                            )
+                                        })}
+                                        </tbody>
+                                    </>
+                                ) : (<div class="alert alert-info" role="alert">
+                                    No se han encontrado tareas nuevas
+                                </div>)}
+                            </table>
+                        </div>
                     </>
                 )}
             </div>

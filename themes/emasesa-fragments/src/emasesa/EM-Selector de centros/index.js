@@ -39,7 +39,7 @@ fetch(url, {
                 uiInputElement.appendChild(optionElement);
             });
         } else {
-            console.error('Error: La respuesta no es un array.');
+            console.debug('Error: La respuesta no es un array.');
         }
 
         valueInputElement.innerHTML = data.value;
@@ -48,7 +48,7 @@ fetch(url, {
         console.error('Error:', error);
     });
 
-uiInputElement.addEventListener('change', function () {
+/*uiInputElement.addEventListener('change', function () {
     const selectedValue = uiInputElement.value;
     const selectedText = uiInputElement.options[uiInputElement.selectedIndex].text;
 
@@ -64,6 +64,40 @@ uiInputElement.addEventListener('change', function () {
     }else if($('[name=centroDeTrabajoOrigenVolante]').val() != "" && $('[name=centroDeTrabajoDestinoVolante]').val() != "" && tipoParte.val() == volante){
         getCentroDistancias(volante, $('[name=centroDeTrabajoOrigenVolante]').val(), $('[name=centroDeTrabajoDestinoVolante]').val());
     }
+});*/
+
+$('[name=origenCentro], [name=destinoCentro]').on("change", function (){
+  const selectedValue = uiInputElement.value;
+  const selectedText = uiInputElement.options[uiInputElement.selectedIndex].text;
+
+  valueInputElement.value = selectedValue;
+  valueInputElement.textContent = selectedValue;
+  labelInputElement.value = selectedText;
+  labelInputElement.textContent = selectedText;
+  var locomocion = "locomocion";
+
+  if ($('[name=centroDeTrabajoOrigen]').val() != "" && $('[name=centroDeTrabajoDestino]').val() != "" && tipoParte.val() == locomocion){
+    getCentroDistancias(locomocion, $('[name=centroDeTrabajoOrigen]').val(), $('[name=centroDeTrabajoDestino]').val());
+  }else{
+    $('[name=kilometrosTotales]').val('');
+  }
+});
+
+$('[name=centroOrigenVolante], [name=centroDestinoVolante]').on("change", function (){
+  const selectedValue = uiInputElement.value;
+  const selectedText = uiInputElement.options[uiInputElement.selectedIndex].text;
+
+  valueInputElement.value = selectedValue;
+  valueInputElement.textContent = selectedValue;
+  labelInputElement.value = selectedText;
+  labelInputElement.textContent = selectedText;
+  var volante = "volante";
+
+  if($('[name=centroDeTrabajoOrigenVolante]').val() != "" && $('[name=centroDeTrabajoDestinoVolante]').val() != "" && tipoParte.val() == volante){
+    getCentroDistancias(volante, $('[name=centroDeTrabajoOrigenVolante]').val(), $('[name=centroDeTrabajoDestinoVolante]').val());
+  }else{
+    $('[name=kilometrosTotalesVolante]').val('')
+  }
 });
 
 function getCentroDistancias(tipo, origen, destino){
