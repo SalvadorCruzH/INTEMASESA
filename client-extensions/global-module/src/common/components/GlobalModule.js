@@ -28,6 +28,7 @@ class GlobalModule extends React.Component {
         window.transitionsLabel["Aprobada-enviar-asesor-juridico"] = Liferay.Language.get("es.emasesa.transition.label.Aprobada-enviar-asesor-juridico");
         window.transitionsLabel["assignToMe"] = Liferay.Language.get("es.emasesa.transition.label.assignToMe");
         window.transitionsLabel["consultar"] = Liferay.Language.get("es.emasesa.transition.label.consultar");
+        window.transitionsLabel["Mandar-a-portafirmas"] = Liferay.Language.get("es.emasesa.transition.label.Mandar-a-portafirmas");
         window.objToString = function(obj) {
             var str = '';
             for (var p in obj) {
@@ -50,8 +51,8 @@ class GlobalModule extends React.Component {
             const day = String(date.getDate()).padStart(2, '0');
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const year = date.getFullYear();
-            const hour = date.getHours();
-            const minutes = date.getMinutes();
+            const hour = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
             return `${day}/${month}/${year} - ${hour}:${minutes}`;
         };
 

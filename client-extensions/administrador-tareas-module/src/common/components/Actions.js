@@ -1,7 +1,7 @@
 import React from 'react';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import TareasApi from '../services/TareasApi';
-import {OBJECT_MAPPING, OBJECT_CONSTANTS} from "../js/Constants";
+import {OBJECT_MAPPING, OBJECT_CONSTANTS, iframeURLChange} from "../js/Constants";
 
 let onlyonce = true;
 
@@ -107,12 +107,49 @@ class Actions extends React.Component {
             display += "?objectEntryId=" + objectReviewed.id;
             display += "&objectType=" + objectReviewed.assetType;
             display += "&mode=1";
+            display += "&p_p_state=pop_up";
             let url = themeDisplay.getPortalURL() + display;
-            window.open(url, "_blank")
+            let dialog = Liferay.Util.openWindow({
+                cache: false,
+                dialog: {
+                    destroyOnHide: true,
+                    modal: true,
+                    cssClass:'dialog-with-footer i-mainWrapper',
+                    after: {
+                        render: function(event) {},
+                        destroy: function(event) {
+                        }
+                    },
+                    toolbars: {
+                        footer: [
+                            {
+                                label: 'Cerrar',
+                                cssClass: 'btn-link pull-right btn btn-secondary',
+                                on: {
+                                    click: function() {
+                                        let dialog = Liferay.Util.Window.getById('consultarPeticionDialog_iframe_');
+                                        dialog.destroy();
+                                    }
+                                },
+                            }
+                        ]
+                    }
+                },
+                dialogIframe: {
+                    bodyCssClass: 'dialog-with-footer i-mainWrapper'
+                },
+                id: 'consultarPeticionDialog',
+                refreshWindow: window,
+                title: 'Consulta',
+                uri: url
+            });
+
+            //window.open(url, "_blank")
         }
     }
 
     openModalAsesor = (event) => {
+        let thatContext = this;
         let objectReviewed = this.state.objectReviewed;
         var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
         let objectMapping = jsonObjectMapping[objectReviewed.assetType];
@@ -124,25 +161,56 @@ class Actions extends React.Component {
             display += "&p_p_state=pop_up";
             let url = themeDisplay.getPortalURL() + display;
             let dialog = Liferay.Util.openWindow({
+                cache: false,
                 dialog: {
                     destroyOnHide: true,
                     modal: true,
-                    cssClass:'i-mainWrapper',
+                    cssClass:'dialog-with-footer i-mainWrapper',
                     after: {
                         render: function(event) {},
                         destroy: function(event) {
                         }
+                    },
+                    toolbars: {
+                        footer: [
+                            {
+                                label: 'Avanzar flujo',
+                                id: 'avanzar-flujo-button',
+                                cssClass: 'btn-link pull-right btn btn-secondary hide',
+                                on: {
+                                    click: function() {
+                                    }
+                                },
+                            },
+                            {
+                                label: 'Cerrar',
+                                cssClass: 'btn-link pull-right btn btn-secondary',
+                                on: {
+                                    click: function() {
+                                        let dialog = Liferay.Util.Window.getById('asesorDialog_iframe_');
+                                        dialog.destroy();
+                                    }
+                                },
+                            }
+                        ]
                     }
                 },
                 dialogIframe: {
-                    bodyCssClass: 'i-mainWrapper'
+                    bodyCssClass: 'dialog-with-footer i-mainWrapper'
                 },
-                id: 'EditInfoIntDialog',
+                id: 'asesorDialog',
                 refreshWindow: window,
                 title: 'Editar',
                 uri: url
             });
 
+            setTimeout(() => {
+                iframeURLChange(document.getElementById("asesorDialog_iframe_"), function (newURL) {
+                    let dialog = Liferay.Util.Window.getById('asesorDialog_iframe_');
+                    thatContext.changeTransition(event);
+                    dialog.destroy();
+                })
+            }, 4000);
             //window.open(url, "_blank")
         }
     }
@@ -169,14 +237,26 @@ class Actions extends React.Component {
                         </li>
                     }
                     <li><a className="dropdown-item"
-                           onClick={this.openModalAsesor}>{Liferay.Language.get("es.emasesa.transition.label.consultar")}</a>
+                           onClick={this.openModal}>{Liferay.Language.get("es.emasesa.transition.label.consultar")}</a>
                     </li>
-                    {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson.id == Liferay.ThemeDisplay.getUserId() && this.state.transitions.map) &&
+                    {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson.id === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
+                            console.log(transition);
                             return (
                                 <>
-                                    <li><a className="dropdown-item" data-name={transition.name}
-                                           onClick={this.changeTransition}>{window.transitionsLabel[transition.label]}</a>
+                                    <li>
+                                        <>
+                                        {transition.name === '' ? (
+                                            <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
+                                                {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                            </a>
+                                        ) : (
+                                            <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
+                                                {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                            </a>
+                                        )}
+                                        </>
+
                                     </li>
                                 </>
                             )
