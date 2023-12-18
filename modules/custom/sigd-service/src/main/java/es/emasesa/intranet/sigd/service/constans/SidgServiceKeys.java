@@ -71,6 +71,5 @@ public class SidgServiceKeys {
 	public static final String FORM_TRIBUNALES = "Tribunales";
 	public static final String FORM_SINDICALES = "Sindicales";
 	public static final String FORM_FORMATIVAS = "Formativas";
-	
-	
+
 }

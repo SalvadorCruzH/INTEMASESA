@@ -43,7 +43,12 @@ public class RestEmasesaConfigurationApplication extends Application {
 			Method[] classMethods = _clientExtensionsSettings.getClass().getDeclaredMethods();
 			for(Method method: classMethods){
 				if(!method.getReturnType().getName().equals("void")) {
-					jsonObject.put(method.getName(), ""+method.invoke(_clientExtensionsSettings));
+					try{
+						JSONObject jsonObjectRetorno = JSONFactoryUtil.createJSONObject(method.invoke(_clientExtensionsSettings).toString());
+						jsonObject.put(method.getName(), jsonObjectRetorno);
+					}catch(Exception e){
+						jsonObject.put(method.getName(), ""+method.invoke(_clientExtensionsSettings));
+					}
 				}
 			}
 

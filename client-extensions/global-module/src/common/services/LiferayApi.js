@@ -58,11 +58,14 @@ const callService = (clientId, url, method, data, callback, errorHandler) => {
             oAuth2Client?.fetch(url, config)
                 .then((response) => {
                     let result = "";
+                    console.log(response);
                     try {
                         result = JSON.parse(JSON.stringify(response));
                     } catch (e) {
                         console.error(e)
+                        result = response;
                     }
+                    console.log(result);
                     if (callback) callback(result);
                 })
                 .catch((error) => {
