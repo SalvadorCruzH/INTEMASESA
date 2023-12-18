@@ -107,7 +107,7 @@ public class SigdServiceApplication{
      * @return id del elemento
      * 
      */
-	public String insertarDocumento(Map<String, Serializable> workflowContext, String pdf, String tipoDocumental, long userId, Boolean anexoPortafirmas) {
+	public String insertarDocumento(Map<String, Serializable> workflowContext, String pdf, String objectName, String tipoDocumental, long userId, Boolean anexoPortafirmas) {
 		
 		String idElemento = StringPool.BLANK;
 		try {
@@ -118,7 +118,7 @@ public class SigdServiceApplication{
 	        post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 	        LoggerUtil.debug(LOG, "Creacion de HtpPost a la URL: " + url);	        
 	        
-			JSONObject jsonObject = createBody(workflowContext, pdf, tipoDocumental, userId, anexoPortafirmas);
+			JSONObject jsonObject = createBody(workflowContext, pdf, objectName, tipoDocumental, userId, anexoPortafirmas);
 			
 		    String json = jsonObject.toString();
 		    StringEntity jsonEntity = new StringEntity(json, ContentType.APPLICATION_JSON);
@@ -157,10 +157,10 @@ public class SigdServiceApplication{
      * @param tipoDocumental
      * 
      */
-    public String saveDocumentOnSIGD(Map<String, Serializable> workflowContext, String pdf, String tipoDocumental, long userId, Boolean anexoPortaFirmas) {
+    public String saveDocumentOnSIGD(Map<String, Serializable> workflowContext, String pdf, String objectName, String tipoDocumental, long userId, Boolean anexoPortaFirmas) {
     	
     	LoggerUtil.debug(LOG, "Guardando el documento en el gestor documnetal SIGD. Para el formulario con el tipo documental: " + tipoDocumental);
-    	String idDocument = insertarDocumento(workflowContext, pdf, tipoDocumental, userId, anexoPortaFirmas);
+    	String idDocument = insertarDocumento(workflowContext, pdf, objectName, tipoDocumental, userId, anexoPortaFirmas);
     	LoggerUtil.debug(LOG, "Documento almacenado: " + idDocument);
     	return idDocument;
     }
@@ -278,9 +278,9 @@ public class SigdServiceApplication{
 	 * @return json con el body
 	  * 
 	 */
-	 public JSONObject createBody(Map<String, Serializable> workflowContext, String pdf, String tipoDocumental, long userId, Boolean anexoPortaFirmas){
+	 public JSONObject createBody(Map<String, Serializable> workflowContext, String pdf, String objectName, String tipoDocumental, long userId, Boolean anexoPortaFirmas){
 		 
-		String objectName = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
+		//String objectName = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
 		LoggerUtil.debug(LOG, "Object Name: " + objectName);
 		
 		LoggerUtil.debug(LOG, "Creando el JSON del body" );
@@ -334,18 +334,18 @@ public class SigdServiceApplication{
 						userId = ServiceContextThreadLocal.getServiceContext().getUserId();
 				 }
 				 long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+				 Date today = new Date();
+				 SimpleDateFormat todayFormat = new SimpleDateFormat("dd-MM-yyyy");
 				 String dni = StringPool.BLANK;
-				 String fechaDocumento = StringPool.BLANK;
+				 String fechaDocumento = todayFormat.format(today);
 				 String numeroPersonal = StringPool.BLANK;
 				 String nombre = StringPool.BLANK;
 				 
 				 if(envioPortaFirmas) {
 					 LoggerUtil.debug(LOG, "El documento se envía al portatirmas, se recuperan los valores del usuario actual del workflow: " + userId);
-					 Date today = new Date();
-					 SimpleDateFormat todayFormat = new SimpleDateFormat("dd-MM-yyyy");
+					
 					 dni = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NIF, userId).getString();
-					 fechaDocumento = todayFormat.format(today);
-					 numeroPersonal = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.NUMERO_MATRICULA, userId).getString();
+					 numeroPersonal = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_MATRICULA, userId).getString();
 					 nombre = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NOMBRE, userId).getString();
 				 }else{
 					 if(workflowContext.size()>0){
@@ -353,11 +353,8 @@ public class SigdServiceApplication{
 				         long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 				    	 ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(classPK);
 				         Map<String,Serializable> values = objectEntry.getValues();
-				         Date date = (Date) values.get("createDate");
-				         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 						 dni = (String) values.get(EmasesaConstants.EMASESA_EXPANDO_NIF);
 						 numeroPersonal = (String) values.get(EmasesaConstants.NUMERO_MATRICULA);
-						 fechaDocumento = sdf.format(date);
 						 nombre = (String) values.get(EmasesaConstants.EMASESA_EXPANDO_NOMBRE);
 					 }
 				 }
