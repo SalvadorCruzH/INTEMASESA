@@ -39,7 +39,10 @@ public class SidgServiceKeys {
 	public static final String FORM_METADATO_DATE_VALUE = "dateValue";
 	public static final String FORM_METADATO_NOMBRE_DESTINO = "nombreDestino";
 	public static final String FORM_METADATO_TIPO_DESTINO = "tipoDestino";
-	
+	public static final String SIGD_METADATO_DNI = "DNI";
+	public static final String SIGD_METADATO_FECHA_DOC = "FechadeDocumento";
+	public static final String SIGD_METADATO_NUM_PERSONAL = "NumeroPersonal";
+	public static final String SIGD_METADATO_NOMBRE = "Nombre";
 	
 	/*Configuraciones formularios*/
 	public static final String FORM_COMPATIBILDIAD = "Compatibilidad";
@@ -58,7 +61,7 @@ public class SidgServiceKeys {
 	public static final String FORM_ANTICIPOS_VACACIONES= "AnticiposVacaciones";
 	public static final String FORM_ANTICIPOS_REINTEGRABLES = "AnticiposReintegrables";
 	public static final String FORM_DOMICILIACION_BANCARIA = "Domiciliacion";
-	public static final String FORM_IRPF = "IRPF";
+	public static final String FORM_IRPF = "Modificación de IRPF";
 	public static final String FORM_PRESTAMOS_VIVIENDA = "PrestamosVivienda";
 	public static final String FORM_AYUDA_ESCOLAR = "AyudaEscolar";
 	public static final String FORM_HISTORIAL_ACADEMICO = "HistorialAcedemico";

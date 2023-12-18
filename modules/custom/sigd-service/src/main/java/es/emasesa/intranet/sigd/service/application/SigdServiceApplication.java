@@ -1,5 +1,8 @@
 package es.emasesa.intranet.sigd.service.application;
 
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -9,10 +12,19 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
@@ -29,6 +41,7 @@ import org.apache.http.util.EntityUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import es.emasesa.intranet.base.constant.EmasesaConstants;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.settings.osgi.SigdServicesSettings;
 import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
@@ -94,7 +107,7 @@ public class SigdServiceApplication{
      * @return id del elemento
      * 
      */
-	public String insertarDocumento(String pdf, String objectName,String tipoDocumental) {
+	public String insertarDocumento(Map<String, Serializable> workflowContext, String pdf, String tipoDocumental, long userId, Boolean anexoPortafirmas) {
 		
 		String idElemento = StringPool.BLANK;
 		try {
@@ -105,7 +118,7 @@ public class SigdServiceApplication{
 	        post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 	        LoggerUtil.debug(LOG, "Creacion de HtpPost a la URL: " + url);	        
 	        
-			JSONObject jsonObject = createBody(pdf, objectName, tipoDocumental);
+			JSONObject jsonObject = createBody(workflowContext, pdf, tipoDocumental, userId, anexoPortafirmas);
 			
 		    String json = jsonObject.toString();
 		    StringEntity jsonEntity = new StringEntity(json, ContentType.APPLICATION_JSON);
@@ -144,10 +157,10 @@ public class SigdServiceApplication{
      * @param tipoDocumental
      * 
      */
-    public String saveDocumentOnSIGD(String pdf, String objectName,String tipoDocumental) {
+    public String saveDocumentOnSIGD(Map<String, Serializable> workflowContext, String pdf, String tipoDocumental, long userId, Boolean anexoPortaFirmas) {
     	
-    	LoggerUtil.debug(LOG, "Guardando el documento en el gestor documnetal SIGD. Para el formulario: " + objectName + " y el tipo documental: " + tipoDocumental);
-    	String idDocument = insertarDocumento(pdf, objectName, tipoDocumental);
+    	LoggerUtil.debug(LOG, "Guardando el documento en el gestor documnetal SIGD. Para el formulario con el tipo documental: " + tipoDocumental);
+    	String idDocument = insertarDocumento(workflowContext, pdf, tipoDocumental, userId, anexoPortaFirmas);
     	LoggerUtil.debug(LOG, "Documento almacenado: " + idDocument);
     	return idDocument;
     }
@@ -265,22 +278,28 @@ public class SigdServiceApplication{
 	 * @return json con el body
 	  * 
 	 */
-	 public JSONObject createBody(String pdf,  String objectName, String tipoDocumental){
+	 public JSONObject createBody(Map<String, Serializable> workflowContext, String pdf, String tipoDocumental, long userId, Boolean anexoPortaFirmas){
 		 
+		String objectName = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
+		LoggerUtil.debug(LOG, "Object Name: " + objectName);
+		
 		LoggerUtil.debug(LOG, "Creando el JSON del body" );
 		/*Creamos la cabecera del JSON*/
 		JSONObject json = JSONFactoryUtil.createJSONObject();
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_ID_ORIGEN, "1");
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_SERIE_DOCUMENTAL, getConfigurationValue(objectName, SidgServiceKeys.CREAR_DOCUMENTO_SERIE_DOCUMENTAL));
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_TIPO_DOCUMENTAL, getConfigurationValue(objectName, tipoDocumental));
-		json.put(SidgServiceKeys.CREAR_DOCUMENTO_USUARIO_INDEXACION, "LoginUsuario");
+		json.put(SidgServiceKeys.CREAR_DOCUMENTO_USUARIO_INDEXACION, _configuration.getUsuarioIndexacion());
 		LoggerUtil.debug(LOG, "Cabecera creada: " + json.toString());	
 		 
 		 /*Agrega el JSONArray "campos" al JSON principal*/
 		LoggerUtil.debug(LOG, "Añadiendo los campos con los metadatos" );
-		String metadatos = getConfigurationValue(objectName, SidgServiceKeys.FORM_METADATOS);
-		LoggerUtil.debug(LOG, "Se recuperan los metadatos en forma de String de la configuracion del sistema: " + metadatos );
-		json.put(SidgServiceKeys.CREAR_DOCUMENTO_CAMPOS, obtainMetadatosWithService(objectName, tipoDocumental));
+		/*Este método ahora mismo no se usa, ya que estamos obteniendo los valores del servicio. Dejar por si a futuro no se quiere llamar al servicio
+		 * String metadatos = getConfigurationValue(objectName, SidgServiceKeys.FORM_METADATOS);
+		LoggerUtil.debug(LOG, "Se recuperan los metadatos en forma de String de la configuracion del sistema: " + metadatos );*/
+		JSONArray metadatosService = obtainMetadatosWithService(objectName, tipoDocumental);
+		JSONArray metadatosWithValues = addMetadatosValue(metadatosService, workflowContext, userId, anexoPortaFirmas);
+		json.put(SidgServiceKeys.CREAR_DOCUMENTO_CAMPOS, metadatosWithValues);
 		LoggerUtil.debug(LOG, "Añadido campos de los metadatos: " + json.toString());	
 		 
 		 /*Agrega el JSONArray "ficheros" al JSON principal*/
@@ -297,6 +316,89 @@ public class SigdServiceApplication{
 		LoggerUtil.debug(LOG, "Creado el JSON del body: "+  json);	
 		
 		return json;
+	 }
+	 
+	 /**
+	  * Se añaden valores a los campos metadatos
+	 * @param metadatosService
+	 * @param workflowContext
+	 * 
+	 * @return JSONArray campos con los metadatos con sus valores añadidos
+	  * 
+	 */
+	 public JSONArray addMetadatosValue(JSONArray metadatosService, Map<String, Serializable> workflowContext, long userId, Boolean envioPortaFirmas) {
+		 
+		 try {
+			 if (Validator.isNotNull(metadatosService)) {
+				 if (ServiceContextThreadLocal.getServiceContext() != null) {
+						userId = ServiceContextThreadLocal.getServiceContext().getUserId();
+				 }
+				 long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+				 String dni = StringPool.BLANK;
+				 String fechaDocumento = StringPool.BLANK;
+				 String numeroPersonal = StringPool.BLANK;
+				 String nombre = StringPool.BLANK;
+				 
+				 if(envioPortaFirmas) {
+					 LoggerUtil.debug(LOG, "El documento se envía al portatirmas, se recuperan los valores del usuario actual del workflow: " + userId);
+					 Date today = new Date();
+					 SimpleDateFormat todayFormat = new SimpleDateFormat("dd-MM-yyyy");
+					 dni = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NIF, userId).getString();
+					 fechaDocumento = todayFormat.format(today);
+					 numeroPersonal = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.NUMERO_MATRICULA, userId).getString();
+					 nombre = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NOMBRE, userId).getString();
+				 }else{
+					 if(workflowContext.size()>0){
+						 LoggerUtil.debug(LOG, "El documento no se envía al portafirmas, se recuperan los valores del object.");
+				         long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+				    	 ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(classPK);
+				         Map<String,Serializable> values = objectEntry.getValues();
+				         Date date = (Date) values.get("createDate");
+				         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+						 dni = (String) values.get(EmasesaConstants.EMASESA_EXPANDO_NIF);
+						 numeroPersonal = (String) values.get(EmasesaConstants.NUMERO_MATRICULA);
+						 fechaDocumento = sdf.format(date);
+						 nombre = (String) values.get(EmasesaConstants.EMASESA_EXPANDO_NOMBRE);
+					 }
+				 }
+				 
+				 LoggerUtil.debug(LOG, "DNI: " + dni);
+				 LoggerUtil.debug(LOG, "FechaDocumento: " + fechaDocumento);
+				 LoggerUtil.debug(LOG, "NumeroPersonal: " + numeroPersonal);
+				 LoggerUtil.debug(LOG, "Nombre: " + nombre);
+				 
+				 LoggerUtil.debug(LOG, "Añadiendo valores a los metadatos del SIGD" );
+			        for (int i = 0; i < metadatosService.length(); i++) {
+			            JSONObject campoJson = metadatosService.getJSONObject(i);
+			            String nombreCampo = campoJson.getString("nombreOrigen").trim();
+			            LoggerUtil.debug(LOG, "Metadato: " + nombreCampo);
+	
+			            switch (nombreCampo) {
+			                case SidgServiceKeys.SIGD_METADATO_DNI:
+			                    campoJson.put("stringValue", dni);
+			                    LoggerUtil.debug(LOG, "Añadido dni: " + dni);
+			                    break;
+			                case SidgServiceKeys.SIGD_METADATO_FECHA_DOC:
+			                    campoJson.put("stringValue", fechaDocumento);
+			                    LoggerUtil.debug(LOG, "Añadido fechaDocumento: " + fechaDocumento);
+			                    break;
+			                case SidgServiceKeys.SIGD_METADATO_NUM_PERSONAL:
+			                    campoJson.put("stringValue", numeroPersonal);
+			                    LoggerUtil.debug(LOG, "Añadido numeroPersonal: " + numeroPersonal);
+			                    break;
+			                case  SidgServiceKeys.SIGD_METADATO_NOMBRE:
+			                    campoJson.put("stringValue", nombre);
+			                    LoggerUtil.debug(LOG, "Añadido nombre: " + nombre);
+			                    break;
+			                default:
+			                    break;
+			            }
+			       }
+			   }
+		 }catch(PortalException e) {
+	    	LoggerUtil.error(LOG, "Error al recuperar el valor de los expandos: ", e);
+		 }
+		return metadatosService;
 	 }
 	 
 	 /**
@@ -434,9 +536,13 @@ public class SigdServiceApplication{
 		     */
 		   public String getJSONConfigurationForm(String objectName) {
 			   
-			   String formConfiguration = StringPool.BLANK;
-			   
-				 switch (objectName) {
+				 String formConfiguration = StringPool.BLANK;
+				 LoggerUtil.debug(LOG, "Codificar el nombre del objeto en UTF-8: " + objectName);
+				 byte[] objectNameBytes = objectName.getBytes(StandardCharsets.UTF_8);
+				 objectName = new String(objectNameBytes, StandardCharsets.UTF_8);
+				 LoggerUtil.debug(LOG, "Codificado: " + objectName);
+				   
+				 switch (objectName.trim()) {
 				    case SidgServiceKeys.FORM_COMPATIBILDIAD:
 				    	formConfiguration = _configuration.getCompatibilidadesConfiguration();
 				        break;
@@ -516,7 +622,7 @@ public class SigdServiceApplication{
 				    	formConfiguration = _configuration.getFormativasConfiguration();
 				        break;
 				    default:
-				    	LoggerUtil.debug(LOG, "No se ha encontrado la configuracion del formulario con nombre: " + objectName);
+				    	LoggerUtil.debug(LOG, "No se ha encontrado la configuracion del formulario con nombre: " + objectName +" " +SidgServiceKeys.FORM_IRPF);
 				}			   
 			   return formConfiguration;
 		   }
@@ -524,6 +630,9 @@ public class SigdServiceApplication{
 	
 	@Reference
 	private SigdServicesSettings _configuration;
+	
+	@Reference
+    ExpandoValueLocalService _expandoValueLocalService;
 	
 	private static final Log LOG = LogFactoryUtil.getLog(
 			SigdServiceApplication.class);
