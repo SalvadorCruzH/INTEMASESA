@@ -1,60 +1,72 @@
-const btnAdd = document.getElementById(`${fragmentNamespace}-add-button`);
+const btnAdd = document.getElementById('add-button-table');
 
 const locomocion = "locomocion";
-const volante = "volante";
 const trayectosEntreCentros = "trayectosEntreCentros";
 const otrosTrayectos = "otrosTrayectos";
 
-const tipoParte = $('[name=seleccionDeParte]');
 const tipoDeDesplazamiento = $('[name=tipoDeDesplazamiento]');
-const tipoDeDesplazamientoVolante = $('[name=tipoDeDesplazamientoVolante]');
-
 const centroTrabajoOrigen = $('[name=centroDeTrabajoOrigen-label]');
 const centroDeTrabajoDestino = $('[name=centroDeTrabajoDestino-label]');
 const kilometrosTotales = $('[name=kilometrosTotales]');
 const desde = $('[name=desde]');
 const hasta = $('[name=hasta]');
 const kilmetrosTotales = $('[name=kilmetrosTotales]');
-const centroDeTrabajoOrigenVolante = $('[name=centroDeTrabajoOrigenVolante-label]');
-const centroDeTrabajoDestinoVolante = $('[name=centroDeTrabajoDestinoVolante-label]');
-const kilometrosTotalesVolante = $('[name=kilometrosTotalesVolante]');
-const desdeVolante = $('[name=desdeVolante]');
-const hastaVolante = $('[name=hastaVolante]');
-const kilmetrosTotalesVolante = $('[name=kilmetrosTotalesVolante]');
 
 $(btnAdd).click(function (event) {
-    event.preventDefault();
-    var valorParte = tipoParte.val();
+  event.preventDefault();
 
-    if(valorParte == locomocion){
-        if(tipoDeDesplazamiento.val() == trayectosEntreCentros){
-            addFilaTabla(centroTrabajoOrigen, centroDeTrabajoDestino, kilometrosTotales);
-            $('[name=origenCentro]').val('');
-            $('[name=destinoCentro]').val('');
-        }else if(tipoDeDesplazamiento.val() == otrosTrayectos){
-            addFilaTabla(desde, hasta, kilmetrosTotales);
-        }
-    }else if(valorParte == volante) {
-        if(tipoDeDesplazamientoVolante.val() == trayectosEntreCentros){
-            addFilaTabla(centroDeTrabajoOrigenVolante, centroDeTrabajoDestinoVolante, kilometrosTotalesVolante);
-            $('[name=centroDestinoVolante]').val('');
-            $('[name=centroOrigenVolante]').val('');
-        }else if(tipoDeDesplazamientoVolante.val() == otrosTrayectos){
-            addFilaTabla(desdeVolante, hastaVolante, kilmetrosTotalesVolante);
-        }
-    }
+  if (tipoDeDesplazamiento.val() == trayectosEntreCentros && $('[name=seleccionDeParte]').val() === locomocion) {
+    addFilaTabla(centroTrabajoOrigen, centroDeTrabajoDestino, kilometrosTotales);
+    $('[name=origenCentro]').val('');
+    $('[name=destinoCentro]').val('');
+  } else if (tipoDeDesplazamiento.val() == otrosTrayectos && $('[name=seleccionDeParte]').val() === locomocion) {
+    addFilaTabla(desde, hasta, kilmetrosTotales);
+  }
 });
 
-function addFilaTabla(valorOrigen, valorDestino, kilometros){
-    if (valorOrigen.val() != "" && valorDestino.val() != "" && kilometros.val() != 0) {
-        var nuevaFila = '<tr><td>' + valorOrigen.text() + '</td><td>' + valorDestino.text() + '</td><td>' + kilometros.val() + '</td></tr>';
-        $("#" + `${configuration.idConfig}` +"-table-id tbody").append(nuevaFila);
-        valorOrigen.val('');
-        valorDestino.val('');
-        kilometros.val('');
-        $('[name=centroDeTrabajoDestinoVolante]').val('');
-        $('[name=centroDeTrabajoOrigenVolante]').val('');
-        $('[name=centroDeTrabajoOrigen]').val('');
-        $('[name=centroDeTrabajoDestino]').val('');
-    }
+function addFilaTabla(valorOrigen, valorDestino, kilometros) {
+  if (valorOrigen.val() !== "" && valorDestino.val() !== "" && kilometros.val() !== 0) {
+    var nuevaFila = '<tr><td>' + valorOrigen.val() + '</td><td>' + valorDestino.val() + '</td><td>' + kilometros.val() + '</td></tr>';
+    $("#" + `${configuration.idConfig}` + "-table-id tbody").append(nuevaFila);
+    valorOrigen.val('');
+    valorDestino.val('');
+    kilometros.val('');
+    $('[name=centroDeTrabajoOrigen]').val('');
+    $('[name=centroDeTrabajoDestino]').val('');
+    $('#add-button-table').prop("disabled", true)
+  }
 }
+
+$('[name=origenCentro], [name=destinoCentro]').on("change", function (){
+  setTimeout(function() {
+    if (centroTrabajoOrigen.val() !== "" && $('[name=centroDeTrabajoDestino]').val() !== "" && kilometrosTotales.val() !== "") {
+      $('#add-button-table').prop("disabled", false);
+    }else{
+      $('#add-button-table').prop("disabled", true);
+    }
+  }, 500);
+});
+
+kilmetrosTotales.on("input", verificarContenido);
+desde.on("input", verificarContenido);
+hasta.on("input", verificarContenido);
+
+function verificarContenido() {
+  if (kilmetrosTotales.val() !== "" && desde.val() !== "" && hasta.val() !== "") {
+    $('#add-button-table').prop("disabled", false);
+  } else {
+    $('#add-button-table').prop("disabled", true);
+  }
+}
+$('[name=tipoDeDesplazamiento-1]').on('click', function(){
+  if (centroTrabajoOrigen.val() !== "" && $('[name=centroDeTrabajoDestino]').val() !== "" && kilometrosTotales.val() !== "") {
+    $('#add-button-table').prop("disabled", false);
+  }else{
+    $('#add-button-table').prop("disabled", true);
+  }
+  if(desde.val() !== "" && hasta.val() !== "" && kilmetrosTotales.val() !== ""){
+    $('#add-button-table').prop("disabled", false);
+  }else{
+    $('#add-button-table').prop("disabled", true);
+  }
+})
