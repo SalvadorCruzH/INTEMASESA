@@ -1,5 +1,8 @@
 package es.emasesa.intranet.service.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,6 +20,10 @@ import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.Normalizer;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -157,7 +164,98 @@ public class CustomWorkflowUtil {
 
         return datosServicio;
     }
-    
+
+    public String addPlusSap(Map<String, Serializable> workflowContext){
+        String datosServicio = StringPool.BLANK;
+        String pernr = StringPool.BLANK;
+        String codigoParte = StringPool.BLANK;
+        int valueUnits = 0;
+
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            LOG.debug("Se procede a añdir plus...");
+            long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+            String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
+            ObjectMapper listadoParse = new ObjectMapper();
+            JsonNode listado = listadoParse.readTree(listadoString);
+
+            for (JsonNode solicitud : listado) {
+                String fecha = solicitud.get("fecha").asText();
+                String parte = solicitud.get("parte").asText();
+                String parteModificado = quitarTildes(parte);
+
+                if (parteModificado.equals("Volante")) {
+                    codigoParte = "1J09";
+                    valueUnits = 1;
+                    addFechas(fecha, pernr, codigoParte, valueUnits);
+                    return datosServicio;
+                } else if(parteModificado.equals("Penoso")) {
+                    codigoParte = "1J03";
+                    valueUnits = 1;
+                }else if(parteModificado.equals("Toxico")) {
+                    codigoParte = "1J05";
+                    valueUnits = 1;
+                    addFechas(fecha, pernr, codigoParte, valueUnits);
+                    return datosServicio;
+                }else if(parteModificado.equals("Trabajo con Pantalla")) {
+                    codigoParte = "1J16";
+                    valueUnits = 1;
+                    addFechas(fecha, pernr, codigoParte, valueUnits);
+                    return datosServicio;
+                }else if(parteModificado.equals("Locomocion")) {
+                    codigoParte = "1J13";
+                    valueUnits = solicitud.get("valor").asInt();
+                }
+                ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+                Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+                datosServicio = jornadaNominaService.addPlusSap(pernr, fecha, codigoParte, BigDecimal.valueOf(valueUnits));
+                LOG.debug("Se ha añadido el plus: " + parte + " para el usuario " + pernr);
+                LOG.debug("Los datosServicio son: " + datosServicio);
+                Thread.currentThread().setContextClassLoader(actualClassLoader);
+            }
+        } catch (PortalException e) {
+            LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return datosServicio;
+    }
+
+    public static String quitarTildes(String input){
+        String cadenaNormalizada = Normalizer.normalize(input, Normalizer.Form.NFD);
+        return cadenaNormalizada.replaceAll("[^\\p{ASCII}]", "");
+    }
+
+    public void addFechas(String fechas, String pernr, String plusNomina, int plusUnidades){
+        String rangofechas = fechas;
+        String[] fechasArray = rangofechas.split(" - ");
+        String fechaInicioStr = fechasArray[0];
+        String fechaFinStr = fechasArray[1];
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, formatter);
+        LocalDate fechaFin = LocalDate.parse(fechaFinStr, formatter);
+
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+
+        while (!fechaInicio.isAfter(fechaFin)) {
+            try {
+                ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+                Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+                jornadaNominaService.addPlusSap(pernr, fechaInicio.format(formatter), plusNomina, BigDecimal.valueOf(plusUnidades));
+                LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
+                Thread.currentThread().setContextClassLoader(actualClassLoader);
+            } catch (Exception e) {
+                LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+            }
+            fechaInicio = fechaInicio.plusDays(1);
+        }
+
+        LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
+        Thread.currentThread().setContextClassLoader(actualClassLoader);
+    }
 
     @Activate
     @Modified

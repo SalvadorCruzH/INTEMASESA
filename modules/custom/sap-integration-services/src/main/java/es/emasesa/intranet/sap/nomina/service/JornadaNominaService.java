@@ -104,6 +104,24 @@ public class JornadaNominaService {
         return null;
     }
 
+    public String addPlusSap(String pernr, String fechaInicio, String parte, BigDecimal unidades){
+        try {
+            ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
+            zpeStActJornadaNomina.setPernr(pernr);
+            zpeStActJornadaNomina.setFechaInicio(fechaInicio);
+            zpeStActJornadaNomina.setPlusCcnomina(parte);
+            zpeStActJornadaNomina.setPlusUnidades(unidades);
+
+            Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
+
+            return datos.toString();
+
+        } catch (Exception e) {
+            LOG.error("Se ha producido un error al intentar acceder a WS de jornadaNomina", e);
+        }
+        return null;
+    }
+
     private XMLGregorianCalendar getXMLGregorianCalendar(LocalDateTime localDateTime) throws DatatypeConfigurationException {
         ZoneId zoneId = ZoneId.systemDefault();
         GregorianCalendar gregorianCalendar = new GregorianCalendar();

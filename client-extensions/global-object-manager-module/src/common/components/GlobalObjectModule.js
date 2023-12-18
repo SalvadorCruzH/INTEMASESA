@@ -49,6 +49,7 @@ class GlobalObjectModule extends React.Component {
     setObject = (object) => {
         console.log(this.state.mode);
         if(this.state.mode === 1){
+            console.log('pasando por donde no debo');
             document.querySelectorAll(".form-control").forEach(((element) => element.readOnly = true));
             document.querySelector(".lfr-layout-structure-item-inputs-submit-button").classList.add("d-none");
             document.querySelectorAll(".btn-secondary").disabled = true;
@@ -66,14 +67,19 @@ class GlobalObjectModule extends React.Component {
             }
         }
         console.debug(object);
-        let modeOpened = this.state.mode;
+        let modeOpened = Number(this.state.mode);
+        console.debug(modeOpened);
         Object.keys(object).forEach(function(key) {
             console.debug(key);
-            console.debug(modeOpened);
             if(object[key] != null){
             var input = document.querySelector("[name='"+key+"']");
                 if(input){
-                    $('.component-button.text-break').hide();
+                    if(modeOpened !== 2){
+                        $('.component-button.text-break').hide();
+                    }
+                    if(modeOpened === 1){
+                        input.setAttribute('disabled', 'disabled');
+                    }
                     $('.seleccionParte').hide();
                     $('.penoso').hide();
                     $('.locomocion').hide();
@@ -136,9 +142,8 @@ class GlobalObjectModule extends React.Component {
                 }
             }
         });
-        console.debug(modeOpened);
-        console.debug((modeOpened !== 2));
         if(modeOpened !== 2){
+            console.log('No debo pasar por aquí');
             document.querySelectorAll(".lfr-layout-structure-item-form button").forEach(function(buttonInput) {
                 buttonInput.style.display = 'none';
             });

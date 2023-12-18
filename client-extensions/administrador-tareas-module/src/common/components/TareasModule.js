@@ -179,9 +179,7 @@ class TareasModule extends React.Component {
           });
         if (result && result.items != null && result.items.length > 0) {
                 result.items.forEach((tarea) => {
-
                     this.addTareaExtraData(tarea);
-
                 });
 
         }
@@ -343,8 +341,10 @@ class TareasModule extends React.Component {
                            {this.state.tareas.length != 0 ?(   <>
                                   <tbody>
                                       {this.state.tareas.map((tarea, i) =>{
-                                         return( <>
-                                          <tr>
+                                          console.debug('Tarea')
+                                          console.debug(tarea);
+                                          return( <>
+                                            <tr data-objectId="{tarea.id}">
                                                 <td>{tarea.objectData.numeroDeMatricula}</td>
                                                 <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
                                                 <td>{tarea.objectReviewed.assetType}</td>
