@@ -36,94 +36,100 @@ import juntadeandalucia.cice.pfirma.modify.v2.PfirmaException;
 
 @Component(immediate = true, property = {}, service = PortalFirmasUtil.class)
 public class PortalFirmasUtil {
-	
-	 /**
-     * Send document to portafirmas
-     * @param workflowContext
-     * @param documentSIGDID  
-     * @employeeType kaleoInstanceToken
-     * 
-     */
-    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoTaskInstanceToken kaleoTaskInstanceToken, long userId, String userType){
-    	try {    	
-    		if (ServiceContextThreadLocal.getServiceContext() != null) {
-    			userId = ServiceContextThreadLocal.getServiceContext().getUserId();
-    		}
-    		LoggerUtil.debug(LOG, "userId: " + userId);
-    		
-	        String subject; // NOMBRE OBJETO + NOMBRE USUARIO
-	        String reference; // NOMBRE OBJETO
-	        String documentName; // NOMBRE DOCUMENTO SIGD
-	        List<String> nifs = new ArrayList<String>(); // NIFs de los firmantes - Obtener quien es el consejero delegado con el servicio SAP de estructura recoger positionId, y obtener el dni de Liferay o del servicio de datos
-	        String remitterNIF = StringPool.BLANK; // NIF de la persona que manda al portafirmas
-	        String workflowTaskId = StringPool.BLANK;
-	        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-	        LoggerUtil.debug(LOG, "Se procede a enviar el documento al portafirmas." );
-	        
-	        if(workflowContext.size()>0){
-	        	long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-	    		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(classPK);
-	            Map<String,Serializable> values = objectEntry.getValues();
-	            
-	            LoggerUtil.debug(LOG, "Obteniendo los valores del workflowContext y kaleoInstanceToken..." );
-	            subject = workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE)+ StringPool.BLANK+ values.get(EmasesaConstants.NUMERO_MATRICULA);
-	            reference = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
-	            documentName = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE))+
-	                    GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-	            remitterNIF = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NIF, userId).getString();
-	            nifs = getNifPortaFirmasUser(workflowContext, userType);
-	            
-	            if(Validator.isNotNull(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId())) {
-	            	workflowTaskId =  String.valueOf(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
-	            }
-	            
-	            LoggerUtil.debug(LOG, "subject: " + subject);
-	            LoggerUtil.debug(LOG, "reference: " + reference);
-	            LoggerUtil.debug(LOG, "documentName: " + documentName);
-	            LoggerUtil.debug(LOG, "nifs: " + nifs.toString());
-	            LoggerUtil.debug(LOG, "remitterNIF: " + remitterNIF);
-	            LoggerUtil.debug(LOG, "workflowTaskId: " + workflowTaskId);
-				JSONArray documentos = JSONFactoryUtil.createJSONArray((String) objectEntry.getValues().get(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS));
-	            _pFirmasModifyServices.sendSign(subject, reference,
-						documentos, nifs, remitterNIF, workflowTaskId);
-	            LoggerUtil.debug(LOG, "Docuemnto enviado a portal firmas." );
-	        }
-    	} catch (JSONException | PfirmaException e) {
-    		LoggerUtil.error(LOG, "Error al enviar a portal firmas: ", e);
-		} catch (PortalException e) {
-			LoggerUtil.error(LOG, "Error al obtener el usaurio que envia al portal firmas: ", e);
-		}
+
+    public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoTaskInstanceToken kaleoTaskInstanceToken, long userId, String userType) {
+    	
+    	ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+        	LoggerUtil.debug(LOG, "Se procede a enviar el documento al portafirmas.");
+            ClassLoader objectFactoryClassLoader = PortalFirmasUtil.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            
+            if (ServiceContextThreadLocal.getServiceContext() != null) {
+                userId = ServiceContextThreadLocal.getServiceContext().getUserId();
+            }
+            LoggerUtil.debug(LOG, "userId: " + userId);
+            
+            String subject; // NOMBRE OBJETO + NOMBRE USUARIO
+            String reference; // NOMBRE OBJETO
+            String documentName; // NOMBRE DOCUMENTO SIGD
+            List<String> nifs = new ArrayList<String>(); // NIFs de los firmantes - Obtener quien es el consejero delegado con el servicio SAP de estructura recoger positionId, y obtener el dni de Liferay o del servicio de datos
+            String remitterNIF = StringPool.BLANK; // NIF de la persona que manda al portafirmas
+            String workflowTaskId = StringPool.BLANK;
+            long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+
+            if (workflowContext.size() > 0) {
+                long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+                ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(classPK);
+                Map<String, Serializable> values = objectEntry.getValues();
+
+                LoggerUtil.debug(LOG, "Obteniendo los valores del workflowContext y kaleoInstanceToken...");
+                subject = workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE) + StringPool.BLANK + values.get(EmasesaConstants.NUMERO_MATRICULA);
+                reference = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
+                documentName = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE)) +
+                        GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+                remitterNIF = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, EmasesaConstants.EMASESA_EXPANDO_NIF, userId).getString();
+                nifs = getNifPortaFirmasUser(workflowContext, userType);
+
+                if (Validator.isNotNull(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId())) {
+                    workflowTaskId = String.valueOf(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+                }
+
+                LoggerUtil.debug(LOG, "subject: " + subject);
+                LoggerUtil.debug(LOG, "reference: " + reference);
+                LoggerUtil.debug(LOG, "documentName: " + documentName);
+                LoggerUtil.debug(LOG, "nifs: " + nifs.toString());
+                LoggerUtil.debug(LOG, "remitterNIF: " + remitterNIF);
+                LoggerUtil.debug(LOG, "workflowTaskId: " + workflowTaskId);
+                JSONArray documentos = JSONFactoryUtil.createJSONArray((String) objectEntry.getValues().get(EmasesaConstants.EMASESA_OBJECT_SIGD_IDS));
+                _pFirmasModifyServices.sendSign(subject, reference,
+                        documentos, nifs, remitterNIF, workflowTaskId);
+                LoggerUtil.debug(LOG, "Docuemnto enviado a portal firmas.");
+            }
+        } catch (JSONException | PfirmaException e) {
+            LoggerUtil.error(LOG, "Error al enviar a portal firmas: ", e);
+        } catch (PortalException e) {
+            LoggerUtil.error(LOG, "Error al obtener el usaurio que envia al portal firmas: ", e);
+        }finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
+        }
     }
-    
+
     /**
      * Obtain NIF del usuario que envia al portafirmas
+     *
      * @param workflowContext
      * @param userType
      * @return nifs
-     * 
      */
-    private List<String> getNifPortaFirmasUser(Map<String, Serializable> workflowContext, String userType){
-    		List<String> nifs = new ArrayList<String>();
-    	try {
-    		LoggerUtil.debug(LOG, "Obteniendo el NIF del : " + userType);
-    		User user = _customWorkflowUtil.getUserSap(workflowContext, userType);
-	        String nombreCampoExpando = EmasesaConstants.EMASESA_EXPANDO_NIF;
-	        LoggerUtil.debug(LOG, "nombre campo expando: " + nombreCampoExpando);	
-	        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-		    
-		    if(Validator.isNotNull(user)) {
-		    	LoggerUtil.debug(LOG, "Se obtiene un usuario en liferay con el name = " + user.getScreenName());
-			    String nifUser = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, nombreCampoExpando, user.getUserId()).getString();
-			    LoggerUtil.debug(LOG, "Se obtiene el NIF del usuario  " + nifUser);
-			    nifs.add(nifUser);
-		    }else {
-		    	LoggerUtil.debug(LOG, "No se ha encontrado ningun usuario en liferay con el name = " + user.getScreenName());
-		    }
-    	} catch (PortalException e) {
-    		LoggerUtil.error(LOG, "Error al recuperar el NIF del usuario para el envío de portafirmas: ", e);
-		}
-    	return nifs;
-     }
+    private List<String> getNifPortaFirmasUser(Map<String, Serializable> workflowContext, String userType) {
+        List<String> nifs = new ArrayList<>();
+
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            LoggerUtil.debug(LOG, "Obteniendo el NIF del : " + userType);
+            ClassLoader objectFactoryClassLoader = PortalFirmasUtil.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            User user = _customWorkflowUtil.getUserSap(workflowContext, userType);
+            String nombreCampoExpando = EmasesaConstants.EMASESA_EXPANDO_NIF;
+            LoggerUtil.debug(LOG, "nombre campo expando: " + nombreCampoExpando);
+            long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+
+            if (Validator.isNotNull(user)) {
+                LoggerUtil.debug(LOG, "Se obtiene un usuario en liferay con el name = " + user.getScreenName());
+                String nifUser = _expandoValueLocalService.getValue(companyId, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, nombreCampoExpando, user.getUserId()).getString();
+                LoggerUtil.debug(LOG, "Se obtiene el NIF del usuario  " + nifUser);
+                nifs.add(nifUser);
+            } else {
+                LoggerUtil.debug(LOG, "No se ha encontrado ningun usuario en liferay con el name = " + user.getScreenName());
+            }
+        } catch (PortalException e) {
+            LoggerUtil.error(LOG, "Error al recuperar el NIF del usuario para el envío de portafirmas: ", e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
+        }
+        return nifs;
+    }
 
     @Reference
     PFirmasModifyServices _pFirmasModifyServices;
@@ -137,7 +143,7 @@ public class PortalFirmasUtil {
     PortalFirmasServicesSettings _portalFirmasServicesSettings;
     @Reference
     CustomWorkflowUtil _customWorkflowUtil;
-    
-	private static final Log LOG = LogFactoryUtil.getLog(PortalFirmasUtil.class);
+
+    private static final Log LOG = LogFactoryUtil.getLog(PortalFirmasUtil.class);
 
 }

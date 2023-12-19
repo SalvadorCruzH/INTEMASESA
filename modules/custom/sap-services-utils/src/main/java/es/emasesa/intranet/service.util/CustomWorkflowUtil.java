@@ -93,11 +93,14 @@ public class CustomWorkflowUtil {
         try {
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            if (ciertosDatosEstructuraService == null){
+                activate(null);
+            }
             JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
             Thread.currentThread().setContextClassLoader(actualClassLoader);
 
             matriculaUser = json.getString(userType);
-            LOG.debug("La matrÃ­cula del usuario es: " + matriculaUser);
+            LOG.debug("La matricula del usuario es: " + matriculaUser);
             user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
 
         } catch (SapException e) {
@@ -124,9 +127,10 @@ public class CustomWorkflowUtil {
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             i = jornadaNominaService.guardarIRPF(pernr, fechaSolicitud, IRPF_Solicitado);
             LOG.debug("Se ha guardado el cambio de IRPF: "+IRPF_Solicitado + " para el usuario " +pernr);
-            Thread.currentThread().setContextClassLoader(actualClassLoader);
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al modificar IRPF para "+ pernr, e);
+        } finally{
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return i;
@@ -157,9 +161,11 @@ public class CustomWorkflowUtil {
             datosServicio = jornadaNominaService.cambioDomiciliacionBancaria(pernr, fechaSolicitud, iban);
             LOG.debug("Se ha guardado el cambio de iban: "+iban + " para el usuario " +pernr);
             LOG.debug("Los datosServicio son: " + datosServicio);
-            Thread.currentThread().setContextClassLoader(actualClassLoader);
+
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al modificar de cambio de domiciliacion bancaria para "+ pernr, e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return datosServicio;
@@ -212,12 +218,14 @@ public class CustomWorkflowUtil {
                 datosServicio = jornadaNominaService.addPlusSap(pernr, fecha, codigoParte, BigDecimal.valueOf(valueUnits));
                 LOG.debug("Se ha añadido el plus: " + parte + " para el usuario " + pernr);
                 LOG.debug("Los datosServicio son: " + datosServicio);
-                Thread.currentThread().setContextClassLoader(actualClassLoader);
+
             }
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return datosServicio;
@@ -246,9 +254,11 @@ public class CustomWorkflowUtil {
                 Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
                 jornadaNominaService.addPlusSap(pernr, fechaInicio.format(formatter), plusNomina, BigDecimal.valueOf(plusUnidades));
                 LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
-                Thread.currentThread().setContextClassLoader(actualClassLoader);
+
             } catch (Exception e) {
                 LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+            } finally {
+                Thread.currentThread().setContextClassLoader(actualClassLoader);
             }
             fechaInicio = fechaInicio.plusDays(1);
         }
@@ -262,10 +272,12 @@ public class CustomWorkflowUtil {
     protected void activate(Map<String, Object> properties) {
         CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
+        CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
 
         try {
             this.empleadoEstructuraService = service.getService();
             this.jornadaNominaService = serviceNomina.getService();
+            this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
