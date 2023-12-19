@@ -129,6 +129,14 @@
     .btn {
         width: 100%;
     }
+    &--inline {
+        display: flex;
+        gap: 1rem;
+        .btn {
+            width: -moz-fit-content;
+            width: fit-content;
+        }
+    }
 }
 
 .ema-inline-items {

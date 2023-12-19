@@ -163,6 +163,7 @@ var menuDesktop = (function () {
 					parentNodeLink.classList.remove('show');
 					parentNodeLink.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
 					document.body.classList.remove('menu-opened');
+					document.documentElement.classList.remove('menu-opened');
 					this.setAttribute('aria-expanded', "false");
 
 				}else {
@@ -170,11 +171,13 @@ var menuDesktop = (function () {
 						element.classList.remove('show');
 						element.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
 						document.body.classList.remove('menu-opened');
+						document.body.documentElement.remove('menu-opened');
 					});
 					parentNodeLink.classList.add('show');
 					parentNodeLink.querySelector('a').setAttribute('aria-expanded', "true");
 					parentNodeLink.querySelector('.i-mainNavigation__submenuContainer').classList.add('open');
 					document.body.classList.add('menu-opened')
+					document.body.documentElement.add('menu-opened');
 					this.setAttribute('aria-expanded', "true");
 
 				}
@@ -193,6 +196,7 @@ var menuDesktop = (function () {
 					element.classList.remove('show');
 					element.querySelector('.i-mainNavigation__submenuContainer').classList.remove('open');
 					document.body.classList.remove('menu-opened');
+					document.documentElement.classList.remove('menu-opened');
 				});
 			}
 		});
