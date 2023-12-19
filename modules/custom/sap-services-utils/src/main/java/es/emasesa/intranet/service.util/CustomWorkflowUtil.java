@@ -93,11 +93,14 @@ public class CustomWorkflowUtil {
         try {
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
+            if (_ciertosDatosEstructuraService == null){
+                activate(null);
+            }
+            JSONObject json = _ciertosDatosEstructuraService.getCiertosDatosEstructura();
             Thread.currentThread().setContextClassLoader(actualClassLoader);
 
             matriculaUser = json.getString(userType);
-            LOG.debug("La matrÃ­cula del usuario es: " + matriculaUser);
+            LOG.debug("La matricula del usuario es: " + matriculaUser);
             user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
 
         } catch (SapException e) {
@@ -276,7 +279,7 @@ public class CustomWorkflowUtil {
     @Reference
     SapInterfaceService _sapService;
     private EmpleadoEstructuraService empleadoEstructuraService;
-    private CiertosDatosEstructuraService ciertosDatosEstructuraService;
+    private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
     @Reference
     ObjectEntryLocalService _objectEntryLocalService;
     private JornadaNominaService jornadaNominaService;
