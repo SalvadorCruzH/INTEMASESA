@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
+import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
@@ -481,7 +482,7 @@ public class SapServicesUtil {
             } */
         } catch (InterruptedException e) {
             LOG.error("Se ha producido un error levantando el CustomTracker de Spring");
-            throw new RuntimeException(e);
+            LoggerUtil.info(LOG,"Error arrancando servicios", e);
        /*} catch (SapException e) {
             LOG.info("Se ha producido un error validando los servicios en el arranque", e);
         */} catch (NullPointerException e) {

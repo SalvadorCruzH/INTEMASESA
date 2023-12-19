@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.ServiceLocator;
+import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapException;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
@@ -302,7 +303,7 @@ public class CustomWorkflowUtil {
             _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
             _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            LoggerUtil.info(LOG,"Error arrancando servicios", e);
         }
     }
     protected CustomExpandoUtil customExpandoUtil;
