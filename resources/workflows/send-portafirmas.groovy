@@ -10,5 +10,5 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.sendObjectPortafirmas(workflowContext);
+customWorkflowUtil.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, "consejeroId");
 customWorkflowUtilTracker.close();
