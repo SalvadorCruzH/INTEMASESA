@@ -38,12 +38,18 @@ import juntadeandalucia.cice.pfirma.modify.v2.PfirmaException;
 public class PortalFirmasUtil {
 
     public void enviarPortalFirmas(Map<String, Serializable> workflowContext, KaleoTaskInstanceToken kaleoTaskInstanceToken, long userId, String userType) {
+    	
+    	ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+        	LoggerUtil.debug(LOG, "Se procede a enviar el documento al portafirmas.");
+            ClassLoader objectFactoryClassLoader = PortalFirmasUtil.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            
             if (ServiceContextThreadLocal.getServiceContext() != null) {
                 userId = ServiceContextThreadLocal.getServiceContext().getUserId();
             }
             LoggerUtil.debug(LOG, "userId: " + userId);
-
+            
             String subject; // NOMBRE OBJETO + NOMBRE USUARIO
             String reference; // NOMBRE OBJETO
             String documentName; // NOMBRE DOCUMENTO SIGD
@@ -51,7 +57,6 @@ public class PortalFirmasUtil {
             String remitterNIF = StringPool.BLANK; // NIF de la persona que manda al portafirmas
             String workflowTaskId = StringPool.BLANK;
             long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-            LoggerUtil.debug(LOG, "Se procede a enviar el documento al portafirmas.");
 
             if (workflowContext.size() > 0) {
                 long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
@@ -85,6 +90,8 @@ public class PortalFirmasUtil {
             LoggerUtil.error(LOG, "Error al enviar a portal firmas: ", e);
         } catch (PortalException e) {
             LoggerUtil.error(LOG, "Error al obtener el usaurio que envia al portal firmas: ", e);
+        }finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
 
