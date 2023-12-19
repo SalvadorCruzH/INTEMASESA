@@ -5,20 +5,20 @@
         <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message><i class="fa-solid fa-chevron-down fa-2xs" aria-hidden="true"></i>
     </button>
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
-        <div class="ema-ajaxsearch-filtros__text">
+        <div class="ema-ajaxsearch-filtros__text ema-ajaxsearch-filtros__text--radios">
 
             <label for="tipo1">
+                <input type="radio" id="tipo1" class="tipo" name="tipo" data-as-id="tipo" value="1" checked>
                 <span class="ema-ajaxsearch-filtros__label">
                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.empleado"/>
                 </span>
-                <input type="radio" id="tipo1" class="tipo" name="tipo" data-as-id="tipo" value="1" checked>
             </label>
 
             <label for="tipo2">
+                <input type="radio" id="tipo2" class="tipo" name="tipo" data-as-id="tipo" value="2">
                 <span class="ema-ajaxsearch-filtros__label">
                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.fecha"/>
                 </span>
-                <input type="radio" id="tipo2" class="tipo" name="tipo" data-as-id="tipo" value="2">
             </label>
         </div>
         <div class="ema-ajaxsearch-filtros__text tipo-1">

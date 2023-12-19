@@ -101,6 +101,16 @@
                             }
                         }
                     }
+                    .ema-ajaxsearch-filtros__text {
+                        &--radios {
+                            border-bottom: 1px solid #dcdcdc;
+                            width: 100%;
+                            flex-basis: 100%;
+                            flex-direction: row;
+                            gap: 3rem;
+                            justify-content: flex-start;
+                        }
+                    }
                 }
                 .ema-ajaxsearch-filtros__sortby--wrapper {
                     margin-top: 1rem;

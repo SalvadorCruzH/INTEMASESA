@@ -16,6 +16,11 @@
     }
     &__item {
         display: flex;
+        &:first-child {
+            .no-first & {
+                display: none;
+            }
+        }
         > a,
         > span {
             display: block;
