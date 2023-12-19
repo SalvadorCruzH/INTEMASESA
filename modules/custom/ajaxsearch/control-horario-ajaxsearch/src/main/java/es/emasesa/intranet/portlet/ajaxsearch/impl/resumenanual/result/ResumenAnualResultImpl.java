@@ -185,9 +185,9 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 			});
 			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + year);
 
-			jsonArray.getJSONObject(0).put("vacacionesYear",getVacaciones(themeDisplay, year));
+			jsonArray.getJSONObject(0).put("vacacionesYear", getVacaciones(themeDisplay, year));
 			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + (Integer.parseInt(year) - 1));
-			jsonArray.getJSONObject(0).put("vacacionesLastYear",getVacaciones(themeDisplay, String.valueOf(Integer.parseInt(year)-1)));
+			jsonArray.getJSONObject(0).put("vacacionesLastYear", getVacaciones(themeDisplay, String.valueOf(Integer.parseInt(year)-1)));
 		}
 		return totalItems;
 	}

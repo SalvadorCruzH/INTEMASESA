@@ -33,7 +33,12 @@ class GlobalObjectModule extends React.Component {
         if(searchParams.has('objectEntryId') && searchParams.has('objectType')){
             objectEntryId = searchParams.get("objectEntryId");
             var objectType = searchParams.get("objectType");
-            var objectMapping = JSON.parse(this.state.configuration.objectMapping);
+            let objectMapping = {};
+            try{
+                objectMapping = JSON.parse(this.state.configuration.objectMapping);
+            }catch(e){
+                objectMapping = this.state.configuration.objectMapping;
+            }
             var objectCallUrl = Constants.oauthUserAgent.URL_DEFAULT+objectMapping[objectType].url;
             console.debug(objectCallUrl);
             ObjectApi.getObject(objectEntryId,objectCallUrl, this.setObject, this.errorHandler);

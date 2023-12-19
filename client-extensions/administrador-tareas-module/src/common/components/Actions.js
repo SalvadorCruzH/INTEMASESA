@@ -100,7 +100,12 @@ class Actions extends React.Component {
 
     openModal = (event) => {
         let objectReviewed = this.state.objectReviewed;
-        var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        let jsonObjectMapping = {};
+        try{
+            jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        }catch(e){
+            jsonObjectMapping = this.state.configuration.objectMapping;
+        }
         let objectMapping = jsonObjectMapping[objectReviewed.assetType];
         if (objectMapping) {
             let display = objectMapping.display;
@@ -151,7 +156,12 @@ class Actions extends React.Component {
     openModalAsesor = (event) => {
         let thatContext = this;
         let objectReviewed = this.state.objectReviewed;
-        var jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        let jsonObjectMapping = {};
+        try{
+            jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        }catch(e){
+            jsonObjectMapping = this.state.configuration.objectMapping;
+        }
         let objectMapping = jsonObjectMapping[objectReviewed.assetType];
         if (objectMapping) {
             let display = objectMapping.asesoriaJuridica;
