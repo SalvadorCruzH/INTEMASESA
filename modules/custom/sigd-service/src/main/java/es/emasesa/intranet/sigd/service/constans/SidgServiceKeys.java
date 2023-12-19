@@ -61,7 +61,7 @@ public class SidgServiceKeys {
 	public static final String FORM_ANTICIPOS_VACACIONES= "AnticiposVacaciones";
 	public static final String FORM_ANTICIPOS_REINTEGRABLES = "AnticiposReintegrables";
 	public static final String FORM_DOMICILIACION_BANCARIA = "Domiciliacion";
-	public static final String FORM_IRPF = "Modificación de IRPF";
+	public static final String FORM_IRPF = "IRPF";
 	public static final String FORM_PRESTAMOS_VIVIENDA = "PrestamosVivienda";
 	public static final String FORM_AYUDA_ESCOLAR = "AyudaEscolar";
 	public static final String FORM_HISTORIAL_ACADEMICO = "HistorialAcedemico";
