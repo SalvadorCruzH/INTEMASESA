@@ -655,3 +655,44 @@
     }
   }
 }
+
+#wrapper {
+  .pagination-bar {
+    > .pagination-results {
+      display: none;
+    }
+    .pagination-items-per-page {
+      button {
+        background-color: #a8c855;
+        border: none;
+        border-radius: 20px;
+        color: black;
+        padding: 9.5px 15px 9.5px 20px;
+        height: auto;
+      }
+    }
+    .pagination {
+      margin-left: auto;
+      gap: 1rem;
+      * {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        border: none;
+      }
+      .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        color: black;
+      }
+      .active .page-link {
+        background-color: #36c;
+        color: white;
+      }
+    }
+  }
+}

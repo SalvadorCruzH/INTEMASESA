@@ -6,12 +6,14 @@
     </button>
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
         <div class="ema-ajaxsearch-filtros__text">
+
             <label for="tipo1">
                 <span class="ema-ajaxsearch-filtros__label">
                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.empleado"/>
                 </span>
                 <input type="radio" id="tipo1" class="tipo" name="tipo" data-as-id="tipo" value="1" checked>
             </label>
+
             <label for="tipo2">
                 <span class="ema-ajaxsearch-filtros__label">
                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.fecha"/>

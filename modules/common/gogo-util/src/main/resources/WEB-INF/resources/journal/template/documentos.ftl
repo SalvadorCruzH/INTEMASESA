@@ -7,7 +7,7 @@
         <#if validator.isNotNull(Date88698232_Data)>
             <p class="ema-docsADT__item__date">
                 <#assign Date88698232_DateObj = dateUtil.parseDate("yyyy-MM-dd", Date88698232_Data, locale)>
-                ${dateUtil.getDate(Date88698232_DateObj, "dd MMM yyyy - HH:mm:ss", locale)}
+                ${dateUtil.getDate(Date88698232_DateObj, "dd MMM yyyy", locale)}
             </p>
         </#if>
     </header>
