@@ -93,10 +93,10 @@ public class CustomWorkflowUtil {
         try {
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            if (_ciertosDatosEstructuraService == null){
+            if (ciertosDatosEstructuraService == null){
                 activate(null);
             }
-            JSONObject json = _ciertosDatosEstructuraService.getCiertosDatosEstructura();
+            JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
             Thread.currentThread().setContextClassLoader(actualClassLoader);
 
             matriculaUser = json.getString(userType);
@@ -272,10 +272,12 @@ public class CustomWorkflowUtil {
     protected void activate(Map<String, Object> properties) {
         CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
+        CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
 
         try {
             this.empleadoEstructuraService = service.getService();
             this.jornadaNominaService = serviceNomina.getService();
+            this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -286,7 +288,7 @@ public class CustomWorkflowUtil {
     @Reference
     SapInterfaceService _sapService;
     private EmpleadoEstructuraService empleadoEstructuraService;
-    private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
+    private CiertosDatosEstructuraService ciertosDatosEstructuraService;
     @Reference
     ObjectEntryLocalService _objectEntryLocalService;
     private JornadaNominaService jornadaNominaService;
