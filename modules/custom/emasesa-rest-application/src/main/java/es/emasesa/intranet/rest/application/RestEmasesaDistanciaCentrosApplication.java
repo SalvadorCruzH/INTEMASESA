@@ -1,7 +1,5 @@
 package es.emasesa.intranet.rest.application;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -10,7 +8,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.rest.constant.EmasesaRestConstant;
 import es.emasesa.intranet.service.util.SapServicesUtil;
-import es.emasesa.intranet.settings.osgi.ClientExtensionsSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -20,7 +17,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Set;
 

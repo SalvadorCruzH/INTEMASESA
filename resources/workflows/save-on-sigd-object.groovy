@@ -18,7 +18,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
 customWorkflowBaseUtil.updateObjectHistoryAndStatus(workflowContext, statusObject, userId, rolName);
 String pdf = customWorkflowBaseUtil.pdfBase64(customWorkflowBaseUtil.createPDF(workflowContext));
-String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, objectName, documentType);
+String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, objectName, documentType, userId, false);
 
 customWorkflowBaseUtilTracker.close();
 sigdServiceTracker.close();

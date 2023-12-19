@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>20</version>
+	<version>24</version>
 	<state>
 		<name>d447b28d-155f-4d95-9e05-f35825a66b95</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -104,12 +104,12 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobado", 0, 
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Turnos", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Turnos", "solicitud", userId, false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Turnos", "solicitud");
+    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Turnos", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -188,12 +188,12 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", 0,
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Turnos", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Turnos", "solicitud", userId, false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Turnos", "solicitud");
+    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Turnos", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -276,25 +276,9 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
-Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
-ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
-customWorkflowUtilTracker.open();
-CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId");
-customWorkflowUtilTracker.close();]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>jefedepartarmentoflexibilidadhoraria@mail.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">

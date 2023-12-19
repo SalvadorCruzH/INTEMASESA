@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>58</version>
+	<version>59</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -147,16 +147,16 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Compatibilidad", "solicitud", userId, false);
 }
 //Subir fichero certificacion o decalracion responsable
 String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
 String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
 
 if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
-	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "certificacion");
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "certificacion", userId, false);
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "declaracion");
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "declaracion", userId, false);
 }	
 
 customWorkflowUtilTracker.close();
@@ -781,7 +781,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConse
 //Subir formulario de solicitud al SIGD
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Compatibilidad", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Compatibilidad", "solicitud", userId, false);
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Compatibilidad", false);
 }
 
@@ -790,10 +790,10 @@ String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "
 String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
 
 if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
-	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaPropia, "Compatibilidad", "certificacion");
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "certificacion", userId, false);
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Certificación de la empresa", false);
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(pdfCuentaAjena, "Compatibilidad", "declaracion");
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "declaracion", userId, false);
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Declaración responsable", false);
 }	
 
@@ -801,9 +801,9 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
 String idDocumentoAsesoriaJuridica = "";
 if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
-	idDocumentoAsesoriaJuridica = sigdService.saveDocumentOnSIGD(pdfAnexoAsesoriaJuridica, "Compatibilidad", "resolucion");
+	idDocumentoAsesoriaJuridica = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoAsesoriaJuridica, "Compatibilidad", "resolucion", userId, true);
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoAsesoriaJuridica, "Escrito asesoría jurídica", true);
-	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken);
+	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, "consejeroId");
 }
 
 customWorkflowUtilTracker.close();

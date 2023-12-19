@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>539c4516-e04f-69a9-3b67-749aa51bccb4</name>
-	<version>2</version>
+	<version>3</version>
 	<state>
 		<name>5d6facc1-1eb5-4109-8d3f-25f236c1d15c</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -104,13 +104,13 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", use
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AyudaEscolar", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AyudaEscolar", "solicitud", userId, false);
 }
 //Subir fichero certificacion o decalracion responsable
 String pdfadjuntarDocumentos = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarDocumentos");
 
 if(pdfadjuntarDocumentos != null && pdfadjuntarDocumentos != ""){
-	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(pdfadjuntarDocumentos, "AyudaEscolar", "solicitud");
+	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfadjuntarDocumentos, "AyudaEscolar", "solicitud",  userId, false);
 }	
 
 customWorkflowUtilTracker.close();
@@ -190,13 +190,13 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AyudaEscolar", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AyudaEscolar", "solicitud", userId, false);
 }
 //Subir fichero certificacion o decalracion responsable
 String pdfadjuntarDocumentos = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarDocumentos");
 
 if(pdfadjuntarDocumentos != null && pdfadjuntarDocumentos != ""){
-	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(pdfadjuntarDocumentos, "AyudaEscolar", "solicitud");
+	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfadjuntarDocumentos, "AyudaEscolar", "solicitud", userId, false);
 }	
 
 customWorkflowUtilTracker.close();

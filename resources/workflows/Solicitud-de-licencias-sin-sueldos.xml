@@ -6,11 +6,20 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>37</version>
+	<version>39</version>
 	<state>
 		<name>8eab626c-a786-4d84-9abd-e1136e3afa89</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-367,-66],"transitions":{"e09de5b7-d810-4162-8cbd-eca18adfa132":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-367,
+						-66
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -96,7 +105,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Licencias", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Licencias", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -175,7 +184,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Jefe división Personas");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Licencias", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Licencias", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -217,7 +226,16 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>30b7549c-1e21-4cac-9647-1ee862833b97</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[25,-65],"transitions":{"5fa455e5-1c60-4c5d-b4fd-bfdc48bba0e3":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						25.546875,
+						-65.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -317,7 +335,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>3f1c67ff-14e6-4b6c-ac9d-7a574541638d</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[453,-62],"transitions":{"8d0e0319-55e7-4cc7-9da4-79e77b14ccd3":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						453.546875,
+						-62.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -417,7 +444,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>a2a2c1d7-7955-4c0b-932e-da9bb0d3ae80</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[849,-70],"transitions":{"cc13cf11-4bcb-4c38-bb76-b4c2ff671b9c":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						849.54677734375,
+						-70.10001220703123
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -507,7 +543,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>79b7c8d1-6cf8-452f-9fbf-b9b3fff5add1</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[849,200],"transitions":{"16fa44f8-e758-4d1e-981b-4e966d87c057":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						849.1210307599397,
+						200.30020454507874
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
