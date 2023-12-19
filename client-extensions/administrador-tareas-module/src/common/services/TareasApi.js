@@ -41,9 +41,10 @@ const TareasApi = {
         },
 
         callAction: (actionUrl, data,callback, errorHandler) => {
+            let urlAct = new URL(actionUrl);
             LiferayApi.post(
                 Constants.oauthUserAgent.CLIENT_ID,
-                actionUrl,
+                urlAct.pathname,
                 data,
                 callback,
                 errorHandler
