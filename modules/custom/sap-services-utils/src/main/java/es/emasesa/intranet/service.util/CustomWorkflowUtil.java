@@ -96,6 +96,9 @@ public class CustomWorkflowUtil {
             if (ciertosDatosEstructuraService == null){
                 activate(null);
             }
+            if (customExpandoUtil == null){
+                activate(null);
+            }
             JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
             Thread.currentThread().setContextClassLoader(actualClassLoader);
 
@@ -273,15 +276,18 @@ public class CustomWorkflowUtil {
         CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
         CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
+        CustomServiceTracker<CustomExpandoUtil> customExpandoUtil = new CustomServiceTracker<>(CustomExpandoUtil.class, "getCustomExpandoUtil");
 
         try {
             this.empleadoEstructuraService = service.getService();
             this.jornadaNominaService = serviceNomina.getService();
             this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
+            this.customExpandoUtil = customExpandoUtil.getService();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
+    @Reference
     private CustomExpandoUtil customExpandoUtil;
     @Reference
     private UserLocalService _userLocalService;
