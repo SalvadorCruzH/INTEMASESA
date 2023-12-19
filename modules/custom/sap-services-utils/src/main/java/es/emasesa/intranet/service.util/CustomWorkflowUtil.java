@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.template.ServiceLocator;
 import es.emasesa.intranet.sap.base.exception.SapException;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
@@ -273,25 +274,27 @@ public class CustomWorkflowUtil {
         CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
         CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
+        CustomServiceTracker<JornadaNominaService> jornadaNominaServiceTracker = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
 
         try {
             this.empleadoEstructuraService = service.getService();
             this.jornadaNominaService = serviceNomina.getService();
             this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
+            this.jornadaNominaService = jornadaNominaServiceTracker.getService();
+            customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
+            _userLocalService = (UserLocalService) ServiceLocator.getInstance().findService("com.liferay.portal.kernel.service.UserLocalService");
+            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
+            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-    private CustomExpandoUtil customExpandoUtil;
-    @Reference
-    private UserLocalService _userLocalService;
-    @Reference
-    SapInterfaceService _sapService;
-    private EmpleadoEstructuraService empleadoEstructuraService;
-    private CiertosDatosEstructuraService ciertosDatosEstructuraService;
-    @Reference
-    ObjectEntryLocalService _objectEntryLocalService;
-    private JornadaNominaService jornadaNominaService;
+    protected CustomExpandoUtil customExpandoUtil;
+    protected UserLocalService _userLocalService;
+    protected EmpleadoEstructuraService empleadoEstructuraService;
+    protected CiertosDatosEstructuraService ciertosDatosEstructuraService;
+    protected ObjectEntryLocalService _objectEntryLocalService;
+    protected JornadaNominaService jornadaNominaService;
 
     private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
 }
