@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>30d8f10b-1b9e-3866-117a-57ea10872adc</name>
-	<version>18</version>
+	<version>20</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -121,9 +121,9 @@ CustomWorkflowUtil sapCustomWorkflowUtil = sapCustomWorkflowUtilTracker.getServi
 customWorkflowBaseUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Administrador RRHH");
 
 //Subir el object en PDF
-String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+String pdf = customWorkflowBaseUtil.pdfBase64(customWorkflowBaseUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Domiciliacion", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Domiciliacion", "solicitud", userId, false);
 }
 
 //Llamada a SAP para enviar el nuevo iban
@@ -211,7 +211,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Domiciliacion", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Domiciliacion", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();

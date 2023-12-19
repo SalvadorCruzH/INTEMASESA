@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
-	<version>76</version>
+	<version>78</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -63,8 +63,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						793.7695521212758,
-						605.1228018277288
+						793.7695451356564,
+						603.9740402803037
 					],
 					"terminal": true
 				}
@@ -130,22 +130,17 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", userId, "");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Excedencias", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Excedencias", "solicitud", userId, false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
-String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoDirector");
 
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(pdfFichero, "Excedencias", "solicitud");
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "Excedencias", "solicitud", userId, false);
 }
-
-if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
-    String idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(pdfAnexoDirectorRRHH, "Excedencias", "solicitud");
-
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -471,23 +466,23 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSubdi
 
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "Excedencias", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Excedencias", "solicitud", userId, false);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Reduccion Jornada", false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
 
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(pdfFichero, "Excedencias", "solicitud");
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "Excedencias", "solicitud", userId, false);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoFicheroSigd, "Fichero", false);
 }
 
 String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoDirector");
 String idDocumentoDirectorRRHH = "";
 if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
-    idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(pdfAnexoDirectorRRHH, "Excedencias", "solicitud");
+    idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoDirectorRRHH, "Excedencias", "solicitud", userId, true);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoDirectorRRHH, "Escrito director RRHH", true);
-    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken);
+    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, "direccionRrhhRespId");
 }
 
 customWorkflowUtilTracker.close();
@@ -717,7 +712,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-jefe-division-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[809,148],"transitions":{"Mandar a portafirmas":{"bendpoints":[]}}}]]></metadata>
+		<metadata><![CDATA[{"xy":[809,148],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -775,7 +770,7 @@ customWorkflowUtilTracker.close();]]>
 						Mandar a portafirmas
 					</label>
 				</labels>
-				<name>Mandar a portafirmas</name>
+				<name>Mandar-a-portafirmas</name>
 				<target>portafirma-director-RRHH</target>
 				<default>true</default>
 			</transition>

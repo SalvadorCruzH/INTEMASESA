@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>87ca54ba-9b30-1ea0-6b34-71ff5d0364d3</name>
-	<version>37</version>
+	<version>40</version>
 	<condition>
 		<name>d292d2f5-9289-46fb-a8b6-16e2a568636e</name>
 		<description>Ejecute una lógica condicional.</description>
@@ -248,7 +248,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", use
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposVacaciones", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -336,7 +336,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposVacaciones", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -419,7 +419,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposVacaciones", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -502,7 +502,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposVacaciones", "solicitud");
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposVacaciones", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();

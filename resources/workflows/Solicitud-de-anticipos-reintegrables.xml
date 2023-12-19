@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>7bb1bf32-49f0-1875-dcf3-a60fdf4f1842</name>
-	<version>13</version>
+	<version>14</version>
 	<state>
 		<name>35e23d24-283f-4f8b-8419-08c071097df7</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -96,7 +96,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Admin RRHH");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposReintegrables", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposReintegrables", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -174,7 +174,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Admin RRHH");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "AnticiposReintegrables", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposReintegrables", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>

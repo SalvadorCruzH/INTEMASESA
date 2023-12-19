@@ -6,20 +6,11 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>a77d955e-e716-7ce6-cbc4-a3ae2750b9b1</name>
-	<version>17</version>
+	<version>19</version>
 	<state>
 		<name>ed44c245-0e5f-46e6-873b-228b2b58005f</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-355.453125,
-						122.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-355,122],"transitions":{"9c7d500f-81a1-4829-9efe-85cad22e6420":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -108,7 +99,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", use
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "PrestamosVivienda", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "PrestamosVivienda", "solicitud", userId, false);
 }
 //Subir fichero certificacion o decalracion responsable
 String pdfPresupuesto = customWorkflowUtil.getDocumentToLoad(workflowContext, "presupuesto");
@@ -117,16 +108,16 @@ String pdfEscritura = customWorkflowUtil.getDocumentToLoad(workflowContext, "esc
 String pdfOtros = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarOtros");
 
 if(pdfContrato != null && pdfContrato != ""){
-    String idDocumentoContratoSigd = sigdService.saveDocumentOnSIGD(pdfContrato, "PrestamosVivienda", "solicitud");
+    String idDocumentoContratoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfContrato, "PrestamosVivienda", "solicitud", userId, false);
 }
 if(pdfEscritura != null && pdfEscritura != ""){
-    String idDocumentoEscrituraSigd = sigdService.saveDocumentOnSIGD(pdfEscritura, "PrestamosVivienda", "solicitud");
+    String idDocumentoEscrituraSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfEscritura, "PrestamosVivienda", "solicitud", userId, false);
 }
 if(pdfOtros != null && pdfOtros != ""){
-    String idDocumentoOtrosSigd = sigdService.saveDocumentOnSIGD(pdfOtros, "PrestamosVivienda", "solicitud");
+    String idDocumentoOtrosSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfOtros, "PrestamosVivienda", "solicitud", userId, false);
 }
 if(pdfPresupuesto != null && pdfPresupuesto != ""){
-    String idDocumentoPresupuestoSigd = sigdService.saveDocumentOnSIGD(pdfPresupuesto, "PrestamosVivienda", "solicitud");
+    String idDocumentoPresupuestoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfPresupuesto, "PrestamosVivienda", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -209,7 +200,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "PrestamosVivienda", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "PrestamosVivienda", "solicitud", userId, false);
 }
 //Subir fichero certificacion o decalracion responsable
 String pdfPresupuesto = customWorkflowUtil.getDocumentToLoad(workflowContext, "presupuesto");
@@ -218,16 +209,16 @@ String pdfEscritura = customWorkflowUtil.getDocumentToLoad(workflowContext, "esc
 String pdfOtros = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarOtros");
 
 if(pdfContrato != null && pdfContrato != ""){
-    String idDocumentoContratoSigd = sigdService.saveDocumentOnSIGD(pdfContrato, "PrestamosVivienda", "solicitud");
+    String idDocumentoContratoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfContrato, "PrestamosVivienda", "solicitud", userId, false);
 }
 if(pdfEscritura != null && pdfEscritura != ""){
-    String idDocumentoEscrituraSigd = sigdService.saveDocumentOnSIGD(pdfEscritura, "PrestamosVivienda", "solicitud");
+    String idDocumentoEscrituraSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfEscritura, "PrestamosVivienda", "solicitud", userId, false);
 }
 if(pdfOtros != null && pdfOtros != ""){
-    String idDocumentoOtrosSigd = sigdService.saveDocumentOnSIGD(pdfOtros, "PrestamosVivienda", "solicitud");
+    String idDocumentoOtrosSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfOtros, "PrestamosVivienda", "solicitud", userId, false);
 }
 if(pdfPresupuesto != null && pdfPresupuesto != ""){
-    String idDocumentoPresupuestoSigd = sigdService.saveDocumentOnSIGD(pdfPresupuesto, "PrestamosVivienda", "solicitud");
+    String idDocumentoPresupuestoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfPresupuesto, "PrestamosVivienda", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -270,16 +261,7 @@ sigdServiceTracker.close();
 	<task>
 		<name>f9efb950-2eed-41be-8820-8730d1a61f6f</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						451.546875,
-						122.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[451,122],"transitions":{"aeef7efd-fe1a-4ca5-950c-6582d0a07156":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -342,16 +324,7 @@ sigdServiceTracker.close();
 	<task>
 		<name>0be24609-6c43-4d67-9ecc-f613b0b91dd2</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						52.546875,
-						121.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[52,121],"transitions":{"6bccfd01-7a87-491d-b547-84a5b168b79a":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>

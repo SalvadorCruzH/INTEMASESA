@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
-	<version>74</version>
+	<version>77</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -133,20 +133,15 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "ReduccionJornada", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
-String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoDirector");
 
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(pdfFichero, "ReduccionJornada", "solicitud");
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "ReduccionJornada", "solicitud", userId, false);
 }
 
-if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
-    String idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(pdfAnexoDirectorRRHH, "ReduccionJornada", "solicitud");
-
-}
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
 				</script>
@@ -471,23 +466,23 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSubdi
 
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "ReduccionJornada", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, false);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Reduccion Jornada", false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
 
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(pdfFichero, "ReduccionJornada", "solicitud");
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "ReduccionJornada", "solicitud", userId, false);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoFicheroSigd, "Fichero", false);
 }
 
 String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoDirector");
 String idDocumentoDirectorRRHH = "";
 if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
-    idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(pdfAnexoDirectorRRHH, "ReduccionJornada", "solicitud");
+    idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoDirectorRRHH, "ReduccionJornada", "solicitud", userId, true);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoDirectorRRHH, "Escrito director RRHH", true);
-    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken);
+    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, "direccionRrhhRespId");
 }
 
 customWorkflowUtilTracker.close();
@@ -708,7 +703,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-jefe-division-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[808,150],"transitions":{"Mandar a portafirmas":{"bendpoints":[]}}}]]></metadata>
+		<metadata><![CDATA[{"xy":[808,150],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -770,7 +765,7 @@ customWorkflowUtilTracker.close();]]>
 						Mandar a portafirmas
 					</label>
 				</labels>
-				<name>Mandar a portafirmas</name>
+				<name>Mandar-a-portafirmas</name>
 				<target>portafirma-director-RRHH</target>
 				<default>true</default>
 			</transition>

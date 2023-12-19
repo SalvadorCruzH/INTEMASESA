@@ -96,7 +96,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Jefe División de Personas");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "FlexibilidadHoraria", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "FlexibilidadHoraria", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -174,7 +174,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(pdf, "FlexibilidadHoraria", "solicitud");
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "FlexibilidadHoraria", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
