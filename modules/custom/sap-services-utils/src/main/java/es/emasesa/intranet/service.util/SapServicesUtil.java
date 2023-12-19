@@ -40,7 +40,6 @@ import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.*;
@@ -298,7 +297,7 @@ public class SapServicesUtil {
         return datosSubordinados;
     }
 
-    public JSONArray getempleadoPrestamos(String pernr, String fechaInicio) {
+    public JSONArray getEmpleadoPrestamos(String pernr, String fechaInicio) {
 
         if(LOG.isDebugEnabled()){
             LOG.debug("[B] getempleadoPrestamos " + pernr);
@@ -325,7 +324,7 @@ public class SapServicesUtil {
     /**
      * Llamada al servicio de empleado-prestamos para obtener datos de prestamo de un usuario.
      *
-     * @param User
+     * @param user
      * @return JSONArray
      */
     public JSONArray getEmpleadoPrestamos(User user) {
@@ -336,7 +335,7 @@ public class SapServicesUtil {
         JSONArray datosEmpleadoPrestamos = JSONFactoryUtil.createJSONArray();
         String pernr = StringPool.BLANK;
         try {
-			//TODO: Intentar coger la matricula del m�todo de la clase expando. El servicio viene a null
+			//TODO: Intentar coger la matricula del método de la clase expando. El servicio viene a null
 	//		pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
 			pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
 			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
@@ -361,7 +360,7 @@ public class SapServicesUtil {
     /**
      * Llamada al servicio de empleado-relc-laboral para obtener datos laborales de un usuario.
      *
-     * @param User
+     * @param user
      * @return JSONObject
      */
 	 public JSONObject getEmpleadoRelacionLaboral(User user) {
@@ -402,7 +401,6 @@ public class SapServicesUtil {
                 LOG.debug("[B] getAyudaEscolar " + pernr);
             }
             JSONObject datosAyudaEscolar = JSONFactoryUtil.createJSONObject();
-
             try {
                 if(_ayudaEscolarService == null){
                     activate(null);
@@ -450,7 +448,7 @@ public class SapServicesUtil {
             this._ayudaEscolarService = ayudaEscolarServiceTracker.getService();
             this._ciertosDatosEstructuraService = ciertosDatosEstructuraServiceTracker.getService();
             this._relacionLaboralService = relacionLaboralServiceTracker.getService();
-            this.customExpandoUtil = customExpandoUtilTracker.getService();
+            this._customExpandoUtil = customExpandoUtilTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -498,7 +496,7 @@ public class SapServicesUtil {
     private DistanciaCentrosService _distanciaCentrosService;
     private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
     private RelacionLaboralService _relacionLaboralService;
-    private CustomExpandoUtil customExpandoUtil;
+    private CustomExpandoUtil _customExpandoUtil;
     @Reference
     private ExpandoValueLocalService _expandoValueLocalService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
