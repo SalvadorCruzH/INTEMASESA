@@ -334,26 +334,26 @@ class TareasModule extends React.Component {
             <div>
                 {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
 
-                        <div class="button-holder btn-wrapper btn-wrapper--inline">
-                            <a href id="toMe" class="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true"
+                        <div className="button-holder btn-wrapper btn-wrapper--inline">
+                            <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true"
                                onClick={this.getAssignedToMe}>Asignadas a mi</a>
-                            <a href id="toRole" class="btn btn-primary" aria-label="Asignadas a mi rol"
+                            <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
                                aria-disabled="true" onClick={this.getAssignedToUserRol}>Asignadas a mi rol</a>
                         </div>
 
-                        <div class="ema-table-wrapper">
-                            <table id="table-id" class="ema-table last">
-                                <caption class="sr-only">Sumario de la tabla</caption>
+                        <div className="ema-table-wrapper">
+                            <table id="table-id" className="ema-table last">
+                                <caption className="sr-only">Sumario de la tabla</caption>
                                 <thead>
                                 <tr>
                                     {this.state.columns.map((column, i) => {
                                         return (
                                             <>
-                                                <th scope="col"><span class="order" onClick={() => this.orderBy(column)}><i
-                                                    class="fa-solid fa-sort fa-lg"></i></span>{column.label}</th>
+                                                <th scope="col"><span className="order" onClick={() => this.orderBy(column)}><i
+                                                    className="fa-solid fa-sort fa-lg"></i></span>{column.label}</th>
                                             </>)
                                     })}
-                                    <th scope="col"><i class="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
+                                    <th scope="col"><i className="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
                                 </tr>
                                 </thead>
                                 {this.state.tareas.length != 0 ? (<>
@@ -377,7 +377,7 @@ class TareasModule extends React.Component {
                                         })}
                                         </tbody>
                                     </>
-                                ) : (<div class="alert alert-info" role="alert">
+                                ) : (<div className="alert alert-info" role="alert">
                                     No se han encontrado tareas nuevas
                                 </div>)}
                             </table>
