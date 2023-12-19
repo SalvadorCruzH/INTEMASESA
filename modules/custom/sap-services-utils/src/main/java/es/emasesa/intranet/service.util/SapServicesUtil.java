@@ -73,10 +73,12 @@ public class SapServicesUtil {
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             resumenAnual = _resumenAnualService.obtenerResumenAnual(pernr, anno);
-            Thread.currentThread().setContextClassLoader(actualClassLoader);
+
         } catch (SapCommunicationException | ResumenAnualException e) {
             LOG.error(e.getMessage());
             LOG.debug(e.getMessage(), e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return resumenAnual;

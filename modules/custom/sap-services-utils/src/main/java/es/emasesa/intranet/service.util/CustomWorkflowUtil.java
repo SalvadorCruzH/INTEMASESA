@@ -127,9 +127,10 @@ public class CustomWorkflowUtil {
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             i = jornadaNominaService.guardarIRPF(pernr, fechaSolicitud, IRPF_Solicitado);
             LOG.debug("Se ha guardado el cambio de IRPF: "+IRPF_Solicitado + " para el usuario " +pernr);
-            Thread.currentThread().setContextClassLoader(actualClassLoader);
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al modificar IRPF para "+ pernr, e);
+        } finally{
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return i;
@@ -160,9 +161,11 @@ public class CustomWorkflowUtil {
             datosServicio = jornadaNominaService.cambioDomiciliacionBancaria(pernr, fechaSolicitud, iban);
             LOG.debug("Se ha guardado el cambio de iban: "+iban + " para el usuario " +pernr);
             LOG.debug("Los datosServicio son: " + datosServicio);
-            Thread.currentThread().setContextClassLoader(actualClassLoader);
+
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al modificar de cambio de domiciliacion bancaria para "+ pernr, e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return datosServicio;
@@ -215,12 +218,14 @@ public class CustomWorkflowUtil {
                 datosServicio = jornadaNominaService.addPlusSap(pernr, fecha, codigoParte, BigDecimal.valueOf(valueUnits));
                 LOG.debug("Se ha añadido el plus: " + parte + " para el usuario " + pernr);
                 LOG.debug("Los datosServicio son: " + datosServicio);
-                Thread.currentThread().setContextClassLoader(actualClassLoader);
+
             }
         } catch (PortalException e) {
             LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
 
         return datosServicio;
@@ -249,9 +254,11 @@ public class CustomWorkflowUtil {
                 Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
                 jornadaNominaService.addPlusSap(pernr, fechaInicio.format(formatter), plusNomina, BigDecimal.valueOf(plusUnidades));
                 LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
-                Thread.currentThread().setContextClassLoader(actualClassLoader);
+
             } catch (Exception e) {
                 LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+            } finally {
+                Thread.currentThread().setContextClassLoader(actualClassLoader);
             }
             fechaInicio = fechaInicio.plusDays(1);
         }
