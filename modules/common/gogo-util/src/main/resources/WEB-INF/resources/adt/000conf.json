@@ -106,5 +106,29 @@
         "templateFile":"carrusel-noticias.ftl",
         "comment": "Carrusel de noticias.",
         "uuid":"b8a88d0e-0ed3-9c3c-3231-45c652e695eb"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Listado de documentos",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-LISTADO-DOCUMENTOS",
+        "templateFile": "listado-documentos.ftl",
+        "comment": "ADT para el listado de contenidos web tipo Documentos.",
+        "uuid": "b58667ad-77b4-aae3-7c73-4e8f7ee5e94c"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Listado de documentos",
+        "type": "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-LISTADO-DOCUMENTOS-BUSQUEDAS",
+        "templateFile": "listado-documentos-busquedas.ftl",
+        "comment": "ADT para el listado de contenidos web tipo Documentos en los resultados de búsqueda.",
+        "uuid": "b3fe5ef7-2274-fadd-1f11-fcf7230743e8"
     }
 ]
