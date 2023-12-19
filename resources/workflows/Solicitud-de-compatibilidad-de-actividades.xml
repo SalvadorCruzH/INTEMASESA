@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>59</version>
+	<version>64</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -758,6 +758,8 @@ import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 import es.emasesa.intranet.porta.firmas.service.util.PortalFirmasUtil;
+import com.liferay.portal.kernel.model.User;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
 
 Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
@@ -774,6 +776,11 @@ Bundle bundlePortaFirma = FrameworkUtil.getBundle(PortalFirmasUtil.class);
 ServiceTracker portaFirmaServiceTracker = new ServiceTracker(bundlePortaFirma.getBundleContext(),PortalFirmasUtil.class, null);
 portaFirmaServiceTracker.open();
 PortalFirmasUtil portaFirmaService = portaFirmaServiceTracker.getService();
+
+Bundle bundleSAP = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker sapCustomWorkflowUtilTracker = new ServiceTracker(bundleSAP.getBundleContext(),CustomWorkflowUtil.class, null);
+sapCustomWorkflowUtilTracker.open();
+CustomWorkflowUtil sapCustomWorkflowUtil = sapCustomWorkflowUtilTracker.getService();
 
 //Cambiar status e histórico
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteConsejeroDelegado", userId, "Consejero Delegado");
@@ -797,18 +804,22 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Declaración responsable", false);
 }	
 
+//Recuperamos el usuario consejero delegado de SAP
+User consejeroDeledado = sapCustomWorkflowUtil.getUserSap(workflowContext, "consejeroId");
+
 //Recuperar anexo introducido por Asesor Jurídico y subir al SIGD y portafirmas
 String pdfAnexoAsesoriaJuridica = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoAsesoriaJuridica");
 String idDocumentoAsesoriaJuridica = "";
 if(pdfAnexoAsesoriaJuridica != null && pdfAnexoAsesoriaJuridica != ""){
 	idDocumentoAsesoriaJuridica = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoAsesoriaJuridica, "Compatibilidad", "resolucion", userId, true);
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoAsesoriaJuridica, "Escrito asesoría jurídica", true);
-	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, "consejeroId");
+	portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, consejeroDeledado);
 }
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
-portaFirmaServiceTracker.close();]]>
+portaFirmaServiceTracker.close();
+sapCustomWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
