@@ -3,6 +3,7 @@ package es.emasesa.intranet.sap.ayudaEscolar.service;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -30,21 +31,38 @@ import java.net.URL;
 @org.springframework.stereotype.Component("ayudaEscolarService")
 public class AyudaEscolarService {
 
-    public Bapireturn1 getAyudaEscolar(String pernr) throws AyudaEscolarException, SapCommunicationException {
+    public JSONObject getAyudaEscolar(String pernr) throws AyudaEscolarException, SapCommunicationException {
 
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEAYUDAESCOLAR.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             Holder<TableOfZpeStAyudasSolicitadas> tAyudasSolicitadas = new Holder<>();
             Holder<TableOfZpeStBeneficiarios> tBeneficiarios = new Holder<>();
             Holder<TableOfZpeStEstudios> tEstudios = new Holder<>();
             Holder<TableOfZpeStInsAyudaEscolar> tInsAyudaEscolar = new Holder<>();
 
-            Bapireturn1 serviceResult = port.zPeAyudaEscolar(pernr, tAyudasSolicitadas ,tBeneficiarios ,tEstudios, tInsAyudaEscolar);
-            return serviceResult;
-        } catch (ServerSOAPFaultException e) {
-            throw new AyudaEscolarException("Error llamando al WS para el origen "+ pernr, e);
+            port.zPeAyudaEscolar(pernr, tAyudasSolicitadas ,tBeneficiarios ,tEstudios, tInsAyudaEscolar);
+            JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
+            if (tAyudasSolicitadas.value != null){
+                jsonReturn.put("ayudasSolicitadas", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tAyudasSolicitadas.value.getItem())));
+            }
+            if (tBeneficiarios.value != null){
+                jsonReturn.put("beneficiarios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tBeneficiarios.value.getItem())));
+            }
+            if (tEstudios.value != null){
+                jsonReturn.put("estudios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEstudios.value.getItem())));
+            }
+            if (tInsAyudaEscolar.value != null){
+                jsonReturn.put("ayudaEscolar", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInsAyudaEscolar.value.getItem())));
+            }
+            return jsonReturn;
+        } catch (ServerSOAPFaultException | JSONException e) {
+            throw new AyudaEscolarException("Error llamando al WS para el origen o parseando datos"+ pernr, e);
         } catch (ClientTransportException e) {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
             LoggerUtil.debug(LOG, "[E] solicitarAyudaEscolar");
         }
     }
