@@ -5,7 +5,8 @@ Bundle-Version: 1.0.0
 Web-ContextPath: /sap-services-utils
 
 Export-Package: \
-    es.emasesa.intranet.service.util.*
+    es.emasesa.intranet.service.util.*,\
+    es.emasesa.intranet.service.util
 
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -noimportjava: true

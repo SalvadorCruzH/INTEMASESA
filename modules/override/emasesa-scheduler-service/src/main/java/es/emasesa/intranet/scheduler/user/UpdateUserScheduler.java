@@ -31,7 +31,7 @@ public class UpdateUserScheduler implements MessageListener  {
 
         JSONObject jsonObject = (JSONObject) message.getPayload();
         String pernr = jsonObject.getString("pernr");
-        if(!Validator.isNumber(pernr)) {
+        if(!Validator.isNumber(pernr) && !pernr.contains("adminpersonas")) {
             long companyId = jsonObject.getLong("companyId");
             LoggerUtil.debug(LOG, "Se procede a actualizar el usuario con user id " + pernr);
             JSONObject employerData = _sapServices.getDatosEmpleadoAndDomicilio(pernr);
