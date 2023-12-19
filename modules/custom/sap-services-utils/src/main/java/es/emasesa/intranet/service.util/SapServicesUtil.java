@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
+import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
@@ -394,7 +395,30 @@ public class SapServicesUtil {
 		}
 		 return datosEmpleadoRelacionLaboral;
 	 }
-	 
+
+     public JSONObject getAyudaEscolar(String pernr){
+
+        	 if(LOG.isDebugEnabled()){
+                LOG.debug("[B] getAyudaEscolar " + pernr);
+            }
+            JSONObject datosAyudaEscolar = JSONFactoryUtil.createJSONObject();
+
+            try {
+                if(_ayudaEscolarService == null){
+                    activate(null);
+                }
+                datosAyudaEscolar = (JSONObject) _ayudaEscolarService.getAyudaEscolar(pernr);
+            } catch (SapCommunicationException e) {
+                LOG.error(e.getMessage(), e);
+            } catch (AyudaEscolarException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if(LOG.isDebugEnabled()){
+                    LOG.debug("[E] getAyudaEscolar " + pernr);
+                }
+            }
+            return datosAyudaEscolar;
+     }
 
     @Activate
     protected void activate(Map<String, Object> properties) {
