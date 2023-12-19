@@ -6,18 +6,29 @@
     </button>
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
         <div class="ema-ajaxsearch-filtros__text">
-            <input type="radio" class="tipo" name="tipo" data-as-id="tipo" value="1" checked><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.empleado"/></input>
-            <input type="radio" class="tipo" name="tipo" data-as-id="tipo" value="2"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.fecha"/></input>
+            <label for="tipo1">
+                <span class="ema-ajaxsearch-filtros__label">
+                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.empleado"/>
+                </span>
+                <input type="radio" id="tipo1" class="tipo" name="tipo" data-as-id="tipo" value="1" checked>
+            </label>
+            <label for="tipo2">
+                <span class="ema-ajaxsearch-filtros__label">
+                    <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.gestionhorarios.consulta.fecha"/>
+                </span>
+                <input type="radio" id="tipo2" class="tipo" name="tipo" data-as-id="tipo" value="2">
+            </label>
         </div>
         <div class="ema-ajaxsearch-filtros__text tipo-1">
                     <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.matricula"></liferay-ui:message></label>
-                    <input name="<portlet:namespace />matricula"
-                            type="text"
-                            id="matricula"
-                            value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("matricula")) %>'
-                            data-as-id="matricula"
-                            class="m-searchAjax__input text"
-                            placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
+                    <input
+                        name="<portlet:namespace />matricula"
+                        type="text"
+                        id="matricula"
+                        value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("matricula")) %>'
+                        data-as-id="matricula"
+                        class="m-searchAjax__input text"
+                        placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
                     />
         </div>
          <div class="ema-ajaxsearch-filtros__dates tipo-1">
