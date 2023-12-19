@@ -395,28 +395,33 @@ public class SapServicesUtil {
 		 return datosEmpleadoRelacionLaboral;
 	 }
 
-     public JSONObject getAyudaEscolar(String pernr){
+    public JSONObject getAyudaEscolar(User user) throws PortalException {
 
-        	 if(LOG.isDebugEnabled()){
-                LOG.debug("[B] getAyudaEscolar " + pernr);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getAyudaEscolar " + +user.getUserId());
+        }
+        JSONObject datosAyudaEscolar = JSONFactoryUtil.createJSONObject();
+        String pernr = StringPool.BLANK;
+
+        pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
+        LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+
+        try {
+            if (_ayudaEscolarService == null) {
+                activate(null);
             }
-            JSONObject datosAyudaEscolar = JSONFactoryUtil.createJSONObject();
-            try {
-                if(_ayudaEscolarService == null){
-                    activate(null);
-                }
-                datosAyudaEscolar = (JSONObject) _ayudaEscolarService.getAyudaEscolar(pernr);
-            } catch (SapCommunicationException e) {
-                LOG.error(e.getMessage(), e);
-            } catch (AyudaEscolarException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if(LOG.isDebugEnabled()){
-                    LOG.debug("[E] getAyudaEscolar " + pernr);
-                }
+            datosAyudaEscolar = (JSONObject) _ayudaEscolarService.getAyudaEscolar(pernr);
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (AyudaEscolarException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getAyudaEscolar " + pernr);
             }
-            return datosAyudaEscolar;
-     }
+        }
+        return datosAyudaEscolar;
+    }
 
     @Activate
     protected void activate(Map<String, Object> properties) {
