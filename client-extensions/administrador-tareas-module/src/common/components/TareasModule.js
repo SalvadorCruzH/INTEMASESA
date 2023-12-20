@@ -70,7 +70,7 @@ class TareasModule extends React.Component {
     }
 
     componentDidMount() {
-
+        this.setState({loading: true});
         this.loadDependencies();
     }
 
@@ -79,7 +79,6 @@ class TareasModule extends React.Component {
         this.setState({loading: true});
         setTimeout(() => {
             EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
-
             this.getTasksUser();
 
         }, 100)
@@ -91,7 +90,6 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToMe = () => {
-
         this.setState({
            view: 1
         });
@@ -116,8 +114,6 @@ class TareasModule extends React.Component {
         setTimeout(() => {
                TareasApi.getWorkflowTask("",this.state.showCompleted,true,this.state.start,this.state.end,this.setTasks, this.errorHandler);
         }, 100)
-
-
     }
 
     getTasksUser = () => {
@@ -223,7 +219,6 @@ class TareasModule extends React.Component {
                         this.setState(previousState => ({
                             tareas: previousState.tareas.concat(tarea)
                         }));
-
                     } catch (e) {
                         console.error(e)
                     }
@@ -243,14 +238,19 @@ class TareasModule extends React.Component {
         this.setState({
             tareas: []
         });
-        if (result && result != null && result.length > 0) {
-            result.forEach((tarea) => {
+        if (result && result.length > 0) {
+            result.forEach((tarea, index) => {
                 this.addTareaExtraData(tarea);
+                if(index === 0){
+                    this.setState({loading: false});
+                }
             });
             this.setState({start:start+delta,end:end+delta});
+        }else{
+            this.setState({loading: false});
         }
 
-        this.setState({loading: false});
+
 
     }
 
@@ -264,6 +264,10 @@ class TareasModule extends React.Component {
         }
     }
 
+
+    setLoading = (loadingVar) => {
+        this.setState({loading: loadingVar});
+    }
     setUser = (result) => {
         this.setState({
             [result.id]: result
@@ -436,7 +440,7 @@ class TareasModule extends React.Component {
                                                         <td>{tarea.assigneePersonName && tarea.assigneePersonName}</td>
                                                         <td>{tarea.objectData.estadoObjeto.name}</td>
                                                         <td><Actions tarea={tarea} configuration={this.state.configuration}
-                                                                     refresh={this.loadDependencies}/></td>
+                                                                     refresh={this.loadDependencies} loading={this.setLoading}/></td>
                                                     </tr>
                                                 </>
                                             )
