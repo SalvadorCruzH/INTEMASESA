@@ -416,7 +416,7 @@ class TareasModule extends React.Component {
                                             console.debug('Tarea'+i)
                                             console.debug(tarea);
                                             return (<>
-                                                    <tr data-objectId="{tarea.workflowTaskId}">
+                                                    <tr data-objectId={tarea.attributes.entryClassPK} data-workflowTaskId={tarea.workflowTaskId}>
                                                         <td>{tarea.objectData.numeroDeMatricula}</td>
                                                         <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
                                                         <td>{tarea.attributes.entryType}</td>
