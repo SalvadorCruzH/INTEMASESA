@@ -132,6 +132,51 @@ public class CustomWorkflowUtil {
         }
         return user;
     }
+    
+    /**
+     * Devuelve el usuario de SAP. Busca al subdireccionRrhhRespId y si no existe se trae el direccionRrhhRespId
+     * @param workflowContext
+     * @return List<User>
+     */
+    public List<User> assignWorkflowSubdirectorOrDirector(Map<String, Serializable> workflowContext){
+    	
+    	 LOG.debug("Asignar usuario horizontal de SAP subdireccionRrhhRespId o direccionRrhhRespId en el caso de que el otro no exista.");
+    	 List<User> users = new ArrayList<>();
+    	 String matriculaUser = StringPool.BLANK;
+
+         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+         long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+    	 
+         try {
+         	LOG.debug("Buscando usuario del SAP...");
+             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+             if (ciertosDatosEstructuraService == null){
+                 activate(null);
+             }
+             JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
+             Thread.currentThread().setContextClassLoader(actualClassLoader);
+
+             matriculaUser = json.getString("subdireccionRrhhRespId");
+             LOG.debug("La matricula del usuario es: " + matriculaUser);
+             
+             if(Validator.isNotNull(matriculaUser) && ("00000000".equals(matriculaUser))) {
+            	 LOG.debug("No existe en SAP el usuario subdireccionRrhhRespId: " + matriculaUser + " . Se busca el direccionRrhhRespId");
+            	 matriculaUser = json.getString("direccionRrhhRespId");
+            	 LOG.debug("La matricula del usuario direccionRrhhRespId es: " + matriculaUser+ " . Se procede a buscar el usuaruio en liferay con esa matrícula.");
+             }else {
+            	 LOG.debug("Existe el usuario subdireccionRrhhRespId: " + matriculaUser + " . Se procede a buscar el usuaruio en liferay con esa matrícula.");
+             }
+            User user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
+            users.add(user);
+
+         } catch (SapException e) {
+             LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+ matriculaUser, e);
+         } finally {
+             Thread.currentThread().setContextClassLoader(actualClassLoader);
+         }
+    	 return users;
+    }
 
 
     public String modificarIRPF(Map<String, Serializable> workflowContext) {

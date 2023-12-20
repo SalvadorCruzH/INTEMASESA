@@ -60,7 +60,7 @@ const TareasApi = {
         assignToMe: (workflowTaskId,data,callback, errorHandler) => {
            LiferayApi.post(
               Constants.oauthUserAgent.CLIENT_ID,
-              WORKFLOWTASKS.URL_POST_CHANGE_TRANSITION.replace("--workflowTaskId--", workflowTaskId),
+              WORKFLOWTASKS.URL_POST_ASSIGN_TO_ME.replace("--workflowTaskId--", workflowTaskId),
               data,
               callback,
               errorHandler
