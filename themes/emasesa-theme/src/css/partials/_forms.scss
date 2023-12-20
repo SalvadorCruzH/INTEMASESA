@@ -132,6 +132,9 @@
     &--inline {
         display: flex;
         gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #dcdcdc;
         .btn {
             width: -moz-fit-content;
             width: fit-content;

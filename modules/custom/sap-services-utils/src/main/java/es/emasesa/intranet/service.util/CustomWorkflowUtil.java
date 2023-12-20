@@ -82,9 +82,24 @@ public class CustomWorkflowUtil {
 
         return users;
     }
-
+    
     /**
      * Devuelve usuarios de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
+     * @param workflowContext
+     * @param userType
+     * @return List<User>
+     */
+    public List<User> assignWorkflowHorizontalUser(Map<String, Serializable> workflowContext, String userType){
+    	
+    	 LOG.debug("Asignar usuario horizontal: " + userType);
+    	 List<User> users = new ArrayList<>();
+    	 User user = getUserSap(workflowContext, userType);
+    	 users.add(user);
+    	 return users;
+    }
+
+    /**
+     * Devuelve usuario de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
      * @param workflowContext
      * @param userType
      * @return user
@@ -96,6 +111,7 @@ public class CustomWorkflowUtil {
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+        	LOG.debug("Buscando usuario del SAP: " + userType);
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             if (ciertosDatosEstructuraService == null){
