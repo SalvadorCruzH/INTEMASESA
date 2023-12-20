@@ -21,7 +21,7 @@
 				},
 					{
 					"dataType": "string",
-					"defaultValue": "pernr",
+					"defaultValue": "importeAnticipo",
 					"label": "Nombre campo relacion laboral",
 					"localizable": true,
 					"name": "relacionLaboralName",
