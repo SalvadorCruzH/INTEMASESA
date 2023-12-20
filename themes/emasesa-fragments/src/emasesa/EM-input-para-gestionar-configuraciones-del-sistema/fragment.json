@@ -1,0 +1,9 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "code",
+  "name": "EM-Input para gestionar Configuraciones del Sistema",
+  "type": "component"
+}

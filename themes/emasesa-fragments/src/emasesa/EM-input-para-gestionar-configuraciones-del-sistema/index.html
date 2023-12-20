@@ -1,0 +1,52 @@
+[#assign getConfigurationValueUtil = serviceLocator.findService("es.emasesa.intranet.settings.util.GetConfigurationValueUtil")]
+[#assign pid = configuration.pidValue] 
+[#assign configKey1 = configuration.configKey1]
+[#assign configKey2 = configuration.configKey2]
+[#assign configValue1 = getConfigurationValueUtil.getStringValue(pid,configKey1)]
+[#assign configValue2 = getConfigurationValueUtil.getStringValue(pid,configKey2)]
+
+<div class="alert-container cadmin container em-alert hide">
+		<div class="alert-notifications alert-notifications-fixed" id="ToastAlertContainer">
+            <div class="lfr-tooltip-scope"><div class="mb-3 alert alert-dismissible alert-success">
+                <div role="alert" class="alert-autofit-row autofit-row">
+                    <div class="autofit-col">
+                        <div class="autofit-section">
+                            <span class="alert-indicator">
+                                <svg class="lexicon-icon lexicon-icon-check-circle-full" role="presentation">
+                                    <use xlink:href="/o/admin-theme/images/clay/icons.svg#check-circle-full"></use>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="autofit-col autofit-col-expand">
+                        <div class="autofit-section">
+                            <div>
+                                <strong class="lead">Éxito:</strong>Su petición ha terminado con éxito.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button aria-label="Close" class="close" type="button">
+                    <svg class="lexicon-icon lexicon-icon-times" role="presentation">
+                        <use xlink:href="/o/admin-theme/images/clay/icons.svg#times"></use>
+                    </svg>
+                </button>
+            </div>
+            </div>
+        </div>
+	</div>
+<div class="em-configuracionesSistema">
+	<div class="em-configuracionesSistema--inputs">
+		<div class="em-configuracionesSistema--inputs-input">
+			<label class="" for="value">${configuration.inputLabel1}</label>
+			<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input-value1" name="value" value="${configValue1}" type="date" />
+		</div>
+		<div class="em-configuracionesSistema--inputs-input">
+			<label class="" for="value">${configuration.inputLabel2}</label>
+			<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input-value2" name="value" value="${configValue2}" type="date" />
+		</div>
+	</div>
+	<button class="btn btn-normal btn-primary em-buttom-submit" data-lfr-editable-id="submit-button-text" data-lfr-editable-type="text" id="fragment-${fragmentEntryLinkNamespace}-submit-button" type="submit">
+		Guardar
+	</button>
+</div>
