@@ -751,3 +751,11 @@ html:not(#__):not(#___) {
   height: 100svh;
   z-index: 10000;
 }
+
+.empty .alert {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  background: none;
+  color: #555;
+}
