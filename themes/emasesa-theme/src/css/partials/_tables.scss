@@ -208,6 +208,7 @@
                 }
             }
             .dropdown-menu {
+                max-width: none;
                 &.show {
                     a.dropdown-item {
                         white-space: nowrap;
