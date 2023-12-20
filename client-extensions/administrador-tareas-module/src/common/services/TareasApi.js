@@ -1,8 +1,26 @@
 import * as Constants from "../js/Constants";
-import {WORKFLOWTASKS} from "../js/Constants";
+import {WORKFLOWTASKS,WORKFLOWTASK_BASE} from "../js/Constants";
 
 
 const TareasApi = {
+        getWorkflowTask: (assetType,completed,byRole,start,end,callback, errorHandler) => {
+               let url = WORKFLOWTASK_BASE.URL_DEFAULT;
+            if(assetType!==""){
+                url = url+assetType+"/"+completed+"/"+byRole+"/"+start+"/"+end;
+
+            }else{
+                url = url+completed+"/"+byRole+"/"+start+"/"+end;
+            }
+
+            LiferayApi.get(
+                Constants.oauthUserAgent.CLIENT_ID,
+                url,
+                callback,
+                errorHandler
+            );
+
+        },
+
         getWorkflowTasksMe: (scope, callback, errorHandler) => {
             LiferayApi.get(
                 Constants.oauthUserAgent.CLIENT_ID,

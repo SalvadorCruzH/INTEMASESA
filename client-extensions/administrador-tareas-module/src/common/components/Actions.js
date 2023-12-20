@@ -251,12 +251,12 @@ class Actions extends React.Component {
                     </li>
                     {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson.id === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
-                            console.log(transition);
+                            console.debug(transition);
                             return (
                                 <>
                                     <li>
                                         <>
-                                        {transition.name === '' ? (
+                                        {transition.name !== 'Mandar-a-portafirmas' ? (
                                             <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
                                                 {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
                                             </a>
@@ -266,18 +266,13 @@ class Actions extends React.Component {
                                             </a>
                                         )}
                                         </>
-
                                     </li>
                                 </>
                             )
-
                         })
                     }
-
                 </ul>
             </div>
-
-
         </>);
 
     }

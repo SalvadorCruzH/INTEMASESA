@@ -14,21 +14,47 @@ class TareasModule extends React.Component {
         columns.push({
             name: "objectData.numeroDeMatricula",
             label: Liferay.Language.get("objectData.numeroDeMatricula"),
-            order: "asc"
+            order: "asc",
+            icon: "fa-solid fa-sort fa-lg"
         });
-        columns.push({name: "objectData.name", label: Liferay.Language.get("objectData.name"), order: "asc"});
+        columns.push({
+            name: "objectData.name",
+            label: Liferay.Language.get("objectData.name"),
+            order: "asc",
+            icon: "fa-solid fa-sort fa-lg"
+        });
         columns.push({
             name: "attributes.entryType",
             label: Liferay.Language.get("objectReviewed.assetType"),
-            order: "asc"
+            order: "asc",
+            icon: "fa-solid fa-sort fa-lg"
         });
-        columns.push({name: "dateCreated", label: Liferay.Language.get("dateCreated"), order: "asc"});
-        columns.push({name: "assigneePersonName", label: Liferay.Language.get("assigneePerson.name"), order: "asc"});
+        columns.push({
+            name: "dateCreated",
+            label: Liferay.Language.get("dateCreated"),
+            order: "asc",
+            icon: "fa-solid fa-sort fa-lg"
+        });
+        columns.push({
+            name: "assigneePersonName",
+            label: Liferay.Language.get("assigneePerson.name"),
+            order: "asc",
+            icon: "fa-solid fa-sort fa-lg"
+        });
         columns.push({
             name: "objectData.estadoObjeto",
             label: Liferay.Language.get("objectData.estadoObjeto"),
-            order: "asc"
+            order: "asc",
+            icon: "fa-solid fa-sort fa-lg"
         });
+
+        columns.push({
+            name: "actions",
+            label: "",
+            order: "asc",
+            icon: "fa-solid fa-ellipsis fa-rotate-90 fa-2xl"
+        });
+
         this.state = {
             tareas: [],
             loading: true,
@@ -101,9 +127,6 @@ class TareasModule extends React.Component {
     }
 
     showMore = () =>{
-        let delta = this.state.delta;
-        let start = this.state.start;
-        let end = this.state.end;
 
         this.getTasksUser();
     }
@@ -201,6 +224,10 @@ class TareasModule extends React.Component {
 
 
     setTasks = (result) => {
+        let delta = this.state.delta;
+        let start = this.state.start;
+        let end = this.state.end;
+
         this.setState({
             tareas: []
         });
@@ -291,6 +318,7 @@ class TareasModule extends React.Component {
 
             })
         }
+
         if (type === "attributes.entryType") {
             tareas = tareas.sort((a, b) => {
                 let assetTypeA = a.attributes.entryType;
@@ -312,6 +340,7 @@ class TareasModule extends React.Component {
 
             });
         }
+
         if (type === "assigneePersonName") {
             tareas = tareas.sort((a, b) => {
                 let assigneePersonA = a.assigneePersonName ? a.assigneePersonName : "";
@@ -334,7 +363,6 @@ class TareasModule extends React.Component {
             });
         }
 
-
         console.debug(tareas);
         this.setState({tareas: tareas});
     }
@@ -353,10 +381,10 @@ class TareasModule extends React.Component {
                 {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
 
                         <div className="button-holder btn-wrapper btn-wrapper--inline">
-                            <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true"
-                               onClick={this.getAssignedToMe}>Asignadas a mi</a>
+                            <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi"
+                                onClick={this.getAssignedToMe} aria-selected={this.state.view == 1}>{Liferay.Language.get('admin.task.assign.toMe')}</a>
                             <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
-                               aria-disabled="true" onClick={this.getAssignedToUserRol} aria-selected={this.state.view == 2}>Asignadas a mi rol</a>
+                                onClick={this.getAssignedToUserRol} aria-selected={this.state.view == 2}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
                         </div>
 
                         <div className="filter-wrapper">
@@ -370,26 +398,25 @@ class TareasModule extends React.Component {
 
                         <div className="ema-table-wrapper">
                             <table id="table-id" className="ema-table last">
-                                <caption className="sr-only">Sumario de la tabla</caption>
+                                <caption className="sr-only">{Liferay.Language.get('admin.task.summary')}</caption>
                                 <thead>
                                 <tr>
                                     {this.state.columns.map((column, i) => {
                                         return (
                                             <>
                                                 <th scope="col"><span className="order" onClick={() => this.orderBy(column)}><i
-                                                    className="fa-solid fa-sort fa-lg"></i></span>{column.label}</th>
+                                                    className={column.icon}></i></span>{column.label}</th>
                                             </>)
                                     })}
-                                    <th scope="col"><i className="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i></th>
                                 </tr>
                                 </thead>
                                 {this.state.tareas.length != 0 ? (<>
                                         <tbody>
                                         {this.state.tareas.map((tarea, i) => {
-                                            console.debug('Tarea')
+                                            console.debug('Tarea'+i)
                                             console.debug(tarea);
                                             return (<>
-                                                    <tr data-objectId="{tarea.id}">
+                                                    <tr data-objectId="{tarea.workflowTaskId}">
                                                         <td>{tarea.objectData.numeroDeMatricula}</td>
                                                         <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
                                                         <td>{tarea.attributes.entryType}</td>
@@ -405,7 +432,11 @@ class TareasModule extends React.Component {
                                         </tbody>
                                     </>
                                 ) : (<div className="alert alert-info" role="alert">
-                                    No se han encontrado tareas nuevas
+                                    <tbody>
+                                        <tr data-objectId="{tarea.id}">
+                                            <td colSpan={7} className="empty"><div className="alert alert-info">{Liferay.Language.get('admin.task.no.task')}</div></td>
+                                        </tr>
+                                    </tbody>
                                 </div>)}
                             </table>
                             <div class="button-holder">

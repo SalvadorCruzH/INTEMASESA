@@ -16,7 +16,7 @@
     }
 
     table {
-        &.ema-table{
+        &.ema-table {
             width: 100%;
             border-bottom: 5px solid $color-green;
 
@@ -204,6 +204,13 @@
                     }
                     tr:last-child {
                         border-bottom: m-rem(3px) solid $color-aux-blue;
+                    }
+                }
+            }
+            .dropdown-menu {
+                &.show {
+                    a.dropdown-item {
+                        white-space: nowrap;
                     }
                 }
             }
