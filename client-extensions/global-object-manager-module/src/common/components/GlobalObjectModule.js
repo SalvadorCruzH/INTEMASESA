@@ -140,7 +140,7 @@ class GlobalObjectModule extends React.Component {
                             newRow.append('<td></td>');
                             newRow.append('<td>' + item.solicitante + '</td>');
                             newRow.append('<td>' + item.parte + '</td>');
-                            newRow.append('<td>' + item.fechaactividad + '</td>');
+                            newRow.append('<td>' + item.fecha + '</td>');
                             newRow.append('<td>' + item.valor + '</td>');
                             newRow.append('<td>' + item.detalles + '</td>');
 
