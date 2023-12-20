@@ -14,7 +14,7 @@ class Actions extends React.Component {
             tareaid: props.tarea.workflowTaskId,
             transitions: props.tarea.transitions,
             refresh: props.refresh,
-            objectReviewed: props.tarea.attributes.entryType,
+            objectReviewed: props.tarea.attributes,
             externalReferenceCode: props.tarea.objectData.externalReferenceCode,
             completed: props.tarea.completed,
             configuration: props.configuration,
@@ -121,11 +121,11 @@ class Actions extends React.Component {
         }catch(e){
             jsonObjectMapping = this.state.configuration.objectMapping;
         }
-        let objectMapping = jsonObjectMapping[objectReviewed.assetType];
+        let objectMapping = jsonObjectMapping[objectReviewed.entryType];
         if (objectMapping) {
             let display = objectMapping.display;
-            display += "?objectEntryId=" + objectReviewed.id;
-            display += "&objectType=" + objectReviewed.assetType;
+            display += "?objectEntryId=" + objectReviewed.entryClassPK;
+            display += "&objectType=" + objectReviewed.entryType;
             display += "&mode=1";
             display += "&p_p_state=pop_up";
             let url = themeDisplay.getPortalURL() + display;
@@ -160,7 +160,7 @@ class Actions extends React.Component {
                 },
                 id: 'consultarPeticionDialog',
                 refreshWindow: window,
-                title: 'Consulta de '+objectReviewed.assetType,
+                title: 'Consulta de '+objectReviewed.entryType,
                 uri: url
             });
 
@@ -177,11 +177,11 @@ class Actions extends React.Component {
         }catch(e){
             jsonObjectMapping = this.state.configuration.objectMapping;
         }
-        let objectMapping = jsonObjectMapping[objectReviewed.assetType];
+        let objectMapping = jsonObjectMapping[objectReviewed.entryType];
         if (objectMapping) {
             let display = objectMapping.asesoriaJuridica;
-            display += "?objectEntryId=" + objectReviewed.id;
-            display += "&objectType=" + objectReviewed.assetType;
+            display += "?objectEntryId=" + objectReviewed.entryClassPK;
+            display += "&objectType=" + objectReviewed.entryType;
             display += "&mode=2";
             display += "&p_p_state=pop_up";
             let url = themeDisplay.getPortalURL() + display;
@@ -225,7 +225,7 @@ class Actions extends React.Component {
                 },
                 id: 'asesorDialog',
                 refreshWindow: window,
-                title: 'Consulta de '+objectReviewed.assetType,
+                title: 'Consulta de '+objectReviewed.entryType,
                 uri: url
             });
 
