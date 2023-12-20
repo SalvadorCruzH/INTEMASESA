@@ -90,6 +90,7 @@ class TareasModule extends React.Component {
         this.setState({
            view: 1
         });
+        this.setState({start:0,end:10});
         setTimeout(() => {
              TareasApi.getWorkflowTask("",this.state.showCompleted,false,this.state.start,this.state.end,this.setTasks, this.errorHandler);
         }, 100)
@@ -101,9 +102,10 @@ class TareasModule extends React.Component {
         this.setState({
           view: 2
         });
+        this.setState({start:0,end:10});
         setTimeout(() => {
                TareasApi.getWorkflowTask("",this.state.showCompleted,true,this.state.start,this.state.end,this.setTasks, this.errorHandler);
-         }, 100)
+        }, 100)
 
 
     }
@@ -431,13 +433,13 @@ class TareasModule extends React.Component {
                                         })}
                                         </tbody>
                                     </>
-                                ) : (<div className="alert alert-info" role="alert">
+                                ) : (
                                     <tbody>
                                         <tr data-objectId="{tarea.id}">
                                             <td colSpan={7} className="empty"><div className="alert alert-info">{Liferay.Language.get('admin.task.no.task')}</div></td>
                                         </tr>
                                     </tbody>
-                                </div>)}
+                                )}
                             </table>
                             <div class="button-holder">
                                 <a href id="more" class="btn btn-primary" aria-label="Mostrar más" aria-disabled="true" onClick={this.showMore}>Mostrar más</a>

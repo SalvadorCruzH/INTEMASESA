@@ -46,7 +46,7 @@ class Actions extends React.Component {
         let actionExecuted = this.state.actionExecuted;
         let message = '';
         console.debug(actionExecuted.toString());
-        if (actionExecuted && window.objToString(actionExecuted).indexOf('assign-to-me') > 0) {
+        if (actionExecuted && window.objToString(actionExecuted).indexOf('assign-to-me') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.assignToMe.success');
         } else if (actionExecuted && window.objToString(actionExecuted).indexOf('Aprobada-enviar-asesor-juridico') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.Aprobada-enviar-asesor-juridico.success');
@@ -86,14 +86,13 @@ class Actions extends React.Component {
 
     assignToMe = (event) => {
         let workflowTaskId = this.state.tareaid;
-        let transitionName = event.target.dataset.name;
         let data = {
             "comment": "",
             "dueDate": new Date().toISOString(),
             "workflowTaskId": workflowTaskId
         }
         this.setState({
-            actionExecuted: action
+            actionExecuted: 'assign-to-me'
         })
         TareasApi.assignToMe(workflowTaskId, data, this.callDataCallback, this.errorHandler);
     }
@@ -264,7 +263,7 @@ class Actions extends React.Component {
                     <li><a className="dropdown-item"
                            onClick={this.openModal}>{Liferay.Language.get("es.emasesa.transition.label.consultar")}</a>
                     </li>
-                    {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson === Number(Liferay.ThemeDisplay.getUserId()) ) &&
+                    {(this.state.assigneePerson && this.state.transitions && Number(this.state.assigneePerson) === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
                             console.debug(transition);
                             return (
