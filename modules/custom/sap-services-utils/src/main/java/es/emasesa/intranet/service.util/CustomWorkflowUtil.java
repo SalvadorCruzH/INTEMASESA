@@ -288,20 +288,20 @@ public class CustomWorkflowUtil {
     @Modified
     protected void activate(Map<String, Object> properties) {
 
-        CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
+        CustomServiceTracker<EmpleadoEstructuraService> serviceEstructuraTracker = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
         CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
         CustomServiceTracker<JornadaNominaService> jornadaNominaServiceTracker = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
 
         try {
-            this.empleadoEstructuraService = service.getService();
+            this.empleadoEstructuraService = serviceEstructuraTracker.getService();
             this.jornadaNominaService = serviceNomina.getService();
             this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
             this.jornadaNominaService = jornadaNominaServiceTracker.getService();
             this.customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
-            _userLocalService = (UserLocalService) ServiceLocator.getInstance().findService("com.liferay.portal.kernel.service.UserLocalService");
-            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
-            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
+            this._userLocalService = (UserLocalService) ServiceLocator.getInstance().findService("com.liferay.portal.kernel.service.UserLocalService");
+            this._objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
+            this._objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
         } catch (InterruptedException e) {
             LoggerUtil.info(LOG,"Error arrancando servicios", e);
         }

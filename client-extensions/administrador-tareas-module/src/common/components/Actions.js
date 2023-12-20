@@ -251,7 +251,7 @@ class Actions extends React.Component {
                     </li>
                     {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson.id === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
-                            console.log(transition);
+                            console.debug(transition);
                             return (
                                 <>
                                     <li>
@@ -266,18 +266,13 @@ class Actions extends React.Component {
                                             </a>
                                         )}
                                         </>
-
                                     </li>
                                 </>
                             )
-
                         })
                     }
-
                 </ul>
             </div>
-
-
         </>);
 
     }
