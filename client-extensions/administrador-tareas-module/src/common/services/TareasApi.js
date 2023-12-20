@@ -57,6 +57,15 @@ const TareasApi = {
                 errorHandler
             );
         },
+        assignToMe: (workflowTaskId,data,callback, errorHandler) => {
+           LiferayApi.post(
+              Constants.oauthUserAgent.CLIENT_ID,
+              WORKFLOWTASKS.URL_POST_CHANGE_TRANSITION.replace("--workflowTaskId--", workflowTaskId),
+              data,
+              callback,
+              errorHandler
+          );
+        },
 
         callAction: (actionUrl, data,callback, errorHandler) => {
             let urlAct = new URL(actionUrl);

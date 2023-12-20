@@ -9,12 +9,12 @@ class Actions extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            assigneePerson: props.tarea.assigneePerson,
+            assigneePerson: props.tarea.assigneeUserId,
             actions: props.tarea.actions,
-            tareaid: props.tarea.id,
+            tareaid: props.tarea.workflowTaskId,
             transitions: props.tarea.transitions,
             refresh: props.refresh,
-            objectReviewed: props.tarea.objectReviewed,
+            objectReviewed: props.tarea.attributes.entryType,
             externalReferenceCode: props.tarea.objectData.externalReferenceCode,
             completed: props.tarea.completed,
             configuration: props.configuration,
@@ -29,6 +29,7 @@ class Actions extends React.Component {
     }
 
     callAction = (event) => {
+
         let action = this.state.actions[event.target.dataset.action];
         let data = {
             "comment": "",
@@ -81,6 +82,20 @@ class Actions extends React.Component {
             actionExecuted: transitionName
         })
         TareasApi.changeTransition(workflowTaskId, data, this.callDataCallback, this.errorHandler);
+    }
+
+    assignToMe = (event) => {
+        let workflowTaskId = this.state.tareaid;
+        let transitionName = event.target.dataset.name;
+        let data = {
+            "comment": "",
+            "dueDate": new Date().toISOString(),
+            "workflowTaskId": workflowTaskId
+        }
+        this.setState({
+            actionExecuted: action
+        })
+        TareasApi.assignToMe(workflowTaskId, data, this.callDataCallback, this.errorHandler);
     }
 
 
@@ -145,7 +160,7 @@ class Actions extends React.Component {
                 },
                 id: 'consultarPeticionDialog',
                 refreshWindow: window,
-                title: 'Consulta',
+                title: 'Consulta de '+objectReviewed.assetType,
                 uri: url
             });
 
@@ -210,7 +225,7 @@ class Actions extends React.Component {
                 },
                 id: 'asesorDialog',
                 refreshWindow: window,
-                title: 'Editar',
+                title: 'Consulta de '+objectReviewed.assetType,
                 uri: url
             });
 
@@ -243,13 +258,13 @@ class Actions extends React.Component {
                 <ul aria-labelledby="dropdownAction1" className="dropdown-menu">
                     {!this.state.completed &&
                         <li><a className="dropdown-item" data-action="assignToMe"
-                               onClick={this.callAction}>{Liferay.Language.get("es.emasesa.transition.label.assignToMe")}</a>
+                               onClick={this.assignToMe}>{Liferay.Language.get("es.emasesa.transition.label.assignToMe")}</a>
                         </li>
                     }
                     <li><a className="dropdown-item"
                            onClick={this.openModal}>{Liferay.Language.get("es.emasesa.transition.label.consultar")}</a>
                     </li>
-                    {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson.id === Number(Liferay.ThemeDisplay.getUserId()) ) &&
+                    {(this.state.assigneePerson && this.state.transitions && this.state.assigneePerson === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
                             console.debug(transition);
                             return (

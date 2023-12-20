@@ -30,7 +30,7 @@ class TareasModule extends React.Component {
             icon: "fa-solid fa-sort fa-lg"
         });
         columns.push({
-            name: "dateCreated",
+            name: "createDate",
             label: Liferay.Language.get("dateCreated"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
@@ -329,13 +329,13 @@ class TareasModule extends React.Component {
             });
         }
 
-        if (type === "dateCreated") {
+        if (type === "createDate") {
 
             tareas = tareas.sort((a, b) => {
-                let dateCreatedA = a.dateCreated;
-                let dateCreatedB = b.dateCreated;
+                let createDateA = a.createDate;
+                let createDateB = b.createDate;
 
-                let result = order === "asc" ? dateCreatedA.localeCompare(dateCreatedB) : dateCreatedB.localeCompare(dateCreatedA);
+                let result = order === "asc" ? createDateA.localeCompare(createDateB) : createDateB.localeCompare(createDateA);
                 return result;
 
             });
@@ -416,7 +416,7 @@ class TareasModule extends React.Component {
                                             console.debug('Tarea'+i)
                                             console.debug(tarea);
                                             return (<>
-                                                    <tr data-objectId="{tarea.workflowTaskId}">
+                                                    <tr data-objectId={tarea.attributes.entryClassPK} data-workflowTaskId={tarea.workflowTaskId}>
                                                         <td>{tarea.objectData.numeroDeMatricula}</td>
                                                         <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
                                                         <td>{tarea.attributes.entryType}</td>
