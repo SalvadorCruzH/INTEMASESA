@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
-	<version>79</version>
+	<version>83</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-472,-24],"transitions":{"c776482b-663f-49dc-a7bf-2ce20f0b77fa":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-470.9107129161446,
+						-25.851313053632325
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -50,21 +59,21 @@ customWorkflowUtilTracker.close();]]>
 						Solicitud enviada
 					</label>
 				</labels>
-				<name>c776482b-663f-49dc-a7bf-2ce20f0b77fa</name>
+				<name>solicitudenviada</name>
 				<target>Asignar-admin-RRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>c035cfd3-be36-4f6d-80ad-8dcd3f884e12</name>
+		<name>aprobacion final</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						809.9999824248322,
-						650.7843843543876
+						813.4821282134765,
+						650.7844213559459
 					],
 					"terminal": true
 				}
@@ -94,14 +103,14 @@ customWorkflowUtilTracker.close();]]>
 		</labels>
 	</state>
 	<state>
-		<name>659fe9d4-f141-4db7-bebd-f708be82419b</name>
+		<name>Rechazada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						23.09445961540471,
-						178.08070863245712
+						21.945769092888014,
+						178.0806801669343
 					],
 					"terminal": true
 				}
@@ -181,7 +190,16 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>aceptar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[522,460],"transitions":{"aceptada":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						524.8443173912626,
+						459.35129309979015
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -250,7 +268,7 @@ sigdServiceTracker.close();]]>
 					</label>
 				</labels>
 				<name>aceptada</name>
-				<target>c035cfd3-be36-4f6d-80ad-8dcd3f884e12</target>
+				<target>aprobacion final</target>
 				<default>true</default>
 			</transition>
 		</transitions>
@@ -258,7 +276,16 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>rechazar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[1042,462],"transitions":{"rechazada":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						1042.7025514228678,
+						464.8531824253539
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -327,7 +354,7 @@ sigdServiceTracker.close();]]>
 					</label>
 				</labels>
 				<name>rechazada</name>
-				<target>c035cfd3-be36-4f6d-80ad-8dcd3f884e12</target>
+				<target>aprobacion final</target>
 				<default>true</default>
 			</transition>
 		</transitions>
@@ -335,7 +362,16 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[30,-27],"transitions":{"aprobar-enviar-jefe-departamento":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						30.546895583361664,
+						-27.18048865366615
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -406,8 +442,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>ac993a67-5639-4fda-9994-e5ad61ef4f51</name>
-				<target>659fe9d4-f141-4db7-bebd-f708be82419b</target>
+				<name>Rechazar solicitud y guardar en SIGD</name>
+				<target>Rechazada</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -425,7 +461,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-director-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[810,322],"transitions":{"rechazadoPF":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						811.6956945062112,
+						321.35128322872663
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -521,13 +566,9 @@ sapCustomWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<scripted-assignment>
-				<script>
-					<![CDATA[<p>import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId"); customWorkflowUtilTracker.close();</p>
-]]>
-				</script>
-				<script-language>groovy</script-language>
-			</scripted-assignment>
+			<user>
+				<email-address>direccionrrhh@mail.com</email-address>
+			</user>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -560,7 +601,16 @@ sapCustomWorkflowUtilTracker.close();]]>
 	<task>
 		<name>asignar-jefe-departamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[423,-24],"transitions":{"Aprobar-enviar-jefe-division-area":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						423.546875,
+						-24.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -643,7 +693,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>asignar-jefe-division-area</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[813,-35],"transitions":{"Aprobada-enviar-jefe-division-RRHH":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						813.546875,
+						-35.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -687,7 +746,7 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<scripted-assignment>
 				<script>
-					<![CDATA[<p>import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId"); customWorkflowUtilTracker.close();</p>
+					<![CDATA[<p>import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "divisionRespId"); customWorkflowUtilTracker.close();</p>
 ]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -714,7 +773,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-jefe-division-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[808,150],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						808.546807975915,
+						150.81950972853005
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -758,7 +826,21 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<scripted-assignment>
 				<script>
-					<![CDATA[<p>import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId"); customWorkflowUtilTracker.close();</p>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "divisionRrhhRespId");
+
+customWorkflowUtilTracker.close();
 ]]>
 				</script>
 				<script-language>groovy</script-language>

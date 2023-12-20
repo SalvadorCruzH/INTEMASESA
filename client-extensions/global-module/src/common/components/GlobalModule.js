@@ -56,6 +56,11 @@ class GlobalModule extends React.Component {
             return `${day}/${month}/${year} - ${hour}:${minutes}`;
         };
 
+        window.timestampToDdMmYyyy = function (timestamp) {
+            const date = new Date(timestamp);
+            return window.formatDateToDdMmYyyy(date);
+        }
+
         LiferayApi.test();
 
         this.state = {

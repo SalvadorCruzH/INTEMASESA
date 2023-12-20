@@ -256,7 +256,7 @@ class Actions extends React.Component {
                                 <>
                                     <li>
                                         <>
-                                        {transition.name === '' ? (
+                                        {transition.name !== 'Mandar-a-portafirmas' ? (
                                             <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
                                                 {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
                                             </a>
