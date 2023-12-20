@@ -85,16 +85,26 @@ class TareasModule extends React.Component {
         }, 100)
     }
 
+    getAssignedToMeButton = (event) => {
+        this.setState({start:0,end:10});
+        this.getAssignedToMe();
+    }
+
     getAssignedToMe = () => {
 
         this.setState({
            view: 1
         });
-        this.setState({start:0,end:10});
+
         setTimeout(() => {
              TareasApi.getWorkflowTask("",this.state.showCompleted,false,this.state.start,this.state.end,this.setTasks, this.errorHandler);
         }, 100)
 
+    }
+
+    getAssignedToUserRolButton = (event) => {
+        this.setState({start:0,end:10});
+        this.getAssignedToUserRol();
     }
 
     getAssignedToUserRol = () => {
@@ -111,7 +121,7 @@ class TareasModule extends React.Component {
     }
 
     getTasksUser = () => {
-        if (this.state.view == 1) {
+        if (this.state.view === 1) {
             this.getAssignedToMe();
         } else {
             this.getAssignedToUserRol();
@@ -384,9 +394,9 @@ class TareasModule extends React.Component {
 
                         <div className="button-holder btn-wrapper btn-wrapper--inline">
                             <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi"
-                                onClick={this.getAssignedToMe} aria-selected={this.state.view == 1}>{Liferay.Language.get('admin.task.assign.toMe')}</a>
+                                onClick={this.getAssignedToMeButton} aria-selected={this.state.view === 1}>{Liferay.Language.get('admin.task.assign.toMe')}</a>
                             <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
-                                onClick={this.getAssignedToUserRol} aria-selected={this.state.view == 2}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
+                                onClick={this.getAssignedToUserRolButton} aria-selected={this.state.view === 2}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
                         </div>
 
                         <div className="filter-wrapper">
