@@ -765,3 +765,27 @@ html:not(#__):not(#___) {
   margin: 0 auto;
   padding: 0 30px;
 }
+
+#error-validacion-otp-invalido,
+#error-validacion-otp-expirado {
+  margin: 0;
+  background-color: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px 25px;
+  border-radius: 10px;
+  position: relative;
+  margin-top: 10px;
+  color: #b33;
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent white transparent;
+    border-style: solid;
+    position: absolute;
+    top: -5px;
+    left: 15px;
+  }
+}
