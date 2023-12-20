@@ -758,4 +758,10 @@ html:not(#__):not(#___) {
   border: none;
   background: none;
   color: #555;
+  background: transparent url('@theme_image_path@/icons/ico-info.svg') left center no-repeat;
+  background-size: 20px;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0 30px;
 }
