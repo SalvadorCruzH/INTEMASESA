@@ -3,8 +3,8 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import TareasApi from '../services/TareasApi';
 import {OBJECT_MAPPING, OBJECT_CONSTANTS, iframeURLChange} from "../js/Constants";
 
-let onlyonce = true;
-
+var onlyonce = true;
+var actionExecuted = "";
 class Actions extends React.Component {
     constructor(props) {
         super(props)
@@ -18,8 +18,6 @@ class Actions extends React.Component {
             externalReferenceCode: props.tarea.objectData.externalReferenceCode,
             completed: props.tarea.completed,
             configuration: props.configuration,
-            loading: true,
-            actionExecuted: ""
         }
         console.debug(this);
     }
@@ -36,36 +34,36 @@ class Actions extends React.Component {
             "dueDate": new Date().toISOString(),
             "workflowTaskId": 0
         }
-        this.setState({
-            actionExecuted: action
-        })
+        actionExecuted =  action;
+        this.props.loading(true);
         TareasApi.callAction(action.href, data, this.callDataCallback, this.errorHandler);
     }
 
     callDataCallback = (data) => {
-        let actionExecuted = this.state.actionExecuted;
         let message = '';
-        console.debug(actionExecuted.toString());
-        if (actionExecuted && window.objToString(actionExecuted).indexOf('assign-to-me') >= 0) {
+        console.debug(actionExecuted);
+        console.debug((String(actionExecuted)).indexOf('assign-to-me'));
+        if (actionExecuted && (String(actionExecuted)).indexOf('assign-to-me') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.assignToMe.success');
-        } else if (actionExecuted && window.objToString(actionExecuted).indexOf('Aprobada-enviar-asesor-juridico') >= 0) {
+        } else if (actionExecuted && String(actionExecuted).indexOf('Aprobada-enviar-asesor-juridico') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.Aprobada-enviar-asesor-juridico.success');
-        }else if (actionExecuted && window.objToString(actionExecuted).indexOf('Rechazar-y-guardar-en-sigd') >= 0) {
+        }else if (actionExecuted && String(actionExecuted).indexOf('Rechazar-y-guardar-en-sigd') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.Rechazar-y-guardar-en-sigd.success');
-        }else if (actionExecuted && window.objToString(actionExecuted).indexOf('Devolver-a-usuario-para-edicion.success') >= 0) {
+        }else if (actionExecuted && String(actionExecuted).indexOf('Devolver-a-usuario-para-edicion.success') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.Devolver-a-usuario-para-edicion.success.success');
         }
 
-        if (message.length > 0) {
-            Liferay.Util.openToast({
-                message: message,
-                title: Liferay.Language.get('global.success'),
-                toastProps: {
-                    autoClose: 5000,
-                },
-                type: 'success',
-            });
+        if (message.length <= 0) {
+            message = "La operación se ha realizado correctamente";
         }
+        Liferay.Util.openToast({
+            message: message,
+            title: Liferay.Language.get('global.success'),
+            toastProps: {
+                autoClose: 5000,
+            },
+            type: 'success',
+        });
         setTimeout(this.props.refresh, 100);
     }
 
@@ -77,10 +75,9 @@ class Actions extends React.Component {
             "comment": "",
             "transitionName": transitionName,
             "workflowTaskId": workflowTaskId
-        }
-        this.setState({
-            actionExecuted: transitionName
-        })
+        };
+        actionExecuted = transitionName;
+        this.props.loading(true);
         TareasApi.changeTransition(workflowTaskId, data, this.callDataCallback, this.errorHandler);
     }
 
@@ -90,16 +87,16 @@ class Actions extends React.Component {
             "comment": "",
             "dueDate": new Date().toISOString(),
             "workflowTaskId": workflowTaskId
-        }
-        this.setState({
-            actionExecuted: 'assign-to-me'
-        })
+        };
+        actionExecuted = 'assign-to-me';
+        this.props.loading(true);
         TareasApi.assignToMe(workflowTaskId, data, this.callDataCallback, this.errorHandler);
     }
 
 
     errorHandler = (error) => {
         if (onlyonce) {
+            this.props.loading(false);
             Liferay.Util.openToast({
                 message: Liferay.Language.get('global.error.config') + " " + error,
                 title: Liferay.Language.get('global.error'),
@@ -129,7 +126,7 @@ class Actions extends React.Component {
             display += "&p_p_state=pop_up";
             let url = themeDisplay.getPortalURL() + display;
             let dialog = Liferay.Util.openWindow({
-                cache: false,
+                //cache: false,
                 dialog: {
                     destroyOnHide: true,
                     modal: true,
@@ -158,7 +155,7 @@ class Actions extends React.Component {
                     bodyCssClass: 'dialog-with-footer i-mainWrapper'
                 },
                 id: 'consultarPeticionDialog',
-                refreshWindow: window,
+                //refreshWindow: window,
                 title: 'Consulta de '+objectReviewed.entryType,
                 uri: url
             });
@@ -185,7 +182,7 @@ class Actions extends React.Component {
             display += "&p_p_state=pop_up";
             let url = themeDisplay.getPortalURL() + display;
             let dialog = Liferay.Util.openWindow({
-                cache: false,
+                //cache: false,
                 dialog: {
                     destroyOnHide: true,
                     modal: true,
@@ -223,7 +220,7 @@ class Actions extends React.Component {
                     bodyCssClass: 'dialog-with-footer i-mainWrapper'
                 },
                 id: 'asesorDialog',
-                refreshWindow: window,
+                //refreshWindow: window,
                 title: 'Consulta de '+objectReviewed.entryType,
                 uri: url
             });
