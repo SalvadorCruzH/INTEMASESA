@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>539c4516-e04f-69a9-3b67-749aa51bccb4</name>
-	<version>3</version>
+	<version>5</version>
 	<state>
-		<name>5d6facc1-1eb5-4109-8d3f-25f236c1d15c</name>
+		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-221,315],"transitions":{"7a511dc1-e2da-473d-8b61-17503e8355bb":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-220,
+						316
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -50,21 +59,21 @@ customWorkflowUtilTracker.close();]]>
 						Solicitud enviada
 					</label>
 				</labels>
-				<name>7a511dc1-e2da-473d-8b61-17503e8355bb</name>
-				<target>22fab6a5-5b84-4cf7-a24f-065da83713ee</target>
+				<name>solicitud enviada</name>
+				<target>asistente social</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>1fc1b797-6916-4b49-9e4c-25943a329bec</name>
+		<name>aprobracion final</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						706,
-						315
+						709,
+						313
 					],
 					"terminal": true
 				}
@@ -111,7 +120,7 @@ String pdfadjuntarDocumentos = customWorkflowUtil.getDocumentToLoad(workflowCont
 
 if(pdfadjuntarDocumentos != null && pdfadjuntarDocumentos != ""){
 	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfadjuntarDocumentos, "AyudaEscolar", "solicitud",  userId, false);
-}	
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -143,13 +152,13 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<state>
-		<name>e4219b66-94e8-4d55-a947-220883cabb48</name>
+		<name>rechazada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						210.546875,
+						213.546875,
 						536.5
 					],
 					"terminal": true
@@ -197,7 +206,7 @@ String pdfadjuntarDocumentos = customWorkflowUtil.getDocumentToLoad(workflowCont
 
 if(pdfadjuntarDocumentos != null && pdfadjuntarDocumentos != ""){
 	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfadjuntarDocumentos, "AyudaEscolar", "solicitud", userId, false);
-}	
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -229,9 +238,18 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<task>
-		<name>22fab6a5-5b84-4cf7-a24f-065da83713ee</name>
+		<name>asistente social</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[210,313],"transitions":{"8846e202-af6f-485e-9dec-b8c541a236a7":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						209.546875,
+						313.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -298,8 +316,8 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar solicitud y guardar en SIG
 					</label>
 				</labels>
-				<name>3a75315e-164e-4645-bbd1-8803351d88b8</name>
-				<target>1fc1b797-6916-4b49-9e4c-25943a329bec</target>
+				<name>aprobar solicitud</name>
+				<target>aprobracion final</target>
 				<default>true</default>
 			</transition>
 			<transition>
@@ -308,8 +326,8 @@ customWorkflowUtilTracker.close();]]>
 						Devolver a usuario para edición
 					</label>
 				</labels>
-				<name>9907d11c-73e2-40b5-b941-af8cc6107f63</name>
-				<target>7ca08f76-bd83-4151-b4e7-116002ef1e66</target>
+				<name>Devolver a usuario</name>
+				<target>devuelta usuario</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -318,16 +336,25 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>8846e202-af6f-485e-9dec-b8c541a236a7</name>
-				<target>e4219b66-94e8-4d55-a947-220883cabb48</target>
+				<name>rechazar</name>
+				<target>rechazada</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>7ca08f76-bd83-4151-b4e7-116002ef1e66</name>
+		<name>devuelta usuario</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[211,104],"transitions":{"de68ff7e-0b98-49dd-b211-8e1f3e99f64d":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						214.546875,
+						104.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -408,8 +435,8 @@ customWorkflowUtilTracker.close();]]>
 						reenviar a Asistente social
 					</label>
 				</labels>
-				<name>de68ff7e-0b98-49dd-b211-8e1f3e99f64d</name>
-				<target>22fab6a5-5b84-4cf7-a24f-065da83713ee</target>
+				<name>reenviar</name>
+				<target>asistente social</target>
 				<default>true</default>
 			</transition>
 		</transitions>

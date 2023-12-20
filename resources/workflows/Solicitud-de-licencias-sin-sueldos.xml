@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>39</version>
+	<version>40</version>
 	<state>
-		<name>8eab626c-a786-4d84-9abd-e1136e3afa89</name>
+		<name>envio</name>
 		<description>Inicia un flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						-367,
+						-366,
 						-66
 					]
 				}
@@ -59,21 +59,21 @@ customWorkflowUtilTracker.close();]]>
 						envio de solicitud
 					</label>
 				</labels>
-				<name>e09de5b7-d810-4162-8cbd-eca18adfa132</name>
-				<target>30b7549c-1e21-4cac-9647-1ee862833b97</target>
+				<name>envioSolicitud</name>
+				<target>jefe departamento</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>379f610e-7b41-40bc-956a-533d3700f7b8</name>
+		<name>rechazada y guardar SIGD</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						25,
-						331
+						26,
+						332
 					],
 					"terminal": true
 				}
@@ -145,14 +145,14 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<state>
-		<name>a46995ca-de4c-4d24-9a99-66f7576d9031</name>
+		<name>Solicitud finalizada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						846.9365756786316,
-						470.244327394374
+						850.9365234375,
+						469.24432373046875
 					],
 					"terminal": true
 				}
@@ -224,14 +224,14 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<task>
-		<name>30b7549c-1e21-4cac-9647-1ee862833b97</name>
+		<name>jefe departamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						25.546875,
-						-65.5
+						32.546875,
+						-67.5
 					]
 				}
 			]]>
@@ -316,8 +316,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>28a10977-90dd-4274-9a8c-40684de27d4f</name>
-				<target>379f610e-7b41-40bc-956a-533d3700f7b8</target>
+				<name>rechazar</name>
+				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -326,21 +326,21 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>5fa455e5-1c60-4c5d-b4fd-bfdc48bba0e3</name>
-				<target>3f1c67ff-14e6-4b6c-ac9d-7a574541638d</target>
+				<name>aprobar solicitud</name>
+				<target>jefe division area</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>3f1c67ff-14e6-4b6c-ac9d-7a574541638d</name>
+		<name>jefe division area</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
 						453.546875,
-						-62.5
+						-69.5
 					]
 				}
 			]]>
@@ -425,8 +425,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>188ecab7-4abf-43a0-bd4a-130a72502cb1</name>
-				<target>379f610e-7b41-40bc-956a-533d3700f7b8</target>
+				<name>rechazar solicitud</name>
+				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -435,14 +435,14 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>8d0e0319-55e7-4cc7-9da4-79e77b14ccd3</name>
-				<target>a2a2c1d7-7955-4c0b-932e-da9bb0d3ae80</target>
+				<name>aprobar-solicitud</name>
+				<target>admin rrhh</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>a2a2c1d7-7955-4c0b-932e-da9bb0d3ae80</name>
+		<name>admin rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
 		<metadata>
 			<![CDATA[
@@ -524,8 +524,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>780163b3-f6bd-44e3-95a3-5a75abf512f3</name>
-				<target>379f610e-7b41-40bc-956a-533d3700f7b8</target>
+				<name>rechazar y guardar en SIGD</name>
+				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -534,14 +534,14 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>cc13cf11-4bcb-4c38-bb76-b4c2ff671b9c</name>
-				<target>79b7c8d1-6cf8-452f-9fbf-b9b3fff5add1</target>
+				<name>aprobar</name>
+				<target>jefe division personas</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>79b7c8d1-6cf8-452f-9fbf-b9b3fff5add1</name>
+		<name>jefe division personas</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
 		<metadata>
 			<![CDATA[
@@ -617,8 +617,8 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>f5687012-34e7-4852-890e-bf7b4ba60cc5</name>
-				<target>a46995ca-de4c-4d24-9a99-66f7576d9031</target>
+				<name>aprobar solicitud y guardar en SIGD</name>
+				<target>Solicitud finalizada</target>
 				<default>true</default>
 			</transition>
 			<transition>
@@ -627,8 +627,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>16fa44f8-e758-4d1e-981b-4e966d87c057</name>
-				<target>379f610e-7b41-40bc-956a-533d3700f7b8</target>
+				<name>rechazar y guardar</name>
+				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 		</transitions>

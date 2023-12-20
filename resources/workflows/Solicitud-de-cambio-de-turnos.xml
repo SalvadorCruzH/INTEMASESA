@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>24</version>
+	<version>27</version>
 	<state>
-		<name>d447b28d-155f-4d95-9e05-f35825a66b95</name>
+		<name>creacion solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-356,-12],"transitions":{"5d55dfd0-1965-402d-a5ef-84e19bc56d41":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-356,
+						-13.4000244140625
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -50,14 +59,14 @@ customWorkflowUtilTracker.close();]]>
 						Envio de solicitud
 					</label>
 				</labels>
-				<name>5d55dfd0-1965-402d-a5ef-84e19bc56d41</name>
+				<name>envio de solicitud</name>
 				<target>a5e883d4-7b8a-4eac-a7c1-3c25b192ea56</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>105a97d0-8529-4512-bc83-df7e89b84dde</name>
+		<name>solicitud aprobada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
@@ -141,14 +150,14 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<state>
-		<name>3fb23196-fde0-4d4d-a24d-870d7f4d3bf3</name>
+		<name>solicitud rechazada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						59.546875,
-						257.5
+						61.546875,
+						251.5
 					],
 					"terminal": true
 				}
@@ -227,7 +236,16 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>a5e883d4-7b8a-4eac-a7c1-3c25b192ea56</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[21,-13],"transitions":{"9ae3bf78-42ec-40fd-ae40-a874416813eb":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						24.256256103515625,
+						-13.199996948242188
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -276,9 +294,25 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>jefedepartarmentoflexibilidadhoraria@mail.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -292,7 +326,7 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>0c32779c-942b-42ea-a249-9c5cbadb816e</name>
+				<name>aprobar solicitud</name>
 				<target>7a06644e-3652-4cfa-bd43-6d7444bf3056</target>
 				<default>true</default>
 			</transition>
@@ -302,8 +336,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>9ae3bf78-42ec-40fd-ae40-a874416813eb</name>
-				<target>3fb23196-fde0-4d4d-a24d-870d7f4d3bf3</target>
+				<name>rechazar-solicitud-guardar-SIGD</name>
+				<target>solicitud rechazada</target>
 				<default>false</default>
 			</transition>
 		</transitions>
@@ -311,7 +345,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>7a06644e-3652-4cfa-bd43-6d7444bf3056</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[412,-14],"transitions":{"Devolver-a-usuario-para-edicion":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						412.546875,
+						-14.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -382,8 +425,8 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>0c12fb45-e208-4c06-bffc-ce2caa2a407a</name>
-				<target>105a97d0-8529-4512-bc83-df7e89b84dde</target>
+				<name>Aprobar solicitud y guardad en Sigd</name>
+				<target>solicitud aprobada</target>
 				<default>true</default>
 			</transition>
 			<transition>
@@ -392,8 +435,8 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar solicitud y guardar en SIGD
 					</label>
 				</labels>
-				<name>4d4d9c3d-375b-48f4-bdbf-4ecf22c99f65</name>
-				<target>3fb23196-fde0-4d4d-a24d-870d7f4d3bf3</target>
+				<name>rechazar solicitud y guardad en sigd</name>
+				<target>solicitud rechazada</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -411,7 +454,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Devolver-solicitud</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[435,263],"transitions":{"Devolver-a-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						438.546875,
+						263.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>

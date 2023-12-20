@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>a77d955e-e716-7ce6-cbc4-a3ae2750b9b1</name>
-	<version>19</version>
+	<version>20</version>
 	<state>
-		<name>ed44c245-0e5f-46e6-873b-228b2b58005f</name>
+		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-355,122],"transitions":{"9c7d500f-81a1-4829-9efe-85cad22e6420":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-355.453125,
+						122.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -50,20 +59,20 @@ customWorkflowUtilTracker.close();]]>
 						solicitud enviada
 					</label>
 				</labels>
-				<name>9c7d500f-81a1-4829-9efe-85cad22e6420</name>
-				<target>0be24609-6c43-4d67-9ecc-f613b0b91dd2</target>
+				<name>solicitud enviada</name>
+				<target>asistente social</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>181c5390-5904-4aaf-92f0-e839fdc87623</name>
+		<name>solicitud aprobada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						925.546875,
+						926.546875,
 						121.5
 					],
 					"terminal": true
@@ -158,7 +167,7 @@ sigdServiceTracker.close();
 		</labels>
 	</state>
 	<state>
-		<name>620ab41a-b474-4972-acc6-8d5db0ea8a7c</name>
+		<name>solicitud rechazada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
@@ -259,9 +268,18 @@ sigdServiceTracker.close();
 		</labels>
 	</state>
 	<task>
-		<name>f9efb950-2eed-41be-8820-8730d1a61f6f</name>
+		<name>admin RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[451,122],"transitions":{"aeef7efd-fe1a-4ca5-950c-6582d0a07156":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						451.546875,
+						122.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -305,8 +323,8 @@ sigdServiceTracker.close();
 						Aprobación de la solicitud
 					</label>
 				</labels>
-				<name>929deb3b-3b63-429d-bee1-e82c5a580d44</name>
-				<target>181c5390-5904-4aaf-92f0-e839fdc87623</target>
+				<name>aprobacion de solicitud</name>
+				<target>solicitud aprobada</target>
 				<default>true</default>
 			</transition>
 			<transition>
@@ -315,16 +333,25 @@ sigdServiceTracker.close();
 						Rechazar solicitud
 					</label>
 				</labels>
-				<name>aeef7efd-fe1a-4ca5-950c-6582d0a07156</name>
-				<target>620ab41a-b474-4972-acc6-8d5db0ea8a7c</target>
+				<name>rechazar solicitud</name>
+				<target>solicitud rechazada</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>0be24609-6c43-4d67-9ecc-f613b0b91dd2</name>
+		<name>asistente social</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[52,121],"transitions":{"6bccfd01-7a87-491d-b547-84a5b168b79a":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						52.546875,
+						121.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -391,8 +418,8 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar solicitud
 					</label>
 				</labels>
-				<name>6bccfd01-7a87-491d-b547-84a5b168b79a</name>
-				<target>f9efb950-2eed-41be-8820-8730d1a61f6f</target>
+				<name>aprobar solicitud</name>
+				<target>admin RRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>
