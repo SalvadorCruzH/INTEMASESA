@@ -736,3 +736,32 @@ html:not(#__):not(#___) {
     }
   }
 }
+
+.em-loading-overlay {
+  background-color: rgba(white,.9);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 10000;
+}
+
+.empty .alert {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  background: none;
+  color: #555;
+  background: transparent url('@theme_image_path@/icons/ico-info.svg') left center no-repeat;
+  background-size: 20px;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0 30px;
+}
