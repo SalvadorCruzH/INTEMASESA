@@ -52,16 +52,19 @@ class GlobalObjectModule extends React.Component {
     }
 
     setObject = (object) => {
-        console.log(this.state.mode);
-        if(this.state.mode === 1){
-            console.log('pasando por donde no debo');
+
+        let mode = Number(this.state.mode);
+        console.log(mode);
+        if(mode === 1){
+            console.debug('Mode 1');
             document.querySelectorAll(".form-control").forEach(((element) => element.readOnly = true));
             document.querySelector(".lfr-layout-structure-item-inputs-submit-button").classList.add("d-none");
             document.querySelectorAll(".btn-secondary").disabled = true;
             if(document.getElementById("generate-otp-button")){
                 document.getElementById("generate-otp-button").classList.add("d-none");
             }
-        }else if(this.state.mode === 2){
+        }else if(mode === 2){
+        console.debug('Mode 2');
             var input = document.createElement("input");
             input.setAttribute("type", "hidden");
             input.setAttribute("name", "classPK");
