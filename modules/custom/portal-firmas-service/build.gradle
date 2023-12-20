@@ -29,9 +29,6 @@ dependencies {
 	compileOnly 'org.apache.cxf:cxf-rt-frontend-jaxws:3.4.10'
 	compileOnly project (':modules:common:base-module')
 	compileOnly project (':modules:common:settings-module')
-	compileOnly project (':modules:custom:sap-services-utils')
-
-
 }
 
 jar {

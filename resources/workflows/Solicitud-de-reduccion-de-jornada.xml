@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
-	<version>77</version>
+	<version>79</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -446,6 +446,8 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.porta.firmas.service.util.PortalFirmasUtil;
+import com.liferay.portal.kernel.model.User;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
 
 Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
@@ -462,6 +464,11 @@ ServiceTracker portaFirmaServiceTracker = new ServiceTracker(bundlePortaFirma.ge
 portaFirmaServiceTracker.open();
 PortalFirmasUtil portaFirmaService = portaFirmaServiceTracker.getService();
 
+Bundle bundleSAP = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker sapCustomWorkflowUtilTracker = new ServiceTracker(bundleSAP.getBundleContext(),CustomWorkflowUtil.class, null);
+sapCustomWorkflowUtilTracker.open();
+CustomWorkflowUtil sapCustomWorkflowUtil = sapCustomWorkflowUtilTracker.getService();
+
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSubdirectorDirector", userId, "Director RRHH");
 
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
@@ -477,17 +484,21 @@ if(pdfFichero != null && pdfFichero != ""){
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoFicheroSigd, "Fichero", false);
 }
 
+//Recuperamos el usuario direccion de RRHH de SAP
+User direccionRRHH = sapCustomWorkflowUtil.getUserSap(workflowContext, "direccionRrhhRespId");
+
 String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoDirector");
 String idDocumentoDirectorRRHH = "";
 if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
     idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoDirectorRRHH, "ReduccionJornada", "solicitud", userId, true);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoDirectorRRHH, "Escrito director RRHH", true);
-    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, "direccionRrhhRespId");
+    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, direccionRRHH);
 }
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
-portaFirmaServiceTracker.close();]]>
+portaFirmaServiceTracker.close();
+sapCustomWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>

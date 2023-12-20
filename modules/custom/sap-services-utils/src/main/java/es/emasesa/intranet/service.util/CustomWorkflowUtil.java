@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.template.ServiceLocator;
+import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapException;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
@@ -54,6 +56,9 @@ public class CustomWorkflowUtil {
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         User user = null;
         try {
+            if (customExpandoUtil == null){
+                activate(null);
+            }
             String matriculaActualUser  = customExpandoUtil.getDataValueByUser(userId, companyId, "matricula");
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
@@ -118,6 +123,9 @@ public class CustomWorkflowUtil {
         String pernr = "";
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            if (_objectEntryLocalService == null){
+                activate(null);
+            }
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             String fechaSolicitud = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("fechaSolicitud");
             double IRPF_Solicitado = (double) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("retencinDelIRPFSolicitada");
@@ -147,6 +155,9 @@ public class CustomWorkflowUtil {
         String pernr = StringPool.BLANK;
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            if (_objectEntryLocalService == null){
+                activate(null);
+            }
             LOG.debug("Se procede con el cambio de domiciliacion bancaria...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             String fechaSolicitud = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("createDate");
@@ -179,6 +190,9 @@ public class CustomWorkflowUtil {
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            if (_objectEntryLocalService == null){
+                activate(null);
+            }
             LOG.debug("Se procede a añdir plus...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
@@ -237,6 +251,7 @@ public class CustomWorkflowUtil {
     }
 
     public void addFechas(String fechas, String pernr, String plusNomina, int plusUnidades){
+
         String rangofechas = fechas;
         String[] fechasArray = rangofechas.split(" - ");
         String fechaInicioStr = fechasArray[0];
@@ -247,7 +262,9 @@ public class CustomWorkflowUtil {
         LocalDate fechaFin = LocalDate.parse(fechaFinStr, formatter);
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
-
+        if (jornadaNominaService == null){
+            activate(null);
+        }
         while (!fechaInicio.isAfter(fechaFin)) {
             try {
                 ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
@@ -270,28 +287,30 @@ public class CustomWorkflowUtil {
     @Activate
     @Modified
     protected void activate(Map<String, Object> properties) {
+
         CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
         CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
+        CustomServiceTracker<JornadaNominaService> jornadaNominaServiceTracker = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
 
         try {
             this.empleadoEstructuraService = service.getService();
             this.jornadaNominaService = serviceNomina.getService();
             this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
+            this.jornadaNominaService = jornadaNominaServiceTracker.getService();
+            this.customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
+            _userLocalService = (UserLocalService) ServiceLocator.getInstance().findService("com.liferay.portal.kernel.service.UserLocalService");
+            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
+            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            LoggerUtil.info(LOG,"Error arrancando servicios", e);
         }
     }
-    private CustomExpandoUtil customExpandoUtil;
-    @Reference
-    private UserLocalService _userLocalService;
-    @Reference
-    SapInterfaceService _sapService;
-    private EmpleadoEstructuraService empleadoEstructuraService;
-    private CiertosDatosEstructuraService ciertosDatosEstructuraService;
-    @Reference
-    ObjectEntryLocalService _objectEntryLocalService;
-    private JornadaNominaService jornadaNominaService;
-
+    protected CustomExpandoUtil customExpandoUtil;
+    protected UserLocalService _userLocalService;
+    protected EmpleadoEstructuraService empleadoEstructuraService;
+    protected CiertosDatosEstructuraService ciertosDatosEstructuraService;
+    protected ObjectEntryLocalService _objectEntryLocalService;
+    protected JornadaNominaService jornadaNominaService;
     private static final Log LOG = LogFactoryUtil.getLog(CustomWorkflowUtil.class);
 }
