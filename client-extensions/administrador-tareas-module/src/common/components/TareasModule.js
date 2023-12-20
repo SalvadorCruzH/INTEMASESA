@@ -18,12 +18,12 @@ class TareasModule extends React.Component {
         });
         columns.push({name: "objectData.name", label: Liferay.Language.get("objectData.name"), order: "asc"});
         columns.push({
-            name: "objectReviewed.assetType",
+            name: "attributes.entryType",
             label: Liferay.Language.get("objectReviewed.assetType"),
             order: "asc"
         });
         columns.push({name: "dateCreated", label: Liferay.Language.get("dateCreated"), order: "asc"});
-        columns.push({name: "assigneePerson.name", label: Liferay.Language.get("assigneePerson.name"), order: "asc"});
+        columns.push({name: "assigneePersonName", label: Liferay.Language.get("assigneePerson.name"), order: "asc"});
         columns.push({
             name: "objectData.estadoObjeto",
             label: Liferay.Language.get("objectData.estadoObjeto"),
@@ -34,7 +34,11 @@ class TareasModule extends React.Component {
             loading: true,
             columns: columns,
             view: 1,
-            configuration: {}
+            configuration: {},
+            start:0,
+            end:10,
+            delta:10,
+            showCompleted:false
         }
         console.debug(this);
     }
@@ -50,42 +54,40 @@ class TareasModule extends React.Component {
         setTimeout(() => {
             EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
 
-            if (this.state.view == 1) {
-                this.getAssignedToMe();
-            } else {
-                this.getAssignedToUserRol();
-            }
+            this.getTasksUser();
 
         }, 100)
     }
 
     getAssignedToMe = () => {
+
         this.setState({
-            view: 1
+           view: 1
         });
         setTimeout(() => {
-            TareasApi.getWorkflowTasksMe(
-                Liferay.ThemeDisplay.getScopeGroupId(),
-                this.setTasks,
-                this.errorHandler
-            )
+             TareasApi.getWorkflowTask("",this.state.showCompleted,false,this.state.start,this.state.end,this.setTasks, this.errorHandler);
         }, 100)
 
     }
+
     getAssignedToUserRol = () => {
+
         this.setState({
-            view: 2
+          view: 2
         });
         setTimeout(() => {
-
-            TareasApi.getWorkflowTasksByUserRole(
-                Liferay.ThemeDisplay.getScopeGroupId(),
-                this.setTasks,
-                this.errorHandler
-            )
-        }, 100)
+               TareasApi.getWorkflowTask("",this.state.showCompleted,true,this.state.start,this.state.end,this.setTasks, this.errorHandler);
+         }, 100)
 
 
+    }
+
+    getTasksUser = () => {
+        if (this.state.view == 1) {
+            this.getAssignedToMe();
+        } else {
+            this.getAssignedToUserRol();
+        }
     }
 
     loadConfiguration = (result) => {
@@ -98,6 +100,14 @@ class TareasModule extends React.Component {
         }
     }
 
+    showMore = () =>{
+        let delta = this.state.delta;
+        let start = this.state.start;
+        let end = this.state.end;
+
+        this.getTasksUser();
+    }
+
     addTareaExtraData = (tarea) => {
         var jsonObjectMapping = {};
         try{
@@ -106,10 +116,10 @@ class TareasModule extends React.Component {
             jsonObjectMapping = this.state.configuration.objectMapping;
         }
         console.debug(jsonObjectMapping);
-        let objectMapping = jsonObjectMapping[tarea.objectReviewed.assetType];
+        let objectMapping = jsonObjectMapping[tarea.attributes.entryType];
         if (objectMapping) {
             let urlObject = objectMapping.url;
-            let objectId = tarea.objectReviewed.id;
+            let objectId = tarea.attributes.entryClassPK;
             if (urlObject) {
 
                 let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
@@ -149,7 +159,7 @@ class TareasModule extends React.Component {
     }
 
     addTareaTransition = (tarea) => {
-        let workflowTaskId = tarea.id;
+        let workflowTaskId = tarea.workflowTaskId;
         let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
         if (client) {
             let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
@@ -194,12 +204,13 @@ class TareasModule extends React.Component {
         this.setState({
             tareas: []
         });
-        if (result && result.items != null && result.items.length > 0) {
-            result.items.forEach((tarea) => {
+        if (result && result != null && result.length > 0) {
+            result.forEach((tarea) => {
                 this.addTareaExtraData(tarea);
             });
-
+            this.setState({start:start+delta,end:end+delta});
         }
+
         this.setState({loading: false});
 
     }
@@ -280,10 +291,10 @@ class TareasModule extends React.Component {
 
             })
         }
-        if (type === "objectReviewed.assetType") {
+        if (type === "attributes.entryType") {
             tareas = tareas.sort((a, b) => {
-                let assetTypeA = a.objectReviewed.assetType;
-                let assetTypeB = b.objectReviewed.assetType;
+                let assetTypeA = a.attributes.entryType;
+                let assetTypeB = b.attributes.entryType;
 
                 let result = order === "asc" ? assetTypeA.localeCompare(assetTypeB) : assetTypeB.localeCompare(assetTypeA);
                 return result;
@@ -301,10 +312,10 @@ class TareasModule extends React.Component {
 
             });
         }
-        if (type === "assigneePerson.name") {
+        if (type === "assigneePersonName") {
             tareas = tareas.sort((a, b) => {
-                let assigneePersonA = a.assigneePerson ? a.assigneePerson.name : "";
-                let assigneePersonB = b.assigneePerson ? b.assigneePerson.name : "";
+                let assigneePersonA = a.assigneePersonName ? a.assigneePersonName : "";
+                let assigneePersonB = b.assigneePersonName ? b.assigneePersonName : "";
 
                 let result = order === "asc" ? assigneePersonA.localeCompare(assigneePersonB) : assigneePersonB.localeCompare(assigneePersonA);
 
@@ -328,6 +339,13 @@ class TareasModule extends React.Component {
         this.setState({tareas: tareas});
     }
 
+    showCompletedTask = () =>{
+        this.setState({showCompleted:!this.state.showCompleted});
+
+        this.getTasksUser();
+
+    }
+
     render() {
 
         return (
@@ -338,7 +356,16 @@ class TareasModule extends React.Component {
                             <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true"
                                onClick={this.getAssignedToMe}>Asignadas a mi</a>
                             <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
-                               aria-disabled="true" onClick={this.getAssignedToUserRol}>Asignadas a mi rol</a>
+                               aria-disabled="true" onClick={this.getAssignedToUserRol} aria-selected={this.state.view == 2}>Asignadas a mi rol</a>
+                        </div>
+
+                        <div className="filter-wrapper">
+
+                            <label for="showCompleted">
+                                <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"
+                                onClick={this.showCompletedTask}  aria-selected={this.state.showCompleted} />
+                                <span>{Liferay.Language.get("show.completed.tasks")}</span>
+                            </label>
                         </div>
 
                         <div className="ema-table-wrapper">
@@ -365,9 +392,9 @@ class TareasModule extends React.Component {
                                                     <tr data-objectId="{tarea.id}">
                                                         <td>{tarea.objectData.numeroDeMatricula}</td>
                                                         <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
-                                                        <td>{tarea.objectReviewed.assetType}</td>
-                                                        <td>{window.formatDateToDdMmYyyyHhMMss(tarea.dateCreated)}</td>
-                                                        <td>{tarea.assigneePerson && tarea.assigneePerson.name}</td>
+                                                        <td>{tarea.attributes.entryType}</td>
+                                                        <td>{window.timestampToDdMmYyyy(tarea.createDate)}</td>
+                                                        <td>{tarea.assigneePersonName && tarea.assigneePersonName}</td>
                                                         <td>{tarea.objectData.estadoObjeto.name}</td>
                                                         <td><Actions tarea={tarea} configuration={this.state.configuration}
                                                                      refresh={this.loadDependencies}/></td>
@@ -381,6 +408,9 @@ class TareasModule extends React.Component {
                                     No se han encontrado tareas nuevas
                                 </div>)}
                             </table>
+                            <div class="button-holder">
+                                <a href id="more" class="btn btn-primary" aria-label="Mostrar más" aria-disabled="true" onClick={this.showMore}>Mostrar más</a>
+                            </div>
                         </div>
                     </>
                 )}
