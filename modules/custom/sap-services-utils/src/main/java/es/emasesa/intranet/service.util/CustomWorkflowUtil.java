@@ -82,9 +82,24 @@ public class CustomWorkflowUtil {
 
         return users;
     }
-
+    
     /**
      * Devuelve usuarios de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
+     * @param workflowContext
+     * @param userType
+     * @return List<User>
+     */
+    public List<User> assignWorkflowHorizontalUser(Map<String, Serializable> workflowContext, String userType){
+    	
+    	 LOG.debug("Asignar usuario horizontal: " + userType);
+    	 List<User> users = new ArrayList<>();
+    	 User user = getUserSap(workflowContext, userType);
+    	 users.add(user);
+    	 return users;
+    }
+
+    /**
+     * Devuelve usuario de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
      * @param workflowContext
      * @param userType
      * @return user
@@ -96,6 +111,7 @@ public class CustomWorkflowUtil {
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+        	LOG.debug("Buscando usuario del SAP: " + userType);
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             if (ciertosDatosEstructuraService == null){
@@ -288,20 +304,20 @@ public class CustomWorkflowUtil {
     @Modified
     protected void activate(Map<String, Object> properties) {
 
-        CustomServiceTracker<EmpleadoEstructuraService> service = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
+        CustomServiceTracker<EmpleadoEstructuraService> serviceEstructuraTracker = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
         CustomServiceTracker<JornadaNominaService> serviceNomina = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
         CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraService = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
         CustomServiceTracker<JornadaNominaService> jornadaNominaServiceTracker = new CustomServiceTracker<>(JornadaNominaService.class, "getJornadaNominaService");
 
         try {
-            this.empleadoEstructuraService = service.getService();
+            this.empleadoEstructuraService = serviceEstructuraTracker.getService();
             this.jornadaNominaService = serviceNomina.getService();
             this.ciertosDatosEstructuraService = ciertosDatosEstructuraService.getService();
             this.jornadaNominaService = jornadaNominaServiceTracker.getService();
             this.customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
-            _userLocalService = (UserLocalService) ServiceLocator.getInstance().findService("com.liferay.portal.kernel.service.UserLocalService");
-            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
-            _objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
+            this._userLocalService = (UserLocalService) ServiceLocator.getInstance().findService("com.liferay.portal.kernel.service.UserLocalService");
+            this._objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
+            this._objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
         } catch (InterruptedException e) {
             LoggerUtil.info(LOG,"Error arrancando servicios", e);
         }

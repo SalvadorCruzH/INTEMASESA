@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component("sapInterfaceService")
 public class SapInterfaceService  extends AbstractSelfRegisteringService {
 
-    @Autowired
+    @Autowired(required = false)
     EmpleadoEstructuraService empleadoEstructuraService;
     @Autowired(required = false)
     JornadaNominaService jornadaNominaService;
@@ -29,9 +29,9 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     MarcajeService marcajeService;
     @Autowired(required = false)
     ResumenAnualService resumenAnualService;
-    @Autowired
+    @Autowired(required = false)
     EmpleadoDatosPersonalesService empleadoDatosPersonalesService;
-    @Autowired
+    @Autowired(required = false)
     EmpleadoDatosDomicilioService empleadoDatosDomicilioService;
     @Autowired(required = false)
     JornadaDiariaService jornadaDiariaService;

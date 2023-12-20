@@ -336,14 +336,14 @@ class TareasModule extends React.Component {
 
                         <div className="button-holder btn-wrapper btn-wrapper--inline">
                             <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi" aria-disabled="true"
-                               onClick={this.getAssignedToMe}>Asignadas a mi</a>
+                               onClick={this.getAssignedToMe}>{Liferay.Language.get('admin.task.assign.toMe')}</a>
                             <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
-                               aria-disabled="true" onClick={this.getAssignedToUserRol}>Asignadas a mi rol</a>
+                               aria-disabled="true" onClick={this.getAssignedToUserRol}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
                         </div>
 
                         <div className="ema-table-wrapper">
                             <table id="table-id" className="ema-table last">
-                                <caption className="sr-only">Sumario de la tabla</caption>
+                                <caption className="sr-only">{Liferay.Language.get('admin.task.summary')}</caption>
                                 <thead>
                                 <tr>
                                     {this.state.columns.map((column, i) => {
@@ -378,7 +378,11 @@ class TareasModule extends React.Component {
                                         </tbody>
                                     </>
                                 ) : (<div className="alert alert-info" role="alert">
-                                    No se han encontrado tareas nuevas
+                                    <tbody>
+                                        <tr data-objectId="{tarea.id}">
+                                            <td colSpan={7} className="empty"><div className="alert alert-info">{Liferay.Language.get('admin.task.no.task')}</div></td>
+                                        </tr>
+                                    </tbody>
                                 </div>)}
                             </table>
                         </div>
