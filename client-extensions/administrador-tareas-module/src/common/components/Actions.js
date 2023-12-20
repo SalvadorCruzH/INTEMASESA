@@ -160,7 +160,7 @@ class Actions extends React.Component {
                 },
                 id: 'consultarPeticionDialog',
                 refreshWindow: window,
-                title: 'Consulta',
+                title: 'Consulta de '+objectReviewed.assetType,
                 uri: url
             });
 
@@ -225,7 +225,7 @@ class Actions extends React.Component {
                 },
                 id: 'asesorDialog',
                 refreshWindow: window,
-                title: 'Editar',
+                title: 'Consulta de '+objectReviewed.assetType,
                 uri: url
             });
 

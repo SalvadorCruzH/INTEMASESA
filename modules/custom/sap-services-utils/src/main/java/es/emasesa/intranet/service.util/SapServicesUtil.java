@@ -398,6 +398,23 @@ public class SapServicesUtil {
 		 return datosEmpleadoRelacionLaboral;
 	 }
 
+     public JSONObject getImporteAnticipo(JSONArray datosEmpleados){
+         JSONObject datosCalculados = JSONFactoryUtil.createJSONObject();
+
+         JSONObject primerObjeto = datosEmpleados.getJSONObject(0);
+
+         double salarioBase = primerObjeto.getDouble("salarioBase");
+         double antiguedad = primerObjeto.getDouble("antiguedad");
+
+         double importeAnticipo = (salarioBase + antiguedad) * 30;
+         double reintegroMensual = importeAnticipo / 12;
+
+         datosCalculados.put("importeAnticipo", importeAnticipo);
+         datosCalculados.put("reintegroMensual", reintegroMensual);
+
+         return datosCalculados;
+     }
+
     public JSONObject getAyudaEscolar(User user) throws PortalException {
 
         if (LOG.isDebugEnabled()) {

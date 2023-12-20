@@ -696,3 +696,43 @@
     }
   }
 }
+
+.dialog-iframe-popup {
+  &.i-mainWrapper {
+    h1 {
+      margin-top: 2rem;
+    }
+    html:not(#__):not(#___) & {
+      height: 100svh;
+    }
+  }
+}
+
+.linkAsButton {
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #a8c855;
+  border-radius: 20px;
+  color: black;
+  padding: 10.5px 20px;
+  margin-block: 1rem;
+}
+
+html:not(#__):not(#___) {
+  #consultarPeticionDialog {
+    .modal-footer .btn.btn-link {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-family: "Roboto", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      color: black;
+      background-color: #a8c855;
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+  }
+}

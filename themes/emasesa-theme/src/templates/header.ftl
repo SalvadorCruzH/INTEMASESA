@@ -24,7 +24,7 @@
 			<a href="/group/guest/administrar-tareas" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />" id="i-btnAdminTareas" class="i-header__btnAdmin i-header__btnAdmin--goAdmin btn">
 				<@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/>
 			</a>
-			<a href="${themeDisplay.getURLHome()}" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />" id="i-btnAdminTareas" class="i-header__btnAdmin i-header__btnAdmin--salir btn">
+			<a href="${site_default_url}" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />" id="i-btnAdminTareas" class="i-header__btnAdmin i-header__btnAdmin--salir btn">
 				<@liferay.language key='es.emasesa.intranet.common.salir'/>
 			</a>
 			<button id="i-btnAdminTareasMobile" class="i-header__btnAdmin--mobile btn" title="<@liferay.language key='es.emasesa.intranet.common.administrar-tareas' />">
