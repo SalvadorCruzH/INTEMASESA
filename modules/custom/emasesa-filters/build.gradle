@@ -1,0 +1,5 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly project(":modules:common:base-module")
+	compileOnly project (':modules:common:settings-module')
+}
