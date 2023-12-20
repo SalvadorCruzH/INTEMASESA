@@ -101,6 +101,10 @@ public class RestEmasesaWorkflowApplication extends Application {
 		String[] assetTypes = new String[]{assetType};
 		JSONArray result = JSONFactoryUtil.createJSONArray();
 
+		if(byRole){
+			asigneeIds = null;
+		}
+
 		List<WorkflowTask> tasks = _workflowTaskManager.search(serviceContext.getCompanyId(), user.getUserId(), null,
 				null, assetTypes, null, null, asigneeIds, null,
 				null, completed, byRole, null, null, false,
@@ -115,8 +119,12 @@ public class RestEmasesaWorkflowApplication extends Application {
 			if(user.getUserId() == task.getAssigneeUserId()){
 				jsonTask.put("assigneePersonName",user.getFullName());
 			}else{
-				User assigneeUser = _userLocalService.getUser(task.getAssigneeUserId());
-				jsonTask.put("assigneePersonName",assigneeUser.getFullName());
+				String fullName = "Sin asignar";
+				if(task.getAssigneeUserId() > 0) {
+					User assigneeUser = _userLocalService.getUser(task.getAssigneeUserId());
+					fullName = assigneeUser.getFullName();
+				}
+				jsonTask.put("assigneePersonName", fullName);
 			}
 
 			result.put(jsonTask);
