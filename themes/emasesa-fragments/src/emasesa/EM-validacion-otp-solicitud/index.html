@@ -19,4 +19,23 @@
     </div>
 </div>
 
-<h3 id="validacion-otp-correcto" class="otp-success d-none" aria-hidden="true">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.validado")}</h3>
+<div id="validacion-otp-correcto" class="otp-success d-none alert alert-success" style="margin-top: 2rem;">
+    <div role="alert" class="alert-autofit-row autofit-row">
+        <div class="autofit-col">
+            <div class="autofit-section">
+                <span class="alert-indicator">
+                    <svg class="lexicon-icon lexicon-icon-check-circle-full" role="presentation" viewBox="0 0 512 512">
+                        <path class="lexicon-icon-outline"
+                            d="M471.2,117.7L280.3,340.8c-5.9,6.8-14.6,11.2-24.3,11.2c-8.8,0-16.8-3.6-22.6-9.4l-96-96.1 c-29.1-28.9,16.1-74.2,45.2-45.3l71.6,71.7L423.7,74.8c2.2-2.5,4.7-3.9,7.1-5.5C385,26.5,323.7,0,256,0C114.6,0,0,114.6,0,256 s114.6,256,256,256s256-114.6,256-256C512,205,496.9,157.6,471.2,117.7z">
+                        </path>
+                    </svg>
+                </span>
+            </div>
+        </div>
+        <div class="autofit-col autofit-col-expand">
+            <div class="autofit-section">
+                ${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.validado")}
+            </div>
+        </div>
+    </div>
+</div>
