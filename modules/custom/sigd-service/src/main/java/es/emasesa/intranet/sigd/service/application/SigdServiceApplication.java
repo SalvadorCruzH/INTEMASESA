@@ -307,7 +307,7 @@ public class SigdServiceApplication{
 		JSONArray ficherosArray = JSONFactoryUtil.createJSONArray();
 		JSONObject fichero = JSONFactoryUtil.createJSONObject();
 		fichero.put(SidgServiceKeys.CREAR_DOCUMENTO_NUMERO_ORDEN, "1");
-		fichero.put(SidgServiceKeys.CREAR_DOCUMENTO_EXTENSION, "png");
+		fichero.put(SidgServiceKeys.CREAR_DOCUMENTO_EXTENSION, "pdf");
 		fichero.put(SidgServiceKeys.CREAR_DOCUMENTO_FICHERO, pdf);
 		ficherosArray.put(fichero);
 		json.put(SidgServiceKeys.CREAR_DOCUMENTO_FICHEROS, ficherosArray);
