@@ -3,7 +3,7 @@
     padding-bottom: .5rem;
     border-bottom: 1px solid $color-dashed;
     @include media-breakpoint-down(sm) {
-        overflow-x: scroll;
+        overflow-x: auto;
     }
     &__items {
         list-style-type: none;

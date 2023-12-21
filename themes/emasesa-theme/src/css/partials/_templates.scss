@@ -20,20 +20,6 @@
         }
         &__img {
             display: none;
-            // height: m-rem(435px);
-            // width: 100%;
-            // max-width: 100%;
-            // border-radius: m-rem(40px);
-            // object-fit: cover;
-            // @include media-breakpoint-up(md) {
-
-            // }
-        }
-        &__contenido {
-
-        }
-        &__categoriasContainer {
-
         }
         &__categorias {
             @include font_base;
@@ -50,20 +36,19 @@
                 text-transform: uppercase;
             }
         }
-        &__categoria {
-
-        }
         &__fecha {
             @include font_base;
             font-size: m-rem(16px);
             color: #000000;
             background: #0096DA3A;
+            width: -moz-fit-content;
             width: fit-content;
             padding: 0 .5rem;
             @include media-breakpoint-up(md) {
                 font-size: m-rem(18px);
                 color: #000000;
                 background: #0096DA3A;
+                width: -moz-fit-content;
                 width: fit-content;
                 padding: 0 .5rem;
             }
@@ -154,6 +139,7 @@
                 margin-bottom: 1rem;
             }
             &__categorias {
+                width: -moz-fit-content;
                 width: fit-content;
                 background-color: $color-medium-light;
                 padding: m-rem(2px) m-rem( 10px);
@@ -597,12 +583,6 @@
                 background-color: black;
                 text-decoration: none;
             }
-            @include media-breakpoint-up(md) {
-                &__link {
-
-                }
-            }
-
             &__bgImg{
                 height: 429px;
             }
@@ -716,7 +696,7 @@
     .ema-tarjeta-colores {
         display: flex;
         column-gap: 0.5rem;
-        overflow-x: scroll;
+        overflow-x: auto;
         margin: auto;
         padding-left:m-rem(5px);
         max-width: m-rem(398px);
@@ -735,12 +715,8 @@
             justify-content: flex-end;
         }
 
-        @media (min-width: 1500px) {
-            // max-width: m-rem(1300px);
-        }
         @media (min-width: 1920px) {
             max-width: m-rem(1920px);
-
         }
 
         &::-webkit-scrollbar {
@@ -868,7 +844,7 @@
         @include media-breakpoint-up(xl) {
             max-width: m-rem(1305px);
             width: 88%;
-            overflow-x: scroll;
+            overflow-x: auto;
             column-gap: 2.2vw;
             flex-wrap: unset;
             justify-content: unset;

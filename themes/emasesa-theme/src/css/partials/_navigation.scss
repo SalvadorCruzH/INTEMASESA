@@ -4,9 +4,6 @@
         @include media_breakpoint_up(xl) {
            display: block;
         }
-        &__ul {
-
-        }
         &__li {
             border-bottom: m-rem(2px) solid transparent;
             margin-right: m-rem(26px);
@@ -51,12 +48,6 @@
                         width: 10px;
                         height: 19px;
                         margin: 3px 0 0 0.5rem;
-                    }
-                    &:hover {
-                        &::after {
-                            // transform: rotate(0deg);
-                            // background: transparent url("@theme_image_path@/icons/angle-down-blue.svg") center center no-repeat;
-                        }
                     }
                 }
                 &.show {
@@ -208,9 +199,6 @@
                 }
             }
         }
-        &__userLink {
-
-        }
     }
 
     /* mobile navigation */
@@ -295,9 +283,6 @@
             margin-bottom: 0;
         }
         .i-navMainMobile {
-            &__ul {
-
-            }
             &__li {
                 border-bottom: m-rem(1px) solid $color-ultra-light-grey;
             }

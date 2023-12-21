@@ -1,9 +1,6 @@
 .i-mainWrapper {
     .i-header {
         box-shadow: 0 m-rem(3px) m-rem(6px) rgba(black, 0.16);
-        @include media_breakpoint_up(xl) {
-            // box-shadow: none;
-        }
         &__wrapper {
             display: flex;
             justify-content: space-between;

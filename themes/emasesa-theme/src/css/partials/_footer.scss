@@ -11,7 +11,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-    
             @include media-breakpoint-up(xl) {
                 display: flex;
                 flex-direction: row;
@@ -37,7 +36,7 @@
             @include font_base-bold;
             font-size: m-rem(38px);
             color: white;
-    
+
         }
         &__menuWrapper {
             display: flex;
@@ -48,7 +47,6 @@
                 flex-basis: 70%;
                 align-items: flex-start;
             }
-    
         }
         &__menu {
             .navbar-nav {
@@ -75,12 +73,8 @@
             .navbar-nav {
                 flex-wrap: wrap;
                 display: flex;
-                // flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                @include media-breakpoint-up(xl) {
-                   
-                }
             }
             li {
                 .nav-link {
@@ -97,7 +91,7 @@
                         }
                     }
                 }
-            } 
+            }
         }
     }
 }
