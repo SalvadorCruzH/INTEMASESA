@@ -61,10 +61,10 @@ class TareasModule extends React.Component {
             columns: columns,
             view: 1,
             configuration: {},
-            start:0,
-            end:10,
-            delta:10,
-            showCompleted:false
+            start: 0,
+            end: 10,
+            delta: 10,
+            showCompleted: false
         }
         console.debug(this);
     }
@@ -85,34 +85,35 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToMeButton = (event) => {
-        this.setState({start:0,end:10});
+        this.setState({start: 0, end: 10});
         this.getAssignedToMe();
     }
 
     getAssignedToMe = () => {
         this.setState({
-           view: 1
+            view: 1
         });
 
         setTimeout(() => {
-             TareasApi.getWorkflowTask("",this.state.showCompleted,false,this.state.start,this.state.end,this.setTasks, this.errorHandler);
+            TareasApi.getWorkflowTask("", this.state.showCompleted, false, this.state.start, this.state.end, this.setTasks, this.errorHandler);
         }, 100)
 
     }
 
     getAssignedToUserRolButton = (event) => {
-        this.setState({start:0,end:10});
+        this.setState({start: 0, end: 10});
         this.getAssignedToUserRol();
     }
 
     getAssignedToUserRol = () => {
 
+        console.log('asadadasd');
         this.setState({
-          view: 2
+            view: 2
         });
-        this.setState({start:0,end:10});
+        this.setState({start: 0, end: 10});
         setTimeout(() => {
-               TareasApi.getWorkflowTask("",this.state.showCompleted,true,this.state.start,this.state.end,this.setTasks, this.errorHandler);
+            TareasApi.getWorkflowTask("", this.state.showCompleted, true, this.state.start, this.state.end, this.setTasks, this.errorHandler);
         }, 100)
     }
 
@@ -134,19 +135,19 @@ class TareasModule extends React.Component {
         }
     }
 
-    showMore = () =>{
+    showMore = () => {
 
         this.getTasksUser();
     }
 
     addTareaExtraData = (tarea) => {
+
         var jsonObjectMapping = {};
-        try{
+        try {
             jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
-        }catch(e){
+        } catch (e) {
             jsonObjectMapping = this.state.configuration.objectMapping;
         }
-        console.debug(jsonObjectMapping);
         let objectMapping = jsonObjectMapping[tarea.attributes.entryType];
         if (objectMapping) {
             let urlObject = objectMapping.url;
@@ -210,6 +211,7 @@ class TareasModule extends React.Component {
                     let result = "";
                     try {
                         result = JSON.parse(JSON.stringify(response));
+                        console.debug('Hola');
                         console.debug(result);
                         if (result.totalCount > 0) {
 
@@ -239,17 +241,16 @@ class TareasModule extends React.Component {
             tareas: []
         });
         if (result && result.length > 0) {
-            result.forEach((tarea, index) => {
+            result.forEach((tarea, index, result) => {
                 this.addTareaExtraData(tarea);
-                if(index === 0){
+                if (index === 0) {
                     this.setState({loading: false});
                 }
             });
-            this.setState({start:start+delta,end:end+delta});
-        }else{
+            this.setState({start: start + delta, end: end + delta});
+        } else {
             this.setState({loading: false});
         }
-
 
 
     }
@@ -383,8 +384,8 @@ class TareasModule extends React.Component {
         this.setState({tareas: tareas});
     }
 
-    showCompletedTask = () =>{
-        this.setState({showCompleted:!this.state.showCompleted});
+    showCompletedTask = () => {
+        this.setState({showCompleted: !this.state.showCompleted});
 
         this.getTasksUser();
 
@@ -394,73 +395,82 @@ class TareasModule extends React.Component {
 
         return (
             <div>
-                {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
 
-                        <div className="button-holder btn-wrapper btn-wrapper--inline">
-                            <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi"
-                                onClick={this.getAssignedToMeButton} aria-selected={this.state.view === 1}>{Liferay.Language.get('admin.task.assign.toMe')}</a>
-                            <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
-                                onClick={this.getAssignedToUserRolButton} aria-selected={this.state.view === 2}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
-                        </div>
+                <div className="button-holder btn-wrapper btn-wrapper--inline">
+                    <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi"
+                       onClick={this.getAssignedToMeButton}
+                       aria-selected={this.state.view === 1}>{Liferay.Language.get('admin.task.assign.toMe')}</a>
+                    <a href id="toRole" className="btn btn-primary" aria-label="Asignadas a mi rol"
+                       onClick={this.getAssignedToUserRolButton}
+                       aria-selected={this.state.view === 2}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
+                </div>
 
-                        <div className="filter-wrapper">
+                <div className="filter-wrapper">
 
-                            <label for="showCompleted">
-                                <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"
-                                onClick={this.showCompletedTask}  aria-selected={this.state.showCompleted} />
-                                <span>{Liferay.Language.get("show.completed.tasks")}</span>
-                            </label>
-                        </div>
+                    <label for="showCompleted">
+                        <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"
+                               onClick={this.showCompletedTask} aria-selected={this.state.showCompleted}/>
+                        <span>{Liferay.Language.get("show.completed.tasks")}</span>
+                    </label>
+                </div>
 
-                        <div className="ema-table-wrapper">
-                            <table id="table-id" className="ema-table last">
-                                <caption className="sr-only">{Liferay.Language.get('admin.task.summary')}</caption>
-                                <thead>
-                                <tr>
-                                    {this.state.columns.map((column, i) => {
-                                        return (
-                                            <>
-                                                <th scope="col"><span className="order" onClick={() => this.orderBy(column)}><i
-                                                    className={column.icon}></i></span>{column.label}</th>
-                                            </>)
-                                    })}
-                                </tr>
-                                </thead>
-                                {this.state.tareas.length != 0 ? (<>
-                                        <tbody>
-                                        {this.state.tareas.map((tarea, i) => {
-                                            console.debug('Tarea'+i)
-                                            console.debug(tarea);
-                                            return (<>
-                                                    <tr data-objectId={tarea.attributes.entryClassPK} data-workflowTaskId={tarea.workflowTaskId}>
-                                                        <td>{tarea.objectData.numeroDeMatricula}</td>
-                                                        <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
-                                                        <td>{tarea.attributes.entryType}</td>
-                                                        <td>{window.timestampToDdMmYyyy(tarea.createDate)}</td>
-                                                        <td>{tarea.assigneePersonName && tarea.assigneePersonName}</td>
-                                                        <td>{tarea.objectData.estadoObjeto.name}</td>
-                                                        <td><Actions tarea={tarea} configuration={this.state.configuration}
-                                                                     refresh={this.loadDependencies} loading={this.setLoading}/></td>
-                                                    </tr>
-                                                </>
-                                            )
-                                        })}
-                                        </tbody>
-                                    </>
-                                ) : (
+                <div className="ema-table-wrapper">
+                    <table id="table-id" className="ema-table last">
+                        <caption className="sr-only">{Liferay.Language.get('admin.task.summary')}</caption>
+                        <thead>
+                        <tr>
+                            {this.state.columns.map((column, i) => {
+                                return (
+                                    <>
+                                        <th scope="col"><span className="order" onClick={() => this.orderBy(column)}><i
+                                            className={column.icon}></i></span>{column.label}</th>
+                                    </>)
+                            })}
+                        </tr>
+                        </thead>
+                        {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
+                            {this.state.tareas.length != 0 ? (<>
                                     <tbody>
-                                        <tr data-objectId="{tarea.id}">
-                                            <td colSpan={7} className="empty"><div className="alert alert-info">{Liferay.Language.get('admin.task.no.task')}</div></td>
-                                        </tr>
+                                    {this.state.tareas.map((tarea, i) => {
+                                        console.debug('Tarea --> ' + i)
+                                        console.debug(tarea);
+                                        return (<>
+                                                <tr data-objectId={tarea.attributes.entryClassPK}
+                                                    data-workflowTaskId={tarea.workflowTaskId}>
+                                                    <td>{tarea.objectData.numeroDeMatricula}</td>
+                                                    <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
+                                                    <td>{tarea.attributes.entryType}</td>
+                                                    <td>{window.timestampToDdMmYyyy(tarea.createDate)}</td>
+                                                    <td>{tarea.assigneePersonName && tarea.assigneePersonName}</td>
+                                                    <td>{tarea.objectData.estadoObjeto.name}</td>
+                                                    <td><Actions tarea={tarea} configuration={this.state.configuration}
+                                                                 refresh={this.loadDependencies}
+                                                                 loading={this.setLoading}/></td>
+
+                                                </tr>
+                                            </>
+                                        )
+                                    })}
                                     </tbody>
-                                )}
-                            </table>
-                            <div class="button-holder">
-                                <a href id="more" class="btn btn-primary" aria-label="Mostrar más" aria-disabled="true" onClick={this.showMore}>Mostrar más</a>
-                            </div>
-                        </div>
-                    </>
-                )}
+                                </>
+                            ) : (
+                                <tbody>
+                                <tr>
+                                    <td colSpan={7} className="empty">
+                                        <div
+                                            className="alert alert-info">{Liferay.Language.get('admin.task.no.task')}</div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            )}
+                        </>)}
+                    </table>
+                    <div className="button-holder">
+                        <a href id="more" className="btn btn-primary" aria-label="Mostrar más" aria-disabled="true"
+                           onClick={this.showMore}>{Liferay.Language.get('task.show.more')}</a>
+                    </div>
+                </div>
+
             </div>
         )
     }
