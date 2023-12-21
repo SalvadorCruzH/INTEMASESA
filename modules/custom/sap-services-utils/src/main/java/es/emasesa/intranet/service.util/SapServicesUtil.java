@@ -71,6 +71,9 @@ public class SapServicesUtil {
         JSONArray resumenAnual = JSONFactoryUtil.createJSONArray();
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            if(_resumenAnualService == null){
+                activate(null);
+            }
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             resumenAnual = _resumenAnualService.obtenerResumenAnual(pernr, anno);

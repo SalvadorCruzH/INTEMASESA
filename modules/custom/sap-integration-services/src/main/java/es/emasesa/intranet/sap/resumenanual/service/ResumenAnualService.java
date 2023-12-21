@@ -48,17 +48,18 @@ public class ResumenAnualService {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEmpleados.value.getItem()));
                 for(int i=0;i<data.length();i++){
                     JSONObject jsonObject = data.getJSONObject(i);
+                    // Se han quitado los JSONFactoryUtil.createJSONArray porque daba error
                     if (contingenteVacaciones.value != null){
-                        jsonObject.put("contingenteVacaciones", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(contingenteVacaciones.value)));
+                        jsonObject.put("contingenteVacaciones", JSONFactoryUtil.looseSerializeDeep(contingenteVacaciones.value));
                     }
                     if (computoConFuturo.value != null){
-                        jsonObject.put("computoConFuturo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(computoConFuturo.value)));
+                        jsonObject.put("computoConFuturo", JSONFactoryUtil.looseSerializeDeep(computoConFuturo.value));
                     }
                     if (computoSinFuturo.value != null){
-                        jsonObject.put("computoSinFuturo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(computoSinFuturo.value)));
+                        jsonObject.put("computoSinFuturo", JSONFactoryUtil.looseSerializeDeep(computoSinFuturo.value));
                     }
                     if (computoSinFuturoAnnoAnteri.value != null){
-                        jsonObject.put("computoSinFuturoAnnoAnteri", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(computoSinFuturoAnnoAnteri.value)));
+                        jsonObject.put("computoSinFuturoAnnoAnteri", JSONFactoryUtil.looseSerializeDeep(computoSinFuturoAnnoAnteri.value));
                     }
                 }
             }
