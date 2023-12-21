@@ -1,0 +1,13 @@
+.em-configuracionesSistema--inputs {
+	display: flex;
+	flex-wrap:wrap;
+	
+}
+.em-configuracionesSistema--inputs-input{
+	padding-left:1rem;
+	padding-bottom:1rem;
+}
+
+.em-buttom-submit {
+	margin-left:1rem;
+}
