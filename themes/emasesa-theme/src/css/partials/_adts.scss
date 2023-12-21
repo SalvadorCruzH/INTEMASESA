@@ -19,7 +19,7 @@
             display: grid;
             grid-template-columns: repeat(3, m-rem(297px));
             grid-gap: m-rem(25px);
-            overflow-x: scroll;
+            overflow-x: auto;
             @include media-breakpoint-up(md) {
                 grid-template-columns: repeat(3, m-rem(282px));
                 grid-gap: m-rem(32px);
@@ -30,7 +30,7 @@
             }
             @include media-breakpoint-up(xl) {
                 grid-gap: m-rem(55px);
-                
+
             }
         }
 
@@ -39,7 +39,7 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100%;
-            
+
             &__imgContainer {
                 background-size: cover;
                 background-repeat: no-repeat;
@@ -71,7 +71,7 @@
                 height: 100%
             }
             &__categoriasContainer {
-                
+
             }
             &__categorias {
                 @include font_base;
@@ -90,7 +90,7 @@
                 -webkit-box-orient: vertical;
                 white-space: normal;
                 @include media-breakpoint-up(md) {
-                    
+
                 }
             }
             &__categoria {
@@ -347,7 +347,7 @@
             &--3 {
                 @include media-breakpoint-up(md) {
                     grid-column: 1 / 3;
-                
+
                 }
                 @include media-breakpoint-up(lg) {
                     grid-column: 3 / 3;
@@ -361,7 +361,7 @@
                 @include media-breakpoint-up(lg) {
                     grid-column: 3 / 3;
                     grid-row: 2 / 3;
-                } 
+                }
             }
             &--5 {
                 @include media-breakpoint-up(md) {
@@ -371,7 +371,7 @@
                     grid-column: 3 / 3;
                     grid-row: 3 / 4;
                 }
-               
+
             }
             &--1,
             &--2 {
@@ -379,7 +379,7 @@
                 box-shadow: 0px 3px 6px #00000029;
                 padding: 3rem 2rem 3.5rem;
                 .ema-novedad-item {
-                    
+
                 }
                 .ema-novedad-item__icon {
                     display: none;

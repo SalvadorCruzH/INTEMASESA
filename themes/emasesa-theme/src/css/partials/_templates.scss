@@ -716,7 +716,7 @@
     .ema-tarjeta-colores {
         display: flex;
         column-gap: 0.5rem;
-        overflow-x: scroll;
+        overflow-x: auto;
         margin: auto;
         padding-left:m-rem(5px);
         max-width: m-rem(398px);
@@ -868,7 +868,7 @@
         @include media-breakpoint-up(xl) {
             max-width: m-rem(1305px);
             width: 88%;
-            overflow-x: scroll;
+            overflow-x: auto;
             column-gap: 2.2vw;
             flex-wrap: unset;
             justify-content: unset;
