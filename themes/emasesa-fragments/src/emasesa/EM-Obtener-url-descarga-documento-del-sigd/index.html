@@ -1,0 +1,6 @@
+[#assign sigdService = serviceLocator.findService("es.emasesa.intranet.sigd.service.application.SigdServiceApplication")]
+[#assign objectEntryId = paramUtil.getLong(request, "classPK")]
+[#assign url = sigdService.getUrlObjectEntryByDocumentName(configuration.nombreDocumento, objectEntryId)]
+[#if url?has_content]]
+   <a href="${url}" target="_blank">${configuration.nombreDocumento}</a>
+[/#if]

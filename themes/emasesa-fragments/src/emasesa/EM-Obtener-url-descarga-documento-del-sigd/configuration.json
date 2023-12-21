@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+					{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Nombre documento",
+					"localizable": true,
+					"name": "nombreDocumento",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
