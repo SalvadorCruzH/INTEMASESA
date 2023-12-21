@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.template.ServiceLocator;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -38,10 +39,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 import es.emasesa.intranet.base.constant.EmasesaConstants;
+import es.emasesa.intranet.base.util.CustomObjectUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.settings.osgi.SigdServicesSettings;
 import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
@@ -170,8 +174,11 @@ public class SigdServiceApplication{
 	  * tipo=1 y procesarContenidos=false
 	  * @param idElemento obtenido en insertarDocumento()
 	  * 
+	  * @return responseBody
 	 */
-	public void obtenerElemento(String idElemento) {
+	public String obtenerElemento(String idElemento) {
+		
+		String responseBody = StringPool.BLANK;
 		try {
 			String url = _configuration.obtenerElementoEndPoint();
 			LoggerUtil.debug(LOG,"Se obtiene URL del enpoint: " + url);
@@ -197,7 +204,7 @@ public class SigdServiceApplication{
 			response = httpClient.execute(get);
 			LoggerUtil.debug(LOG,"Respuesta obtenida" + response.toString());
 			HttpEntity responseEntity = response.getEntity();
-		    String responseBody = EntityUtils.toString(responseEntity);
+		    responseBody = EntityUtils.toString(responseEntity);
 		    LoggerUtil.debug(LOG, "Entidad obtenida tras la ejecucion del get: " + responseBody);
 			
 			 response.close();
@@ -208,6 +215,115 @@ public class SigdServiceApplication{
 		} catch (IOException e) {
 			 LoggerUtil.error(LOG, "Error en el servicio de obtener Elemento en SIGD: ", e);
 		}
+		
+		return responseBody;
+	}
+	
+	
+	/**
+	  * Se obtiene URL de descarga del SIGD para un id
+	  * @param idElemento
+	  * 
+	  * @return urlDescarga
+	  * 
+	 */
+	public String getUrlDescarga(String idElemento) {
+		
+		LoggerUtil.debug(LOG,"Se procede a obtener la URL de descarga en SIGD del documento con id: " + idElemento);
+		String jsonString = obtenerElemento(idElemento);
+		LoggerUtil.debug(LOG,"jsonString: " + jsonString);
+		String urlDescarga = StringPool.BLANK;
+		try {
+	       JSONObject jsonObject = JSONFactoryUtil.createJSONObject(jsonString);
+	       if(Validator.isNotNull(jsonObject)) {
+	    	   urlDescarga = jsonObject.getJSONObject("obtenerElementoResponse").getJSONObject("documentoOrigen").getString("urlDescarga");
+	       }
+	       LoggerUtil.debug(LOG, "URL de Descarga: " + urlDescarga);
+	    } catch (Exception e) {
+	       LoggerUtil.error(LOG, "Error al intentar obtener la URL de descarga del SIGD: ", e);
+	    }
+		return urlDescarga;
+	}
+	
+	
+	/**
+	  * Se obtiene URL de descarga de un documento de un objectEntry consultando el campo del object sIGDIds
+	  * @param nombreDocumento
+	  * @param objectEntryId
+	  * 
+	  * @return url
+	  * 
+	 */
+	public String getUrlObjectEntryByDocumentName(String nombreDocumento, long objectEntryId){
+		ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+		String url = StringPool.BLANK;
+		
+		try {
+			LoggerUtil.debug(LOG,"Se procede a obtener: " + nombreDocumento + " para el objecteEntry: " + objectEntryId);
+			Thread.currentThread().setContextClassLoader(actualClassLoader);
+			if (_customObjectUtil == null){
+	            activate(null);
+	        }
+			LoggerUtil.debug(LOG,"Obteniendo el valor del campo sIGDIds del objecyEntry: " + objectEntryId);
+			String sIGDIds = _customObjectUtil.getValueObjectField(objectEntryId, "sIGDIds");
+			LoggerUtil.debug(LOG,"Obtenido sIGDIds: " + sIGDIds);
+			
+			if(Validator.isNotNull(sIGDIds) && !(sIGDIds.isEmpty())){
+				LoggerUtil.debug(LOG,"Procedemos a recuperar el Id del documento: " + nombreDocumento);
+				String documentId = getIdSigdByDocumentName(sIGDIds, nombreDocumento);
+				LoggerUtil.debug(LOG,"Obtenido el id: " + documentId);				
+				if(Validator.isNotNull(documentId) && !(documentId.isEmpty())) {
+					LoggerUtil.debug(LOG,"Obteniendo url de descarga" + documentId);
+					url = getUrlDescarga(documentId);
+					LoggerUtil.debug(LOG,"URL obtenida" + url);
+				}else {
+					LoggerUtil.debug(LOG,"No existe documento con nombre: " + nombreDocumento + " para el objectEntry: " + objectEntryId);
+				}				
+			}else {
+				LoggerUtil.debug(LOG,"El campo sIGDIds del objectEntry es vacío.");
+			}
+		
+		}finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        }
+		
+		return url;
+	}
+	
+	/**
+	  * Obtiene el ID de un documento por su nombre
+	  * @param sIGDIds
+	  * @param nombreDocumento
+	  * 
+	  * @return documentId
+	  * 
+	 */
+	public String getIdSigdByDocumentName(String sIGDIds, String nombreDocumento) {
+		String documentId = StringPool.BLANK;
+		
+		try {
+			
+			LoggerUtil.debug(LOG,"Se procede a obtener: " + nombreDocumento + " del JSON: " + sIGDIds);
+            JSONArray jsonArray = JSONFactoryUtil.createJSONArray(sIGDIds);
+            LoggerUtil.debug(LOG,"Se convierte a Array: " + jsonArray);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                LoggerUtil.debug(LOG," Se obtiene el objeto JSON en la posición i: " + jsonObject);
+
+                if (nombreDocumento.equals(jsonObject.getString("documentName"))) {
+                	 LoggerUtil.debug(LOG," Verificar si el documentName coincide: " + nombreDocumento);
+                	documentId = jsonObject.getString("idSIGD");
+               	 	LoggerUtil.debug(LOG,"Obtenido el documentId: " + documentId);
+                    break; 
+                }
+            }
+        } catch (JSONException e) {
+        	LoggerUtil.error(LOG, "Error al intentar recuperar el id del sigd: ", e);
+        }
+		
+		return documentId;
+		
 	}
 	
 	 /**
@@ -623,6 +739,12 @@ public class SigdServiceApplication{
 				}			   
 			   return formConfiguration;
 		   }
+		   
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		this._customObjectUtil = (CustomObjectUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomObjectUtil");
+	}
 	
 	
 	@Reference
@@ -636,5 +758,7 @@ public class SigdServiceApplication{
 	
 	 @Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+	 
+	private CustomObjectUtil _customObjectUtil;
 }
 
