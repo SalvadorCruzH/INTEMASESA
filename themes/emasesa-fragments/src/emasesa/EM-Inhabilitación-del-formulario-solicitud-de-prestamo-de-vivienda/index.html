@@ -1,0 +1,15 @@
+[#assign userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")]
+[#assign sapUtil = serviceLocator.findService("es.emasesa.intranet.service.util.SapServicesUtil")]
+[#assign userId = themeDisplay.getUserId()]
+[#assign user = userLocalService.getUserById(userId)]
+[#assign expandoValueLocalService = serviceLocator.findService("com.liferay.expando.kernel.service.ExpandoValueLocalService")]
+[#assign matricula = expandoValueLocalService.getData(themeDisplay.getCompanyId(), "com.liferay.portal.kernel.model.User", "CUSTOM_FIELDS", "matricula", userId, "")]
+[#assign prestamoEmpleado = sapUtil.getEmpleadoPrestamos(matricula,"0000-00-00")]
+[#assign importeVivienda = prestamoEmpleado.get(0).get("importeVivienda")]
+<div class="em-block-form">
+	<div class="em-message">${configuration.textoMensaje}</div>
+</div>
+
+<script>
+var importeVivienda = '${importeVivienda}';
+</script>
