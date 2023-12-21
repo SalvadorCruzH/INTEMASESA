@@ -6,7 +6,7 @@
     <div id="input-wrapper" class="ema-input-wrapper text-truncate d-none" aria-hidden="true">
         <div>
             <label class="" id="qtts-text-input-label">${languageUtil.get(locale, "es.emasesa.intranet.fragmentos.otp.codigo")}</label>
-            <input id="otp-input" class="form-control" placeholder="${configuration.placeholder}" type="text" disabled aria-disabled="true">
+            <input id="otp-input" class="form-control" placeholder="${configuration.placeholder}" type="text" disabled aria-disabled="true" aria-label="${configuration.placeholder}">
             <input id="timestampGeneration-input" type="hidden">
         </div>
         <button id="validate-otp-button" type="button" class="btn btn-nm btn-primary" disabled aria-disabled="true">
