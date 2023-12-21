@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.sap.document.sap.rfc.functions.ZPESTINSAYUDAESCOLAR;
 import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -37,12 +38,12 @@ public class AyudaEscolarService {
         try {
             ClassLoader objectFactoryClassLoader = ZWSPEAYUDAESCOLAR.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            ZPESTINSAYUDAESCOLAR tInsAyudaEscolar = new ZPESTINSAYUDAESCOLAR();
             Holder<TableOfZpeStAyudasSolicitadas> tAyudasSolicitadas = new Holder<>();
             Holder<TableOfZpeStBeneficiarios> tBeneficiarios = new Holder<>();
             Holder<TableOfZpeStEstudios> tEstudios = new Holder<>();
-            Holder<TableOfZpeStInsAyudaEscolar> tInsAyudaEscolar = new Holder<>();
 
-            port.zPeAyudaEscolar(pernr, tAyudasSolicitadas ,tBeneficiarios ,tEstudios, tInsAyudaEscolar);
+            port.zPeAyudaEscolar(pernr, tInsAyudaEscolar, tAyudasSolicitadas, tBeneficiarios ,tEstudios);
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
             if (tAyudasSolicitadas.value != null){
                 jsonReturn.put("ayudasSolicitadas", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tAyudasSolicitadas.value.getItem())));
@@ -53,7 +54,7 @@ public class AyudaEscolarService {
             if (tEstudios.value != null){
                 jsonReturn.put("estudios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEstudios.value.getItem())));
             }
-            if (tInsAyudaEscolar.value != null){
+            if (tInsAyudaEscolar != null){
                 jsonReturn.put("ayudaEscolar", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInsAyudaEscolar.value.getItem())));
             }
             return jsonReturn;
