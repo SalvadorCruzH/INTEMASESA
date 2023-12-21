@@ -1,0 +1,9 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "code",
+  "name": "EM - Inhabilitación del Formulario Solicitud de Prestamo de Vivienda",
+  "type": "component"
+}
