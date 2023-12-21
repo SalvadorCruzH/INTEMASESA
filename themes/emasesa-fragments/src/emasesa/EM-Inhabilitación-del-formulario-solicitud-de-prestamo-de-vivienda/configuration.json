@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Texto del Mensaje",
+					"localizable": true,
+					"name": "textoMensaje",
+					"type": "text"
+				}
+      ]
+		}
+	]
+}
