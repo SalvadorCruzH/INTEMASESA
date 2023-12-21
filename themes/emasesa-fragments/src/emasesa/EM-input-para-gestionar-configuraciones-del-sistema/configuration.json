@@ -1,0 +1,48 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "es.emasesa.intranet.settings.configuration.AyudaEscolarFormConfiguration",
+					"label": "pid",
+					"localizable": true,
+					"name": "pidValue",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "startDateViewAyudaEscolarForm",
+					"label": "Config Key 1",
+					"localizable": true,
+					"name": "configKey1",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "endDateViewAyudaEscolarForm",
+					"label": "Config Key 2",
+					"localizable": true,
+					"name": "configKey2",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Valor del Label del Input 1",
+					"localizable": true,
+					"name": "inputLabel1",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Valor del Label del Input 2",
+					"localizable": true,
+					"name": "inputLabel2",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

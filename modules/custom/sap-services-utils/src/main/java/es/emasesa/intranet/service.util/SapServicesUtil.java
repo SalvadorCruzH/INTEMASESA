@@ -400,7 +400,7 @@ public class SapServicesUtil {
 
      public JSONArray getImporteAnticipo(JSONArray datosEmpleados){
          JSONArray datosCalculadosArray = JSONFactoryUtil.createJSONArray();
-
+         LOG.debug("[E] getImporteAnticipo " + datosEmpleados.toString());
          JSONObject primerObjeto = datosEmpleados.getJSONObject(0);
 
          double salarioBase = primerObjeto.getDouble("salarioBase");
@@ -415,7 +415,7 @@ public class SapServicesUtil {
          JSONObject datosCalculados = JSONFactoryUtil.createJSONObject();
          datosCalculados.put("importeAnticipo", redondeoImporteAnticipo);
          datosCalculados.put("reintegroMensual", redondeoReintegroMensual);
-
+         LOG.debug("[E] este metodo devuelve " + datosCalculadosArray.toString());
          datosCalculadosArray.put(datosCalculados);
 
          return datosCalculadosArray;

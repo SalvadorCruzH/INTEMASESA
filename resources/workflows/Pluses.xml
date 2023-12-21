@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>2a78f74c-fa92-6923-7d62-533ee0af8044</name>
-	<version>24</version>
+	<version>33</version>
 	<state>
 		<name>envioSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -102,7 +102,7 @@ customWorkflowUtilTracker.close();
 
 ]]>
 				</script>
-				<script-language>java</script-language>
+				<script-language>groovy</script-language>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
@@ -135,8 +135,8 @@ customWorkflowUtilTracker.close();
 			<![CDATA[
 				{
 					"xy": [
-						62.546875,
-						-64.5
+						61.546875,
+						-63.5
 					],
 					"terminal": true
 				}
@@ -145,7 +145,7 @@ customWorkflowUtilTracker.close();
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
-				<description></description>
+				<description>Cambiar estado</description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
 import com.liferay.portal.util.*;
@@ -203,8 +203,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						58.546875,
-						149.5
+						59.546875,
+						148.5
 					]
 				}
 			]]>
@@ -258,9 +258,12 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>jefedepartarmento@mail.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId"); customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
