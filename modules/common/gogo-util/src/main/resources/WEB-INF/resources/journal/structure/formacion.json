@@ -1,0 +1,590 @@
+{
+    "definitionSchemaVersion": "2.0",
+    "availableLanguageIds": [
+        "es_ES"
+    ],
+    "successPage": {
+        "body": {},
+        "title": {},
+        "enabled": false
+    },
+    "defaultLanguageId": "es_ES",
+    "fields": [
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": true,
+            "displayStyle": "singleline",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción07715800",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción07715800"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "formacionTitle",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "hideField": false,
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Título"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text95572821",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": false,
+            "displayStyle": "multiline",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción07715800",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción07715800"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "formacionResumen",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "hideField": false,
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Resumen"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text04507321",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Descripción"
+            },
+            "type": "rich_text",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "text",
+            "repeatable": false,
+            "name": "RichText91942079",
+            "localizable": true,
+            "fieldReference": "formacionDescripcion",
+            "tip": {
+                "es_ES": ""
+            }
+        },
+        {
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "A quién va dirigido"
+            },
+            "type": "rich_text",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "text",
+            "repeatable": false,
+            "name": "RichText08062765",
+            "localizable": true,
+            "fieldReference": "formacionDirigido",
+            "tip": {
+                "es_ES": ""
+            }
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmStructureLayoutId": "",
+            "ddmStructureId": "",
+            "upgradedStructure": false,
+            "readOnly": false,
+            "label": {
+                "es_ES": "Fechas de la formación"
+            },
+            "type": "fieldset",
+            "rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Date46178346\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Date24622077\"]}]}]",
+            "collapsible": false,
+            "showLabel": true,
+            "required": false,
+            "nestedFields": [
+                {
+                    "labelAtStructureLevel": true,
+                    "dataType": "date",
+                    "readOnly": false,
+                    "label": {
+                        "es_ES": "Fecha de inicio"
+                    },
+                    "type": "date",
+                    "showLabel": true,
+                    "required": true,
+                    "fieldNamespace": "",
+                    "visibilityExpression": "",
+                    "indexType": "keyword",
+                    "repeatable": false,
+                    "name": "Date46178346",
+                    "nativeField": false,
+                    "localizable": true,
+                    "fieldReference": "formacionInicio",
+                    "tip": {
+                        "es_ES": ""
+                    }
+                },
+                {
+                    "labelAtStructureLevel": true,
+                    "dataType": "date",
+                    "readOnly": false,
+                    "label": {
+                        "es_ES": "Fecha de fin"
+                    },
+                    "type": "date",
+                    "showLabel": true,
+                    "required": true,
+                    "fieldNamespace": "",
+                    "visibilityExpression": "",
+                    "indexType": "keyword",
+                    "repeatable": false,
+                    "name": "Date24622077",
+                    "nativeField": false,
+                    "localizable": true,
+                    "fieldReference": "formacionFin",
+                    "tip": {
+                        "es_ES": ""
+                    }
+                }
+            ],
+            "repeatable": false,
+            "name": "Fieldset63929124",
+            "localizable": false,
+            "fieldReference": "formacionFechas"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": false,
+            "displayStyle": "singleline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción90347189",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción90347189"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "formacionHorario",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "hideField": false,
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Horario"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text50733299",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": true,
+            "displayStyle": "multiline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción90347189",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción90347189"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "formacionLugar",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "hideField": false,
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Lugar de celebración"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text68033676",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "numeric",
+            "showLabel": true,
+            "required": true,
+            "characterOptions": false,
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "repeatable": false,
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "formacionPrecio",
+            "tip": {
+                "es_ES": ""
+            },
+            "numericInputMask": {
+                "es_ES": "{\"append\": \"\", \"appendType\": \"prefix\", \"decimalPlaces\": 2, \"symbols\": {\"decimalSymbol\": \".\", \"thousandsSeparator\": \"none\"}}"
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "hideField": false,
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "dataType": "double",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Precio"
+            },
+            "inputMask": false,
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "inputMaskFormat": {
+                "es_ES": ""
+            },
+            "name": "Numeric91976397",
+            "localizable": true
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmStructureLayoutId": "",
+            "ddmStructureId": "",
+            "upgradedStructure": false,
+            "readOnly": false,
+            "label": {
+                "es_ES": "Enlaces nterés"
+            },
+            "type": "fieldset",
+            "rows": [
+                {
+                    "columns": [
+                        {
+                            "fields": [
+                                "Text78698588"
+                            ],
+                            "size": 12
+                        }
+                    ]
+                },
+                {
+                    "columns": [
+                        {
+                            "fields": [
+                                "Text48584456"
+                            ],
+                            "size": 12
+                        }
+                    ]
+                }
+            ],
+            "collapsible": false,
+            "showLabel": true,
+            "required": false,
+            "nestedFields": [
+                {
+                    "labelAtStructureLevel": true,
+                    "ddmDataProviderInstanceId": [],
+                    "predefinedValue": {
+                        "es_ES": ""
+                    },
+                    "tooltip": {
+                        "es_ES": ""
+                    },
+                    "requireConfirmation": false,
+                    "type": "text",
+                    "showLabel": true,
+                    "required": false,
+                    "displayStyle": "singleline",
+                    "requiredErrorMessage": {
+                        "es_ES": ""
+                    },
+                    "objectFieldName": "",
+                    "ddmDataProviderInstanceOutput": [],
+                    "repeatable": false,
+                    "options": [
+                        {
+                            "reference": "Opción90347189",
+                            "label": {
+                                "es_ES": "Opción"
+                            },
+                            "value": "Opción90347189"
+                        }
+                    ],
+                    "nativeField": false,
+                    "confirmationLabel": {
+                        "es_ES": ""
+                    },
+                    "fieldReference": "formacionURLTitle",
+                    "tip": {
+                        "es_ES": ""
+                    },
+                    "placeholder": {
+                        "es_ES": ""
+                    },
+                    "direction": [
+                        "vertical"
+                    ],
+                    "hideField": false,
+                    "confirmationErrorMessage": {
+                        "es_ES": ""
+                    },
+                    "autocomplete": false,
+                    "dataType": "string",
+                    "readOnly": false,
+                    "label": {
+                        "es_ES": "Título del enlace"
+                    },
+                    "fieldNamespace": "",
+                    "visibilityExpression": "",
+                    "indexType": "keyword",
+                    "name": "Text78698588",
+                    "localizable": true,
+                    "dataSourceType": "manual"
+                },
+                {
+                    "labelAtStructureLevel": true,
+                    "ddmDataProviderInstanceId": [],
+                    "predefinedValue": {
+                        "es_ES": ""
+                    },
+                    "tooltip": {
+                        "es_ES": ""
+                    },
+                    "requireConfirmation": false,
+                    "type": "text",
+                    "showLabel": true,
+                    "required": false,
+                    "displayStyle": "singleline",
+                    "requiredErrorMessage": {
+                        "es_ES": ""
+                    },
+                    "objectFieldName": "",
+                    "ddmDataProviderInstanceOutput": [],
+                    "repeatable": false,
+                    "options": [
+                        {
+                            "reference": "Opción90347189",
+                            "label": {
+                                "es_ES": "Opción"
+                            },
+                            "value": "Opción90347189"
+                        }
+                    ],
+                    "nativeField": false,
+                    "confirmationLabel": {
+                        "es_ES": ""
+                    },
+                    "fieldReference": "formacionURL",
+                    "tip": {
+                        "es_ES": ""
+                    },
+                    "placeholder": {
+                        "es_ES": ""
+                    },
+                    "direction": [
+                        "vertical"
+                    ],
+                    "hideField": false,
+                    "confirmationErrorMessage": {
+                        "es_ES": ""
+                    },
+                    "autocomplete": false,
+                    "dataType": "string",
+                    "readOnly": false,
+                    "label": {
+                        "es_ES": "URL del enlace"
+                    },
+                    "fieldNamespace": "",
+                    "visibilityExpression": "",
+                    "indexType": "keyword",
+                    "name": "Text48584456",
+                    "localizable": true,
+                    "dataSourceType": "manual"
+                }
+            ],
+            "repeatable": true,
+            "name": "Fieldset34844012",
+            "localizable": false,
+            "fieldReference": "formacionEnlaces"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "dataType": "document-library",
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "readOnly": false,
+            "label": {
+                "es_ES": "Documentos"
+            },
+            "type": "document_library",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "objectFieldName": "",
+            "repeatable": false,
+            "allowGuestUsers": false,
+            "name": "DocumentLibrary03044086",
+            "localizable": true,
+            "fieldReference": "formacionDocumentos",
+            "tip": {
+                "es_ES": ""
+            }
+        }
+    ]
+}

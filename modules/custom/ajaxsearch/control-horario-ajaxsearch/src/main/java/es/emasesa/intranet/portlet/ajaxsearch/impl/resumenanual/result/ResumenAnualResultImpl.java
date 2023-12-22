@@ -1,9 +1,12 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.result;
 
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.base.util.CustomDateUtil;
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.service.util.SapServicesUtil;
 
 import java.time.Year;
@@ -139,7 +142,18 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 		String usuario = ajaxSearchDisplayContext.getString("usuarioSelected", StringPool.BLANK);
 		boolean isValidUser;
 		if (usuario.isBlank()){
-			usuario = themeDisplay.getUser().getScreenName();
+			try {
+				usuario = _expandoValueLocalService.getData(
+							themeDisplay.getCompanyId(),
+							User.class.getName(),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME,
+							"matricula",
+							themeDisplay.getUser().getUserId(),
+							StringPool.BLANK
+				);
+			} catch (Exception e) {
+				LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
+			}
 			isValidUser = Boolean.TRUE;
 		} else {
 			isValidUser = checkUsuarioSelected(usuario, themeDisplay.getUser());
@@ -156,7 +170,7 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 
 			}else{
 
-				array = _sapServicesUtil.getResumenAnual(themeDisplay.getUser(),year);
+				array = _sapServicesUtil.getResumenAnual(usuario, year);
 				_cache.put(cacheKey,array,86400);
 
 			}
@@ -267,4 +281,6 @@ public class ResumenAnualResultImpl implements AjaxSearchResult {
 	CustomCacheSingleUtil _cache;
 	@Reference
 	RolesSettings _rolesSettings;
+	@Reference
+	ExpandoValueLocalService _expandoValueLocalService;
 }

@@ -39,7 +39,7 @@
 
         var _setCurrentPage = function(numPage){
             $("#asCurrentPage").val(numPage)
-            $('html, body').animate({scrollTop:0}, '300');
+            $('html, body').animate({scrollTop:$(".m-searchAjax--results").offset().top}, 500);
 
             var options = $(".results-pagination-select-container .results-pagination-select option");
             for (var i = 0; i < options.length; i++) {
@@ -153,7 +153,7 @@
                 // Fix scroll
                 if (typeof doScroll !== "undefined" && doScroll) {
                 	$('html, body').animate({
-              			scrollTop: $("#as-total-items").offset().top-100
+              			scrollTop: $(".m-searchAjax--results").offset().top
               		}, 500);
                 }
             }

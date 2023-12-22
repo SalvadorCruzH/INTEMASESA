@@ -130,5 +130,17 @@
         "templateFile": "listado-documentos-busquedas.ftl",
         "comment": "ADT para el listado de contenidos web tipo Documentos en los resultados de búsqueda.",
         "uuid": "b3fe5ef7-2274-fadd-1f11-fcf7230743e8"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Listado de formación",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-FORMACION-ADT",
+        "templateFile": "listado-formacion.ftl",
+        "comment": "ADT para el listado de contenidos web tipo Formación Externa.",
+        "uuid": "0f80048c-ff2f-62c0-e8d1-f71d053c873b"
     }
 ]

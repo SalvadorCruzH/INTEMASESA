@@ -1,5 +1,7 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.jornadadiaria.result;
 
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -16,6 +18,7 @@ import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.base.model.AjaxMessage;
 import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.base.util.CustomDateUtil;
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
@@ -149,7 +152,18 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 		String usuario = ajaxSearchDisplayContext.getString("usuarioSelected", StringPool.BLANK);
 		boolean isValidUser;
 		if (usuario.isBlank()){
-			usuario = themeDisplay.getUser().getScreenName();
+			try {
+				usuario = _expandoValueLocalService.getData(
+						themeDisplay.getCompanyId(),
+						User.class.getName(),
+						ExpandoTableConstants.DEFAULT_TABLE_NAME,
+						"matricula",
+						themeDisplay.getUser().getUserId(),
+						StringPool.BLANK
+				);
+			} catch (Exception e) {
+				LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
+			}
 			isValidUser = Boolean.TRUE;
 		} else {
 			isValidUser = checkUsuarioSelected(usuario, themeDisplay.getUser());
@@ -311,4 +325,6 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 	CustomCacheSingleUtil _cache;
 	@Reference
 	RolesSettings _rolesSettings;
+	@Reference
+	ExpandoValueLocalService _expandoValueLocalService;
 }
