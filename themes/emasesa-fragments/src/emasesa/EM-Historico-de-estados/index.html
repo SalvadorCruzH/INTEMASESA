@@ -1,0 +1,44 @@
+[#assign customHistoryUtil = serviceLocator.findService("es.emasesa.intranet.base.util.CustomHistoryUtil")]
+[#assign userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")]
+[#assign objectEntryId = paramUtil.getLong(request, "classPK")]
+
+[#if objectEntryId?? && objectEntryId > 0 && objectEntryId?has_content]
+    [#assign customHistory = customHistoryUtil.getHistoryState(objectEntryId)/]
+    [#assign jsonObject = customHistory?eval]
+
+    <div class="container">
+        <div class="ema-table-wrapper">
+            <table id="table-id" class="ema-table last">
+                <caption class="sr-only">Sumario de la tabla</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Usuario Asignado</th>
+                    <th scope="col">Rol</th>
+                </tr>
+                </thead>
+                <tbody>
+                [#list jsonObject as cur_history]
+					[#assign userId = getterUtil.getLong(cur_history.userId)]
+					[#if userId?? && userId != 0]
+						[#assign user = userLocalService.getUser(userId)]
+						[#if user??]
+							[#assign userName = user.getFullName()]
+						[/#if]
+					[/#if]
+                    [#assign estado = cur_history.estadoObjeto]
+                    <tr>
+                        <td>${cur_history.fechaCambioEstado}</td>
+                        <td>${languageUtil.get(locale, estado)}</td>
+                        <td>${userName}</td>
+                        <td>${cur_history.rolName}</td>
+                    </tr>
+                [/#list]
+                </tbody>
+            </table>
+        </div>
+    </div>
+    [#else]
+        <h3>No hay histórico para mostrar</h3>
+[/#if]
