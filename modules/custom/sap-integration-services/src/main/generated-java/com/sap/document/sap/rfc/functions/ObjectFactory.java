@@ -30,19 +30,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TABLEOFZPESTEMPLEADOJORNADADIARIA }
+     * Create an instance of {@link ZPESTINSAYUDAESCOLAR }
      * 
      */
-    public TABLEOFZPESTEMPLEADOJORNADADIARIA createTABLEOFZPESTEMPLEADOJORNADADIARIA() {
-        return new TABLEOFZPESTEMPLEADOJORNADADIARIA();
-    }
-
-    /**
-     * Create an instance of {@link ZPESTEMPLEADOJORNADADIARIA }
-     * 
-     */
-    public ZPESTEMPLEADOJORNADADIARIA createZPESTEMPLEADOJORNADADIARIA() {
-        return new ZPESTEMPLEADOJORNADADIARIA();
+    public ZPESTINSAYUDAESCOLAR createZPESTINSAYUDAESCOLAR() {
+        return new ZPESTINSAYUDAESCOLAR();
     }
 
 }

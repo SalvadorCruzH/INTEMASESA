@@ -1,6 +1,7 @@
 
 package com.sap.document.sap.soap.functions.mc_style;
 
+import com.sap.document.sap.rfc.functions.ZPESTINSAYUDAESCOLAR;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebResult;
@@ -19,7 +20,8 @@ import jakarta.xml.ws.ResponseWrapper;
  */
 @WebService(name = "Z_WS_PE_AYUDA_ESCOLAR", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style")
 @XmlSeeAlso({
-    ObjectFactory.class
+    com.sap.document.sap.rfc.functions.ObjectFactory.class,
+    com.sap.document.sap.soap.functions.mc_style.ObjectFactory.class
 })
 public interface ZWSPEAYUDAESCOLAR {
 
@@ -41,13 +43,13 @@ public interface ZWSPEAYUDAESCOLAR {
     public Bapireturn1 zPeAyudaEscolar(
         @WebParam(name = "Pernr", targetNamespace = "")
         String pernr,
+        @WebParam(name = "TInsAyudaEscolar", targetNamespace = "")
+        ZPESTINSAYUDAESCOLAR tInsAyudaEscolar,
         @WebParam(name = "TAyudasSolicitadas", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<TableOfZpeStAyudasSolicitadas> tAyudasSolicitadas,
         @WebParam(name = "TBeneficiarios", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<TableOfZpeStBeneficiarios> tBeneficiarios,
         @WebParam(name = "TEstudios", targetNamespace = "", mode = WebParam.Mode.OUT)
-        Holder<TableOfZpeStEstudios> tEstudios,
-        @WebParam(name = "TInsAyudaEscolar", targetNamespace = "", mode = WebParam.Mode.OUT)
-        Holder<TableOfZpeStInsAyudaEscolar> tInsAyudaEscolar);
+        Holder<TableOfZpeStEstudios> tEstudios);
 
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
 	<version>83</version>

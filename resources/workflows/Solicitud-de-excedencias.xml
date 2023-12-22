@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
-	<version>81</version>
+	<version>82</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -837,9 +837,26 @@ customWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>jefedivisionpersonas@mail.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "divisionRrhhRespId");
+
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">

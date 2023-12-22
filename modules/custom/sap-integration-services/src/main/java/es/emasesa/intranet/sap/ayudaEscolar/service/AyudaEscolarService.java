@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.sap.document.sap.rfc.functions.ZPESTINSAYUDAESCOLAR;
 import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -31,18 +32,28 @@ import java.net.URL;
 @org.springframework.stereotype.Component("ayudaEscolarService")
 public class AyudaEscolarService {
 
-    public JSONObject getAyudaEscolar(String pernr) throws AyudaEscolarException, SapCommunicationException {
+    public JSONObject saveAyudaEscolar(String pernr, String centro, String estudioId, String estudioNivel,
+                                       String famNumerosa, String numero, String tipoId, String famMonoParental, String comentario) throws AyudaEscolarException, SapCommunicationException {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
             ClassLoader objectFactoryClassLoader = ZWSPEAYUDAESCOLAR.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            ZPESTINSAYUDAESCOLAR tInsAyudaEscolar = new ZPESTINSAYUDAESCOLAR();
+            tInsAyudaEscolar.setCENTRO(centro);
+            tInsAyudaEscolar.setESTUDIOID(estudioId);
+            tInsAyudaEscolar.setESTUDIONIVEL(estudioNivel);
+            tInsAyudaEscolar.setFAMNUMEROSA(famNumerosa);
+            tInsAyudaEscolar.setNUMERO(numero);
+            tInsAyudaEscolar.setPERNR(pernr);
+            tInsAyudaEscolar.setTIPOID(tipoId);
+            tInsAyudaEscolar.setFAMMONOPARENTAL(famMonoParental);
+            tInsAyudaEscolar.setCOMENTARIO(comentario);
             Holder<TableOfZpeStAyudasSolicitadas> tAyudasSolicitadas = new Holder<>();
             Holder<TableOfZpeStBeneficiarios> tBeneficiarios = new Holder<>();
             Holder<TableOfZpeStEstudios> tEstudios = new Holder<>();
-            Holder<TableOfZpeStInsAyudaEscolar> tInsAyudaEscolar = new Holder<>();
 
-            port.zPeAyudaEscolar(pernr, tAyudasSolicitadas ,tBeneficiarios ,tEstudios, tInsAyudaEscolar);
+            port.zPeAyudaEscolar(pernr, tInsAyudaEscolar, tAyudasSolicitadas, tBeneficiarios ,tEstudios);
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
             if (tAyudasSolicitadas.value != null){
                 jsonReturn.put("ayudasSolicitadas", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tAyudasSolicitadas.value.getItem())));
@@ -53,8 +64,38 @@ public class AyudaEscolarService {
             if (tEstudios.value != null){
                 jsonReturn.put("estudios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEstudios.value.getItem())));
             }
-            if (tInsAyudaEscolar.value != null){
-                jsonReturn.put("ayudaEscolar", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInsAyudaEscolar.value.getItem())));
+            return jsonReturn;
+        } catch (ServerSOAPFaultException | JSONException e) {
+            throw new AyudaEscolarException("Error llamando al WS para el origen o parseando datos"+ pernr, e);
+        } catch (ClientTransportException e) {
+            throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
+            LoggerUtil.debug(LOG, "[E] solicitarAyudaEscolar");
+        }
+    }
+
+    public JSONObject getAyudaEscolar(String pernr) throws AyudaEscolarException, SapCommunicationException {
+
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader objectFactoryClassLoader = ZWSPEAYUDAESCOLAR.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            ZPESTINSAYUDAESCOLAR tInsAyudaEscolar = new ZPESTINSAYUDAESCOLAR();
+            Holder<TableOfZpeStAyudasSolicitadas> tAyudasSolicitadas = new Holder<>();
+            Holder<TableOfZpeStBeneficiarios> tBeneficiarios = new Holder<>();
+            Holder<TableOfZpeStEstudios> tEstudios = new Holder<>();
+
+            port.zPeAyudaEscolar(pernr, tInsAyudaEscolar, tAyudasSolicitadas, tBeneficiarios ,tEstudios);
+            JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
+            if (tAyudasSolicitadas.value != null){
+                jsonReturn.put("ayudasSolicitadas", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tAyudasSolicitadas.value.getItem())));
+            }
+            if (tBeneficiarios.value != null){
+                jsonReturn.put("beneficiarios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tBeneficiarios.value.getItem())));
+            }
+            if (tEstudios.value != null){
+                jsonReturn.put("estudios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEstudios.value.getItem())));
             }
             return jsonReturn;
         } catch (ServerSOAPFaultException | JSONException e) {
