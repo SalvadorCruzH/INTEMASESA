@@ -88,5 +88,15 @@
     "structureFile": "documentos.json",
     "comment": "Estructura para documentos",
     "uuid": "045d40f2-0f52-e7e1-a0cd-1643aae0a734"
+  },
+  {
+    "screenName": "aemasesa",
+    "name": "EMA - Formación",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-FORMACION",
+    "structureFile": "formacion.json",
+    "comment": "Estructura para formación",
+    "uuid": "19c3f49d-ab0c-6ed1-9719-0b83eee805c9"
   }
 ]

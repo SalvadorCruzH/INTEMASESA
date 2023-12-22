@@ -1,0 +1,45 @@
+.ema-accordion {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    &__btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 20px;
+        background-color: #36c;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        &::after,
+        &::before {
+            content: '';
+            width: 11px;
+            height: 3px;
+            background-color: white;
+            position: absolute;
+            transition: rotate .3s ease;
+        }
+        &::before {
+            rotate: 90deg;
+        }
+        &--opened {
+            &::before {
+                rotate: 180deg;
+            }
+        }
+    }
+    &__content {
+        overflow: hidden;
+        height: 0;
+        opacity: 0;
+        transition: opacity .3s ease;
+        &--opened {
+            overflow: visible;
+            height: auto;
+            opacity: 1;
+        }
+    }
+}

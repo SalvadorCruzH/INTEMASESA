@@ -180,5 +180,18 @@
         "comment": "Plantilla para los documentos en la sección Servicios - Recursos",
         "uuid": "232e8386-ec63-de81-e8d2-d78d4070a826",
         "structureUuid": "045d40f2-0f52-e7e1-a0cd-1643aae0a734"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Formación",
+        "templateKey": "EMA-FORMACION-TEMPLATE",
+        "structureKey": "EMA-FORMACION",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "formacion.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para las formaciones externas de interés.",
+        "uuid": "ce0ed3aa-7528-47cf-f328-cd107b7c0013",
+        "structureUuid": "19c3f49d-ab0c-6ed1-9719-0b83eee805c9"
     }
 ]
