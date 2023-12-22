@@ -29,6 +29,9 @@ class GlobalModule extends React.Component {
         window.transitionsLabel["assignToMe"] = Liferay.Language.get("es.emasesa.transition.label.assignToMe");
         window.transitionsLabel["consultar"] = Liferay.Language.get("es.emasesa.transition.label.consultar");
         window.transitionsLabel["Mandar-a-portafirmas"] = Liferay.Language.get("es.emasesa.transition.label.Mandar-a-portafirmas");
+        window.transitionsLabel["aceptar"] = Liferay.Language.get("es.emasesa.transition.label.aceptar");
+        window.transitionsLabel["rechazar"] = Liferay.Language.get("es.emasesa.transition.label.rechazar");
+        window.transitionsLabel["portafirma-director-RRHH"] = Liferay.Language.get("es.emasesa.transition.label.portafirma-director-RRHH");
         window.objToString = function(obj) {
             var str = '';
             for (var p in obj) {
