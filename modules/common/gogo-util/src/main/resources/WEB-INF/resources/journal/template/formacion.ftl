@@ -17,11 +17,13 @@
 
     <#if (formacionDirigido.getData())??>
         <div class="ema-formacion__item__dirigido">
+            <h4 class="ema-formacion__item__data-title">¿A quién va dirigido?</h4>
             ${formacionDirigido.getData()}
         </div>
     </#if>
 
     <div class="ema-formacion__item__fecha">
+        <h4 class="ema-formacion__item__data-title">Fechas de la formación</h4>
         <#assign formacionFechas_formacionInicio_Data = getterUtil.getString(formacionFechas.formacionInicio.getData())>
         <#if validator.isNotNull(formacionFechas_formacionInicio_Data)>
             <#assign formacionFechas_formacionInicio_DateObj = dateUtil.parseDate("yyyy-MM-dd", formacionFechas_formacionInicio_Data, locale)>
@@ -40,42 +42,47 @@
 
     <#if (formacionHorario.getData())??>
         <div class="ema-formacion__item__horario">
+            <h4 class="ema-formacion__item__data-title">Horarios de la formación</h4>
             ${formacionHorario.getData()}
         </div>
     </#if>
 
     <#if (formacionLugar.getData())??>
         <div class="ema-formacion__item__lugar">
+            <h4 class="ema-formacion__item__data-title">Lugar de la formación</h4>
             ${formacionLugar.getData()}
         </div>
     </#if>
 
     <#if (formacionPrecio.getData())??>
         <div class="ema-formacion__item__precio">
+            <h4 class="ema-formacion__item__data-title">Precio</h4>
             ${formacionPrecio.getData()}
         </div>
     </#if>
 
     <#if formacionEnlaces.getSiblings()?has_content>
         <div class="ema-formacion__item__enlaces">
+            <h4 class="ema-formacion__item__data-title">URL Oficial o enlaces de interés</h4>
             <#list formacionEnlaces.getSiblings() as cur_formacionEnlaces>
                 <div class="ema-formacion__item__enlace">
                     <#if (formacionEnlaces.formacionURLTitle.getData())??>
                         <div class="ema-formacion__item__enlace__title">
-                            ${formacionEnlaces.formacionURLTitle.getData()}
+                            <a href="formacionEnlaces.formacionURL.getData()" title="${formacionEnlaces.formacionURLTitle.getData()}">${formacionEnlaces.formacionURLTitle.getData()}</a>
                         </div>
                     </#if>
-                    <#if (formacionEnlaces.formacionURL.getData())??>
+                    <#--  <#if (formacionEnlaces.formacionURL.getData())??>
                         <div class="ema-formacion__item__enlace__url">
                             ${formacionEnlaces.formacionURL.getData()}
                         </div>
-                    </#if>
+                    </#if>  -->
                 </div>
             </#list>
         </div>
     </#if>
 
     <div class="ema-formacion__item__documentos">
+        <h4 class="ema-formacion__item__data-title">Documentación</h4>
         <a href="${formacionDocumentos.getData()}">
             ${languageUtil.format(locale, "download-x", "Documentos", false)}
         </a>

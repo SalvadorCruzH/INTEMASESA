@@ -20,11 +20,7 @@
         &__lugar,
         &__precio,
         &__enlaces {
-            margin-bottom: 1rem;
-        }
-        &__fecha {
-            display: flex;
-            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
         &__header {
             @include media-breakpoint-up(md) {
@@ -62,6 +58,9 @@
             }
         }
         &__fecha {
+            display: flex;
+            gap: 0 1rem;
+            flex-wrap: wrap;
             &__inicio {
                 &::before {
                     font-family: 'Font Awesome 6 Free';
@@ -86,41 +85,63 @@
                     content: "\f272";
                 }
             }
+            .ema-formacion__item__data-title {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f073";
+                    margin-right: 8px;
+                }
+            }
         }
         &__horario {
-            &::before {
-                font-family: 'Font Awesome 6 Free';
-                -moz-osx-font-smoothing: grayscale;
-                font-style: normal;
-                font-variant: normal;
-                font-weight: 900;
-                line-height: 1;
-                text-rendering: auto;
-                content: "\f017";
+            .ema-formacion__item__data-title {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f017";
+                    margin-right: 8px;
+                }
             }
         }
         &__lugar {
-            &::before {
-                font-family: 'Font Awesome 6 Free';
-                -moz-osx-font-smoothing: grayscale;
-                font-style: normal;
-                font-variant: normal;
-                font-weight: 900;
-                line-height: 1;
-                text-rendering: auto;
-                content: "\f3c5";
+            .ema-formacion__item__data-title {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f3c5";
+                    margin-right: 8px;
+                }
             }
         }
         &__precio {
-            &::before {
-                font-family: 'Font Awesome 6 Free';
-                -moz-osx-font-smoothing: grayscale;
-                font-style: normal;
-                font-variant: normal;
-                font-weight: 900;
-                line-height: 1;
-                text-rendering: auto;
-                content: "\f09d";
+            .ema-formacion__item__data-title {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f09d";
+                    margin-right: 8px;
+                }
             }
             &::after {
                 font-family: 'Font Awesome 6 Free';
@@ -133,8 +154,8 @@
                 content: "\f153";
             }
         }
-        &__enlace {
-            &__title {
+        &__enlaces {
+            .ema-formacion__item__data-title {
                 &::before {
                     font-family: 'Font Awesome 6 Free';
                     -moz-osx-font-smoothing: grayscale;
@@ -144,20 +165,47 @@
                     line-height: 1;
                     text-rendering: auto;
                     content: "\f0c1";
+                    margin-right: 8px;
                 }
             }
         }
         &__documentos {
-            &::before {
-                font-family: 'Font Awesome 6 Free';
-                -moz-osx-font-smoothing: grayscale;
-                font-style: normal;
-                font-variant: normal;
-                font-weight: 900;
-                line-height: 1;
-                text-rendering: auto;
-                content: "\f02d";
+            .ema-formacion__item__data-title {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f02d";
+                    margin-right: 8px;
+                }
             }
+        }
+        &__content {
+            @include media-breakpoint-up(md) {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0 2rem;
+                > div {
+                    flex-basis: calc(50% - 2rem);
+                }
+            }
+            &--opened{
+                padding: .935rem;
+                margin-top: .935rem;
+                border-radius: .935rem;
+                border: 1px solid #dcdcdc;
+            }
+        }
+        &__data-title {
+            .i-mainWrapper & {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            width: 100%;
         }
     }
 }
