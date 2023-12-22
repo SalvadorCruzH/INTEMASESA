@@ -5,7 +5,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,19 +32,18 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import es.emasesa.intranet.base.constant.EmasesaConstants;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Locale;
 import java.util.function.Consumer;
 
 @Component(immediate = true,
         property = {
-            "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken",
-            "service.ranking:Integer=11111"
+                "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken",
+                "service.ranking:Integer=11111"
         },
         service = ModelDocumentContributor.class)
 public class KaleoTaskInstanceTokenModelDocumentContributor
@@ -82,6 +84,8 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 
     private static final String MATRICULA = "matricula";
 
+    private static final String FULLNAME = "fullName";
+
     private static final String ASSIGNEE_USERNAMES = "assigneeUserNames";
 
     @Override
@@ -106,6 +110,12 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                     kaleoTaskAssignmentInstance.getAssigneeClassPK());
             assigneeGroupIds.add(kaleoTaskAssignmentInstance.getGroupId());
             assigneeUserName.add(kaleoTaskAssignmentInstance.getUserName());
+            try {
+                User userAss = _userLocalService.getUser(kaleoTaskAssignmentInstance.getAssigneeClassPK());
+                document.addKeywordSortable(
+                        "assigneePersonName", userAss.getFullName());
+            } catch (Exception e) {
+            }
         }
 
         document.addKeyword(
@@ -142,14 +152,28 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 
         try {
 
-           User user = _userLocalService.getUser(kaleoTaskInstanceToken.getUserId());
-           if(user.getExpandoBridge().hasAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA)){
-               if(Validator.isNotNull(user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA))){
-                   document.addKeyword(MATRICULA, (String) user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA),false);
-               }
+            User user = _userLocalService.getUser(kaleoTaskInstanceToken.getUserId());
+            if (user.getExpandoBridge().hasAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA)) {
+                if (Validator.isNotNull(user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, false))) {
+                    document.addKeywordSortable(MATRICULA, (String) user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, false));
+                    document.addKeywordSortable(FULLNAME, (String) user.getFullName());
+                }
+            }
+            try {
+                document.addKeywordSortable("entryType",
+                        JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getString("entryType"));
+                String entryClassName = JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getString("entryClassName");
+                if(entryClassName.contains("ObjectDefinition")){
+                    Long entryClassPK = JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getLong("entryClassPK");
+                    JSONObject objetEstado = JSONFactoryUtil.createJSONObject(_objectEntryLocalService.getObjectEntry(entryClassPK).getValues());
+                    //objetEstado = objetEstado.getJSONObject("estadoObjeto");
+                    document.addKeywordSortable("estadoObjeto", ""+objetEstado.get("estadoObjeto"));
 
-           }
 
+                }
+            }catch(Exception e){
+
+            }
             KaleoDefinitionVersion kaleoDefinitionVersion =
                     kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
                             kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
@@ -160,8 +184,10 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
             document.addKeyword(
                     KALEO_DEFINITION_ID,
                     kaleoDefinition.getKaleoDefinitionId());
-        }
-        catch (PortalException portalException) {
+
+
+
+        } catch (PortalException portalException) {
             if (_log.isWarnEnabled()) {
                 _log.warn(portalException);
             }
@@ -204,7 +230,7 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
         String[] languageIds = _localization.getAvailableLanguageIds(content);
 
         if (languageIds.length == 0) {
-            languageIds = new String[] {defaultLanguageId};
+            languageIds = new String[]{defaultLanguageId};
         }
 
         return languageIds;
@@ -230,8 +256,7 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                             assetEntry.getGroupId()));
 
             assetEntryConsumer.accept(assetEntry);
-        }
-        else {
+        } else {
             WorkflowHandler<?> workflowHandler =
                     WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 
@@ -259,8 +284,7 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                 return assetEntryLocalService.getEntry(
                         assetRenderer.getClassName(), assetRenderer.getClassPK());
             }
-        }
-        catch (PortalException portalException) {
+        } catch (PortalException portalException) {
             if (_log.isDebugEnabled()) {
                 _log.debug(portalException);
             }
@@ -282,6 +306,7 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 
         return null;
     }
+
     @Reference
     protected ClassNameLocalService classNameLocalService;
 
@@ -289,6 +314,8 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
     protected KaleoDefinitionVersionLocalService
             kaleoDefinitionVersionLocalService;
 
+    @Reference
+    protected ObjectEntryLocalService _objectEntryLocalService;
     @Reference
     protected Portal portal;
     @Reference

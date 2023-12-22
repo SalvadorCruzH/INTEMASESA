@@ -12,37 +12,37 @@ class TareasModule extends React.Component {
         super();
         let columns = [];
         columns.push({
-            name: "objectData.numeroDeMatricula",
+            name: "matricula_String",
             label: Liferay.Language.get("objectData.numeroDeMatricula"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
         });
         columns.push({
-            name: "objectData.name",
+            name: "fullName_String",
             label: Liferay.Language.get("objectData.name"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
         });
         columns.push({
-            name: "attributes.entryType",
+            name: "entryType_String",
             label: Liferay.Language.get("objectReviewed.assetType"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
         });
         columns.push({
-            name: "createDate",
+            name: "createDate_Number",
             label: Liferay.Language.get("dateCreated"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
         });
         columns.push({
-            name: "assigneePersonName",
+            name: "assigneePersonName_String",
             label: Liferay.Language.get("assigneePerson.name"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
         });
         columns.push({
-            name: "objectData.estadoObjeto",
+            name: "estadoObjeto_String",
             label: Liferay.Language.get("objectData.estadoObjeto"),
             order: "asc",
             icon: "fa-solid fa-sort fa-lg"
@@ -64,7 +64,16 @@ class TareasModule extends React.Component {
             start: 0,
             end: 10,
             delta: 10,
-            showCompleted: false
+            showCompleted: false,
+            typeList: "",
+            columnSelected :
+                {
+                    name: "createDate_Number_sortable",
+                    label: Liferay.Language.get("dateCreated"),
+                    order: "asc",
+                    icon: "fa-solid fa-sort fa-lg"
+                }
+
         }
         console.debug(this);
     }
@@ -85,8 +94,9 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToMeButton = (event) => {
-        this.setState({start: 0, end: 10});
+        this.setState({start: 0, end: 10, typeList: "toMe"});
         this.getAssignedToMe();
+
     }
 
     getAssignedToMe = () => {
@@ -94,26 +104,25 @@ class TareasModule extends React.Component {
             view: 1
         });
 
+        console.log(this.state.columnSelected);
         setTimeout(() => {
-            TareasApi.getWorkflowTask("", this.state.showCompleted, false, this.state.start, this.state.end, this.setTasks, this.errorHandler);
+            TareasApi.getWorkflowTask("", this.state.showCompleted, false, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler);
         }, 100)
 
     }
 
     getAssignedToUserRolButton = (event) => {
-        this.setState({start: 0, end: 10});
+        this.setState({start: 0, end: 10, typeList: "toUserRol"});
         this.getAssignedToUserRol();
     }
 
     getAssignedToUserRol = () => {
-
-        console.log('asadadasd');
         this.setState({
             view: 2
         });
         this.setState({start: 0, end: 10});
         setTimeout(() => {
-            TareasApi.getWorkflowTask("", this.state.showCompleted, true, this.state.start, this.state.end, this.setTasks, this.errorHandler);
+            TareasApi.getWorkflowTask("", this.state.showCompleted, true, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler);
         }, 100)
     }
 
@@ -136,24 +145,21 @@ class TareasModule extends React.Component {
     }
 
     showMore = () => {
-
         this.getTasksUser();
     }
 
     addTareaExtraData = (tarea) => {
-
         var jsonObjectMapping = {};
         try {
             jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
         } catch (e) {
             jsonObjectMapping = this.state.configuration.objectMapping;
         }
-        let objectMapping = jsonObjectMapping[tarea.attributes.entryType];
+        let objectMapping = jsonObjectMapping[tarea.entryType];
         if (objectMapping) {
             let urlObject = objectMapping.url;
-            let objectId = tarea.attributes.entryClassPK;
+            let objectId = tarea.entryClassPK;
             if (urlObject) {
-
                 let client = LiferayApi.getClient(oauthUserAgent.CLIENT_ID);
                 if (client) {
                     let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
@@ -176,6 +182,7 @@ class TareasModule extends React.Component {
                                 result = JSON.parse(JSON.stringify(response));
                                 console.debug(result);
                                 tarea.objectData = result;
+                                console.log(tarea.objectData);
                                 this.addTareaTransition(tarea);
 
                             } catch (e) {
@@ -211,12 +218,8 @@ class TareasModule extends React.Component {
                     let result = "";
                     try {
                         result = JSON.parse(JSON.stringify(response));
-                        console.debug('Hola');
-                        console.debug(result);
                         if (result.totalCount > 0) {
-
                             tarea.transitions = result.items;
-
                         }
                         this.setState(previousState => ({
                             tareas: previousState.tareas.concat(tarea)
@@ -304,11 +307,23 @@ class TareasModule extends React.Component {
     }
 
     orderBy = (column) => {
-        let tareas = this.state.tareas;
-        let order = column.order;
-        let type = column.name;
-        console.debug(tareas);
+
         console.debug(column);
+        this.state.columns.forEach(function (col){
+            if(col.name === column.name){
+                col.order = (column.order === "asc")?'desc':'asc';
+            }
+        });
+        this.setState({columnSelected: column});
+        if(this.state.typeList === '' || this.state.typeList === 'toMe'){
+            this.getAssignedToMeButton()
+        }else{
+            this.getAssignedToUserRolButton();
+        }
+/*
+
+        let tareas = this.state.tareas;
+
 
         column.order = order === "asc" ? "desc" : "asc";
 
@@ -338,8 +353,8 @@ class TareasModule extends React.Component {
 
         if (type === "attributes.entryType") {
             tareas = tareas.sort((a, b) => {
-                let assetTypeA = a.attributes.entryType;
-                let assetTypeB = b.attributes.entryType;
+                let assetTypeA = a.entryType;
+                let assetTypeB = b.entryType;
 
                 let result = order === "asc" ? assetTypeA.localeCompare(assetTypeB) : assetTypeB.localeCompare(assetTypeA);
                 return result;
@@ -381,14 +396,12 @@ class TareasModule extends React.Component {
         }
 
         console.debug(tareas);
-        this.setState({tareas: tareas});
+        this.setState({tareas: tareas});*/
     }
 
     showCompletedTask = () => {
         this.setState({showCompleted: !this.state.showCompleted});
-
         this.getTasksUser();
-
     }
 
     render() {
@@ -435,11 +448,11 @@ class TareasModule extends React.Component {
                                         console.debug('Tarea --> ' + i)
                                         console.debug(tarea);
                                         return (<>
-                                                <tr data-objectId={tarea.attributes.entryClassPK}
+                                                <tr data-objectId={tarea.entryClassPK}
                                                     data-workflowTaskId={tarea.workflowTaskId}>
-                                                    <td>{tarea.objectData.numeroDeMatricula}</td>
-                                                    <td>{tarea.objectData.nombre} {tarea.objectData.primerApellido} {tarea.objectData.segundoApellido}</td>
-                                                    <td>{tarea.attributes.entryType}</td>
+                                                    <td>{tarea.matricula}</td>
+                                                    <td>{tarea.fullName}</td>
+                                                    <td>{tarea.entryType}</td>
                                                     <td>{window.timestampToDdMmYyyy(tarea.createDate)}</td>
                                                     <td>{tarea.assigneePersonName && tarea.assigneePersonName}</td>
                                                     <td>{tarea.objectData.estadoObjeto.name}</td>

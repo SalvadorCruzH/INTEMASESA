@@ -4,10 +4,14 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.*;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -22,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,68 +37,73 @@ import java.util.Objects;
 )
 public class EmasesaWorkflowTaskSearch {
 
-    public void searchWorkflowTask (ServiceContext serviceContext, boolean andOperator, String[] assetTypes, Long[] assigneeClassPKs,
-                                    boolean completed, int start, int end, boolean searchByUserRoles, OrderByComparator<WorkflowTask> orderByComparator) throws PortalException {
+    public JSONArray searchWorkflowTask(ServiceContext serviceContext, boolean andOperator, String[] assetTypes, Long[] assigneeClassPKs,
+                                        boolean completed, int start, int end, boolean searchByUserRoles, String orderColumn, String orderType) throws PortalException, ParseException {
 
-        if( orderByComparator == null){
-            orderByComparator = new WorkflowTaskCreateDateComparator(
-                    false,
-                    "createDate ASC",
-                    "createDate DESC",
-                    new String[] {
-                            "createDate"
-                    });
-        }
+
         Hits hits = _search(
-        HashMapBuilder.<String, Serializable>put(
-                "kaleoTaskInstanceTokenQuery",
-                () -> {
-                    KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery =
-                            new KaleoTaskInstanceTokenQuery(serviceContext);
+                HashMapBuilder.<String, Serializable>put(
+                        "kaleoTaskInstanceTokenQuery",
+                        () -> {
+                            KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery =
+                                    new KaleoTaskInstanceTokenQuery(serviceContext);
 
-                    kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
-                    kaleoTaskInstanceTokenQuery.setAssetTitle(null);
-                    kaleoTaskInstanceTokenQuery.setAssetTypes(assetTypes);
-                    kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(
-                            null);
-                    kaleoTaskInstanceTokenQuery.setAssigneeClassName(
-                            null);
-                    kaleoTaskInstanceTokenQuery.setAssigneeClassPKs(
-                            assigneeClassPKs);
-                    kaleoTaskInstanceTokenQuery.setCompleted(completed);
-                    kaleoTaskInstanceTokenQuery.setDueDateGT(null);
-                    kaleoTaskInstanceTokenQuery.setDueDateLT(null);
-                    kaleoTaskInstanceTokenQuery.setEnd(end);
-                    kaleoTaskInstanceTokenQuery.setKaleoDefinitionId(
-                            null);
-                    kaleoTaskInstanceTokenQuery.setKaleoInstanceIds(
-                            null);
-                    kaleoTaskInstanceTokenQuery.setOrderByComparator(
-                            null);
-                    kaleoTaskInstanceTokenQuery.
-                            setSearchByActiveWorkflowHandlers(
-                                    false);
-                    kaleoTaskInstanceTokenQuery.setSearchByUserRoles(
-                            searchByUserRoles);
-                    kaleoTaskInstanceTokenQuery.setStart(start);
-                    kaleoTaskInstanceTokenQuery.setTaskNames(null);
+                            kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
+                            kaleoTaskInstanceTokenQuery.setAssetTitle(null);
+                            kaleoTaskInstanceTokenQuery.setAssetTypes(assetTypes);
+                            kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setAssigneeClassName(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setAssigneeClassPKs(
+                                    assigneeClassPKs);
+                            kaleoTaskInstanceTokenQuery.setCompleted(completed);
+                            kaleoTaskInstanceTokenQuery.setDueDateGT(null);
+                            kaleoTaskInstanceTokenQuery.setDueDateLT(null);
+                            kaleoTaskInstanceTokenQuery.setEnd(end);
+                            kaleoTaskInstanceTokenQuery.setKaleoDefinitionId(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setKaleoInstanceIds(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setOrderByComparator(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.
+                                    setSearchByActiveWorkflowHandlers(
+                                            false);
+                            kaleoTaskInstanceTokenQuery.setSearchByUserRoles(
+                                    searchByUserRoles);
+                            kaleoTaskInstanceTokenQuery.setStart(start);
+                            kaleoTaskInstanceTokenQuery.setTaskNames(null);
 
-                    return kaleoTaskInstanceTokenQuery;
-                }
-        ).build(),
-        start, end, KaleoTaskInstanceTokenOrderByComparator.
-                        getOrderByComparator(
-                                orderByComparator,
-                                _kaleoWorkflowModelConverter), serviceContext);
+                            return kaleoTaskInstanceTokenQuery;
+                        }
+                ).build(),
+                start, end, orderColumn, orderType, serviceContext);
 
-        LOG.error(hits.getDocs());
+        //
+        JSONArray jsonArrayResult = JSONFactoryUtil.createJSONArray();
+        for (Document doc : hits.getDocs()) {
+            JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+            //jsonObject.put("workflowTaskId", GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK)));
+            jsonObject.put("entryClassPK", GetterUtil.getLong(doc.get(Field.CLASS_PK)));
+            jsonObject.put("fullName", GetterUtil.getString(doc.get("fullName")));
+            jsonObject.put("matricula", GetterUtil.getString(doc.get("matricula")));
+            jsonObject.put("entryType", GetterUtil.getString(doc.get("entryType")));
+            jsonObject.put("taskName", GetterUtil.getString(doc.get("taskName")));
+            jsonObject.put("createDate", doc.getDate("createDate"));
+            jsonObject.put("assigneeUserId", GetterUtil.getString(doc.get("assigneeClassPKs")));
+            jsonObject.put("workflowTaskId", GetterUtil.getLong(doc.get("kaleoTaskInstanceTokenId")));
+            jsonObject.put("assigneePersonName", GetterUtil.getString(doc.get("assigneePersonName")));
+            jsonArrayResult.put(jsonObject);
+        }
 
+        return jsonArrayResult;
     }
 
 
     private Hits _search(
             Map<String, Serializable> searchAttributes, int start, int end,
-            OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+            String orderColumn, String orderType,
             ServiceContext serviceContext)
             throws PortalException {
 
@@ -103,13 +113,13 @@ public class EmasesaWorkflowTaskSearch {
 
         return indexer.search(
                 _buildSearchContext(
-                        searchAttributes, start, end, orderByComparator,
+                        searchAttributes, start, end, orderColumn, orderType,
                         serviceContext));
     }
 
     private SearchContext _buildSearchContext(
             Map<String, Serializable> searchAttributes, int start, int end,
-            OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+            String orderColumn, String orderType,
             ServiceContext serviceContext) {
 
         SearchContext searchContext = new SearchContext();
@@ -117,104 +127,22 @@ public class EmasesaWorkflowTaskSearch {
         searchContext.setAttributes(searchAttributes);
         searchContext.setCompanyId(serviceContext.getCompanyId());
         searchContext.setEnd(end);
-        searchContext.setGroupIds(new long[] {-1L});
+        searchContext.setGroupIds(new long[]{-1L});
         searchContext.setStart(start);
 
-        if (orderByComparator != null) {
-            searchContext.setSorts(_getSortsFromComparator(orderByComparator));
-        }
+        if (orderColumn != null && !orderColumn.equals("")) {
+            if(orderColumn.equals("createDate_Number_sortable")){
+                searchContext.setSorts(new Sort(orderColumn, Sort.LONG_TYPE, !orderType.equals("asc")));
+            }else{
+                searchContext.setSorts(new Sort(orderColumn, Sort.STRING_TYPE, !orderType.equals("asc")));
+            }
 
+        }
+        searchContext.getQueryConfig().setSelectedFieldNames("assigneePersonName", "classPK", "kaleoTaskInstanceTokenId", "entryClassPK", "fullName", "matricula", "entryType", "matricula", "taskName", "createDate", "assigneeClassPKs");
         searchContext.setUserId(serviceContext.getUserId());
 
         return searchContext;
     }
-
-    private Sort[] _getSortsFromComparator(
-            OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-
-        if (orderByComparator == null) {
-            return null;
-        }
-
-        return TransformUtil.transform(
-                orderByComparator.getOrderByFields(),
-                orderByFieldName -> {
-                    String fieldName = _fieldNameOrderByCols.getOrDefault(
-                            orderByFieldName, orderByFieldName);
-
-                    int sortType = _fieldNameSortTypes.getOrDefault(
-                            fieldName, Sort.STRING_TYPE);
-
-                    boolean ascending = orderByComparator.isAscending();
-
-                    if (Objects.equals(
-                            orderByFieldName, EmasesaKaleoTaskInstanceTokenField.COMPLETED)) {
-
-                        ascending = true;
-                    }
-
-                    return new Sort(fieldName, sortType, !ascending);
-                },
-                Sort.class);
-    }
-
-
-    private static final Map<String, String> _fieldNameOrderByCols =
-            HashMapBuilder.put(
-                    Field.CREATE_DATE,
-                    _getSortableFieldName(Field.CREATE_DATE, "Number")
-            ).put(
-                    Field.USER_ID, _getSortableFieldName(Field.USER_ID, "Number")
-            ).put(
-                    EmasesaKaleoTaskInstanceTokenField.COMPLETED,
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.COMPLETED, "String")
-            ).put(
-                    EmasesaKaleoTaskInstanceTokenField.COMPLETION_DATE,
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.COMPLETION_DATE, "Number")
-            ).put(
-                    EmasesaKaleoTaskInstanceTokenField.DUE_DATE,
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.DUE_DATE, "Number")
-            ).put(
-                    EmasesaKaleoTaskInstanceTokenField.KALEO_INSTANCE_ID,
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.KALEO_INSTANCE_ID, "Number")
-            ).put(
-                    EmasesaKaleoTaskInstanceTokenField.KALEO_TASK_ID,
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.KALEO_TASK_ID, "Number")
-            ).put(
-                    EmasesaKaleoTaskInstanceTokenField.KALEO_TASK_INSTANCE_TOKEN_ID,
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.KALEO_TASK_INSTANCE_TOKEN_ID,
-                            "Number")
-            ).put(
-                    "modifiedDate", _getSortableFieldName(Field.MODIFIED_DATE, "Number")
-            ).put(
-                    "name",
-                    _getSortableFieldName(
-                            EmasesaKaleoTaskInstanceTokenField.TASK_NAME, "String")
-            ).build();
-    private static final Map<String, Integer> _fieldNameSortTypes =
-            HashMapBuilder.put(
-                    Field.CREATE_DATE, Sort.LONG_TYPE
-            ).put(
-                    Field.MODIFIED_DATE, Sort.LONG_TYPE
-            ).put(
-                    "completionDate", Sort.LONG_TYPE
-            ).put(
-                    "dueDate", Sort.LONG_TYPE
-            ).build();
-
-    private static String _getSortableFieldName(String name, String type) {
-        return Field.getSortableFieldName(
-                StringBundler.concat(name, StringPool.UNDERLINE, type));
-    }
-
-    @Reference
-    private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
     private static final Log LOG = LogFactoryUtil.getLog(EmasesaWorkflowTaskSearch.class);
 }
