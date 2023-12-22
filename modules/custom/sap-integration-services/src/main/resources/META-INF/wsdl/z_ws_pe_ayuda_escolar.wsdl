@@ -250,12 +250,6 @@
                     <xsd:fractionDigits value="2"/>
                 </xsd:restriction>
             </xsd:simpleType>
-            <xsd:simpleType name="date10">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="10"/>
-                    <xsd:pattern value="\d\d\d\d-\d\d-\d\d"/>
-                </xsd:restriction>
-            </xsd:simpleType>
             <xsd:simpleType name="numeric2">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="2"/>
@@ -280,6 +274,19 @@
                     <xsd:pattern value="\d*"/>
                 </xsd:restriction>
             </xsd:simpleType>
+            <xsd:complexType name="ZPE_ST_INS_AYUDA_ESCOLAR">
+                <xsd:sequence>
+                    <xsd:element name="PERNR" type="n1:numeric8"/>
+                    <xsd:element name="TIPO_ID" type="n1:char4"/>
+                    <xsd:element name="NUMERO" type="n1:char2"/>
+                    <xsd:element name="ESTUDIO_ID" type="n1:numeric3"/>
+                    <xsd:element name="ESTUDIO_NIVEL" type="n1:numeric2"/>
+                    <xsd:element name="CENTRO" type="n1:char50"/>
+                    <xsd:element name="COMENTARIO" type="n1:char50"/>
+                    <xsd:element name="FAM_NUMEROSA" type="n1:char1"/>
+                    <xsd:element name="FAM_MONOPARENTAL" type="n1:char1"/>
+                </xsd:sequence>
+            </xsd:complexType>
         </xsd:schema>
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                     xmlns:n0="urn:sap-com:document:sap:rfc:functions">
@@ -314,20 +321,6 @@
                     <xsd:element name="EstudioDesc" type="n0:char200"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="ZpeStInsAyudaEscolar">
-                <xsd:sequence>
-                    <xsd:element name="Pernr" type="n0:numeric8"/>
-                    <xsd:element name="TipoId" type="n0:char4"/>
-                    <xsd:element name="Numero" type="n0:char2"/>
-                    <xsd:element name="EstudioId" type="n0:numeric3"/>
-                    <xsd:element name="EstudioNivel" type="n0:numeric2"/>
-                    <xsd:element name="Centro" type="n0:char50"/>
-                    <xsd:element name="Comentario" type="n0:char50"/>
-                    <xsd:element name="FamNumerosa" type="n0:char1"/>
-                    <xsd:element name="FamMonoparental" type="n0:char1"/>
-                    <xsd:element name="Fecha" type="n0:date10"/>
-                </xsd:sequence>
-            </xsd:complexType>
             <xsd:complexType name="Bapireturn1">
                 <xsd:sequence>
                     <xsd:element name="Type" type="n0:char1"/>
@@ -357,15 +350,11 @@
                     <xsd:element name="item" type="tns:ZpeStAyudasSolicitadas" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStInsAyudaEscolar">
-                <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStInsAyudaEscolar" minOccurs="0" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:complexType>
             <xsd:element name="ZPeAyudaEscolar">
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element name="Pernr" type="n0:numeric8"/>
+                        <xsd:element name="TInsAyudaEscolar" type="n0:ZPE_ST_INS_AYUDA_ESCOLAR"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -376,7 +365,6 @@
                         <xsd:element name="TAyudasSolicitadas" type="tns:TableOfZpeStAyudasSolicitadas"/>
                         <xsd:element name="TBeneficiarios" type="tns:TableOfZpeStBeneficiarios"/>
                         <xsd:element name="TEstudios" type="tns:TableOfZpeStEstudios"/>
-                        <xsd:element name="TInsAyudaEscolar" type="tns:TableOfZpeStInsAyudaEscolar"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
