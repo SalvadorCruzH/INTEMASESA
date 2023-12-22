@@ -1,25 +1,16 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
-	<version>33</version>
+	<version>37</version>
 	<state>
 		<name>creacion solicitud</name>
 		<description>Se crea una solicitud de flexibilidad horaria</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-15.838787078857422,
-						-11.7933349609375
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-15,-11],"transitions":{"envio":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -224,16 +215,7 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>jefeDepartamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-15.8411865234375,
-						-284.94110107421875
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-15,-284],"transitions":{"Rechazar y guardar":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -314,7 +296,7 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>aprobar</name>
+				<name>Aprobar</name>
 				<target>jefeDivision</target>
 				<default>true</default>
 			</transition>
@@ -324,7 +306,7 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar y guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar</name>
+				<name>Rechazar y guardar</name>
 				<target>Rechazada</target>
 				<default>false</default>
 			</transition>
@@ -333,16 +315,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>jefeDivision</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						384.9689025878906,
-						-288.40130615234375
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[384,-288],"transitions":{"rechazar solicitud":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -405,7 +378,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "divisionId");
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "DivisionRespId");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -442,16 +415,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>administrador RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.Solicitud enviada lista para asignarse a un usuario con rol Administración de RRHH</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						769.1991577148438,
-						-286.5092468261719
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[769,-286],"transitions":{"Rechazar":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -541,16 +505,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>jefe division personas</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						1214.6334463405512,
-						-289.59199669897663
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[1215,-289],"transitions":{"Rechazar solicitud":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -613,7 +568,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "divisionRespId");
+users = customWorkflowUtil.getUserSap(workflowContext,userId, "DivisionRrhhRespId");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
