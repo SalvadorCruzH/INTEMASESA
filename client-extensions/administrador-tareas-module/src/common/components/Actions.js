@@ -46,11 +46,13 @@ class Actions extends React.Component {
         if (actionExecuted && (String(actionExecuted)).indexOf('assign-to-me') >= 0) {
             message = Liferay.Language.get('es.emasesa.transition.label.assignToMe.success');
         } else if (actionExecuted && String(actionExecuted).indexOf('Aprobada-enviar-asesor-juridico') >= 0) {
-            message = Liferay.Language.get('es.emasesa.transition.label.Aprobada-enviar-asesor-juridico.success');
+            message = Liferay.Language.get('es.emasesa.transition.label.Aprobada-enviar-asesor-juridico');
         }else if (actionExecuted && String(actionExecuted).indexOf('Rechazar-y-guardar-en-sigd') >= 0) {
-            message = Liferay.Language.get('es.emasesa.transition.label.Rechazar-y-guardar-en-sigd.success');
-        }else if (actionExecuted && String(actionExecuted).indexOf('Devolver-a-usuario-para-edicion.success') >= 0) {
-            message = Liferay.Language.get('es.emasesa.transition.label.Devolver-a-usuario-para-edicion.success.success');
+            message = Liferay.Language.get('es.emasesa.transition.label.Rechazar-y-guardar-en-sigd');
+        }else if (actionExecuted && String(actionExecuted).indexOf('Devolver-a-usuario-para-edicion') >= 0) {
+            message = Liferay.Language.get('es.emasesa.transition.label.Devolver-a-usuario-para-edicion.success');
+        }else if (actionExecuted && String(actionExecuted).indexOf('portafirma-director-RRHH') >= 0) {
+            message = Liferay.Language.get('es.emasesa.transition.label.portafirma-director-RRHH.success');
         }
 
         if (message.length <= 0) {
@@ -236,6 +238,78 @@ class Actions extends React.Component {
         }
     }
 
+    openModalDireccion = (event) => {
+        let thatContext = this;
+        let objectReviewed = this.state.objectReviewed;
+        let jsonObjectMapping = {};
+        try{
+            jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        }catch(e){
+            jsonObjectMapping = this.state.configuration.objectMapping;
+        }
+        let objectMapping = jsonObjectMapping[objectReviewed.entryType];
+        if (objectMapping) {
+            let display = objectMapping.direccion;
+            display += "?objectEntryId=" + objectReviewed.entryClassPK;
+            display += "&objectType=" + objectReviewed.entryType;
+            display += "&mode=2";
+            display += "&p_p_state=pop_up";
+            let url = themeDisplay.getPortalURL() + display;
+            let dialog = Liferay.Util.openWindow({
+                //cache: false,
+                dialog: {
+                    destroyOnHide: true,
+                    modal: true,
+                    cssClass:'dialog-with-footer i-mainWrapper',
+                    after: {
+                        render: function(event) {},
+                        destroy: function(event) {
+                        }
+                    },
+                    toolbars: {
+                        footer: [
+                            {
+                                label: 'Avanzar flujo',
+                                id: 'avanzar-flujo-button',
+                                cssClass: 'btn-link pull-right btn btn-secondary hide',
+                                on: {
+                                    click: function() {
+                                    }
+                                },
+                            },
+                            {
+                                label: 'Cerrar',
+                                cssClass: 'btn-link pull-right btn btn-secondary',
+                                on: {
+                                    click: function() {
+                                        let dialog = Liferay.Util.Window.getById('direccionDialog_iframe_');
+                                        dialog.destroy();
+                                    }
+                                },
+                            }
+                        ]
+                    }
+                },
+                dialogIframe: {
+                    bodyCssClass: 'dialog-with-footer i-mainWrapper'
+                },
+                id: 'direccionDialog',
+                //refreshWindow: window,
+                title: 'Consulta de '+objectReviewed.entryType,
+                uri: url
+            });
+
+            setTimeout(() => {
+                iframeURLChange(document.getElementById("direccionDialog_iframe_"), function (newURL) {
+                    let dialog = Liferay.Util.Window.getById('direccionDialog_iframe_');
+                    thatContext.changeTransition(event);
+                    dialog.destroy();
+                })
+            }, 4000);
+            //window.open(url, "_blank")
+        }
+    }
+
     render() {
 
         return (<>
@@ -252,7 +326,7 @@ class Actions extends React.Component {
                     <i className="fa-solid fa-ellipsis fa-rotate-90 fa-2xl"></i>
                 </a>
                 <ul aria-labelledby="dropdownAction1" className="dropdown-menu">
-                    {!this.state.completed &&
+                    {!this.state.completed && Number(this.state.assigneePerson) !== Number(Liferay.ThemeDisplay.getUserId()) &&
                         <li><a className="dropdown-item" data-action="assignToMe"
                                onClick={this.assignToMe}>{Liferay.Language.get("es.emasesa.transition.label.assignToMe")}</a>
                         </li>
@@ -267,15 +341,27 @@ class Actions extends React.Component {
                                 <>
                                     <li>
                                         <>
-                                        {transition.name !== 'Mandar-a-portafirmas' ? (
-                                            <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
-                                                {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
-                                            </a>
-                                        ) : (
-                                            <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
-                                                {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
-                                            </a>
-                                        )}
+                                            {(() => {
+                                                if (transition.name !== 'Mandar-a-portafirmas') {
+                                                    return (
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
+                                                            {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                                        </a>
+                                                    )
+                                                } else if (transition.name !== 'portafirma-director-RRHH') {
+                                                    return (
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
+                                                            {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                                        </a>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
+                                                            {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                                        </a>
+                                                    )
+                                                }
+                                            })()}
                                         </>
                                     </li>
                                 </>

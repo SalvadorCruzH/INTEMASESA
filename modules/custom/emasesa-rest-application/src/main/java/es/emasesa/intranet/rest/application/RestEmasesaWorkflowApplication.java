@@ -13,8 +13,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskCreateDateComparator;
 import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.rest.constant.EmasesaRestConstant;
+import es.emasesa.intranet.rest.search.EmasesaWorkflowTaskSearch;
 import es.emasesa.intranet.service.util.SapServicesUtil;
 import java.util.Collections;
 import java.util.List;
@@ -45,16 +47,16 @@ public class RestEmasesaWorkflowApplication extends Application {
 	}
 
 	@GET
-	@Path("/{assetType}/{completed}/{byRole}/{start}/{end}")
+	@Path("/{assetType}/{completed}/{byRole}/{start}/{end}/{orderColumn}/{orderType}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response getWorkflowTasksAssigned(@Context HttpServletRequest request,@PathParam("assetType") String assetType,
-									 @PathParam("completed") boolean completed,@PathParam("byRole") boolean byRole,@PathParam("start") int start,
-									 @PathParam("end") int end) {
+	public Response getWorkflowTasksAssigned(@Context HttpServletRequest request, @PathParam("assetType") String assetType,
+									 @PathParam("completed") boolean completed, @PathParam("byRole") boolean byRole, @PathParam("start") int start,
+									 @PathParam("end") int end, @PathParam("orderColumn") String orderColumn, @PathParam("orderType") String orderType)  {
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		try {
-			JSONArray result = getTasks(assetType, completed, byRole, start, end, serviceContext);
+			JSONArray result = getTasks(assetType, completed, byRole, start, end, orderColumn, orderType, serviceContext);
 
 			return Response
 					.status(Response.Status.OK)
@@ -70,16 +72,16 @@ public class RestEmasesaWorkflowApplication extends Application {
 	}
 
 	@GET
-	@Path("/{completed}/{byRole}/{start}/{end}")
+	@Path("/{completed}/{byRole}/{start}/{end}/{orderColumn}/{orderType}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response getAllWorkflowTasksAssigned(@Context HttpServletRequest request,
-											 @PathParam("completed") boolean completed,@PathParam("byRole") boolean byRole,@PathParam("start") int start,
-											 @PathParam("end") int end) {
+											 @PathParam("completed") boolean completed,@PathParam("byRole") boolean byRole, @PathParam("start") int start,
+											 @PathParam("end") int end, @PathParam("orderColumn") String orderColumn, @PathParam("orderType") String orderType) {
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		try {
-			JSONArray result = getTasks("",completed, byRole, start, end, serviceContext);
+			JSONArray result = getTasks("",completed, byRole, start, end, orderColumn, orderType, serviceContext);
 
 			return Response
 					.status(Response.Status.OK)
@@ -95,20 +97,37 @@ public class RestEmasesaWorkflowApplication extends Application {
 	}
 
 
-	private JSONArray getTasks(String assetType, boolean completed, boolean byRole, int start, int end, ServiceContext serviceContext) throws PortalException {
+	private JSONArray getTasks(String assetType, boolean completed, boolean byRole, int start, int end,
+							   String orderColumn, String orderType, ServiceContext serviceContext) throws Exception {
+
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 		Long[] asigneeIds = new Long[]{user.getUserId()};
 		String[] assetTypes = new String[]{assetType};
-		JSONArray result = JSONFactoryUtil.createJSONArray();
 
 		if(byRole){
 			asigneeIds = null;
 		}
+		JSONArray jsonArray = _emasesaWorkflowTaskSearch.searchWorkflowTask(serviceContext, false, assetTypes, asigneeIds, completed, start, end, byRole, orderColumn, orderType);
 
-		List<WorkflowTask> tasks = _workflowTaskManager.search(serviceContext.getCompanyId(), user.getUserId(), null,
+		jsonArray.forEach(jsonObject -> {
+			JSONObject jsonTask = (JSONObject)jsonObject;
+			String fullName = "Sin asignar";
+			if(jsonTask.getString("assigneePersonName").isEmpty()) {
+				jsonTask.put("assigneePersonName", fullName);
+			}
+		});
+
+		return jsonArray;
+		/*List<WorkflowTask> tasks = _workflowTaskManager.search(serviceContext.getCompanyId(), user.getUserId(), null,
 				null, assetTypes, null, null, asigneeIds, null,
 				null, completed, byRole, null, null, false,
-				start, end,null);
+				start, end, new WorkflowTaskCreateDateComparator(
+						false,
+						"createDate ASC",
+						"createDate DESC",
+						new String[] {
+								"createDate"
+						}));
 
 		for(WorkflowTask task:tasks){
 			JSONObject jsonTask = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(task));
@@ -130,7 +149,7 @@ public class RestEmasesaWorkflowApplication extends Application {
 			result.put(jsonTask);
 
 		}
-		return result;
+		return result;*/
 	}
 
 
@@ -138,8 +157,8 @@ public class RestEmasesaWorkflowApplication extends Application {
 	@Path("/check/{roleId}/{workflowtaskId}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response checkUserAndRole(@Context HttpServletRequest request,@PathParam("userId") long userId,
-									 @PathParam("roleId") long roleId,@PathParam("workflowtaskId") long workflowtaskId) {
+	public Response checkUserAndRole(@Context HttpServletRequest request,
+									 @PathParam("roleId") long roleId, @PathParam("workflowtaskId") long workflowtaskId) {
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		boolean result = false;
@@ -170,4 +189,6 @@ public class RestEmasesaWorkflowApplication extends Application {
 	protected WorkflowTaskManager _workflowTaskManager;
 	@Reference
 	protected UserLocalService _userLocalService;
+	@Reference
+	protected EmasesaWorkflowTaskSearch _emasesaWorkflowTaskSearch;
 }
