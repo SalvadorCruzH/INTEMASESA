@@ -64,9 +64,6 @@ public class AyudaEscolarService {
             if (tEstudios.value != null){
                 jsonReturn.put("estudios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEstudios.value.getItem())));
             }
-            if (tInsAyudaEscolar != null){
-                jsonReturn.put("ayudaEscolar", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInsAyudaEscolar.value.getItem())));
-            }
             return jsonReturn;
         } catch (ServerSOAPFaultException | JSONException e) {
             throw new AyudaEscolarException("Error llamando al WS para el origen o parseando datos"+ pernr, e);
@@ -99,9 +96,6 @@ public class AyudaEscolarService {
             }
             if (tEstudios.value != null){
                 jsonReturn.put("estudios", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEstudios.value.getItem())));
-            }
-            if (tInsAyudaEscolar != null){
-                jsonReturn.put("ayudaEscolar", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInsAyudaEscolar.value.getItem())));
             }
             return jsonReturn;
         } catch (ServerSOAPFaultException | JSONException e) {
