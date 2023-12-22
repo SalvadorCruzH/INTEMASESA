@@ -13,5 +13,151 @@
             padding-right: 50px;
             line-height: 1.25;
         }
+        &__descripcion,
+        &__dirigido,
+        &__fecha,
+        &__horario,
+        &__lugar,
+        &__precio,
+        &__enlaces {
+            margin-bottom: 1rem;
+        }
+        &__fecha {
+            display: flex;
+            gap: 1rem;
+        }
+        &__header {
+            @include media-breakpoint-up(md) {
+                display: flex;
+                > * {
+                    flex-basis: 50%;
+                }
+            }
+        }
+        &__title {
+            @include media-breakpoint-up(md) {
+                padding-right: 15px;
+            }
+        }
+        &__resumen {
+            @include media-breakpoint-up(md) {
+                padding-right: 50px;
+            }
+        }
+        &__dirigido {
+            position: relative;
+            padding-left: 30px;
+            &::before {
+                font-family: 'Font Awesome 6 Free';
+                -moz-osx-font-smoothing: grayscale;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 900;
+                line-height: 1;
+                text-rendering: auto;
+                content: "\f0c0";
+                position: absolute;
+                top: 5px;
+                left: 0;
+            }
+        }
+        &__fecha {
+            &__inicio {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f271";
+                }
+            }
+            &__fin {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f272";
+                }
+            }
+        }
+        &__horario {
+            &::before {
+                font-family: 'Font Awesome 6 Free';
+                -moz-osx-font-smoothing: grayscale;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 900;
+                line-height: 1;
+                text-rendering: auto;
+                content: "\f017";
+            }
+        }
+        &__lugar {
+            &::before {
+                font-family: 'Font Awesome 6 Free';
+                -moz-osx-font-smoothing: grayscale;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 900;
+                line-height: 1;
+                text-rendering: auto;
+                content: "\f3c5";
+            }
+        }
+        &__precio {
+            &::before {
+                font-family: 'Font Awesome 6 Free';
+                -moz-osx-font-smoothing: grayscale;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 900;
+                line-height: 1;
+                text-rendering: auto;
+                content: "\f09d";
+            }
+            &::after {
+                font-family: 'Font Awesome 6 Free';
+                -moz-osx-font-smoothing: grayscale;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 900;
+                line-height: 1;
+                text-rendering: auto;
+                content: "\f153";
+            }
+        }
+        &__enlace {
+            &__title {
+                &::before {
+                    font-family: 'Font Awesome 6 Free';
+                    -moz-osx-font-smoothing: grayscale;
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: 900;
+                    line-height: 1;
+                    text-rendering: auto;
+                    content: "\f0c1";
+                }
+            }
+        }
+        &__documentos {
+            &::before {
+                font-family: 'Font Awesome 6 Free';
+                -moz-osx-font-smoothing: grayscale;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 900;
+                line-height: 1;
+                text-rendering: auto;
+                content: "\f02d";
+            }
+        }
     }
 }
