@@ -22,7 +22,6 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="TAyudasSolicitadas" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStAyudasSolicitadas"/&gt;
  *         &lt;element name="TBeneficiarios" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStBeneficiarios"/&gt;
  *         &lt;element name="TEstudios" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStEstudios"/&gt;
- *         &lt;element name="TInsAyudaEscolar" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStInsAyudaEscolar"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,8 +35,7 @@ import jakarta.xml.bind.annotation.XmlType;
     "_return",
     "tAyudasSolicitadas",
     "tBeneficiarios",
-    "tEstudios",
-    "tInsAyudaEscolar"
+    "tEstudios"
 })
 @XmlRootElement(name = "ZPeAyudaEscolarResponse")
 public class ZPeAyudaEscolarResponse {
@@ -50,8 +48,6 @@ public class ZPeAyudaEscolarResponse {
     protected TableOfZpeStBeneficiarios tBeneficiarios;
     @XmlElement(name = "TEstudios", required = true)
     protected TableOfZpeStEstudios tEstudios;
-    @XmlElement(name = "TInsAyudaEscolar", required = true)
-    protected TableOfZpeStInsAyudaEscolar tInsAyudaEscolar;
 
     /**
      * Obtiene el valor de la propiedad return.
@@ -147,30 +143,6 @@ public class ZPeAyudaEscolarResponse {
      */
     public void setTEstudios(TableOfZpeStEstudios value) {
         this.tEstudios = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad tInsAyudaEscolar.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TableOfZpeStInsAyudaEscolar }
-     *     
-     */
-    public TableOfZpeStInsAyudaEscolar getTInsAyudaEscolar() {
-        return tInsAyudaEscolar;
-    }
-
-    /**
-     * Define el valor de la propiedad tInsAyudaEscolar.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TableOfZpeStInsAyudaEscolar }
-     *     
-     */
-    public void setTInsAyudaEscolar(TableOfZpeStInsAyudaEscolar value) {
-        this.tInsAyudaEscolar = value;
     }
 
 }

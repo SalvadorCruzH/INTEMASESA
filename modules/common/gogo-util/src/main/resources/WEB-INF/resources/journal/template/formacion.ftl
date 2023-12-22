@@ -2,14 +2,13 @@
     <#if (formacionTitle.getData())??>
         <h3 class="ema-formacion__item__title ema-accordion__title">${formacionTitle.getData()}</h3>
     </#if>
+    <#if (formacionResumen.getData())??>
+        <p class="ema-formacion__item__resumen">${formacionResumen.getData()}</p>
+    </#if>
 </header>
 <button type="button" class="ema-accordion__btn"><span class="sr-only">Ampliar información</span></button>
 
 <div class="ema-formacion__item__content ema-accordion__content">
-    <#if (formacionResumen.getData())??>
-        ${formacionResumen.getData()}
-    </#if>
-    <br />
     <#if (formacionDescripcion.getData())??>
         ${formacionDescripcion.getData()}
     </#if>

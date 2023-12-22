@@ -1,3 +1,17 @@
 .ema-formacion {
     margin-block: 3rem;
+    padding: 1.875rem;
+    background-color: white;
+    border-radius: 20px;
+    p {
+        font-size: 1rem;
+        margin: 0;
+    }
+    &__item {
+        &__title {
+            font-size: 1.15rem;
+            padding-right: 50px;
+            line-height: 1.25;
+        }
+    }
 }
