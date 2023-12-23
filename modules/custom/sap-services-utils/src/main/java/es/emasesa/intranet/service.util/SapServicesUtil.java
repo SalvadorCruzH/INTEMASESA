@@ -2,6 +2,7 @@ package es.emasesa.intranet.service.util;
 
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -11,8 +12,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
@@ -41,6 +44,7 @@ import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.*;
@@ -427,7 +431,7 @@ public class SapServicesUtil {
     public JSONObject getAyudaEscolar(User user) throws PortalException {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[B] getAyudaEscolar " + +user.getUserId());
+            LOG.debug("[B] getAyudaEscolar " + user.getUserId());
         }
         JSONObject datosAyudaEscolar = JSONFactoryUtil.createJSONObject();
         String pernr = StringPool.BLANK;
@@ -450,6 +454,40 @@ public class SapServicesUtil {
             }
         }
         return datosAyudaEscolar;
+    }
+
+    public void saveAyudaEscolar(Map<String, Serializable> workflowContext) throws PortalException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] saveAyudaEscolar ");
+        }
+        long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+        LOG.debug("Obtenido classPK la petición" + classPK);
+
+         Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
+         String pernr = (String) objectValues.get("numeroDeMatricula");
+         String centro = (String) objectValues.get("centroDeEstudios");
+         String estudioId = (String) objectValues.get("estudios");
+         String estudioNivel =  "1";// String) objectValues.get("nivelDeEstudios");
+         String famNumerosa = (String) objectValues.get("familiaNumerosa");
+         String famMonoparental = (String) objectValues.get("familiaMonoparental");
+         String numero = (String) objectValues.get("numero");
+         String tipoId = (String) objectValues.get("beneficiariosDeLaAyuda");
+         String comentarios = (String) objectValues.get("comentarios");
+
+        try {
+            if (_ayudaEscolarService == null) {
+                activate(null);
+            }
+            _ayudaEscolarService.saveAyudaEscolar(pernr, centro, estudioId, estudioNivel, famNumerosa, numero, tipoId, famMonoparental, comentarios);
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (AyudaEscolarException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] finalizada saveAyudaEscolar para el usuario con matrícula " + pernr);
+            }
+        }
     }
 
     @Activate
@@ -518,6 +556,8 @@ public class SapServicesUtil {
 
     @Reference
     private UserLocalService _userLocalService;
+    @Reference
+    private ObjectEntryLocalService _objectEntryLocalService;
     private MarcajeService _marcajeService;
     private ResumenAnualService _resumenAnualService;
     private EmpleadoDatosPersonalesService _empleadoDatosPersonalesService;
