@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "Obtener valores de tabla SAP",
+					"name": "valueSap",
+					"type": "text",
+					"typeOptions": {
+          	"placeholder": "beneficiarios, estudios"
+          }
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,56 @@
+[#assign sapServicesUtil = serviceLocator.findService("es.emasesa.intranet.service.util.SapServicesUtil")]
+[#assign user = themeDisplay.getUser()]
+[#assign ayudaEscolar = sapServicesUtil.getAyudaEscolar(user)]
+[#assign valueSap = configuration.valueSap]
+[#assign beneficiarios = ayudaEscolar.beneficiarios]
+[#assign estudios = ayudaEscolar.estudios]
+[#assign cantidadHijos = 0]
+[#assign familiaMonoparental = "S"]
+
+<div class="select-from-list" id="${fragmentEntryLinkNamespace}-parent">
+    <div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
+        <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-radio-group">
+            ${htmlUtil.escape(input.label)}
+            [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+        </label>
+
+        <div aria-labelledby="${fragmentEntryLinkNamespace}-label" id="${fragmentEntryLinkNamespace}-radio-group" role="radiogroup">
+            [#if valueSap == "beneficiarios"]
+                [#assign jsonOptions = beneficiarios?eval]
+                [#list jsonOptions as item]
+                    [#if item??]
+                        <label>
+                            <input type="radio" name="beneficiarios" value="${item.tipoId}" data-number="${item.numero}">
+                            ${item.nombre} ${item.apellido1} ${item.apellido2} - ${item.tipoDesc}
+                        </label>
+                        <br>
+                        [#if item.tipoDesc == "Hijo"]
+                          [#assign cantidadHijos = cantidadHijos + 1]
+                        [/#if]
+                        [#if item.tipoDesc == "Cónyuge"]
+                          [#assign familiaMonoparental = "N"]
+                        [/#if]
+                    [/#if]
+                [/#list]
+            [#elseif valueSap == "estudios"]
+                [#assign jsonOptions = estudios?eval]
+                [#list jsonOptions as item]
+                    [#if item??]
+                        <label>
+                            <input type="radio" name="estudios" value="${item.estudioId}">
+                            (${item.importe}€)-${item.estudioDesc}
+                        </label>
+                        <br>
+                    [/#if]
+                [/#list]
+            [/#if]
+
+        </div>
+        <input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
+        <input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
+        <input id="familiaMonoparental" type="hidden" [#if familiaMonoparental??]value="${familiaMonoparental}"[/#if]/>
+        <input id="familiaNumerosa" type="hidden" [#if cantidadHijos gte 3]value="S"[#else]value="N"[/#if]/>
+        <input id="numeroBeneficiario" type="hidden" value=""/>
+    </div>
+</div>
+
