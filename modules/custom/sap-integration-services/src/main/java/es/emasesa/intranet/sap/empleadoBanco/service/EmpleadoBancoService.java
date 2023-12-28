@@ -1,4 +1,4 @@
-package es.emasesa.intranet.sap.empleadoPrestamos.service;
+package es.emasesa.intranet.sap.empleadoBanco.service;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -11,6 +11,7 @@ import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
+import es.emasesa.intranet.sap.empleadoBanco.exception.EmpleadoBancoException;
 import es.emasesa.intranet.sap.empleadoPrestamos.exception.EmpleadoPrestamosException;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
@@ -24,24 +25,24 @@ import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 
-@org.springframework.stereotype.Component("prestamoEmpleados")
-public class EmpleadoPrestamosService {
+@org.springframework.stereotype.Component("empleadoBanco")
+public class EmpleadoBancoService {
 
-   public JSONArray obtenerPrestamoEmpleados(String pernr, String fechaInicio) throws EmpleadoPrestamosException, SapCommunicationException {
+    public JSONArray getEmpleadoBanco(String pernr) throws EmpleadoBancoException, SapCommunicationException {
         JSONArray data = JSONFactoryUtil.createJSONArray();
 
         try {
-            TableOfZpeStEmpleadoPrestamos response = port.zPeEmpleadoPrestamos(fechaInicio, pernr);
+            TableOfZpeStEmpleadoBanco response = port.zPeEmpleadoBanco(pernr);
             if (!response.getItem().isEmpty()) {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
             }
-        }catch (JSONException | ServerSOAPFaultException e) {
+        } catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
-            throw new EmpleadoPrestamosException("Error con el WS:" + e.getMessage(), e);
+            throw new EmpleadoBancoException("Error con el WS:" + e.getMessage(), e);
         } catch (ClientTransportException e) {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
-            LoggerUtil.debug(LOG, "[E] obtenerprestamoEmpleados");
+            LoggerUtil.debug(LOG, "[E] getEmpleadoBanco");
         }
         return data;
     }
@@ -60,7 +61,7 @@ public class EmpleadoPrestamosService {
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOPRESTAMOS.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOBANCO.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
@@ -72,9 +73,15 @@ public class EmpleadoPrestamosService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            URL urlEndpoint = new URL(configuration.empleadoPrestamosEndpoint());
-            ZWSPEEMPLEADOPRESTAMOS_Service service = new ZWSPEEMPLEADOPRESTAMOS_Service();
-            port = service.getPort(ZWSPEEMPLEADOPRESTAMOS.class);
+            try {
+                URL urlEndpoint = new URL(configuration.empleadoBancoEndpoint());
+            }catch (MalformedURLException e) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Error en el WSDL de ZWSPEEMPLEADOBANCO_Service --> " + configuration.empleadoBancoEndpoint());
+                }
+            }
+            ZWSPEEMPLEADOBANCO_Service service = new ZWSPEEMPLEADOBANCO_Service();
+            port = service.getPort(ZWSPEEMPLEADOBANCO.class);
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
@@ -84,25 +91,22 @@ public class EmpleadoPrestamosService {
 
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Se ha producido un error instanciando el servicio de EmpleadoPrestamosService");
-            }
-        }catch (MalformedURLException e) {
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Error en el WSDL de ZWSPEEMPLEADOPRESTAMOS_Service --> " + configuration.empleadoPrestamosEndpoint());
+                LOG.info("Se ha producido un error instanciando el servicio de EmpleadoBancoService");
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[E] EmpleadoPrestamosService");
+            LOG.debug("[E] EmpleadoBancoService");
         }
     }
 
-    private ZWSPEEMPLEADOPRESTAMOS port;
+    private ZWSPEEMPLEADOBANCO port;
+
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
-    private static final Log LOG = LogFactoryUtil.getLog(EmpleadoPrestamosService.class);
+    private static final Log LOG = LogFactoryUtil.getLog(EmpleadoBancoService.class);
 
 }

@@ -30,16 +30,44 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZPeEmpleadoRelacLaboral }
+     * Create an instance of {@link ZPeEmpleadoBanco }
      * 
      */
+    public ZPeEmpleadoBanco createZPeEmpleadoBanco() {
+        return new ZPeEmpleadoBanco();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoBancoResponse }
+     * 
+     */
+    public ZPeEmpleadoBancoResponse createZPeEmpleadoBancoResponse() {
+        return new ZPeEmpleadoBancoResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoBanco }
+     * 
+     */
+    public TableOfZpeStEmpleadoBanco createTableOfZpeStEmpleadoBanco() {
+        return new TableOfZpeStEmpleadoBanco();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoBanco }
+     * 
+     */
+    public ZpeStEmpleadoBanco createZpeStEmpleadoBanco() {
+        return new ZpeStEmpleadoBanco();
+    }
+
     public ZPeEmpleadoRelacLaboral createZPeEmpleadoRelacLaboral() {
         return new ZPeEmpleadoRelacLaboral();
     }
 
     /**
      * Create an instance of {@link ZPeEmpleadoRelacLaboralResponse }
-     * 
+     *
      */
     public ZPeEmpleadoRelacLaboralResponse createZPeEmpleadoRelacLaboralResponse() {
         return new ZPeEmpleadoRelacLaboralResponse();
@@ -47,7 +75,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStEmpleadoRelacLaboral }
-     * 
+     *
      */
     public TableOfZpeStEmpleadoRelacLaboral createTableOfZpeStEmpleadoRelacLaboral() {
         return new TableOfZpeStEmpleadoRelacLaboral();
@@ -55,7 +83,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStEmpleadoRelacLaboral }
-     * 
+     *
      */
     public ZpeStEmpleadoRelacLaboral createZpeStEmpleadoRelacLaboral() {
         return new ZpeStEmpleadoRelacLaboral();
@@ -470,6 +498,4 @@ public class ObjectFactory {
     public ZpeStSubordinados createZpeStSubordinados() {
         return new ZpeStSubordinados();
     }
-
-
 }

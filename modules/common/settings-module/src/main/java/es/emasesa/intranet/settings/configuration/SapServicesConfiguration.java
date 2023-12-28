@@ -91,6 +91,13 @@ public interface SapServicesConfiguration {
 
     @Meta.AD(
             deflt = "",
+            name = "empleadoBancoEndpoint",
+            required = false
+    )
+    String empleadoBancoEndpoint();
+
+    @Meta.AD(
+            deflt = "",
             name = "certificadoRetencionesEndpoint",
             required = false
     )

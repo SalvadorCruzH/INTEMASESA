@@ -2,6 +2,7 @@ package es.emasesa.intranet.sap.proxy;
 
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
+import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioService;
@@ -22,33 +23,35 @@ import org.springframework.stereotype.Component;
 public class SapInterfaceService  extends AbstractSelfRegisteringService {
 
     @Autowired(required = false)
-    EmpleadoEstructuraService empleadoEstructuraService;
+    protected EmpleadoEstructuraService empleadoEstructuraService;
     @Autowired(required = false)
-    JornadaNominaService jornadaNominaService;
+    protected JornadaNominaService jornadaNominaService;
     @Autowired(required = false)
-    MarcajeService marcajeService;
+    protected MarcajeService marcajeService;
     @Autowired(required = false)
-    ResumenAnualService resumenAnualService;
+    protected ResumenAnualService resumenAnualService;
     @Autowired(required = false)
-    EmpleadoDatosPersonalesService empleadoDatosPersonalesService;
+    protected EmpleadoDatosPersonalesService empleadoDatosPersonalesService;
     @Autowired(required = false)
-    EmpleadoDatosDomicilioService empleadoDatosDomicilioService;
+    protected EmpleadoDatosDomicilioService empleadoDatosDomicilioService;
     @Autowired(required = false)
-    JornadaDiariaService jornadaDiariaService;
+    protected JornadaDiariaService jornadaDiariaService;
     @Autowired(required = false)
-    SubordinadosService subordinadosService;
+    protected SubordinadosService subordinadosService;
     @Autowired(required = false)
-    EmpleadoPrestamosService empleadoPrestamosService;
+    protected EmpleadoPrestamosService empleadoPrestamosService;
     @Autowired(required = false)
-    CertificadoRetencionesService certificadoRetencionesService;
+    protected CertificadoRetencionesService certificadoRetencionesService;
     @Autowired(required = false)
-    DistanciaCentrosService distanciaCentrosService;
+    protected DistanciaCentrosService distanciaCentrosService;
     @Autowired(required = false)
-    AyudaEscolarService ayudaEscolarService;
+    protected AyudaEscolarService ayudaEscolarService;
     @Autowired(required = false)
-    CiertosDatosEstructuraService ciertosDatosEstructuraService;
+    protected CiertosDatosEstructuraService ciertosDatosEstructuraService;
     @Autowired(required = false)
-    RelacionLaboralService relacionLaboralService;
+    protected RelacionLaboralService relacionLaboralService;
+    @Autowired(required = false)
+    protected EmpleadoBancoService empleadoBancoService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -91,5 +94,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public RelacionLaboralService getRelacionLaboralService() {
         return relacionLaboralService;
+    }
+    public EmpleadoBancoService getEmpleadoBancoService(){
+        return empleadoBancoService;
     }
 }
