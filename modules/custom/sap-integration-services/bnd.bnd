@@ -32,9 +32,9 @@ Export-Package: \
     es.emasesa.intranet.sap.ayudaEscolar.service,\
     es.emasesa.intranet.sap.ayudaEscolar.exception,\
     es.emasesa.intranet.sap.relacionLaboral.service,\
-    es.emasesa.intranet.sap.relacionLaboral.exception
-
-
+    es.emasesa.intranet.sap.relacionLaboral.exception,\
+    es.emasesa.intranet.sap.empleadoBanco.service,\
+    es.emasesa.intranet.sap.empleadoBanco.exception
 
 Import-Package:\*;resolution:=optional
 

@@ -68,7 +68,7 @@ class TareasModule extends React.Component {
             typeList: "",
             columnSelected :
                 {
-                    name: "createDate_Number_sortable",
+                    name: "createDate_Number",
                     label: Liferay.Language.get("dateCreated"),
                     order: "asc",
                     icon: "fa-solid fa-sort fa-lg"
