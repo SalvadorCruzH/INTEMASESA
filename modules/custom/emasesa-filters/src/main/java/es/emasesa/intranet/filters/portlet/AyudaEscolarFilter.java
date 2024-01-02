@@ -9,6 +9,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.Validator;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.filters.portlet.constants.EmasesaFiltersConstant;
 import es.emasesa.intranet.settings.osgi.AyudaEscolarFormSettings;
@@ -28,6 +29,7 @@ import java.time.format.DateTimeParseException;
 		property = { "servlet-context-name=",
 				"servlet-filter-name=Filtro Solicitud Ayuda Escolar",
 				"url-pattern=/mis-gestiones/nomina/ayuda-escolar/solicitud",
+				"url-pattern=/group/guest/mis-gestiones/nomina/ayuda-escolar/solicitud",
 				"after-filter=Session Max Allowed Filter"
 		},
 		service = Filter.class
@@ -52,7 +54,11 @@ public class AyudaEscolarFilter extends BaseFilter {
 
 			if (today.isBefore(startDate) || today.isAfter(endDate)) {
 				LoggerUtil.debug(LOG, "Se cumple la condicion para la redireccion");
-				httpServletResponse.sendRedirect("/mis-gestiones/nomina/ayuda-escolar");
+				if (httpServletRequest.getRequestURL().toString().contains("/group/guest/")){
+					httpServletResponse.sendRedirect("/group/guest/mis-gestiones/nomina/ayuda-escolar");
+				} else {
+					httpServletResponse.sendRedirect("/mis-gestiones/nomina/ayuda-escolar");
+				}
 				return;
 			}
 
