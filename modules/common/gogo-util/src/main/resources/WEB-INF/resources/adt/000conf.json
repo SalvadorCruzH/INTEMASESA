@@ -142,5 +142,17 @@
         "templateFile": "listado-formacion.ftl",
         "comment": "ADT para el listado de contenidos web tipo Formación Externa.",
         "uuid": "0f80048c-ff2f-62c0-e8d1-f71d053c873b"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Calendario eventos",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-CALENDARIO-ADT",
+        "templateFile": "calendario-eventos.ftl",
+        "comment": "ADT para el calendario de eventos.",
+        "uuid": "e5025740-7d01-6339-0b8e-e1d27f1d8415"
     }
 ]

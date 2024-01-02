@@ -1,0 +1,52 @@
+.ema-calendario {
+    background-color: $color-white;
+    border-radius: 30px;
+    padding-block: 30px;
+    margin-block: 3rem;
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    &__contenedor-evento {
+        display: none;
+    }
+    &__header {
+        display: flex;
+        justify-content: center;
+        border-bottom: 5px solid $color-green;
+        padding-bottom: 10px;
+        margin-top: -15px;
+    }
+    &__mes {
+        text-align: center;
+        .i-mainWrapper & {
+            font-size: 1.5rem;
+            line-height: 1.15;
+        }
+    }
+    &__year {
+        font-weight: 400;
+        font-size: .875rem;
+        color: $color-grey;
+    }
+    table {
+        width: 100%;
+        text-align: center;
+    }
+    thead {
+        border-bottom: 1px solid $color-light-grey;
+    }
+    .day,
+    th {
+        padding: .469rem;
+    }
+    th {
+        font-weight: 700;
+        text-align: center;
+    }
+    .day {
+        &.today {
+            background-color: rgba($color-light-blue, .25);
+        }
+    }
+}
