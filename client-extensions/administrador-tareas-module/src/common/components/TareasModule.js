@@ -66,6 +66,7 @@ class TareasModule extends React.Component {
             delta: 10,
             showCompleted: false,
             typeList: "",
+            hasMore: true,
             columnSelected :
                 {
                     name: "createDate_Number_sortable",
@@ -94,7 +95,7 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToMeButton = (event) => {
-        this.setState({start: 0, end: 10, typeList: "toMe"});
+        this.setState({tareas:[],start: 0, end: 10, typeList: "toMe"});
         this.getAssignedToMe();
 
     }
@@ -112,7 +113,7 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToUserRolButton = (event) => {
-        this.setState({start: 0, end: 10, typeList: "toUserRol"});
+        this.setState({tareas:[],start: 0, end: 10, typeList: "toUserRol"});
         this.getAssignedToUserRol();
     }
 
@@ -164,7 +165,7 @@ class TareasModule extends React.Component {
                 if (client) {
                     let oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(client);
                     let url = oauthUserAgent.URL_DEFAULT + "/" + urlObject + "/" + objectId + "?fields=numeroDeMatricula%2Cnombre%2CprimerApellido%2CsegundoApellido%2CexternalReferenceCode%2CestadoObjeto";
-
+                    console.log(url);
                     const config = {
                         method: 'GET',
                         timeout: 5000,
@@ -240,17 +241,15 @@ class TareasModule extends React.Component {
         let start = this.state.start;
         let end = this.state.end;
 
-        this.setState({
-            tareas: []
-        });
-        if (result && result.length > 0) {
-            result.forEach((tarea, index, result) => {
+        if (result && result.tasks && result.tasks.length > 0) {
+            result.tasks.forEach((tarea, index, result) => {
                 this.addTareaExtraData(tarea);
                 if (index === 0) {
                     this.setState({loading: false});
                 }
             });
             this.setState({start: start + delta, end: end + delta});
+            this.setState({hasMore: result.hasMore});
         } else {
             this.setState({loading: false});
         }
@@ -478,10 +477,14 @@ class TareasModule extends React.Component {
                             )}
                         </>)}
                     </table>
-                    <div className="button-holder">
-                        <a href id="more" className="btn btn-primary" aria-label="Mostrar más" aria-disabled="true"
-                           onClick={this.showMore}>{Liferay.Language.get('task.show.more')}</a>
-                    </div>
+                    {this.state.hasMore &&
+                        <>
+                            <div className="button-holder">
+                                <a href id="more" className="btn btn-primary" aria-label="Mostrar más" aria-disabled="true"
+                                   onClick={this.showMore}>{Liferay.Language.get('task.show.more')}</a>
+                            </div>
+                        </>
+                    }
                 </div>
 
             </div>
