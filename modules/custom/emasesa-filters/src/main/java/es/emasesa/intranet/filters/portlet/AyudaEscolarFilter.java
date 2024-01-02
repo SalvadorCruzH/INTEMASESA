@@ -28,6 +28,7 @@ import java.time.format.DateTimeParseException;
 		property = { "servlet-context-name=",
 				"servlet-filter-name=Filtro Solicitud Ayuda Escolar",
 				"url-pattern=/mis-gestiones/nomina/ayuda-escolar/solicitud",
+				"url-pattern=/group/guest/mis-gestiones/nomina/ayuda-escolar/solicitud",
 				"after-filter=Session Max Allowed Filter"
 		},
 		service = Filter.class
