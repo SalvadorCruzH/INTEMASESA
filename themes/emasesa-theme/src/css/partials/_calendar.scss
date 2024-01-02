@@ -1,3 +1,7 @@
+a[class*="ema-calendario__"] {
+    width: 40px;
+    height: 40px;
+}
 .ema-calendario {
     background-color: $color-white;
     border-radius: 30px;
@@ -12,10 +16,20 @@
     }
     &__header {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         border-bottom: 5px solid $color-green;
         padding-bottom: 10px;
         margin-top: -15px;
+    }
+    &__next {
+        background: transparent url('@theme_image_path@/icons/ico-angle-circle-right.svg') center center no-repeat;
+        background-size: 100%;
+        margin-right: 15px;
+    }
+    &__prev {
+        background: transparent url('@theme_image_path@/icons/ico-angle-circle-left.svg') center center no-repeat;
+        background-size: 100%;
+        margin-left: 15px;
     }
     &__mes {
         text-align: center;
@@ -32,6 +46,7 @@
     table {
         width: 100%;
         text-align: center;
+        border-bottom: 3px solid $color-green;
     }
     thead {
         border-bottom: 1px solid $color-light-grey;
@@ -45,6 +60,10 @@
         text-align: center;
     }
     .day {
+        &.wrong-month {
+            background-color: rgba($color-light-grey, .25);
+            color: $color-icon-grey;
+        }
         &.today {
             background-color: rgba($color-light-blue, .25);
         }
