@@ -56,7 +56,7 @@ public class RestEmasesaWorkflowApplication extends Application {
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		try {
-			JSONArray result = getTasks(assetType, completed, byRole, start, end, orderColumn, orderType, serviceContext);
+			JSONObject result = getTasks(assetType, completed, byRole, start, end, orderColumn, orderType, serviceContext);
 
 			return Response
 					.status(Response.Status.OK)
@@ -81,7 +81,7 @@ public class RestEmasesaWorkflowApplication extends Application {
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		try {
-			JSONArray result = getTasks("",completed, byRole, start, end, orderColumn, orderType, serviceContext);
+			JSONObject result = getTasks("",completed, byRole, start, end, orderColumn, orderType, serviceContext);
 
 			return Response
 					.status(Response.Status.OK)
@@ -97,17 +97,19 @@ public class RestEmasesaWorkflowApplication extends Application {
 	}
 
 
-	private JSONArray getTasks(String assetType, boolean completed, boolean byRole, int start, int end,
+	private JSONObject getTasks(String assetType, boolean completed, boolean byRole, int start, int end,
 							   String orderColumn, String orderType, ServiceContext serviceContext) throws Exception {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 		Long[] asigneeIds = new Long[]{user.getUserId()};
 		String[] assetTypes = new String[]{assetType};
+		JSONObject result = JSONFactoryUtil.createJSONObject();
 
 		if(byRole){
 			asigneeIds = null;
 		}
 		JSONArray jsonArray = _emasesaWorkflowTaskSearch.searchWorkflowTask(serviceContext, false, assetTypes, asigneeIds, completed, start, end, byRole, orderColumn, orderType);
+		long count = _emasesaWorkflowTaskSearch.searchWorkflowTaskCount(serviceContext, false, assetTypes, asigneeIds, completed, 0, 0, byRole, orderColumn, orderType);
 
 		jsonArray.forEach(jsonObject -> {
 			JSONObject jsonTask = (JSONObject)jsonObject;
@@ -116,40 +118,9 @@ public class RestEmasesaWorkflowApplication extends Application {
 				jsonTask.put("assigneePersonName", fullName);
 			}
 		});
-
-		return jsonArray;
-		/*List<WorkflowTask> tasks = _workflowTaskManager.search(serviceContext.getCompanyId(), user.getUserId(), null,
-				null, assetTypes, null, null, asigneeIds, null,
-				null, completed, byRole, null, null, false,
-				start, end, new WorkflowTaskCreateDateComparator(
-						false,
-						"createDate ASC",
-						"createDate DESC",
-						new String[] {
-								"createDate"
-						}));
-
-		for(WorkflowTask task:tasks){
-			JSONObject jsonTask = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(task));
-
-			jsonTask.put("attributes", JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.looseSerialize(task.getOptionalAttributes())));
-
-			if(user.getUserId() == task.getAssigneeUserId()){
-				jsonTask.put("assigneePersonName",user.getFullName());
-			}else{
-				String fullName = "Sin asignar";
-				if(task.getAssigneeUserId() > 0) {
-					User assigneeUser = _userLocalService.getUser(task.getAssigneeUserId());
-					fullName = assigneeUser.getFullName();
-				}
-				jsonTask.put("assigneePersonName", fullName);
-			}
-
-			result.put(jsonTask);
-
-		}
-		return result;*/
+		result.put("hasMore", count > end);
+		result.put("tasks", jsonArray);
+		return result;
 	}
 
 

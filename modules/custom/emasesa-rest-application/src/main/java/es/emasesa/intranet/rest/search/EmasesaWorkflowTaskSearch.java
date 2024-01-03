@@ -3,6 +3,7 @@ package es.emasesa.intranet.rest.search;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -100,6 +101,50 @@ public class EmasesaWorkflowTaskSearch {
         return jsonArrayResult;
     }
 
+    public long searchWorkflowTaskCount(ServiceContext serviceContext, boolean andOperator, String[] assetTypes, Long[] assigneeClassPKs,
+                                        boolean completed, int start, int end, boolean searchByUserRoles, String orderColumn, String orderType) throws PortalException, ParseException {
+
+
+       return _searchCount(
+                HashMapBuilder.<String, Serializable>put(
+                        "kaleoTaskInstanceTokenQuery",
+                        () -> {
+                            KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery =
+                                    new KaleoTaskInstanceTokenQuery(serviceContext);
+
+                            kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
+                            kaleoTaskInstanceTokenQuery.setAssetTitle(null);
+                            kaleoTaskInstanceTokenQuery.setAssetTypes(assetTypes);
+                            kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setAssigneeClassName(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setAssigneeClassPKs(
+                                    assigneeClassPKs);
+                            kaleoTaskInstanceTokenQuery.setCompleted(completed);
+                            kaleoTaskInstanceTokenQuery.setDueDateGT(null);
+                            kaleoTaskInstanceTokenQuery.setDueDateLT(null);
+                            kaleoTaskInstanceTokenQuery.setEnd(end);
+                            kaleoTaskInstanceTokenQuery.setKaleoDefinitionId(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setKaleoInstanceIds(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.setOrderByComparator(
+                                    null);
+                            kaleoTaskInstanceTokenQuery.
+                                    setSearchByActiveWorkflowHandlers(
+                                            false);
+                            kaleoTaskInstanceTokenQuery.setSearchByUserRoles(
+                                    searchByUserRoles);
+                            kaleoTaskInstanceTokenQuery.setStart(start);
+                            kaleoTaskInstanceTokenQuery.setTaskNames(null);
+
+                            return kaleoTaskInstanceTokenQuery;
+                        }
+                ).build(),
+               QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderColumn, orderType, serviceContext);
+    }
+
 
     private Hits _search(
             Map<String, Serializable> searchAttributes, int start, int end,
@@ -111,7 +156,25 @@ public class EmasesaWorkflowTaskSearch {
                 IndexerRegistryUtil.getIndexer(
                         KaleoTaskInstanceToken.class.getName());
 
+
         return indexer.search(
+                _buildSearchContext(
+                        searchAttributes, start, end, orderColumn, orderType,
+                        serviceContext));
+    }
+
+    private long _searchCount(
+            Map<String, Serializable> searchAttributes, int start, int end,
+            String orderColumn, String orderType,
+            ServiceContext serviceContext)
+            throws PortalException {
+
+        Indexer<KaleoTaskInstanceToken> indexer =
+                IndexerRegistryUtil.getIndexer(
+                        KaleoTaskInstanceToken.class.getName());
+
+
+        return indexer.searchCount(
                 _buildSearchContext(
                         searchAttributes, start, end, orderColumn, orderType,
                         serviceContext));
@@ -129,6 +192,7 @@ public class EmasesaWorkflowTaskSearch {
         searchContext.setEnd(end);
         searchContext.setGroupIds(new long[]{-1L});
         searchContext.setStart(start);
+
 
         if (orderColumn != null && !orderColumn.equals("")) {
             if(orderColumn.equals("createDate_Number_sortable")){
