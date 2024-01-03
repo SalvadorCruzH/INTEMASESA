@@ -1,0 +1,24 @@
+[#assign añoActual = .now?date?string("yyyy")?number]
+[#assign añoSiguiente = añoActual + 1]
+
+<div class="select-from-list" id="${fragmentEntryLinkNamespace}-parent">
+  <div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
+    <label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-radio-group">
+      ${htmlUtil.escape(input.label)}
+      [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+    </label>
+
+    <div aria-labelledby="${fragmentEntryLinkNamespace}-label" id="${fragmentEntryLinkNamespace}-radio-group" role="radiogroup">
+      <label>
+        <input type="radio" name="yearFormation" value="${añoActual}">
+        Año ${añoActual}
+      </label>
+      <label>
+        <input type="radio" name="yearFormation" value="${añoSiguiente}">
+        Año ${añoSiguiente}
+      </label>
+    </div>
+    <input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
+  </div>
+</div>
+
