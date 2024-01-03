@@ -64,6 +64,8 @@ public class AjaxSearchPortletKeys {
 	public static final String DURACION = "duracion";
 	public static final String HORAS = "horas";
 	public static final String FECHA_ACTIVIDAD = "fechaActividad";
+	public static final String NUMERO_EMPLEADOS = "numeroEmpleadosALosQueSolicita" ;
+	public static final String DENOMINACION_FORMACION = "denominacion";
 	public static final String FECHA_DESDE = "fechaDesde";
 	public static final String FECHA_HASTA = "fechaHasta";
 	public static final String FECHA_ENVIO = "fechaEnvio";
