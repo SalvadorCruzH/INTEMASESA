@@ -75,5 +75,14 @@ public class AjaxSearchPortletKeys {
 	public static final String URL_VISUALIZAR = "urlVisualizar";
 	public static final String URL_EDITAR = "urlEditar";
 	public static final String URL_ELIMINAR = "urlEliminar";
+	public static final String FECHA_SOLICITUD = "fechaSolicitud";
+	public static final String PLAN_FORMACION = "anoDeLaFormacion";
+	public static final String SOLICITANTE = "solicitante";
+	public static final String DENOMINACION = "denominacion";
+	public static final String OBLIGATORIEDAD = "obligatoriedad";
+	public static final String MODALIDAD = "modalidad";
+	public static final String NOMBRE = "nombre";
+	public static final String PRIMER_APELLIDO = "primerApellido";
+	public static final String SEGUNDO_APELLIDO = "segundoApellido";
 
 }

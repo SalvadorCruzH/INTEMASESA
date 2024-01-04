@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM-Radio button ayudaEscolar",
+  "typeOptions": {"fieldTypes": [
+    "select",
+    "text"
+  ]},
+  "type": "input"
+}
