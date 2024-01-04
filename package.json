@@ -2,12 +2,12 @@
     "private": true,
     "workspaces": {
         "packages": [
-            "client-extensions/global-object-manager-module",
-            "client-extensions/administrador-tareas-module",
-            "client-extensions/global-module",
-            "modules/override/rest-ddmfieldextender",
-            "themes/emasesa-fragments",
-            "themes/emasesa-theme"
+            "client-extensions\\administrador-tareas-module",
+            "client-extensions\\global-module",
+            "client-extensions\\global-object-manager-module",
+            "modules\\override\\rest-ddmfieldextender",
+            "themes\\emasesa-fragments",
+            "themes\\emasesa-theme"
         ]
     }
 }
