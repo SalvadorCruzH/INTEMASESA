@@ -41,10 +41,19 @@
                     @include media-breakpoint-up(lg) {
                         padding: 2rem;
                         flex-direction: row;
+                        justify-content: space-between;
                     }
                     @include media-breakpoint-up(xl) {
                         width: 90%;
                     }
+
+                    #formulated, #applicant {
+                        @include media-breakpoint-up(lg){
+                            width: 15vw;
+                            min-width: 200px;
+                        }
+                    }
+
                     .ema-ajaxsearch-filtros__dates {
                         display: flex;
                         flex-wrap: wrap;
