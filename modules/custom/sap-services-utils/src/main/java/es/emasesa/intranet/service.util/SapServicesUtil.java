@@ -529,7 +529,7 @@ public class SapServicesUtil {
          String pernr = (String) objectValues.get("numeroDeMatricula");
          String centro = (String) objectValues.get("centroDeEstudios");
          String estudioId = (String) objectValues.get("estudios");
-         String estudioNivel =  "1";// String) objectValues.get("nivelDeEstudios");
+         String estudioNivel = (String) objectValues.get("numero");
          String famNumerosa = (String) objectValues.get("familiaNumerosa");
          String famMonoparental = (String) objectValues.get("familiaMonoparental");
          String numero = (String) objectValues.get("numero");
