@@ -56,6 +56,8 @@ public class DNFFilter extends BaseFilter {
 
 			String endDateString = _DNFFormSettings.endDateViewDNFForm();
 			LocalDate endDate = LocalDate.parse(endDateString, formatter);
+			LoggerUtil.debug(LOG, "inicio: " + startDate + " fin: " + endDate);
+
 			if (httpServletRequest.getRequestURL().toString().contains("/solicitud")) {
 				if (today.isBefore(startDate) || today.isAfter(endDate)) {
 					LoggerUtil.debug(LOG, "Se cumple la condicion para la redireccion de /solicitud");
@@ -67,6 +69,7 @@ public class DNFFilter extends BaseFilter {
 					return;
 				}
 			}else{
+				LoggerUtil.debug(LOG, "acceso a modo consulta");
 				List<UserGroupRole> rolUser = _userGroupRoleLocalService.getUserGroupRoles((Long) httpServletRequest.getSession().getAttribute("USER_ID"));
 				LoggerUtil.debug(LOG,"se obtiene el rolId: " + rolUser);
 				if (rolUser.size() == 1){
@@ -86,9 +89,9 @@ public class DNFFilter extends BaseFilter {
 					if (today.isBefore(startDate) || today.isAfter(extendedEndDate)) {
 						LoggerUtil.debug(LOG, "Se cumple la condicion para la redireccion de /gestion-necesidades-de-formacion");
 						if (httpServletRequest.getRequestURL().toString().contains("/es/group/guest/")) {
-							httpServletResponse.sendRedirect("/es/web/guest/inicio");
+							httpServletResponse.sendRedirect("/group/guest/inicio");
 						} else {
-							httpServletResponse.sendRedirect("/inicio");
+							httpServletResponse.sendRedirect("/group/guest/inicio");
 						}
 						return;
 					}
