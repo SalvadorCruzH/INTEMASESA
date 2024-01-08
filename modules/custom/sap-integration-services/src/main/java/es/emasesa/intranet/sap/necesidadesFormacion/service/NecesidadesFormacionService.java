@@ -26,7 +26,7 @@ import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 
-@org.springframework.stereotype.Component("ayudaEscolarService")
+@org.springframework.stereotype.Component("necesidadesFormacionService")
 public class NecesidadesFormacionService {
 
     public JSONObject getNecesidadFormativa(String pernr, String planFormacion, String numFormuladaPor) throws NecesidadesFormacionException, SapCommunicationException {
