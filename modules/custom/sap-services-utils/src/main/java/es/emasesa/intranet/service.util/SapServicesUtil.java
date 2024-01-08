@@ -34,6 +34,7 @@ import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
+import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 import es.emasesa.intranet.sap.relacionLaboral.exception.RelacionLaboralException;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
@@ -509,6 +510,7 @@ public class SapServicesUtil {
             CustomServiceTracker<RelacionLaboralService> relacionLaboralServiceTracker = new CustomServiceTracker<>(RelacionLaboralService.class, "getRelacionLaboralService");
             CustomServiceTracker<CustomExpandoUtil> customExpandoUtilTracker = new CustomServiceTracker<>(CustomExpandoUtil.class, "getCustomExpandoUtil");
             CustomServiceTracker<EmpleadoBancoService> empleadoBancoServiceTracker = new CustomServiceTracker<>(EmpleadoBancoService.class, "getEmpleadoBancoService");
+            CustomServiceTracker<NecesidadesFormacionService> necesidadesFormacionServiceTracker = new CustomServiceTracker<>(NecesidadesFormacionService.class, "getNecesidadesFormacionService");
 
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
@@ -523,7 +525,8 @@ public class SapServicesUtil {
             this._ciertosDatosEstructuraService = ciertosDatosEstructuraServiceTracker.getService();
             this._relacionLaboralService = relacionLaboralServiceTracker.getService();
             this._customExpandoUtil = customExpandoUtilTracker.getService();
-            this._empleadoBancoService= empleadoBancoServiceTracker.getService();
+            this._empleadoBancoService = empleadoBancoServiceTracker.getService();
+            this._necesidadesFormacionService = necesidadesFormacionServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -574,6 +577,8 @@ public class SapServicesUtil {
     private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
     private EmpleadoBancoService _empleadoBancoService;
     private RelacionLaboralService _relacionLaboralService;
+
+    private NecesidadesFormacionService _necesidadesFormacionService;
     private CustomExpandoUtil _customExpandoUtil;
     @Reference
     private ExpandoValueLocalService _expandoValueLocalService;

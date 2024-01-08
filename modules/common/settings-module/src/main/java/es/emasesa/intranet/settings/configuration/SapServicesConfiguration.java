@@ -130,4 +130,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String relacionLaboralEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "necesidadesFormacionEndpoint",
+            required = false
+    )
+    String necesidadesFormacionEndpoint();
 }

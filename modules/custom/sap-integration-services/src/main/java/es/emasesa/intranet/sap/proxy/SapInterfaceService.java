@@ -1,6 +1,5 @@
 package es.emasesa.intranet.sap.proxy;
 
-import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
@@ -10,6 +9,7 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesServi
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
+import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
@@ -45,13 +45,15 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     @Autowired(required = false)
     protected DistanciaCentrosService distanciaCentrosService;
     @Autowired(required = false)
-    protected AyudaEscolarService ayudaEscolarService;
+    protected NecesidadesFormacionService ayudaEscolarService;
     @Autowired(required = false)
     protected CiertosDatosEstructuraService ciertosDatosEstructuraService;
     @Autowired(required = false)
     protected RelacionLaboralService relacionLaboralService;
     @Autowired(required = false)
     protected EmpleadoBancoService empleadoBancoService;
+    @Autowired(required = false)
+    protected NecesidadesFormacionService necesidadesFormacionService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -86,7 +88,7 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     public DistanciaCentrosService getDistanciaCentrosService() {
         return distanciaCentrosService;
     }
-    public AyudaEscolarService getAyudaEscolarService() {
+    public NecesidadesFormacionService getAyudaEscolarService() {
         return ayudaEscolarService;
     }
     public CiertosDatosEstructuraService getCiertosDatosEstructuraService() {
@@ -98,4 +100,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     public EmpleadoBancoService getEmpleadoBancoService(){
         return empleadoBancoService;
     }
+    public NecesidadesFormacionService getNecesidadesFormacionService(){
+        return necesidadesFormacionService;
+    }
+
 }

@@ -34,8 +34,8 @@ dependencies {
 war {
 	enabled= true
 }
-
-/*wsimport {
+/*
+wsimport {
 	includeDependencies = true
 	//wsdl = "../META-INF/wsdl/z_ws_pe_act_jornada_nomina.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_estructura.wsdl"
@@ -52,6 +52,7 @@ war {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_ciertos_datos_estructu.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_relac_laboral.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_banco.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_detecnecform.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated-java"
 }*/

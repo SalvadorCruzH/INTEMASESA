@@ -113,6 +113,7 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToUserRolButton = (event) => {
+        this.setState({loading: true});
         this.setState({tareas:[],start: 0, end: 10, typeList: "toUserRol"});
         this.getAssignedToUserRol();
     }
@@ -121,6 +122,7 @@ class TareasModule extends React.Component {
         this.setState({
             view: 2
         });
+        this.setState({loading: true});
         this.setState({start: 0, end: 10});
         setTimeout(() => {
             TareasApi.getWorkflowTask("", this.state.showCompleted, true, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler);
