@@ -16,12 +16,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.template.ServiceLocator;
+
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
+import es.emasesa.intranet.sap.empleadoBanco.exception.EmpleadoBancoException;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.empleadoPrestamos.exception.EmpleadoPrestamosException;
@@ -41,6 +44,7 @@ import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
+import es.emasesa.intranet.sap.retenciones.exception.CertificadoRetencionesException;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
@@ -92,6 +96,30 @@ public class SapServicesUtil {
         }
 
         return resumenAnual;
+    }
+
+    public JSONObject getRetenciones(User user, String anno) {
+
+        return getRetenciones(user.getScreenName(), anno);
+    }
+    public JSONObject getRetenciones(String pernr, String anno) {
+
+        JSONObject retenciones = JSONFactoryUtil.createJSONObject();
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            if(_certificadoRetencionesService == null){
+                activate(null);
+            }
+            retenciones = _certificadoRetencionesService.getCertificadoRetenciones(pernr, anno);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        } catch (SapCommunicationException | CertificadoRetencionesException e) {
+            LOG.error(e.getMessage());
+            LOG.debug(e.getMessage(), e);
+        }
+
+        return retenciones;
     }
 
     public JSONArray getHistoricoActual(long userId, String fechaInicio, String fechaFin) {
@@ -347,20 +375,19 @@ public class SapServicesUtil {
         JSONArray datosEmpleadoPrestamos = JSONFactoryUtil.createJSONArray();
         String pernr = StringPool.BLANK;
         try {
-			//TODO: Intentar coger la matricula del método de la clase expando. El servicio viene a null
-	//		pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
-			pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
-			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
-			if(_empleadoPrestamsoService == null){
+        	if(_empleadoPrestamsoService == null || _customExpandoUtil == null){
                 activate(null);
             }
-            datosEmpleadoPrestamos = _empleadoPrestamsoService.obtenerPrestamoEmpleados(pernr, StringPool.BLANK);
+        	 if(Validator.isNotNull(user)) {
+ 	        	LOG.debug("Obteniendo los datos del usuario...");
+				pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+				LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+	            datosEmpleadoPrestamos = _empleadoPrestamsoService.obtenerPrestamoEmpleados(pernr, StringPool.BLANK);
+        	 }
         } catch (SapCommunicationException e) {
             LOG.error(e.getMessage(), e);
         } catch (EmpleadoPrestamosException e) {
             throw new RuntimeException(e);
-        } catch (PortalException e) {
-        	LOG.error("Error al intentar obtener la matricula del campo expando para getRelacionLaboralService", e);
 		} finally {
             if(LOG.isDebugEnabled()){
                 LOG.debug("[E] getempleadoPrestamos " + user.getUserId());
@@ -376,36 +403,69 @@ public class SapServicesUtil {
      * @return JSONObject
      */
 	 public JSONObject getEmpleadoRelacionLaboral(User user) {
-		 if(LOG.isDebugEnabled()){
-		       LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
-		     }
-			JSONObject datosEmpleadoRelacionLaboral = JSONFactoryUtil.createJSONObject();
+		
+		if(LOG.isDebugEnabled()){
+		     LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
+		}
+		JSONObject datosEmpleadoRelacionLaboral = JSONFactoryUtil.createJSONObject();
+		String pernr = StringPool.BLANK;
 		try {
-			//TODO: Intentar coger la matricula del m�todo de la clase expando. El servicio viene a null
-	//		String pernr = customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
-			String pernr = _expandoValueLocalService.getData(user.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "matricula", user.getUserId(), StringPool.BLANK);
-			LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
-			
-			 try {
-		            if(_relacionLaboralService == null){
-		                activate(null);
-		            }
-		            datosEmpleadoRelacionLaboral = _relacionLaboralService.getRelacionLaboralEmpleado(pernr);
-		            LOG.debug("Obtenida la relacion laboral del empleado" + datosEmpleadoRelacionLaboral.toJSONString());
-		        } catch (SapCommunicationException e) {
-		            LOG.error(e.getMessage(), e);
-		        } catch (RelacionLaboralException e) {
-		            throw new RuntimeException(e);
-		        } finally {
-		            if(LOG.isDebugEnabled()){
-		                LOG.debug("[E] getempleadoPrestamos " + pernr);
-		            }
-		        }
-		}catch (Exception e) {
-			LOG.error("Error al intentar obtener la matricula del campo expando para getRelacionLaboralService", e);
+			 if(_relacionLaboralService == null || _customExpandoUtil == null){
+	                activate(null);
+	            }
+			 if(Validator.isNotNull(user)) {
+	        	LOG.debug("Obteniendo los datos del usuario...");
+				pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+				LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+				datosEmpleadoRelacionLaboral = _relacionLaboralService.getRelacionLaboralEmpleado(pernr);
+			    LOG.debug("Obtenida la relacion laboral del empleado" + datosEmpleadoRelacionLaboral.toJSONString());
+			 }
+		} catch (SapCommunicationException e) {
+		    LOG.error(e.getMessage(), e);
+		} catch (RelacionLaboralException e) {
+		     throw new RuntimeException(e);
+		} finally {
+		   if(LOG.isDebugEnabled()){
+		        LOG.debug("[E] getempleadoPrestamos " + pernr);
+		   }
 		}
 		 return datosEmpleadoRelacionLaboral;
 	 }
+	 
+	   /**
+	     * Llamada al servicio de empleado-banco para obtener datos de banco de un usuario.
+	     *
+	     * @param user
+	     * @return JSONArray
+	     */
+	    public JSONArray getEmpleadoBanco(User user) {
+
+	        if(LOG.isDebugEnabled()){
+	            LOG.debug("[B] getEmpleadoBanco " + user.getUserId());
+	        }
+	        JSONArray datosEmpleadoBanco = JSONFactoryUtil.createJSONArray();
+	        String pernr = StringPool.BLANK;
+	        try {
+	        	if(_empleadoBancoService == null || _customExpandoUtil == null){
+	                activate(null);
+	            }
+	        	if(Validator.isNotNull(user)) {
+	        		LOG.debug("Obteniendo los datos del usuario...");
+					pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+					LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+		            datosEmpleadoBanco = _empleadoBancoService.getEmpleadoBanco(pernr);
+	        	}
+	        } catch (SapCommunicationException e) {
+	            LOG.error(e.getMessage(), e);
+	        } catch (EmpleadoBancoException e) {
+	            throw new RuntimeException(e);
+			} finally {
+	            if(LOG.isDebugEnabled()){
+	                LOG.debug("[E] getEmpleadoBanco " + user.getUserId());
+	            }
+	        }
+	        return datosEmpleadoBanco;
+	    }
 
      public JSONArray getImporteAnticipo(JSONArray datosEmpleados){
          JSONArray datosCalculadosArray = JSONFactoryUtil.createJSONArray();
@@ -508,10 +568,11 @@ public class SapServicesUtil {
             CustomServiceTracker<AyudaEscolarService> ayudaEscolarServiceTracker = new CustomServiceTracker<>(AyudaEscolarService.class, "getAyudaEscolarService");
             CustomServiceTracker<CiertosDatosEstructuraService> ciertosDatosEstructuraServiceTracker = new CustomServiceTracker<>(CiertosDatosEstructuraService.class, "getCiertosDatosEstructuraService");
             CustomServiceTracker<RelacionLaboralService> relacionLaboralServiceTracker = new CustomServiceTracker<>(RelacionLaboralService.class, "getRelacionLaboralService");
-            CustomServiceTracker<CustomExpandoUtil> customExpandoUtilTracker = new CustomServiceTracker<>(CustomExpandoUtil.class, "getCustomExpandoUtil");
             CustomServiceTracker<EmpleadoBancoService> empleadoBancoServiceTracker = new CustomServiceTracker<>(EmpleadoBancoService.class, "getEmpleadoBancoService");
             CustomServiceTracker<NecesidadesFormacionService> necesidadesFormacionServiceTracker = new CustomServiceTracker<>(NecesidadesFormacionService.class, "getNecesidadesFormacionService");
 
+
+            this._customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
             this._resumenAnualService = resumenAnualServiceCustomServiceTracker.getService();
             this._empleadoDatosPersonalesService = empleadoDatosPersonalesServiceCustomService.getService();
@@ -524,7 +585,6 @@ public class SapServicesUtil {
             this._ayudaEscolarService = ayudaEscolarServiceTracker.getService();
             this._ciertosDatosEstructuraService = ciertosDatosEstructuraServiceTracker.getService();
             this._relacionLaboralService = relacionLaboralServiceTracker.getService();
-            this._customExpandoUtil = customExpandoUtilTracker.getService();
             this._empleadoBancoService = empleadoBancoServiceTracker.getService();
             this._necesidadesFormacionService = necesidadesFormacionServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
