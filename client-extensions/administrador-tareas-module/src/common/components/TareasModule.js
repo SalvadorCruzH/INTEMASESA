@@ -95,6 +95,7 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToMeButton = (event) => {
+        this.setState({loading: true});
         this.setState({tareas:[],start: 0, end: 10, typeList: "toMe"});
         this.getAssignedToMe();
 
