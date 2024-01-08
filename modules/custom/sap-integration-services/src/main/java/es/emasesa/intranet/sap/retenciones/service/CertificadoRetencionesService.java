@@ -6,7 +6,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.sap.document.sap.soap.functions.mc_style.*;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPECONSULTACERTRETPDF;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPECONSULTACERTRETPDF_Service;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -24,7 +25,8 @@ import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.util.Base64;
+
+import org.apache.commons.codec.binary.Base64;
 
 @org.springframework.stereotype.Component("certificadoRetencionesService")
 public class CertificadoRetencionesService {
@@ -38,9 +40,25 @@ public class CertificadoRetencionesService {
             ClassLoader objectFactoryClassLoader = ZWSPECONSULTACERTRETPDF.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             port.zPeConsultaCertRetPdf(imVariante, pernr , out, exResult);
-            String decoded = new String(Base64.getDecoder().decode(out.value));
-            JSONObject certificado = JSONFactoryUtil.createJSONObject("");
-            certificado.put("pdf", decoded);
+                        JSONObject certificado = JSONFactoryUtil.createJSONObject("");
+            //String decoded = new String(Base64.getDecoder().decode(out.value));
+
+            if (exResult.value != 2) {
+                String decoded = Base64.encodeBase64String(out.value);
+                certificado.put("valor", decoded);
+                String pdfName = "Certificado_" + imVariante + ".pdf";
+                certificado.put("pdf", pdfName);
+                String resultado = "<a href=\"#urlVisualizar#\" class=\"ema-enlace-visualizar\"><i class=\"fa-solid fa-eye\"></i></a>\n" +
+                        "                    <!-- Boton de descarga -->\n" +
+                        "                    <a href=\"javascript:void(0);\" class=\"ema-boton-descargar\" onclick=\"descargarPDF('#valor#', '"+pdfName+"')\">\n" +
+                        "                        <i class=\"fa-solid fa-download\"></i> Descargar\n" +
+                        "                    </a>";
+                certificado.put("resultado", resultado);
+            } else {
+                String resultado = "No hay certificados.";
+                certificado.put("resultado", resultado);
+            }
+            certificado.put("ano", imVariante);
             return certificado;
         } catch (JSONException | ServerSOAPFaultException e) {
             throw new CertificadoRetencionesException("Error llamando al WS para el pernr "+ pernr, e);

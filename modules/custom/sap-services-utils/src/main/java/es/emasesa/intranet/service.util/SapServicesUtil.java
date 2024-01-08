@@ -43,6 +43,7 @@ import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 
+import es.emasesa.intranet.sap.retenciones.exception.CertificadoRetencionesException;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
@@ -94,6 +95,30 @@ public class SapServicesUtil {
         }
 
         return resumenAnual;
+    }
+
+    public JSONObject getRetenciones(User user, String anno) {
+
+        return getRetenciones(user.getScreenName(), anno);
+    }
+    public JSONObject getRetenciones(String pernr, String anno) {
+
+        JSONObject retenciones = JSONFactoryUtil.createJSONObject();
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            if(_certificadoRetencionesService == null){
+                activate(null);
+            }
+            retenciones = _certificadoRetencionesService.getCertificadoRetenciones(pernr, anno);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        } catch (SapCommunicationException | CertificadoRetencionesException e) {
+            LOG.error(e.getMessage());
+            LOG.debug(e.getMessage(), e);
+        }
+
+        return retenciones;
     }
 
     public JSONArray getHistoricoActual(long userId, String fechaInicio, String fechaFin) {

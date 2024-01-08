@@ -5,4 +5,5 @@ dependencies {
 	compile project (':modules:common:base-module')
 	compile project (':modules:custom:ajaxsearch:ajaxsearch-core')
 	compile project (':modules:common:search-util')
+	compile project (':modules:custom:sap-services-utils')
 }
