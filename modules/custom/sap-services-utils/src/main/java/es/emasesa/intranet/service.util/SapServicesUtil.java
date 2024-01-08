@@ -387,8 +387,6 @@ public class SapServicesUtil {
             LOG.error(e.getMessage(), e);
         } catch (EmpleadoPrestamosException e) {
             throw new RuntimeException(e);
-        } catch (PortalException e) {
-        	LOG.error("Error al intentar obtener la matricula del campo expando para getRelacionLaboralService", e);
 		} finally {
             if(LOG.isDebugEnabled()){
                 LOG.debug("[E] getempleadoPrestamos " + user.getUserId());
@@ -460,8 +458,6 @@ public class SapServicesUtil {
 	            LOG.error(e.getMessage(), e);
 	        } catch (EmpleadoBancoException e) {
 	            throw new RuntimeException(e);
-	        } catch (PortalException e) {
-	        	LOG.error("Error al intentar obtener la matricula del campo expando para getEmpleadoBanco", e);
 			} finally {
 	            if(LOG.isDebugEnabled()){
 	                LOG.debug("[E] getEmpleadoBanco " + user.getUserId());
