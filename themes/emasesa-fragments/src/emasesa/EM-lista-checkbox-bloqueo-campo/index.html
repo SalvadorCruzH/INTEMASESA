@@ -42,35 +42,33 @@
                     [#assign selectedValueFoundInOptions=true]
                 [/#if]
 
-                <label class="custom-checkbox-label" for="${fragmentEntryLinkNamespace}-checkbox">
+                <label class="custom-checkbox-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
                     <input
-                        data-element-target="${targetName}"
-                        [#if selectedOption]aria-selected="true" [/#if]
+                            data-element-target="${targetName}"
+                            [#if selectedOption]aria-selected="true" [/#if]
                         data-option-value="${option.value}"
                         id="${fragmentEntryLinkNamespace}-checkbox-${option.value}"
                         aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text"
                         class="custom-checkbox-input"
-                        id="${fragmentEntryLinkNamespace}-checkbox"
-                        name="${input.name}-1"
+                        name="${input.name}"
                         type="checkbox"
-                        [#if input.value?? && input.value=='true' ]checked[/#if]
+												value="${option.value}"
                     />
                     ${htmlUtil.escape(option.label)}
                 </label>
 
                 [#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
-                <label class="custom-checkbox-label" for="${fragmentEntryLinkNamespace}-checkbox">
+                <label class="custom-checkbox-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
                     <input
-                        data-element-target="${targetName}"
-                        [#if selectedOption]aria-selected="true" [/#if]
+                            data-element-target="${targetName}"
+                            [#if selectedOption]aria-selected="true" [/#if]
                         data-option-value="${option.value}"
                         id="${fragmentEntryLinkNamespace}-checkbox-${option.value}"
                         aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text"
                         class="custom-checkbox-input"
-                        id="${fragmentEntryLinkNamespace}-checkbox"
-                        name="${input.name}-1"
+                        name="${input.name}"
                         type="checkbox"
-                        [#if input.value?? && input.value=='true' ]checked[/#if]
+												value="${option.value}"
                     />
                     ${htmlUtil.escape(input.attributes.selectedOptionLabel)}
                 </label>
