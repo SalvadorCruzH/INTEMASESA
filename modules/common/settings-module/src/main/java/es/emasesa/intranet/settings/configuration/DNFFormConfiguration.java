@@ -17,6 +17,7 @@ public interface DNFFormConfiguration {
     @Meta.AD(
             deflt = "",
             name = "Fecha de Inicio de visualizacion de la Solicitud",
+            description = "El formato correcto es YYYY-MM-DD",
             required = false
     )
     String startDateViewDNFForm();
@@ -24,6 +25,7 @@ public interface DNFFormConfiguration {
     @Meta.AD(
             deflt = "",
             name = "Fecha de Finalizacion de visualizacion de la Solicitud",
+            description = "El formato correcto es YYYY-MM-DD",
             required = false
     )
     String endDateViewDNFForm();
@@ -35,5 +37,14 @@ public interface DNFFormConfiguration {
             required = false
     )
     long deptFormacionId();
+
+    @Meta.AD(
+            deflt = "-1",
+            name = "Gestores sindicales",
+            description = "roleId de gestores sindicales",
+            required = false
+    )
+    long gestoresSindicalesId();
+
 
 }

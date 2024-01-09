@@ -25,6 +25,9 @@ public class DNFFormSettings {
     public long deptFormacionId(){
         return configuration.deptFormacionId();
     }
+    public long gestoresSindicalesId(){
+        return configuration.gestoresSindicalesId();
+    }
 
     @Activate
     @Modified
