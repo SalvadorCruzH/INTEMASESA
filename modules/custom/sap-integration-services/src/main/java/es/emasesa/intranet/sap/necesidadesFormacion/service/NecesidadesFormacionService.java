@@ -6,7 +6,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.sap.document.sap.rfc.functions.ZPESTINSAYUDAESCOLAR;
 import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -33,7 +32,7 @@ public class NecesidadesFormacionService {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            ClassLoader objectFactoryClassLoader = ZWSPEAYUDAESCOLAR.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEDETECNECFORM.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             ZpeStDetecnecformConsulta detecnecformConsulta = new ZpeStDetecnecformConsulta();
             ZhrEDetnecform detecnecformInsert = new ZhrEDetnecform();
@@ -63,7 +62,7 @@ public class NecesidadesFormacionService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
-            LoggerUtil.debug(LOG, "[E] solicitarAyudaEscolar");
+            LoggerUtil.debug(LOG, "[E] necesidadesFormacion");
         }
     }
 
@@ -71,7 +70,7 @@ public class NecesidadesFormacionService {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            ClassLoader objectFactoryClassLoader = ZWSPEAYUDAESCOLAR.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEDETECNECFORM.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             ZpeStDetecnecformConsulta detecnecformConsulta = new ZpeStDetecnecformConsulta();
             ZhrEDetnecform detecnecformInsert = new ZhrEDetnecform();
@@ -101,7 +100,7 @@ public class NecesidadesFormacionService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
-            LoggerUtil.debug(LOG, "[E] solicitarAyudaEscolar");
+            LoggerUtil.debug(LOG, "[E] necesidadesFormacion");
         }
     }
 
@@ -129,7 +128,7 @@ public class NecesidadesFormacionService {
                 }
             });
             try {
-                URL urlEndpoint = new URL(configuration.ayudaEscolarEndpoint());
+                URL urlEndpoint = new URL(configuration.necesidadesFormacionEndpoint());
             }catch (MalformedURLException e) {
                     if (LOG.isInfoEnabled()) {
                         LOG.info("Error en el WSDL de ZWSPEDETECNECFORM --> " + configuration.necesidadesFormacionEndpoint());
