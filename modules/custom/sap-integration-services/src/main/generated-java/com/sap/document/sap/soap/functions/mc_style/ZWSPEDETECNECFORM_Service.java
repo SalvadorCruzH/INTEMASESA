@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_DETECNECFORM", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/stejeros/Developer/source/emasesa/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_detecnecform.wsdl")
+@WebServiceClient(name = "Z_WS_PE_DETECNECFORM", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_detecnecform.wsdl")
 public class ZWSPEDETECNECFORM_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPEDETECNECFORM_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/stejeros/Developer/source/emasesa/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_detecnecform.wsdl");
+            url = new URL("classpath:META-INF/wsdl/z_ws_pe_detecnecform.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
