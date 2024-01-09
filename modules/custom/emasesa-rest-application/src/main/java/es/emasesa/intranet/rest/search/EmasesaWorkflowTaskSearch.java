@@ -95,6 +95,7 @@ public class EmasesaWorkflowTaskSearch {
             jsonObject.put("assigneeUserId", GetterUtil.getString(doc.get("assigneeClassPKs")));
             jsonObject.put("workflowTaskId", GetterUtil.getLong(doc.get("kaleoTaskInstanceTokenId")));
             jsonObject.put("assigneePersonName", GetterUtil.getString(doc.get("assigneePersonName")));
+            jsonObject.put("completed", GetterUtil.getBoolean(doc.get("completed")));
             jsonArrayResult.put(jsonObject);
         }
 
