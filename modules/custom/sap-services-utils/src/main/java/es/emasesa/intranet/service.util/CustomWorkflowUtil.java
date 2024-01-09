@@ -59,6 +59,9 @@ public class CustomWorkflowUtil {
             if (customExpandoUtil == null){
                 activate(null);
             }
+            if (empleadoEstructuraService == null){
+                activate(null);
+            }
             String matriculaActualUser  = customExpandoUtil.getDataValueByUser(userId, companyId, "matricula");
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
