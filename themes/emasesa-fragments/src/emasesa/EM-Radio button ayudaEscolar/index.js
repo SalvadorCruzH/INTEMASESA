@@ -50,7 +50,9 @@ function buttonSubmit() {
 
   if (ayudasSolicitadas && ayudasSolicitadas.innerText.includes(combinados)) {
     buttonSubmit.disabled = true;
+    $('#disclaimer').removeClass('hide');
   } else {
     buttonSubmit.disabled = false;
+    $('#disclaimer').addClass('hide');
   }
 }
