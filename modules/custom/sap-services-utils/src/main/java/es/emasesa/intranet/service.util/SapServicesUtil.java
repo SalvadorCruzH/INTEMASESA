@@ -37,6 +37,7 @@ import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
+import es.emasesa.intranet.sap.necesidadesFormacion.exception.NecesidadesFormacionException;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 import es.emasesa.intranet.sap.relacionLaboral.exception.RelacionLaboralException;
@@ -550,6 +551,28 @@ public class SapServicesUtil {
                 LOG.debug("[E] finalizada saveAyudaEscolar para el usuario con matrícula " + pernr);
             }
         }
+    }
+
+    public JSONObject getPlanesFormacion(String planFormacion) throws NecesidadesFormacionException, SapCommunicationException {
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getPlanesFormacion " + planFormacion);
+        }
+        JSONObject datosNecesidadesFormacion = JSONFactoryUtil.createJSONObject();
+
+        LOG.debug("dentro de getPlanesFormacion con fecha de peticion " + planFormacion);
+
+        try {
+            if (_necesidadesFormacionService == null) {
+                activate(null);
+            }
+            datosNecesidadesFormacion = (JSONObject) _necesidadesFormacionService.getPlanesFormacion(planFormacion);
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getPlanesFormacion " + planFormacion);
+            }
+        }
+        return datosNecesidadesFormacion;
     }
 
     @Activate
