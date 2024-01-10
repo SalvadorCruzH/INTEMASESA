@@ -23,7 +23,19 @@
         &.ema-table {
             width: 100%;
             border-bottom: 5px solid $color-green;
-
+            min-height: 150px;
+            position: relative;
+            > span.loading-animation {
+                display: block;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0;
+                top: 70px;
+                &::before {
+                    content: none;
+                }
+            }
             td,
             th {
                 padding: 1rem;
