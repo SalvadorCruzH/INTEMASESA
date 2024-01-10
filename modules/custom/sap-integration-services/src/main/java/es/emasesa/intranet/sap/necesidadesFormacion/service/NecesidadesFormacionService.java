@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.Validator;
 import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -36,10 +37,12 @@ public class NecesidadesFormacionService {
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             ZpeStDetecnecformConsulta detecnecformConsulta = new ZpeStDetecnecformConsulta();
             ZhrEDetnecform detecnecformInsert = new ZhrEDetnecform();
-            detecnecformConsulta.setSolicitante(pernr);
-            detecnecformConsulta.setPlanFormacion(planFormacion);
-            detecnecformConsulta.setNumFormuladaPor(numFormuladaPor);
 
+            if(!Validator.isBlank(numFormuladaPor)) {
+                detecnecformConsulta.setSolicitante(pernr);
+                detecnecformConsulta.setPlanFormacion(planFormacion);
+                detecnecformConsulta.setNumFormuladaPor(numFormuladaPor);
+            }
             Holder<TableOfZhrPlanesForma> planesFormacion = new Holder<>();
             Holder<TableOfZhrEDetnecform> solicitudesCons = new Holder<>();
             Holder<TableOfZpeStDetecnecformTipos> tiposEventoPlanformacion = new Holder<>();
@@ -147,7 +150,7 @@ public class NecesidadesFormacionService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de necesidadesFormacionService");
             }
-        }  finally {
+        } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
