@@ -114,6 +114,11 @@
                             &.ema-td-dropdown {
                                 //display: inline-block;
                                 position: relative;
+                                .ema-enlace-visualizar {
+                                    background: none;
+                                    border: none;
+                                    padding: 0;
+                                }
                             }
                             .ema-button-moreoptions {
                                 background-color: transparent;

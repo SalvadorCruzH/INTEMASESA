@@ -222,6 +222,8 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                 kaleoTaskInstanceToken.getClassName(),
                 kaleoTaskInstanceToken.getClassPK(), document,
                 kaleoTaskInstanceToken.getGroupId());
+                kaleoTaskInstanceToken.isCompleted();
+                document.addText("completed", Boolean.toString(kaleoTaskInstanceToken.isCompleted()));
     }
 
     protected String[] getLanguageIds(

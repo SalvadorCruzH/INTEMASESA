@@ -10,6 +10,7 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesServi
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
+import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
@@ -52,6 +53,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected RelacionLaboralService relacionLaboralService;
     @Autowired(required = false)
     protected EmpleadoBancoService empleadoBancoService;
+    @Autowired(required = false)
+    protected NecesidadesFormacionService necesidadesFormacionService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -98,4 +101,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     public EmpleadoBancoService getEmpleadoBancoService(){
         return empleadoBancoService;
     }
+    public NecesidadesFormacionService getNecesidadesFormacionService(){
+        return necesidadesFormacionService;
+    }
+
 }

@@ -14,7 +14,7 @@ class Actions extends React.Component {
             tareaid: props.tarea.workflowTaskId,
             transitions: props.tarea.transitions,
             refresh: props.refresh,
-            objectReviewed: props.tarea.attributes,
+            objectReviewed: props.tarea,
             externalReferenceCode: props.tarea.objectData.externalReferenceCode,
             completed: props.tarea.completed,
             configuration: props.configuration,

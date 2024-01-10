@@ -1,4 +1,8 @@
 const checkboxElementsList = fragmentElement.querySelectorAll('.custom-checkbox-input');
+const valueInputElement = document.getElementById(
+    // eslint-disable-next-line no-undef
+    `${fragmentEntryLinkNamespace}-value-input`
+);
 const parentElement = document.getElementById(
     // eslint-disable-next-line no-undef
     `${fragmentEntryLinkNamespace}-parent`
@@ -22,6 +26,9 @@ function disabledAllTargets (targetSelected){
   }
 }
 function handleClickCheckboxButton(e) {
+  valueInputElement.value = $('.custom-checkbox-input:checked').map(function() {
+    return this.value;
+  }).get();
   let elementTarget = e.target.dataset.elementTarget;
   let optionSelected = e.target.checked;
   selectedCheckboxes[elementTarget] = optionSelected;

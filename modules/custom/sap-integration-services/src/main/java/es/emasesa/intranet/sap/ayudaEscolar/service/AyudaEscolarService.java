@@ -1,6 +1,5 @@
 package es.emasesa.intranet.sap.ayudaEscolar.service;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -15,10 +14,8 @@ import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
-import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
-import jakarta.jws.WebParam;
 import jakarta.xml.ws.Holder;
 import org.springframework.beans.factory.annotation.Autowired;
 

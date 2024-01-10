@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
  * type definitions, element declarations and model 
  * groups.  Factory methods for each of these are 
  * provided in this class.
- * 
+ *
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -24,14 +24,94 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.sap.document.sap.soap.functions.mc_style
-     * 
+     *
      */
     public ObjectFactory() {
     }
 
     /**
+     * Create an instance of {@link ZPeDetecnecform }
+     *
+     */
+    public ZPeDetecnecform createZPeDetecnecform() {
+        return new ZPeDetecnecform();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStDetecnecformConsulta }
+     *
+     */
+    public ZpeStDetecnecformConsulta createZpeStDetecnecformConsulta() {
+        return new ZpeStDetecnecformConsulta();
+    }
+
+    /**
+     * Create an instance of {@link ZhrEDetnecform }
+     *
+     */
+    public ZhrEDetnecform createZhrEDetnecform() {
+        return new ZhrEDetnecform();
+    }
+
+    /**
+     * Create an instance of {@link ZPeDetecnecformResponse }
+     *
+     */
+    public ZPeDetecnecformResponse createZPeDetecnecformResponse() {
+        return new ZPeDetecnecformResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZhrPlanesForma }
+     *
+     */
+    public TableOfZhrPlanesForma createTableOfZhrPlanesForma() {
+        return new TableOfZhrPlanesForma();
+    }
+
+    /**
+     * Create an instance of {@link Bapireturn1 }
+     *
+     */
+    public Bapireturn1 createBapireturn1() {
+        return new Bapireturn1();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZhrEDetnecform }
+     *
+     */
+    public TableOfZhrEDetnecform createTableOfZhrEDetnecform() {
+        return new TableOfZhrEDetnecform();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStDetecnecformTipos }
+     *
+     */
+    public TableOfZpeStDetecnecformTipos createTableOfZpeStDetecnecformTipos() {
+        return new TableOfZpeStDetecnecformTipos();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStDetecnecformTipos }
+     *
+     */
+    public ZpeStDetecnecformTipos createZpeStDetecnecformTipos() {
+        return new ZpeStDetecnecformTipos();
+    }
+
+    /**
+     * Create an instance of {@link ZhrPlanesForma }
+     *
+     */
+    public ZhrPlanesForma createZhrPlanesForma() {
+        return new ZhrPlanesForma();
+    }
+
+    /**
      * Create an instance of {@link ZPeEmpleadoBanco }
-     * 
+     *
      */
     public ZPeEmpleadoBanco createZPeEmpleadoBanco() {
         return new ZPeEmpleadoBanco();
@@ -39,7 +119,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeEmpleadoBancoResponse }
-     * 
+     *
      */
     public ZPeEmpleadoBancoResponse createZPeEmpleadoBancoResponse() {
         return new ZPeEmpleadoBancoResponse();
@@ -47,7 +127,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStEmpleadoBanco }
-     * 
+     *
      */
     public TableOfZpeStEmpleadoBanco createTableOfZpeStEmpleadoBanco() {
         return new TableOfZpeStEmpleadoBanco();
@@ -55,7 +135,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStEmpleadoBanco }
-     * 
+     *
      */
     public ZpeStEmpleadoBanco createZpeStEmpleadoBanco() {
         return new ZpeStEmpleadoBanco();
@@ -317,14 +397,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Bapireturn1 }
-     *
-     */
-    public Bapireturn1 createBapireturn1() {
-        return new Bapireturn1();
-    }
-
-    /**
      * Create an instance of {@link ZPeMarcajesHistoricoActual }
      *
      */
@@ -498,4 +570,5 @@ public class ObjectFactory {
     public ZpeStSubordinados createZpeStSubordinados() {
         return new ZpeStSubordinados();
     }
+
 }

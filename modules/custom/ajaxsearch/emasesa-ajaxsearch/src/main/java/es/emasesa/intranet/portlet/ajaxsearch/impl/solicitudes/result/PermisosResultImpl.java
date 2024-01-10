@@ -3,10 +3,7 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.*;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.*;
@@ -26,6 +23,7 @@ import es.emasesa.intranet.portlet.ajaxsearch.util.AjaxSearchUtil;
 import es.emasesa.intranet.searchframework.SearchingCommon;
 import es.emasesa.intranet.searchframework.SearchingJournal;
 import es.emasesa.intranet.searchframework.SearchingObject;
+import es.emasesa.intranet.settings.osgi.ClientExtensionsSettings;
 import es.emasesa.intranet.settings.osgi.ObjectsGroupsSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -238,9 +236,21 @@ public class PermisosResultImpl implements AjaxSearchResult {
             }
             String externalReferenceCode = objectEntry.getExternalReferenceCode();
             String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
-            jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, "");
-            jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(themeDisplay.getPortalURL(), externalReferenceCode, objectDefinitionId));
-            jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
+            try {
+                String json = clientExtensionsSettings.objectMapping();
+                JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject(json);
+                String stringObject = jsonObject1.getString(document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME));
+                if(!stringObject.equals(StringPool.BLANK)){
+                    JSONObject jsonObject2 = JSONFactoryUtil.createJSONObject(stringObject);
+                    String display = jsonObject2.getString("display");
+                    jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, ajaxSearchUtil.formatViewUrl(String.valueOf(objectClassPK), document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME), display, themeDisplay.getPortalURL()));
+                    jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME), display, themeDisplay.getPortalURL()));
+                    jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
+
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
         return jsonObject;
     }
@@ -275,5 +285,8 @@ public class PermisosResultImpl implements AjaxSearchResult {
 
     @Reference
     ObjectsGroupsSettings objectsGroupsSettings;
+
+    @Reference
+    ClientExtensionsSettings clientExtensionsSettings;
 
 }
