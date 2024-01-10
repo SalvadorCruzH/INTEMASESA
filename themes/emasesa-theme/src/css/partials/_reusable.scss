@@ -697,6 +697,10 @@
   }
 }
 
+.no-pagination .results-pagination-wrapper {
+  display: none;
+}
+
 .dialog-iframe-popup {
   &.i-mainWrapper {
     h1 {
