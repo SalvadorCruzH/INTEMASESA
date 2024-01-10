@@ -154,5 +154,17 @@
         "templateFile": "calendario-eventos.ftl",
         "comment": "ADT para el calendario de eventos.",
         "uuid": "e5025740-7d01-6339-0b8e-e1d27f1d8415"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Listado de documentos relacionados",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-LISTADO-DOCUMENTOS-RELACIONADOS",
+        "templateFile": "listado-documentos-relacionados.ftl",
+        "comment": "ADT para el listado de documentos relacionados con la tabla superior.",
+        "uuid": "4278ef08-2000-5138-a2ae-966e20e0ccb3"
     }
 ]
