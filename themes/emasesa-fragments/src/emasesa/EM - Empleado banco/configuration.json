@@ -1,0 +1,33 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "fieldName",
+					"localizable": true,
+					"name": "fieldName",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "show-characters-count",
+					"name": "showCharactersCount",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+					{
+					"dataType": "string",
+					"defaultValue": "pernr",
+					"label": "Nombre campo empleado banco",
+					"localizable": true,
+					"name": "empleadoBancoName",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
