@@ -31,10 +31,6 @@ import java.util.List;
                 "url-pattern=/group/guest/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion/solicitud",
                 "url-pattern=/group/guest/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion",
                 "url-pattern=/es/group/guest/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion",
-                "url-pattern=/es/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion/solicitud",
-                "url-pattern=/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion/solicitud",
-                "url-pattern=/es/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion",
-                "url-pattern=/formacion/deteccion-de-necesidades-de-formacion/gestion-de-necesidades-de-formacion",
                 "after-filter=Session Max Allowed Filter"
         },
         service = Filter.class
@@ -62,19 +58,22 @@ public class DNFFilter extends BaseFilter {
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
             LoggerUtil.debug(LOG, "inicio: " + startDate + " fin: " + endDate);
 
-            List<UserGroupRole> rolUser = _userGroupRoleLocalService.getUserGroupRoles((long) httpServletRequest.getSession().getAttribute("USER_ID"));
-            LoggerUtil.debug(LOG, "se obtiene el rolId: " + rolUser);
+            if (httpServletRequest.getSession().getAttribute("USER_ID") != null) {
+                List<UserGroupRole> rolUser = _userGroupRoleLocalService.getUserGroupRoles((long) httpServletRequest.getSession().getAttribute("USER_ID"));
+                LoggerUtil.debug(LOG, "se obtiene el rolId: " + rolUser);
 
-            if (rolUser.size() == 1) {
-                idRol = rolUser.get(0).getRoleId();
-            } else if (rolUser.size() > 1) {
-                for (UserGroupRole userGroupRole : rolUser) {
-                    if (userGroupRole.getRoleId() == rolFormacion || userGroupRole.getRoleId() == rolSindicales) {
-                        idRol = userGroupRole.getRoleId();
-                        break;
+                if (rolUser.size() == 1) {
+                    idRol = rolUser.get(0).getRoleId();
+                } else if (rolUser.size() > 1) {
+                    for (UserGroupRole userGroupRole : rolUser) {
+                        if (userGroupRole.getRoleId() == rolFormacion || userGroupRole.getRoleId() == rolSindicales) {
+                            idRol = userGroupRole.getRoleId();
+                            break;
+                        }
                     }
                 }
             }
+
 
             if (httpServletRequest.getRequestURL().toString().contains("/solicitud")) {
                 if (idRol != rolFormacion && idRol != rolSindicales) {
