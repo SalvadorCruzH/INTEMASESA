@@ -1,0 +1,7 @@
+[#assign sapUtil = serviceLocator.findService("es.emasesa.intranet.service.util.SapServicesUtil")]
+[#assign user = themeDisplay.getUser()]
+[#assign empleadoBanco = sapUtil.getEmpleadoBanco(user)]
+[#assign datoEmpleadoBanco = empleadoBanco.get(0).get("${configuration.empleadoBancoName}")]
+<div class="text-input">
+${configuration.fieldName}: ${datoEmpleadoBanco}
+</div>

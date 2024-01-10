@@ -29,6 +29,42 @@ import java.net.URL;
 @org.springframework.stereotype.Component("necesidadesFormacionService")
 public class NecesidadesFormacionService {
 
+    public JSONObject getPlanesFormacion(String planFormacion) throws NecesidadesFormacionException, SapCommunicationException {
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader objectFactoryClassLoader = ZWSPEDETECNECFORM.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            ZpeStDetecnecformConsulta detecnecformConsulta = new ZpeStDetecnecformConsulta();
+            ZhrEDetnecform detecnecformInsert = new ZhrEDetnecform();
+
+            detecnecformConsulta.setPlanFormacion(planFormacion);
+
+            Holder<TableOfZhrPlanesForma> planesFormacion = new Holder<>();
+            Holder<TableOfZhrEDetnecform> solicitudesCons = new Holder<>();
+            Holder<TableOfZpeStDetecnecformTipos> tiposEventoPlanformacion = new Holder<>();
+
+            port.zPeDetecnecform(detecnecformConsulta, detecnecformInsert, planFormacion, planesFormacion, solicitudesCons ,tiposEventoPlanformacion);
+            JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
+            if (planesFormacion.value != null){
+                jsonReturn.put("planesFormacion", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(planesFormacion.value.getItem())));
+            }
+            if (solicitudesCons.value != null){
+                jsonReturn.put("solicitudesCons", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(solicitudesCons.value.getItem())));
+            }
+            if (tiposEventoPlanformacion.value != null){
+                jsonReturn.put("tiposEventoPlanformacion", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tiposEventoPlanformacion.value.getItem())));
+            }
+            return jsonReturn;
+        } catch (ServerSOAPFaultException | JSONException e) {
+            throw new NecesidadesFormacionException("Error llamando al WS para el origen o parseando datos"+ planFormacion, e);
+        } catch (ClientTransportException e) {
+            throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
+            LoggerUtil.debug(LOG, "[E] getPlanesFormacion");
+        }
+    }
+
     public JSONObject getNecesidadFormativa(String pernr, String planFormacion, String numFormuladaPor) throws NecesidadesFormacionException, SapCommunicationException {
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
