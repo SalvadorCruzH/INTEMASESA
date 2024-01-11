@@ -6,38 +6,52 @@
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
             <div class="resums">
                 <div id="wrapper-resum-lastyear" class="resum">
-                    <span>
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
-                    </span>
-                    <span class="m-searchAjax pdt-disfrutar">
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
-                        <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                    </span>
-                    <span class="m-searchAjax sin-planificar">
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
-                        <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                    </span>
-                    <span class="m-searchAjax vacaciones">
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                        <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
-                    </span>
+                    <h3 class="resum__title">Pasado a&ntilde;o</h3>
+                    <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
+                    <div class="resum__datas">
+                        <span class="m-searchAjax pdt-disfrutar resum__data">
+                            <div class="resum__input">
+                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                            </div>
+                            <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                        </span>
+                        <span class="m-searchAjax sin-planificar resum__data">
+                            <div class="resum__input">
+                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                            </div>
+                            <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                        </span>
+                        <span class="m-searchAjax vacaciones resum__data">
+                            <div class="resum__input">
+                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                            </div>
+                            <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                        </span>
+                    </div>
                 </div>
                 <div id="wrapper-resum" class="resum">
-                    <span>
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
-                    </span>
-                    <span class="m-searchAjax pdt-disfrutar">
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
-                        <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                    </span>
-                    <span class="m-searchAjax sin-planificar">
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
-                        <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                    </span>
-                    <span class="m-searchAjax vacaciones">
-                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                        <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
-                    </span>
+                    <h3 class="resum__title">Actual</h3>
+                    <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
+                    <div class="resum__datas">
+                        <span class="m-searchAjax pdt-disfrutar resum__data">
+                            <div class="resum__input">
+                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                            </div>
+                            <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                        </span>
+                        <span class="m-searchAjax sin-planificar resum__data">
+                            <div class="resum__input">
+                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                            </div>
+                            <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                        </span>
+                        <span class="m-searchAjax vacaciones resum__data">
+                            <div class="resum__input">
+                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                            </div>
+                            <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                        </span>
+                    </div>
                 </div>
             </div>
             <%-- /.resums --%>
