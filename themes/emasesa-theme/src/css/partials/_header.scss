@@ -127,6 +127,7 @@
 
 #content {
     padding-top: 152px;
+    padding-bottom: 2rem;
     transition: padding .3s ease;
     @include media-breakpoint-up(xl) {
         padding-top: 100px;
