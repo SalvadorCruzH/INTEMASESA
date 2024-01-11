@@ -30,4 +30,12 @@ public interface ClientExtensionsConfiguration {
     )
     String objectMapping();
 
+    @Meta.AD(
+            deflt = "",
+            name = "objectNames.name",
+            required = false,
+            description = "objectNames.desc"
+    )
+    String objectNames();
+
 }

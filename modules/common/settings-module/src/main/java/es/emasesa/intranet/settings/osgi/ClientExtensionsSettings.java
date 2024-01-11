@@ -24,6 +24,9 @@ public class ClientExtensionsSettings {
     public String objectMapping(){
         return configuration.objectMapping();
     }
+    public String objectNames(){
+        return configuration.objectNames();
+    }
     
     @Activate
     @Modified

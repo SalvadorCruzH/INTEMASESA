@@ -13,5 +13,6 @@
     "Modificación de IRPF" : { "url": "modificaciondeirpfs","id":67620,"display":"/group/guest/mis-gestiones/nomina/retención-irpf/solicitud"},
     "Domiciliación Bancaria" : { "url": "domiciliacionbancarias","id":67588,"display":"/group/guest/mis-gestiones/nomina/cambio-de-domiciliación-bancaria/solicitud"},
 	"Vacaciones, Ausencias y Permisos" : { "url": "vacacionesausenciasypermisoses","id":67320,"display":"/group/guest/mis-gestiones/mi-jornada/vacaciones-ausencias-y-permisos/solicitud"},
-    "Registro de Marcaje" : { "url": "registrodemarcajes","id":152510,"display":"/group/guest/mis-gestiones/mi-jornada/registro-marcaje/solicitud"}
+    "Registro de Marcaje" : { "url": "registrodemarcajes","id":152510,"display":"/group/guest/mis-gestiones/mi-jornada/registro-marcaje/solicitud"},
+    "Jubilado Parcial" : { "url": "jubiladoparcials","id":67398,"display":"/group/guest/solicitud-de-jubilados-parciales"}
 }

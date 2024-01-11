@@ -1,0 +1,18 @@
+{   "Compatibilidad" : "Compatibilidad",
+    "Excedencia" : "Excedencia",
+    "Flexibilidad" : "Flexibilidad horaria",
+    "Licencias" : "Licencia sin sueldo",
+    "Reduccion" : "Reduccion de jornada",
+    "Turnos" : "Cambio turnos",
+    "AsuntoSindical" : "Asunto Sindical",
+    "Pluses" : "Pluses",
+    "AnticiposReintegrables" : "Anticipo Reintegrable",
+    "AnticipoVacaciones" : "Anticipo Vacaciones",
+    "AyudaEscolar" : "Ayuda Escolar",
+    "PrestamoDeVivienda" : "Préstamo de Vivienda",
+    "ModificacionDeIRPF" : "Modificación de IRPF",
+    "DomiciliacionBancaria" : "Domiciliación Bancaria",
+	"VacacionesAusenciasYPermisos" : "Vacaciones, Ausencias y Permisos",
+    "RegistroDeMarcaje" : "Registro de Marcaje",
+    "JubiladoParcial" : "Jubilado Parcial"
+}

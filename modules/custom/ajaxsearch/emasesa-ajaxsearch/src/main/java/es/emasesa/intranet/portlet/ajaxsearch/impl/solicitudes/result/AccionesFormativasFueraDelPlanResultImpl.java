@@ -237,14 +237,15 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
             String externalReferenceCode = objectEntry.getExternalReferenceCode();
             String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
             try {
+                String objectDefinitionName = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
+                String objectName = JSONFactoryUtil.createJSONObject(clientExtensionsSettings.objectNames()).getString(objectDefinitionName, objectDefinitionName);
                 String json = clientExtensionsSettings.objectMapping();
                 JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject(json);
-                String stringObject = jsonObject1.getString(document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME));
+                String stringObject = jsonObject1.getString(objectName);
                 if(!stringObject.equals(StringPool.BLANK)){
-                    JSONObject jsonObject2 = JSONFactoryUtil.createJSONObject(stringObject);
-                    String display = jsonObject2.getString("display");
-                    jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, ajaxSearchUtil.formatViewUrl(String.valueOf(objectClassPK), document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME), display, themeDisplay.getPortalURL()));
-                    jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME), display, themeDisplay.getPortalURL()));
+                    String display = JSONFactoryUtil.createJSONObject(stringObject).getString("display");
+                    jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, ajaxSearchUtil.formatViewUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
+                    jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
                     jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
 
                 }
