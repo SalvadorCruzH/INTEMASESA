@@ -1,4 +1,4 @@
-{	"Compatibilidad" : { "url": "compatibilidads","id":39213,"display":"/group/guest/mis-gestiones/situacion-laboral/compatibilidad-de-actividades/solicitud", "asesoriaJuridica":"/group/guest/mis-gestiones/situacion-laboral/compatibilidad-de-actividades/asesoria-juridica"},
+{"Compatibilidad" : { "url": "compatibilidads","id":39213,"display":"/group/guest/mis-gestiones/situacion-laboral/compatibilidad-de-actividades/solicitud", "asesoriaJuridica":"/group/guest/mis-gestiones/situacion-laboral/compatibilidad-de-actividades/asesoria-juridica"},
     "Excedencia" : { "url": "excedenciases","id":35707,"display":"/group/guest/mis-gestiones/situacion-laboral/excedencias/solicitud", "direccionRRHH":"/group/guest/mis-gestiones/situacion-laboral/excedencias/direccion-rrhh"},
     "Flexibilidad horaria" : { "url": "flexibilidads","id":38910,"display":"/group/guest/mis-gestiones/situacion-laboral/flexibilidad-horaria/solicitud"},
     "Licencia sin sueldo" : { "url": "licenciases","id":34848,"display":"/group/guest/mis-gestiones/situacion-laboral/licencia-sin-sueldo/solicitud"},
@@ -11,6 +11,6 @@
     "Ayuda Escolar" : { "url": "ayudaescolars","id":67728,"display":"/group/guest/mis-gestiones/nomina/ayuda-escolar/solicitud"},
     "Préstamo de Vivienda" : { "url": "prestamodeviviendas","id":67689,"display":"/group/guest/mis-gestiones/nomina/préstamo-vivienda/solicitud"},
     "Modificación de IRPF" : { "url": "modificaciondeirpfs","id":67620,"display":"/group/guest/mis-gestiones/nomina/retención-irpf/solicitud"},
-    "Domiciliación Bancaria" : { "url": "domiciliacionbancarias","id":67588,"display":"/group/guest/mis-gestiones/nomina/cambio-de-domiciliación-bancaria/solicitud"}
+    "Domiciliación Bancaria" : { "url": "domiciliacionbancarias","id":67588,"display":"/group/guest/mis-gestiones/nomina/cambio-de-domiciliación-bancaria/solicitud"},
+	"Vacaciones, Ausencias y Permisos" : { "url": "vacacionesausenciasypermisoses","id":67320,"display":"/group/guest/mis-gestiones/mi-jornada/vacaciones-ausencias-y-permisos/solicitud"}
 }
-    

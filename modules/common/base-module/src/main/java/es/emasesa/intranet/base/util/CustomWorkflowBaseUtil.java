@@ -231,15 +231,19 @@ public class CustomWorkflowBaseUtil {
 		contentStream.beginText();
 		contentStream.setLeading(15f);
 		contentStream.newLineAtOffset(25, 750);
-
-		objectValues.forEach((clave, valor) ->{
-			try {
-				contentStream.showText(clave + ": " + valor.toString());
-				contentStream.newLine();
-			} catch (IOException e) {
-				LOG.error("Se ha producido un error al añadir texto al PDF", e);
-			}
-		});
+		
+		if(Validator.isNotNull(objectValues)) {
+			objectValues.forEach((clave, valor) ->{
+				try {
+					if(Validator.isNotNull(clave) && Validator.isNotNull(valor)) {
+						contentStream.showText(clave + ": " + valor.toString());
+						contentStream.newLine();
+					}
+				} catch (IOException e) {
+					LOG.error("Se ha producido un error al añadir texto al PDF", e);
+				}
+			});
+		}
 
 		contentStream.endText();
 		contentStream.close();
