@@ -34,26 +34,6 @@
     &--pm3 {
       padding-left: 1rem;
       margin-bottom: 1rem;
-      .selected {
-        .i-mainNavigation__link2Level,
-        .i-mainNavigation__link2Level i {
-          color: $color-green;
-        }
-        .i-mainNavigation__link2Level {
-          display: flex;
-          flex-direction: row-reverse;
-          justify-content: flex-end;
-          align-items: center;
-          &:hover,
-          &:focus {
-            text-decoration: none;
-          }
-          i {
-            rotate: 180deg;
-            margin-left: 10px;
-          }
-        }
-      }
     }
   }
   .m-listBaseNoStylesOnlyPl {

@@ -7,19 +7,21 @@
         </div>
 
         <div class="m-results-wrapper ema-documentos-ajax ema-ajaxsearch">
-            <table class="ema-table__ajaxsearch">
-                <thead>
-                 <tr>
-                  <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-name" /></th>
-                  <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-category" /></th>
-                  <th class="ema-modified-date"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-modified-date" /></th>
-                  <th class="ema-expiration-date"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-expiration-date" /></th>
-                 </tr>
-                </thead>
-                <tbody id="as-wrapper">
-                    <!-- -->
-                </tbody>
-            </table>
+            <div class="ema-table__wrapper">
+                <table class="ema-table__ajaxsearch">
+                    <thead>
+                     <tr>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-name" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-category" /></th>
+                      <th class="ema-modified-date"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-modified-date" /></th>
+                      <th class="ema-expiration-date"><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.result.doc-expiration-date" /></th>
+                     </tr>
+                    </thead>
+                    <tbody id="as-wrapper">
+                        <!-- -->
+                    </tbody>
+                </table>
+            </div>
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
