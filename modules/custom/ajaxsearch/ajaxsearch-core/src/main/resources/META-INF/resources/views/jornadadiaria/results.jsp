@@ -4,44 +4,43 @@
     <div>
 
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
-            <div id="wrapper-resum-lastyear" class="resum">
-                <span>
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
-                </span>
-                <span class="m-searchAjax pdt-disfrutar">
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
-                    <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                </span>
-
-                <span class="m-searchAjax sin-planificar">
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
-                    <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                </span>
-
-                <span class="m-searchAjax vacaciones">
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                    <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
-                </span>
+            <div class="resums">
+                <div id="wrapper-resum-lastyear" class="resum">
+                    <span>
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
+                    </span>
+                    <span class="m-searchAjax pdt-disfrutar">
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                        <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax sin-planificar">
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                        <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax vacaciones">
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                        <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                </div>
+                <div id="wrapper-resum" class="resum">
+                    <span>
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
+                    </span>
+                    <span class="m-searchAjax pdt-disfrutar">
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                        <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax sin-planificar">
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                        <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax vacaciones">
+                        <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                        <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                </div>
             </div>
-            <div id="wrapper-resum" class="resum">
-                <span>
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/>
-                </span>
-                <span class="m-searchAjax pdt-disfrutar">
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
-                    <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                </span>
-
-                <span class="m-searchAjax sin-planificar">
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
-                    <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                </span>
-
-                <span class="m-searchAjax vacaciones">
-                    <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                    <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
-                </span>
-            </div>
+            <%-- /.resums --%>
              <div class="ema-table-wrapper">
             <table id="table-id" class="ema-table">
                 <caption class="sr-only">Sumario de la tabla</caption>
@@ -126,7 +125,7 @@ ajaxSearchGlobalConfig = {
     _postdrawItem : function (jsonItem) {},
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
-        
+
         if($("#month").find(":selected").length == 0){
             //get second option and select it
             $("#month option:eq(1)").prop('selected', true);
