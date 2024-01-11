@@ -86,14 +86,8 @@ public class CiertosDatosEstructuraService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            try {
-                URL urlEndpoint = new URL(configuration.ciertosDatosEstructuraEndpoint());
-            } catch (MalformedURLException e) {
-                if (LOG.isInfoEnabled()) {
-                    LOG.info("Error en el WSDL de ZWSPECIERTOSDATOSESTRUCTU_Service --> " + configuration.ciertosDatosEstructuraEndpoint());
-                }
-            }
-            ZWSPECIERTOSDATOSESTRUCTU_Service service = new ZWSPECIERTOSDATOSESTRUCTU_Service();
+            URL urlEndpoint = new URL(configuration.ciertosDatosEstructuraEndpoint());
+            ZWSPECIERTOSDATOSESTRUCTU_Service service = new ZWSPECIERTOSDATOSESTRUCTU_Service(urlEndpoint);
             port = service.getPort(ZWSPECIERTOSDATOSESTRUCTU.class);
 
             /*******************UserName & Password ******************************/
@@ -105,6 +99,10 @@ public class CiertosDatosEstructuraService {
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de SubordinadosService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPECIERTOSDATOSESTRUCTU_Service --> " + configuration.ciertosDatosEstructuraEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

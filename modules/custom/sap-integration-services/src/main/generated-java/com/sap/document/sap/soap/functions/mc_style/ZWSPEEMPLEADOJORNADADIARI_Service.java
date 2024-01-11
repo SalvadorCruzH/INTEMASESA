@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_JORNADA_DIARI", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_jornada_diari.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_jornada_diari", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_jornada_diari.wsdl")
 public class ZWSPEEMPLEADOJORNADADIARI_Service
     extends Service
 {
@@ -34,6 +34,7 @@ public class ZWSPEEMPLEADOJORNADADIARI_Service
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
+
         ZWSPEEMPLEADOJORNADADIARI_WSDL_LOCATION = url;
         ZWSPEEMPLEADOJORNADADIARI_EXCEPTION = e;
     }
@@ -67,9 +68,9 @@ public class ZWSPEEMPLEADOJORNADADIARI_Service
      * @return
      *     returns ZWSPEEMPLEADOJORNADADIARI
      */
-    @WebEndpoint(name = "Z_WS_PE_EMPLEADO_JORNADA_DIARI")
+    @WebEndpoint(name = "Z_WS_PE_EMPLEADO_jornada_diari")
     public ZWSPEEMPLEADOJORNADADIARI getZWSPEEMPLEADOJORNADADIARI() {
-        return super.getPort(new QName("urn:sap-com:document:sap:soap:functions:mc-style", "Z_WS_PE_EMPLEADO_JORNADA_DIARI"), ZWSPEEMPLEADOJORNADADIARI.class);
+        return super.getPort(new QName("urn:sap-com:document:sap:soap:functions:mc-style", "Z_WS_PE_EMPLEADO_jornada_diari"), ZWSPEEMPLEADOJORNADADIARI.class);
     }
 
     /**
@@ -79,9 +80,9 @@ public class ZWSPEEMPLEADOJORNADADIARI_Service
      * @return
      *     returns ZWSPEEMPLEADOJORNADADIARI
      */
-    @WebEndpoint(name = "Z_WS_PE_EMPLEADO_JORNADA_DIARI")
+    @WebEndpoint(name = "Z_WS_PE_EMPLEADO_jornada_diari")
     public ZWSPEEMPLEADOJORNADADIARI getZWSPEEMPLEADOJORNADADIARI(WebServiceFeature... features) {
-        return super.getPort(new QName("urn:sap-com:document:sap:soap:functions:mc-style", "Z_WS_PE_EMPLEADO_JORNADA_DIARI"), ZWSPEEMPLEADOJORNADADIARI.class, features);
+        return super.getPort(new QName("urn:sap-com:document:sap:soap:functions:mc-style", "Z_WS_PE_EMPLEADO_jornada_diari"), ZWSPEEMPLEADOJORNADADIARI.class, features);
     }
 
     private static URL __getWsdlLocation() {

@@ -190,7 +190,7 @@ public class JornadaNominaService {
                 }
             });
             URL urlEndpoint = new URL(configuration.jornadaNominaEndpoint());
-            ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service();
+            ZWSPEACTJORNADANOMINA_Service service = new ZWSPEACTJORNADANOMINA_Service(urlEndpoint);
             port = service.getPort(ZWSPEACTJORNADANOMINA.class);
 
             /*******************UserName & Password ******************************/

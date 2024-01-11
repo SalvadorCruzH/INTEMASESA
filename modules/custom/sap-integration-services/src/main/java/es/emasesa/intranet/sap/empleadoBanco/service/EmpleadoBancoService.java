@@ -73,14 +73,9 @@ public class EmpleadoBancoService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            try {
-                URL urlEndpoint = new URL(configuration.empleadoBancoEndpoint());
-            }catch (MalformedURLException e) {
-                if (LOG.isInfoEnabled()) {
-                    LOG.info("Error en el WSDL de ZWSPEEMPLEADOBANCO_Service --> " + configuration.empleadoBancoEndpoint());
-                }
-            }
-            ZWSPEEMPLEADOBANCO_Service service = new ZWSPEEMPLEADOBANCO_Service();
+            URL urlEndpoint = new URL(configuration.empleadoBancoEndpoint());
+
+            ZWSPEEMPLEADOBANCO_Service service = new ZWSPEEMPLEADOBANCO_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOBANCO.class);
 
             /*******************UserName & Password ******************************/
@@ -92,6 +87,10 @@ public class EmpleadoBancoService {
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de EmpleadoBancoService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADOBANCO_Service --> " + configuration.empleadoBancoEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

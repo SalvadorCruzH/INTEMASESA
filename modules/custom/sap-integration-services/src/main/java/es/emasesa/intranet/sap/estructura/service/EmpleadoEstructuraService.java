@@ -79,7 +79,7 @@ public class EmpleadoEstructuraService {
                 }
             });
             URL urlEndpoint = new URL(configuration.empleadoEstructuraEndpoint());
-            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service();
+            ZWSPEEMPLEADOESTRUCTURA_Service service = new ZWSPEEMPLEADOESTRUCTURA_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOESTRUCTURA.class);
 
             /*******************UserName & Password ******************************/

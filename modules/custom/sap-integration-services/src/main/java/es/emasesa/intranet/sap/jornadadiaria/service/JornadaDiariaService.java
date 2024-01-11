@@ -41,6 +41,7 @@ public class JornadaDiariaService {
             if (!response.getItem().isEmpty()) {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
             }
+
         } catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
             throw new JornadaDiariaException("Error con el WS:" + e.getMessage(), e);
@@ -80,7 +81,7 @@ public class JornadaDiariaService {
                 }
             });
             URL urlEndpoint = new URL(configuration.jornadaDiariaEndpoint());
-            ZWSPEEMPLEADOJORNADADIARI_Service service = new ZWSPEEMPLEADOJORNADADIARI_Service();
+            ZWSPEEMPLEADOJORNADADIARI_Service service = new ZWSPEEMPLEADOJORNADADIARI_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOJORNADADIARI.class);
 
             /*******************UserName & Password ******************************/

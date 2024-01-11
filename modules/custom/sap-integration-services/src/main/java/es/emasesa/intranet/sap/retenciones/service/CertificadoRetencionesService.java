@@ -94,7 +94,7 @@ public class CertificadoRetencionesService {
                 }
             });
             URL urlEndpoint = new URL(configuration.certificadoRetencionesEndpoint());
-            ZWSPECONSULTACERTRETPDF_Service service = new ZWSPECONSULTACERTRETPDF_Service();
+            ZWSPECONSULTACERTRETPDF_Service service = new ZWSPECONSULTACERTRETPDF_Service(urlEndpoint);
             port = service.getPort(ZWSPECONSULTACERTRETPDF.class);
 
             /*******************UserName & Password ******************************/

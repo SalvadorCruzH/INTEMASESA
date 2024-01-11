@@ -66,7 +66,7 @@ public class DistanciaCentrosService {
                 }
             });
             URL urlEndpoint = new URL(configuration.distanciaCentrosEndpoint());
-            ZWSPECENTROSDISTANCIAS_Service service = new ZWSPECENTROSDISTANCIAS_Service();
+            ZWSPECENTROSDISTANCIAS_Service service = new ZWSPECENTROSDISTANCIAS_Service(urlEndpoint);
             port = service.getPort(ZWSPECENTROSDISTANCIAS.class);
 
             /*******************UserName & Password ******************************/
