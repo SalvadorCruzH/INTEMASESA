@@ -166,14 +166,8 @@ public class NecesidadesFormacionService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            try {
-                URL urlEndpoint = new URL(configuration.necesidadesFormacionEndpoint());
-            }catch (MalformedURLException e) {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info("Error en el WSDL de ZWSPEDETECNECFORM --> " + configuration.necesidadesFormacionEndpoint());
-                    }
-                }
-            ZWSPEDETECNECFORM_Service service = new ZWSPEDETECNECFORM_Service();
+            URL urlEndpoint = new URL(configuration.necesidadesFormacionEndpoint());
+            ZWSPEDETECNECFORM_Service service = new ZWSPEDETECNECFORM_Service(urlEndpoint);
             port = service.getPort(ZWSPEDETECNECFORM.class);
 
             /*******************UserName & Password ******************************/
@@ -185,6 +179,10 @@ public class NecesidadesFormacionService {
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de necesidadesFormacionService");
+            }
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEDETECNECFORM --> " + configuration.necesidadesFormacionEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);

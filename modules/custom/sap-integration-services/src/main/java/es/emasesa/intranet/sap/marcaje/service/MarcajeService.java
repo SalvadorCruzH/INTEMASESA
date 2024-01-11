@@ -80,7 +80,7 @@ public class MarcajeService {
                 }
             });
             URL urlEndpoint = new URL(configuration.marcajeEndpoint());
-            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service();
+            ZWSPEMARCAJESHISTORICOACT_Service service = new ZWSPEMARCAJESHISTORICOACT_Service(urlEndpoint);
             port = service.getPort(ZWSPEMARCAJESHISTORICOACT.class);
 
             /*******************UserName & Password ******************************/

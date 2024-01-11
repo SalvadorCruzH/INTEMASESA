@@ -36,7 +36,6 @@ public class SubordinadosService {
         LoggerUtil.debug(LOG, "[B] getSubordinados");
         try {
             TableOfZpeStSubordinados serviceResult = port.zPeSubordinados(directorioTodos,pernr);
-
             List<ZpeStSubordinados> subordinados = serviceResult.getItem();
 
             return JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(subordinados));
@@ -76,8 +75,8 @@ public class SubordinadosService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            URL urlEndpoint = new URL(configuration.empleadoDatosPersonalesEndpoint());
-            ZWSPESUBORDINADOS_Service service = new ZWSPESUBORDINADOS_Service();
+            URL urlEndpoint = new URL(configuration.subordinadosEndpoint());
+            ZWSPESUBORDINADOS_Service service = new ZWSPESUBORDINADOS_Service(urlEndpoint);
             port = service.getPort(ZWSPESUBORDINADOS.class);
 
             /*******************UserName & Password ******************************/

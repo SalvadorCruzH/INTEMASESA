@@ -73,15 +73,9 @@ public class RelacionLaboralService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            try{
-                URL urlEndpoint = new URL(configuration.relacionLaboralEndpoint());
-            }catch (MalformedURLException e) {
-                if (LOG.isInfoEnabled()) {
-                    LOG.info("Error en el WSDL de ZWSPEEMPLEADORELACLABORAL --> " + configuration.relacionLaboralEndpoint());
-                }
-            }
 
-            ZWSPEEMPLEADORELACLABORAL_Service service = new ZWSPEEMPLEADORELACLABORAL_Service();
+            URL urlEndpoint = new URL(configuration.relacionLaboralEndpoint());
+            ZWSPEEMPLEADORELACLABORAL_Service service = new ZWSPEEMPLEADORELACLABORAL_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADORELACLABORAL.class);
 
             /*******************UserName & Password ******************************/
@@ -94,7 +88,11 @@ public class RelacionLaboralService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de CertificadoRetencionesService");
             }
-        }  finally {
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADORELACLABORAL --> " + configuration.relacionLaboralEndpoint());
+            }
+        } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 

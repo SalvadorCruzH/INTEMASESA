@@ -128,14 +128,8 @@ public class AyudaEscolarService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            try {
-                URL urlEndpoint = new URL(configuration.ayudaEscolarEndpoint());
-            }catch (MalformedURLException e) {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info("Error en el WSDL de ZWSPEAYUDAESCOLAR --> " + configuration.ayudaEscolarEndpoint());
-                    }
-                }
-            ZWSPEAYUDAESCOLAR_Service service = new ZWSPEAYUDAESCOLAR_Service();
+            URL urlEndpoint = new URL(configuration.ayudaEscolarEndpoint());
+            ZWSPEAYUDAESCOLAR_Service service = new ZWSPEAYUDAESCOLAR_Service(urlEndpoint);
             port = service.getPort(ZWSPEAYUDAESCOLAR.class);
 
             /*******************UserName & Password ******************************/
@@ -148,7 +142,11 @@ public class AyudaEscolarService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de ayudaEscolarService");
             }
-        }  finally {
+        }  catch (MalformedURLException e){
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEAYUDAESCOLAR --> " + configuration.ayudaEscolarEndpoint());
+            }
+        } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 

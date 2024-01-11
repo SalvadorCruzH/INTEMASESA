@@ -103,7 +103,8 @@ public class ResumenAnualService {
                 }
             });
 
-            ZWSPEEMPLEADOJORNADARESUM_Service service = new ZWSPEEMPLEADOJORNADARESUM_Service();
+            URL urlEndpoint = new URL(configuration.jornadaResumenAnual());
+            ZWSPEEMPLEADOJORNADARESUM_Service service = new ZWSPEEMPLEADOJORNADARESUM_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOJORNADARESUM.class);
 
             /*******************UserName & Password ******************************/
@@ -116,7 +117,11 @@ public class ResumenAnualService {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de ResumenAnualService");
             }
-        }finally {
+        } catch (MalformedURLException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADOJORNADARESUM --> " + configuration.jornadaResumenAnual());
+            }
+        } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 

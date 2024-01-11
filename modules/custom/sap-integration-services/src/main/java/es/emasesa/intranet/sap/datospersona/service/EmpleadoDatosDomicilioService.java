@@ -67,7 +67,7 @@ public class EmpleadoDatosDomicilioService {
                 }
             });
             URL urlEndpoint = new URL(configuration.empleadoDatosDomicilioEndpoint());
-            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service();
+            ZWSPEEMPLEADODOMICILIO_Service service = new ZWSPEEMPLEADODOMICILIO_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADODOMICILIO.class);
 
             /*******************UserName & Password ******************************/

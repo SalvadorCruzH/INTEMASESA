@@ -73,7 +73,7 @@ public class EmpleadoPrestamosService {
                 }
             });
             URL urlEndpoint = new URL(configuration.empleadoPrestamosEndpoint());
-            ZWSPEEMPLEADOPRESTAMOS_Service service = new ZWSPEEMPLEADOPRESTAMOS_Service();
+            ZWSPEEMPLEADOPRESTAMOS_Service service = new ZWSPEEMPLEADOPRESTAMOS_Service(urlEndpoint);
             port = service.getPort(ZWSPEEMPLEADOPRESTAMOS.class);
 
             /*******************UserName & Password ******************************/
