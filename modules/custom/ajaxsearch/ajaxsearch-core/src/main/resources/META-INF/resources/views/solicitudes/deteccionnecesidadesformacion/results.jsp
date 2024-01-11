@@ -76,7 +76,9 @@
                     </a>
                 </li>
             </ul>
-            <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>
+            <button class="ema-enlace-visualizar" onclick="openViewDialog('#urlVisualizar#')">
+                <i class="fa-solid fa-eye"></i>
+            </button>
         </td>
     </tr>
 </template>
@@ -151,6 +153,23 @@ var openEditDialog = function (url) {
             }
         },
         id: 'EditInfoIntDialog',
+        refreshWindow: window,
+        title: 'Consultar',
+        uri: url
+    });
+}
+var openViewDialog = function (url) {
+    Liferay.Util.openWindow({
+        dialog: {
+            destroyOnHide: true,
+            modal: true,
+            after: {
+                render: function(event) {
+                    //
+                }
+            }
+        },
+        id: 'ViewInfoIntDialog',
         refreshWindow: window,
         title: 'Consultar',
         uri: url
