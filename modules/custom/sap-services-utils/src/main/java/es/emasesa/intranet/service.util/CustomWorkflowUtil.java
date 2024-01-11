@@ -307,6 +307,73 @@ public class CustomWorkflowUtil {
         return datosServicio;
     }
 
+    public String addMarcaje(Map<String, Serializable> workflowContext){
+        String datosServicio = StringPool.BLANK;
+        String pernr = StringPool.BLANK;
+        String codigoMotivo = StringPool.BLANK;
+        int valueUnits = 0;
+
+
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            if (_objectEntryLocalService == null){
+                activate(null);
+            }
+            LOG.debug("Se procede a añadir marcaje...");
+            long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+            String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
+            ObjectMapper listadoParse = new ObjectMapper();
+            JsonNode listado = listadoParse.readTree(listadoString);
+
+            for (JsonNode solicitud : listado) {
+                String fecha = solicitud.get("fecha").asText();
+                String parte = solicitud.get("parte").asText();
+                String parteModificado = quitarTildes(parte);
+
+                if (parteModificado.equals("Marcaje")) {
+                    String motivo = solicitud.get("detalles").asText().substring("Motivo: ".length());
+
+                    if (motivo.equals("asuntoSindicalASIPE")) {
+                        codigoMotivo = "";
+                    } else if(motivo.equals("asuntoSindicalCCOO")) {
+                        codigoMotivo = "";
+                    } else if(motivo.equals("asuntoSindicalUGT")) {
+                        codigoMotivo = "";
+                    } else if(motivo.equals("olvidoDeterioroTarjeta")) {
+                        codigoMotivo = "";
+                    } else if(motivo.equals("trabajoFueraDelCT")) {
+                        codigoMotivo = "";
+                    } else if(motivo.equals("trabajoNoPresencial")) {
+                        codigoMotivo = "";
+                    }
+
+                    ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+                    Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+                    String [] horas = solicitud.get("valor").asText().split(StringPool.DASH);
+                    for (String hora : horas) {
+                        datosServicio = jornadaNominaService.addMarcaje(pernr, fecha, hora, codigoMotivo);
+                        LOG.debug("Se ha añadido el marcaje: " + hora + " para el usuario " + pernr);
+                        LOG.debug("Los datosServicio son: " + datosServicio);
+                    }
+
+                } else if(parteModificado.equals("Presencia de Formacion")) {
+                    String requiereDesplazamiento = solicitud.get("detalles").asText().substring("Requiere Desplazamiento: ".length());
+
+
+                }
+            }
+        } catch (PortalException e) {
+            LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        }
+
+        return datosServicio;
+    }
+
     public static String quitarTildes(String input){
         String cadenaNormalizada = Normalizer.normalize(input, Normalizer.Form.NFD);
         return cadenaNormalizada.replaceAll("[^\\p{ASCII}]", "");

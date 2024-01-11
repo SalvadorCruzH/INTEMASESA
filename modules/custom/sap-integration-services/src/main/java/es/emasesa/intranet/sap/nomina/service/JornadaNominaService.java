@@ -1,5 +1,6 @@
 package es.emasesa.intranet.sap.nomina.service;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -111,6 +112,29 @@ public class JornadaNominaService {
             zpeStActJornadaNomina.setFechaInicio(fechaInicio);
             zpeStActJornadaNomina.setPlusCcnomina(parte);
             zpeStActJornadaNomina.setPlusUnidades(unidades);
+
+            Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
+
+            return datos.toString();
+
+        } catch (Exception e) {
+            LOG.error("Se ha producido un error al intentar acceder a WS de jornadaNomina", e);
+        }
+        return null;
+    }
+
+    public String addMarcaje(String pernr, String fecha, String hora, String motivo){
+        try {
+            ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
+            zpeStActJornadaNomina.setPernr(pernr);
+
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime horaInicioDateTime = LocalDateTime.parse(fecha + StringPool.SPACE + hora, formatter);
+
+            XMLGregorianCalendar xmlHoraEntrada = getXMLGregorianCalendar(horaInicioDateTime);
+            zpeStActJornadaNomina.setMarcajeHora(xmlHoraEntrada);
+            zpeStActJornadaNomina.setMarcajeMotivo(motivo);
 
             Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
 

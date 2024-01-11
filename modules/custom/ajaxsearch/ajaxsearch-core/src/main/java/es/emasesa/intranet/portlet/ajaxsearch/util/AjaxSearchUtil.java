@@ -232,6 +232,7 @@ public class AjaxSearchUtil {
             ObjectEntry objetoEntry = objectEntryLocalService.getObjectEntry(objectClassPK);
             return objetoEntry;
         } catch (PortalException e) {
+            LoggerUtil.error(LOG, "Error at getObject: ", e);
             return null;
         }
     }

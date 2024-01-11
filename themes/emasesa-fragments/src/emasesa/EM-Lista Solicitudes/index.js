@@ -44,6 +44,17 @@ const diasCompletos = "diasCompletos";
 var tipoDeAusencia = $('[name=tipoDeAusencia]');
 //[F] Formulario vacaciones, ausencias y permisos
 
+//[I] Formulario Registro de Marcajes
+var tipoRegistro = $("[name=tipoDeRegistro]");
+const registroMarcaje = "marcaje";
+const registroFormacion = "presenciaDeFormacion";
+var fechaActividad = $("[name=fechaDeActividad]");
+var horaEntrada = $("[name=horaEntrada]");
+var horaSalida = $("[name=horaSalida]");
+var motivoMarcaje = $('[name=motivo]');
+var requiereDesplazamiento = $('[name=requiereDesplazamiento]');
+//[F] Formulario Registro de Marcajes
+
 $(btnAdd).click(function (event) {
     event.preventDefault();
 
@@ -75,6 +86,17 @@ $(btnAdd).click(function (event) {
 		addDiasCompletos(labelParte);
 	}
 	//[F] Formulario vacaciones, ausencias y permisos
+
+    //[I] Formulario Registro de Marcajes
+	var valorTipoRegistro = tipoRegistro.val();
+	if(valorTipoRegistro == registroMarcaje){
+		var labelParte = "Marcaje";
+		addMarcaje(labelParte);
+	}else if(valorTipoRegistro == registroFormacion){
+		var labelParte = "Presencia de Formación";
+		addFormacion(labelParte);
+	}
+	//[F] Formulario Registro de Marcajes
 });
 
 $(btndelete).click(function() {
@@ -353,5 +375,50 @@ function addAusenciaParcial(valorParte){
         fechaInicio.val('')
         horaDeInicio.val('')
         justificacion.val('')
+    }
+}
+
+function addFormacion(valorParte){
+    var valorFechaActividad = fechaActividad.val();
+    var valorRequiereDesplazamiento = requiereDesplazamiento.val();
+
+
+    if(valorFechaActividad != "") {
+        var fechaActividad = valorFechaInicio;
+        
+		var detalles = "Requiere Desplazamiento: " + (valorRequiereDesplazamiento == "true" ? "Si" : "No");
+
+        if (valorHoras > 0){
+            addSolicitudTabla(valorParte, fechaActividad, "", detalles);
+        }
+
+        fechaActividad.val('')
+        horaEntrada.val('')
+        horaSalida.val('')
+        motivoMarcaje.val('')
+    }
+}
+
+function addMarcaje(valorParte){
+    var valorFechaActividad = fechaActividad.val();
+    var valorHoraEntrada = horaEntrada.val();
+    var valorHoraSalida = horaSalida.val();
+    var valorMotivoMarcaje = motivoMarcaje.val();
+
+
+    if(valorFechaActividad != "" && valorMotivoMarcaje != "") {
+        var fechaActividad = valorFechaInicio + '= ' + valorHoraEntrada + " - " + valorHoraSalida;
+        
+		var detalles = "Motivo: " + valormotivoAusencia;
+        var valorHoras = valorHoraSalida +"-"+ valorHoraEntrada;
+
+        if (valorHoras > 0){
+            addSolicitudTabla(valorParte, fechaActividad, valorHoras, detalles);
+        }
+
+        fechaActividad.val('')
+        horaEntrada.val('')
+        horaSalida.val('')
+        motivoMarcaje.val('')
     }
 }
