@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d6eb33e7-e516-1643-4a0b-ac5277ac46b8</name>
-	<version>17</version>
+	<version>20</version>
 	<state>
 		<name>envioSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -116,6 +116,11 @@ String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowC
 if(pdf != null && pdf != ""){
 	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Vacaciones", "solicitud", userId, false);
 }
+//Subir fichero documentacion usuario
+String documentoUsuario = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
+if(documentoUsuario != null && documentoUsuario != ""){
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, documentoUsuario, "Vacaciones", "justificante", userId, false);
+}
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -162,7 +167,7 @@ sigdServiceTracker.close();]]>
 		</metadata>
 		<actions>
 			<action>
-				<name>Cambiar estado objeto</name>
+				<name>Cambiar estado objeto y subir a SIGD</name>
 				<description></description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
@@ -171,13 +176,30 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
 Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Admin RRHH");
+
+//Subir el object en PDF
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Vacaciones", "solicitud", userId, false);
+}
+//Subir fichero documentacion usuario
+String documentoUsuario = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
+if(documentoUsuario != null && documentoUsuario != ""){
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, documentoUsuario, "Vacaciones", "justificante", userId, false);
+}
 
 customWorkflowUtilTracker.close();]]>
 				</script>

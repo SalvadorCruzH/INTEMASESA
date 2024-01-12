@@ -86,10 +86,6 @@ public class PFirmasQueryServicesImpl implements PFirmasQueryServices {
         docList.getDocument().add(doc);
         Action action = new Action();
         action.setType(objectFactory.createRequestText("WEB"));
-        /**
-         * TODO: URL de web que será invocada al ejecutar la acción de la petición
-         *
-         */
         action.setAction("");
         State stateRead = new State();
         stateRead.setIdentifier("LEIDO");
@@ -98,7 +94,6 @@ public class PFirmasQueryServicesImpl implements PFirmasQueryServices {
         actionList.getAction().add(action);
 
         Request req = new Request();
-        //TODO: ¿A que application va?
         req.setApplication(objectFactory.createRequestApplication(""));
         req.setDocumentList(objectFactory.createRequestDocumentList(docList));
         req.setReference(objectFactory.createRequestReference("Referencia"));
