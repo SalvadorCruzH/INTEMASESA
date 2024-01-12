@@ -137,4 +137,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String necesidadesFormacionEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "calendarioEventosEndpoint",
+            required = false
+    )
+    String calendarioEventosEndpoint();
 }
