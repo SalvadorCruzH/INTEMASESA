@@ -12,10 +12,12 @@
                     <thead>
                      <tr>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.subject" /></th>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.name" /></th>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.datesent" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.dateactivity" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.numeroEmpleados" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.denominacionFromacion" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.email" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.status" /></th>
+                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.datesent" /></th>
                       <th></th>
                      </tr>
                     </thead>
@@ -48,15 +50,23 @@
 <template id="as-template">
     <tr>
         <td>#asunto#</td>
-        <td>#nombreCompleto#</td>
+        <td>#fechaActividad#</td>
+         <td>#numeroEmpleadosALosQueSolicita#</td>
+         <td>#denominacion#</td>
+         <td>#email#</td>
+        <td><span class="ema-pill-estado #estado-code#">#estado#</span></td>
         <td>#fechaEnvio#</td>
-        <td>#numeroEmpleadosALosQueSolicita#</td>
-        <td>#denominacion#</td>
         <td class="ema-td-dropdown">
             <button class="ema-button-moreoptions">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
             <ul class="ema-desplegable-moreoptions">
+                <li>
+                    <button onclick="openEditDialog('#urlMarcarLeido#')">
+                        <i class="fa-solid fa-check"></i>
+                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.markRead" />
+                    </button>
+                </li>
                 <li>
                     <button onclick="openEditDialog('#urlEditar#')">
                         <i class="fa-solid fa-edit"></i>
@@ -70,9 +80,7 @@
                     </a>
                 </li>
             </ul>
-            <button class="ema-enlace-visualizar" onclick="openViewDialog('#urlVisualizar#')">
-                <i class="fa-solid fa-eye"></i>
-            </button>
+            <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>
         </td>
     </tr>
 </template>
@@ -147,23 +155,6 @@ var openEditDialog = function (url) {
             }
         },
         id: 'EditInfoIntDialog',
-        refreshWindow: window,
-        title: 'Consultar',
-        uri: url
-    });
-}
-var openViewDialog = function (url) {
-    Liferay.Util.openWindow({
-        dialog: {
-            destroyOnHide: true,
-            modal: true,
-            after: {
-                render: function(event) {
-                    //
-                }
-            }
-        },
-        id: 'ViewInfoIntDialog',
         refreshWindow: window,
         title: 'Consultar',
         uri: url
