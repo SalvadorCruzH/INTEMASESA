@@ -127,14 +127,16 @@ public class JornadaNominaService {
         try {
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(pernr);
-
+            zpeStActJornadaNomina.setFechaInicio(fecha);
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime horaInicioDateTime = LocalDateTime.parse(fecha + StringPool.SPACE + hora, formatter);
 
             XMLGregorianCalendar xmlHoraEntrada = getXMLGregorianCalendar(horaInicioDateTime);
             zpeStActJornadaNomina.setMarcajeHora(xmlHoraEntrada);
-            zpeStActJornadaNomina.setMarcajeMotivo(motivo);
+            if (!motivo.equals(StringPool.BLANK)) {
+                zpeStActJornadaNomina.setMarcajeMotivo(motivo);
+            }
 
             Bapireturn1 datos =  port.zPeActJornadaNomina(zpeStActJornadaNomina);
 

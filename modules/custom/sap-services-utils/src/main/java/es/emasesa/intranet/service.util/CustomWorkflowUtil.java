@@ -340,7 +340,6 @@ public class CustomWorkflowUtil {
 
                 if (parteModificado.equals("Marcaje")) {
                     String motivo = solicitud.get("detalles").asText().substring("Motivo: ".length());
-                    //TODO: Añadir los códigos de los motivos
                     if (motivo.equals("asuntoSindicalASIPE")) {
                         codigoMotivo = "";
                     } else if(motivo.equals("asuntoSindicalCCOO")) {
