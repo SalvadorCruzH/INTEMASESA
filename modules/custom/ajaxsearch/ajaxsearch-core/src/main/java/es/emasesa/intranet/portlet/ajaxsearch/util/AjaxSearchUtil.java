@@ -253,11 +253,8 @@ public class AjaxSearchUtil {
         return baseUrl + display;
     }
 
-    public final String formatDeleteUrl(String portalUrl, String externalReferenceCode, String groupId) {
-        String url = portalUrl + "/o/c/compatibilidads/scopes/--groupId--/by-external-reference-code/--externalReferenceCode--";
-        url = url.replace("--groupId--", groupId)
-                .replace("--externalReferenceCode--", externalReferenceCode);
-        return url;
+    public final String formatDeleteUrl(String portalUrl, String externalReferenceCode, String groupId, String objectContextPath) {
+        return portalUrl + objectContextPath + "/scopes/" + groupId + "/by-external-reference-code/" + externalReferenceCode;
     }
     /**
      * Formatea la fecha de la solicitud

@@ -1,7 +1,9 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.*;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -238,13 +240,14 @@ public class TodasResultImpl implements AjaxSearchResult {
                 String stringObject = jsonObject1.getString(objectName);
                 if(!stringObject.equals(StringPool.BLANK)){
                     String display = JSONFactoryUtil.createJSONObject(stringObject).getString("display");
+                    String objectContextPath = _objectDefinitionLocalService.getObjectDefinition(objectEntry.getObjectDefinitionId()).getRESTContextPath();
                     jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, ajaxSearchUtil.formatViewUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
                     jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
-                    jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
+                    jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId()), objectContextPath));
 
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            } catch (PortalException e) {
+                LoggerUtil.error(LOG, e);
             }
         }
         return jsonObject;
@@ -282,6 +285,9 @@ public class TodasResultImpl implements AjaxSearchResult {
 
     @Reference
     ClientExtensionsSettings clientExtensionsSettings;
+
+    @Reference
+    ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 
 }

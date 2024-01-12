@@ -81,8 +81,21 @@ public class AjaxSearchPortletKeys {
 	public static final String DENOMINACION = "denominacion";
 	public static final String OBLIGATORIEDAD = "obligatoriedad";
 	public static final String MODALIDAD = "modalidad";
+	public static final String MATRICULA = "matricula";
 	public static final String NOMBRE = "nombre";
 	public static final String PRIMER_APELLIDO = "primerApellido";
 	public static final String SEGUNDO_APELLIDO = "segundoApellido";
 
+	/** VALORES ESTADO SELECT ACCION FORMATIVA FUERA DEL PLAN **/
+	public static final String PENDIENTE_JEFE_DIVISION = "asignadaJefeDeDivision";
+	public static final String PENDIENTE_JEFE_DEPARTAMENTO = "pendienteJefeDepartamento";
+	public static final String PENDIENTE_SUBDIRECTOR_DIRECTOR_CONSEJERO = "pendienteSubdirectorDirector";
+	public static final String APROBADO = "aceptada";
+	public static final String RECHAZADO = "rechazada";
+	public static final String LEIDO = "leido";
+
+	public static final String ROLE_RRHH_CONFIG = "roleRRHHName";
+	public static final String FIELD_OBJECT_ENTRY_CONTENT = "objectEntryContent";
+	public static final String EMAIL = "email";
+	public static final String NOMBRE_COMPLETO = "nombreCompleto";
 }

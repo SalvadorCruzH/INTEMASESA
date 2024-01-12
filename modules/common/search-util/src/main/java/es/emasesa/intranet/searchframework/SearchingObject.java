@@ -11,7 +11,9 @@ import com.liferay.portal.kernel.search.generic.NestedQuery;
 import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component(
 		immediate = true,
@@ -54,6 +56,34 @@ public class SearchingObject {
             listDocuments.addAll(hitsList);
 		}
 		return listDocuments;
+	}
+
+	/** Searching **/
+	public List<Document> searchObjectsAllUsers(String[] objectDefinitionIds, SearchContext searchContext) throws SearchException, ParseException {
+
+		List<Document> listDocuments = new ArrayList<>();
+
+		for (String objectDefinitionId : objectDefinitionIds) {
+			BooleanQuery query = new BooleanQueryImpl();
+			MatchQuery entryClassNameQuery = new MatchQuery("entryClassName", "com.liferay.object.model.ObjectDefinition#" + objectDefinitionId);
+			query.add(entryClassNameQuery, BooleanClauseOccur.MUST.getName());
+			Hits hits = indexSearcherHelper.search(searchContext, query);
+			List<Document> hitsList = hits.toList();
+			listDocuments.addAll(hitsList);
+		}
+		return listDocuments;
+	}
+
+	public Map<String, String> getObjectEntryContent(String str) {
+		String[] keyValuePairs = str.split(",");
+		Map<String, String> map = new HashMap<>();
+
+		for(String pair : keyValuePairs) {
+			String[] keyValue = pair.split(":");
+			map.put(keyValue[0].trim(), keyValue.length > 1 ? keyValue[1].trim() : "");
+		}
+
+		return map;
 	}
 	
 	public Hits searchObject(final String objectDefinitionId, final SearchContext searchContext, String... fieldFilter) throws SearchException {

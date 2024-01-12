@@ -1,18 +1,24 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.*;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.*;
+import es.emasesa.intranet.base.constant.EmasesaConstants;
 import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.base.model.AjaxMessage;
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.CustomJournalUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
@@ -30,10 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component(
         immediate = true,
@@ -64,13 +69,20 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
     }
 
     private static final String VIEW = "/views/solicitudes/accionesformativasfueradelplan/results.jsp";
+    private static final String VIEW_RRHH = "/views/solicitudes/accionesformativasfueradelplan/results_rol_rrhh.jsp";
 
     @Override
     public String getResultsView(PortletRequest request, PortletResponse response) {
         final Map<String, String> config = ajaxSearchUtil.getPropertiesMap(request);
         request.setAttribute("cssWrapperClass", config.getOrDefault(CSS_WRAPPER_CLASS, StringPool.BLANK));
         request.setAttribute("disablePagination", config.getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO));
-        return VIEW;
+        boolean isRRHHAdmin = checkIsRole(request);
+
+        if (isRRHHAdmin){
+            return VIEW_RRHH;
+        } else {
+            return VIEW;
+        }
     }
 
     public AjaxMessage filterResults(PortletRequest request,
@@ -128,12 +140,14 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
                                        final boolean disablePagination,
                                        final JSONArray jsonArray) throws ParseException, SearchException {
         final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-
         final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
         final int end = disablePagination ? pageSize : (currentPage * pageSize);
 
         final SearchContext searchContext = searchingCommon.createPaginatedSearchContext(start, end);
         final BooleanQuery booleanQuery = searchingCommon.createEmptyBooleanQuery();
+
+        int totalItems = 0;
+        boolean isRRHHAdmin = checkIsRole(request);
 
         if (Validator.isNotNull(themeDisplay)) {
             searchingCommon.addCompanyIdFilter(searchContext, themeDisplay.getCompanyId());
@@ -150,8 +164,70 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
 
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
-        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
-        final int totalItems = documents.size();
+        List<Document> documents = new ArrayList<>();
+        if (isRRHHAdmin){
+            documents = searchingObject.searchObjectsAllUsers(solicitudesId.split(","), searchContext);
+            Date fechaDesde = ParamUtil.getDate(request, AjaxSearchPortletKeys.FECHA_DESDE, AjaxSearchPortletKeys.DFLT_SIMPLE_DATE_FORMAT);
+            Date fechaHasta = ParamUtil.getDate(request, AjaxSearchPortletKeys.FECHA_HASTA, AjaxSearchPortletKeys.DFLT_SIMPLE_DATE_FORMAT);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fechaHasta);
+            cal.add(Calendar.DATE, 1);
+            Date fechaHastaValid = cal.getTime();
+            String matricula = ParamUtil.getString(request, AjaxSearchPortletKeys.MATRICULA);
+            String nombre = ParamUtil.getString(request, AjaxSearchPortletKeys.NOMBRE);
+            String[] estado = ParamUtil.getParameterValues(request, AjaxSearchPortletKeys.ESTADO);
+            Date now = new Date();
+
+            if (!fechaDesde.equals(now)) {
+                documents = (documents != null) ? documents.stream().filter(document -> {
+                    try {
+                       Date date = document.getDate(Field.CREATE_DATE);
+                        return date.after(fechaDesde);
+                    } catch (java.text.ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).collect(Collectors.toList()) : new ArrayList<>();
+            }
+
+            if (!fechaHasta.equals(now)) {
+                documents = (documents != null) ? documents.stream().filter(document -> {
+                    try {
+                        Date date = document.getDate(Field.CREATE_DATE);
+                        return date.before(fechaHastaValid);
+                    } catch (java.text.ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).collect(Collectors.toList()) : new ArrayList<>();
+            }
+
+            if (!matricula.isBlank()) {
+                documents = (documents != null) ? documents.stream().filter(document -> {
+                    Map<String, String> content =  searchingObject.getObjectEntryContent(document.get(AjaxSearchPortletKeys.FIELD_OBJECT_ENTRY_CONTENT));
+                    String matriculaValue = content.get(AjaxSearchPortletKeys.MATRICULA);
+                    return matriculaValue != null && matriculaValue.toLowerCase().contains(matricula.toLowerCase());
+                }).collect(Collectors.toList()) : new ArrayList<>();
+            }
+
+            if (!nombre.isBlank()) {
+                documents = (documents != null) ? documents.stream().filter(document -> {
+                    Map<String, String> content =  searchingObject.getObjectEntryContent(document.get(AjaxSearchPortletKeys.FIELD_OBJECT_ENTRY_CONTENT));
+                    String nombreValue = content.get(AjaxSearchPortletKeys.NOMBRE);
+                    return nombreValue != null && nombreValue.toLowerCase().contains(nombre.toLowerCase());
+                }).collect(Collectors.toList()) : new ArrayList<>();
+            }
+
+            if (estado.length>0){
+                documents = (documents != null) ? documents.stream().filter(document -> {
+                    Map<String, String> content =  searchingObject.getObjectEntryContent(document.get(AjaxSearchPortletKeys.FIELD_OBJECT_ENTRY_CONTENT));
+                    String statusObject = content.get(AjaxSearchPortletKeys.ESTADO_OBJETO);
+                    return Arrays.asList(estado).contains(statusObject);
+                }).collect(Collectors.toList()) : new ArrayList<>();
+            }
+        } else {
+            documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+        }
+
+        totalItems = documents.size();
 
         String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
         if (Validator.isNotNull(sortBy)) {
@@ -195,16 +271,28 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
         String fechaEnvio = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
         jsonObject.put(AjaxSearchPortletKeys.FECHA_ENVIO, ajaxSearchUtil.formatDate(fechaEnvio));
 
-        //String objectEntryContent = document.get(themeDisplay.getLocale(), "objectEntryContent");
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
         ObjectEntry objectEntry = ajaxSearchUtil.getObject(objectClassPK);
         if (objectEntry != null) {
             String asunto = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
             jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
 
+            String fechaActividad;
+            if (Validator.isNotNull(objectEntry.getValues().get(AjaxSearchPortletKeys.FECHA_ACTIVIDAD))){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date date = formatter.parse(objectEntry.getValues().get(AjaxSearchPortletKeys.FECHA_ACTIVIDAD).toString());
+                    fechaActividad = formatter2.format(date);
+                } catch (java.text.ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
-            String fechaActividad = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.FECHA_ACTIVIDAD, StringPool.DASH).toString();
-            jsonObject.put(AjaxSearchPortletKeys.FECHA_ACTIVIDAD, ajaxSearchUtil.formatDate(fechaActividad));
+            } else {
+                fechaActividad = StringPool.DASH;
+            }
+
+            jsonObject.put(AjaxSearchPortletKeys.FECHA_ACTIVIDAD, fechaActividad);
 
             String numeroEmpleadosALosQueSolicita = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.NUMERO_EMPLEADOS, StringPool.DASH).toString();
             jsonObject.put(AjaxSearchPortletKeys.NUMERO_EMPLEADOS, numeroEmpleadosALosQueSolicita);
@@ -214,6 +302,16 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
 
             String tipoRetribucion = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.TIPO_RETRIBUCION, StringPool.DASH).toString();
             jsonObject.put(AjaxSearchPortletKeys.TIPO_RETRIBUCION, tipoRetribucion);
+
+            User user = themeDisplay.getUser();
+            _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), EmasesaConstants.EMASESA_EXPANDO_NOMBRE);
+            String nombreCompleto = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), EmasesaConstants.EMASESA_EXPANDO_NOMBRE) + " "
+                    + _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), EmasesaConstants.EMASESA_EXPANDO_APELLIDO1) + " "
+                    + _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), EmasesaConstants.EMASESA_EXPANDO_APELLIDO2);
+            jsonObject.put(AjaxSearchPortletKeys.NOMBRE_COMPLETO, nombreCompleto);
+
+            String email = themeDisplay.getUser().getEmailAddress();
+            jsonObject.put(AjaxSearchPortletKeys.EMAIL, email);
 
             String estadoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ESTADO_OBJETO, StringPool.BLANK).toString();
             if (!estadoObjeto.equals(StringPool.BLANK)) {
@@ -235,7 +333,6 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
                 jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "unknown");
             }
             String externalReferenceCode = objectEntry.getExternalReferenceCode();
-            String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
             try {
                 String objectDefinitionName = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
                 String objectName = JSONFactoryUtil.createJSONObject(clientExtensionsSettings.objectNames()).getString(objectDefinitionName, objectDefinitionName);
@@ -244,16 +341,31 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
                 String stringObject = jsonObject1.getString(objectName);
                 if(!stringObject.equals(StringPool.BLANK)){
                     String display = JSONFactoryUtil.createJSONObject(stringObject).getString("display");
+                    String objectContextPath = _objectDefinitionLocalService.getObjectDefinition(objectEntry.getObjectDefinitionId()).getRESTContextPath();
                     jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, ajaxSearchUtil.formatViewUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
                     jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
-                    jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId())));
+                    jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId()), objectContextPath));
 
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            } catch (PortalException e) {
+                LoggerUtil.error(LOG, e);
             }
         }
         return jsonObject;
+    }
+
+    private boolean checkIsRole(PortletRequest request ){
+        final Map<String, String> config = ajaxSearchUtil.getPropertiesMap(request);
+        String roleName = (config.get(AjaxSearchPortletKeys.ROLE_RRHH_CONFIG) != null)? config.get(AjaxSearchPortletKeys.ROLE_RRHH_CONFIG) : "";
+
+        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+        User user = themeDisplay.getUser();
+
+        long groupId = themeDisplay.getScopeGroupId();
+
+        List<Role> siteRoles = _roleLocalService.getUserGroupRoles(user.getUserId(), groupId);
+
+       return siteRoles.stream().anyMatch(role -> roleName.equals(role.getName()));
     }
 
 
@@ -290,4 +402,12 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
     @Reference
     ClientExtensionsSettings clientExtensionsSettings;
 
+    @Reference
+    private RoleLocalService _roleLocalService;
+
+    @Reference
+    private CustomExpandoUtil _customExpandoUtil;
+
+    @Reference
+    ObjectDefinitionLocalService _objectDefinitionLocalService;
 }

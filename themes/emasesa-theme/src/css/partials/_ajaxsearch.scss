@@ -120,6 +120,23 @@
                             justify-content: flex-start;
                         }
                     }
+
+                    .ema-ajaxsearch-filtros__multiple{
+                        flex-direction: row;
+                        align-items: baseline;
+                        flex-wrap:wrap;
+                        justify-content: flex-start;
+                        div {
+                            margin: 1rem;
+                        }
+
+                        .m-searchAjax__block_date{
+                            max-width:200px;
+                        }
+                        .m-searchAjax__block_select select{
+                            height: max-content;
+                        }
+                    }
                 }
                 .ema-ajaxsearch-filtros__sortby--wrapper {
                     margin-top: 1rem;
