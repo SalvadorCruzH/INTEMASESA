@@ -321,7 +321,14 @@ public class CustomWorkflowUtil {
             }
             LOG.debug("Se procede a añadir marcaje...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-            pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+            switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")){
+                case "cuentaPropia":
+                    pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+                    break;
+                case "cuentaAjena":
+                    pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("nmeroDeMatrculaAjena");
+                    break;
+            }
             String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
             ObjectMapper listadoParse = new ObjectMapper();
             JsonNode listado = listadoParse.readTree(listadoString);
@@ -333,7 +340,7 @@ public class CustomWorkflowUtil {
 
                 if (parteModificado.equals("Marcaje")) {
                     String motivo = solicitud.get("detalles").asText().substring("Motivo: ".length());
-
+                    //TODO: Añadir los códigos de los motivos
                     if (motivo.equals("asuntoSindicalASIPE")) {
                         codigoMotivo = "";
                     } else if(motivo.equals("asuntoSindicalCCOO")) {
