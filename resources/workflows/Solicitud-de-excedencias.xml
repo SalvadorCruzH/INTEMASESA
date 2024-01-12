@@ -6,20 +6,11 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
-	<version>82</version>
+	<version>84</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-468,
-						-29
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-468,-29],"transitions":{"c776482b-663f-49dc-a7bf-2ce20f0b77fa":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -72,8 +63,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						793.7695451356564,
-						603.9740402803037
+						810.9231803817949,
+						702.9371947820852
 					],
 					"terminal": true
 				}
@@ -190,16 +181,7 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>aceptar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						558.0264108341445,
-						460.78623829012093
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[807,508],"transitions":{"aceptada":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -276,16 +258,7 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>rechazar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						1013.0853955401208,
-						459.67105298527576
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[1255,315],"transitions":{"Rechazar solicitud":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -350,11 +323,11 @@ sigdServiceTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Fin del proceso solicitud rechazada
+						Solicitud rechazada
 					</label>
 				</labels>
-				<name>rechazada</name>
-				<target>c035cfd3-be36-4f6d-80ad-8dcd3f884e12</target>
+				<name>Rechazar solicitud</name>
+				<target>Asignar-jefe-division-RRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>
@@ -362,16 +335,7 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						30.546875,
-						-27.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[30,-27],"transitions":{"aprobar-enviar-jefe-departamento":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -461,16 +425,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-director-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						805.546875,
-						322.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[806,322],"transitions":{"rechazadoPF":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -602,16 +557,7 @@ sapCustomWorkflowUtilTracker.close();
 	<task>
 		<name>asignar-jefe-departamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						423.54682065628776,
-						-23.35128377478072
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[423,-23],"transitions":{"Aprobada-enviar-jefe-division-area":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -694,16 +640,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>asignar-jefe-division-area</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						805.5060402625122,
-						-28.35129694082863
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[805,-28],"transitions":{"Aprobada-enviar-jefe-division-RRHH":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -786,16 +723,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-jefe-division-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						809.546875,
-						148.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[809,148],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
