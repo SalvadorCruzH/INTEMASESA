@@ -74,7 +74,7 @@
                     </button>
                 </li>
                 <li>
-                    <a href="#urlEliminar#">
+                    <a href="#eliminar#" class="removeButton" data-solicitudId="#objectEntryId#">
                         <i class="fa-solid fa-trash"></i>
                         <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.delete" />
                     </a>
@@ -87,77 +87,132 @@
 
 <script>
 ajaxSearchGlobalConfig = {
-    _preAppendItem : function (newItem, jsonItem) {return newItem},
-    _postdrawItem : function (jsonItem) {},
-    _predrawAll : function (payload) {},
-    _postdrawAll : function (payload) {
+    _preAppendItem : function ( newItem , jsonItem ) {return newItem} ,
+    _postdrawItem : function ( jsonItem ) {} ,
+    _predrawAll : function ( payload ) {} ,
+    _postdrawAll : function ( payload ) {
         addClickFunctionality();
         checkStatus();
     }
 }
-$(document).ready(function () {
-    var options = $(".results-pagination-select-container .results-pagination-select option");
-    for (var i = 0; i < options.length; i++) {
-        var urlParams = new URLSearchParams(window.location.search);
-        var curPage = urlParams.get('currentPage');
-        if (curPage == null) {
-            curPage = 1;
+$( document )
+    .ready( function () {
+        var options = $( ".results-pagination-select-container .results-pagination-select option" );
+        for ( var i = 0 ; i < options.length ; i++ ) {
+            var urlParams = new URLSearchParams( window.location.search );
+            var curPage = urlParams.get( 'currentPage' );
+            if ( curPage == null ) {
+                curPage = 1;
+            }
+            var value = options[ i ].value;
+            if ( value == curPage ) {
+                options[ i ].selected = true;
+            }
         }
-        var value = options[i].value;
-        if (value == curPage) {
-            options[i].selected = true;
-        }
-    }
-    $(document).mouseup(function(e) {
-        var container = $(".ema-desplegable-moreoptions");
-        if (!container.is(e.target) && container.has(e.target).length === 0) {
-            container.removeClass('show');
-        }
-    });
-
-    
-});
+        $( document )
+            .mouseup( function ( e ) {
+                var container = $( ".ema-desplegable-moreoptions" );
+                if ( !container.is( e.target ) && container.has( e.target ).length === 0 ) {
+                    container.removeClass( 'show' );
+                }
+            } );
+    } );
 
 var addClickFunctionality = function () {
-    var moreOptionsTd = $('.ema-td-dropdown');
-    moreOptionsTd.each(function() {
-        $(this).children('.ema-button-moreoptions').on('click', function () {
-            $(this).siblings('.ema-desplegable-moreoptions').toggleClass('show');
-        });
-    });
+    var moreOptionsTd = $( '.ema-td-dropdown' );
+    moreOptionsTd.each( function () {
+        $( this )
+            .children( '.ema-button-moreoptions' )
+            .on( 'click' , function () {
+                $( this )
+                    .siblings( '.ema-desplegable-moreoptions' )
+                    .toggleClass( 'show' );
+            } );
+    } );
 }
 
 var checkStatus = function () {
-    $('tbody#as-wrapper tr').each(function() {
-        var estado = $(this).find('.ema-pill-estado');
-        if(estado.hasClass("success")) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else if (estado.hasClass("danger") ) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else {
-            $(this).find('.ema-enlace-visualizar').remove();
-        }
-    });
+    $( 'tbody#as-wrapper tr' )
+        .each( function () {
+            var estado = $( this )
+                .find( '.ema-pill-estado' );
+            if ( estado.hasClass( "success" ) ) {
+                $( this )
+                    .find( ".ema-button-moreoptions" )
+                    .remove();
+                $( this )
+                    .find( ".ema-desplegable-moreoptions" )
+                    .remove();
+            } else if ( estado.hasClass( "danger" ) ) {
+                $( this )
+                    .find( ".ema-button-moreoptions" )
+                    .remove();
+                $( this )
+                    .find( ".ema-desplegable-moreoptions" )
+                    .remove();
+            } else {
+                $( this )
+                    .find( '.ema-enlace-visualizar' )
+                    .remove();
+            }
+        } );
 }
 
 
-var openEditDialog = function (url) {
-    Liferay.Util.openWindow({
-        dialog: {
-            destroyOnHide: true,
-            modal: true,
-            after: {
-                render: function(event) {
+var openEditDialog = function ( url ) {
+    Liferay.Util.openWindow( {
+        dialog : {
+            destroyOnHide : true ,
+            modal : true ,
+            after : {
+                render : function ( event ) {
                     //
                 }
             }
-        },
-        id: 'EditInfoIntDialog',
-        refreshWindow: window,
-        title: 'Consultar',
-        uri: url
-    });
+        } ,
+        id : 'EditInfoIntDialog' ,
+        refreshWindow : window ,
+        title : 'Consultar' ,
+        uri : url
+    } );
 }
+
+$(document).on('click', '.removeButton', function(){
+const objectEntryId = $(this).data("solicitudid");
+    const url = `/o/object-entry-util/delete-object-entry/` + objectEntryId;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+                Liferay.Util.openToast({
+                    type: 'danger',
+                    title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.title'/>',
+                    message: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.message'/>'
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            $(this).closest("tr").remove();
+            Liferay.Util.openToast({
+                type: 'success',
+                title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.success.title'/>',
+                message: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.success.message'/>'
+            });
+        })
+        .catch(error => {
+            Liferay.Util.openToast({
+                type: 'danger',
+                title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.title'/>',
+                message: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.message'/>'
+            });
+        });
+});
+
 </script>

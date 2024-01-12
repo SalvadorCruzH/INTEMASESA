@@ -313,6 +313,8 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
             String email = themeDisplay.getUser().getEmailAddress();
             jsonObject.put(AjaxSearchPortletKeys.EMAIL, email);
 
+            jsonObject.put(AjaxSearchPortletKeys.FIELD_OBJECT_ENTRY_ID, objectEntry.getObjectEntryId());
+
             String estadoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ESTADO_OBJETO, StringPool.BLANK).toString();
             if (!estadoObjeto.equals(StringPool.BLANK)) {
                 jsonObject.put(AjaxSearchPortletKeys.ESTADO, LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));

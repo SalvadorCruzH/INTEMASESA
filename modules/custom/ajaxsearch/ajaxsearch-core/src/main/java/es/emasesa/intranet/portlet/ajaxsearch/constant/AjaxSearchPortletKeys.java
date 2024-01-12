@@ -96,6 +96,7 @@ public class AjaxSearchPortletKeys {
 
 	public static final String ROLE_RRHH_CONFIG = "roleRRHHName";
 	public static final String FIELD_OBJECT_ENTRY_CONTENT = "objectEntryContent";
+	public static final String FIELD_OBJECT_ENTRY_ID = "objectEntryId";
 	public static final String EMAIL = "email";
 	public static final String NOMBRE_COMPLETO = "nombreCompleto";
 }
