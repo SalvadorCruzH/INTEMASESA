@@ -578,8 +578,14 @@ public class SapServicesUtil {
     }
 
     public JSONObject getCalendarioEventos() throws CalendarioEventosException, SapCommunicationException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getCalendarioEventos ");
+        }
             JSONObject calendarioEventos = JSONFactoryUtil.createJSONObject();
         try {
+            if (_calendarioEventosService == null) {
+                activate(null);
+            }
             calendarioEventos = _calendarioEventosService.getCalendarioEventos();
         } finally {
             if (LOG.isDebugEnabled()) {
