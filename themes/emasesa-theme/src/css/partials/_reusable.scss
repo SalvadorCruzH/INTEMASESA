@@ -793,3 +793,34 @@ html:not(#__):not(#___) {
     left: 15px;
   }
 }
+
+.lfr-pagination-buttons {
+  justify-content: center;
+  gap: 1rem;
+  > .page-item {
+    display: flex;
+    > a {
+      padding: 8px 15px;
+      border: 2px solid $color-aux-blue;
+      border-radius: 20px;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+    &.disabled > a {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+    &:first-child > a {
+      background: transparent url('@theme_image_path@/icons/angle-left-blue.svg') 15px center no-repeat;
+      background-size: auto 15px;
+      padding-left: 35px;
+    }
+    &:last-child > a {
+      background: transparent url('@theme_image_path@/icons/angle-right-blue.svg') calc(100% - 15px) center no-repeat;
+      background-size: auto 15px;
+      padding-right: 35px;
+    }
+  }
+}
