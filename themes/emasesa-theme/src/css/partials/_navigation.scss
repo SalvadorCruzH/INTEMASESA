@@ -135,6 +135,12 @@
             @include font_base-black;
             font-size: m-rem(16px);
             color: $color-text;
+            line-height: 1.35;
+            text-wrap: balance;
+            margin-bottom: .25rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0 .25rem;
             &:hover {
                 color: $color-text;
             }
@@ -143,6 +149,12 @@
             @include font_base;
             font-size: .95rem;
             color: $color-text;
+            line-height: 1.35;
+            text-wrap: balance;
+            margin-bottom: .25rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0 .25rem;
             &:hover {
                 color: $color-text;
             }
