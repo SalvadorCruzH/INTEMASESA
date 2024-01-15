@@ -1,0 +1,102 @@
+.ema-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+    gap: 1rem;
+    &__link {
+        background-position: center;
+        background-size: cover;
+        border-radius: 30px;
+        padding: 30px;
+        min-height: 250px;
+        display: flex;
+        align-items: flex-end;
+        position: relative;
+        overflow: hidden;
+        color: $color-white;
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        &:hover {
+            .ema-links__link__data {
+                bottom: 0;
+            }
+            .ema-links__link__description {
+                opacity: 1;
+            }
+            .ema-links__link__btn {
+                opacity: 1;
+                width: auto;
+                text-indent: 0;
+                background-position: 15px center;
+                padding-left: 40px;
+            }
+        }
+        &__data {
+            position: relative;
+            bottom: -50px;
+            background-color: rgba(0,0,0,.75);
+            margin: 0 -30px -30px;
+            padding: 25px 30px;
+            transition: bottom .3s ease;
+        }
+        &__title {
+            .i-mainWrapper & {
+                font-size: 1.25rem;
+                line-height: 1.15;
+            }
+            text-wrap: balance;
+        }
+        &__description {
+            transition: opacity .3s ease;
+            opacity: 0;
+            display: -moz-box;
+            display: -webkit-box;
+            display: box;
+            -moz-box-orient: vertical;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: $color-white;
+        }
+        &__url {
+            display: -moz-box;
+            display: -webkit-box;
+            display: box;
+            -moz-box-orient: vertical;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: $color-medium-light;
+            margin-bottom: .5rem;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+                color: $color-blue;
+            }
+        }
+        &__btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 7px 15px;
+            width: 40px;
+            max-height: 40px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-indent: 35px;
+            background: $color-aux-blue url('@theme_image_path@/icons/angle-left-white.svg') center center no-repeat;
+            background-size: auto 15px;
+            opacity: .5;
+            transition: all .3s ease;
+            &:hover {
+                text-decoration: none;
+                color: $color-light-blue;
+            }
+        }
+    }
+}

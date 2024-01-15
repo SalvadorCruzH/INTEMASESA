@@ -166,5 +166,17 @@
         "templateFile": "listado-documentos-relacionados.ftl",
         "comment": "ADT para el listado de documentos relacionados con la tabla superior.",
         "uuid": "4278ef08-2000-5138-a2ae-966e20e0ccb3"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Enlaces de interés",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-ENLACES-DE-INTERES",
+        "templateFile": "enlaces-de-interes.ftl",
+        "comment": "ADT para el listado de enlaces de interés filtrados por categoría.",
+        "uuid": "4f84deb1-9b87-cab0-e58a-b70c28e7171a"
     }
 ]

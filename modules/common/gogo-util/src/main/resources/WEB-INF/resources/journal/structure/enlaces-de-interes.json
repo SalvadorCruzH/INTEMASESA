@@ -1,0 +1,222 @@
+{
+    "definitionSchemaVersion": "2.0",
+    "availableLanguageIds": [
+        "es_ES"
+    ],
+    "successPage": {
+        "body": {},
+        "title": {},
+        "enabled": false
+    },
+    "defaultLanguageId": "es_ES",
+    "fields": [
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": true,
+            "displayStyle": "singleline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción86156134",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción86156134"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "linkTitle",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Título del enlace"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text68360630",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": false,
+            "displayStyle": "multiline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción86156134",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción86156134"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "linkDescription",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "Descripción del enlace"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text56950581",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "labelAtStructureLevel": true,
+            "ddmDataProviderInstanceId": [],
+            "predefinedValue": {
+                "es_ES": ""
+            },
+            "tooltip": {
+                "es_ES": ""
+            },
+            "requireConfirmation": false,
+            "type": "text",
+            "showLabel": true,
+            "required": true,
+            "displayStyle": "singleline",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "objectFieldName": "",
+            "ddmDataProviderInstanceOutput": [],
+            "repeatable": false,
+            "options": [
+                {
+                    "reference": "Opción86156134",
+                    "label": {
+                        "es_ES": "Opción"
+                    },
+                    "value": "Opción86156134"
+                }
+            ],
+            "nativeField": false,
+            "confirmationLabel": {
+                "es_ES": ""
+            },
+            "fieldReference": "linkURL",
+            "tip": {
+                "es_ES": ""
+            },
+            "placeholder": {
+                "es_ES": ""
+            },
+            "direction": [
+                "vertical"
+            ],
+            "confirmationErrorMessage": {
+                "es_ES": ""
+            },
+            "hideField": false,
+            "autocomplete": false,
+            "dataType": "string",
+            "readOnly": false,
+            "label": {
+                "es_ES": "URL del enlace"
+            },
+            "fieldNamespace": "",
+            "visibilityExpression": "",
+            "indexType": "keyword",
+            "name": "Text68869904",
+            "localizable": true,
+            "dataSourceType": "manual"
+        },
+        {
+            "dataType": "image",
+            "predefinedValue": {
+                "es_ES": "{}"
+            },
+            "readOnly": false,
+            "label": {
+                "es_ES": "Imagen del enlace"
+            },
+            "type": "image",
+            "showLabel": true,
+            "required": false,
+            "fieldNamespace": "",
+            "requiredErrorMessage": {
+                "es_ES": ""
+            },
+            "visibilityExpression": "",
+            "indexType": "text",
+            "objectFieldName": "",
+            "repeatable": false,
+            "requiredDescription": true,
+            "name": "Image76993358",
+            "localizable": true,
+            "fieldReference": "linkImg",
+            "tip": {
+                "es_ES": ""
+            }
+        }
+    ]
+}
