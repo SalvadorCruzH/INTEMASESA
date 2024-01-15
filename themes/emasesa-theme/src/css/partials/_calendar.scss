@@ -1,71 +1,215 @@
 a[class*="ema-calendario__"] {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
+
 .ema-calendario {
-    background-color: $color-white;
-    border-radius: 30px;
-    padding-block: 30px;
-    margin-block: 3rem;
-    * {
-        margin: 0;
-        padding: 0;
+  background-color: $color-white;
+  border-radius: 30px;
+  padding-block: 30px;
+  margin-block: 3rem;
+  position: relative;
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .filler {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: #545A5C;
+    transform: translate(-50%, -50%);
+  }
+
+  &__contenedor-evento {
+   /* display: none;
+    border-top: 1px solid #eee;
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    flex-direction: column;
+    position: relative;*/
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px 50px;
+    background: #545A5C;
+    box-sizing: border-box;
+
+    #btn-register {
+      padding: 0.40rem 1.2rem;
     }
-    &__contenedor-evento {
+
+    /*.close {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background-color: #CBD1D2;
+      }
+
+      &:after {
+        transform: rotate(-45deg);
+      }
+
+      &:before {
+        transform: rotate(45deg);
+      }
+    }*/
+
+    .event-wrapper {
+      overflow-y: auto;
+      max-height: 100%;
+
+      &::-webkit-scrollbar {
         display: none;
+      }
     }
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 5px solid $color-green;
-        padding-bottom: 10px;
-        margin-top: -15px;
+  }
+
+  &__detailsClose, .close {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    right: 20px;
+    cursor: pointer;
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      background-color: #CBD1D2;
     }
-    &__next {
-        background: transparent url('@theme_image_path@/icons/ico-angle-circle-right.svg') center center no-repeat;
-        background-size: 100%;
-        margin-right: 15px;
+
+    &:after {
+      transform: rotate(-45deg);
     }
-    &__prev {
-        background: transparent url('@theme_image_path@/icons/ico-angle-circle-left.svg') center center no-repeat;
-        background-size: 100%;
-        margin-left: 15px;
+
+    &:before {
+      transform: rotate(45deg);
     }
-    &__mes {
-        text-align: center;
-        .i-mainWrapper & {
-            font-size: 1.5rem;
-            line-height: 1.15;
-        }
+  }
+
+  &__event {
+    position: relative;
+    width: 50%;
+    padding: 1em;
+    background: #6691CC;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    color: white;
+    margin: 0 auto 1rem;
+    cursor: pointer;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 5px solid $color-green;
+    padding-bottom: 10px;
+    margin-top: -15px;
+  }
+
+  &__next {
+    background: transparent url('@theme_image_path@/icons/ico-angle-circle-right.svg') center center no-repeat;
+    background-size: 100%;
+    margin-right: 15px;
+  }
+
+  &__prev {
+    background: transparent url('@theme_image_path@/icons/ico-angle-circle-left.svg') center center no-repeat;
+    background-size: 100%;
+    margin-left: 15px;
+  }
+
+  &__mes {
+    text-align: center;
+
+    .i-mainWrapper & {
+      font-size: 1.5rem;
+      line-height: 1.15;
     }
-    &__year {
-        font-weight: 400;
-        font-size: .875rem;
-        color: $color-grey;
+  }
+
+  &__year {
+    font-weight: 400;
+    font-size: .875rem;
+    color: $color-grey;
+  }
+
+  table {
+    width: 100%;
+    text-align: center;
+    border-bottom: 3px solid $color-green;
+  }
+
+  thead {
+    border-bottom: 1px solid $color-light-grey;
+  }
+
+  .day,
+  th {
+    padding: .469rem;
+  }
+
+  th {
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .day {
+    cursor: pointer;
+    position: relative;
+
+    &.has-event {
+      background: #6691CC;
+      border-right: 2px solid $white;
     }
-    table {
-        width: 100%;
-        text-align: center;
-        border-bottom: 3px solid $color-green;
+
+    &.disabled {
+      cursor: default;
     }
-    thead {
-        border-bottom: 1px solid $color-light-grey;
+
+    &.wrong-month {
+      background-color: rgba($color-light-grey, .25);
+      color: $color-icon-grey;
     }
-    .day,
-    th {
-        padding: .469rem;
+
+    &.today {
+      background-color: rgba($color-light-blue, .25);
     }
-    th {
-        font-weight: 700;
-        text-align: center;
+  }
+
+  &__check {
+    margin: 15px 40px;
+    width: max-content;
+    display: flex;
+
+    #checkMisCursos {
+      margin-right: 10px;
     }
-    .day {
-        &.wrong-month {
-            background-color: rgba($color-light-grey, .25);
-            color: $color-icon-grey;
-        }
-        &.today {
-            background-color: rgba($color-light-blue, .25);
-        }
-    }
+  }
 }
