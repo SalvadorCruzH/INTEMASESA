@@ -193,5 +193,18 @@
         "comment": "Plantilla para las formaciones externas de interés.",
         "uuid": "ce0ed3aa-7528-47cf-f328-cd107b7c0013",
         "structureUuid": "19c3f49d-ab0c-6ed1-9719-0b83eee805c9"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Enlace de interés",
+        "templateKey": "EMA-ENLACES-INTERES",
+        "structureKey": "EMA-ENLACES-DE-INTERES",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateFile": "enlace-de-interes.ftl",
+        "cacheable": true,
+        "comment": "Plantilla para los enlaces de interés.",
+        "uuid": "61cf13f4-a9e0-1ac0-f2e5-ba5715f26951",
+        "structureUuid": "4f84deb1-9b87-cab0-e58a-b70c28e7171a"
     }
 ]
