@@ -22,6 +22,8 @@ import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
+import es.emasesa.intranet.sap.calendarioeventos.exception.CalendarioEventosException;
+import es.emasesa.intranet.sap.calendarioeventos.service.CalendarioEventosService;
 import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.empleadoBanco.exception.EmpleadoBancoException;
@@ -575,6 +577,18 @@ public class SapServicesUtil {
         return datosNecesidadesFormacion;
     }
 
+    public JSONObject getCalendarioEventos() throws CalendarioEventosException, SapCommunicationException {
+            JSONObject calendarioEventos = JSONFactoryUtil.createJSONObject();
+        try {
+            calendarioEventos = _calendarioEventosService.getCalendarioEventos();
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getCalendarioEventos " + calendarioEventos);
+            }
+        }
+        return calendarioEventos;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -593,7 +607,7 @@ public class SapServicesUtil {
             CustomServiceTracker<RelacionLaboralService> relacionLaboralServiceTracker = new CustomServiceTracker<>(RelacionLaboralService.class, "getRelacionLaboralService");
             CustomServiceTracker<EmpleadoBancoService> empleadoBancoServiceTracker = new CustomServiceTracker<>(EmpleadoBancoService.class, "getEmpleadoBancoService");
             CustomServiceTracker<NecesidadesFormacionService> necesidadesFormacionServiceTracker = new CustomServiceTracker<>(NecesidadesFormacionService.class, "getNecesidadesFormacionService");
-
+            CustomServiceTracker<CalendarioEventosService> calendarioEventosServiceTracker = new CustomServiceTracker<>(CalendarioEventosService.class, "getCalendarioEventosService");
 
             this._customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
@@ -610,6 +624,7 @@ public class SapServicesUtil {
             this._relacionLaboralService = relacionLaboralServiceTracker.getService();
             this._empleadoBancoService = empleadoBancoServiceTracker.getService();
             this._necesidadesFormacionService = necesidadesFormacionServiceTracker.getService();
+            this._calendarioEventosService = calendarioEventosServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -662,6 +677,7 @@ public class SapServicesUtil {
     private RelacionLaboralService _relacionLaboralService;
 
     private NecesidadesFormacionService _necesidadesFormacionService;
+    private CalendarioEventosService _calendarioEventosService;
     private CustomExpandoUtil _customExpandoUtil;
     @Reference
     private ExpandoValueLocalService _expandoValueLocalService;
