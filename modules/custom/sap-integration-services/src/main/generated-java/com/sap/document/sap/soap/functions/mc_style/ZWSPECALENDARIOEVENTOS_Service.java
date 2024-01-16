@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_CALENDARIO_EVENTOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/Users/stejeros/Developer/source/emasesa/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_calendario_eventos.wsdl")
+@WebServiceClient(name = "Z_WS_PE_CALENDARIO_EVENTOS", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_calendario_eventos.wsdl")
 public class ZWSPECALENDARIOEVENTOS_Service
     extends Service
 {
