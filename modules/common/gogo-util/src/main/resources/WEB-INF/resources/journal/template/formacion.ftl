@@ -66,27 +66,28 @@
             <h4 class="ema-formacion__item__data-title">URL Oficial o enlaces de interés</h4>
             <#list formacionEnlaces.getSiblings() as cur_formacionEnlaces>
                 <div class="ema-formacion__item__enlace">
-                    <#if (formacionEnlaces.formacionURLTitle.getData())??>
+                    <#if (cur_formacionEnlaces.formacionURLTitle.getData())??>
                         <div class="ema-formacion__item__enlace__title">
-                            <a href="formacionEnlaces.formacionURL.getData()" title="${formacionEnlaces.formacionURLTitle.getData()}">${formacionEnlaces.formacionURLTitle.getData()}</a>
+                            <a href="cur_formacionEnlaces.formacionURL.getData()" title="${cur_formacionEnlaces.formacionURLTitle.getData()}">${cur_formacionEnlaces.formacionURLTitle.getData()}</a>
                         </div>
                     </#if>
-                    <#--  <#if (formacionEnlaces.formacionURL.getData())??>
-                        <div class="ema-formacion__item__enlace__url">
-                            ${formacionEnlaces.formacionURL.getData()}
-                        </div>
-                    </#if>  -->
                 </div>
             </#list>
         </div>
     </#if>
 
-    <div class="ema-formacion__item__documentos">
-        <h4 class="ema-formacion__item__data-title">Documentación</h4>
-        <a href="${formacionDocumentos.getData()}">
-            ${languageUtil.format(locale, "download-x", "Documentos", false)}
-        </a>
-    </div>
+    <#if formacionDocumentos.getSiblings()?has_content>
+        <div class="ema-formacion__item__documentos">
+            <h4 class="ema-formacion__item__data-title">Documentación</h4>
+            <ul class="ema-formacion__item__documentos__list">
+                <#list formacionDocumentos.getSiblings() as cur_formacionDocumentos>
+                    <#assign docSplit = cur_formacionDocumentos.getData()?split("/") />
+                    <li class="ema-formacion__item__documentos__item">
+                        <a href="${cur_formacionDocumentos.getData()}" class="ema-formacion__item__documentos__link" title="Descarga el documento" target="_blank">${docSplit[4]}</a>
+                    </li>
+                </#list>
+            </ul>
+        </div>
+    </#if>
 
-    <#--  ${friendlyURL}  -->
 </div>
