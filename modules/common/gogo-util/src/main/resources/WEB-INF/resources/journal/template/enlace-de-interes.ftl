@@ -4,8 +4,13 @@
 <#else>
     <div class="ema-links__link" style="background-image: url('${images_folder}/logos/imagen-generica.png')">
 </#if>
-    <a href="${linkURL.getData()}" title="Ir a ${linkTitle.getData()}" class="btn btn-primary ema-links__link__btn" target="_blank">Saber más</a></p>
-    <div class="ema-links__link__data">
+    <a href="${linkURL.getData()}" title="Ir a ${linkTitle.getData()}" class="btn btn-primary ema-links__link__btn" target="_blank">Saber más</a>
+
+    <#if (linkDescription.getData())?? && linkDescription.getData() != "">
+        <div class="ema-links__link__data">
+    <#else>
+        <div class="ema-links__link__data ema-links__link__data--no-description">
+    </#if>
         <#if (linkTitle.getData())??>
             <header class="ema-links__link__header">
                 <h3 class="ema-links__link__title">
@@ -13,10 +18,11 @@
                 </h3>
             </header>
         </#if>
-        <#if (linkDescription.getData())??>
+        <#if (linkDescription.getData())?? && linkDescription.getData() != "">
             <div class="ema-links__link__description">
                 <p>${linkDescription.getData()}</p>
             </div>
         </#if>
     </div>
+
 </div>

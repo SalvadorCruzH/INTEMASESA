@@ -39,6 +39,10 @@
             margin: 0 -30px -30px;
             padding: 25px 30px;
             transition: bottom .3s ease;
+            &--no-description {
+                bottom: 0px;
+                padding-bottom: 29px;
+            }
         }
         &__title {
             .i-mainWrapper & {
