@@ -38,7 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @org.springframework.stereotype.Component("calendarioEventosService")
 public class CalendarioEventosService {
 
-    public JSONObject getCalendarioEventos() throws CalendarioEventosException, SapCommunicationException {
+    public JSONObject getCalendarioEventos(String pernr, String fechaDesde, String fechaHasta) throws CalendarioEventosException, SapCommunicationException {
         LoggerUtil.debug(LOG, "[I] calendarioEventos");
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -49,7 +49,7 @@ public class CalendarioEventosService {
             Holder<TableOfZpeStCalendarioEventos> tCalendarioEventos = new Holder<>();
             Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos2 = new Holder<>();
 
-            port.zPeCalendarioEventos(tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
+            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
 
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
             if (tConteniObjetiEventos.value != null){

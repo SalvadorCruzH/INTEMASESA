@@ -26,6 +26,9 @@ public interface ZWSPECALENDARIOEVENTOS {
     /**
      * 
      * @param tContenido
+     * @param fechaHasta
+     * @param fechaDesde
+     * @param idEmpleado
      * @param tObjetivo
      * @param tEventos
      */
@@ -33,6 +36,12 @@ public interface ZWSPECALENDARIOEVENTOS {
     @RequestWrapper(localName = "ZPeCalendarioEventos", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeCalendarioEventos")
     @ResponseWrapper(localName = "ZPeCalendarioEventosResponse", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeCalendarioEventosResponse")
     public void zPeCalendarioEventos(
+        @WebParam(name = "FechaDesde", targetNamespace = "")
+        String fechaDesde,
+        @WebParam(name = "FechaHasta", targetNamespace = "")
+        String fechaHasta,
+        @WebParam(name = "IdEmpleado", targetNamespace = "")
+        String idEmpleado,
         @WebParam(name = "TContenido", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<TableOfZpeStConteniObjetiEventos> tContenido,
         @WebParam(name = "TEventos", targetNamespace = "", mode = WebParam.Mode.OUT)

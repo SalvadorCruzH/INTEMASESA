@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -202,8 +202,87 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsdl:types>
+        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
+                    xmlns:n0="urn:sap-com:document:sap:rfc:functions">
+            <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
+            <xsd:simpleType name="char1">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="1"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="char16">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="16"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="date10">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="10"/>
+                    <xsd:pattern value="\d\d\d\d-\d\d-\d\d"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="numeric8">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="8"/>
+                    <xsd:pattern value="\d*"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="ZpeStConteniObjetiEventos">
+                <xsd:sequence>
+                    <xsd:element name="EventoId" type="n0:numeric8"/>
+                    <xsd:element name="TipoLiteral" type="n0:char1"/>
+                    <xsd:element name="Tabseqnr" type="n0:numeric6"/>
+                    <xsd:element name="Literal" type="n0:char132"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ZpeStCalendarioEventos">
+                <xsd:sequence>
+                    <xsd:element name="EventoId" type="n0:numeric8"/>
+                    <xsd:element name="EventoShort" type="n0:char12"/>
+                    <xsd:element name="Begda" type="n0:date10"/>
+                    <xsd:element name="Endda" type="n0:date10"/>
+                    <xsd:element name="Duracion" type="n0:decimal8.2"/>
+                    <xsd:element name="EventoDesc" type="n0:char255"/>
+                    <xsd:element name="Sede" type="n0:char40"/>
+                    <xsd:element name="Modalidad" type="tns:char16"/>
+                    <xsd:element name="Convocatoria" type="tns:char16"/>
+                    <xsd:element name="Ofertado" type="tns:char1"/>
+                    <xsd:element name="AsisteElEmpleado" type="tns:char1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStConteniObjetiEventos">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStConteniObjetiEventos" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStCalendarioEventos">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStCalendarioEventos" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ZPeCalendarioEventos">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="FechaDesde" type="tns:date10"/>
+                        <xsd:element name="FechaHasta" type="tns:date10"/>
+                        <xsd:element name="IdEmpleado" type="tns:numeric8" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ZPeCalendarioEventosResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="TContenido" type="tns:TableOfZpeStConteniObjetiEventos"/>
+                        <xsd:element name="TEventos" type="tns:TableOfZpeStCalendarioEventos"/>
+                        <xsd:element name="TObjetivo" type="tns:TableOfZpeStConteniObjetiEventos"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
         <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions"
-                    xmlns:tns="urn:sap-com:document:sap:rfc:functions">
+                    xmlns:tns="urn:sap-com:document:sap:rfc:functions"
+                    xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style">
+            <xsd:import namespace="urn:sap-com:document:sap:soap:functions:mc-style"/>
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="1"/>
@@ -253,53 +332,6 @@
                     <xsd:pattern value="\d*"/>
                 </xsd:restriction>
             </xsd:simpleType>
-        </xsd:schema>
-        <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style"
-                    xmlns:n0="urn:sap-com:document:sap:rfc:functions">
-            <xsd:import namespace="urn:sap-com:document:sap:rfc:functions"/>
-            <xsd:complexType name="ZpeStConteniObjetiEventos">
-                <xsd:sequence>
-                    <xsd:element name="EventoId" type="n0:numeric8"/>
-                    <xsd:element name="TipoLiteral" type="n0:char1"/>
-                    <xsd:element name="Tabseqnr" type="n0:numeric6"/>
-                    <xsd:element name="Literal" type="n0:char132"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="ZpeStCalendarioEventos">
-                <xsd:sequence>
-                    <xsd:element name="EventoId" type="n0:numeric8"/>
-                    <xsd:element name="EventoShort" type="n0:char12"/>
-                    <xsd:element name="Begda" type="n0:date10"/>
-                    <xsd:element name="Endda" type="n0:date10"/>
-                    <xsd:element name="Duracion" type="n0:decimal8.2"/>
-                    <xsd:element name="EventoDesc" type="n0:char255"/>
-                    <xsd:element name="Sede" type="n0:char40"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStConteniObjetiEventos">
-                <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStConteniObjetiEventos" minOccurs="0" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStCalendarioEventos">
-                <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStCalendarioEventos" minOccurs="0" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:complexType>
-            <xsd:element name="ZPeCalendarioEventos">
-                <xsd:complexType>
-                    <xsd:sequence/>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ZPeCalendarioEventosResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="TContenido" type="tns:TableOfZpeStConteniObjetiEventos"/>
-                        <xsd:element name="TEventos" type="tns:TableOfZpeStCalendarioEventos"/>
-                        <xsd:element name="TObjetivo" type="tns:TableOfZpeStConteniObjetiEventos"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="ZPeCalendarioEventos">
@@ -357,11 +389,11 @@
     <wsdl:service name="Z_WS_PE_CALENDARIO_EVENTOS">
         <wsdl:port name="Z_WS_PE_CALENDARIO_EVENTOS" binding="tns:Z_WS_PE_CALENDARIO_EVENTOS">
             <soap:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_calendario_eventos/010/z_ws_pe_calendario_eventos/z_ws_pe_calendario_eventos"/>
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_calendario_eventos/010/z_ws_pe_calendario_eventos/z_ws_pe_calendario_eventos"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_CALENDARIO_EVENTOS_soap12" binding="tns:Z_WS_PE_CALENDARIO_EVENTOS_soap12">
             <wsoap12:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_calendario_eventos/010/z_ws_pe_calendario_eventos/z_ws_pe_calendario_eventos"/>
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_calendario_eventos/010/z_ws_pe_calendario_eventos/z_ws_pe_calendario_eventos"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
