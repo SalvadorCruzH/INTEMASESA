@@ -577,7 +577,7 @@ public class SapServicesUtil {
         return datosNecesidadesFormacion;
     }
 
-    public JSONObject getCalendarioEventos() throws CalendarioEventosException, SapCommunicationException {
+    public JSONObject getCalendarioEventos(String pernr, String fechaDesde, String fechaHasta) throws CalendarioEventosException, SapCommunicationException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getCalendarioEventos ");
         }
@@ -586,7 +586,7 @@ public class SapServicesUtil {
             if (_calendarioEventosService == null) {
                 activate(null);
             }
-            calendarioEventos = _calendarioEventosService.getCalendarioEventos();
+            calendarioEventos = _calendarioEventosService.getCalendarioEventos(pernr, fechaDesde, fechaHasta);
         } finally {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getCalendarioEventos " + calendarioEventos);

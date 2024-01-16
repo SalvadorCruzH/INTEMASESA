@@ -25,6 +25,10 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="Duracion" type="{urn:sap-com:document:sap:rfc:functions}decimal8.2"/&gt;
  *         &lt;element name="EventoDesc" type="{urn:sap-com:document:sap:rfc:functions}char255"/&gt;
  *         &lt;element name="Sede" type="{urn:sap-com:document:sap:rfc:functions}char40"/&gt;
+ *         &lt;element name="Modalidad" type="{urn:sap-com:document:sap:soap:functions:mc-style}char16"/&gt;
+ *         &lt;element name="Convocatoria" type="{urn:sap-com:document:sap:soap:functions:mc-style}char16"/&gt;
+ *         &lt;element name="Ofertado" type="{urn:sap-com:document:sap:soap:functions:mc-style}char1"/&gt;
+ *         &lt;element name="AsisteElEmpleado" type="{urn:sap-com:document:sap:soap:functions:mc-style}char1"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -41,7 +45,11 @@ import jakarta.xml.bind.annotation.XmlType;
     "endda",
     "duracion",
     "eventoDesc",
-    "sede"
+    "sede",
+    "modalidad",
+    "convocatoria",
+    "ofertado",
+    "asisteElEmpleado"
 })
 public class ZpeStCalendarioEventos {
 
@@ -59,6 +67,14 @@ public class ZpeStCalendarioEventos {
     protected String eventoDesc;
     @XmlElement(name = "Sede", required = true)
     protected String sede;
+    @XmlElement(name = "Modalidad", required = true)
+    protected String modalidad;
+    @XmlElement(name = "Convocatoria", required = true)
+    protected String convocatoria;
+    @XmlElement(name = "Ofertado", required = true)
+    protected String ofertado;
+    @XmlElement(name = "AsisteElEmpleado", required = true)
+    protected String asisteElEmpleado;
 
     /**
      * Obtiene el valor de la propiedad eventoId.
@@ -226,6 +242,102 @@ public class ZpeStCalendarioEventos {
      */
     public void setSede(String value) {
         this.sede = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad modalidad.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    /**
+     * Define el valor de la propiedad modalidad.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setModalidad(String value) {
+        this.modalidad = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad convocatoria.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getConvocatoria() {
+        return convocatoria;
+    }
+
+    /**
+     * Define el valor de la propiedad convocatoria.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setConvocatoria(String value) {
+        this.convocatoria = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad ofertado.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOfertado() {
+        return ofertado;
+    }
+
+    /**
+     * Define el valor de la propiedad ofertado.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOfertado(String value) {
+        this.ofertado = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad asisteElEmpleado.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAsisteElEmpleado() {
+        return asisteElEmpleado;
+    }
+
+    /**
+     * Define el valor de la propiedad asisteElEmpleado.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAsisteElEmpleado(String value) {
+        this.asisteElEmpleado = value;
     }
 
 }
