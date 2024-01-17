@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.*;
 
 
 @Component (
@@ -57,7 +57,17 @@ public class UpdateUserScheduler implements MessageListener  {
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, employerData.getString("pernr", StringConstants.EMPTY));
 
-            user.getExpandoBridge().setAttributes(expandoAttributes, false);
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.add(Calendar.SECOND, 20);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    User user = _userLocalService.fetchUserByScreenName(companyId, pernr);
+                    user.getExpandoBridge().setAttributes(expandoAttributes, false);
+                }
+            }, cal.getTime());
+
             LOG.debug("Usuario user id "+jsonObject.get("pernr") +" actualizado");
         }else{
             LoggerUtil.debug(LOG, "El usuario no es numérico "+ pernr);
