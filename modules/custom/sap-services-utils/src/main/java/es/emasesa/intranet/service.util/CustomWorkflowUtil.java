@@ -257,7 +257,15 @@ public class CustomWorkflowUtil {
             }
             LOG.debug("Se procede a añdir plus...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-            pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+            switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")){
+                case "paraMi":
+                    pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+                    break;
+                case "pedirParaOtraPersona":
+                    pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("nmeroDeMatrculaAjena");
+                    break;
+            }
+            LOG.debug("obtenida matricula: " + pernr);
             String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
             ObjectMapper listadoParse = new ObjectMapper();
             JsonNode listado = listadoParse.readTree(listadoString);
