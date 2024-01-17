@@ -35,7 +35,7 @@
 		<nav class="i-header__userNav">
 			<ul class="i-header__userList">
 				<li class="i-header__userItem selected" class="i-header__userItem selected">
-					<a href="" class="i-header__userLink">
+					<a href="${site_default_url}" class="i-header__userLink">
 						<i class="i-icon i-icon--grey fa-solid fa-house"></i>
 						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.home'/></span>
 					</a>
@@ -43,10 +43,10 @@
 				<#assign userId = theme_display.getUser().userId>
 				<#assign customUserNotificationUtil = customUserNotificationUtil.getNotificationsByUserCount(userId) >
 				<li class="i-header__userItem">
-					<a href="" class="i-header__userLink">
+					<a href="${site_default_url}/inicio/notificaciones" class="i-header__userLink">
 						<i class="i-icon i-icon--grey fa-solid fa-bell"></i>
 						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.notifications'/></span>
-						${customUserNotificationUtil}
+						<span class="ema-notif">${customUserNotificationUtil}</span>
 					</a>
 				</li>
 				<li class="i-header__userItem">
@@ -68,7 +68,7 @@
 					</a>
 				</li>
 				<li class="i-header__userItem">
-					<a href="" class="i-header__userLink">
+					<a href="${site_default_url}/inicio/favoritos" class="i-header__userLink">
 						<i class="i-icon i-icon--grey fa-solid fa-heart"></i>
 						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.favorites'/></span>
 					</a>

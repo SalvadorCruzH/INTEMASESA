@@ -210,6 +210,25 @@
                 }
             }
         }
+        &__userLink {
+            position: relative;
+            .ema-notif {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 22.5px;
+                height: 22.5px;
+                border-radius: 14px;
+                background: $color-danger;
+                color: white;
+                font-size: .75rem;
+                font-weight: bold;
+                position: absolute;
+                top: -15px;
+                right: -10px;
+                box-shadow: 0 0 5px 5px rgba($color-black,.15);
+            }
+        }
     }
 
     /* mobile navigation */
