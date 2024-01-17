@@ -4,6 +4,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.DateUtil;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -95,6 +97,15 @@ public class CustomDateUtil {
         calendar.setTime(fecha);
         return calendar.get(Calendar.DAY_OF_MONTH);
 
+    }
+
+    public String getDateNextMonth(){
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate primerDiaDelMesSiguiente = fechaActual.plusMonths(1).withDayOfMonth(1);
+        LocalDate ultimoDiaDelMesSiguiente = primerDiaDelMesSiguiente.plusMonths(1).minusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return ultimoDiaDelMesSiguiente.format(formatter);
     }
 
     private static final Log _log = LoggerUtil.getLog(CustomDateUtil.class);

@@ -25,14 +25,6 @@ a[class*="ema-calendario__"] {
   }
 
   &__contenedor-evento {
-   /* display: none;
-    border-top: 1px solid #eee;
-    width: 50%;
-    text-align: center;
-    justify-content: center;
-    margin: auto;
-    flex-direction: column;
-    position: relative;*/
     display: none;
     position: absolute;
     top: 0;
@@ -46,33 +38,6 @@ a[class*="ema-calendario__"] {
     #btn-register {
       padding: 0.40rem 1.2rem;
     }
-
-    /*.close {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-
-      &:before, &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 2px;
-        height: 100%;
-        background-color: #CBD1D2;
-      }
-
-      &:after {
-        transform: rotate(-45deg);
-      }
-
-      &:before {
-        transform: rotate(45deg);
-      }
-    }*/
 
     .event-wrapper {
       overflow-y: auto;
@@ -122,6 +87,10 @@ a[class*="ema-calendario__"] {
     text-align: center;
     color: white;
     margin: 0 auto 1rem;
+  }
+
+  &__titleEvent {
+    padding-top: 0.75rem;
     cursor: pointer;
   }
 
@@ -208,7 +177,7 @@ a[class*="ema-calendario__"] {
     width: max-content;
     display: flex;
 
-    #checkMisCursos {
+    #checkMisCursos, #checkMisCursosCheck {
       margin-right: 10px;
     }
   }
