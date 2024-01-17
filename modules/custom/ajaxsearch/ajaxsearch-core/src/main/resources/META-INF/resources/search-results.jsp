@@ -39,7 +39,6 @@
 
         var _setCurrentPage = function(numPage){
             $("#asCurrentPage").val(numPage)
-            $('html, body').animate({scrollTop:$(".m-searchAjax--results").offset().top}, 500);
 
             var options = $(".results-pagination-select-container .results-pagination-select option");
             for (var i = 0; i < options.length; i++) {
