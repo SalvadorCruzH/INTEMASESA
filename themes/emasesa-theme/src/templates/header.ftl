@@ -40,10 +40,13 @@
 						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.home'/></span>
 					</a>
 				</li>
+				<#assign userId = theme_display.getUser().userId>
+				<#assign customUserNotificationUtil = customUserNotificationUtil.getNotificationsByUserCount(userId) >
 				<li class="i-header__userItem">
 					<a href="" class="i-header__userLink">
 						<i class="i-icon i-icon--grey fa-solid fa-bell"></i>
 						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.notifications'/></span>
+						${customUserNotificationUtil}
 					</a>
 				</li>
 				<li class="i-header__userItem">
