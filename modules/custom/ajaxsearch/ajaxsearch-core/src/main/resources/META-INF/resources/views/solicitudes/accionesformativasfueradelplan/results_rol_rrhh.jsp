@@ -61,12 +61,12 @@
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
             <ul class="ema-desplegable-moreoptions">
-                <li>
-                    <button onclick="openEditDialog('#urlMarcarLeido#')">
-                        <i class="fa-solid fa-check"></i>
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.markRead" />
-                    </button>
-                </li>
+                    <li class="#isHidden#">
+                        <button href="#marcarLeido" class="markReadButton" data-solicitudId="#objectEntryId#">
+                            <i class="fa-solid fa-check"></i>
+                            <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.markRead" />
+                        </button>
+                    </li>
                 <li>
                     <button onclick="openEditDialog('#urlEditar#')">
                         <i class="fa-solid fa-edit"></i>
@@ -200,6 +200,43 @@ const objectEntryId = $(this).data("solicitudid");
         })
         .then(data => {
             $(this).closest("tr").remove();
+            Liferay.Util.openToast({
+                type: 'success',
+                title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.success.title'/>',
+                message: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.success.message'/>'
+            });
+        })
+        .catch(error => {
+            Liferay.Util.openToast({
+                type: 'danger',
+                title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.title'/>',
+                message: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.message'/>'
+            });
+        });
+});
+
+$(document).on('click', '.markReadButton', function(){
+    const objectEntryId = $(this).data("solicitudid");
+    const url = `/o/object-entry-util/mark-read/` + objectEntryId;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+                Liferay.Util.openToast({
+                    type: 'danger',
+                    title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.title'/>',
+                    message: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.error.message'/>'
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
             Liferay.Util.openToast({
                 type: 'success',
                 title: '<liferay-ui:message key='es.emasesa.intranet.ajaxsearch.messages.success.title'/>',

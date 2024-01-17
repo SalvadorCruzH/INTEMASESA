@@ -1,18 +1,22 @@
 package es.emasesa.intranet.jaxrs.util;
 
 
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
+import es.emasesa.intranet.base.constant.EmasesaConstants;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.jaxrs.constant.JaxrsConstants;
 import es.emasesa.intranet.webservices.jaxrs.beans.ResponseData;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +24,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.io.Serializable;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 @ApplicationPath("/object-entry-util")
@@ -50,7 +56,7 @@ public class ObjectEntryUtil extends Application {
 
         try {
             ObjectEntryLocalServiceUtil.deleteObjectEntry(objectEntryId);
-            json.put("isRemoved", Boolean.TRUE);
+            json.put(JaxrsConstants.IS_REMOVE, Boolean.TRUE);
             builder = Response.ok(new ResponseData(
                     false,
                     json.toString(),
@@ -58,7 +64,7 @@ public class ObjectEntryUtil extends Application {
                     null));
         } catch (PortalException e) {
             LoggerUtil.error(LOG, e);
-            json.put("isRemoved", Boolean.FALSE);
+            json.put(JaxrsConstants.IS_REMOVE, Boolean.FALSE);
             builder = Response.ok(new ResponseData(
                     true,
                     json.toString(),
@@ -69,18 +75,26 @@ public class ObjectEntryUtil extends Application {
         return builder.build();
     }
 
-    /*@GET
-    @Path("/change-status/{objectEntryId}")
+    @GET
+    @Path("/mark-read/{objectEntryId}")
     @Produces(ContentTypes.APPLICATION_JSON)
-    public Response changeStatusObjectEntry(
+    public Response markReadObjectEntry(
             @PathParam("objectEntryId") long objectEntryId,
             @Context HttpServletRequest request) {
         Response.ResponseBuilder builder;
         JSONObject json = JSONFactoryUtil.createJSONObject();
 
         try {
-           // ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntryId);
-            json.put("isRemoved", Boolean.TRUE);
+            ObjectEntry objectentry = _objectEntryLocalService.getObjectEntry(objectEntryId);
+            Map<String, Serializable> map = objectentry.getValues();
+            map.put(EmasesaConstants.EMASESA_OBJECT_STATUS, JaxrsConstants.STATUS_READ);
+
+            ServiceContext serviceContext = new ServiceContext();
+            _objectEntryLocalService.updateObjectEntry(
+                    objectentry.getUserId(), objectentry.getObjectEntryId(), map,
+                    serviceContext);
+
+            json.put(JaxrsConstants.IS_MARK_READ, Boolean.TRUE);
             builder = Response.ok(new ResponseData(
                     false,
                     json.toString(),
@@ -88,7 +102,7 @@ public class ObjectEntryUtil extends Application {
                     null));
         } catch (PortalException e) {
             LoggerUtil.error(LOG, e);
-            json.put("isRemoved", Boolean.FALSE);
+            json.put(JaxrsConstants.IS_MARK_READ, Boolean.FALSE);
             builder = Response.ok(new ResponseData(
                     true,
                     json.toString(),
@@ -97,7 +111,14 @@ public class ObjectEntryUtil extends Application {
         }
 
         return builder.build();
-    }*/
+    }
+
+    @Reference
+    ObjectEntryLocalService _objectEntryLocalService;
+
+    @Reference
+    CustomWorkflowBaseUtil _customWorkflowBaseUtil;
 
     private static final Log LOG = LoggerUtil.getLog(ObjectEntryUtil.class);
+
 }

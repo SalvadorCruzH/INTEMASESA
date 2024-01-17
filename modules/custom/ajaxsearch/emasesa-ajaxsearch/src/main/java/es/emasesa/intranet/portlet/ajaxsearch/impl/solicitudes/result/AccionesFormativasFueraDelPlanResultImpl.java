@@ -317,6 +317,9 @@ public class AccionesFormativasFueraDelPlanResultImpl implements AjaxSearchResul
 
             String estadoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ESTADO_OBJETO, StringPool.BLANK).toString();
             if (!estadoObjeto.equals(StringPool.BLANK)) {
+                if (!estadoObjeto.equals("pendienteRRHH")){
+                    jsonObject.put(AjaxSearchPortletKeys.IS_HIDDEN, "hide");
+                }
                 jsonObject.put(AjaxSearchPortletKeys.ESTADO, LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));
                 switch (estadoObjeto) {
                     case "aceptada":

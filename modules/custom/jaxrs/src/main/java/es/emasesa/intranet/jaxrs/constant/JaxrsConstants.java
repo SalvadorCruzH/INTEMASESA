@@ -20,5 +20,9 @@ public class JaxrsConstants {
     public static final String REASON_INVALID = "invalid";
     public static final String REASON_EXPIRED = "expired";
 
+    public static final String IS_REMOVE = "isRemoved";
+    public static final String IS_MARK_READ = "isMarkRead";
+    public static final String STATUS_READ = "leido";
+
 
 }
