@@ -59,8 +59,8 @@ public class CustomWorkflowUtil {
             if (customExpandoUtil == null || empleadoEstructuraService == null){
                 activate(null);
             }
-
-            String matriculaActualUser  = customExpandoUtil.getDataValueByUser(userId, companyId, "matricula");
+            long userIdSolicitante = _objectEntryLocalService.getObjectEntry(GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK))).getUserId();
+            String matriculaActualUser  = customExpandoUtil.getDataValueByUser(userIdSolicitante, companyId, "matricula");
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matriculaActualUser);
@@ -77,6 +77,8 @@ public class CustomWorkflowUtil {
             }
         } catch (SapException e) {
             LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+matriculaSAPUser, e);
+        } catch (PortalException e) {
+            throw new RuntimeException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
