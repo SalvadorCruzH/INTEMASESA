@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>7bb1bf32-49f0-1875-dcf3-a60fdf4f1842</name>
-	<version>14</version>
+	<version>17</version>
 	<state>
-		<name>35e23d24-283f-4f8b-8419-08c071097df7</name>
+		<name>creaccion-solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-274,66],"transitions":{"3d40641c-f2f6-4c35-9a11-81e87db71fc8":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-275,
+						68
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -50,14 +59,14 @@ customWorkflowUtilTracker.close();]]>
 						envio de solicitud
 					</label>
 				</labels>
-				<name>3d40641c-f2f6-4c35-9a11-81e87db71fc8</name>
-				<target>1a93d5de-c85f-4f6a-a5ce-6b2ebbcf6c36</target>
+				<name>envio-solicitud</name>
+				<target>admin-RRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>648fa0be-540a-4f04-92ba-2b50277f34c7</name>
+		<name>fin-proceso-solicitud</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
@@ -135,7 +144,7 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<state>
-		<name>d1c3cf48-a0f4-4042-9a58-93db4248b6c0</name>
+		<name>Solicitud-rechazada</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
@@ -213,9 +222,18 @@ sigdServiceTracker.close();]]>
 		</labels>
 	</state>
 	<task>
-		<name>1a93d5de-c85f-4f6a-a5ce-6b2ebbcf6c36</name>
+		<name>admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[236,70],"transitions":{"dcba4593-32f3-494b-8ea5-fa67fbe83f4c":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						236.546875,
+						69.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -279,21 +297,21 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud y guardar en SIGD
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>18038393-0821-49c3-a0be-56c5715978fa</name>
-				<target>648fa0be-540a-4f04-92ba-2b50277f34c7</target>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
+				<target>fin-proceso-solicitud</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>dcba4593-32f3-494b-8ea5-fa67fbe83f4c</name>
-				<target>d1c3cf48-a0f4-4042-9a58-93db4248b6c0</target>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
+				<target>Solicitud-rechazada</target>
 				<default>false</default>
 			</transition>
 		</transitions>

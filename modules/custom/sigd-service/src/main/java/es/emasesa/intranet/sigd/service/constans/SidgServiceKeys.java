@@ -55,7 +55,7 @@ public class SidgServiceKeys {
 	public static final String FORM_JUBILADOS = "Jubilados";
 	public static final String FORM_FLEXIBILIDAD_HORARIA = "FlexibilidadHoraria";
 	public static final String FORM_REDUCCION_JORNADA = "ReduccionJornada";
-	public static final String FORM_LICENCIAS = "Licencias";
+	public static final String FORM_LICENCIAS = "LicenciaSinSueldo";
 	public static final String FORM_EXEDENCIAS = "Excedencias";
 	public static final String FORM_TURNOS = "Turnos";
 	public static final String FORM_ANTICIPOS_VACACIONES= "AnticiposVacaciones";
