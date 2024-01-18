@@ -12,7 +12,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "es.emasesa.intranet.settings.configuration.AyudaEscolarFormConfiguration",
+					"defaultValue": "_es.emasesa.intranet.settings.configuration.AyudaEscolarFormConfiguration",
 					"label": "pid",
 					"localizable": true,
 					"name": "pidValue",
