@@ -145,7 +145,11 @@ var openEditDialog = function (url) {
         id: 'EditInfoIntDialog',
         refreshWindow: window,
         title: 'Consultar',
-        uri: url
+        uri: url,
+        cssClass:'dialog-with-footer i-mainWrapper',
+        dialogIframe: {
+            bodyCssClass: 'dialog-with-footer i-mainWrapper'
+        }
     });
 }
 </script>

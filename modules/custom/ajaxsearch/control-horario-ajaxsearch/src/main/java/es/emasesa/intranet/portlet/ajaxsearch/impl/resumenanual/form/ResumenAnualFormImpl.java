@@ -2,6 +2,8 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.resumenanual.form;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -119,9 +121,22 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
                 LoggerUtil.debug(LOG, "[D] Consiguiendo subordinados del usuario mediante CACHE: " + user.getScreenName());
                 subordinadosPernrs = (JSONArray) subordinadosCache;
             } else {
-                LoggerUtil.debug(LOG, "[D] Consiguiendo subordinados del usuario mediante SAP: " + user.getScreenName());
-                subordinadosPernrs = _sapServicesUtil.getSubordinados(user, "T");
-                LoggerUtil.debug(LOG, "[D] Conseguidos subordinados del usuario mediante SAP: " + user.getScreenName());
+                String matriculaUser = StringPool.BLANK;
+                try {
+                    matriculaUser = _expandoValueLocalService.getData(
+                            themeDisplay.getCompanyId(),
+                            User.class.getName(),
+                            ExpandoTableConstants.DEFAULT_TABLE_NAME,
+                            "matricula",
+                            themeDisplay.getUser().getUserId(),
+                            StringPool.BLANK
+                    );
+                } catch (Exception e) {
+                    LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
+                }
+                LoggerUtil.debug(LOG, "[D] Consiguiendo subordinados del usuario mediante SAP: " + matriculaUser);
+                subordinadosPernrs = _sapServicesUtil.getSubordinados(matriculaUser, "T");
+                LoggerUtil.debug(LOG, "[D] Conseguidos subordinados del usuario mediante SAP: " + matriculaUser);
                 _cache.put(subordinadosCacheKey, subordinadosPernrs, 86400);
             }
 
@@ -170,4 +185,7 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
 
     @Reference
     RolesSettings _rolesSettings;
+
+    @Reference
+    ExpandoValueLocalService _expandoValueLocalService;
 }
