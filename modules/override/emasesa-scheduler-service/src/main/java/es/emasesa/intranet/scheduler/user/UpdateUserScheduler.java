@@ -57,16 +57,7 @@ public class UpdateUserScheduler implements MessageListener  {
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
             expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, employerData.getString("pernr", StringConstants.EMPTY));
 
-            Calendar cal = GregorianCalendar.getInstance();
-            cal.add(Calendar.SECOND, 20);
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    User user = _userLocalService.fetchUserByScreenName(companyId, pernr);
-                    user.getExpandoBridge().setAttributes(expandoAttributes, false);
-                }
-            }, cal.getTime());
+            user.getExpandoBridge().setAttributes(expandoAttributes, false);
 
             LOG.debug("Usuario user id "+jsonObject.get("pernr") +" actualizado");
         }else{

@@ -34,7 +34,11 @@ public class SubordinadosService {
     public JSONArray getSubordinados(String directorioTodos, String pernr) throws SubordinadosException, SapCommunicationException {
 
         LoggerUtil.debug(LOG, "[B] getSubordinados");
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPESUBORDINADOS.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStSubordinados serviceResult = port.zPeSubordinados(directorioTodos,pernr);
             List<ZpeStSubordinados> subordinados = serviceResult.getItem();
 
@@ -45,6 +49,7 @@ public class SubordinadosService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] getSubordinados");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
 

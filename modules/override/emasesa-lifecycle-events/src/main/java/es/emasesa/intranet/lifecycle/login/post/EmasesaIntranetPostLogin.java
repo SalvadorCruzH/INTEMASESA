@@ -12,13 +12,23 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import es.emasesa.intranet.base.constant.EmasesaConstants;
+import es.emasesa.intranet.base.constant.StringConstants;
 import es.emasesa.intranet.base.util.LoggerUtil;
+import es.emasesa.intranet.service.util.SapServicesUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+import java.util.Map;
 
 @Component(
         immediate = true,
@@ -42,16 +52,60 @@ public class EmasesaIntranetPostLogin extends Action {
             jsonObject.put("pernr", user.getScreenName());
             jsonObject.put("companyId", CompanyThreadLocal.getCompanyId());
 
-            Message message = new Message();
-            message.setPayload(jsonObject);
-            message.setDestinationName("emasesa/UpdateUser");
-            _messageBus.sendMessage("emasesa/UpdateUser", message);
+            updateUserSapIntegration(CompanyThreadLocal.getCompanyId(), user.getScreenName());
+
             LoggerUtil.debug(LOG, "Enviado mensaje para actualización para: " + user.getScreenName());
         } catch (PortalException e) {
             LoggerUtil.error(LOG, "Se ha producido un error recuperando el usuario en el login", e);
         }
     }
 
+    private void updateUserSapIntegration(long companyId, String screenName){
+
+        if(!Validator.isNumber(screenName) && !screenName.contains("admin") && !screenName.contains("asesor") && !screenName.contains("jefe")) {
+
+            LoggerUtil.debug(LOG, "Se procede a actualizar el usuario con user id " + screenName);
+            JSONObject employerData = _sapServices.getDatosEmpleadoAndDomicilio(screenName);
+            LoggerUtil.debug(LOG, "Datos de empleado :" + employerData);
+            User user = _userLocalService.fetchUserByScreenName(companyId, screenName);
+            PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+            if ((permissionChecker == null) || (permissionChecker.getUserId() != user.getUserId())) {
+                permissionChecker = PermissionCheckerFactoryUtil.create(user);
+                PermissionThreadLocal.setPermissionChecker(permissionChecker);
+            }
+
+            Map<String, Serializable> expandoAttributes = user.getExpandoBridge().getAttributes();
+
+            JSONObject addressData = employerData.getJSONObject("datosDomicilio");
+            String domicilio = addressData.getString("claseDesc", StringConstants.EMPTY) + " " +
+                    addressData.getString("calle", StringConstants.EMPTY) + " " +
+                    addressData.getString("numero", StringConstants.EMPTY) + " " +
+                    addressData.getString("pisoLetra", StringConstants.EMPTY);
+
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NIF, employerData.getString("nifE", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_DOMICILIO, domicilio);
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_LOCALIDAD, addressData.getString("poblacion", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_PROVINCIA, addressData.getString("provinciaDesc", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_TELEFONO, addressData.getString("telefono", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_APELLIDO1, employerData.getString("apellido1", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_APELLIDO2, employerData.getString("apellido2", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_USUARIO, employerData.getString("usuario", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NOMBRE, employerData.getString("nombre", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
+            expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, employerData.getString("pernr", StringConstants.EMPTY));
+
+            user.getExpandoBridge().setAttributes(expandoAttributes, false);
+
+            LOG.debug("Usuario user id "+screenName +" actualizado");
+        }else{
+            LoggerUtil.debug(LOG, "El usuario no es numérico "+ screenName);
+        }
+    }
+
+    @Reference
+    private SapServicesUtil _sapServices;
+    @Reference
+    private UserLocalService _userLocalService;
     @Reference
     protected Portal _portal;
     @Reference

@@ -2,4 +2,5 @@ dependencies {
 	compileOnly "com.liferay.portal:release.dxp.api"
 	compileOnly project(":modules:common:base-module")
 	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.1'
+	compileOnly project(":modules:custom:sap-services-utils")
 }

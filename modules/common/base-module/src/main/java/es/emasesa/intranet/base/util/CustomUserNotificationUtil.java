@@ -25,7 +25,7 @@ public class CustomUserNotificationUtil {
     }
 	
 	public int getNotificationsByUserCount(long userId){
-		LoggerUtil.debug(LOG,"Obteniendo el número de notificaciones de un usuario: " + userId);
+		LoggerUtil.debug(LOG,"Obteniendo el numero de notificaciones de un usuario: " + userId);
         return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId, false);
     }
 
