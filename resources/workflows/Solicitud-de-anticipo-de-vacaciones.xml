@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>87ca54ba-9b30-1ea0-6b34-71ff5d0364d3</name>
-	<version>40</version>
+	<version>50</version>
 	<condition>
 		<name>d292d2f5-9289-46fb-a8b6-16e2a568636e</name>
 		<description>Ejecute una lógica condicional.</description>
-		<metadata><![CDATA[{"xy":[280,180],"transitions":{"existen vacaciones":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						280,
+						180
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -39,20 +48,26 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
 
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.LogFactoryUtil
+
+import java.text.SimpleDateFormat;
 
 Log log = LogFactoryUtil.getLog("es.emasesa.groovy.anticipoVacaciones")
 Bundle bundle = FrameworkUtil.getBundle(SapServicesUtil.class)
 ServiceTracker customSapServiceUtilTracker = new ServiceTracker(bundle.getBundleContext(), SapServicesUtil.class, null)
-def userScreenName = "", matricula = ""
+def matricula = ""
 
 try {
     def user = UserLocalServiceUtil.getUserById(userId)
-    def expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(user.getCompanyId(), user.getModelClassName(), userId)
-    matricula = expandoBridge.getAttribute("matricula")
+    Bundle bundleExpandoUtil = FrameworkUtil.getBundle(CustomExpandoUtil.class)
+    ServiceTracker customExpandoUtilTracker = new ServiceTracker(bundleExpandoUtil.getBundleContext(), CustomExpandoUtil.class, null)
+    customExpandoUtilTracker.open()
+    CustomExpandoUtil customExpandoUtil= customExpandoUtilTracker.getService()
+    matricula= customExpandoUtil.getDataValueByUser(userId, user.getCompanyId(), "matricula" )
+    customExpandoUtilTracker.close()
     LoggerUtil.debug(log, "matricula: " + matricula)
 } catch (Exception e) {
     LoggerUtil.error(log, "No se ha encontrado usuario con matricula: " + matricula)
@@ -60,9 +75,12 @@ try {
 returnValue = "existen vacaciones"
 def fechaComienzoVacaciones = ObjectEntryLocalServiceUtil.getObjectEntry(entryClassPK.toLong()).getValues().get("fechaComienzoVacaciones")
 
+def formato = new SimpleDateFormat("yyyy-MM-dd")
+def fechaComienzoVacacionesFormateada = formato.format(fechaComienzoVacaciones)
+println ("fechaComienzoVacacionesFormateada: " + fechaComienzoVacacionesFormateada)
 customSapServiceUtilTracker.open()
 SapServicesUtil customSapServiceUtil = customSapServiceUtilTracker.getService()
-JSONArray jsonArray = customSapServiceUtil.getempleadoPrestamos(matricula, fechaComienzoVacaciones)
+JSONArray jsonArray = customSapServiceUtil.getEmpleadoPrestamos(matricula, fechaComienzoVacacionesFormateada)
 customSapServiceUtilTracker.close()
 
 LoggerUtil.debug(log, "Resultado de la llamada: " + jsonArray.toString())
@@ -74,7 +92,7 @@ if (jsonArray.length() > 0){
 
     if (fechaFin.equals("0000-00-00") && fechaInicio.equals("0000-00-00")){
         LoggerUtil.debug(log, "La llamada ha devuelto fechas no validas")
-       returnValue = "no existen vacaciones"
+        returnValue = "no existen vacaciones"
         return
     }
 } else {
@@ -109,7 +127,16 @@ if (jsonArray.length() > 0){
 	<condition>
 		<name>1bc97986-ba14-46fd-8690-509815aaee4c</name>
 		<description>Ejecute una lógica condicional.</description>
-		<metadata><![CDATA[{"xy":[612,174],"transitions":{"existe otro anticipo":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						612,
+						174
+					]
+				}
+			]]>
+		</metadata>
 		<labels>
 			<label language-id="es_ES">
 				Validacion otro anticipo en curso
@@ -161,7 +188,16 @@ if (existsOther) returnValue = "existe otro anticipo"]]>
 	<state>
 		<name>773483cc-a7ad-4a49-b6a9-a0872315d24d</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-120,177],"transitions":{"8fa810bf-c22c-4893-9edc-9ee5e659a586":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-120,
+						177
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -538,7 +574,16 @@ sigdServiceTracker.close();
 	<task>
 		<name>envio-rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[970,168],"transitions":{"d1d05cc0-b359-4bfd-9325-02d9e870f9e5":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						970,
+						168
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -599,20 +644,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobada
+						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>fec2de4a-d4a1-4ab9-bc46-2e5c6b0f73da</name>
+				<name>Aprobar Solicitud</name>
 				<target>daa0f5db-6aaa-49b1-bb5f-4415c1c045a1</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						No Aprobada
+						Rechazar Solicitud
 					</label>
 				</labels>
-				<name>d1d05cc0-b359-4bfd-9325-02d9e870f9e5</name>
+				<name>Rechazar Solicitud</name>
 				<target>31273493-1643-423e-aa68-41cefa20eadd</target>
 				<default>false</default>
 			</transition>
@@ -621,7 +666,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>a42319c9-1c1c-40ab-b690-e857c126e66b</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[619,300],"transitions":{"finalizar-flujo-aviso-rrhh":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						619,
+						300
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Completar tarea</name>
@@ -684,7 +738,7 @@ El empleado ${nombre} ${primerApellido} ${segundoApellido} con PERNR ${ user.get
 						Finaliza el Flujo
 					</label>
 				</labels>
-				<name>finalizar-flujo-aviso-rrhh</name>
+				<name>Rechazar Solicitud.</name>
 				<target>denegado-anticipo-existente</target>
 				<default>true</default>
 			</transition>

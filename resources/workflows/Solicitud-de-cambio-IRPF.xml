@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>7608c7dc-4f77-0262-c6e9-ca53f45ec239</name>
-	<version>17</version>
+	<version>18</version>
 	<state>
 		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -317,20 +317,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud
+						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>Aprobar solicitud</name>
+				<name>Aprobar Solicitud</name>
 				<target>Solicitud aprobada</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud
+						Rechazar Solicitud
 					</label>
 				</labels>
-				<name>rechazar solicitud</name>
+				<name>Rechazar Solicitud</name>
 				<target>Solicitud rechazada</target>
 				<default>false</default>
 			</transition>
