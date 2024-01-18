@@ -52,7 +52,7 @@
         <td>#justificacion#</td>
         <td>#fechaActividad#</td>
         <td>#horas#</td>
-        <td><span class="ema-pill-estado #estado-code#">#estado#</span></td>
+        <td><span class="ema-pill-estado #estado-code# #is-user-editable#">#estado#</span></td>
         <td>#fechaEnvio#</td>
         <td class="ema-td-dropdown">
             <button class="ema-button-moreoptions">
@@ -124,14 +124,11 @@ var addClickFunctionality = function () {
 var checkStatus = function () {
     $('tbody#as-wrapper tr').each(function() {
         var estado = $(this).find('.ema-pill-estado');
-        if(estado.hasClass("success")) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else if (estado.hasClass("danger") ) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else {
+        if(estado.hasClass("esEditable")) {
             $(this).find('.ema-enlace-visualizar').remove();
+        } else {
+            $(this).find(".ema-button-moreoptions").remove();
+            $(this).find(".ema-desplegable-moreoptions").remove();
         }
     });
 }

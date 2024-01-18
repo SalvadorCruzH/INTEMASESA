@@ -73,6 +73,7 @@ public class AjaxSearchPortletKeys {
 	public static final String ESTADO = "estado";
 	public static final String ESTADO_OBJETO = "estadoObjeto";
 	public static final String ESTADO_CODE = "estado-code";
+	public static final String ES_EDITABLE_POR_USUARIO = "is-user-editable";
 	public static final String URL_VISUALIZAR = "urlVisualizar";
 	public static final String URL_EDITAR = "urlEditar";
 	public static final String URL_ELIMINAR = "urlEliminar";
