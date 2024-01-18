@@ -86,6 +86,7 @@ public class AjaxSearchPortletKeys {
 	public static final String NOMBRE = "nombre";
 	public static final String PRIMER_APELLIDO = "primerApellido";
 	public static final String SEGUNDO_APELLIDO = "segundoApellido";
+	public static final String FECHA_ACTUAL = "fechaActual";
 
 	/** VALORES ESTADO SELECT ACCION FORMATIVA FUERA DEL PLAN **/
 	public static final String PENDIENTE_JEFE_DIVISION = "asignadaJefeDeDivision";
