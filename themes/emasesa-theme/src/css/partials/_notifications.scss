@@ -3,6 +3,12 @@
     border-radius: 30px;
     padding: 30px 60px;
     max-width: 85%;
+    @include media-breakpoint-down(lg) {
+        max-width: none;
+    }
+    @include media-breakpoint-down(md) {
+        padding-inline: 30px;
+    }
     &__items,
     &__items * {
         margin: 0;
@@ -13,6 +19,17 @@
         border-bottom: 1px solid $color-light-grey;
         margin: 0 -60px 30px;
         padding: 0 60px 30px;
+        @include media-breakpoint-down(md) {
+            margin-inline: -30px;
+            padding-inline: 30px;
+            gap: 0 1rem;
+        }
+        @include media-breakpoint-down(sm) {
+            padding-left: 15px;
+        }
+        @include media-breakpoint-down(xs) {
+            flex-wrap: wrap;
+        }
         &--unread {
             position: relative;
             &::before {
@@ -28,9 +45,16 @@
         &__col {
             &--user-avatar {
                 max-width: 50px;
+                @include media-breakpoint-down(xs) {
+                    margin-left: auto;
+                    margin-top: -15px;
+                }
             }
             &--check {
                 margin-right: 1rem;
+                @include media-breakpoint-down(sm) {
+                    margin-right: 0;
+                }
             }
             &--notification {
                 ul {
@@ -65,13 +89,29 @@
     border-bottom: 1px solid $color-light-grey;
     margin: 0 -60px 30px;
     padding: 0 60px 30px;
+    @include media-breakpoint-down(md) {
+        margin-inline: -30px;
+        padding-inline: 30px;
+    }
+    @include media-breakpoint-down(sm) {
+        padding-left: 15px;
+    }
     .form-row {
         &:first-child {
             margin-right: 2rem;
+            @include media-breakpoint-down(md) {
+                margin-right: 1rem;
+            }
+            @include media-breakpoint-down(sm) {
+                margin-right: 0;
+            }
         }
     }
     select {
         min-width: 275px;
+        @include media-breakpoint-down(xs) {
+            min-width: 165px;
+        }
     }
     &__submit {
         display: flex;
@@ -104,13 +144,26 @@
 
 .ema-tabs {
     gap: 0 2rem;
+    @include media-breakpoint-down(xs) {
+        flex-wrap: nowrap;
+        gap: 0 7.5px;
+    }
     .i-mainWrapper & {
         border-bottom: 1px solid $color-light-grey;
         margin: 0 -60px 30px;
         padding: 0 60px;
     }
     &__tab {
+        @include media-breakpoint-down(xs) {
+            width: 50%;
+        }
         &__btn {
+            @include media-breakpoint-down(xs) {
+                display: block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+            }
             cursor: pointer;
             &.active {
                 font-weight: 700;
