@@ -27,7 +27,10 @@ public class EmpleadoDatosPersonalesService {
     public JSONObject getEmpleadoDatosPersonales(String pernr) throws EmpleadoDatosPersonalesException, SapCommunicationException {
 
         LoggerUtil.debug(LOG, "[B] getEmpleadoDatosPersonales");
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADODATOSPERSONA.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStEmpleadoDatosPersonal serviceResult = port.zPeEmpleadoDatosPersonales(pernr, "");
             ZpeStEmpleadoDatosPersonal empleadoDatosPersonal = serviceResult.getItem().stream().findFirst().orElse(null);
 
@@ -38,6 +41,7 @@ public class EmpleadoDatosPersonalesService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] getEmpleadoDatosPersonales");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
 
