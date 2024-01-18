@@ -4,7 +4,7 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "Asitente social",
+					"defaultValue": "Asistente social",
 					"label": "Rol para el que se muestra el fragment",
 					"localizable": true,
 					"name": "roleName",
