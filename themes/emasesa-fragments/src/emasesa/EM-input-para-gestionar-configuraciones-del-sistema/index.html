@@ -4,8 +4,19 @@
 [#assign configKey2 = configuration.configKey2]
 [#assign configValue1 = getConfigurationValueUtil.getStringValue(pid,configKey1)]
 [#assign configValue2 = getConfigurationValueUtil.getStringValue(pid,configKey2)]
+[#assign UserServiceUtil = staticUtil["com.liferay.portal.kernel.service.UserServiceUtil"] /]
+[#assign RoleLocalServiceUtil = staticUtil["com.liferay.portal.kernel.service.RoleLocalServiceUtil"] /]
+[#assign user = UserServiceUtil.getUserById(themeDisplay.getUserId()) /]
+[#assign userRoles = RoleLocalServiceUtil.getUserGroupRoles(user.getUserId(), themeDisplay.getSiteGroupId()) /]
+[#assign isAsistenteSocial = false /]
+[#list userRoles as userRole]
+    [#if userRole.getName() == configuration.roleName]
+        [#assign isAsistenteSocial = true /]
+    [/#if]
+[/#list]
 
-<div class="alert-container cadmin container em-alert hide">
+	[#if isAsistenteSocial]
+		<div class="alert-container cadmin container em-alert hide">
 		<div class="alert-notifications alert-notifications-fixed" id="ToastAlertContainer">
             <div class="lfr-tooltip-scope"><div class="mb-3 alert alert-dismissible alert-success">
                 <div role="alert" class="alert-autofit-row autofit-row">
@@ -36,6 +47,11 @@
         </div>
 	</div>
 <div class="em-configuracionesSistema">
+	<h3>
+  <lfr-editable id="heading" type="text">
+      Titulo de las Configuraciones
+  </lfr-editable>
+</h3>
 	<div class="em-configuracionesSistema--inputs">
 		<div class="em-configuracionesSistema--inputs-input">
 			<label class="" for="value">${configuration.inputLabel1}</label>
@@ -50,3 +66,4 @@
 		Guardar
 	</button>
 </div>
+[/#if]
