@@ -6,4 +6,5 @@ dependencies {
 	compile project (':modules:custom:ajaxsearch:ajaxsearch-core')
 	compile project (':modules:common:search-util')
 	compile project (':modules:custom:sap-services-utils')
+	compile project (':modules:custom:sigd-service')
 }
