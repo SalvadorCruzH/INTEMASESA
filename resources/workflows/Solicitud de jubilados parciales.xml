@@ -1,0 +1,643 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>ce6a3c7d-6bf9-6e1f-cb0e-4e4dfc19dee5</name>
+	<version>60</version>
+	<condition>
+		<name>3160ce5f-7fde-4c20-a79d-ba26b93c2ddc</name>
+		<description>Ejecute una lógica condicional.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-453.484375,
+						110.484375
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>1</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Validacion de solicitud de jubilaciones parciales
+			</label>
+		</labels>
+		<script>
+			<![CDATA[import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+String userId = GetterUtil.getString(workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
+try {
+    List<Role> userRolesList = RoleLocalServiceUtil.getUserRoles(Long.parseLong(userId));
+    if (userRolesList != null) {
+        for (Role role : userRolesList) {
+            if (role.getName() == "Director") {
+                returnValue = "Aprobar-solicitud-y-guardar-en-SIGD"
+                return
+            }
+        }
+
+        for (Role role : userRolesList) {
+            if (role.getName() == "Jefe Division") {
+                returnValue = "Envia-jefe-division"
+                return
+            }
+        }
+
+        for (Role role : userRolesList) {
+            if (role.getName() == "Jefe Departamento") {
+                returnValue = "Envia-jefe-departamento"
+                return
+            }
+        }
+    }
+} catch (Exception e) {
+    logger.error("Error al obtener los roles del usuario: " + e.getMessage(), e);
+}]]>
+		</script>
+		<script-language>groovy</script-language>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Enviar a Jefe division
+					</label>
+				</labels>
+				<name>Envia-jefe-departamento</name>
+				<target>8ca4e20d-be0f-491b-8585-077b5d298745</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Enviar a Director
+					</label>
+				</labels>
+				<name>Envia-jefe-division</name>
+				<target>46f5797b-1873-4e9d-9576-6d12c9533815</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Aprobar Solicitud y guardar en SIGD
+					</label>
+				</labels>
+				<name>Aprobar-solicitud-y-guardar-en-SIGD</name>
+				<target>22b7da36-98ab-4491-bd23-9f20f2d68943</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</condition>
+	<state>
+		<name>00c653ae-3d2b-4863-b6b2-9a4a1b4d902c</name>
+		<description>Inicia un flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-453.99993896484375,
+						-134
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowBaseUtil = customWorkflowUtilTracker.getService();
+
+customWorkflowBaseUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "Usuario");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<initial>true</initial>
+		<labels>
+			<label language-id="es_ES">
+				Creacion Solicitud Jubulados Parciales
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Creación solicitud
+					</label>
+				</labels>
+				<name>Creación solicitud</name>
+				<target>3160ce5f-7fde-4c20-a79d-ba26b93c2ddc</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>317f5e3e-ea8b-4c8c-9954-bbd7ffe0bd99</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						616.515625,
+						-42.546875
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Jefe Division");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if (pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Jubilados", "solicitud", userId, false);
+
+customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Jubilados", false);
+}
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>4</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud rechazada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha rechazado su solicitud de jubilaciones parciales]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Solicitud rechazada
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>f7280e70-f754-4b17-8aa7-dd50e8f95b29</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						615.0157470703125,
+						109.953125
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Jefe Division");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if (pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Jubilados", "solicitud", userId, false);
+
+customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Jubilados", false);
+}
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>4</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud rechazada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha rechazado su solicitud de jubilados parciales]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Solicitud rechazada
+			</label>
+		</labels>
+	</state>
+	<state>
+		<name>a29a6609-fcb2-4641-a725-2fe9293a280b</name>
+		<description>Finaliza el flujo de trabajo.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						54.515625,
+						440.453125
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Solicitud finalizada</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Su solicitud ha finalizado, ${entryType}]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<labels>
+			<label language-id="es_ES">
+				Final de la solicitud
+			</label>
+		</labels>
+	</state>
+	<task>
+		<name>8ca4e20d-be0f-491b-8585-077b5d298745</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						58.5311279296875,
+						-41.5078125
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivision", userId, "Jefe Division");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Notificación de solicitud</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se le ha asignado una solicitud de jubilados parciales]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>147434</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Jefe Division
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazar solicitud
+					</label>
+				</labels>
+				<name>Rechazar Solicitud</name>
+				<target>317f5e3e-ea8b-4c8c-9954-bbd7ffe0bd99</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Aprobar Solicitud y Enviar a Director
+					</label>
+				</labels>
+				<name>Aprobar Solicitud y Enviar a Director</name>
+				<target>46f5797b-1873-4e9d-9576-6d12c9533815</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>46f5797b-1873-4e9d-9576-6d12c9533815</name>
+		<description>Pida a un DIRECTOR que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						56.015673740961745,
+						109.76563416175628
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSubdirectorDirector", userId, "Director");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>6</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Solicitud jubilados parciales</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha creado una nueva solicitud de jubilados parciales]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-id>147429</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>147429</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Director
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Rechazar Solicitud y Guardar en SIGD
+					</label>
+				</labels>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
+				<target>f7280e70-f754-4b17-8aa7-dd50e8f95b29</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Aprobar Solicitud y Enviar a RRHH
+					</label>
+				</labels>
+				<name>Aprobar Solicitud y Enviar a RRHH</name>
+				<target>22b7da36-98ab-4491-bd23-9f20f2d68943</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>22b7da36-98ab-4491-bd23-9f20f2d68943</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						56.515625,
+						279.265625
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Aprobacion y Guardado en GISD</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Director");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if (pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Jubilados", "solicitud", userId, false);
+    customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Jubilados", false);
+}
+
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onAssignment</execution-type>
+			</action>
+			<action>
+				<name>Cambiar estado workflow</name>
+				<description></description>
+				<status>6</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-id>35183</role-id>
+				</role>
+			</roles>
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Administrador RRHH
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Finalizar Solicitud Aceptada
+					</label>
+				</labels>
+				<name>Finalizar Solicitud Aceptada</name>
+				<target>a29a6609-fcb2-4641-a725-2fe9293a280b</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>
