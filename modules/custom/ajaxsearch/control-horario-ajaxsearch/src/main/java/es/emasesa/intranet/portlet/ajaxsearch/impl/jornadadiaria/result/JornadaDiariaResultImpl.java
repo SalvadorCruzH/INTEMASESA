@@ -98,7 +98,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
 			String monthSelected = ajaxSearchDisplayContext.getString(MONTH_SELECTED);
-			if(!monthSelected.equals("resumenanual")){
+			if(!monthSelected.equals("resumenanual") && !monthSelected.equals("resumenanualpasado")){
 				totalItems = performSearchAndParse(request,
 						response,
 						ajaxSearchDisplayContext,
@@ -150,23 +150,25 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 		int totalItems = 0;
 
 		String usuario = ajaxSearchDisplayContext.getString("usuarioSelected", StringPool.BLANK);
+		String matriculaExpando = StringPool.BLANK;
+		try {
+			matriculaExpando = _expandoValueLocalService.getData(
+					themeDisplay.getCompanyId(),
+					User.class.getName(),
+					ExpandoTableConstants.DEFAULT_TABLE_NAME,
+					"matricula",
+					themeDisplay.getUser().getUserId(),
+					StringPool.BLANK
+			);
+		} catch (Exception e) {
+			LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
+		}
 		boolean isValidUser;
 		if (usuario.isBlank()){
-			try {
-				usuario = _expandoValueLocalService.getData(
-						themeDisplay.getCompanyId(),
-						User.class.getName(),
-						ExpandoTableConstants.DEFAULT_TABLE_NAME,
-						"matricula",
-						themeDisplay.getUser().getUserId(),
-						StringPool.BLANK
-				);
-			} catch (Exception e) {
-				LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
-			}
+			usuario = matriculaExpando;
 			isValidUser = Boolean.TRUE;
 		} else {
-			isValidUser = checkUsuarioSelected(usuario, themeDisplay.getUser());
+			isValidUser = checkUsuarioSelected(usuario, themeDisplay.getUser(), matriculaExpando);
 		}
 
 		if(Validator.isNotNull(monthSelected) && isValidUser){
@@ -219,19 +221,21 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 				}
 
 			});
-
-			Year year = Year.parse(monthSelected, DateTimeFormatter.ofPattern("MMyyyy"));
-			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + year);
-
-			jsonArray.getJSONObject(0).put("vacacionesYear",getVacaciones(themeDisplay, String.valueOf(year)));
-			jsonArray.getJSONObject(0).put("vacacionesLastYear",getVacaciones(themeDisplay, String.valueOf(year.minusYears(1))));
+			if(jsonArray.length() == 0){
+				jsonArray.put(JSONFactoryUtil.createJSONObject());
+			}
+			String actualYear = String.valueOf(Year.now().getValue());
+			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + actualYear);
+			jsonArray.getJSONObject(0).put("vacacionesYear", getVacaciones(usuario, actualYear));
+			LoggerUtil.debug(LOG, "[D] Consiguiendo vacaciones del usuario " + usuario + " para el año " + (Integer.parseInt(actualYear) - 1));
+			jsonArray.getJSONObject(0).put("vacacionesLastYear", getVacaciones(usuario, String.valueOf(Integer.parseInt(actualYear)-1)));
 		}
 		return totalItems;
 	}
 
-	private JSONObject getVacaciones(ThemeDisplay themeDisplay, String year) {
+	private JSONObject getVacaciones(String matriculaUser, String year) {
 
-		String cacheKeyYear = "resumenAnual"+year+themeDisplay.getUser().getUserId();
+		String cacheKeyYear = "resumenAnual"+year+matriculaUser;
 		Object objectYear = _cache.get(cacheKeyYear);
 		JSONArray arrayYear;
 		if(Validator.isNotNull(objectYear) && ((JSONArray) objectYear).length()>0){
@@ -239,7 +243,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 
 		}else{
 
-			arrayYear = _sapServicesUtil.getResumenAnual(themeDisplay.getUser(),year);
+			arrayYear = _sapServicesUtil.getResumenAnual(matriculaUser,year);
 			_cache.put(cacheKeyYear,arrayYear,86400);
 
 		}
@@ -272,26 +276,27 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 		return dias + "d " + horas + "h " + minutos + "m";
 	}
 
-	private boolean checkUsuarioSelected(String usuarioSelected, User user) {
-		String cacheKey = "checkUsuarioSelected" + usuarioSelected + user.getUserId();
+	private boolean checkUsuarioSelected(String usuarioSelected, User user, String matricula) {
+		String cacheKey = "checkUsuarioSelected" + usuarioSelected + matricula;
 		Object object = _cache.get(cacheKey);
 		if(Validator.isNotNull(object)){
 			return (Boolean) object;
 		} else {
-			Boolean isValidUser = checkUsuarioSelectedAux(usuarioSelected, user);
+			Boolean isValidUser = checkUsuarioSelectedAux(usuarioSelected, user, matricula);
 			_cache.put(cacheKey, isValidUser, 86400);
 			return isValidUser;
 		}
 	}
 
-	private Boolean checkUsuarioSelectedAux(String usuarioSelected, User user) {
+	private Boolean checkUsuarioSelectedAux(String usuarioSelected, User user, String matricula) {
 		long[] userRoleIds = user.getRoleIds();
 		for (long roleId : userRoleIds) {
 			if(roleId == _rolesSettings.administradorRRHHId()){
 				return Boolean.TRUE;
 			}
 		}
-		JSONArray subordinados = _sapServicesUtil.getSubordinados(user, "T");
+
+		JSONArray subordinados = _sapServicesUtil.getSubordinados(matricula, "T");
 		if (subordinados.length() > 0){
 
 			for (int i = 0; i < subordinados.length(); i++) {

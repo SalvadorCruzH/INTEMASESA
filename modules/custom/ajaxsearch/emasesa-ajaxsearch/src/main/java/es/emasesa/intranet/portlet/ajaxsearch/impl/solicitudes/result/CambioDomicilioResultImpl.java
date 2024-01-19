@@ -5,19 +5,13 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.*;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexSearcher;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.SortFactory;
+import com.liferay.portal.kernel.search.*;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,9 +45,9 @@ import java.util.Properties;
         property = {},
         service = AjaxSearchResult.class
 )
-public class ConsultaFormacionResultImpl implements AjaxSearchResult {
+public class CambioDomicilioResultImpl implements AjaxSearchResult {
 
-    private final static Log LOG = LoggerUtil.getLog(ConsultaFormacionResultImpl.class);
+    private final static Log LOG = LoggerUtil.getLog(CambioDomicilioResultImpl.class);
 
     private static final Properties DFLT_PROPERTIES = new Properties();
     public static final String DISABLE_PAGINATION = "disable-pagination";
@@ -74,7 +68,7 @@ public class ConsultaFormacionResultImpl implements AjaxSearchResult {
         return DFLT_PROPERTIES;
     }
 
-    private static final String VIEW = "/views/solicitudes/deteccionnecesidadesformacion/results.jsp";
+    private static final String VIEW = "/views/solicitudes/cambiodomicilio/results.jsp";
 
     @Override
     public String getResultsView(PortletRequest request, PortletResponse response) {
@@ -161,7 +155,7 @@ public class ConsultaFormacionResultImpl implements AjaxSearchResult {
 
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
-        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(StringPool.COMMA), searchContext);
         final int totalItems = documents.size();
 
         String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
@@ -203,56 +197,35 @@ public class ConsultaFormacionResultImpl implements AjaxSearchResult {
         final JSONObject jsonObject = jsonFactory.createJSONObject();
         jsonObject.put(AjaxSearchPortletKeys.NOMBRE_OBJETO, document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME));
 
-        String fechaSolicitud = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
-        jsonObject.put(AjaxSearchPortletKeys.FECHA_SOLICITUD, ajaxSearchUtil.formatDate(fechaSolicitud));
+
 
         //String objectEntryContent = document.get(themeDisplay.getLocale(), "objectEntryContent");
         Long objectClassPK = Long.parseLong(document.get(Field.ENTRY_CLASS_PK));
         ObjectEntry objectEntry = ajaxSearchUtil.getObject(objectClassPK);
         if (objectEntry != null) {
-            String planFormacion = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.PLAN_FORMACION, StringPool.DASH).toString();
-            jsonObject.put(AjaxSearchPortletKeys.PLAN_FORMACION, planFormacion);
+            String asunto = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
+            jsonObject.put(AjaxSearchPortletKeys.ASUNTO, asunto);
 
             String nombre = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.NOMBRE, StringPool.DASH).toString();
-            String primerApellido = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.PRIMER_APELLIDO, StringPool.DASH).toString();
-            String segundoApellido = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.SEGUNDO_APELLIDO, StringPool.DASH).toString();
-            String formulada = nombre + " " + primerApellido + " " + segundoApellido;
-            jsonObject.put(AjaxSearchPortletKeys.NOMBRE, formulada);
+            jsonObject.put(AjaxSearchPortletKeys.NOMBRE, nombre);
 
-            String solicitante = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.SOLICITANTE, StringPool.DASH).toString();
-            jsonObject.put(AjaxSearchPortletKeys.SOLICITANTE, solicitante);
+            String fechaActual = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.FECHA_ACTUAL, StringPool.DASH).toString();
+            jsonObject.put(AjaxSearchPortletKeys.FECHA_ACTUAL, ajaxSearchUtil.formatDate(fechaActual));
 
-            String denominacion = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.DENOMINACION, StringPool.DASH).toString();
-            jsonObject.put(AjaxSearchPortletKeys.DENOMINACION, denominacion);
 
-            String obligatoriedad = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.OBLIGATORIEDAD, StringPool.DASH).toString();
-            jsonObject.put(AjaxSearchPortletKeys.OBLIGATORIEDAD, obligatoriedad);
 
-//            String modalidad = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.MODALIDAD, StringPool.DASH).toString();
-//            jsonObject.put(AjaxSearchPortletKeys.MODALIDAD, modalidad);
-            String estadoObjeto = "enviado";
-
-            //String estadoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ESTADO_OBJETO, StringPool.BLANK).toString();
-            //TODO: cambiar por estado traido de SAP
-
+            String estadoObjeto = objectEntry.getValues().getOrDefault(AjaxSearchPortletKeys.ESTADO_OBJETO, StringPool.BLANK).toString();
             if (!estadoObjeto.equals(StringPool.BLANK)) {
                 jsonObject.put(AjaxSearchPortletKeys.ESTADO, LanguageUtil.get(themeDisplay.getLocale(), estadoObjeto));
                 switch (estadoObjeto) {
                     case "aceptada":
                         jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "success");
-                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
                         break;
                     case "rechazada":
                         jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "danger");
-                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
-                        break;
-                    case "devueltoAUsuarioSolicitante":
-                        jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "pending");
-                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, "esEditable");
                         break;
                     default:
                         jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "pending");
-                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
                         break;
                 }
 
@@ -282,7 +255,6 @@ public class ConsultaFormacionResultImpl implements AjaxSearchResult {
         }
         return jsonObject;
     }
-
 
     @Reference
     AjaxSearchUtil ajaxSearchUtil;
