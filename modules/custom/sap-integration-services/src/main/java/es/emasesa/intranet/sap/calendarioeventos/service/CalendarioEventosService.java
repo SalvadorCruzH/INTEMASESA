@@ -104,7 +104,7 @@ public class CalendarioEventosService {
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             /**********************************************************************/
-
+            LOG.info(this.getClass().getName() +" cargado correctamente");
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de calendarioEventosServices");

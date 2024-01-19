@@ -48,4 +48,5 @@ public interface SPECServiceConfiguration {
             required = false
     )
     String subQueryNotScreen();
+
 }
