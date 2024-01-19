@@ -67,6 +67,9 @@
                    <option value='resumenanual'>
                      <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanual"></liferay-ui:message>
                     </option>
+                   <option value='resumenanualpasado'>
+                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanualpasado"></liferay-ui:message>
+                    </option>
                     <c:forEach begin="0" end="${months.length() -1}" var="index">
                            <option value='${months.getJSONObject(index).getString("value")}' ${months.getJSONObject(index).getString("value") == monthSelected ? "selected" : ""}>
                              ${months.getJSONObject(index).getString("label")}
@@ -108,8 +111,8 @@
     // search
     $("#m-searchAjax__button").on("click", function (e){
         e.preventDefault();
-        if($("#month").val() != 'resumenanual'){
-            window.location.href = "${jornadaDiariaUrl}?usuarioSelected"+$("#usuario").val()+"&monthSelected=" + $("#month").val();
+        if($("#month").val() != 'resumenanual' && $("#month").val() != 'resumenanualpasado'){
+            window.location.href = "${jornadaDiariaUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=" + $("#month").val();
         } else {
             ajaxSearchFeature.doSearch(true, false);
         }
@@ -124,8 +127,8 @@
     $("#m-searchAjax__button").on("keypress", function (e){
         if(e.which == 13) {
             e.preventDefault();
-            if($("#month").val() != 'resumenanual'){
-                window.location.href = "${jornadaDiariaUrl}?usuarioSelected"+$("#usuario").val()+"&monthSelected=" + $("#month").val();
+            if($("#month").val() != 'resumenanual' && $("#month").val() != 'resumenanualpasado'){
+                window.location.href = "${jornadaDiariaUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=" + $("#month").val();
             } else {
                 ajaxSearchFeature.doSearch(true, false);
             }

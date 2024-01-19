@@ -30,6 +30,9 @@ public class SPECServicesSettings {
     public String query() {
         return configuration.query();
     }
+    public String subQueryNotScreen() {
+        return configuration.subQueryNotScreen();
+    }
 
     @Activate
     @Modified

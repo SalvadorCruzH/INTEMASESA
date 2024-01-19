@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>42</version>
+	<version>44</version>
 	<state>
 		<name>envio</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-366,-66],"transitions":{"envioSolicitud":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-366,
+						-66
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -217,7 +226,16 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>jefe departamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[32,-67],"transitions":{"aprobar solicitud":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						32.546875,
+						-67.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -295,20 +313,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de Área
 					</label>
 				</labels>
-				<name>aprobar solicitud</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División de Área</name>
 				<target>jefe division area</target>
 				<default>true</default>
 			</transition>
@@ -317,7 +335,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>jefe division area</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[453,-69],"transitions":{"aprobar-solicitud":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						453.546875,
+						-69.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -395,20 +422,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar solicitud</name>
+				<name>Rechazar Solicitud y Guardar en SIGD.</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a RRHH
 					</label>
 				</labels>
-				<name>aprobar-solicitud</name>
+				<name>Aprobar Solicitud y Enviar a RRHH</name>
 				<target>admin rrhh</target>
 				<default>true</default>
 			</transition>
@@ -417,7 +444,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>admin rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[849,-70],"transitions":{"aprobar":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						849.54677734375,
+						-70.10001220703123
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -485,20 +521,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar y guardar en SIGD</name>
+				<name>Rechazar Solicitud y Guardar en SIGD..</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de Personas
 					</label>
 				</labels>
-				<name>aprobar</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División de Personas</name>
 				<target>jefe division personas</target>
 				<default>true</default>
 			</transition>
@@ -507,7 +543,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>jefe division personas</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[849,199],"transitions":{"rechazar y guardar":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						849.12109375,
+						199.30020141601562
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -558,7 +603,19 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<scripted-assignment>
 				<script>
-					<![CDATA[import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.getUserSap(workflowContext,userId, "DivisionRrhhRespId"); customWorkflowUtilTracker.close();]]>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "divisionRrhhRespId");
+customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 			</scripted-assignment>
@@ -572,20 +629,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud y guardar en SIGD
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>aprobar solicitud y guardar en SIGD</name>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
 				<target>Solicitud finalizada</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar y guardar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD...</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>

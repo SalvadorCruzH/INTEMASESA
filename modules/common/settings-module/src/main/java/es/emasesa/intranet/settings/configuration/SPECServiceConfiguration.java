@@ -42,4 +42,11 @@ public interface SPECServiceConfiguration {
     )
     String query();
 
+    @Meta.AD(
+            deflt = "",
+            name = "subQueryNotScreen",
+            required = false
+    )
+    String subQueryNotScreen();
+
 }

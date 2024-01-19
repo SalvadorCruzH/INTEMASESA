@@ -228,12 +228,19 @@ public class HorasExtraResultImpl implements AjaxSearchResult {
                 switch (estadoObjeto) {
                     case "aceptada":
                         jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "success");
+                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
                         break;
                     case "rechazada":
                         jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "danger");
+                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
+                        break;
+                    case "devueltoAUsuarioSolicitante":
+                        jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "pending");
+                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, "esEditable");
                         break;
                     default:
                         jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "pending");
+                        jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
                         break;
                 }
 

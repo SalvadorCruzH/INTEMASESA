@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
-	<version>84</version>
+	<version>100</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-470,-25],"transitions":{"solicitudenviada":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-470.9107129161446,
+						-25.851313053632325
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -181,7 +190,16 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>aceptar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[809,480],"transitions":{"aceptada":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						809.7990664198753,
+						480.57132583127975
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -205,7 +223,7 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Director RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Director RRHH");
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -258,7 +276,16 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>rechazar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[1314,332],"transitions":{"Rechazar":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						1314.1535689022153,
+						332.4811269249422
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -335,7 +362,16 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[30,-27],"transitions":{"aprobar-enviar-jefe-departamento":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						30.546895583361664,
+						-27.18048865366615
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -416,7 +452,7 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>aprobar-enviar-jefe-departamento</name>
+				<name>Aprobar y enviar a jefe departamento</name>
 				<target>asignar-jefe-departamento</target>
 				<default>true</default>
 			</transition>
@@ -425,7 +461,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-director-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[811,321],"transitions":{"rechazadoPF":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						812.8444213867188,
+						319.3512878417969
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -474,7 +519,7 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSubdi
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
     String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, false);
-    customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Reduccion Jornada", false);
+    customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Reduccion Jornada", true);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
@@ -491,9 +536,9 @@ String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowConte
 String idDocumentoDirectorRRHH = "";
 if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
     idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoDirectorRRHH, "ReduccionJornada", "solicitud", userId, true);
-    customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoDirectorRRHH, "Escrito director RRHH", true);
-    portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, direccionRRHH);
+    customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoDirectorRRHH, "Escrito director RRHH", false);
 }
+portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, direccionRRHH);
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
@@ -521,9 +566,30 @@ sapCustomWorkflowUtilTracker.close();]]>
 			</notification>
 		</actions>
 		<assignments>
-			<user>
-				<email-address>direccionrrhh@mail.com</email-address>
-			</user>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+if (customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "subdireccionRrhhRespId") == null) {
+    users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "direccionRrhhRespId");
+}else {
+    users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "subdireccionRrhhRespId");
+}
+customWorkflowUtilTracker.close();
+]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<labels>
 			<label language-id="es_ES">
@@ -556,7 +622,16 @@ sapCustomWorkflowUtilTracker.close();]]>
 	<task>
 		<name>asignar-jefe-departamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[423,-24],"transitions":{"Aprobar-enviar-jefe-division-area":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						423.546875,
+						-24.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -630,7 +705,7 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>Aprobar-enviar-jefe-division-area</name>
+				<name>Aprobar y enviar a jefe división área</name>
 				<target>asignar-jefe-division-area</target>
 				<default>true</default>
 			</transition>
@@ -639,7 +714,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>asignar-jefe-division-area</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[813,-35],"transitions":{"Aprobada-enviar-jefe-division-RRHH":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						813.546875,
+						-35.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -683,7 +767,18 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<scripted-assignment>
 				<script>
-					<![CDATA[<p>import com.liferay.portal.template.*; import com.liferay.portal.util.*; import org.osgi.framework.Bundle; import org.osgi.framework.FrameworkUtil; import org.osgi.util.tracker.ServiceTracker; import es.emasesa.intranet.service.util.CustomWorkflowUtil; Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class); ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null); customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService(); users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "divisionRespId"); customWorkflowUtilTracker.close();</p>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "divisionRespId");
+customWorkflowUtilTracker.close();
 ]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -701,7 +796,7 @@ customWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>Aprobada-enviar-jefe-division-RRHH</name>
+				<name>Aprobar y enviar a jefe división RRHH</name>
 				<target>Asignar-jefe-division-RRHH</target>
 				<default>true</default>
 			</transition>
@@ -710,7 +805,16 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-jefe-division-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[808,150],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						815.60986328125,
+						149.30377197265625
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>

@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>539c4516-e04f-69a9-3b67-749aa51bccb4</name>
-	<version>5</version>
+	<version>9</version>
 	<state>
 		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -14,8 +14,8 @@
 			<![CDATA[
 				{
 					"xy": [
-						-220,
-						316
+						-219,
+						314
 					]
 				}
 			]]>
@@ -72,8 +72,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						709,
-						313
+						708,
+						312
 					],
 					"terminal": true
 				}
@@ -92,7 +92,8 @@ customWorkflowUtilTracker.close();]]>
 				<description></description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
-import com.liferay.portal.util.*;
+import com.liferay.portal.util.*
+import es.emasesa.intranet.service.util.SapServicesUtil;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -109,18 +110,26 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Asistente social");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Asistente social");
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AyudaEscolar", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AyudaEscolar", "solicitud", userId, false);
 }
 //Subir fichero certificacion o decalracion responsable
 String pdfadjuntarDocumentos = customWorkflowUtil.getDocumentToLoad(workflowContext, "adjuntarDocumentos");
 
 if(pdfadjuntarDocumentos != null && pdfadjuntarDocumentos != ""){
-	String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfadjuntarDocumentos, "AyudaEscolar", "solicitud",  userId, false);
+    String idDocumentoAdjuntarSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfadjuntarDocumentos, "AyudaEscolar", "solicitud",  userId, false);
 }
+
+Bundle bundle = FrameworkUtil.getBundle(SapServicesUtil.class);
+ServiceTracker customWorkflowUtilSapTracker = new ServiceTracker(bundle.getBundleContext(),SapServicesUtil.class, null);
+customWorkflowUtilSapTracker.open();
+SapServicesUtil sapServicesUtil = customWorkflowUtilSapTracker.getService();
+
+sapServicesUtil.saveAyudaEscolar(workflowContext);
+customWorkflowUtilSapTracker.close();
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -313,30 +322,30 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud y guardar en SIG
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>aprobar solicitud</name>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
 				<target>aprobracion final</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Devolver a usuario para edición
+						Devolver al Usuario
 					</label>
 				</labels>
-				<name>Devolver a usuario</name>
+				<name>Devolver al Usuario</name>
 				<target>devuelta usuario</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
 				<target>rechazada</target>
 				<default>false</default>
 			</transition>
@@ -432,10 +441,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						reenviar a Asistente social
+						Devolver a Asistente Social
 					</label>
 				</labels>
-				<name>reenviar</name>
+				<name>Devolver a Asistente Social</name>
 				<target>asistente social</target>
 				<default>true</default>
 			</transition>

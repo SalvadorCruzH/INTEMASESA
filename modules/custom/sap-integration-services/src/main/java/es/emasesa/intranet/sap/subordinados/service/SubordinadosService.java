@@ -39,7 +39,7 @@ public class SubordinadosService {
         try {
             ClassLoader objectFactoryClassLoader = ZWSPESUBORDINADOS.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            TableOfZpeStSubordinados serviceResult = port.zPeSubordinados(directorioTodos,pernr);
+            TableOfZpeStSubordinados serviceResult = port.zPeSubordinados(directorioTodos, pernr);
             List<ZpeStSubordinados> subordinados = serviceResult.getItem();
 
             return JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(subordinados));
@@ -89,7 +89,7 @@ public class SubordinadosService {
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             /**********************************************************************/
-
+            LOG.info(this.getClass().getName() +" cargado correctamente");
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de SubordinadosService");

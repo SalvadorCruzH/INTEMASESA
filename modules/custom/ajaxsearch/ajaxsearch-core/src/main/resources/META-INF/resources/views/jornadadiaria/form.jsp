@@ -53,6 +53,9 @@
                 <option value='resumenanual'>
                     <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanual"></liferay-ui:message>
                 </option>
+               <option value='resumenanualpasado'>
+                 <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanualpasado"></liferay-ui:message>
+                </option>
                 <c:forEach begin="0" end="${months.length() -1}" var="index">
                         <option value='${months.getJSONObject(index).getString("value")}' ${months.getJSONObject(index).getString("value") == monthSelected ? "selected" : ""}>
                             ${months.getJSONObject(index).getString("label")}
@@ -95,8 +98,10 @@
     $("#m-searchAjax__button").on("click", function (e){
         e.preventDefault();
         if($("#month").val() == 'resumenanual'){
-            window.location.href = "${resumenAnualUrl}?usuarioSelected"+$("#usuario").val()+"&year="+new Date().getFullYear();
-        } else {
+            window.location.href = "${resumenAnualUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=resumenanual";
+         }else if($("#month").val() == 'resumenanualpasado'){
+                   window.location.href = "${resumenAnualUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=resumenanualpasado";
+           } else {
             ajaxSearchFeature.doSearch(true, false);
         }
     });
@@ -111,8 +116,10 @@
         if(e.which == 13) {
             e.preventDefault();
             if($("#month").val() == 'resumenanual'){
-                window.location.href = "${resumenAnualUrl}?usuarioSelected"+$("#usuario").val()+"&year="+new Date().getFullYear();
-            } else {
+                window.location.href = "${resumenAnualUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=resumenanual";
+            } else if($("#month").val() == 'resumenanualpasado'){
+                   window.location.href = "${resumenAnualUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=resumenanualpasado";
+           } else{
                 ajaxSearchFeature.doSearch(true, false);
             }
         }
@@ -120,9 +127,11 @@
     //on document ready
     $(document).ready(function() {
         //if #month is resumenanual add param to current url and refresh
-        if($("#month").val() == 'resumenanual'){
-            window.location.href = window.location.href.split('?')[0] +"?monthSelected="+(new Date().getMonth()+1) +""+ new Date().getFullYear();
-            
+        let thisDate = (new Date().getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) +""+ new Date().getFullYear();
+        if($("#month").val() == 'resumenanual' ){
+            window.location.href = window.location.href.split('?')[0] +"?monthSelected="+thisDate;
+        } else if($("#month").val() == 'resumenanualpasado' ){
+            window.location.href = window.location.href.split('?')[0] +"?monthSelected="+thisDate;
         }
     });
 

@@ -586,6 +586,7 @@ public class SapServicesUtil {
             if (_calendarioEventosService == null) {
                 activate(null);
             }
+            LOG.debug("vamos a llamar al servicio de calendarioEventos con los parametros: " + pernr + " " + fechaDesde + " " + fechaHasta);
             calendarioEventos = _calendarioEventosService.getCalendarioEventos(pernr, fechaDesde, fechaHasta);
         } finally {
             if (LOG.isDebugEnabled()) {

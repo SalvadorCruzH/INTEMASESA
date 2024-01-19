@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>27</version>
+	<version>29</version>
 	<state>
 		<name>creacion solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -323,20 +323,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a RRHH
 					</label>
 				</labels>
-				<name>aprobar solicitud</name>
+				<name>Aprobar Solicitud y Enviar a RRHH</name>
 				<target>7a06644e-3652-4cfa-bd43-6d7444bf3056</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar-solicitud-guardar-SIGD</name>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
 				<target>solicitud rechazada</target>
 				<default>false</default>
 			</transition>
@@ -422,30 +422,30 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud y guardar en SIGD
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Aprobar solicitud y guardad en Sigd</name>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
 				<target>solicitud aprobada</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar solicitud y guardad en sigd</name>
+				<name>Rechazar Solicitud y Guardar en SIGD.</name>
 				<target>solicitud rechazada</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Devuelta para edición
+						Devolver a Usuario para su Edición
 					</label>
 				</labels>
-				<name>Devolver-a-usuario-para-edicion</name>
+				<name>Devolver a Usuario para su Edición</name>
 				<target>Devolver-solicitud</target>
 				<default>false</default>
 			</transition>
@@ -523,10 +523,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Devuelta a RHH
+						Devolver a RRHH
 					</label>
 				</labels>
-				<name>Devolver-a-rrhh</name>
+				<name>Devolver a RRHH</name>
 				<target>7a06644e-3652-4cfa-bd43-6d7444bf3056</target>
 				<default>true</default>
 			</transition>

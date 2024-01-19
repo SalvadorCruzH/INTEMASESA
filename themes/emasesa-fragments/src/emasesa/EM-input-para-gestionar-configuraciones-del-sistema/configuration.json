@@ -4,7 +4,15 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "es.emasesa.intranet.settings.configuration.AyudaEscolarFormConfiguration",
+					"defaultValue": "Asistente social",
+					"label": "Rol para el que se muestra el fragment",
+					"localizable": true,
+					"name": "roleName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "_es.emasesa.intranet.settings.configuration.AyudaEscolarFormConfiguration",
 					"label": "pid",
 					"localizable": true,
 					"name": "pidValue",

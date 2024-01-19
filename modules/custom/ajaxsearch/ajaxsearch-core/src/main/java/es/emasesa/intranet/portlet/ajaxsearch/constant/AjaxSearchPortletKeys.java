@@ -73,6 +73,7 @@ public class AjaxSearchPortletKeys {
 	public static final String ESTADO = "estado";
 	public static final String ESTADO_OBJETO = "estadoObjeto";
 	public static final String ESTADO_CODE = "estado-code";
+	public static final String ES_EDITABLE_POR_USUARIO = "is-user-editable";
 	public static final String URL_VISUALIZAR = "urlVisualizar";
 	public static final String URL_EDITAR = "urlEditar";
 	public static final String URL_ELIMINAR = "urlEliminar";
@@ -86,6 +87,7 @@ public class AjaxSearchPortletKeys {
 	public static final String NOMBRE = "nombre";
 	public static final String PRIMER_APELLIDO = "primerApellido";
 	public static final String SEGUNDO_APELLIDO = "segundoApellido";
+	public static final String FECHA_ACTUAL = "fechaActual";
 
 	/** VALORES ESTADO SELECT ACCION FORMATIVA FUERA DEL PLAN **/
 	public static final String PENDIENTE_JEFE_DIVISION = "asignadaJefeDeDivision";

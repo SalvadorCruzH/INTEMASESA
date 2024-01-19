@@ -55,7 +55,7 @@
         <td>#nombre#</td>
         <td>#solicitante#</td>
         <td>#denominacion#</td>
-        <td><span class="ema-pill-estado #estado-code#">#estado#</span></td>
+        <td><span class="ema-pill-estado #estado-code# #is-user-editable#">#estado#</span></td>
         <td>#obligatoriedad#</td>
 <%--        <td>#modalidad#</td>--%>
         <td class="ema-td-dropdown">
@@ -128,14 +128,11 @@ var addClickFunctionality = function () {
 var checkStatus = function () {
     $('tbody#as-wrapper tr').each(function() {
         var estado = $(this).find('.ema-pill-estado');
-        if(estado.hasClass("success")) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else if (estado.hasClass("danger") ) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else {
+        if(estado.hasClass("esEditable")) {
             $(this).find('.ema-enlace-visualizar').remove();
+        } else {
+            $(this).find(".ema-button-moreoptions").remove();
+            $(this).find(".ema-desplegable-moreoptions").remove();
         }
     });
 }
@@ -155,7 +152,11 @@ var openEditDialog = function (url) {
         id: 'EditInfoIntDialog',
         refreshWindow: window,
         title: 'Consultar',
-        uri: url
+        uri: url,
+        cssClass:'dialog-with-footer i-mainWrapper',
+        dialogIframe: {
+            bodyCssClass: 'dialog-with-footer i-mainWrapper'
+        }
     });
 }
 var openViewDialog = function (url) {
@@ -172,7 +173,11 @@ var openViewDialog = function (url) {
         id: 'ViewInfoIntDialog',
         refreshWindow: window,
         title: 'Consultar',
-        uri: url
+        uri: url,
+        cssClass:'dialog-with-footer i-mainWrapper',
+        dialogIframe: {
+            bodyCssClass: 'dialog-with-footer i-mainWrapper'
+        }
     });
 }
 </script>
