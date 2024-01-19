@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
-	<version>107</version>
+	<version>85</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -610,7 +610,7 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar Solicitud
 					</label>
 				</labels>
-				<name>rechazadoPF</name>
+				<name>Rechazar Solicitud</name>
 				<target>rechazar-solicitud</target>
 				<default>false</default>
 			</transition>
