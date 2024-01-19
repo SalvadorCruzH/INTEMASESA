@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>44</version>
+	<version>48</version>
 	<state>
 		<name>envio</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -73,7 +73,7 @@ customWorkflowUtilTracker.close();]]>
 				{
 					"xy": [
 						26,
-						332
+						331
 					],
 					"terminal": true
 				}
@@ -105,7 +105,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Licencias", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -181,10 +181,10 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Jefe división Personas");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Jefe división Personas");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Licencias", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
