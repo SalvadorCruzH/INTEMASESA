@@ -58,6 +58,8 @@ public class SpecUtil {
             String marcPers = StringPool.BLANK;
             if (Validator.isNotNull(screenName)) {
                 marcPers = "AND MARC_PERS IN(" + screenName + ")";
+            }else{
+                marcPers = _specServicesSettings.subQueryNotScreen();
             }
 
             query = query.replaceAll(EmasesaConstants.REGEX_STARTDATE, StringPool.APOSTROPHE + startDate + StringPool.APOSTROPHE);
@@ -71,6 +73,7 @@ public class SpecUtil {
             Statement stmt = con.createStatement();
 
             ResultSet rows = stmt.executeQuery(query);
+            LoggerUtil.debug(LOG, "Query " + query);
             ResultSetMetaData metadata = rows.getMetaData();
             int numberOfColumns = metadata.getColumnCount();
 
