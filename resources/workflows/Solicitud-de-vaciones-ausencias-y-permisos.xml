@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d6eb33e7-e516-1643-4a0b-ac5277ac46b8</name>
-	<version>20</version>
+	<version>26</version>
 	<state>
 		<name>envioSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -158,8 +158,8 @@ sigdServiceTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						1078.4119333967642,
-						111.11361228628387
+						1203.4119873046875,
+						103.1136474609375
 					],
 					"terminal": true
 				}
@@ -314,20 +314,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazarSolicitudResponsable</name>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
 				<target>solicitudRechazada</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud
+						Aprobar Solicitud y Enviar a RRHH
 					</label>
 				</labels>
-				<name>aprobarSolicitudResponsable</name>
+				<name>Aprobar Solicitud y Enviar a RRHH</name>
 				<target>adminRRHH</target>
 				<default>false</default>
 			</transition>
@@ -340,8 +340,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						651.0961453378674,
-						108.81621557628979
+						712.09619140625,
+						106.81622314453125
 					]
 				}
 			]]>
@@ -364,7 +364,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -407,20 +407,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>233f8990-0e93-43ad-a7cf-6109aed2188f</name>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
 				<target>aprobarSolicitudRRHH</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Devolver a usuario
+						Devolver al Usuario
 					</label>
 				</labels>
-				<name>devolverUsuario</name>
+				<name>Devolver al Usuario</name>
 				<target>usuario</target>
 				<default>false</default>
 			</transition>
@@ -433,8 +433,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						649.9474469828702,
-						394.8421059705515
+						714.947509765625,
+						377.84210205078125
 					]
 				}
 			]]>
@@ -492,10 +492,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Volver a enviar
+						Devolver a RRHH
 					</label>
 				</labels>
-				<name>reenviar</name>
+				<name>Devolver a RRHH</name>
 				<target>adminRRHH</target>
 				<default>true</default>
 			</transition>

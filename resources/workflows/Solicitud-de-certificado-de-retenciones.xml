@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+        xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+    <name>bcfa0473-1d85-97e9-6f01-87bfe7451f0a</name>
+    <version>2</version>
+    <state>
+        <name>073bdc26-fd9f-4be7-9264-7466e9a2a06b</name>
+        <description>Inicia un flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						300,
+						100
+					]
+				}
+			]]>
+        </metadata>
+        <initial>true</initial>
+        <labels>
+            <label language-id="es_ES">
+                Comienzo
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Etiqueta de transición
+                    </label>
+                </labels>
+                <name>819037eb-4c44-4ce2-a1f6-85c56c73adeb</name>
+                <target>46d287ed-5b94-4629-9c52-c5c66bc643ab</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </state>
+    <state>
+        <name>46d287ed-5b94-4629-9c52-c5c66bc643ab</name>
+        <description>Finaliza el flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						300,
+						400
+					],
+					"terminal": true
+				}
+			]]>
+        </metadata>
+        <labels>
+            <label language-id="es_ES">
+                Final
+            </label>
+        </labels>
+    </state>
+</workflow-definition>

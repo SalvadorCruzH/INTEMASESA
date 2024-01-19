@@ -6,7 +6,7 @@
         xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
     <name>2051ae61-bb72-78bc-6648-910c9c1dacb2</name>
-    <version>10</version>
+    <version>11</version>
     <state>
         <name>89464c74-7ec9-41c9-acd4-1810ac83ee1d</name>
         <description>Inicia un flujo de trabajo.</description>
