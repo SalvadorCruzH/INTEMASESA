@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>43</version>
+	<version>44</version>
 	<state>
 		<name>envio</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -105,7 +105,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Licencias", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -184,7 +184,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Jefe división Personas");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Licencias", "solicitud", userId, false);
 }
 
 customWorkflowUtilTracker.close();
@@ -313,20 +313,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de Área
 					</label>
 				</labels>
-				<name>aprobar solicitud</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División de Área</name>
 				<target>jefe division area</target>
 				<default>true</default>
 			</transition>
@@ -422,20 +422,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar solicitud</name>
+				<name>Rechazar Solicitud y Guardar en SIGD.</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a RRHH
 					</label>
 				</labels>
-				<name>aprobar-solicitud</name>
+				<name>Aprobar Solicitud y Enviar a RRHH</name>
 				<target>admin rrhh</target>
 				<default>true</default>
 			</transition>
@@ -521,20 +521,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar y guardar en SIGD</name>
+				<name>Rechazar Solicitud y Guardar en SIGD..</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de Personas
 					</label>
 				</labels>
-				<name>aprobar</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División de Personas</name>
 				<target>jefe division personas</target>
 				<default>true</default>
 			</transition>
@@ -629,20 +629,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud y guardar en SIGD
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>aprobar solicitud y guardar en SIGD</name>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
 				<target>Solicitud finalizada</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar y guardar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD...</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
