@@ -5,8 +5,8 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
-	<version>100</version>
+	<name>d86c6cfa-26d1-6aba-0572-c1e5a7f9f526</name>
+	<version>110</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -14,8 +14,8 @@
 			<![CDATA[
 				{
 					"xy": [
-						-470.9107129161446,
-						-25.851313053632325
+						-468,
+						-30
 					]
 				}
 			]]>
@@ -49,31 +49,31 @@ customWorkflowUtilTracker.close();]]>
 		<initial>true</initial>
 		<labels>
 			<label language-id="es_ES">
-				Envio solicitud reducción de jornada
+				Envio solicitud excedencia
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud enviada
+						Enviada solicitud de excedencias
 					</label>
 				</labels>
-				<name>solicitudenviada</name>
+				<name>c776482b-663f-49dc-a7bf-2ce20f0b77fa</name>
 				<target>Asignar-admin-RRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>aprobacion final</name>
+		<name>c035cfd3-be36-4f6d-80ad-8dcd3f884e12</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						813.4821282134765,
-						650.7844213559459
+						810.9231803817949,
+						702.9371947820852
 					],
 					"terminal": true
 				}
@@ -98,19 +98,19 @@ customWorkflowUtilTracker.close();]]>
 		</actions>
 		<labels>
 			<label language-id="es_ES">
-				Aprobación de la solicitud
+				final de la solicitud
 			</label>
 		</labels>
 	</state>
 	<state>
-		<name>Rechazada</name>
+		<name>659fe9d4-f141-4db7-bebd-f708be82419b</name>
 		<description>Finaliza el flujo de trabajo.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						21.945769092888014,
-						178.0806801669343
+						26.689239501953125,
+						194.37060546875
 					],
 					"terminal": true
 				}
@@ -139,18 +139,18 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", userId, "");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Excedencias", "solicitud", userId, false);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
 
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "ReduccionJornada", "solicitud", userId, false);
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "Excedencias", "solicitud", userId, false);
 }
-
+}
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
 				</script>
@@ -171,7 +171,7 @@ sigdServiceTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Su solicitud de reducción de jornada ha sido rechaza]]>
+					<![CDATA[Su solicitud de excedencia ha sido rechaza]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -194,15 +194,15 @@ sigdServiceTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						809.7990664198753,
-						480.57132583127975
+						807,
+						507
 					]
 				}
 			]]>
 		</metadata>
 		<actions>
 			<action>
-				<name>Cambiar estado workflow</name>
+				<name>Cambiar estado objeto</name>
 				<description></description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
@@ -233,7 +233,7 @@ sigdServiceTracker.close();]]>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<action>
-				<name>Cambiar estado objeto</name>
+				<name>Cambiar estado workflow</name>
 				<description></description>
 				<status>0</status>
 				<priority>1</priority>
@@ -245,7 +245,7 @@ sigdServiceTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[La solicitud de reduccion de jornada ha sido aceptada]]>
+					<![CDATA[La solicitud de excedencia ha sido aceptada]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -255,6 +255,28 @@ sigdServiceTracker.close();]]>
 				<execution-type>onEntry</execution-type>
 			</notification>
 		</actions>
+		<assignments>
+			<scripted-assignment>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "direccionRrhhRespId");
+
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
+		</assignments>
 		<labels>
 			<label language-id="es_ES">
 				Solicitud aceptada
@@ -268,7 +290,7 @@ sigdServiceTracker.close();]]>
 					</label>
 				</labels>
 				<name>aceptada</name>
-				<target>aprobacion final</target>
+				<target>c035cfd3-be36-4f6d-80ad-8dcd3f884e12</target>
 				<default>true</default>
 			</transition>
 		</transitions>
@@ -280,15 +302,15 @@ sigdServiceTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						1314.1535689022153,
-						332.4811269249422
+						1255,
+						315
 					]
 				}
 			]]>
 		</metadata>
 		<actions>
 			<action>
-				<name>Cambiar estado workflow</name>
+				<name>Cambiar estado objeto</name>
 				<description></description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
@@ -319,19 +341,19 @@ sigdServiceTracker.close();]]>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<action>
-				<name>Cambiar estado objeto</name>
+				<name>Cambiar estado workflow</name>
 				<description></description>
 				<status>4</status>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Solicitud rechazada</name>
+				<name>solicitud rechazada</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[La solicitud de reduccion de jornada ha sido rechazada]]>
+					<![CDATA[La solicitud de excedencia ha sido rechazada]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -350,11 +372,11 @@ sigdServiceTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar Solicitud
 					</label>
 				</labels>
-				<name>Rechazar</name>
-				<target>Asignar-jefe-division-RRHH</target>
+				<name>Rechazar Solicitud.</name>
+				<target>Asignar-jefe-division-RRHHd</target>
 				<default>true</default>
 			</transition>
 		</transitions>
@@ -366,8 +388,8 @@ sigdServiceTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						30.546895583361664,
-						-27.18048865366615
+						30,
+						-28
 					]
 				}
 			]]>
@@ -396,7 +418,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Administrador RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -409,7 +431,7 @@ customWorkflowUtilTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se le ha asignado una solicitud reducción de jornada]]>
+					<![CDATA[Se le ha asignado una solicitud excedencia]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -439,20 +461,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Rechazar solicitud y guardar en SIGD</name>
-				<target>Rechazada</target>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
+				<target>659fe9d4-f141-4db7-bebd-f708be82419b</target>
 				<default>false</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de Departamento
 					</label>
 				</labels>
-				<name>Aprobar y enviar a jefe departamento</name>
+				<name>Aprobar Solicitud y Enviar a jefe de Departamento</name>
 				<target>asignar-jefe-departamento</target>
 				<default>true</default>
 			</transition>
@@ -465,8 +487,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						812.8444213867188,
-						319.3512878417969
+						807,
+						320
 					]
 				}
 			]]>
@@ -518,14 +540,14 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSubdi
 
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Excedencias", "solicitud", userId, false);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Reduccion Jornada", true);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
 
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "ReduccionJornada", "solicitud", userId, false);
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "Excedencias", "solicitud", userId, false);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoFicheroSigd, "Fichero", false);
 }
 
@@ -535,7 +557,7 @@ User direccionRRHH = sapCustomWorkflowUtil.getUserSap(workflowContext, "direccio
 String pdfAnexoDirectorRRHH = customWorkflowUtil.getDocumentToLoad(workflowContext, "anexoDirector");
 String idDocumentoDirectorRRHH = "";
 if(pdfAnexoDirectorRRHH != null && pdfAnexoDirectorRRHH != ""){
-    idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoDirectorRRHH, "ReduccionJornada", "solicitud", userId, true);
+    idDocumentoDirectorRRHH = sigdService.saveDocumentOnSIGD(workflowContext, pdfAnexoDirectorRRHH, "Excedencias", "solicitud", userId, true);
     customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoDirectorRRHH, "Escrito director RRHH", false);
 }
 portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, userId, direccionRRHH);
@@ -543,7 +565,8 @@ portaFirmaService.enviarPortalFirmas(workflowContext, kaleoTaskInstanceToken, us
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();
 portaFirmaServiceTracker.close();
-sapCustomWorkflowUtilTracker.close();]]>
+sapCustomWorkflowUtilTracker.close();
+]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -555,7 +578,7 @@ sapCustomWorkflowUtilTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se le ha asignado una solicitud reducción de jornada]]>
+					<![CDATA[Se le ha asignado una solicitud excedencia]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -580,13 +603,9 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
-if (customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "subdireccionRrhhRespId") == null) {
-    users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "direccionRrhhRespId");
-}else {
-    users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "subdireccionRrhhRespId");
-}
-customWorkflowUtilTracker.close();
-]]>
+users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "direccionRrhhRespId");
+
+customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 			</scripted-assignment>
@@ -600,20 +619,20 @@ customWorkflowUtilTracker.close();
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar solicitud
+						Aprobar Solicitud
 					</label>
 				</labels>
-				<name>aprobadoPF</name>
+				<name>Aprobar Solicitud</name>
 				<target>aceptar-solicitud</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Solicitud rechazada
+						Rechazar Solicitud
 					</label>
 				</labels>
-				<name>rechazadoPF</name>
+				<name>Rechazar Solicitud</name>
 				<target>rechazar-solicitud</target>
 				<default>false</default>
 			</transition>
@@ -626,8 +645,8 @@ customWorkflowUtilTracker.close();
 			<![CDATA[
 				{
 					"xy": [
-						423.546875,
-						-24.5
+						423,
+						-23
 					]
 				}
 			]]>
@@ -662,7 +681,7 @@ customWorkflowUtilTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[se necesita la aprobación de una solicitud de reducción de jornada]]>
+					<![CDATA[se necesita la aprobación de una solicitud de excedencia]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -681,14 +700,13 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.service.util.CustomWorkflowUtil;
-
 Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
-
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId");
-customWorkflowUtilTracker.close();]]>
+customWorkflowUtilTracker.close();
+]]>
 				</script>
 				<script-language>groovy</script-language>
 			</scripted-assignment>
@@ -702,10 +720,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de Área
 					</label>
 				</labels>
-				<name>Aprobar y enviar a jefe división área</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División de Área</name>
 				<target>asignar-jefe-division-area</target>
 				<default>true</default>
 			</transition>
@@ -718,8 +736,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						813.546875,
-						-35.5
+						805,
+						-28
 					]
 				}
 			]]>
@@ -741,7 +759,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivArea", userId, "Jefe Division de área");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteJefeDivArea", userId, "Jefe Division área");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -754,7 +772,7 @@ customWorkflowUtilTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se le ha asignado una solicitud reducción de jornada]]>
+					<![CDATA[Se le ha asignado una solicitud excedencia]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -773,13 +791,14 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
 Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
 ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
 customWorkflowUtilTracker.open();
 CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "divisionRespId");
-customWorkflowUtilTracker.close();
-]]>
+customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 			</scripted-assignment>
@@ -793,24 +812,24 @@ customWorkflowUtilTracker.close();
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de RRHH
 					</label>
 				</labels>
-				<name>Aprobar y enviar a jefe división RRHH</name>
-				<target>Asignar-jefe-division-RRHH</target>
+				<name>Aprobar Solicitud y Enviar a jefe de División de RRHH</name>
+				<target>Asignar-jefe-division-RRHHd</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Asignar-jefe-division-RRHH</name>
+		<name>Asignar-jefe-division-RRHHd</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						815.60986328125,
-						149.30377197265625
+						806,
+						148
 					]
 				}
 			]]>
@@ -845,7 +864,7 @@ customWorkflowUtilTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se le ha asignado una solicitud reducción de jornada]]>
+					<![CDATA[Se le ha asignado una solicitud excedencia]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -872,8 +891,7 @@ CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
 users = customWorkflowUtil.assignWorkflowHorizontalUser(workflowContext, "divisionRrhhRespId");
 
-customWorkflowUtilTracker.close();
-]]>
+customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 			</scripted-assignment>
