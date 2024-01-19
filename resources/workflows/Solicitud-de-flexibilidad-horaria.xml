@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>f9481fa3-698f-ef32-32f8-0d1a1ed620d3</name>
-	<version>43</version>
+	<version>44</version>
 	<state>
 		<name>creacion solicitud</name>
 		<description>Se crea una solicitud de flexibilidad horaria</description>
@@ -311,20 +311,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División
 					</label>
 				</labels>
-				<name>Aprobar</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División</name>
 				<target>jefeDivision</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Rechazar y guardar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD</name>
 				<target>Rechazada</target>
 				<default>false</default>
 			</transition>
@@ -420,20 +420,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a RRHH
 					</label>
 				</labels>
-				<name>aprobar Solicitud</name>
+				<name>Aprobar Solicitud y Enviar a RRHH</name>
 				<target>administrador RRHH</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>rechazar solicitud</name>
+				<name>Rechazar Solicitud y Guardar en SIGD.</name>
 				<target>Rechazada</target>
 				<default>false</default>
 			</transition>
@@ -519,20 +519,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud
+						Aprobar Solicitud y Enviar a jefe de División de Personas
 					</label>
 				</labels>
-				<name>Aprobar solicitud</name>
+				<name>Aprobar Solicitud y Enviar a jefe de División de Personas</name>
 				<target>jefe division personas</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Rechazar</name>
+				<name>Rechazar Solicitud y Guardar en SIGD..</name>
 				<target>Rechazada</target>
 				<default>false</default>
 			</transition>
@@ -628,20 +628,20 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Aprobar Solicitud y guardar en SIGD
+						Aprobar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Aprobar solicitud y guardar en SIGD</name>
+				<name>Aprobar Solicitud y Guardar en SIGD</name>
 				<target>fin solicitud</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar y guardar en SIGD
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Rechazar solicitud</name>
+				<name>Rechazar Solicitud y Guardar en SIGD...</name>
 				<target>Rechazada</target>
 				<default>false</default>
 			</transition>

@@ -1,0 +1,488 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+        xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+    <name>d54acb59-3929-0162-b34a-7d6370ed7d1d</name>
+    <version>5</version>
+    <state>
+        <name>creacion solicitud</name>
+        <description>Se crea una solicitud de flexibilidad horaria</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						-15.838787078857422,
+						-11.7933349609375
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Cambiar estado objeto</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "enviada", userId, "Usuario");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+        </actions>
+        <initial>true</initial>
+        <labels>
+            <label language-id="es_ES">
+                Creación solicitud flexibilidad horaria
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        envio de solicitud
+                    </label>
+                </labels>
+                <name>envio</name>
+                <target>jefeDepartamento</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </state>
+    <state>
+        <name>fin solicitud</name>
+        <description>Finaliza el flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						1021.7774658203125,
+						-11.27911376953125
+					],
+					"terminal": true
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Guardar en SIGD</name>
+                <description>aprobada</description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
+
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Jefe División de Personas");
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "FlexibilidadHoraria", "solicitud", userId, false);
+}
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <action>
+                <name>Cambiar estado workflow</name>
+                <description></description>
+                <status>0</status>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <notification>
+                <name>Solicitud finalizada</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Su solicitud ha finalizado, ${entryType}]]>
+                </template>
+                <template-language>freemarker</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <user />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <labels>
+            <label language-id="es_ES">
+                Fin proceso solicitud
+            </label>
+        </labels>
+    </state>
+    <state>
+        <name>Rechazada</name>
+        <description>Solicitud de flexibilidad horaria rechazada.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						517.4475708007812,
+						-11.215576171875
+					],
+					"terminal": true
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Cambiar estado workflow</name>
+                <description></description>
+                <status>4</status>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <notification>
+                <name>Notificacion de solicitud</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Su solicitud de flexibilidad horaria ha sido rechaza]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <user />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <labels>
+            <label language-id="es_ES">
+                Rechazada
+            </label>
+        </labels>
+    </state>
+    <task>
+        <name>jefeDepartamento</name>
+        <description>Pida a un usuario que trabaje en el elemento.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						-15.8411865234375,
+						-284.94110107421875
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Cambiar estado workflow</name>
+                <description>pendiente jefe de departamento</description>
+                <status>1</status>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <action>
+                <name>Cambiar estado de objeto</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAprobacion", userId, "Jefe Departamento");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onAssignment</execution-type>
+            </action>
+            <notification>
+                <name>Notificar asginación</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Se le ha asignado una solicitud de flexibilidad horaria]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <assignees />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <scripted-assignment>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "dptoRespId");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+            </scripted-assignment>
+        </assignments>
+        <labels>
+            <label language-id="es_ES">
+                Jefe de Departamento del usuario
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Aprobar Solicitud y Enviar a jefe de División
+                    </label>
+                </labels>
+                <name>Aprobar Solicitud y Enviar a jefe de División</name>
+                <target>jefeDivision</target>
+                <default>true</default>
+            </transition>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Rechazar Solicitud
+                    </label>
+                </labels>
+                <name>Rechazar Solicitud</name>
+                <target>Rechazada</target>
+                <default>false</default>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>jefeDivision</name>
+        <description>Pida a un usuario que trabaje en el elemento.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						510.9688720703125,
+						-280.40130615234375
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Cambiar estado workflow</name>
+                <description></description>
+                <status>1</status>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <action>
+                <name>Cambiar estado objeto</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "asignadaJefeDeDivision", userId, "Jefe Division");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onAssignment</execution-type>
+            </action>
+            <notification>
+                <name>Notificar asginación</name>
+                <description>
+                    <![CDATA[pendiente aprobación de jefe de división]]>
+                </description>
+                <template>
+                    <![CDATA[Se le ha asignado una solicitud de flexibilidad horaria]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <assignees />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <scripted-assignment>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+users = customWorkflowUtil.assignWorkflowUser(workflowContext,userId, "DivisionRespId");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+            </scripted-assignment>
+        </assignments>
+        <labels>
+            <label language-id="es_ES">
+                Jefe de División
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Aprobar Solicitud y Enviar a RRHH
+                    </label>
+                </labels>
+                <name>Aprobar Solicitud y Enviar a RRHH</name>
+                <target>administrador RRHH</target>
+                <default>true</default>
+            </transition>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Rechazar Solicitud
+                    </label>
+                </labels>
+                <name>Rechazar Solicitud.</name>
+                <target>Rechazada</target>
+                <default>false</default>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>administrador RRHH</name>
+        <description>Pida a un usuario que trabaje en el elemento.Solicitud enviada lista para asignarse a un usuario con rol Administración de RRHH</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						1022.19921875,
+						-286.5092468261719
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Cambiar estado workflow</name>
+                <description>Pendiente de RRHH</description>
+                <status>1</status>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <action>
+                <name>Cambiar estado objeto</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onAssignment</execution-type>
+            </action>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-id>35183</role-id>
+                </role>
+            </roles>
+        </assignments>
+        <labels>
+            <label language-id="es_ES">
+                Administración de RRHH
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Rechazar Solicitud
+                    </label>
+                </labels>
+                <name>Rechazar Solicitud..</name>
+                <target>Rechazada</target>
+                <default>false</default>
+            </transition>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Aprobar Solicitud
+                    </label>
+                </labels>
+                <name>Aprobar Solicitud</name>
+                <target>fin solicitud</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>
