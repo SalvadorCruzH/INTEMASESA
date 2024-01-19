@@ -7,7 +7,9 @@
 
             <li class="ema-files__file">
                 <#if curEntry.title?has_content>
-                    <h3 class="ema-files__file__title">${curEntry.title}</h3>
+                    <h3 class="ema-files__file__title">
+                        <a href="${customDLUtil.getDownloadURL(dlFile, themeDisplay)}" target="_blank">${curEntry.title}</a>
+                    </h3>
                 </#if>
                 <p class="ema-files__file__file-name"><strong>Nombre del archivo</strong> ${dlFile.getFileName()}</p>
                 <#if curEntry.description?has_content>

@@ -37,6 +37,7 @@ public class ThemeContextContributor implements TemplateContextContributor {
         contextObjects.put("customGetterCategoryLayout",customGetterCategoryLayout);
         contextObjects.put("customDateUtil",_customDateUtil);
         contextObjects.put("customUserNotificationUtil",_customUserNotificationUtil);
+        contextObjects.put("customDLUtil", _customDLUtil);
 
         List<SiteNavigationMenuItem> mainMenuItems =  _siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(Long.parseLong(globalThemeSettings.mainSiteNavigationMenuId()));
         List<Layout> principalMenu = mainMenuItems.stream().map(menu->_customGetter.getLayout(menu)).collect(Collectors.toList());
@@ -62,6 +63,8 @@ public class ThemeContextContributor implements TemplateContextContributor {
     CustomGetterCategoryLayout customGetterCategoryLayout;
     @Reference
     CustomUserNotificationUtil _customUserNotificationUtil;
+    @Reference
+    CustomDLUtil _customDLUtil;
 
     Log LOG = LoggerUtil.getLog(ThemeContextContributor.class);
 }
