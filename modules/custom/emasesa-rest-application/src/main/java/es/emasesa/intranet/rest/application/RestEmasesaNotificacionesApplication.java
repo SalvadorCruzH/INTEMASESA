@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskInstanceIdComparator;
@@ -84,7 +85,9 @@ public class RestEmasesaNotificacionesApplication extends Application {
 				try {
 					String userName = "";
 					try {
-						userName = _userLocalService.fetchUser(payload.getLong("userId")).getFullName();
+						User userNoti = _userLocalService.fetchUser(payload.getLong("userId"));
+						userName = userNoti.getFullName();
+						userNotificationEventJson.put("imageURL", "/user_"+(userNoti.isFemale() ? "female" : "male")+"_portrait?img_id="+ userNoti.getPortraitId() +"&t="+ WebServerServletTokenUtil.getToken(userNoti.getPortraitId()));
 					}catch (Exception e){
 						userName = "N/D";
 					}

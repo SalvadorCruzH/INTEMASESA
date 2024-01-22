@@ -29,7 +29,7 @@ class Notification extends React.Component {
                 </div>
                 <div
                     className="ema-notifications__item__col ema-notifications__item__col--user-avatar">
-                    <img src="/o/emasesa-theme/images/decorative/temp-avatar.png"
+                    <img src={"/image"+this.state.notification.imageURL}
                          alt="Avatar temporal"/>
                 </div>
                 <div
