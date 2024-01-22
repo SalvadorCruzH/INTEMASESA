@@ -62,6 +62,22 @@ class NotificationsModule extends React.Component {
 
     }
 
+    markAllAsRead  = (e) => {
+
+        console.debug(e);
+        if (e.target.value == 'Check All' || e.target.value == 'on') {
+            document.querySelectorAll('input.checkBoxRead').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            e.target.value = 'Uncheck All';
+        } else {
+            document.querySelectorAll('input.checkBoxRead').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            e.target.value = 'Check All';
+        }
+    }
+
     setLoading = (loadingVar) => {
         this.setState({loading: loadingVar});
     }
@@ -75,13 +91,13 @@ class NotificationsModule extends React.Component {
                         <li className="nav-item ema-tabs__tab" role="presentation">
                             <button className="nav-link  ema-tabs__tab__btn active" id="first-tab" data-toggle="tab"
                                     data-target="#first" type="button" role="tab" aria-controls="first"
-                                    aria-selected="true">{Liferay.Language.get("notifications.list")} {this.state.notificationsCount != null ? "("+this.state.notificationsCount+")": ""}
+                                    aria-selected="true">{Liferay.Language.get("notifications.list")} {this.state.notificationsCount  ? "("+this.state.notificationsCount+")": ""}
                             </button>
                         </li>
                         <li className="nav-item ema-tabs__tab" role="presentation">
                             <button className="nav-link  ema-tabs__tab__btn" id="second-tab" data-toggle="tab"
                                     data-target="#second" type="button" role="tab" aria-controls="second"
-                                    aria-selected="false">{Liferay.Language.get("notifications.task.list")} {this.state.notificationsCount != null ? "("+this.state.notificationsCount+")": ""}
+                                    aria-selected="false">{Liferay.Language.get("notifications.task.list")} {this.state.notificationsCount ? "("+this.state.notificationsCount+")": ""}
                             </button>
                         </li>
                     </ul>
@@ -92,9 +108,10 @@ class NotificationsModule extends React.Component {
                             <form method="post" id="notification-filters" className="notification-filters">
                                 <div className="form-row">
                                     <input id="chk_Seleccionartodo" name="chk_Seleccionartodo" type="checkbox"
-                                           aria-labelledby="Seleccionartodo-ariaLabel"/>
+                                           aria-labelledby="Seleccionartodo-ariaLabel"
+                                           onClick={(e) => this.markAllAsRead(e)}/>
                                     <label htmlFor="chk_Seleccionartodo" id="Seleccionartodo-ariaLabel"
-                                           className="sr-only">{Liferay.Language.get("notifications.select.all}")}</label>
+                                           className="sr-only">{Liferay.Language.get("notifications.select.all")}</label>
                                 </div>
                                 <div className="form-row">
                                     <label htmlFor="sel_Filtrarpor" id="Filtrarpor-ariaLabel" className="sr-only">Filtrar
@@ -112,6 +129,9 @@ class NotificationsModule extends React.Component {
                                                                                                   value={Liferay.Language.get("notifications.ordenar")}
                                                                                                   aria-label={Liferay.Language.get("notifications.ordernar.list}")}/>
                                 </div>
+                                <button className="btn btn-primary ema-notifications__item__btn" type="button"><i
+                                    className="fa-regular fa-eye"></i> Marcar todo como leído
+                                </button>
                             </form>
 
                             <div className="ema-notifications__items">
@@ -130,6 +150,31 @@ class NotificationsModule extends React.Component {
                                     ) : (<>
                                         </>
                                     )}
+                                    <div className="results-pagination-wrapper">
+                                        <div className="results-pagination-select-container">
+
+                                        </div>
+                                        <section>
+
+                                            <div id="emasesa_pagination" className="pagination">
+                                                <div className="paginationjs">
+                                                    <nav className="paginationjs-pages" aria-label="Pagination">
+                                                        <ul>
+                                                            <li className="paginationjs-prev disabled m-link-accessible-wrapper linkify">
+                                                                <a href="#"><i
+                                                                    className="fa-solid fa-chevron-left fa-xs"></i>Anterior</a>
+                                                            </li>
+                                                            <li className="paginationjs-next J-paginationjs-next m-link-accessible-wrapper linkify"
+                                                                data-num="2" aria-label="Página siguiente">
+                                                                <a href="#" aria-label="Ir a página 2">Siguiente<i
+                                                                    className="fa-solid fa-chevron-right fa-xs"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
                                 </>)}
                             </div>
 
