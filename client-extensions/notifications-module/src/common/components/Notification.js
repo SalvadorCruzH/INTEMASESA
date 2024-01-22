@@ -26,7 +26,7 @@ class Notification extends React.Component {
                     <input id="chk_Seleccionar" name="chk_Seleccionar" type="checkbox"
                            aria-labelledby="Seleccionar-ariaLabel"/>
                     <label htmlFor="chk_Seleccionar" id="Seleccionar-ariaLabel"
-                           className="sr-only">Seleccionar</label>
+                           className="sr-only">{Liferay.Language.get("notifications.seleccionar")}</label>
                 </div>
                 <div
                     className="ema-notifications__item__col ema-notifications__item__col--user-avatar">
@@ -44,7 +44,7 @@ class Notification extends React.Component {
                             understand it well. Many students have problems with the form (or how to
                             make it).
                         </li>
-                        <li><span className="ema-notifications__item__label">Fecha:</span> 2 enero
+                        <li><span className="ema-notifications__item__label">{Liferay.Language.get("notifications.fecha")}:</span> 2 enero
                             2024 | 11:24
                         </li>
                     </ul>

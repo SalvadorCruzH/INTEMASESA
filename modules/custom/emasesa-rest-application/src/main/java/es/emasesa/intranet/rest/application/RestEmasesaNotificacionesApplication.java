@@ -80,6 +80,36 @@ public class RestEmasesaNotificacionesApplication extends Application {
 		}
 	}
 
+	@GET
+	@Path("/count")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response getUserNotificationsCount(@Context HttpServletRequest request) {
+		try {
+			User user = PermissionThreadLocal.getPermissionChecker().getUser();
+			DSLQuery queryCount = DSLQueryFactoryUtil
+					.count()
+					.from(UserNotificationEventTable.INSTANCE)
+					.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
+							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
+									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))));
+
+			int  userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			jsonObject.put("count", userNotificationEventCount);
+			return Response
+					.status(Response.Status.OK)
+					.entity(jsonObject.toString())
+					.build();
+		} catch (Exception e) {
+			LOG.error("Error obteniendo las notificaciones", e);
+			return Response
+					.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(e.getMessage())
+					.build();
+		}
+	}
+
 	private static final Log LOG = LogFactoryUtil.getLog(RestEmasesaNotificacionesApplication.class);
 
 	@Reference

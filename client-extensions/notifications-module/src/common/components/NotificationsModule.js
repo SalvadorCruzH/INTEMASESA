@@ -12,7 +12,8 @@ class NotificationsModule extends React.Component {
             configuration: null,
             mode: 1,
             notifications: [],
-            notificationsCount : null
+            notificationsCount : null,
+            loading: true
         }
 
         console.debug("Cargando módulo notificaciones");
@@ -114,7 +115,7 @@ class NotificationsModule extends React.Component {
 
                             <div className="ema-notifications__items">
                                 {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
-                                    {this.state.notifications.length != 0 ? (<>
+                                    {this.state.notifications && this.state.notifications.length != 0 ? (<>
                                             {this.state.notifications.map((notification, i) => {
                                                 return (<><Notification notification={notification}
                                                                         configuration={this.state.configuration}
