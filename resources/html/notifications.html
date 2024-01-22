@@ -47,6 +47,7 @@
                             <li><span class="ema-notifications__item__label">Mensaje:</span> We need to use the Present Simple a lot in English, so it's really important to understand it well. Many students have problems with the form (or how to make it).</li>
                             <li><span class="ema-notifications__item__label">Fecha:</span> 2 enero 2024 | 11:24</li>
                         </ul>
+                        <p><button class="btn btn-primary ema-notifications__item__btn" type="button"><i class="fa-regular fa-eye"></i> Marcar como leído</button></p>
                     </div>
                 </div>
                 <div class="ema-notifications__item ema-notifications__item--unread">
@@ -64,6 +65,7 @@
                             <li><span class="ema-notifications__item__label">Mensaje:</span> Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</li>
                             <li><span class="ema-notifications__item__label">Fecha:</span> 4 enero 2024 | 13:15</li>
                         </ul>
+                        <p><button class="btn btn-primary ema-notifications__item__btn" type="button"><i class="fa-regular fa-eye"></i> Marcar como leído</button></p>
                     </div>
                 </div>
                 <div class="ema-notifications__item ema-notifications__item--unread">
@@ -81,8 +83,44 @@
                             <li><span class="ema-notifications__item__label">Mensaje:</span> Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
                             <li><span class="ema-notifications__item__label">Fecha:</span> 10 enero 2024 | 16:04</li>
                         </ul>
+                        <p><button class="btn btn-primary ema-notifications__item__btn" type="button"><i class="fa-regular fa-eye"></i> Marcar como leído</button></p>
                     </div>
                 </div>
+                <div class="results-pagination-wrapper">
+                    <div class="results-pagination-select-container">
+                        <select class="results-pagination-select" title="results-per-page">
+                            <option value="1" selected="selected">Página 1 de 3</option>
+                            <option value="2">Página 2 de 3</option>
+                            <option value="3">Página 3 de 3</option>
+                        </select>
+                    </div>
+                    <section>
+                        <div class="data-container" hidden="">
+                            <ul>
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                            </ul>
+                        </div>
+                        <div id="emasesa_pagination" class="pagination">
+                            <div class="paginationjs">
+                                <nav class="paginationjs-pages" aria-label="Pagination">
+                                    <ul>
+                                        <li class="paginationjs-prev disabled m-link-accessible-wrapper linkify">
+                                            <a href="#"><i class="fa-solid fa-chevron-left fa-xs"></i>Anterior</a>
+                                        </li>
+                                        <li class="paginationjs-next J-paginationjs-next m-link-accessible-wrapper linkify" data-num="2" aria-label="Página siguiente">
+                                            <a href="#" aria-label="Ir a página 2">Siguiente<i class="fa-solid fa-chevron-right fa-xs"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
             </div>
 
         </div>

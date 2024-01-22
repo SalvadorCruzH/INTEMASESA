@@ -29,6 +29,12 @@
         padding: 14.5px 15px;
         height: auto;
     }
+    &#wrapper {
+        select {
+            background: $color-white url('@theme_image_path@/icons/angle-down.svg') calc(100% - 15px) center no-repeat;
+            background-size: 10px auto;
+        }
+    }
     select {
         background: $color-white url('@theme_image_path@/icons/angle-down.svg') calc(100% - 15px) center no-repeat;
         background-size: 10px auto;
