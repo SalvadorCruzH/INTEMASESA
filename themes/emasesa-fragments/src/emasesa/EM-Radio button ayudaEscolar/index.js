@@ -9,15 +9,15 @@ var radioButtonsBeneficiarios = document.querySelectorAll('input[type="radio"][n
 var radioButtonsEstudios = document.querySelectorAll('input[type="radio"][name="estudios"]');
 
 parentElement.addEventListener('click', function (event) {
-    var target = event.target;
-    if (target.tagName != 'INPUT') return;
-    valueInputElement.value = target.value;
-    labelInputElement.value = target.closest('label').innerText.trim();
+  var target = event.target;
+  if (target.tagName != 'INPUT') return;
+  valueInputElement.value = target.value;
+  labelInputElement.value = target.closest('label').innerText.trim();
 
   if (target.name == 'beneficiarios' || target.name == 'estudios') {
     buttonSubmit();
   }
-    setearValores();
+  setearValores();
 });
 function setearValores() {
   $('[name = "familiaMonoparental"]').val($('#familiaMonoparental').val());
@@ -26,6 +26,8 @@ function setearValores() {
   $('[name = "familiaNumerosa"]').text($('#familiaNumerosa').val());
   $('[name = "numero"]').val($('[name="beneficiarios"]:checked').attr('data-number'));
   $('[name = "numero"]').text($('[name="beneficiarios"]:checked').attr('data-number'));
+  $('[name="beneficiariosAyudaLabel"]').val($('[name="beneficiariosDeLaAyuda-label"]').val());
+  $('[name="estudiosLabel"]').val($('[name="estudios-label"]').val());
 }
 
 function buttonSubmit() {
