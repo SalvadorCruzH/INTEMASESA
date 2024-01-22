@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>7bb1bf32-49f0-1875-dcf3-a60fdf4f1842</name>
-	<version>17</version>
+	<version>19</version>
 	<state>
 		<name>creaccion-solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -72,7 +72,7 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						728,
+						727,
 						71
 					],
 					"terminal": true
@@ -102,7 +102,7 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Admin RRHH");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
     String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "AnticiposReintegrables", "solicitud", userId, false);
@@ -229,7 +229,7 @@ sigdServiceTracker.close();]]>
 				{
 					"xy": [
 						236.546875,
-						69.5
+						68.5
 					]
 				}
 			]]>
