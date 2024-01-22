@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>7608c7dc-4f77-0262-c6e9-ca53f45ec239</name>
-	<version>22</version>
+	<name>e75856f5-d6ff-4b68-2195-e6fe71b2f672</name>
+	<version>9</version>
 	<state>
 		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata><![CDATA[{"xy":[-179,67],"transitions":{"solicitud enviada":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						-179,
+						67
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -44,11 +53,16 @@ customWorkflowUtilTracker.close();]]>
 			</label>
 		</labels>
 		<transitions>
-            <transition>
-                <name>solicitud enviada</name>
-                <target>admin RRHH</target>
-                <default>true</default>
-            </transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Solicitud enviada
+					</label>
+				</labels>
+				<name>solicitud enviada</name>
+				<target>admin RRHH</target>
+				<default>true</default>
+			</transition>
 		</transitions>
 	</state>
 	<state>
@@ -178,17 +192,17 @@ customWorkflowUtilSapTracker.open();
 CustomWorkflowUtil customWorkflowUtilSap = customWorkflowUtilSapTracker.getService();
 
 //Modificar historico y estado
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Administrador RRHH");
 
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
     String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "IRPF", "solicitud", userId, false);
-	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud IRPF", false);
+    customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud IRPF", false);
 }
 
 //Llamada a SAP
-customWorkflowUtilSap.modificar(workflowContext);
+customWorkflowUtilSap.modificarIRPF(workflowContext);
 
 customWorkflowUtilSapTracker.close();
 customWorkflowUtilTracker.close();
@@ -230,7 +244,16 @@ sigdServiceTracker.close();]]>
 	<task>
 		<name>admin RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata><![CDATA[{"xy":[310,64],"transitions":{"Rechazar Solicitud":{"bendpoints":[]}}}]]></metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						310.546875,
+						64.5
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>

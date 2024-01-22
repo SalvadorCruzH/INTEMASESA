@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "calendar",
+  "name": "EM-Fecha actual modificable",
+  "typeOptions": {"fieldTypes": ["date"]},
+  "type": "input"
+}
