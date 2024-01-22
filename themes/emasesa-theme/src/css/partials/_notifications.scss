@@ -100,6 +100,7 @@
     @include media-breakpoint-down(md) {
         margin-inline: -30px;
         padding-inline: 30px;
+        flex-wrap: wrap;
     }
     @include media-breakpoint-down(sm) {
         padding-left: 15px;
@@ -133,6 +134,17 @@
         }
         input {
             color: $color-aux-blue;
+        }
+    }
+    .btn {
+        background-color: $color-aux-blue;
+        padding: 13px 20px;
+        border-radius: 25px;
+        margin-left: auto;
+        @include media-breakpoint-down(md) {
+            width: 100%;
+            display: block;
+            margin-top: 1rem;
         }
     }
 }
