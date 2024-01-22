@@ -21,6 +21,8 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="FechaDesde" type="{urn:sap-com:document:sap:soap:functions:mc-style}date10"/&gt;
  *         &lt;element name="FechaHasta" type="{urn:sap-com:document:sap:soap:functions:mc-style}date10"/&gt;
  *         &lt;element name="IdEmpleado" type="{urn:sap-com:document:sap:soap:functions:mc-style}numeric8" minOccurs="0"/&gt;
+ *         &lt;element name="InscripcionAccion" type="{urn:sap-com:document:sap:soap:functions:mc-style}char1" minOccurs="0"/&gt;
+ *         &lt;element name="InscripcionEvento" type="{urn:sap-com:document:sap:soap:functions:mc-style}numeric8" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,7 +35,9 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "fechaDesde",
     "fechaHasta",
-    "idEmpleado"
+    "idEmpleado",
+    "inscripcionAccion",
+    "inscripcionEvento"
 })
 @XmlRootElement(name = "ZPeCalendarioEventos")
 public class ZPeCalendarioEventos {
@@ -44,6 +48,10 @@ public class ZPeCalendarioEventos {
     protected String fechaHasta;
     @XmlElement(name = "IdEmpleado")
     protected String idEmpleado;
+    @XmlElement(name = "InscripcionAccion")
+    protected String inscripcionAccion;
+    @XmlElement(name = "InscripcionEvento")
+    protected String inscripcionEvento;
 
     /**
      * Obtiene el valor de la propiedad fechaDesde.
@@ -115,6 +123,54 @@ public class ZPeCalendarioEventos {
      */
     public void setIdEmpleado(String value) {
         this.idEmpleado = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad inscripcionAccion.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInscripcionAccion() {
+        return inscripcionAccion;
+    }
+
+    /**
+     * Define el valor de la propiedad inscripcionAccion.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInscripcionAccion(String value) {
+        this.inscripcionAccion = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad inscripcionEvento.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInscripcionEvento() {
+        return inscripcionEvento;
+    }
+
+    /**
+     * Define el valor de la propiedad inscripcionEvento.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInscripcionEvento(String value) {
+        this.inscripcionEvento = value;
     }
 
 }

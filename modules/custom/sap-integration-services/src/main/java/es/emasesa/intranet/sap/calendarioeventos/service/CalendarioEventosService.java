@@ -49,7 +49,10 @@ public class CalendarioEventosService {
             Holder<TableOfZpeStCalendarioEventos> tCalendarioEventos = new Holder<>();
             Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos2 = new Holder<>();
 
-            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
+            String inscripcionAccion = "";
+            String inscripcionEvento = "";
+
+            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, inscripcionAccion, inscripcionEvento, tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
 
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
             if (tConteniObjetiEventos.value != null){
@@ -71,6 +74,41 @@ public class CalendarioEventosService {
             LoggerUtil.debug(LOG, "[E] calendarioEventos");
         }
     }
+
+    public JSONObject inscribirCalendarioEventos(String pernr, String fechaDesde, String fechaHasta, String inscripcionAccion, String inscripcionEvento) throws CalendarioEventosException, SapCommunicationException {
+        LoggerUtil.debug(LOG, "[I] calendarioEventos");
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader objectFactoryClassLoader = ZWSPECALENDARIOEVENTOS.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+
+            Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventos> tCalendarioEventos = new Holder<>();
+            Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos2 = new Holder<>();
+
+            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, inscripcionAccion, inscripcionEvento, tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
+
+            JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
+            if (tConteniObjetiEventos.value != null){
+                jsonReturn.put("contenido", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tConteniObjetiEventos.value.getItem())));
+            }
+            if (tCalendarioEventos.value != null){
+                jsonReturn.put("eventos", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tCalendarioEventos.value.getItem())));
+            }
+            if (tConteniObjetiEventos2.value != null){
+                jsonReturn.put("objetivo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tConteniObjetiEventos2.value.getItem())));
+            }
+            return jsonReturn;
+        } catch (ServerSOAPFaultException | JSONException e) {
+            throw new CalendarioEventosException("Error llamando al WS para el origen o parseando datos", e);
+        } catch (ClientTransportException e) {
+            throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
+            LoggerUtil.debug(LOG, "[E] calendarioEventos");
+        }
+    }
+
 
     @PostConstruct
     public void activate() {

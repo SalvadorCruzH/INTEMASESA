@@ -18,6 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="Return" type="{urn:sap-com:document:sap:soap:functions:mc-style}Bapireturn1"/&gt;
  *         &lt;element name="TContenido" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStConteniObjetiEventos"/&gt;
  *         &lt;element name="TEventos" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStCalendarioEventos"/&gt;
  *         &lt;element name="TObjetivo" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStConteniObjetiEventos"/&gt;
@@ -31,6 +32,7 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "_return",
     "tContenido",
     "tEventos",
     "tObjetivo"
@@ -38,12 +40,38 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "ZPeCalendarioEventosResponse")
 public class ZPeCalendarioEventosResponse {
 
+    @XmlElement(name = "Return", required = true)
+    protected Bapireturn1 _return;
     @XmlElement(name = "TContenido", required = true)
     protected TableOfZpeStConteniObjetiEventos tContenido;
     @XmlElement(name = "TEventos", required = true)
     protected TableOfZpeStCalendarioEventos tEventos;
     @XmlElement(name = "TObjetivo", required = true)
     protected TableOfZpeStConteniObjetiEventos tObjetivo;
+
+    /**
+     * Obtiene el valor de la propiedad return.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Bapireturn1 }
+     *     
+     */
+    public Bapireturn1 getReturn() {
+        return _return;
+    }
+
+    /**
+     * Define el valor de la propiedad return.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Bapireturn1 }
+     *     
+     */
+    public void setReturn(Bapireturn1 value) {
+        this._return = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad tContenido.
