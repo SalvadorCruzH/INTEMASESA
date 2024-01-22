@@ -237,7 +237,7 @@ public class AjaxSearchUtil {
         }
     }
 
-    public final String formatViewUrl(String entryClassPK, String entryType, String display, String baseUrl) throws JSONException {
+    public final String formatViewUrl(String entryClassPK, String entryType, String display, String baseUrl) {
         display += "?objectEntryId=" + entryClassPK;
         display += "&objectType=" + entryType;
         display += "&mode=1";
@@ -245,17 +245,17 @@ public class AjaxSearchUtil {
         return baseUrl + display;
     }
 
-    public final String formatEditUrl(String entryClassPK, String entryType, String display, String baseUrl) {
-        display += "?objectEntryId=" + entryClassPK;
-        display += "&objectType=" + entryType;
-        display += "&mode=1";
-        display += "&p_p_state=pop_up";
-        return baseUrl + display;
+    public final String formatEditUrl(String entryClassPK, String entryType, String reenviar, String baseUrl) {
+        if (reenviar.equals(StringPool.BLANK)) {
+            return StringPool.BLANK;
+        }
+        reenviar += "?objectEntryId=" + entryClassPK;
+        reenviar += "&objectType=" + entryType;
+        reenviar += "&mode=2";
+        reenviar += "&p_p_state=pop_up";
+        return baseUrl + reenviar;
     }
 
-    public final String formatDeleteUrl(String portalUrl, String externalReferenceCode, String groupId, String objectContextPath) {
-        return portalUrl + objectContextPath + "/scopes/" + groupId + "/by-external-reference-code/" + externalReferenceCode;
-    }
     /**
      * Formatea la fecha de la solicitud
      *

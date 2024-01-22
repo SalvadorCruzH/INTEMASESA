@@ -230,9 +230,8 @@ public class RestoResultImpl implements AjaxSearchResult {
             } else {
                 jsonObject.put(AjaxSearchPortletKeys.ESTADO, LanguageUtil.get(themeDisplay.getLocale(), "unknown"));
                 jsonObject.put(AjaxSearchPortletKeys.ESTADO_CODE, "unknown");
+                jsonObject.put(AjaxSearchPortletKeys.ES_EDITABLE_POR_USUARIO, StringPool.BLANK);
             }
-            String externalReferenceCode = objectEntry.getExternalReferenceCode();
-            String objectDefinitionId = String.valueOf(objectEntry.getObjectDefinitionId());
             try {
                 String objectDefinitionName = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
                 String objectName = JSONFactoryUtil.createJSONObject(clientExtensionsSettings.objectNames()).getString(objectDefinitionName, objectDefinitionName);
@@ -241,14 +240,17 @@ public class RestoResultImpl implements AjaxSearchResult {
                 JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject(json);
                 String stringObject = jsonObject1.getString(objectName);
                 if(!stringObject.equals(StringPool.BLANK)){
-                    String display = JSONFactoryUtil.createJSONObject(stringObject).getString("display");
-                    String objectContextPath = _objectDefinitionLocalService.getObjectDefinition(objectEntry.getObjectDefinitionId()).getRESTContextPath();
+                    String display = JSONFactoryUtil.createJSONObject(stringObject).getString("display", StringPool.BLANK);
+                    String reenviar = JSONFactoryUtil.createJSONObject(stringObject).getString("reenviar", StringPool.BLANK);
                     jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, ajaxSearchUtil.formatViewUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
-                    jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), objectName, display, themeDisplay.getPortalURL()));
-                    jsonObject.put(AjaxSearchPortletKeys.URL_ELIMINAR, ajaxSearchUtil.formatDeleteUrl(themeDisplay.getPortalURL(), externalReferenceCode, String.valueOf(themeDisplay.getScopeGroupId()), objectContextPath));
-
+                    jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, ajaxSearchUtil.formatEditUrl(String.valueOf(objectClassPK), objectName, reenviar, themeDisplay.getPortalURL()));
+                } else {
+                    jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, StringPool.BLANK);
+                    jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, StringPool.BLANK);
                 }
             } catch (PortalException e) {
+                jsonObject.put(AjaxSearchPortletKeys.URL_VISUALIZAR, StringPool.BLANK);
+                jsonObject.put(AjaxSearchPortletKeys.URL_EDITAR, StringPool.BLANK);
                 LoggerUtil.error(LOG, e);
             }
         }
