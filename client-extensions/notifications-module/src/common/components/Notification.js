@@ -10,7 +10,6 @@ class Notification extends React.Component {
             configuration: props.configuration,
             notification: props.notification
         }
-        console.debug(this);
     }
 
     componentDidMount() {
@@ -35,17 +34,13 @@ class Notification extends React.Component {
                 </div>
                 <div
                     className="ema-notifications__item__col ema-notifications__item__col--notification">
-                    <h3 className="ema-notifications__item__title">Título de la notificación</h3>
+                    <h3 className="ema-notifications__item__title">{this.state.notification.payload.entryType}</h3>
                     <ul>
-                        <li><span className="ema-notifications__item__label">Remitente:</span> Admin
+                        <li><span className="ema-notifications__item__label">Remitente:</span> {this.state.notification.userName}
                         </li>
-                        <li><span className="ema-notifications__item__label">Mensaje:</span> We need
-                            to use the Present Simple a lot in English, so it's really important to
-                            understand it well. Many students have problems with the form (or how to
-                            make it).
+                        <li><span className="ema-notifications__item__label">Mensaje:</span> {this.state.notification.payload.notificationMessage}
                         </li>
-                        <li><span className="ema-notifications__item__label">{Liferay.Language.get("notifications.fecha")}:</span> 2 enero
-                            2024 | 11:24
+                        <li><span className="ema-notifications__item__label">{Liferay.Language.get("notifications.fecha")}:</span> {this.state.notification.timestamp}
                         </li>
                     </ul>
                 </div>

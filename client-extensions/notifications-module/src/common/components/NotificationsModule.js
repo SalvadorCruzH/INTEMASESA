@@ -26,11 +26,12 @@ class NotificationsModule extends React.Component {
 
     buildNotifications = (result) => {
 
-        this.state = {
-            configuration: result.notifications
-        }
+        console.log(result.notifications);
+        this.setState( {
+            notifications: result.notifications
+        });
         this.setState({loading: false});
-        console.log(result);
+        console.log(this.state.notifications);
     }
 
     setObject = (object) => {
@@ -41,9 +42,9 @@ class NotificationsModule extends React.Component {
         console.debug("configurationData");
         console.debug(result);
         if (result) {
-            this.state = {
+            this.setState({
                 configuration: result
-            }
+            });
             this.loadNotifications();
         }
     }
@@ -117,6 +118,7 @@ class NotificationsModule extends React.Component {
                                 {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
                                     {this.state.notifications && this.state.notifications.length != 0 ? (<>
                                             {this.state.notifications.map((notification, i) => {
+                                                console.log(notification)
                                                 return (<><Notification notification={notification}
                                                                         configuration={this.state.configuration}
                                                                         refresh={this.loadNotifications}

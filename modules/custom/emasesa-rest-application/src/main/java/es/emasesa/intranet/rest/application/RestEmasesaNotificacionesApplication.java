@@ -10,8 +10,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskInstanceIdComparator;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
+import es.emasesa.intranet.base.util.CustomCacheSingleUtil;
 import es.emasesa.intranet.rest.constant.EmasesaRestConstant;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -22,7 +30,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +55,8 @@ public class RestEmasesaNotificacionesApplication extends Application {
 	public Response getUserNotifications(@Context HttpServletRequest request) {
 
 		try {
+			SimpleDateFormat formato = new SimpleDateFormat("dd MMMMMMMMMM yyyy | HH:mm");
+			long companyId = CompanyThreadLocal.getCompanyId();
 			User user = PermissionThreadLocal.getPermissionChecker().getUser();
 
 			DSLQuery query = DSLQueryFactoryUtil
@@ -65,7 +77,28 @@ public class RestEmasesaNotificacionesApplication extends Application {
 			int  userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 			jsonObject.put("count", userNotificationEventCount);
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerialize(userNotificationEventList));
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+			for(UserNotificationEvent userNotificationEvent: userNotificationEventList){
+				JSONObject userNotificationEventJson = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(userNotificationEvent));
+				JSONObject payload = JSONFactoryUtil.createJSONObject(userNotificationEvent.getPayload());
+				try {
+					String userName = "";
+					try {
+						userName = _userLocalService.fetchUser(payload.getLong("userId")).getFullName();
+					}catch (Exception e){
+						userName = "N/D";
+					}
+					userNotificationEventJson.put("payload", payload);
+					userNotificationEventJson.put("userName", userName);
+					userNotificationEventJson.put("timestamp", formato.format(new Date(userNotificationEvent.getTimestamp())));
+					WorkflowInstance workflowInstance =
+							WorkflowInstanceManagerUtil.getWorkflowInstance(
+									companyId, payload.getLong("workflowInstanceId"));
+					userNotificationEventJson.put("context", workflowInstance.getCurrentWorkflowNodes().get(0).getLabel(LocaleThreadLocal.getDefaultLocale()));
+				}catch(Exception e){
+				}
+				jsonArray.put(userNotificationEventJson);
+			}
 			jsonObject.put("notifications", jsonArray);
 			return Response
 					.status(Response.Status.OK)
@@ -87,16 +120,22 @@ public class RestEmasesaNotificacionesApplication extends Application {
 	public Response getUserNotificationsCount(@Context HttpServletRequest request) {
 		try {
 			User user = PermissionThreadLocal.getPermissionChecker().getUser();
-			DSLQuery queryCount = DSLQueryFactoryUtil
-					.count()
-					.from(UserNotificationEventTable.INSTANCE)
-					.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
-							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
-									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))));
 
-			int  userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
+			Long notificationsCount = (Long)_customCacheSingleUtil.get("NOTIFICATIONS_COUNT"+user.getUserId());
+			if(notificationsCount == null) {
+				DSLQuery queryCount = DSLQueryFactoryUtil
+						.count()
+						.from(UserNotificationEventTable.INSTANCE)
+						.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
+								.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
+										.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))));
+
+				int userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
+				notificationsCount = (long)userNotificationEventCount;
+				_customCacheSingleUtil.put("NOTIFICATIONS_COUNT"+user.getUserId(), notificationsCount, CustomCacheSingleUtil.TTL_10_MIN);
+			}
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-			jsonObject.put("count", userNotificationEventCount);
+			jsonObject.put("count", notificationsCount);
 			return Response
 					.status(Response.Status.OK)
 					.entity(jsonObject.toString())
@@ -110,9 +149,15 @@ public class RestEmasesaNotificacionesApplication extends Application {
 		}
 	}
 
+	@Reference
+	CustomCacheSingleUtil _customCacheSingleUtil;
+
 	private static final Log LOG = LogFactoryUtil.getLog(RestEmasesaNotificacionesApplication.class);
 
 	@Reference
 	UserNotificationEventLocalService _userNotificationEventLocalService;
+
+	@Reference
+	UserLocalService _userLocalService;
 
 }
