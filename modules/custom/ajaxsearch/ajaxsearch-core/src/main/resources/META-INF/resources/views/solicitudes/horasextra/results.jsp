@@ -51,7 +51,7 @@
 
 <template id="as-template">
     <tr>
-        <td>#asunto#</td>
+        <td>#nombreObjeto#</td>
         <td>#justificacion#</td>
         <td>#fechaActividad#</td>
         <td>#causa#</td>

@@ -50,7 +50,7 @@
 <template id="as-template">
     <tr>
         <td>#tipoAusencia#</td>
-        <td>#asunto#</td>
+        <td>#nombreObjeto#</td>
         <td>#justificacion#</td>
         <td>#fechaActividad#</td>
         <td>#duracion#</td>
