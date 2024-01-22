@@ -61,12 +61,6 @@
                         <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.edit" />
                     </button>
                 </li>
-                <li>
-                    <a href="#urlEliminar#">
-                        <i class="fa-solid fa-trash"></i>
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.delete" />
-                    </a>
-                </li>
             </ul>
             <button class="ema-enlace-visualizar" onclick="openViewDialog('#urlVisualizar#')">
                 <i class="fa-solid fa-eye"></i>
