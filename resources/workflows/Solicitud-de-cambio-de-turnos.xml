@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>5e293a09-be49-c60e-fe0e-22f1d484d2f6</name>
-	<version>29</version>
+	<version>33</version>
 	<state>
 		<name>creacion solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -118,7 +118,7 @@ if (pdf != null && pdf != ""){
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Turnos", "solicitud", userId, false);
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "Turnos", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -157,7 +157,7 @@ sigdServiceTracker.close();]]>
 				{
 					"xy": [
 						61.546875,
-						251.5
+						249.50001525878906
 					],
 					"terminal": true
 				}
@@ -202,7 +202,7 @@ if (pdf != null && pdf != ""){
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
 if(pdfFichero != null && pdfFichero != ""){
-    String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Turnos", "solicitud", userId, false);
+    String idDocumentoFicheroSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfFichero, "Turnos", "solicitud", userId, false);
 }
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -240,8 +240,8 @@ sigdServiceTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						24.256256103515625,
-						-13.199996948242188
+						24.256248474121094,
+						-14.199996948242188
 					]
 				}
 			]]>
@@ -459,7 +459,7 @@ customWorkflowUtilTracker.close();]]>
 				{
 					"xy": [
 						438.546875,
-						263.5
+						265.50001525878906
 					]
 				}
 			]]>

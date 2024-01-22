@@ -6,7 +6,7 @@
         xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
     <name>a77d955e-e716-7ce6-cbc4-a3ae2750b9b1</name>
-    <version>21</version>
+    <version>25</version>
     <state>
         <name>envio solicitud</name>
         <description>Inicia un flujo de trabajo.</description>
@@ -103,7 +103,7 @@ sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
 //Modificar historico y estado
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Administrador RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Administrador RRHH");
 
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
@@ -288,6 +288,29 @@ sigdServiceTracker.close();
                 <priority>1</priority>
                 <execution-type>onEntry</execution-type>
             </action>
+            <action>
+                <name>Cambiar estado objeto</name>
+                <description></description>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "Admin RRHH");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+                <priority>1</priority>
+                <execution-type>onAssignment</execution-type>
+            </action>
             <notification>
                 <name>notificación de solicitud</name>
                 <description>
@@ -346,7 +369,7 @@ sigdServiceTracker.close();
             <![CDATA[
 				{
 					"xy": [
-						52.546875,
+						51.546875,
 						121.5
 					]
 				}

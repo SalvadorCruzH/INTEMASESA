@@ -166,6 +166,78 @@ class Actions extends React.Component {
         }
     }
 
+    openModalReenviar = (event) => {
+        let thatContext = this;
+        let objectReviewed = this.state.objectReviewed;
+        let jsonObjectMapping = {};
+        try{
+            jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        }catch(e){
+            jsonObjectMapping = this.state.configuration.objectMapping;
+        }
+        let objectMapping = jsonObjectMapping[objectReviewed.entryType];
+        if (objectMapping) {
+            let display = objectMapping.reenviar;
+            display += "?objectEntryId=" + objectReviewed.entryClassPK;
+            display += "&objectType=" + objectReviewed.entryType;
+            display += "&mode=2";
+            display += "&p_p_state=pop_up";
+            let url = themeDisplay.getPortalURL() + display;
+            let dialog = Liferay.Util.openWindow({
+                //cache: false,
+                dialog: {
+                    destroyOnHide: true,
+                    modal: true,
+                    cssClass:'dialog-with-footer i-mainWrapper',
+                    after: {
+                        render: function(event) {},
+                        destroy: function(event) {
+                        }
+                    },
+                    toolbars: {
+                        footer: [
+                            {
+                                label: 'Avanzar flujo',
+                                id: 'avanzar-flujo-button',
+                                cssClass: 'btn-link pull-right btn btn-secondary hide',
+                                on: {
+                                    click: function() {
+                                    }
+                                },
+                            },
+                            {
+                                label: 'Cerrar',
+                                cssClass: 'btn-link pull-right btn btn-secondary',
+                                on: {
+                                    click: function() {
+                                        let dialog = Liferay.Util.Window.getById('reenviarDialog_iframe_');
+                                        dialog.destroy();
+                                    }
+                                },
+                            }
+                        ]
+                    }
+                },
+                dialogIframe: {
+                    bodyCssClass: 'dialog-with-footer i-mainWrapper'
+                },
+                id: 'reenviarDialog',
+                //refreshWindow: window,
+                title: 'Reenvío de '+objectReviewed.entryType,
+                uri: url
+            });
+
+            setTimeout(() => {
+                iframeURLChange(document.getElementById("reenviarDialog_iframe_"), function (newURL) {
+                    let dialog = Liferay.Util.Window.getById('reenviarDialog_iframe_');
+                    thatContext.changeTransition(event);
+                    dialog.destroy();
+                })
+            }, 4000);
+            //window.open(url, "_blank")
+        }
+    }
+
     openModalAsesor = (event) => {
         let thatContext = this;
         let objectReviewed = this.state.objectReviewed;
@@ -345,19 +417,37 @@ class Actions extends React.Component {
                                                 if (transition.name !== 'Mandar-a-portafirmas') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
-                                                            {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                                            { window.transitionsLabel[transition.label]
+                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
+                                                                : transition.label.replace(/\./g, '')
+                                                            }
                                                         </a>
                                                     )
                                                 } else if (transition.name !== 'portafirma-director-RRHH') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
-                                                            {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                                            { window.transitionsLabel[transition.label]
+                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
+                                                                : transition.label.replace(/\./g, '')
+                                                            }
+                                                        </a>
+                                                    )
+                                                } else if (transition.name !== 'reenviar-solicitud') {
+                                                    return (
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalReenviar}>
+                                                            { window.transitionsLabel[transition.label]
+                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
+                                                                : transition.label.replace(/\./g, '')
+                                                            }
                                                         </a>
                                                     )
                                                 } else {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
-                                                            {window.transitionsLabel[transition.label]?window.transitionsLabel[transition.label]:transition.label}
+                                                            { window.transitionsLabel[transition.label]
+                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
+                                                                : transition.label.replace(/\./g, '')
+                                                            }
                                                         </a>
                                                     )
                                                 }

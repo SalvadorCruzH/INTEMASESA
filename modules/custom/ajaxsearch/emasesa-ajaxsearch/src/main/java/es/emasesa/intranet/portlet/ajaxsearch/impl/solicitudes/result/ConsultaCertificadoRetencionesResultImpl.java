@@ -170,6 +170,10 @@ public class ConsultaCertificadoRetencionesResultImpl implements AjaxSearchResul
 								themeDisplay.getUser().getUserId(),
 								StringPool.BLANK
 						);
+						if (!contieneSoloNumeros(matricula)) {
+							matricula="";
+						}
+
 					} catch (Exception e) {
 						LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
 					}
@@ -206,6 +210,11 @@ public class ConsultaCertificadoRetencionesResultImpl implements AjaxSearchResul
 		request.setAttribute("cssWrapperClass", config.getOrDefault(CSS_WRAPPER_CLASS, StringPool.BLANK));
 		request.setAttribute("disablePagination", config.getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO));
 		return VIEW;
+	}
+
+	public static boolean contieneSoloNumeros(String matricula) {
+		String patron = "^[0-9]+$";
+		return matricula.matches(patron);
 	}
 
 	@Reference

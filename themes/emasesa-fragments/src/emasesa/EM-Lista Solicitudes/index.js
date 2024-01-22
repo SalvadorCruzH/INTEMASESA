@@ -24,7 +24,9 @@ var fechaFinPantalla = $("[name=fechaFinPantalla]");
 var fechaInicioPantalla = $("[name=fechaInicioPantalla]");
 
 const centroTrabajoOrigen = $('[name=centroDeTrabajoOrigen]');
+const centroTrabajoOrigenlabel = $('[name=centroDeTrabajoOrigen-label]');
 const centroDeTrabajoDestino = $('[name=centroDeTrabajoDestino]');
+const centroDeTrabajoDestinolabel = $('[name=centroDeTrabajoDestino-label]');
 const kilometrosTotales = $('[name=kilometrosTotales]');
 const desde = $('[name=desde]');
 const hasta = $('[name=hasta]');
@@ -75,7 +77,7 @@ $(btnAdd).click(function (event) {
         var labelParte = "Volante";
         addVolante(labelParte);
     }
-	
+
 	//[I] Formulario vacaciones, ausencias y permisos
 	var valorAusencia = tipoDeAusencia.val();
 	if(valorAusencia == ausenciaParcial){
@@ -121,7 +123,7 @@ $(btndelete).click(function() {
 function addLocomocion(valorParte){
     var valorFechaActividad = $('[name=fechaDeActividad]').val();
     var fechaActividad = $('[name=fechaDeActividad]');
-
+    var valorSolicitanteAjeno = $('[name=nombreAjeno]').val() + ' ' + $('[name=primerApellidoAjeno]').val() + ' ' + $('[name=segundoApellidoAjeno]').val();
     if ($("#locomocion-table-id tbody tr").length > 0) {
         $("#locomocion-table-id tbody tr").each(function() {
             var valorTablaDesde = $(this).find('td:eq(0)').text();
@@ -129,13 +131,19 @@ function addLocomocion(valorParte){
             var valorKM = $(this).find('td:eq(2)').text();
             var valorDetalles = valorTablaDesde + " : " + valorTablaHasta;
 
-            if(valorSolicitante != "" && valorFechaActividad != "" && valorDetalles != ""){
+            if ($('[name=pedirParaOtraPersona]').val() === 'pedirParaOtraPersona' && valorSolicitanteAjeno.trim() != "") {
+              if(valorFechaActividad != "" && valorDetalles != ""){
                 addSolicitudTabla(valorParte, valorFechaActividad, valorKM, valorDetalles);
+              }
+            }else {
+              if(valorSolicitante != "" && valorFechaActividad != "" && valorDetalles != ""){
+                addSolicitudTabla(valorParte, valorFechaActividad, valorKM, valorDetalles);
+              }
             }
         });
         $("#locomocion-table-id tbody").empty();
     }else if(valorFechaActividad != "" && centroTrabajoOrigen.val() != "" && centroDeTrabajoDestino.val() != "" && kilometrosTotales.val() != ""){
-        addSolicitudTabla(valorParte, valorFechaActividad, kilometrosTotales.val(), centroTrabajoOrigen.val() + "-" + centroDeTrabajoDestino.val());
+        addSolicitudTabla(valorParte, valorFechaActividad, kilometrosTotales.val(), centroTrabajoOrigenlabel.val() + "-" + centroDeTrabajoDestinolabel.val());
         vaciarInputLocomocion(fechaActividad, centroTrabajoOrigen, centroDeTrabajoDestino, kilometrosTotales);
     }else if(valorFechaActividad != "" && desde.val() != "" && hasta.val() != "" && kilmetrosTotales.val() != ""){
         addSolicitudTabla(valorParte, valorFechaActividad, kilmetrosTotales.val(), desde.val() + "-" + hasta.val());
@@ -265,6 +273,8 @@ function vaciarInputLocomocion(fecha, desde, hasta, km){
     desde.val('');
     hasta.val('');
     km.val('');
+    $('[name=destinoCentro]').val('');
+    $('[name=origenCentro]').val('');
 }
 
 function vaciarInputVolante(fechaIni, fechaFin, numVehiculo, justi, desde, hasta, km){
@@ -275,6 +285,8 @@ function vaciarInputVolante(fechaIni, fechaFin, numVehiculo, justi, desde, hasta
     desde.val('');
     hasta.val('');
     km.val('');
+    $('[name=centroOrigenVolante]').val('');
+    $('[name=centroDestinoVolante]').val('');
 }
 
 function calcularHorasDiferencia(fecha, horaInicio, horaFin){
@@ -297,7 +309,24 @@ function calcularDiasDiferencia(fechaInicio, fechaFin){
 }
 
 function addSolicitudTabla(valorParte, fecha, valor, detalles){
-    var nuevaFila = '<tr>' +
+  var valorSolicitanteAjeno = $('[name=nombreAjeno]').val() + ' ' + $('[name=primerApellidoAjeno]').val() + ' ' + $('[name=segundoApellidoAjeno]').val();
+    if ($('[name=pedirParaOtraPersona]').val() === 'pedirParaOtraPersona' && valorSolicitanteAjeno.trim() != "") {
+        var nuevaFila = '<tr>' +
+          '<td>' + checkboxEstado + '</td>' +
+          '<td>' + valorEstado + '</td>' +
+          '<td>' + valorSolicitanteAjeno + '</td>' +
+          '<td>' + valorParte + '</td>' +
+          '<td>' + fecha + '</td>' +
+          '<td>' + valor + '</td>' +
+          '<td>' + detalles + '</td>' +
+          '</tr>';
+
+        $("#table-solicitudes tbody").append(nuevaFila);
+        addJSONListaSolicitudes(valorParte, fecha, valor, detalles);
+
+    }else{
+
+      var nuevaFila = '<tr>' +
         '<td>' + checkboxEstado + '</td>' +
         '<td>' + valorEstado + '</td>' +
         '<td>' + valorSolicitante + '</td>' +
@@ -307,28 +336,41 @@ function addSolicitudTabla(valorParte, fecha, valor, detalles){
         '<td>' + detalles + '</td>' +
         '</tr>';
 
-    $("#table-solicitudes tbody").append(nuevaFila);
-    addJSONListaSolicitudes(valorParte, fecha, valor, detalles);
+      $("#table-solicitudes tbody").append(nuevaFila);
+      addJSONListaSolicitudes(valorParte, fecha, valor, detalles);
+    }
+
 }
 
 function addJSONListaSolicitudes(parte, fecha, valor, detalles){
     var inputListadoSolicitudes = $("[name=listadoSolicitudes]");
     var listadoSolicitudes = [];
-
+  var valorSolicitanteAjeno = $('[name=nombreAjeno]').val() + ' ' + $('[name=primerApellidoAjeno]').val() + ' ' + $('[name=segundoApellidoAjeno]').val();
     var jsonValue = inputListadoSolicitudes.val();
     if (jsonValue) {
         listadoSolicitudes = JSON.parse(jsonValue);
     }
-
+  if ($('[name=pedirParaOtraPersona]').val() === 'pedirParaOtraPersona' && valorSolicitanteAjeno.trim() != "") {
     var solicitud = {
-        solicitante: valorSolicitante,
-        parte: parte,
-        fecha: fecha,
-        valor: valor,
-        detalles: detalles
+      solicitante: valorSolicitanteAjeno,
+      parte: parte,
+      fecha: fecha,
+      valor: valor,
+      detalles: detalles
     };
     listadoSolicitudes.push(solicitud);
     inputListadoSolicitudes.val(JSON.stringify(listadoSolicitudes));
+  }else {
+    var solicitud = {
+      solicitante: valorSolicitante,
+      parte: parte,
+      fecha: fecha,
+      valor: valor,
+      detalles: detalles
+    };
+    listadoSolicitudes.push(solicitud);
+    inputListadoSolicitudes.val(JSON.stringify(listadoSolicitudes));
+  }
 }
 
 function addDiasCompletos(valorParte){
@@ -337,7 +379,7 @@ function addDiasCompletos(valorParte){
     var valorJustificacion = justificacion.val();
 	var valortipoDeAusencia = tipoDeAusencia.val();
 	var valormotivoAusencia= motivoAusencia.val();
-	
+
 
     if(valorFechaInicio != "" && valorFechaFin != "" && valorJustificacion != ""){
         var fechaActividad = valorFechaInicio + ' - ' + valorFechaFin;
@@ -385,7 +427,7 @@ function addFormacion(valorParte){
 
     if(valorFechaActividad != "") {
         var fechaActividad = valorFechaActividad;
-        
+
 		var detalles = "Requiere Desplazamiento: " + (valorRequiereDesplazamiento == true ? "Si" : "No");
 
         addSolicitudTabla(valorParte, fechaActividad, "", detalles);
@@ -403,7 +445,7 @@ function addMarcaje(valorParte){
 
     if(valorFechaActividad != "" && valorMotivoMarcaje != "") {
         var fechaActividad = valorFechaActividad;
-        
+
 		var detalles = "Motivo: " + valorMotivoMarcaje;
         var valorHoras =   valorHoraEntrada +"-"+ valorHoraSalida;
 

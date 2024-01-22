@@ -4,6 +4,7 @@
         "packages": [
             "client-extensions/global-object-manager-module",
             "client-extensions/administrador-tareas-module",
+            "client-extensions/notifications-module",
             "client-extensions/global-module",
             "modules/override/rest-ddmfieldextender",
             "themes/emasesa-fragments",

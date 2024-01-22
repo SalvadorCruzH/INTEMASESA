@@ -192,7 +192,6 @@ public class JubiladosParcialesResultImpl implements AjaxSearchResult {
     private JSONObject getResultJson(final Document document,
                                      final ThemeDisplay themeDisplay) {
         final JSONObject jsonObject = jsonFactory.createJSONObject();
-        jsonObject.put(AjaxSearchPortletKeys.NOMBRE_OBJETO, document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME));
 
         String fechaEnvio = document.get(themeDisplay.getLocale(), Field.CREATE_DATE);
         jsonObject.put(AjaxSearchPortletKeys.FECHA_ENVIO, ajaxSearchUtil.formatDate(fechaEnvio));
@@ -245,6 +244,7 @@ public class JubiladosParcialesResultImpl implements AjaxSearchResult {
             try {
                 String objectDefinitionName = document.get(themeDisplay.getLocale(), AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
                 String objectName = JSONFactoryUtil.createJSONObject(clientExtensionsSettings.objectNames()).getString(objectDefinitionName, objectDefinitionName);
+                jsonObject.put(AjaxSearchPortletKeys.NOMBRE_OBJETO, objectName);
                 String json = clientExtensionsSettings.objectMapping();
                 JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject(json);
                 String stringObject = jsonObject1.getString(objectName);

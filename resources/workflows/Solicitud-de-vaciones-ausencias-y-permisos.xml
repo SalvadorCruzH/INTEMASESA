@@ -1,25 +1,16 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>d6eb33e7-e516-1643-4a0b-ac5277ac46b8</name>
-	<version>26</version>
+	<version>30</version>
 	<state>
 		<name>envioSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-272.0518101507141,
-						111.4869883293464
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-272,111],"transitions":{"e434ad58-396d-4c93-94b8-94f25fe88015":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -72,8 +63,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						232.03564453125,
-						-102.388427734375
+						233.18434825258228,
+						-101.23975621779256
 					],
 					"terminal": true
 				}
@@ -109,17 +100,20 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
+
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Responsable");
 
 //Subir el object en PDF
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
 	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Vacaciones", "solicitud", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Vacaciones", false);
 }
 //Subir fichero documentacion usuario
 String documentoUsuario = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
 if(documentoUsuario != null && documentoUsuario != ""){
 	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, documentoUsuario, "Vacaciones", "justificante", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Justificante", false);
 }
 
 customWorkflowUtilTracker.close();
@@ -194,11 +188,13 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", use
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
 	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Vacaciones", "solicitud", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Vacaciones", false);
 }
 //Subir fichero documentacion usuario
 String documentoUsuario = customWorkflowUtil.getDocumentToLoad(workflowContext, "documentacion");
 if(documentoUsuario != null && documentoUsuario != ""){
 	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, documentoUsuario, "Vacaciones", "justificante", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Justificante", false);
 }
 
 customWorkflowUtilTracker.close();]]>
@@ -239,16 +235,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>jefeDepartamento</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						230.96994411894653,
-						112.84592674612968
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[230,112],"transitions":{"Aprobar Solicitud y Enviar a RRHH":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -336,16 +323,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>adminRRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						712.09619140625,
-						106.81622314453125
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[712,106],"transitions":{"Devolver al Usuario":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -429,16 +407,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>usuario</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						714.947509765625,
-						377.84210205078125
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[714,377],"transitions":{"Devolver a RRHH":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>

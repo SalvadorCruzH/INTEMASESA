@@ -34,6 +34,8 @@ public class ClientExtensionCleanDatabase {
         LOG.info("Borrado de Global " + result);
         result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~global-object-module'");
         LOG.info("Borrado de Global Objetos " + result);
+        result = executeSQL("delete from Configuration_ where configurationId = 'com.liferay.client.extension.type.configuration.CETConfiguration~notifications-module'");
+        LOG.info("Borrado de Notifications " + result);
         LOG.info("[E] PORTAL_INITIALIZED");
     }
 

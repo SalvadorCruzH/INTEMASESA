@@ -288,6 +288,11 @@
     .search-results {
       display: none;
     }
+    .lfr-pagination-config {
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+    }
     .lfr-pagination-buttons {
       gap: 1rem;
       a {

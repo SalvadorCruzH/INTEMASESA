@@ -46,7 +46,7 @@
 
 <template id="as-template">
     <tr>
-        <td>#asunto#</td>
+        <td>#nombreObjeto#</td>
         <td>#fechaActividad#</td>
         <td><span class="ema-pill-estado #estado-code# #is-user-editable#">#estado#</span></td>
         <td>#fechaEnvio#</td>

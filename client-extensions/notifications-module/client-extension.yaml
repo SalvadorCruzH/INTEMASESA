@@ -1,0 +1,15 @@
+assemble:
+    - from: build/static
+      into: static
+notifications-module:
+    #cssURLs:
+    #    - css/main.*.css
+    friendlyURLMapping: notifications-module
+    htmlElementName: notifications-module
+    instanceable: false
+    name: Modulo para notificaciones
+    portletCategoryName: category.emasesa
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
