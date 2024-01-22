@@ -1,5 +1,10 @@
 <%@ include file="init.jsp" %>
 
+<script>
+	  var loadingOverlay = document.querySelector('.em-loading-overlay');
+	  loadingOverlay.classList.remove('hide');
+</script>
+
 <div class="m-searchAjax m-searchAjax--results">
     <div>
         <div id="as-total-items">
@@ -55,6 +60,12 @@
                 </td>
             </c:if>
     </tr>
+
+    <script>
+	      var loadingOverlay = document.querySelector('.em-loading-overlay');
+	      loadingOverlay.classList.add('hide');
+    </script>
+
 </template>
 
 <script>
@@ -157,3 +168,4 @@ var openEditDialog = function (url) {
     });
 }
 </script>
+

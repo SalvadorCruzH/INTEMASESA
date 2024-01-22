@@ -7,4 +7,5 @@ public class EmasesaRestConstant {
     public static final String DISTANCIACENTROS_BASE = "/distanciacentros";
     public static final String WORKFLOW_TASK_BASE = "/workflowtask";
 
+    public static final String NOTIFICACIONES_BASE = "/notificaciones";
 }

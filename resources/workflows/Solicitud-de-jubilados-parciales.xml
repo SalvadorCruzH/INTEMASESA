@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ce6a3c7d-6bf9-6e1f-cb0e-4e4dfc19dee5</name>
-	<version>60</version>
+	<version>69</version>
 	<condition>
 		<name>3160ce5f-7fde-4c20-a79d-ba26b93c2ddc</name>
 		<description>Ejecute una lógica condicional.</description>
@@ -418,7 +418,7 @@ customWorkflowUtilTracker.close();]]>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<user />
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
@@ -426,7 +426,9 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>147434</role-id>
+					<role-type>regular</role-type>
+					<name>Jefe Division</name>
+					<auto-create>false</auto-create>
 				</role>
 			</roles>
 		</assignments>
@@ -439,7 +441,7 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar solicitud
+						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
 				<name>Rechazar Solicitud</name>
@@ -508,16 +510,12 @@ customWorkflowUtilTracker.close();]]>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Se ha creado una nueva solicitud de jubilados parciales]]>
+					<![CDATA[Se le ha asignado una solicitud de jubilados parciales]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<roles>
-						<role>
-							<role-id>147429</role-id>
-						</role>
-					</roles>
+					<assignees />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
@@ -525,7 +523,9 @@ customWorkflowUtilTracker.close();]]>
 		<assignments>
 			<roles>
 				<role>
-					<role-id>147429</role-id>
+					<role-type>regular</role-type>
+					<name>Director</name>
+					<auto-create>false</auto-create>
 				</role>
 			</roles>
 		</assignments>
@@ -541,7 +541,7 @@ customWorkflowUtilTracker.close();]]>
 						Rechazar Solicitud y Guardar en SIGD
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD</name>
+				<name>Rechazar solicitud.</name>
 				<target>f7280e70-f754-4b17-8aa7-dd50e8f95b29</target>
 				<default>false</default>
 			</transition>
@@ -564,8 +564,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						56.515625,
-						279.265625
+						57.515625,
+						280.26566314697266
 					]
 				}
 			]]>
@@ -614,6 +614,42 @@ sigdServiceTracker.close();]]>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
+			<notification>
+				<name>Notificacion Administrador RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha generado un documento en SIGD de jubilados parciales]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+			<notification>
+				<name>Notificacion Desarrollo RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se ha generado un documento en SIGD de jubilados parciales]]>
+				</template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<roles>
+						<role>
+							<role-type>site</role-type>
+							<name>Desarrollo RRHH</name>
+							<auto-create>false</auto-create>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
 		</actions>
 		<assignments>
 			<roles>
@@ -631,10 +667,10 @@ sigdServiceTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Finalizar Solicitud Aceptada
+						Finalizar solicitud
 					</label>
 				</labels>
-				<name>Finalizar Solicitud Aceptada</name>
+				<name>Finalizar solicitud</name>
 				<target>a29a6609-fcb2-4641-a725-2fe9293a280b</target>
 				<default>true</default>
 			</transition>

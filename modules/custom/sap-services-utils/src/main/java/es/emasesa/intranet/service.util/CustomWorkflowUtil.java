@@ -322,24 +322,30 @@ public class CustomWorkflowUtil {
         String pernr = StringPool.BLANK;
         String codigoMotivo = StringPool.BLANK;
         int valueUnits = 0;
-
+        LOG.debug("Se procede a añadir marcaje...");
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if (_objectEntryLocalService == null){
+            if (_objectEntryLocalService == null || jornadaNominaService == null){
                 activate(null);
             }
-            LOG.debug("Se procede a añadir marcaje...");
+           
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            LOG.debug("classPK: " + classPK);
             switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")){
                 case "cuentaPropia":
+                	LOG.debug("cuentaPropia");
                     pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+                    LOG.debug("numeroDeMatricula: " + pernr);
                     break;
                 case "cuentaAjena":
+                	LOG.debug("cuentaAjena");
                     pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("nmeroDeMatrculaAjena");
+                    LOG.debug("nmeroDeMatrculaAjena: " + pernr);
                     break;
             }
             String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
+            LOG.debug("listadoString: " + listadoString);
             ObjectMapper listadoParse = new ObjectMapper();
             JsonNode listado = listadoParse.readTree(listadoString);
 
@@ -349,6 +355,7 @@ public class CustomWorkflowUtil {
                 String parteModificado = quitarTildes(parte);
 
                 if (parteModificado.equals("Marcaje")) {
+                	LOG.debug("Marcaje");
                     String motivo = solicitud.get("detalles").asText().substring("Motivo: ".length());
                     if (motivo.equals("asuntoSindicalASIPE")) {
                         codigoMotivo = "";
@@ -363,6 +370,7 @@ public class CustomWorkflowUtil {
                     } else if(motivo.equals("trabajoNoPresencial")) {
                         codigoMotivo = "";
                     }
+                    LOG.debug("motivo: " + motivo);
 
                     ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
                     Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);

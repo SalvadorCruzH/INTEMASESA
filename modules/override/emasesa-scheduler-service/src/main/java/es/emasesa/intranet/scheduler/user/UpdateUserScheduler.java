@@ -20,7 +20,7 @@ import java.util.*;
 
 
 @Component (
-        immediate = true,
+        immediate = false,
         property = "destination.name=emasesa/UpdateUser",
         service = MessageListener.class
 )
