@@ -13,7 +13,10 @@ class NotificationsModule extends React.Component {
             mode: 1,
             notifications: [],
             notificationsCount : null,
-            loading: true
+            loading: true,
+            start: 0,
+            end: 10,
+            delta: 10
         }
 
         console.debug("Cargando módulo notificaciones");
@@ -21,7 +24,27 @@ class NotificationsModule extends React.Component {
     }
 
     loadNotifications = () => {
-        NotificationApi.getNotificationsUnRead(this.buildNotifications, this.errorHandler);
+        NotificationApi.getNotificationsUnRead(this.state.start, this.state.end, this.buildNotifications, this.errorHandler);
+    }
+
+    showLess = () => {
+        if(this.state.start <= 0){
+
+        }else{
+            this.setState( {
+                start: this.state.start- this.state.delta,
+                end: this.state.end- this.state.delta
+            });
+            this.loadNotifications()
+        }
+    }
+
+    showMore = () => {
+        this.setState( {
+            start: this.state.start+ this.state.delta,
+            end: this.state.end+ this.state.delta
+        });
+        this.loadNotifications()
     }
 
     buildNotifications = (result) => {
@@ -161,12 +184,12 @@ class NotificationsModule extends React.Component {
                                                     <nav className="paginationjs-pages" aria-label="Pagination">
                                                         <ul>
                                                             <li className="paginationjs-prev disabled m-link-accessible-wrapper linkify">
-                                                                <a href="#"><i
+                                                                <a href="#" onClick={this.showLess} ><i
                                                                     className="fa-solid fa-chevron-left fa-xs"></i>Anterior</a>
                                                             </li>
                                                             <li className="paginationjs-next J-paginationjs-next m-link-accessible-wrapper linkify"
                                                                 data-num="2" aria-label="Página siguiente">
-                                                                <a href="#" aria-label="Ir a página 2">Siguiente<i
+                                                                <a href="#" onClick={this.showMore} aria-label="Ir a página 2">Siguiente<i
                                                                     className="fa-solid fa-chevron-right fa-xs"></i></a>
                                                             </li>
                                                         </ul>

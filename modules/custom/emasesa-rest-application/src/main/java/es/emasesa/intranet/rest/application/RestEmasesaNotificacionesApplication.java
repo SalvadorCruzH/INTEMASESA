@@ -50,10 +50,11 @@ public class RestEmasesaNotificacionesApplication extends Application {
 	}
 
 	@GET
-	@Path("/")
+	@Path("/{start}/{end}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response getUserNotifications(@Context HttpServletRequest request) {
+	public Response getUserNotifications(@Context HttpServletRequest request,
+										 @PathParam("start") int start, @PathParam("end") int end) {
 
 		try {
 			SimpleDateFormat formato = new SimpleDateFormat("dd MMMMMMMMMM yyyy | HH:mm");
@@ -65,7 +66,7 @@ public class RestEmasesaNotificacionesApplication extends Application {
 					.from(UserNotificationEventTable.INSTANCE)
 					.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
 							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
-									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId())))).limit(0, 10);
+									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId())))).limit(start, end);
 
 			DSLQuery queryCount = DSLQueryFactoryUtil
 					.count()

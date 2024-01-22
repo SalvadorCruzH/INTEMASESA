@@ -9,7 +9,8 @@ class Notification extends React.Component {
         super(props)
         this.state = {
             configuration: props.configuration,
-            notification: props.notification
+            notification: props.notification,
+            refresh: props.refresh
         }
     }
 
@@ -19,9 +20,21 @@ class Notification extends React.Component {
 
     markAsRead = () => {
         console.log(this.state.notification)
-        NotificationApi.markAsRed(this.state.notification.userNotificationEventId)
+        NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.state.refresh);
     }
 
+    errorHandler = (error) => {
+
+        Liferay.Util.openToast({
+            message: 'Se ha producido un error marcando como leído',
+            title: Liferay.Language.get('global.error'),
+            toastProps: {
+                autoClose: 5000,
+            },
+            type: 'danger',
+        });
+
+    }
     render() {
 
         return (<>
