@@ -127,7 +127,12 @@ class GlobalObjectModule extends React.Component {
                     }else if(input.type === 'button' && modeOpened !== 2){
                         input.style.display = 'none';
                     }else{
-                        input.value = object[key];
+                        if (!isNaN(new Date(object[key]).getDate())) {
+                            let date = new Date(object[key]);
+                            input.value = date.toISOString().slice(0,10);
+                        } else {
+                            input.value = object[key];
+                        }
                     }
 
                     if (key === "listadoSolicitudes"){
