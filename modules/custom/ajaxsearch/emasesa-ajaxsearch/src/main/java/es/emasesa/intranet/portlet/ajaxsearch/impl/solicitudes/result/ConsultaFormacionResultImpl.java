@@ -143,7 +143,7 @@ public class ConsultaFormacionResultImpl implements AjaxSearchResult {
         final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
         final int end = disablePagination ? pageSize : (currentPage * pageSize);
 
-        final SearchContext searchContext = searchingCommon.createPaginatedSearchContext(start, end);
+        final SearchContext searchContext = searchingCommon.createEmptySearchContext();
         final BooleanQuery booleanQuery = searchingCommon.createEmptyBooleanQuery();
 
         if (Validator.isNotNull(themeDisplay)) {
@@ -176,7 +176,7 @@ public class ConsultaFormacionResultImpl implements AjaxSearchResult {
         }
         JSONObject jsonObject;
 
-        for (Document document : documents) {
+        for (Document document : documents.subList(start, Math.min(documents.size(), end))) {
             jsonObject = getResultJson(document, themeDisplay);
             if (Validator.isNotNull(jsonObject)) {
                 jsonArray.put(jsonObject);
