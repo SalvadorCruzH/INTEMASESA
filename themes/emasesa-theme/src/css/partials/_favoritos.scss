@@ -1,0 +1,152 @@
+.ema-favoritos {
+    &__box-wrapper,
+    &__box-wrapper * {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+    &__box-wrapper {
+        display: grid;
+        margin-bottom: 3rem;
+        &:first-child {
+            grid-template-columns: 1fr 1fr;
+            gap: 0 1rem;
+        }
+        &:last-child {
+            .ema-favoritos__header {
+                justify-content: flex-start;
+            }
+        }
+    }
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 0 1rem;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    &__btn {
+        padding: 7px 18px;
+    }
+    &__content {
+        background-color: $color-white;
+        border-radius: 15px;
+        padding: 15px;
+        form {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            font-weight: 700;
+        }
+        input {
+            &:not([type="submit"]) {
+                .i-mainWrapper & {
+                    padding: 7px 15px;
+                    width: 100%;
+                }
+            }
+            &[type="submit"],
+            &[type="reset"] {
+                background: none;
+                border: none;
+                color: $color-aux-blue;
+                .i-mainWrapper & {
+                    padding: 0;
+                }
+            }
+        }
+    }
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: .5rem;
+        margin-bottom: .5rem;
+        padding-bottom: .5rem;
+        border-bottom: 1px solid $color-light-grey;
+        line-height: 1.25;
+        &:last-child {
+            border: none;
+        }
+        &__label {
+            margin-right: auto;
+            img {
+                width: 20px;
+                margin-right: 5px;
+            }
+        }
+        button {
+            border: none;
+            background: none;
+            i {
+                .i-mainWrapper & {
+                    color: $color-aux-blue;
+                    font-weight: 700;
+                }
+            }
+        }
+        &--word {
+            background: transparent url('@theme_image_path@/icons/file-word.svg') left top no-repeat;
+            background-size: 15px auto;
+            padding-left: 25px;
+        }
+        &--excel {
+            background: transparent url('@theme_image_path@/icons/file-excel.svg') left top no-repeat;
+            background-size: 15px auto;
+            padding-left: 25px;
+        }
+        &--pdf {
+            background: transparent url('@theme_image_path@/icons/file-pdf.svg') left top no-repeat;
+            background-size: 19px auto;
+            padding-left: 25px;
+        }
+    }
+    &__items {
+        .ema-color-box--last & {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 5rem;
+            .ema-favoritos__item {
+                border: none;
+                button {
+                    background-color: $color-icon-grey;
+                    display: flex;
+                    width: 20px;
+                    height: 20px;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 10px;
+                    font-size: .85rem;
+                    i {
+                        color: $color-white;
+                    }
+                }
+                &--add button {
+                    background-color: $color-aux-blue;
+                }
+            }
+        }
+    }
+}
+
+.ema-form-row {
+    margin-bottom: .5rem;
+    &--submit {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        i {
+            background-color: $color-aux-blue;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            font-size: .75rem;
+            .i-mainWrapper & {
+                color: $color-white;
+            }
+        }
+    }
+}

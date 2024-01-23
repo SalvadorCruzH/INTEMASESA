@@ -829,3 +829,25 @@ html:not(#__):not(#___) {
     }
   }
 }
+
+// Color boxes
+
+.i-mainWrapper {
+  .ema-color-box {
+    background-color: $color-white;
+    border-radius: 30px;
+    padding: 30px;
+    align-self: start;
+    &--blue {
+      background-color: $color-medium-light;
+    }
+    &--green {
+      background-color: $color-icon-green;
+    }
+    &--last {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1rem;
+    }
+  }
+}
