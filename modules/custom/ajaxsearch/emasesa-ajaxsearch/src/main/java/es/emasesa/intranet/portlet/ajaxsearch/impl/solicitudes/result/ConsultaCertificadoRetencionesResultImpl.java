@@ -42,9 +42,9 @@ import es.emasesa.intranet.service.util.SapServicesUtil;
 import es.emasesa.intranet.settings.osgi.RolesSettings;
 
 @Component(
-        immediate = true,
-        property = { },
-        service = AjaxSearchResult.class
+		immediate = true,
+		property = { },
+		service = AjaxSearchResult.class
 )
 public class ConsultaCertificadoRetencionesResultImpl implements AjaxSearchResult {
 
@@ -64,7 +64,7 @@ public class ConsultaCertificadoRetencionesResultImpl implements AjaxSearchResul
 
 	static {
 		DFLT_PROPERTIES.put(AjaxSearchPortletKeys.PROP_BASE_PAGESIZE,
-							AjaxSearchPortletKeys.PROP_BASE_PAGESIZE_DFLT);
+				AjaxSearchPortletKeys.PROP_BASE_PAGESIZE_DFLT);
 
 		DFLT_PROPERTIES.put(TEMPLATE_KEY, "EMA-NOTICIA-TARJETA-TEMPLATE");
 		DFLT_PROPERTIES.put(STRUCTURE_KEY, "EMA-NOTICIA");
@@ -91,20 +91,20 @@ public class ConsultaCertificadoRetencionesResultImpl implements AjaxSearchResul
 			final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
 
-            Calendar calendar = Calendar.getInstance();
-            String year = calendar.get(Calendar.YEAR)+"";
+			Calendar calendar = Calendar.getInstance();
+			String year = calendar.get(Calendar.YEAR)+"";
 
 			if(year.isBlank()){
 				year = String.valueOf(Year.now().getValue());
 			}
-            totalItems = performSearchAndParse(request,
-                response,
-                ajaxSearchDisplayContext,
-                    year,
-                currentPage,
-                pageSize,
-                disablePagination,
-                jsonArray);
+			totalItems = performSearchAndParse(request,
+					response,
+					ajaxSearchDisplayContext,
+					year,
+					currentPage,
+					pageSize,
+					disablePagination,
+					jsonArray);
 
 			final int totalPages = (((int) totalItems + pageSize - 1) / pageSize);
 			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(

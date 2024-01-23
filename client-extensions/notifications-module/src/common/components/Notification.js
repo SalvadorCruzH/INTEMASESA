@@ -67,7 +67,7 @@ class Notification extends React.Component {
                     </ul>
                     <p>
                         <button className="btn btn-primary ema-notifications__item__btn" type="button" data-event={this.state.notification.userNotificationEventId} onClick={this.markAsRead}><i
-                            className="fa-regular fa-eye"></i> Marcar como leído
+                            className="fa-regular fa-eye"></i> {Liferay.Language.get("notifications.mark.read")}
                         </button>
                     </p>
                 </div>

@@ -77,7 +77,7 @@ public class ZpeStActJornadaNomina {
     protected BigDecimal plusUnidades;
     @XmlElement(name = "MarcajeHora", required = true)
     @XmlSchemaType(name = "time")
-    protected XMLGregorianCalendar marcajeHora;
+    protected String marcajeHora;
     @XmlElement(name = "MarcajeMotivo", required = true)
     protected String marcajeMotivo;
 
@@ -297,6 +297,7 @@ public class ZpeStActJornadaNomina {
         this.plusUnidades = value;
     }
 
+
     /**
      * Obtiene el valor de la propiedad marcajeHora.
      * 
@@ -305,10 +306,10 @@ public class ZpeStActJornadaNomina {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getMarcajeHora() {
+    public String getMarcajeHora() {
         return marcajeHora;
     }
-
+        //TODO: he cambiado marcajeHora de XMLGregorianCalendar a String HH:mm:ss
     /**
      * Define el valor de la propiedad marcajeHora.
      * 
@@ -317,7 +318,7 @@ public class ZpeStActJornadaNomina {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setMarcajeHora(XMLGregorianCalendar value) {
+    public void setMarcajeHora(String value) {
         this.marcajeHora = value;
     }
 

@@ -88,13 +88,6 @@ class GlobalObjectModule extends React.Component {
                     if(modeOpened === 1){
                         input.setAttribute('disabled', 'disabled');
                     }
-                    $('.seleccionParte').hide();
-                    $('.penoso').hide();
-                    $('.locomocion').hide();
-                    $('.toxico').hide();
-                    $('.trabajoPantalla').hide();
-                    $('.volante').hide();
-                    $('.text-input.attach-listadoSolicitudes').hide();
 
                     if(input.type === 'file') {
                         console.debug(object[key]);
@@ -119,29 +112,49 @@ class GlobalObjectModule extends React.Component {
                                     inputRadio.checked = 'checked';
                                     simulateGlobalClick(inputRadio);
                                 }
-                                inputRadio.disabled = 'disabled';
+                                if(modeOpened === 1) {
+                                    inputRadio.disabled = 'disabled';
+                                }
                             });
                             input.value = keyRadioChecked;
                             console.debug(object[key]);
                         }
                     }else if(input.type === 'button' && modeOpened !== 2){
                         input.style.display = 'none';
-                    }else{
+                    } else if (input.type === 'date') {
                         if (!isNaN(new Date(object[key]).getDate())) {
                             let date = new Date(object[key]);
                             input.value = date.toISOString().slice(0,10);
                         } else {
                             input.value = object[key];
                         }
+                    } else {
+                        input.value = object[key];
                     }
 
-                    if (key === "listadoSolicitudes"){
+                    if (modeOpened === 1 && key === "listadoSolicitudes"){
                         var tbody = $("#table-solicitudes tbody");
                         var data = JSON.parse(object[key]);
                         $.each(data, function(index, item) {
                             var newRow = $('<tr>');
 
                             newRow.append('<td></td>');
+                            newRow.append('<td></td>');
+                            newRow.append('<td>' + item.solicitante + '</td>');
+                            newRow.append('<td>' + item.parte + '</td>');
+                            newRow.append('<td>' + item.fecha + '</td>');
+                            newRow.append('<td>' + item.valor + '</td>');
+                            newRow.append('<td>' + item.detalles + '</td>');
+
+                            tbody.append(newRow);
+                        });
+                    }else if (modeOpened === 2 && key === "listadoSolicitudes"){
+                        var tbody = $("#table-solicitudes tbody");
+                        var data = JSON.parse(object[key]);
+                        const checkboxEstado = '<input type="checkbox">';
+                        $.each(data, function(index, item) {
+                            var newRow = $('<tr>');
+                            newRow.append('<td>' + checkboxEstado + '</td>');
                             newRow.append('<td></td>');
                             newRow.append('<td>' + item.solicitante + '</td>');
                             newRow.append('<td>' + item.parte + '</td>');

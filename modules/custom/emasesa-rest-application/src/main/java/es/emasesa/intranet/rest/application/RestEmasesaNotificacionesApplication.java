@@ -79,6 +79,10 @@ public class RestEmasesaNotificacionesApplication extends Application {
 			int  userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 			jsonObject.put("count", userNotificationEventCount);
+			jsonObject.put("nomore", false);
+			if(end >= userNotificationEventCount){
+				jsonObject.put("nomore", true);
+			}
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 			for(UserNotificationEvent userNotificationEvent: userNotificationEventList){
 				JSONObject userNotificationEventJson = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(userNotificationEvent));

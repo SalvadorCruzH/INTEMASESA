@@ -129,11 +129,16 @@ public class JornadaNominaService {
             zpeStActJornadaNomina.setPernr(pernr);
             zpeStActJornadaNomina.setFechaInicio(fecha);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            LocalDateTime horaInicioDateTime = LocalDateTime.parse(fecha + StringPool.SPACE + hora, formatter);
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            //LocalDateTime horaInicioDateTime = LocalDateTime.parse(fecha + StringPool.SPACE + hora+":00", formatter);
 
-            XMLGregorianCalendar xmlHoraEntrada = getXMLGregorianCalendar(horaInicioDateTime);
-            zpeStActJornadaNomina.setMarcajeHora(xmlHoraEntrada);
+            //XMLGregorianCalendar xmlHoraEntrada = getXMLGregorianCalendar(horaInicioDateTime);
+            //zpeStActJornadaNomina.setMarcajeHora(xmlHoraEntrada);
+
+            //TODO: he cambiado marcajeHora de XMLGregorianCalendar a String HH:mm:ss
+            zpeStActJornadaNomina.setMarcajeHora(hora+":00");
+
+
             if (!motivo.equals(StringPool.BLANK)) {
                 zpeStActJornadaNomina.setMarcajeMotivo(motivo);
             }
