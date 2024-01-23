@@ -48,9 +48,7 @@ public class CertificadoRetencionesService {
                 certificado.put("valor", decoded);
                 String pdfName = "Certificado_" + imVariante + ".pdf";
                 certificado.put("pdf", pdfName);
-                String resultado = "<a href=\"#urlVisualizar#\" class=\"ema-enlace-visualizar\"><i class=\"fa-solid fa-eye\"></i></a>\n" +
-                        "                    <!-- Boton de descarga -->\n" +
-                        "                    <a href=\"javascript:void(0);\" class=\"ema-boton-descargar\" onclick=\"descargarPDF('#valor#', '"+pdfName+"')\">\n" +
+                String resultado = "<a href=\"javascript:void(0);\" class=\"ema-boton-descargar\" onclick=\"descargarPDF('#valor#', '"+pdfName+"')\">\n" +
                         "                        <i class=\"fa-solid fa-download\"></i> Descargar\n" +
                         "                    </a>";
                 certificado.put("resultado", resultado);
