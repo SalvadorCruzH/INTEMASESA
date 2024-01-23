@@ -314,6 +314,21 @@ public class CustomWorkflowBaseUtil {
 		return documentBase64;
 	}
 
+	public String getValue(Map<String, Serializable> workflowContext, String nombre) {
+		String objectValue="";
+		try {
+
+			long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+			objectValue = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get(nombre);
+
+			LOG.debug("Valor buscado: "+objectValue);
+		} catch (PortalException e) {
+			LOG.error("Se ha producido un error al traer el valor "+ e);
+		}
+
+		return objectValue;
+	}
+
 	/**
 	 * Download file
 	 * @param fileEntry
