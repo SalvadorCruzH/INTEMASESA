@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>539c4516-e04f-69a9-3b67-749aa51bccb4</name>
-	<version>14</version>
+	<version>15</version>
 	<state>
 		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -336,7 +336,7 @@ customWorkflowUtilTracker.close();]]>
 					</label>
 				</labels>
 				<name>Devolver al Usuario</name>
-				<target>devuelta usuario</target>
+				<target>Devolver-solicitud</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -352,7 +352,7 @@ customWorkflowUtilTracker.close();]]>
 		</transitions>
 	</task>
 	<task>
-		<name>devuelta usuario</name>
+		<name>Devolver-solicitud</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
 		<metadata>
 			<![CDATA[
@@ -426,7 +426,7 @@ customWorkflowUtilTracker.close();]]>
 						Devolver a Asistente Social
 					</label>
 				</labels>
-				<name>Devolver a Asistente Social</name>
+				<name>reenviar-solicitud</name>
 				<target>asistente social</target>
 				<default>true</default>
 			</transition>
