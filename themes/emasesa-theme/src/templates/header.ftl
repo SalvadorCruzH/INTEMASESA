@@ -56,7 +56,7 @@
 					</a>
 				</li>
 				<li class="i-header__userItem">
-					<a href="" class="i-header__userLink">
+					<a href="${site_default_url}/inicio/directorio-del-personal" class="i-header__userLink">
 						<i class="i-icon i-icon--grey fa-solid fa-users"></i>
 						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.user'/></span>
 					</a>
