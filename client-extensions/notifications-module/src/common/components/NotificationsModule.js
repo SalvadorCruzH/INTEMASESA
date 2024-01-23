@@ -13,6 +13,7 @@ class NotificationsModule extends React.Component {
             mode: 1,
             notifications: [],
             notificationsCount : null,
+            hasMore : true,
             loading: true,
             start: 0,
             end: 10,
@@ -23,38 +24,60 @@ class NotificationsModule extends React.Component {
         EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
     }
 
-    loadNotifications = () => {
-        NotificationApi.getNotificationsUnRead(this.state.start, this.state.end, this.buildNotifications, this.errorHandler);
+    loadNotifications = (start, end) => {
+        if(start !== undefined ){
+            NotificationApi.getNotificationsUnRead(start, end, this.buildNotifications, this.errorHandler);
+        }else{
+            NotificationApi.getNotificationsUnRead(this.state.start, this.state.end, this.buildNotifications, this.errorHandler);
+        }
+
     }
 
     showLess = () => {
-        if(this.state.start <= 0){
-
+        let start = this.state.start;
+        let end = this.state.end;
+        start = start - this.state.delta;
+        end = end - this.state.delta
+        if(start <= 0){
+            this.setState( {
+                start: 0,
+                end: 10
+            });
         }else{
             this.setState( {
-                start: this.state.start- this.state.delta,
-                end: this.state.end- this.state.delta
+                start: start,
+                end: end
             });
-            this.loadNotifications()
         }
+        console.log(start);
+        console.log(end);
+        this.loadNotifications(start, end)
     }
 
     showMore = () => {
+        let start = this.state.start;
+        let end = this.state.end;
+        start = start + this.state.delta;
+        end = end + this.state.delta
+        console.log(start)
+        console.log(end)
         this.setState( {
-            start: this.state.start+ this.state.delta,
-            end: this.state.end+ this.state.delta
+            start: start,
+            end: end
         });
-        this.loadNotifications()
+        this.loadNotifications(start, end)
     }
 
     buildNotifications = (result) => {
 
-        console.log(result.notifications);
-        this.setState( {
-            notifications: result.notifications
-        });
-        this.setState({loading: false});
-        console.log(this.state.notifications);
+        if(result.notifications && result.notifications.length > 0){
+            console.debug(result.notifications);
+            this.setState( {
+                notifications: result.notifications,
+                hasMore:result.nomore
+            });
+            this.setState({loading: false});
+        }
     }
 
     setObject = (object) => {
@@ -83,6 +106,17 @@ class NotificationsModule extends React.Component {
             type: 'danger',
         });
 
+    }
+
+    markAllAsReadButton  = (e) => {
+        let msg = Liferay.Language.get("notifications.markAll.confirm");
+        if (confirm(msg)) {
+            let arraySelected = [];
+            document.querySelectorAll('input.checkBoxRead').forEach(checkbox => {
+                arraySelected.push(checkbox.value);
+            });
+            console.log(arraySelected);
+        }
     }
 
     markAllAsRead  = (e) => {
@@ -152,8 +186,8 @@ class NotificationsModule extends React.Component {
                                                                                                   value={Liferay.Language.get("notifications.ordenar")}
                                                                                                   aria-label={Liferay.Language.get("notifications.ordernar.list}")}/>
                                 </div>
-                                <button className="btn btn-primary ema-notifications__item__btn" type="button"><i
-                                    className="fa-regular fa-eye"></i> Marcar todo como leído
+                                <button className="btn btn-primary ema-notifications__item__btn" type="button" onClick={this.markAllAsReadButton}><i
+                                    className="fa-regular fa-eye"></i> {Liferay.Language.get("notifications.markAll")}
                                 </button>
                             </form>
 
@@ -161,7 +195,6 @@ class NotificationsModule extends React.Component {
                                 {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
                                     {this.state.notifications && this.state.notifications.length != 0 ? (<>
                                             {this.state.notifications.map((notification, i) => {
-                                                console.log(notification)
                                                 return (<><Notification notification={notification}
                                                                         configuration={this.state.configuration}
                                                                         refresh={this.loadNotifications}
@@ -184,13 +217,16 @@ class NotificationsModule extends React.Component {
                                                     <nav className="paginationjs-pages" aria-label="Pagination">
                                                         <ul>
                                                             <li className="paginationjs-prev disabled m-link-accessible-wrapper linkify">
-                                                                <a href="#" onClick={this.showLess} ><i
-                                                                    className="fa-solid fa-chevron-left fa-xs"></i>Anterior</a>
+                                                                <button type="button" onClick={this.showLess} aria-label={Liferay.Language.get("notifications.go.before")} disabled={this.state.start === 0}><i
+                                                                    className="fa-solid fa-chevron-left fa-xs"></i>{Liferay.Language.get("notifications.before")}
+                                                                </button>
                                                             </li>
                                                             <li className="paginationjs-next J-paginationjs-next m-link-accessible-wrapper linkify"
                                                                 data-num="2" aria-label="Página siguiente">
-                                                                <a href="#" onClick={this.showMore} aria-label="Ir a página 2">Siguiente<i
-                                                                    className="fa-solid fa-chevron-right fa-xs"></i></a>
+                                                                <button type="button" onClick={this.showMore} disabled={this.state.hasMore}
+                                                                        aria-label={Liferay.Language.get("notifications.go.next")}>{Liferay.Language.get("notifications.next")}<i
+                                                                    className="fa-solid fa-chevron-right fa-xs"></i>
+                                                                </button>
                                                             </li>
                                                         </ul>
                                                     </nav>
@@ -203,7 +239,7 @@ class NotificationsModule extends React.Component {
 
                         </div>
                         <div className="tab-pane  ema-tabs__tab-panel fade" id="second" role="tabpanel"
-                             aria-labelledby="second-tab">Lista de Peticiones
+                             aria-labelledby="second-tab">{Liferay.Language.get("notifications.task.list")}
                         </div>
                     </div>
 
