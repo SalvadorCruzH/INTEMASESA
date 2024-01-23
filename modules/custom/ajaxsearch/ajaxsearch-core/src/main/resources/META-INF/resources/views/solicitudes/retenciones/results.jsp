@@ -54,9 +54,7 @@
                 <td class="ema-td-dropdown">
                     <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>
                     <!-- Boton de descarga -->
-                    <a href="javascript:void(0);" class="ema-boton-descargar" onclick="descargarPDF('#valor#', '"#pdf#"')">
-                        <i class="fa-solid fa-download"></i> Descargar
-                    </a>
+                    <a href="javascript:void(0);" class="ema-boton-descargar" onclick="descargarPDF('#valor#', '"#pdf#"')"> Descargar</a>
                 </td>
             </c:if>
     </tr>
@@ -129,19 +127,6 @@ var addClickFunctionality = function () {
         });
     });
 }
-
-var checkStatus = function () {
-    $('tbody#as-wrapper tr').each(function() {
-        var estado = $(this).find('.ema-pill-estado');
-        if(estado.hasClass("esEditable")) {
-            $(this).find('.ema-enlace-visualizar').remove();
-        } else {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        }
-    });
-}
-
 
 var openEditDialog = function (url) {
     Liferay.Util.openWindow({
