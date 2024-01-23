@@ -52,9 +52,11 @@
 				<td>#resultado#</td>
             <c:if test="${exResult eq '2'}">
                 <td class="ema-td-dropdown">
-                    <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>
+                    <a href="#urlVisualizar#" class="ema-enlace-visualizar"></a>
                     <!-- Boton de descarga -->
-                    <a href="javascript:void(0);" class="ema-boton-descargar" onclick="descargarPDF('#valor#', '"#pdf#"')"> Descargar</a>
+                    <a href="javascript:void(0);" class="ema-boton-descargar" onclick="descargarPDF('#valor#', '"#pdf#"')">
+                        <i class="fa-solid fa-download"></i> Descargar
+                    </a>
                 </td>
             </c:if>
     </tr>
