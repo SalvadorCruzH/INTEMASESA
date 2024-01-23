@@ -151,10 +151,10 @@ class GlobalObjectModule extends React.Component {
                     }else if (modeOpened === 2 && key === "listadoSolicitudes"){
                         var tbody = $("#table-solicitudes tbody");
                         var data = JSON.parse(object[key]);
+                        const checkboxEstado = '<input type="checkbox">';
                         $.each(data, function(index, item) {
                             var newRow = $('<tr>');
-
-                            newRow.append('<td></td>');
+                            newRow.append('<td>' + checkboxEstado + '</td>');
                             newRow.append('<td></td>');
                             newRow.append('<td>' + item.solicitante + '</td>');
                             newRow.append('<td>' + item.parte + '</td>');
