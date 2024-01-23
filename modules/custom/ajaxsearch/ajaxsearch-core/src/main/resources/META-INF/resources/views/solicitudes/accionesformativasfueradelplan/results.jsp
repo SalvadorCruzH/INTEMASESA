@@ -122,14 +122,11 @@ var addClickFunctionality = function () {
 var checkStatus = function () {
     $('tbody#as-wrapper tr').each(function() {
         var estado = $(this).find('.ema-pill-estado');
-        if(estado.hasClass("success")) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else if (estado.hasClass("danger") ) {
-            $(this).find(".ema-button-moreoptions").remove();
-            $(this).find(".ema-desplegable-moreoptions").remove();
-        } else {
+        if(estado.hasClass("esEditable")) {
             $(this).find('.ema-enlace-visualizar').remove();
+        } else {
+            $(this).find(".ema-button-moreoptions").remove();
+            $(this).find(".ema-desplegable-moreoptions").remove();
         }
     });
 }

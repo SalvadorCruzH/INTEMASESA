@@ -61,12 +61,6 @@
                         <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.edit" />
                     </button>
                 </li>
-                <li>
-                    <a href="#urlEliminar#">
-                        <i class="fa-solid fa-trash"></i>
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.delete" />
-                    </a>
-                </li>
             </ul>
             <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>
         </td>

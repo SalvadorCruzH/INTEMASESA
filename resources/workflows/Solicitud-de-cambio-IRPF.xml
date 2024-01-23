@@ -1,25 +1,16 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>7608c7dc-4f77-0262-c6e9-ca53f45ec239</name>
-	<version>18</version>
+	<version>23</version>
 	<state>
 		<name>envio solicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-179,
-						67
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-179,67],"transitions":{"solicitud enviada":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -85,36 +76,35 @@ customWorkflowUtilTracker.close();]]>
 				<description></description>
 				<script>
 					<![CDATA[import com.liferay.portal.template.*;
-						import com.liferay.portal.util.*;
-						import org.osgi.framework.Bundle;
-						import org.osgi.framework.FrameworkUtil;
-						import org.osgi.util.tracker.ServiceTracker;
-						import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
-						import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
-						Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
-						ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
-						customWorkflowUtilTracker.open();
-						CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+Bundle bundleWorkflow = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleWorkflow.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
 
-						Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
-						ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
-						sigdServiceTracker.open();
-						SigdServiceApplication sigdService = sigdServiceTracker.getService();
+Bundle bundleSigd = FrameworkUtil.getBundle(SigdServiceApplication.class);
+ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleContext(),SigdServiceApplication.class, null);
+sigdServiceTracker.open();
+SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-						//Modificar historico y estado
-						customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Administrador RRHH");
+//Modificar historico y estado
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "Administrador RRHH");
 
-						//Subir el object en PDF
-						String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
-						if(pdf != null && pdf != ""){
-							String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "IRPF", "solicitud", userId, false);
-						}
+//Subir el object en PDF
+String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
+if(pdf != null && pdf != ""){
+	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "IRPF", "solicitud", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud IRPF", false);
+}
 
-						customWorkflowUtilTracker.close();
-						sigdServiceTracker.close();
-
-					]]>
+customWorkflowUtilTracker.close();
+sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -191,7 +181,6 @@ Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
 ServiceTracker customWorkflowUtilSapTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowUtil.class, null);
 customWorkflowUtilSapTracker.open();
 CustomWorkflowUtil customWorkflowUtilSap = customWorkflowUtilSapTracker.getService();
-customWorkflowUtilSap.modificar(workflowContext);
 
 //Modificar historico y estado
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", userId, "Administrador RRHH");
@@ -200,12 +189,15 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aprobada", use
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
     String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "IRPF", "solicitud", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud IRPF", false);
 }
+
+//Llamada a SAP
+customWorkflowUtilSap.modificarIRPF(workflowContext);
 
 customWorkflowUtilSapTracker.close();
 customWorkflowUtilTracker.close();
-sigdServiceTracker.close();
-]]>
+sigdServiceTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -243,16 +235,7 @@ sigdServiceTracker.close();
 	<task>
 		<name>admin RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						310.546875,
-						64.5
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[310,64],"transitions":{"Rechazar Solicitud":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>

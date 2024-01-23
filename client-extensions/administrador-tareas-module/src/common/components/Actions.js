@@ -414,7 +414,16 @@ class Actions extends React.Component {
                                     <li>
                                         <>
                                             {(() => {
-                                                if (transition.name !== 'Mandar-a-portafirmas') {
+                                                if (transition.name == 'reenviar-solicitud'){
+                                                    return (
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalReenviar}>
+                                                            { window.transitionsLabel[transition.label]
+                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
+                                                                : transition.label.replace(/\./g, '')
+                                                            }
+                                                        </a>
+                                                    )
+                                                }else if (transition.name !== 'Mandar-a-portafirmas') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
                                                             { window.transitionsLabel[transition.label]
@@ -426,15 +435,6 @@ class Actions extends React.Component {
                                                 } else if (transition.name !== 'portafirma-director-RRHH') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
-                                                            { window.transitionsLabel[transition.label]
-                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
-                                                                : transition.label.replace(/\./g, '')
-                                                            }
-                                                        </a>
-                                                    )
-                                                } else if (transition.name !== 'reenviar-solicitud') {
-                                                    return (
-                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalReenviar}>
                                                             { window.transitionsLabel[transition.label]
                                                                 ? window.transitionsLabel[transition.label].replace(/\./g, '')
                                                                 : transition.label.replace(/\./g, '')

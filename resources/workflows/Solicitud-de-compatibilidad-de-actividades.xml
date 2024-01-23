@@ -1,25 +1,16 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-		xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>70</version>
+	<version>74</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						-309.29319956507396,
-						168.61442898491455
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[-309,168],"transitions":{"bbe4da74-616c-468a-9429-c37938655e90":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -166,7 +157,7 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "certificacion", userId, false);
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
 	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "declaracion", userId, false);
-}
+}	
 
 customWorkflowUtilTracker.close();
 sigdServiceTracker.close();]]>
@@ -200,16 +191,7 @@ sigdServiceTracker.close();]]>
 	<state>
 		<name>aceptar-solicitud</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						704.6311406311136,
-						1005.5056920133072
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[704,1005],"transitions":{"772540d0-247a-45f3-aa8c-4e7ae4042c2b":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado workflow</name>
@@ -278,16 +260,7 @@ customWorkflowUtilTracker.close();]]>
 	<state>
 		<name>aprobada-consejero</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						711.5817934856456,
-						593.4638858694319
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[711,593],"transitions":{"aprobada-consejero-delegado":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -334,16 +307,7 @@ customWorkflowUtilTracker.close();]]>
 	<state>
 		<name>recahzada-consejero</name>
 		<description>Ejecuta las acciones en el flujo de trabajo.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						1141.9328308476202,
-						425.47678303273744
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[1141,425],"transitions":{"rechazada-consejero-delegado":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -390,16 +354,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-admin-RRHH</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						239.89244673721592,
-						173.5671556788145
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[241,173],"transitions":{"Devolver al Usuario":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -499,16 +454,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Asignar-asesoria-juridica</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						709.4450880245005,
-						181.44353567969696
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[709,181],"transitions":{"Mandar-a-portafirmas":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -581,16 +527,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>Devolver-solicitud</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						238.86638007473806,
-						449.49999448810627
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[238,449],"transitions":{"reenviar-solicitud":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objeto</name>
@@ -608,7 +545,7 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteSolicitante", userId, "User");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "devueltoAUsuarioSolicitante", userId, "User");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
@@ -646,7 +583,7 @@ customWorkflowUtilTracker.close();]]>
 						Devolver a RRHH
 					</label>
 				</labels>
-				<name>Devolver a RRHH</name>
+				<name>reenviar-solicitud</name>
 				<target>Asignar-admin-RRHH</target>
 				<default>true</default>
 			</transition>
@@ -655,16 +592,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>revision-rrhh</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						708.629974397166,
-						763.5869036318155
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[708,763],"transitions":{"Aprobar Solicitud":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Cambiar estado objecto</name>
@@ -737,16 +665,7 @@ customWorkflowUtilTracker.close();]]>
 	<task>
 		<name>portafirma-consejero-delegado</name>
 		<description>Pida a un usuario que trabaje en el elemento.</description>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						711.272414677689,
-						429.29366333449906
-					]
-				}
-			]]>
-		</metadata>
+		<metadata><![CDATA[{"xy":[711,429],"transitions":{"rechazadoPF":{"bendpoints":[]}}}]]></metadata>
 		<actions>
 			<action>
 				<name>Enviar a portafirmas</name>
@@ -804,7 +723,7 @@ if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
 	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "declaracion", userId, false);
 	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Declaración responsable", false);
-}
+}	
 
 //Recuperamos el usuario consejero delegado de SAP
 User consejeroDeledado = sapCustomWorkflowUtil.getUserSap(workflowContext, "consejeroId");
@@ -845,7 +764,7 @@ sapCustomWorkflowUtilTracker.close();]]>
 						Aprobar Solicitud y Enviar a RRHH
 					</label>
 				</labels>
-				<name>Aprobar Solicitud y Enviar a RRHH</name>
+				<name>aprobadoPF</name>
 				<target>aprobada-consejero</target>
 				<default>true</default>
 			</transition>
@@ -855,7 +774,7 @@ sapCustomWorkflowUtilTracker.close();]]>
 						Rechazar Solicitud
 					</label>
 				</labels>
-				<name>Rechazar Solicitud</name>
+				<name>rechazadoPF</name>
 				<target>recahzada-consejero</target>
 				<default>false</default>
 			</transition>

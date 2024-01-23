@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
  * type definitions, element declarations and model 
  * groups.  Factory methods for each of these are 
  * provided in this class.
- * 
+ *
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -24,14 +24,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.sap.document.sap.soap.functions.mc_style
-     * 
+     *
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link ZPeCalendarioEventos }
-     * 
+     *
      */
     public ZPeCalendarioEventos createZPeCalendarioEventos() {
         return new ZPeCalendarioEventos();
@@ -39,7 +39,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZPeCalendarioEventosResponse }
-     * 
+     *
      */
     public ZPeCalendarioEventosResponse createZPeCalendarioEventosResponse() {
         return new ZPeCalendarioEventosResponse();
@@ -47,7 +47,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStConteniObjetiEventos }
-     * 
+     *
      */
     public TableOfZpeStConteniObjetiEventos createTableOfZpeStConteniObjetiEventos() {
         return new TableOfZpeStConteniObjetiEventos();
@@ -55,7 +55,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableOfZpeStCalendarioEventos }
-     * 
+     *
      */
     public TableOfZpeStCalendarioEventos createTableOfZpeStCalendarioEventos() {
         return new TableOfZpeStCalendarioEventos();
@@ -63,7 +63,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStConteniObjetiEventos }
-     * 
+     *
      */
     public ZpeStConteniObjetiEventos createZpeStConteniObjetiEventos() {
         return new ZpeStConteniObjetiEventos();
@@ -71,7 +71,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZpeStCalendarioEventos }
-     * 
+     *
      */
     public ZpeStCalendarioEventos createZpeStCalendarioEventos() {
         return new ZpeStCalendarioEventos();
