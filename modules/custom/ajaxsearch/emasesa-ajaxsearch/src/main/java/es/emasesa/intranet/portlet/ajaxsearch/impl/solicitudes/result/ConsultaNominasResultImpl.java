@@ -139,7 +139,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 		final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		JSONArray array = null;
 		int totalItems = 0;
-		String matricula ="";
+		String matricula = "", urlNominaDefinitiva = "", urlNominaProvisional = "", urlUltimoRecalculo="", fechaNomina="", fechaRecalculo="";
 
 		try {
 			matricula = _expandoValueLocalService.getData(
@@ -157,49 +157,86 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 		String listadoNominas = _sigdServiceApplication.buscarDocumento(matricula);
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(listadoNominas);
-			JSONObject buscarDocumentosResponse = jsonObject.getJSONObject("buscarDocumentosResponse");
-
-			if (buscarDocumentosResponse != null) {
-				JSONArray elementos = buscarDocumentosResponse.getJSONArray("elementos");
-
+			JSONArray elementos = JSONFactoryUtil.createJSONObject(listadoNominas).getJSONObject("buscarDocumentosResponse").getJSONArray("elementos");
+			JSONArray nominax = JSONFactoryUtil.createJSONArray("");
 				if (elementos != null) {
 					for (int i = 0; i < elementos.length(); i++) {
-						JSONObject elemento = elementos.getJSONObject(i);
-						JSONObject documentoOrigen = elemento.getJSONObject("documentoOrigen");
-
+						JSONObject nomina = JSONFactoryUtil.createJSONObject("");
+						JSONObject documentoOrigen = elementos.getJSONObject(i).getJSONObject("documentoOrigen");
+						JSONArray campos = elementos.getJSONObject(i).getJSONObject("documentoOrigen").getJSONArray("campos");
 						String codigoTipoDocumental = documentoOrigen.getString("codigoTipoDocumental");
+
 						if ("7972".equals(codigoTipoDocumental)) {
-							String urlNominaDefinitiva = documentoOrigen.getString("urlDescarga");
+							nomina.put("urlNominaDefinitiva",documentoOrigen.getString("urlDescarga"));
+							for (int b = 0; b < campos.length(); b++) {
+								String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
+								if ("FechaNomina".equals(nombreOrigen)) {
+									nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
+									break;
+								}
+							}
+
 						} else if ("7971".equals(codigoTipoDocumental)) {
-							String urlNominaProvisional = documentoOrigen.getString("urlDescarga");
+							nomina.put("urlNominaProvisional", urlNominaProvisional = documentoOrigen.getString("urlDescarga"));
+							for (int b = 0; b < campos.length(); b++) {
+								String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
+								if ("FechaNomina".equals(nombreOrigen)) {
+									nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
+									break;
+								}
+							}
+
 						} else if ("7973".equals(codigoTipoDocumental)) {
-							String urlUltimoRecalculo = documentoOrigen.getString("urlDescarga");
-						} else {
-							System.out.println("El valor no es ninguno de los esperados");
+							nomina.put("urlUltimoRecalculo", documentoOrigen.getString("urlDescarga"));
+							for (int b = 0; b < campos.length(); b++) {
+								String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
+								if ("FechaNomina".equals(nombreOrigen)) {
+									nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
+								}
+								if ("Fecharecalculo".equals(nombreOrigen)) {
+									nomina.put("fechaRecalculo", campos.getJSONObject(b).getString("dateValue"));
+									break;
+								}
+							}
 						}
-						String urlDescarga = documentoOrigen.getString("urlDescarga");
-
-						JSONArray campos = documentoOrigen.getJSONArray("campos");
-						for (int b = 0; b < campos.length(); b++) {
-							JSONObject campo = campos.getJSONObject(b);
-							String nombreOrigen = campo.getString("nombreOrigen");
-							String dateValue = campo.getString("dateValue");
-						}
+						nominax.put(nomina);
 					}
-				} else {
-					System.out.println("La matriz de elementos es nula.");
 				}
-			} else {
-				System.out.println("El objeto buscarDocumentosResponse es nulo.");
+			// Mapa para almacenar las nominas agrupadas por fecha
+			Map<String, List<JSONObject>> nominasPorFecha = new HashMap<>();
 
+			// Iterar sobre cada elemento de la lista
+			for (int i = 0; i < nominax.length(); i++) {
+				JSONObject nomina = nominax.getJSONObject(i);
+				fechaNomina = nomina.getString("fechaNomina");
+
+				// Verificar si ya existe una lista para esta fecha
+				if (!nominasPorFecha.containsKey(fechaNomina)) {
+					nominasPorFecha.put(fechaNomina, new ArrayList<>());
+				}
+
+				// Agregar la nomina a la lista correspondiente a esta fecha
+				nominasPorFecha.get(fechaNomina).add(nomina);
 			}
+
+			// Imprimir el resultado
+			for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
+				fechaNomina = entry.getKey();
+				List<JSONObject> nominas = entry.getValue();
+
+				System.out.println("Fecha: " + fechaNomina);
+				System.out.println("Nominas:");
+				for (JSONObject nomina : nominas) {
+					System.out.println("  " + nomina);
+				}
+				System.out.println();
+			}
+
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
 
-
-		if(Validator.isNotNull(year)){
+	/**	if(Validator.isNotNull(year)){
 
 			String cacheKey = "certificadoRetenciones_"+year+themeDisplay.getUser().getScreenName();
 			Object object = _cache.get(cacheKey);
@@ -233,7 +270,8 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 			listJson.subList(start,end).stream().forEach(j->{
 				jsonArray.put(j);
 			});
-		}
+		}**/
+
 		return totalItems;
 	}
 

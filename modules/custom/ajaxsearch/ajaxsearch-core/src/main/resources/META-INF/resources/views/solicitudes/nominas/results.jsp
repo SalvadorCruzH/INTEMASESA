@@ -46,8 +46,8 @@
 
 <template id="as-template">
     <tr>
-        <td>#periodo#</td>
-				<td>#nominaProvisional#</td>
+        <td>#fechaNomina#</td>
+				<td>#urlNominaProvisional#</td>
             <c:if test="${exResult eq '2'}">
                 <td class="ema-td-dropdown">
                     <a href="#urlVisualizar#" class="ema-enlace-visualizar"><i class="fa-solid fa-eye"></i></a>

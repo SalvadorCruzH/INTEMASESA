@@ -28,7 +28,9 @@ public class SidgServiceKeys {
 	public static final String BUSCAR_DOCUMENTO_TIPO_ELEMENTO = "tipoElemento";
 	public static final String BUSCAR_DOCUMENTO_SERIE_DOCUMENTAL = "codigoSerieDocumental";
 	public static final String BUSCAR_DOCUMENTO_CLASE_FILE_NET = "claseFileNet";
-	
+
+	public static final String NOMINA_FECHA_NOMINA = "fechaNomina";
+
 	public static final String OBTENER_CONTENIDO_ID = "id";
 	public static final String OBTENER_CONTENIDO_VERSION = "version";
 	public static final String OBTENER_CONTENIDO_DESCARGA = "descarga";
