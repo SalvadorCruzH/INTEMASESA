@@ -11,10 +11,21 @@
         &:first-child {
             grid-template-columns: 1fr 1fr;
             gap: 0 1rem;
+            @include media-breakpoint-down(md) {
+                grid-template-columns: 1fr;
+                gap: 1rem 0;
+            }
         }
         &:last-child {
             .ema-favoritos__header {
                 justify-content: flex-start;
+            }
+        }
+        .ema-color-box--last {
+            .ema-favoritos__content {
+                @include media-breakpoint-down(lg) {
+                    padding: 0;
+                }
             }
         }
     }
@@ -70,6 +81,9 @@
         }
         &__label {
             margin-right: auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 0 .25rem;
             img {
                 width: 20px;
                 margin-right: 5px;
@@ -106,8 +120,19 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem 5rem;
+            @include media-breakpoint-down(lg) {
+                gap: .5rem 2rem;
+            }
+            @include media-breakpoint-down(xs) {
+                grid-template-columns: 1fr;
+            }
             .ema-favoritos__item {
                 border: none;
+                @include media-breakpoint-down(xs) {
+                    &:not(:last-child) {
+                        border-bottom: 1px solid $color-light-grey;
+                    }
+                }
                 button {
                     background-color: $color-icon-grey;
                     display: flex;
