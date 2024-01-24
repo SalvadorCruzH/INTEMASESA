@@ -73,7 +73,7 @@
             background-color: transparent;
             .panel-header-link {
                 padding-inline: 0;
-                border-bottom: 1px solid #dcdcdc;
+                border-bottom: 1px solid $color-light-grey;
                 margin-bottom: 1rem;
             }
             .panel-body {
@@ -81,6 +81,10 @@
             }
             .facet-value {
                 margin-bottom: .5rem;
+                a[id*="range-toggleLink"] {
+                    display: flex;
+                    align-items: center;
+                }
             }
         }
         .portlet-search-bar {
@@ -229,5 +233,26 @@
                 }
             }
         }
+    }
+}
+
+.modified-custom-range {
+    display: flex;
+    flex-wrap: wrap;
+    > div {
+        padding: 0;
+        width: 100%;
+        flex: inherit;
+        max-width: none;
+        .lfr-input-date {
+            padding: 0;
+            display: block;
+            input {
+                padding: 7px 10px;
+            }
+        }
+    }
+    .modified-facet-custom-range-filter-button {
+        width: 100%;
     }
 }
