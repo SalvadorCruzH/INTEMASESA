@@ -35,8 +35,9 @@ public class CustomUserNotificationUtil {
                     .count()
                     .from(UserNotificationEventTable.INSTANCE)
                     .where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
-                            .and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
-                                    .and(UserNotificationEventTable.INSTANCE.userId.eq(userId))));
+                            .and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false))
+                                    .and(UserNotificationEventTable.INSTANCE.archived.eq(false))
+                                    .and(UserNotificationEventTable.INSTANCE.userId.eq(userId)));
 
             int userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
             notificationsCount = (long) userNotificationEventCount;
