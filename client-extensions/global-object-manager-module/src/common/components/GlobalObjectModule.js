@@ -119,7 +119,23 @@ class GlobalObjectModule extends React.Component {
                             input.value = keyRadioChecked;
                             console.debug(object[key]);
                         }
-                    }else if(input.type === 'button' && modeOpened !== 2){
+                    } else if(input.type === 'checkbox'){
+                        let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
+                        if(inputsRadio){
+                            let keyRadioChecked = object[key]['key'];
+                            inputsRadio.forEach(function(inputRadio) {
+                                if(inputRadio.dataset.optionValue === keyRadioChecked){
+                                    inputRadio.checked = 'checked';
+                                    simulateGlobalClick(inputRadio);
+                                }
+                                if(modeOpened === 1) {
+                                    inputRadio.disabled = 'disabled';
+                                }
+                            });
+                            input.value = keyRadioChecked;
+                            console.debug(object[key]);
+                        }
+                    } else if(input.type === 'button' && modeOpened !== 2){
                         input.style.display = 'none';
                     } else if (input.type === 'date') {
                         if (!isNaN(new Date(object[key]).getDate())) {
