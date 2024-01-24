@@ -1,6 +1,6 @@
 import React from 'react';
-import ObjectApi from "../services/ObjectApi";
 import * as Constants from "../js/Constants";
+import ObjectApi from "../services/ObjectApi";
 
 class GlobalObjectModule extends React.Component {
     constructor() {
@@ -88,13 +88,6 @@ class GlobalObjectModule extends React.Component {
                     if(modeOpened === 1){
                         input.setAttribute('disabled', 'disabled');
                     }
-                    $('.seleccionParte').hide();
-                    $('.penoso').hide();
-                    $('.locomocion').hide();
-                    $('.toxico').hide();
-                    $('.trabajoPantalla').hide();
-                    $('.volante').hide();
-                    $('.text-input.attach-listadoSolicitudes').hide();
 
                     if(input.type === 'file') {
                         console.debug(object[key]);
@@ -119,12 +112,30 @@ class GlobalObjectModule extends React.Component {
                                     inputRadio.checked = 'checked';
                                     simulateGlobalClick(inputRadio);
                                 }
-                                inputRadio.disabled = 'disabled';
+                                if(modeOpened === 1) {
+                                    inputRadio.disabled = 'disabled';
+                                }
                             });
                             input.value = keyRadioChecked;
                             console.debug(object[key]);
                         }
-                    }else if(input.type === 'button' && modeOpened !== 2){
+                    } else if(input.type === 'checkbox'){
+                        let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
+                        if(inputsRadio){
+                            let keyRadioChecked = object[key]['key'];
+                            inputsRadio.forEach(function(inputRadio) {
+                                if(inputRadio.dataset.optionValue === keyRadioChecked){
+                                    inputRadio.checked = 'checked';
+                                    simulateGlobalClick(inputRadio);
+                                }
+                                if(modeOpened === 1) {
+                                    inputRadio.disabled = 'disabled';
+                                }
+                            });
+                            input.value = keyRadioChecked;
+                            console.debug(object[key]);
+                        }
+                    } else if(input.type === 'button' && modeOpened !== 2){
                         input.style.display = 'none';
                     } else if (input.type === 'date') {
                         if (!isNaN(new Date(object[key]).getDate())) {
@@ -137,7 +148,7 @@ class GlobalObjectModule extends React.Component {
                         input.value = object[key];
                     }
 
-                    if (key === "listadoSolicitudes"){
+                    if (modeOpened === 1 && key === "listadoSolicitudes"){
                         var tbody = $("#table-solicitudes tbody");
                         var data = JSON.parse(object[key]);
                         $.each(data, function(index, item) {
@@ -150,6 +161,39 @@ class GlobalObjectModule extends React.Component {
                             newRow.append('<td>' + item.fecha + '</td>');
                             newRow.append('<td>' + item.valor + '</td>');
                             newRow.append('<td>' + item.detalles + '</td>');
+
+                            tbody.append(newRow);
+                        });
+                    }else if (modeOpened === 2 && key === "listadoSolicitudes"){
+                        var tbody = $("#table-solicitudes tbody");
+                        var data = JSON.parse(object[key]);
+                        const checkboxEstado = '<input type="checkbox">';
+                        $.each(data, function(index, item) {
+                            var newRow = $('<tr>');
+                            newRow.append('<td>' + checkboxEstado + '</td>');
+                            newRow.append('<td></td>');
+                            newRow.append('<td>' + item.solicitante + '</td>');
+                            newRow.append('<td>' + item.parte + '</td>');
+                            newRow.append('<td>' + item.fecha + '</td>');
+                            newRow.append('<td>' + item.valor + '</td>');
+                            newRow.append('<td>' + item.detalles + '</td>');
+
+                            tbody.append(newRow);
+                        });
+                    }else if (modeOpened === 1 && key === "listadoSolicitudesJubilados"){
+                        var tbody = $("#table-solicitudes tbody");
+                        var data = JSON.parse(object[key]);
+                        const checkboxEstado = '<input type="checkbox">';
+                        $.each(data, function(index, item) {
+                            var newRow = $('<tr>');
+                            newRow.append('<td></td>');
+                            newRow.append('<td></td>');
+                            newRow.append('<td>' + item.matricula + '</td>');
+                            newRow.append('<td>' + item.solicitante + '</td>');
+                            newRow.append('<td>' + item.inicio + '</td>');
+                            newRow.append('<td>' + item.fin + '</td>');
+                            newRow.append('<td>' + item.duracion + '</td>');
+                            newRow.append('<td>' + item.observaciones + '</td>');
 
                             tbody.append(newRow);
                         });

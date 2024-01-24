@@ -1,0 +1,162 @@
+<div class="ema-favoritos">
+    <div class="ema-favoritos__box-wrapper">
+        <div class="ema-color-box ema-color-box--blue ema-favoritos__box">
+            <header class="ema-favoritos__header">
+                <h3 class="ema-favoritos__title">Mis enlaces</h3>
+                <button id="mis-enlaces-btn" type="button" class="ema-favoritos__btn btn btn-primary">Guardar</button>
+            </header>
+            <div class="ema-favoritos__content">
+                <form method="post">
+                    <div class="ema-form-row">
+                        <label for="txt_titulo" id="titulo-ariaLabel">Título</label>
+                        <input id="txt_titulo" name="txt_titulo" type="text" aria-labelledby="titulo-ariaLabel" />
+                    </div>
+                    <div class="ema-form-row">
+                        <label for="enlace" id="enlace-ariaLabel">Enlace</label>
+                        <input id="enlace" name="enlace" type="url" aria-labelledby="enlace-ariaLabel" />
+                    </div>
+                    <div class="ema-form-row ema-form-row--submit">
+                        <span class="ema-form-row--submit__item">
+                            <input type="reset" aria-label="Borrar formulario" value="Cancelar" />
+                        </span>
+                        <span class="ema-form-row--submit__item">
+                            <i class="fa-solid fa-plus"></i> <input type="submit" value="Añadir" aria-label="Añadir enlace" />
+                        </span>
+                    </div>
+                </form>
+                <ul class="ema-favoritos__items">
+                    <li class="ema-favoritos__item">
+                        <span class="ema-favoritos__item__label">Primer enlace de la lista</span>
+                        <button type="button"><span class="sr-only">Editar</span> <i class="fa-regular fa-pen-to-square"></i></button>
+                        <button type="button"><span class="sr-only">Eliminar</span> <i class="fa-regular fa-trash-can"></i></button>
+                    </li>
+                    <li class="ema-favoritos__item">
+                        <span class="ema-favoritos__item__label">Segundo enlace de los que se supone que tenemos guardados y tenemos la opción de editar o eliminar</span>
+                        <button type="button"><span class="sr-only">Editar</span> <i class="fa-regular fa-pen-to-square"></i></button>
+                        <button type="button"><span class="sr-only">Eliminar</span> <i class="fa-regular fa-trash-can"></i></button>
+                    </li>
+                    <li class="ema-favoritos__item">
+                        <span class="ema-favoritos__item__label">Y después del título largo viene este enlace</span>
+                        <button type="button"><span class="sr-only">Editar</span> <i class="fa-regular fa-pen-to-square"></i></button>
+                        <button type="button"><span class="sr-only">Eliminar</span> <i class="fa-regular fa-trash-can"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ema-color-box ema-color-box--green ema-favoritos__box">
+            <header class="ema-favoritos__header">
+                <h3 class="ema-favoritos__title">Mis documentos</h3>
+                <button id="mis-documentos-btn" type="button" class="ema-favoritos__btn btn btn-primary">Guardar</button>
+            </header>
+            <div class="ema-favoritos__content">
+                <ul class="ema-favoritos__items">
+                    <li class="ema-favoritos__item ema-favoritos__item--word">
+                        <span class="ema-favoritos__item__label">Grimorio dancer peitch por la noche</span>
+                        <button type="button"><span class="sr-only">Eliminar</span> <i class="fa-regular fa-trash-can"></i></button>
+                    </li>
+                    <li class="ema-favoritos__item ema-favoritos__item--excel">
+                        <span class="ema-favoritos__item__label">Documento para ver qué tal vamos maquetando</span>
+                        <button type="button"><span class="sr-only">Eliminar</span> <i class="fa-regular fa-trash-can"></i></button>
+                    </li>
+                    <li class="ema-favoritos__item ema-favoritos__item--pdf">
+                        <span class="ema-favoritos__item__label">Último documento de la lista</span>
+                        <button type="button"><span class="sr-only">Eliminar</span> <i class="fa-regular fa-trash-can"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.ema-favoritos__box-wrapper -->
+    <div class="ema-favoritos__box-wrapper">
+        <header class="ema-favoritos__header">
+            <h3 class="ema-favoritos__title">Mis accesos directos</h3>
+            <button id="mis-documentos-btn" type="button" class="ema-favoritos__btn btn btn-primary">Guardar</button>
+        </header>
+        <div class="ema-color-box--last">
+            <div class="ema-color-box ema-color-box--white ema-favoritos__box">
+                <div class="ema-favoritos__content">
+                    <ul class="ema-favoritos__items">
+                        <li class="ema-favoritos__item ema-favoritos__item--add">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-boletin-digital.svg" alt=""> Boletín digital
+                            </span>
+                            <button type="button"><span class="sr-only">Activar</span> <i class="fa-solid fa-plus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-biblioteca-digital.svg" alt=""> Biblioteca digital
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-nomina.svg" alt=""> Mi nómina
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--add">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-calendario-laboral.svg" alt=""> Calendario laboral
+                            </span>
+                            <button type="button"><span class="sr-only">Activar</span> <i class="fa-solid fa-plus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-mis-vacaciones.svg" alt=""> Mis vacaciones
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-gestion-salas.svg" alt=""> Gestión de salas
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ema-color-box ema-color-box--white ema-favoritos__box">
+                <div class="ema-favoritos__content">
+                    <ul class="ema-favoritos__items">
+                        <li class="ema-favoritos__item ema-favoritos__item--add">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-boletin-digital.svg" alt=""> Boletín digital
+                            </span>
+                            <button type="button"><span class="sr-only">Activar</span> <i class="fa-solid fa-plus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-biblioteca-digital.svg" alt=""> Biblioteca digital
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-nomina.svg" alt=""> Mi nómina
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--add">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-calendario-laboral.svg" alt=""> Calendario laboral
+                            </span>
+                            <button type="button"><span class="sr-only">Activar</span> <i class="fa-solid fa-plus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-mis-vacaciones.svg" alt=""> Mis vacaciones
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                        <li class="ema-favoritos__item ema-favoritos__item--remove">
+                            <span class="ema-favoritos__item__label">
+                                <img src="/o/emasesa-theme/images/icons/ico-gestion-salas.svg" alt=""> Gestión de salas
+                            </span>
+                            <button type="button"><span class="sr-only">Desactivar</span> <i class="fa-solid fa-minus"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

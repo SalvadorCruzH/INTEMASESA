@@ -20,7 +20,20 @@ class Notification extends React.Component {
 
     markAsRead = () => {
         console.log(this.state.notification)
-        NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.state.refresh);
+        NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.callDataCallback, this.callDataCallback);
+    }
+
+    callDataCallback = (data) => {
+        let message = "La operación se ha realizado correctamente";
+        Liferay.Util.openToast({
+            message: message,
+            title: Liferay.Language.get('global.success'),
+            toastProps: {
+                autoClose: 5000,
+            },
+            type: 'success',
+        });
+        setTimeout(this.state.refresh, 100);
     }
 
     errorHandler = (error) => {

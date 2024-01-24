@@ -49,6 +49,13 @@
                     margin-left: auto;
                     margin-top: -15px;
                 }
+                img {
+                    width: 50px;
+                    border-radius: 25px;
+                    .i-mainWrapper & {
+                        max-width: 50px;
+                    }
+                }
             }
             &--check {
                 margin-right: 1rem;

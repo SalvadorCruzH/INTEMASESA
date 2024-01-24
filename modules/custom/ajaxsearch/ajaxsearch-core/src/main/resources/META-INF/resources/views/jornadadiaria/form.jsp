@@ -102,14 +102,14 @@
          }else if($("#month").val() == 'resumenanualpasado'){
                    window.location.href = "${resumenAnualUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=resumenanualpasado";
            } else {
-            ajaxSearchFeature.doSearch(true, false);
+            ajaxSearchFeature.doSearch(true, false, true);
         }
     });
 
     $("#m-searchAjax__clean__button").on("click", function (e){
         $('#year').val('');
         $('#queryText').val('');
-         ajaxSearchFeature.doSearch();
+            ajaxSearchFeature.doSearch(true, false, true);
     });
 
     $("#m-searchAjax__button").on("keypress", function (e){
@@ -120,7 +120,7 @@
             } else if($("#month").val() == 'resumenanualpasado'){
                    window.location.href = "${resumenAnualUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=resumenanualpasado";
            } else{
-                ajaxSearchFeature.doSearch(true, false);
+            ajaxSearchFeature.doSearch(true, false, true);
             }
         }
     });

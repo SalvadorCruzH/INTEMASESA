@@ -84,8 +84,6 @@
             }
         }
         .portlet-search-bar {
-            background-color: #e7eee6;
-            padding: 2rem;
             margin-bottom: 2rem;
             border-radius: 30px;
             .search-bar-keywords-input {
@@ -184,6 +182,51 @@
             margin-bottom: 1rem;
             .i-mainWrapper & {
                 line-height: 1.15;
+            }
+        }
+    }
+}
+
+.ema-docs-table {
+    .portlet-search-results .display-list .list-group {
+        display: block;
+        .list-group-item {
+            padding: 15px;
+            border-radius: 0;
+            gap: 0 1.5rem;
+            &:first-child {
+                border-radius: 30px 30px 0 0;
+            }
+            &:last-child {
+                border-radius: 0 0 30px 30px;
+            }
+            .list-group-title {
+                font-size: 2rem;
+                font-weight: 700;
+                border-bottom: 1px solid $color-light-grey;
+                margin-bottom: 1rem;
+                a {
+                    background: transparent url('@theme_image_path@/icons/ico-download.svg') left 5px no-repeat;
+                    background-size: 30px;
+                    padding-left: 40px;
+                }
+            }
+            .autofit-col {
+                &:not(.autofit-col-expand) {
+                    width: 200px;
+                    * {
+                        display: block;
+                        position: initial;
+                        top: inherit;
+                        left: inherit;
+                        transform: none;
+                    }
+                    .sticker {
+                        margin: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
             }
         }
     }
