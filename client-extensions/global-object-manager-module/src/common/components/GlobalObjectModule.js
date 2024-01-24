@@ -145,7 +145,11 @@ class GlobalObjectModule extends React.Component {
                             input.value = object[key];
                         }
                     } else {
-                        input.value = object[key];
+                        if(typeof object[key] === 'object'){
+                            input.value = object[key]['name'];
+                        } else {
+                            input.value = object[key];
+                        }
                     }
 
                     if (modeOpened === 1 && key === "listadoSolicitudes"){
