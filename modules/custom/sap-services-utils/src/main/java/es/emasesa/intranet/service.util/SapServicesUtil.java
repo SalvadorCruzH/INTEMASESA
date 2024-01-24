@@ -596,6 +596,38 @@ public class SapServicesUtil {
         return calendarioEventos;
     }
 
+    public void manejarInscripcionFormacion(Map<String, Object> workflowContext) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[A] manejarInscripcionFormacion ");
+        }
+        try {
+            if (_calendarioEventosService == null) {
+                activate(null);
+            }
+            long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            LOG.debug("Obtenido classPK la petición" + classPK);
+
+            Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
+            String pernr = (String) objectValues.get("numeroDeMatricula");
+            String eventoId = (String) objectValues.get("idDelEvento");
+            String accion = (String) objectValues.get("accionAlEvento");
+            String fecha = "";
+
+            _calendarioEventosService.inscribirCalendarioEventos(pernr, fecha, fecha, accion, eventoId);
+
+        } catch (PortalException e) {
+            LOG.debug("[B] manejarInscripcionFormacion al obtener objeto");
+        } catch (CalendarioEventosException e) {
+            LOG.debug("[C] manejarInscripcionFormacion al comunicar con calendario service");
+        } catch (SapCommunicationException e) {
+            LOG.debug("[C] manejarInscripcionFormacion al comunicar con SAP");
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[D] manejarInscripcionFormacion, finalizada ");
+            }
+        }
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
