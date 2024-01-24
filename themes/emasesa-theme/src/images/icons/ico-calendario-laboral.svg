@@ -3,7 +3,7 @@
 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 14.8 16.9" style="enable-background:new 0 0 14.8 16.9;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#B3DAE8;stroke:#3366CC;stroke-width:0.5;stroke-miterlimit:10;}
+	.st0{fill:#3366CC;}
 </style>
 <path id="calendar-days" class="st0" d="M4.2,0c0.6,0,1.1,0.5,1.1,1.1l0,0v1.1h4.2V1.1c0-0.6,0.5-1,1.1-1s1,0.5,1,1v1.1h1.6
 	c0.9,0,1.6,0.7,1.6,1.6v1.6H0V3.7c0-0.9,0.7-1.6,1.6-1.6h1.6v-1C3.2,0.5,3.6,0,4.2,0L4.2,0z M0,6.3h14.8v9c0,0.9-0.7,1.6-1.6,1.6

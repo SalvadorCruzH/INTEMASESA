@@ -64,10 +64,10 @@
                         class="m-searchAjax__input select"
                         id="month"
                     >
-                   <option value='resumenanual'>
+                   <option value='resumenanual' ${"resumenanual".equals(monthSelected) ? "selected" : ""}>
                      <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanual"></liferay-ui:message>
                     </option>
-                   <option value='resumenanualpasado'>
+                   <option value='resumenanualpasado' ${"resumenanualpasado".equals(monthSelected) ? "selected" : ""}>
                      <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.option.resumenanualpasado"></liferay-ui:message>
                     </option>
                     <c:forEach begin="0" end="${months.length() -1}" var="index">
@@ -114,14 +114,14 @@
         if($("#month").val() != 'resumenanual' && $("#month").val() != 'resumenanualpasado'){
             window.location.href = "${jornadaDiariaUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=" + $("#month").val();
         } else {
-            ajaxSearchFeature.doSearch(true, false);
+            ajaxSearchFeature.doSearch(true, false, true);
         }
     });
 
     $("#m-searchAjax__clean__button").on("click", function (e){
         $('#year').val('');
         $('#queryText').val('');
-         ajaxSearchFeature.doSearch();
+         ajaxSearchFeature.doSearch(true, false, true);
     });
 
     $("#m-searchAjax__button").on("keypress", function (e){
@@ -130,7 +130,7 @@
             if($("#month").val() != 'resumenanual' && $("#month").val() != 'resumenanualpasado'){
                 window.location.href = "${jornadaDiariaUrl}?usuarioSelected="+$("#usuario").val()+"&monthSelected=" + $("#month").val();
             } else {
-                ajaxSearchFeature.doSearch(true, false);
+                ajaxSearchFeature.doSearch(true, false, true);
             }
         }
     });

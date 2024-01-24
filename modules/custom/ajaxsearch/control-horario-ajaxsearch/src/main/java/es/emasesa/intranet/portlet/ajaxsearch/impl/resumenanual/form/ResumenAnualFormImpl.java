@@ -91,7 +91,7 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
 
         }
 
-        request.setAttribute("monthSelected", ajaxSearchDisplayContext.getLong("monthSelected"));
+        request.setAttribute("monthSelected", ajaxSearchDisplayContext.getString("monthSelected"));
         request.setAttribute("months", months);
 
         request.setAttribute("jornadaDiariaUrl",ajaxSearchDisplayContext.getConfig().getOrDefault(JORNADA_DIARIA_URL,"/jornada-diaria"));
