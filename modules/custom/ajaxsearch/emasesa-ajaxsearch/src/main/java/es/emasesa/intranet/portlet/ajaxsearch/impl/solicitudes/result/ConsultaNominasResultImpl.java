@@ -158,120 +158,108 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 		String listadoNominas = _sigdServiceApplication.buscarDocumento(matricula);
 		try {
 			JSONArray elementos = JSONFactoryUtil.createJSONObject(listadoNominas).getJSONObject("buscarDocumentosResponse").getJSONArray("elementos");
-			JSONArray nominax = JSONFactoryUtil.createJSONArray("");
-				if (elementos != null) {
-					for (int i = 0; i < elementos.length(); i++) {
-						JSONObject nomina = JSONFactoryUtil.createJSONObject("");
-						JSONObject documentoOrigen = elementos.getJSONObject(i).getJSONObject("documentoOrigen");
-						JSONArray campos = elementos.getJSONObject(i).getJSONObject("documentoOrigen").getJSONArray("campos");
-						String codigoTipoDocumental = documentoOrigen.getString("codigoTipoDocumental");
+			JSONArray nominas = JSONFactoryUtil.createJSONArray("");
+			if (elementos != null) {
+				for (int i = 0; i < elementos.length(); i++) {
+					JSONObject nomina = JSONFactoryUtil.createJSONObject("");
+					JSONObject documentoOrigen = elementos.getJSONObject(i).getJSONObject("documentoOrigen");
+					JSONArray campos = elementos.getJSONObject(i).getJSONObject("documentoOrigen").getJSONArray("campos");
+					String codigoTipoDocumental = documentoOrigen.getString("codigoTipoDocumental");
 
-						if ("7972".equals(codigoTipoDocumental)) {
-							nomina.put("urlNominaDefinitiva",documentoOrigen.getString("urlDescarga"));
-							for (int b = 0; b < campos.length(); b++) {
-								String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
-								if ("FechaNomina".equals(nombreOrigen)) {
-									nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
-									break;
-								}
-							}
-
-						} else if ("7971".equals(codigoTipoDocumental)) {
-							nomina.put("urlNominaProvisional", urlNominaProvisional = documentoOrigen.getString("urlDescarga"));
-							for (int b = 0; b < campos.length(); b++) {
-								String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
-								if ("FechaNomina".equals(nombreOrigen)) {
-									nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
-									break;
-								}
-							}
-
-						} else if ("7973".equals(codigoTipoDocumental)) {
-							nomina.put("urlUltimoRecalculo", documentoOrigen.getString("urlDescarga"));
-							for (int b = 0; b < campos.length(); b++) {
-								String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
-								if ("FechaNomina".equals(nombreOrigen)) {
-									nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
-								}
-								if ("Fecharecalculo".equals(nombreOrigen)) {
-									nomina.put("fechaRecalculo", campos.getJSONObject(b).getString("dateValue"));
-									break;
-								}
+					if ("7972".equals(codigoTipoDocumental)) {
+						for (int j = 0; j < campos.length(); j++) {
+							String nombreOrigen = campos.getJSONObject(j).getString("nombreOrigen");
+							if ("FechaNomina".equals(nombreOrigen)) {
+								nomina.put("urlNominaDefinitiva",documentoOrigen.getString("urlDescarga"));
+								nomina.put("fechaNomina", campos.getJSONObject(j).getString("dateValue"));
+								nominas.put(nomina);
+								break;
 							}
 						}
-						nominax.put(nomina);
+
+					} else if ("7971".equals(codigoTipoDocumental)) {
+						for (int b = 0; b < campos.length(); b++) {
+							String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
+							if ("FechaNomina".equals(nombreOrigen)) {
+								nomina.put("urlNominaProvisional", urlNominaProvisional = documentoOrigen.getString("urlDescarga"));
+								nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
+								nominas.put(nomina);
+								break;
+							}
+						}
+
+					} else if ("7973".equals(codigoTipoDocumental)) {
+						for (int j = 0; j < campos.length(); j++) {
+							String nombreOrigen = campos.getJSONObject(j).getString("nombreOrigen");
+							if ("FechaNomina".equals(nombreOrigen)) {
+								nomina.put("urlUltimoRecalculo", documentoOrigen.getString("urlDescarga"));
+								nomina.put("fechaNomina", campos.getJSONObject(j).getString("dateValue"));
+								nominas.put(nomina);
+								nomina = JSONFactoryUtil.createJSONObject("");
+								nomina.put("fechaNomina", campos.getJSONObject(j).getString("dateValue"));
+							}
+							if ("Fecharecalculo".equals(nombreOrigen)) {
+								nomina.put("fechaRecalculo", campos.getJSONObject(j).getString("dateValue"));
+								nominas.put(nomina);
+								break;
+							}
+						}
 					}
 				}
-			// Mapa para almacenar las nominas agrupadas por fecha
-			Map<String, List<JSONObject>> nominasPorFecha = new HashMap<>();
+				Map<String, List<JSONObject>> nominasPorFecha = new HashMap<>();
 
-			// Iterar sobre cada elemento de la lista
-			for (int i = 0; i < nominax.length(); i++) {
-				JSONObject nomina = nominax.getJSONObject(i);
-				fechaNomina = nomina.getString("fechaNomina");
+				for (int i = 0; i < nominas.length(); i++) {
+					fechaNomina = nominas.getJSONObject(i).getString("fechaNomina");
 
-				// Verificar si ya existe una lista para esta fecha
-				if (!nominasPorFecha.containsKey(fechaNomina)) {
-					nominasPorFecha.put(fechaNomina, new ArrayList<>());
+					if (!nominasPorFecha.containsKey(fechaNomina)) {
+						nominasPorFecha.put(fechaNomina, new ArrayList<>());
+					}
+
+					// Crear un nuevo JSONObject con los campos específicos que deseas agregar
+					JSONObject nominasAgrupadas = JSONFactoryUtil.createJSONObject("");
+					nominasAgrupadas.put("fechaNomina", fechaNomina);
+					// Verificar si el campo "urlNominaDefinitiva" existe antes de intentar obtener su valor
+					if (nominas.getJSONObject(i).has("urlNominaDefinitiva")) {
+						nominasAgrupadas.put("urlNominaDefinitiva", nominas.getJSONObject(i).getString("urlNominaDefinitiva"));
+					}
+
+// Verificar si el campo "urlNominaProvisional" existe antes de intentar obtener su valor
+					if (nominas.getJSONObject(i).has("urlNominaProvisional")) {
+						nominasAgrupadas.put("urlNominaProvisional", nominas.getJSONObject(i).getString("urlNominaProvisional"));
+					}
+
+// Verificar si el campo "urlUltimoRecalculo" existe antes de intentar obtener su valor
+					if (nominas.getJSONObject(i).has("urlUltimoRecalculo")) {
+						nominasAgrupadas.put("urlUltimoRecalculo", nominas.getJSONObject(i).getString("urlUltimoRecalculo"));
+					}
+
+					nominasPorFecha.get(fechaNomina).add(nominas.getJSONObject(i));
 				}
 
-				// Agregar la nomina a la lista correspondiente a esta fecha
-				nominasPorFecha.get(fechaNomina).add(nomina);
-			}
+				for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
+					fechaNomina = entry.getKey();
+					List<JSONObject> ListaNominas = entry.getValue();
 
-			// Imprimir el resultado
-			for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
-				fechaNomina = entry.getKey();
-				List<JSONObject> nominas = entry.getValue();
+					System.out.println("Fecha: " + fechaNomina);
+					System.out.println("Nominas:" + ListaNominas);
 
-				System.out.println("Fecha: " + fechaNomina);
-				System.out.println("Nominas:");
-				for (JSONObject nomina : nominas) {
-					System.out.println("  " + nomina);
+					final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
+					int count = (currentPage * pageSize) > nominas.length() ? nominas.length() : (currentPage * pageSize);
+					final int end = disablePagination ? pageSize : count;
+
+					totalItems = nominas.length();
+					for(int i = 0;i<nominas.length();i++){
+						ListaNominas.add(nominas.getJSONObject(i));
+					}
+
+					ListaNominas.subList(start,end).stream().forEach(j->{
+						jsonArray.put(j);
+					});
 				}
-				System.out.println();
 			}
-
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-
-	/**	if(Validator.isNotNull(year)){
-
-			String cacheKey = "certificadoRetenciones_"+year+themeDisplay.getUser().getScreenName();
-			Object object = _cache.get(cacheKey);
-
-			if(Validator.isNotNull(object) && ((JSONArray) object).length()>0){
-				array = (JSONArray) object;
-
-			}else{
-				int yearActual = Integer.parseInt(year);
-				array = JSONFactoryUtil.createJSONArray();
-				for (int i = 0; i < 5; i++) {
-					yearActual = yearActual - 1;
-
-					JSONObject x = _sapServicesUtil.getRetenciones(matricula, String.valueOf(yearActual));
-					array.put(x);
-				}
-				//_cache.put(cacheKey, array, 86400);
-			}
-
-			final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
-			int count = (currentPage * pageSize) > array.length() ? array.length() : (currentPage * pageSize);
-			final int end = disablePagination ? pageSize : count;
-
-			totalItems = array.length();
-			List<JSONObject> listJson = new ArrayList<>();
-			for(int i = 0;i<array.length();i++){
-
-				listJson.add(array.getJSONObject(i));
-			}
-
-			listJson.subList(start,end).stream().forEach(j->{
-				jsonArray.put(j);
-			});
-		}**/
-
 		return totalItems;
 	}
 
