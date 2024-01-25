@@ -57,6 +57,7 @@ war {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_banco.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_detecnecform.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_calendario_eventos.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_act_datos_personales.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated-java"
 }*/

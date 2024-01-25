@@ -3,6 +3,7 @@ package es.emasesa.intranet.sap.proxy;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.calendarioeventos.service.CalendarioEventosService;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
+import es.emasesa.intranet.sap.datospersona.service.EmpleadoActDatosPersonalesService;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
@@ -58,6 +59,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected NecesidadesFormacionService necesidadesFormacionService;
     @Autowired(required = false)
     protected CalendarioEventosService calendarioEventosService;
+    @Autowired(required = false)
+    protected EmpleadoActDatosPersonalesService empleadoActDatosPersonalesService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -109,5 +112,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public CalendarioEventosService getCalendarioEventosService() {
         return calendarioEventosService;
+    }
+    public EmpleadoActDatosPersonalesService getEmpleadoActDatosPersonalesService() {
+        return empleadoActDatosPersonalesService;
     }
 }

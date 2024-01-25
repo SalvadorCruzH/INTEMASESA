@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
  * type definitions, element declarations and model 
  * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -24,9 +24,41 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.sap.document.sap.soap.functions.mc_style
-     *
+     * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link ZPeActDatosPersonales }
+     * 
+     */
+    public ZPeActDatosPersonales createZPeActDatosPersonales() {
+        return new ZPeActDatosPersonales();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStActDatosPersonales }
+     * 
+     */
+    public ZpeStActDatosPersonales createZpeStActDatosPersonales() {
+        return new ZpeStActDatosPersonales();
+    }
+
+    /**
+     * Create an instance of {@link ZPeActDatosPersonalesResponse }
+     * 
+     */
+    public ZPeActDatosPersonalesResponse createZPeActDatosPersonalesResponse() {
+        return new ZPeActDatosPersonalesResponse();
+    }
+
+    /**
+     * Create an instance of {@link Bapireturn1 }
+     * 
+     */
+    public Bapireturn1 createBapireturn1() {
+        return new Bapireturn1();
     }
 
     /**
@@ -111,14 +143,6 @@ public class ObjectFactory {
      */
     public TableOfZhrPlanesForma createTableOfZhrPlanesForma() {
         return new TableOfZhrPlanesForma();
-    }
-
-    /**
-     * Create an instance of {@link Bapireturn1 }
-     *
-     */
-    public Bapireturn1 createBapireturn1() {
-        return new Bapireturn1();
     }
 
     /**
