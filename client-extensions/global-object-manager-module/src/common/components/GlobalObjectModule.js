@@ -106,7 +106,13 @@ class GlobalObjectModule extends React.Component {
                     }else if(input.type === 'hidden'){
                         let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
                         if(inputsRadio){
-                            let keyRadioChecked = object[key]['key'];
+                            let keyRadioChecked = '';
+                            if (Array.isArray(object[key])) {
+                                let aux = object[key];
+                                keyRadioChecked = object[0]['key'];
+                            }else{
+                                keyRadioChecked = object[key]['key'];
+                            }
                             inputsRadio.forEach(function(inputRadio) {
                                 if(inputRadio.dataset.optionValue === keyRadioChecked){
                                     inputRadio.checked = 'checked';
@@ -122,7 +128,14 @@ class GlobalObjectModule extends React.Component {
                     } else if(input.type === 'checkbox'){
                         let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
                         if(inputsRadio){
-                            let keyRadioChecked = object[key]['key'];
+                            let keyRadioChecked = '';
+                            if (Array.isArray(object[key])) {
+                                let aux = object[key];
+                                keyRadioChecked = object[0]['key'];
+                            }else{
+                                keyRadioChecked = object[key]['key'];
+                            }
+
                             inputsRadio.forEach(function(inputRadio) {
                                 if(inputRadio.dataset.optionValue === keyRadioChecked){
                                     inputRadio.checked = 'checked';
