@@ -131,7 +131,7 @@ class GlobalObjectModule extends React.Component {
                             let keyRadioChecked = '';
                             if (Array.isArray(object[key])) {
                                 let aux = object[key];
-                                keyRadioChecked = object[0]['key'];
+                                keyRadioChecked = aux[0]['key'];
                             }else{
                                 keyRadioChecked = object[key]['key'];
                             }
