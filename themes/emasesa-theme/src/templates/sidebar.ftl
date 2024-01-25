@@ -1,6 +1,6 @@
 <nav class="i-header__userNav">
     <ul class="i-header__userList">
-        <li class="i-header__userItem selected">
+        <li class="i-header__userItem">
             <a href="${site_default_url}" class="i-header__userLink">
                 <i class="i-icon i-icon--grey fa-solid fa-house"></i>
                 <span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.home'/></span>
@@ -16,7 +16,7 @@
             </a>
         </li>
         <li class="i-header__userItem">
-            <a class="i-header__userLink" href="">
+            <a class="i-header__userLink" href="#">
                 <i class="i-icon i-icon--grey fa-solid fa-envelope"></i>
                 <span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.mail'/></span>
             </a>
@@ -123,3 +123,12 @@
         </li>
     </ul>
 </nav>
+<script>
+    const currentLocation = window.location.href
+    let sidebarLinks = document.querySelectorAll('.i-header__userLink')
+    for (let i = 0; i < sidebarLinks.length; i++) {
+        if (sidebarLinks[i].href === currentLocation) {
+            sidebarLinks[i].classList.add('selected')
+        }
+    }
+</script>
