@@ -47,7 +47,26 @@
 <template id="as-template">
     <tr>
         <td>#fechaNomina#</td>
-				<td>#urlNominaProvisional#</td>
+        <td class="ema-td-dropdown">
+            <a href="#urlNominaProvisional#" class="ema-boton-descargar" download>
+                <i class="fa-solid fa-download"></i> Descargar
+            </a>
+        </td>
+        <td class="ema-td-dropdown">
+            <a href="#urlNominaDefinitiva#" class="ema-boton-descargar" download>
+                <i class="fa-solid fa-download"></i> Descargar
+            </a>
+        </td>
+        <td class="ema-td-dropdown">
+            <a href="#urlUltimoRecalculo#" class="ema-boton-descargar" download>
+                <i class="fa-solid fa-download"></i> Descargar
+            </a>
+        </td>
+				String fechaRecalculo = "#fechaRecalculo#";
+        if (fechaRecalculo != null && fechaRecalculo!="#fechaRecalculo#") {
+        %>
+            <td>#fechaRecalculo#</td>
+        <% } %>
     </tr>
 </template>
 

@@ -34,6 +34,7 @@ import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import java.text.SimpleDateFormat;
 import java.time.Year;
 import java.util.*;
 
@@ -210,53 +211,67 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 				for (int i = 0; i < nominas.length(); i++) {
 					fechaNomina = nominas.getJSONObject(i).getString("fechaNomina");
+					JSONObject nominasAgrupadas = JSONFactoryUtil.createJSONObject("");
+					nominasAgrupadas.put("fechaNomina", fechaNomina);
 
 					if (!nominasPorFecha.containsKey(fechaNomina)) {
 						nominasPorFecha.put(fechaNomina, new ArrayList<>());
 					}
 
-					// Crear un nuevo JSONObject con los campos específicos que deseas agregar
-					JSONObject nominasAgrupadas = JSONFactoryUtil.createJSONObject("");
-					nominasAgrupadas.put("fechaNomina", fechaNomina);
-					// Verificar si el campo "urlNominaDefinitiva" existe antes de intentar obtener su valor
 					if (nominas.getJSONObject(i).has("urlNominaDefinitiva")) {
 						nominasAgrupadas.put("urlNominaDefinitiva", nominas.getJSONObject(i).getString("urlNominaDefinitiva"));
 					}
-
-// Verificar si el campo "urlNominaProvisional" existe antes de intentar obtener su valor
 					if (nominas.getJSONObject(i).has("urlNominaProvisional")) {
 						nominasAgrupadas.put("urlNominaProvisional", nominas.getJSONObject(i).getString("urlNominaProvisional"));
 					}
-
-// Verificar si el campo "urlUltimoRecalculo" existe antes de intentar obtener su valor
 					if (nominas.getJSONObject(i).has("urlUltimoRecalculo")) {
 						nominasAgrupadas.put("urlUltimoRecalculo", nominas.getJSONObject(i).getString("urlUltimoRecalculo"));
 					}
-
 					nominasPorFecha.get(fechaNomina).add(nominas.getJSONObject(i));
 				}
 
+				JSONArray nominasArray = JSONFactoryUtil.createJSONArray();
 				for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
-					fechaNomina = entry.getKey();
+					JSONObject nominaFinal = JSONFactoryUtil.createJSONObject("");
+
 					List<JSONObject> ListaNominas = entry.getValue();
+					fechaNomina = entry.getKey();
+					String fechaFormateada = formatearFecha(fechaNomina);
+					nominaFinal.put("fechaNomina", fechaFormateada);
 
-					System.out.println("Fecha: " + fechaNomina);
-					System.out.println("Nominas:" + ListaNominas);
-
-					final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
-					int count = (currentPage * pageSize) > nominas.length() ? nominas.length() : (currentPage * pageSize);
-					final int end = disablePagination ? pageSize : count;
-
-					totalItems = nominas.length();
-					for(int i = 0;i<nominas.length();i++){
-						ListaNominas.add(nominas.getJSONObject(i));
+					for (JSONObject nominasElemento : ListaNominas) {
+						if (nominasElemento.has("urlNominaDefinitiva")) {
+							nominaFinal.put("urlNominaDefinitiva", nominasElemento.getString("urlNominaDefinitiva"));
+						}
+						if (nominasElemento.has("urlNominaProvisional")) {
+							nominaFinal.put("urlNominaProvisional", nominasElemento.getString("urlNominaProvisional"));
+						}
+						if (nominasElemento.has("urlUltimoRecalculo")) {
+							nominaFinal.put("urlUltimoRecalculo", nominasElemento.getString("urlUltimoRecalculo"));
+						}
+						if (nominasElemento.has("fechaRecalculo")) {
+							fechaFormateada = formatearFecha(nominasElemento.getString("fechaRecalculo"));
+							nominaFinal.put("fechaRecalculo", fechaFormateada);
+						}
 					}
-
-					ListaNominas.subList(start,end).stream().forEach(j->{
-						jsonArray.put(j);
-					});
+					nominasArray.put(nominaFinal);
 				}
+				final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
+				int count = (currentPage * pageSize) > nominasArray.length() ? nominasArray.length() : (currentPage * pageSize);
+				final int end = disablePagination ? pageSize : count;
+
+				totalItems = nominasArray.length();
+				List<JSONObject> listJson = new ArrayList<>();
+				for(int i = 0;i<nominasArray.length();i++){
+
+					listJson.add(nominasArray.getJSONObject(i));
+				}
+
+				listJson.subList(start,end).stream().forEach(j->{
+					jsonArray.put(j);
+				});
 			}
+
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -264,6 +279,17 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 	}
 
 	private static final String VIEW = "/views/solicitudes/nominas/results.jsp";
+
+	public static String formatearFecha(String fechaNomina) {
+		try {
+			Date date = new Date(Long.parseLong(fechaNomina));
+			SimpleDateFormat sdf = new SimpleDateFormat("MM.yyyy");
+			return sdf.format(date);
+		} catch (NumberFormatException e) {
+			System.err.println("Error al convertir la cadena de fecha a long: " + e.getMessage());
+			return null;
+		}
+	}
 
 	@Override
 	public String getResultsView(PortletRequest request, PortletResponse response) {
