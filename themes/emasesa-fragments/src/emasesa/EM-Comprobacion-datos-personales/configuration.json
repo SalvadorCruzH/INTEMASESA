@@ -1,0 +1,96 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+				{
+          "dataType": "string",
+          "defaultValue": "",
+          "label": "External Reference Lista de Provincias",
+          "localizable": true,
+          "name": "externalReferencesListaProvincias",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "fechaDeNacimiento",
+          "label": "Selector Fecha Nacimiento",
+          "localizable": true,
+          "name": "selectFechaNacimiento",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "calle",
+          "label": "Selector Calle",
+          "localizable": true,
+          "name": "selectCalle",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "numero",
+          "label": "Selector Numero",
+          "localizable": true,
+          "name": "selectNumero",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "pisoYLetra",
+          "label": "Selector Piso y Letra",
+          "localizable": true,
+          "name": "selectPisoyLetra",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "portal",
+          "label": "Selector Portal",
+          "localizable": true,
+          "name": "selectPortal",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "provincia",
+          "label": "Selector Provincia",
+          "localizable": true,
+          "name": "selectProvincia",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "codigoPostal",
+          "label": "Selector Codigo Postal",
+          "localizable": true,
+          "name": "selectCodigoPostal",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "poblacion",
+          "label": "Selector Poblacion",
+          "localizable": true,
+          "name": "selectPoblacion",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "email",
+          "label": "Selector Email",
+          "localizable": true,
+          "name": "selectEmail",
+          "type": "text"
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "telefono",
+          "label": "Selector Telefono",
+          "localizable": true,
+          "name": "selectTelefono",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
