@@ -1,134 +1,147 @@
 .i-mainWrapper {
-  position: relative;
-  @include font_base;
-  color: $color-text;
-  .container,
-  .container-fluid-max-xl {
-    padding-left: m-rem(15px);
-    padding-right: m-rem(15px);
-    @media(min-width: 1400px) {
-      max-width: 1280px;
-    }
-  }
-  .portlet-header {
-    display: none;
-  }
-  .portlet {
-    margin-bottom: 0;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  strong,
-  b {
-    @include font_base-bold;
-  }
-  h1 em,
-  h2 em,
-  h3 em,
-  h4 em,
-  strong em,
-  h1 i,
-  h2 i,
-  h3 i,
-  h4 i,
-  strong i,
-  b i {
-    @include font_base-bold-italic;
-  }
-  h1 i.i-icon,
-  h2 i.i-icon,
-  h3 i.i-icon,
-  h4 i.i-icon,
-  strong i.i-icon,
-  b i.i-icon {
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    font-style: normal;
-  }
-  em {
-    @include font_base-italic;
-  }
-
-  h1 {
-    @include font_base-black;
-    font-size: m-rem(36px);
-    line-height: m-rem(42px);
-    @include media-breakpoint-up(xl) {
-      font-size: m-rem(40px);
-      line-height: m-rem(47px);
-    }
-    &.page-title {
-      @include font_base-bold;
-    }
-  }
-  h2 {
-    @include font_base-bold;
-    font-size: m-rem(28px);
-    line-height: m-rem(37px);
-    text-wrap: balance;
-    @include media-breakpoint-up(xl) {
-      @include font_base-black;
-      font-size: m-rem(36px);
-      line-height: m-rem(42px);
-    }
-  }
-  h3 {
-    @include font_base-bold;
-    font-size: m-rem(24px);
-    line-height: m-rem(32px);
-  }
-  h4 {
-    @include font_base-bold;
-    font-size: m-rem(24px);
-    line-height: m-rem(32px);
-  }
-  h5,
-  h6 {
-    font-size: m-rem(20px);
-    line-height: m-rem(26px);
-  }
-  p {
+    position: relative;
     @include font_base;
-    font-size: m-rem(18px);
-  }
-  .fa-solid,
-  .fa-regular {
     color: $color-text;
-  }
-  .linkify:hover {
-      cursor: pointer;
-      box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
-  }
-  .linkify.isfocused {
-      outline: 0;
-      box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
-  }
-  .linkify a:focus {
-      outline: none;
-      box-shadow: none !important;
-  }
-  #main-content {
-    padding-top: 3rem;
-    min-height: 70vh;
-  }
+    .container,
+    .container-fluid-max-xl {
+        padding-left: m-rem(15px);
+        padding-right: m-rem(15px);
+        @media(min-width: 1400px) {
+            max-width: 1280px;
+        }
+    }
+    .portlet-header {
+        display: none;
+    }
+    .portlet {
+        margin-bottom: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    strong,
+    b {
+        @include font_base-bold;
+    }
+    h1 em,
+    h2 em,
+    h3 em,
+    h4 em,
+    strong em,
+    h1 i,
+    h2 i,
+    h3 i,
+    h4 i,
+    strong i,
+    b i {
+        @include font_base-bold-italic;
+    }
+    h1 i.i-icon,
+    h2 i.i-icon,
+    h3 i.i-icon,
+    h4 i.i-icon,
+    strong i.i-icon,
+    b i.i-icon {
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        font-style: normal;
+    }
+    em {
+        @include font_base-italic;
+    }
+
+    h1 {
+        @include font_base-black;
+        font-size: m-rem(36px);
+        line-height: m-rem(42px);
+        @include media-breakpoint-up(xl) {
+            font-size: m-rem(40px);
+            line-height: m-rem(47px);
+        }
+        &.page-title {
+            @include font_base-bold;
+        }
+    }
+    h2 {
+        @include font_base-bold;
+        font-size: m-rem(28px);
+        line-height: m-rem(37px);
+        text-wrap: balance;
+        @include media-breakpoint-up(xl) {
+            @include font_base-black;
+            font-size: m-rem(36px);
+            line-height: m-rem(42px);
+        }
+    }
+    h3 {
+        @include font_base-bold;
+        font-size: m-rem(24px);
+        line-height: m-rem(32px);
+    }
+    h4 {
+        @include font_base-bold;
+        font-size: m-rem(24px);
+        line-height: m-rem(32px);
+    }
+    h5,
+    h6 {
+        font-size: m-rem(20px);
+        line-height: m-rem(26px);
+    }
+    p {
+        @include font_base;
+        font-size: m-rem(18px);
+    }
+    .fa-solid,
+    .fa-regular {
+        color: $color-text;
+    }
+    .linkify:hover {
+            cursor: pointer;
+            box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
+    }
+    .linkify.isfocused {
+            outline: 0;
+            box-shadow: 0 0 0 m-rem(2px) white, 0 0 0 m-rem(4px) $color-blue;
+    }
+    .linkify a:focus {
+            outline: none;
+            box-shadow: none !important;
+    }
+    #main-content {
+        padding-top: 3rem;
+        min-height: 70vh;
+    }
 }
 body {
-  a {
-    text-decoration: none;
-    color: $color-primary;
-    transition: color .3s ease;
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-      color: $color-hover-blue;
+    a {
+        text-decoration: none;
+        color: $color-primary;
+        transition: color .3s ease;
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+            color: $color-hover-blue;
+        }
     }
-  }
+    &.menu-open {
+        overflow-x: hidden;
+        &::after {
+            content: '';
+            width: 100%;
+            height: 100dvh;
+            background-color: rgba($color-white,.85);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+    }
 }
 
 .content {
-  background-color: $color-bg-grey;
+    background-color: $color-bg-grey;
 }
 
