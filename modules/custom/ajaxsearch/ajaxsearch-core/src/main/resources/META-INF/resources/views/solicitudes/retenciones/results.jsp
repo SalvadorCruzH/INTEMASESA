@@ -86,7 +86,6 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
         addClickFunctionality();
-        checkStatus();
     }
 }
 $(document).ready(function () {

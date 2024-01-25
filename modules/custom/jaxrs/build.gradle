@@ -13,6 +13,7 @@ dependencies {
 	compile project (':modules:common:webservices-util')
     compile project (':modules:common:base-module')
     compileOnly project (':modules:common:settings-module')
+    compile project (':modules:custom:sap-services-utils')
 
 	compileOnly group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.9.8'
     compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.3'

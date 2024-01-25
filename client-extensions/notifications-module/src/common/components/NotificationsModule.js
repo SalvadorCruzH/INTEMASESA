@@ -24,7 +24,12 @@ class NotificationsModule extends React.Component {
         EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
     }
 
+    loadNotificationsRefresh = () => {
+        this.loadNotifications(0, 10);
+    }
+
     loadNotifications = (start, end) => {
+        this.setState({loading: true});
         if(start !== undefined ){
             NotificationApi.getNotificationsUnRead(start, end, this.buildNotifications, this.errorHandler);
         }else{
@@ -197,7 +202,7 @@ class NotificationsModule extends React.Component {
                                             {this.state.notifications.map((notification, i) => {
                                                 return (<><Notification notification={notification}
                                                                         configuration={this.state.configuration}
-                                                                        refresh={this.loadNotifications}
+                                                                        refresh={this.loadNotificationsRefresh}
                                                                         loading={this.setLoading}/>
                                                     </>
                                                 )

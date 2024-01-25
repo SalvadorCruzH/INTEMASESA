@@ -65,15 +65,17 @@ public class RestEmasesaNotificacionesApplication extends Application {
 					.select()
 					.from(UserNotificationEventTable.INSTANCE)
 					.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
-							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
-									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId())))).limit(start, end);
+							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false))
+									.and(UserNotificationEventTable.INSTANCE.archived.eq(false))
+									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))).limit(start, end);
 
 			DSLQuery queryCount = DSLQueryFactoryUtil
 					.count()
 					.from(UserNotificationEventTable.INSTANCE)
 					.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
-							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
-									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))));
+							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false))
+									.and(UserNotificationEventTable.INSTANCE.archived.eq(false))
+									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId())));
 
 			List<UserNotificationEvent> userNotificationEventList = _userNotificationEventLocalService.dslQuery(query);
 			int  userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
