@@ -253,6 +253,18 @@
                     }
                 }
             }
+            > .selected {
+                position: initial;
+                &::after {
+                    content: '';
+                    width: 5px;
+                    height: 100%;
+                    position: absolute;
+                    background-color: $color-aux-blue;
+                    left: -3px;
+                    top: 0;
+                }
+            }
         }
         &__userLink {
             position: relative;
