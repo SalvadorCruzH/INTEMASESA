@@ -1,0 +1,12 @@
+[#assign userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")]
+[#assign themeDisplay = request.getAttribute("LIFERAY_SHARED_THEME_DISPLAY")]
+[#assign userId = themeDisplay.getUserId()]
+[#assign user = userLocalService.getUserById(userId)]
+[#assign expandoValueLocalService = serviceLocator.findService("com.liferay.expando.kernel.service.ExpandoValueLocalService")]
+[#assign expandoValueByName = expandoValueLocalService.getData(themeDisplay.getCompanyId(), "com.liferay.portal.kernel.model.User", "CUSTOM_FIELDS", "matricula", userId, "")]
+
+<div class="fragment_1701">
+</div>
+<script>
+var matricula = ${expandoValueByName};
+</script>

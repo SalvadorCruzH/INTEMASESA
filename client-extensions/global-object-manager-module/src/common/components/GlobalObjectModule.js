@@ -89,8 +89,8 @@ class GlobalObjectModule extends React.Component {
                         linkDocument.innerHTML= object[key]['link']['label'];
                         parentParentInput.appendChild(linkDocument);
                     }else if(input.type === 'hidden'){
-                        let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
-                        if(inputsRadio){
+                        let inputsRadioCheck = document.querySelectorAll("[name='"+key+"-1']");
+                        if(inputsRadioCheck){
                             let keyRadioChecked = '';
                             if (Array.isArray(object[key])) {
                                 let aux = object[key];
@@ -98,7 +98,7 @@ class GlobalObjectModule extends React.Component {
                             }else{
                                 keyRadioChecked = object[key]['key'];
                             }
-                            inputsRadio.forEach(function(inputRadio) {
+                            inputsRadioCheck.forEach(function(inputRadio) {
                                 if(inputRadio.dataset.optionValue === keyRadioChecked){
                                     inputRadio.checked = 'checked';
                                     simulateGlobalClick(inputRadio);

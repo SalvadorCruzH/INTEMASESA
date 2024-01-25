@@ -33,7 +33,6 @@
 </#macro>
 
 <#macro favoritos userId groupId assetEntryId assetEntryClassNameId customNamespace title url fileExtension ddmStructureKey="">
-
 	<#if !emasesaFavoritosService.isFav(assetEntryId?string) >
 	        <span class="${customNamespace} unfavorito-icon" data-groupId="${groupId}" data-assetEntryId="${assetEntryId}"
 	              data-classNameId="${assetEntryClassNameId}" data-title="${title}" data-fileextension="${fileExtension}"
@@ -46,7 +45,6 @@
 </#macro>
 
 <#macro accesosDirectos userId groupId assetEntryId assetEntryClassNameId customNamespace title url fileExtension ddmStructureKey="">
-
 	<#if ddmStructureKey = "EMA-ACCESO-DIRECTO" >
 		<#if !emasesaFavoritosService.isFav(assetEntryId?string) >
 		 <button type="button">
@@ -62,6 +60,18 @@
 	      </button>
 	    </#if>
 	</#if>
+</#macro>
+
+<#macro documentosFavoritos userId groupId assetEntryId assetEntryClassNameId customNamespace title url fileExtension ddmStructureKey="">
+		<#if !emasesaFavoritosService.isFav(assetEntryId?string) >
+	        <span class="${customNamespace} unfavorito-icon" data-groupId="${groupId}" data-assetEntryId="${assetEntryId}"
+	              data-classNameId="${assetEntryClassNameId}" data-title="${title}" data-fileextension="${fileExtension}"
+	              data-url="${url}" data-ddmStructureKey="${ddmStructureKey}"><i class="fa-regular fa-trash-can"></i></span>
+	    <#else>
+	        <span class="${customNamespace} favorito-icon" data-groupId="${groupId}" data-assetEntryId="${assetEntryId}"
+	              data-classNameId="${assetEntryClassNameId}" data-title="${title}"
+	              data-url="${url}" data-ddmStructureKey="${ddmStructureKey}"><i class="fa-regular fa-trash-can"></i></span>
+	   </#if>
 </#macro>
 
 <#macro favoritosEndScript customNamespace>
