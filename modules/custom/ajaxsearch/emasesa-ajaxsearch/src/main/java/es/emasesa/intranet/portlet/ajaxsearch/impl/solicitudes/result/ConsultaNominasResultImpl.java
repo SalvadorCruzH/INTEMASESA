@@ -69,6 +69,8 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 		DFLT_PROPERTIES.put(DISABLE_PAGINATION, "0");
 	}
 
+
+
 	@Override
 	public Properties getDefaultProperties() {
 		return DFLT_PROPERTIES;
@@ -138,7 +140,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 									   final JSONArray jsonArray) throws ParseException, SearchException {
 
 		final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		JSONArray array = null;
 		int totalItems = 0;
 		String matricula = "", urlNominaDefinitiva = "", urlNominaProvisional = "", urlUltimoRecalculo="", fechaNomina="", fechaRecalculo="";
 
@@ -208,7 +209,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 					}
 				}
 				Map<String, List<JSONObject>> nominasPorFecha = new HashMap<>();
-
 				for (int i = 0; i < nominas.length(); i++) {
 					fechaNomina = nominas.getJSONObject(i).getString("fechaNomina");
 					JSONObject nominasAgrupadas = JSONFactoryUtil.createJSONObject("");
@@ -217,7 +217,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 					if (!nominasPorFecha.containsKey(fechaNomina)) {
 						nominasPorFecha.put(fechaNomina, new ArrayList<>());
 					}
-
 					if (nominas.getJSONObject(i).has("urlNominaDefinitiva")) {
 						nominasAgrupadas.put("urlNominaDefinitiva", nominas.getJSONObject(i).getString("urlNominaDefinitiva"));
 					}
@@ -232,38 +231,58 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 				JSONArray nominasArray = JSONFactoryUtil.createJSONArray();
 				for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
-					JSONObject nominaFinal = JSONFactoryUtil.createJSONObject("");
+					JSONObject nominaFinal = JSONFactoryUtil.createJSONObject();
+
+					// Agregar todos los campos con valores predeterminados (pueden ser nulos o vacíos)
+					nominaFinal.put("fechaNomina", "");
+					nominaFinal.put("urlNominaDefinitiva", "");
+					nominaFinal.put("urlNominaProvisional", "");
+					nominaFinal.put("urlUltimoRecalculo", "");
+					nominaFinal.put("fechaRecalculo", "");
 
 					List<JSONObject> ListaNominas = entry.getValue();
 					fechaNomina = entry.getKey();
 					String fechaFormateada = formatearFecha(fechaNomina);
 					nominaFinal.put("fechaNomina", fechaFormateada);
 
-					for (JSONObject nominasElemento : ListaNominas) {
-						if (nominasElemento.has("urlNominaDefinitiva")) {
-							nominaFinal.put("urlNominaDefinitiva", nominasElemento.getString("urlNominaDefinitiva"));
+					if (nominasArray.length() < 24) {
+						for (JSONObject nominasElemento : ListaNominas) {
+							if (nominasElemento.has("urlNominaDefinitiva")) {
+								urlNominaDefinitiva = nominasElemento.getString("urlNominaDefinitiva");
+								String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download>" +
+										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
+								nominaFinal.put("urlNominaDefinitiva", descarga);
+							}
+							if (nominasElemento.has("urlNominaProvisional")) {
+								urlNominaProvisional = nominasElemento.getString("urlNominaProvisional");
+								String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download>" +
+										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
+								nominaFinal.put("urlNominaProvisional", descarga);
+							}
+							if (nominasElemento.has("urlUltimoRecalculo")) {
+								urlUltimoRecalculo = nominasElemento.getString("urlUltimoRecalculo");
+								String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download>" +
+										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
+								nominaFinal.put("urlUltimoRecalculo", descarga);
+							}
+							if (nominasElemento.has("fechaRecalculo")) {
+								fechaFormateada = formatearFechaRecalculo(nominasElemento.getString("fechaRecalculo"));
+								nominaFinal.put("fechaRecalculo", fechaFormateada);
+							}
 						}
-						if (nominasElemento.has("urlNominaProvisional")) {
-							nominaFinal.put("urlNominaProvisional", nominasElemento.getString("urlNominaProvisional"));
-						}
-						if (nominasElemento.has("urlUltimoRecalculo")) {
-							nominaFinal.put("urlUltimoRecalculo", nominasElemento.getString("urlUltimoRecalculo"));
-						}
-						if (nominasElemento.has("fechaRecalculo")) {
-							fechaFormateada = formatearFecha(nominasElemento.getString("fechaRecalculo"));
-							nominaFinal.put("fechaRecalculo", fechaFormateada);
-						}
+						nominasArray.put(nominaFinal);
+					} else {
+						break;
 					}
-					nominasArray.put(nominaFinal);
 				}
+
 				final int start = disablePagination ? 0 : ((currentPage - 1) * pageSize);
 				int count = (currentPage * pageSize) > nominasArray.length() ? nominasArray.length() : (currentPage * pageSize);
 				final int end = disablePagination ? pageSize : count;
 
 				totalItems = nominasArray.length();
 				List<JSONObject> listJson = new ArrayList<>();
-				for(int i = 0;i<nominasArray.length();i++){
-
+				for(int i = 0;i<24;i++){
 					listJson.add(nominasArray.getJSONObject(i));
 				}
 
@@ -283,7 +302,22 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 	public static String formatearFecha(String fechaNomina) {
 		try {
 			Date date = new Date(Long.parseLong(fechaNomina));
+			TimeZone timeZone = TimeZone.getTimeZone("GMT+2");
 			SimpleDateFormat sdf = new SimpleDateFormat("MM.yyyy");
+			sdf.setTimeZone(timeZone);
+			return sdf.format(date);
+		} catch (NumberFormatException e) {
+			System.err.println("Error al convertir la cadena de fecha a long: " + e.getMessage());
+			return null;
+		}
+	}
+
+	public static String formatearFechaRecalculo(String fechaNomina) {
+		try {
+			Date date = new Date(Long.parseLong(fechaNomina));
+			TimeZone timeZone = TimeZone.getTimeZone("GMT+2");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			sdf.setTimeZone(timeZone);
 			return sdf.format(date);
 		} catch (NumberFormatException e) {
 			System.err.println("Error al convertir la cadena de fecha a long: " + e.getMessage());
