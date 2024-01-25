@@ -1,4 +1,4 @@
-package es.emasesa.intranet.favoritos.bean;
+package es.emasesa.intranet.favoritos.rest.bean;
 
 import java.io.Serializable;
 

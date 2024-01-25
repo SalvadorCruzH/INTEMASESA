@@ -1,4 +1,4 @@
-package es.emasesa.intranet.favoritos.util;
+package es.emasesa.intranet.favoritos.service.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.*;
@@ -38,7 +38,7 @@ public class EmasesaFavoritosUtil {
 
         return 0;
     }
-
+	
 
     public List<Long> searchObjectByField(String objectDefinitionId, String fieldValue) throws PortalException {
 

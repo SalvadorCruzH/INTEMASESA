@@ -1,4 +1,6 @@
 Bundle-Name: emasesa-favoritos-service
 Bundle-SymbolicName: es.emasesa.intranet.favoritos.service
 Bundle-Version: 1.0.0
-Export-Package: emasesa.favoritos.service
+-sources: true
+Export-Package: es.emasesa.intranet.favoritos.service
+-dsannotations-options: inherit
