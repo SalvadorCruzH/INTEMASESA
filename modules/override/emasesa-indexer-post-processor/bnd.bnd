@@ -1,0 +1,3 @@
+Bundle-Name: emasesa-indexer-post-processor
+Bundle-SymbolicName: es.emasesa.intranet.indexer.post.processor
+Bundle-Version: 1.0.0

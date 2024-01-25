@@ -9,7 +9,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.favoritos.bean.FavoritoBean;
+import es.emasesa.intranet.favoritos.rest.bean.FavoritoBean;
 import es.emasesa.intranet.favoritos.service.EmasesaFavoritosService;
 
 import javax.ws.rs.*;
@@ -21,7 +21,9 @@ import java.util.Set;
         immediate = true,
         property = {
                 JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/favoritos",
-                JaxrsWhiteboardConstants.JAX_RS_NAME + "=Favoritos.Rest"
+                JaxrsWhiteboardConstants.JAX_RS_NAME + "=Favoritos.Rest",
+                "auth.verifier.guest.allowed=true",
+                "liferay.access.control.disable=true"
         },
         service = Application.class
 )

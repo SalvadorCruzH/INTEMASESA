@@ -190,5 +190,17 @@
         "templateFile": "documentos.ftl",
         "comment": "ADT para el listado de documentos en «Documentos y multimedia».",
         "uuid": "445d6c7b-dfb7-372b-942d-fc939b8e5fca"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Resultados de búsqueda",
+        "type": "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-RESULTADOS-DE-BUSQUEDA",
+        "templateFile": "resultados-de-busqueda.ftl",
+        "comment": "ADT para Los resultados de búsqueda en documentos de Plan de Formación.",
+        "uuid": "54d6c613-7762-c01b-ba73-bcc727233ef9"
     }
 ]

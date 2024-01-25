@@ -1,8 +1,8 @@
-package es.emasesa.intranet.favoritos.impl;
+package es.emasesa.intranet.favoritos.service.impl;
 
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.favoritos.service.EmasesaFavoritosService;
-import es.emasesa.intranet.favoritos.util.EmasesaFavoritosUtil;
+import es.emasesa.intranet.favoritos.service.util.EmasesaFavoritosUtil;
 import es.emasesa.intranet.settings.configuration.FavoritosConfiguration;
 
 import com.liferay.object.model.ObjectEntry;
@@ -31,7 +31,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Component(
-        configurationPid="es.camara.intranet.settings.configuration.FavoritesConfiguration",
+        configurationPid="es.emasesa.intranet.settings.configuration.FavoritosConfiguration",
         immediate = true,
         property = {
         },
@@ -65,7 +65,7 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 	        if(!Validator.isBlank(fileExtension)) {
 	            params.put("fileExtension", fileExtension);
 	        }
-	        ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(user.getUserId(), 0, Long.valueOf(_configuration.objectDefinitionId()), params, ServiceContextThreadLocal.getServiceContext());
+	        ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(user.getUserId(), groupId, Long.valueOf(_configuration.objectDefinitionId()), params, ServiceContextThreadLocal.getServiceContext());
 	        _objectEntryLocalService.updateAsset(user.getUserId(), objectEntry, new long[0], new String[0], new long[0], null);
 	        return true;
 	    }
@@ -96,7 +96,7 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 
 	        return _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectDefinitionId(), permissionChecker.getUserId(), ""+classPK) > 0?true: false ;
 	    }
-
+	    
 	    public Hits searchFavoritesByUserAndType(ThemeDisplay themeDisplay, String classNameId, int start, int end) throws ParseException, SearchException {
 
 	        BooleanQuery query = new BooleanQueryImpl();

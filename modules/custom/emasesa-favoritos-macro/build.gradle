@@ -1,0 +1,5 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
+	compileOnly project(":modules:common:base-module")
+}
