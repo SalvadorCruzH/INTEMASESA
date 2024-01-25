@@ -209,10 +209,16 @@
                 font-weight: 700;
                 border-bottom: 1px solid $color-light-grey;
                 margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
                 a {
                     background: transparent url('@theme_image_path@/icons/ico-download.svg') left 5px no-repeat;
                     background-size: 30px;
                     padding-left: 40px;
+                }
+                span {
+                    font-size: 1rem;
                 }
             }
             .autofit-col {

@@ -916,6 +916,11 @@ html:not(#__):not(#___) {
     }
 }
 
+.favorito-icon i[class*="fa"],
+.unfavorito-icon i[class*="fa"] {
+    color: $color-error;
+}
+
 // Search bar
 .portlet-search-bar {
     margin-bottom: 2rem;
