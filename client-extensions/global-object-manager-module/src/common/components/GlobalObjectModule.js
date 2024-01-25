@@ -6,16 +6,11 @@ class GlobalObjectModule extends React.Component {
     constructor() {
         super();
         this.state = {
-                    configuration: null,
-                    mode: 1,
-                    objectEntryId: null
-                }
-
-        console.debug("Cargando módulo objecto");
-
+            configuration: null,
+            mode: 1,
+            objectEntryId: null
+        }
         EmasesaApi.getConfiguration(this.loadConfiguration, this.errorHandler)
-
-
     }
 
     loadObject = () => {
@@ -40,9 +35,7 @@ class GlobalObjectModule extends React.Component {
                 objectMapping = this.state.configuration.objectMapping;
             }
             var objectCallUrl = Constants.oauthUserAgent.URL_DEFAULT+objectMapping[objectType].url;
-            console.debug(objectCallUrl);
             ObjectApi.getObject(objectEntryId,objectCallUrl, this.setObject, this.errorHandler);
-
         }
         this.state = {
             mode: mode,
@@ -54,9 +47,7 @@ class GlobalObjectModule extends React.Component {
     setObject = (object) => {
 
         let mode = Number(this.state.mode);
-        console.log(mode);
         if(mode === 1){
-            console.debug('Mode 1');
             document.querySelectorAll(".form-control").forEach(((element) => element.readOnly = true));
             document.querySelector(".lfr-layout-structure-item-inputs-submit-button").classList.add("d-none");
             document.querySelectorAll(".btn-secondary").disabled = true;
@@ -64,7 +55,6 @@ class GlobalObjectModule extends React.Component {
                 document.getElementById("generate-otp-button").classList.add("d-none");
             }
         }else if(mode === 2){
-        console.debug('Mode 2');
             var input = document.createElement("input");
             input.setAttribute("type", "hidden");
             input.setAttribute("name", "classPK");
@@ -74,11 +64,8 @@ class GlobalObjectModule extends React.Component {
                 document.querySelector(".lfr-layout-structure-item-form").appendChild(input);
             }
         }
-        console.debug(object);
         let modeOpened = Number(this.state.mode);
-        console.debug(modeOpened);
         Object.keys(object).forEach(function(key) {
-            console.debug(key);
             if(object[key] != null){
             var input = document.querySelector("[name='"+key+"']");
                 if(input){
@@ -90,7 +77,6 @@ class GlobalObjectModule extends React.Component {
                     }
 
                     if(input.type === 'file') {
-                        console.debug(object[key]);
                         let parentInput = input.closest('div');
                         parentInput = parentInput.closest('div');
                         parentInput.setAttribute('style', 'display: none !important');
@@ -101,7 +87,6 @@ class GlobalObjectModule extends React.Component {
                         linkDocument.setAttribute('class', 'linkAsButton');
                         linkDocument.setAttribute('target', '_blank');
                         linkDocument.innerHTML= object[key]['link']['label'];
-                        console.debug(linkDocument);
                         parentParentInput.appendChild(linkDocument);
                     }else if(input.type === 'hidden'){
                         let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
@@ -123,7 +108,6 @@ class GlobalObjectModule extends React.Component {
                                 }
                             });
                             input.value = keyRadioChecked;
-                            console.debug(object[key]);
                         }
                     } else if(input.type === 'checkbox'){
                         let inputsRadio = document.querySelectorAll("[name='"+key+"-1']");
@@ -146,7 +130,6 @@ class GlobalObjectModule extends React.Component {
                                 }
                             });
                             input.value = keyRadioChecked;
-                            console.debug(object[key]);
                         }
                     } else if(input.type === 'button' && modeOpened !== 2){
                         input.style.display = 'none';
@@ -204,7 +187,6 @@ class GlobalObjectModule extends React.Component {
                         $.each(data, function(index, item) {
                             var newRow = $('<tr>');
                             newRow.append('<td></td>');
-                            newRow.append('<td></td>');
                             newRow.append('<td>' + item.matricula + '</td>');
                             newRow.append('<td>' + item.solicitante + '</td>');
                             newRow.append('<td>' + item.inicio + '</td>');
@@ -219,7 +201,6 @@ class GlobalObjectModule extends React.Component {
             }
         });
         if(modeOpened !== 2){
-            console.log('No debo pasar por aquí');
             document.querySelectorAll(".lfr-layout-structure-item-form button").forEach(function(buttonInput) {
                 buttonInput.style.display = 'none';
             });
@@ -227,29 +208,25 @@ class GlobalObjectModule extends React.Component {
     }
 
     loadConfiguration = (result) => {
-            console.debug("configurationData");
-            console.debug(result);
-            if (result) {
-             this.state = {
-                configuration: result
-             }
-
-                this.loadObject();
-            }
+        if (result) {
+         this.state = {
+            configuration: result
+         }
+            this.loadObject();
         }
+    }
 
     errorHandler = (error) => {
 
-                Liferay.Util.openToast({
-                    message: Liferay.Language.get('global.error.config'),
-                    title: Liferay.Language.get('global.error'),
-                    toastProps: {
-                        autoClose: 5000,
-                    },
-                    type: 'danger',
-                });
-
-        }
+        Liferay.Util.openToast({
+            message: Liferay.Language.get('global.error.config'),
+            title: Liferay.Language.get('global.error'),
+            toastProps: {
+                autoClose: 5000,
+            },
+            type: 'danger',
+        });
+    }
 
     render() {
         return (
