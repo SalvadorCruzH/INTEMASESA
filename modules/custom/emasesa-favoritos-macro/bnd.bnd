@@ -1,0 +1,6 @@
+Bundle-Name: emasesa-favoritos-macro
+Bundle-SymbolicName: es.emasesa.intranet.favoritos.macro
+Bundle-Version: 1.0.0
+-sources: true
+Fragment-Host: com.liferay.portal.template.freemarker;bundle-version="[7.0.33,8.0.0)"
+
