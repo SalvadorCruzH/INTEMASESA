@@ -32,55 +32,7 @@
 				<span class="i-header__btnIn sr-only"><@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/></span>
 			</button>
 		</div>
-		<nav class="i-header__userNav">
-			<ul class="i-header__userList">
-				<li class="i-header__userItem selected" class="i-header__userItem selected">
-					<a href="${site_default_url}" class="i-header__userLink">
-						<i class="i-icon i-icon--grey fa-solid fa-house"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.home'/></span>
-					</a>
-				</li>
-				<#assign userId = theme_display.getUser().userId>
-				<#assign customUserNotificationUtil = customUserNotificationUtil.getNotificationsByUserCount(userId) >
-				<li class="i-header__userItem">
-					<a href="${site_default_url}/inicio/notificaciones" class="i-header__userLink">
-						<i class="i-icon i-icon--grey fa-solid fa-bell"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.notifications'/></span>
-						<span class="ema-notif">${customUserNotificationUtil}</span>
-					</a>
-				</li>
-				<li class="i-header__userItem">
-					<a class="i-header__userLink" href="">
-						<i class="i-icon i-icon--grey fa-solid fa-envelope"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.mail'/></span>
-					</a>
-				</li>
-				<li class="i-header__userItem">
-					<a href="${site_default_url}/inicio/directorio-del-personal" class="i-header__userLink">
-						<i class="i-icon i-icon--grey fa-solid fa-users"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.user'/></span>
-					</a>
-				</li>
-				<li class="i-header__userItem">
-					<a href="" class="i-header__userLink">
-						<i class="i-icon i-icon--grey fa-solid fa-grip"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.apps'/></span>
-					</a>
-				</li>
-				<li class="i-header__userItem">
-					<a href="${site_default_url}/inicio/favoritos" class="i-header__userLink">
-						<i class="i-icon i-icon--grey fa-solid fa-heart"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.favorites'/></span>
-					</a>
-				</li>
-				<li class="i-header__userItem">
-					<a href="" class="i-header__userLink">
-						<i class="i-icon i-icon--grey fa-solid fa-user"></i>
-						<span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.user'/></span>
-					</a>
-				</li>
-			</ul>
-		</nav>
+		<#include "${full_templates_path}/sidebar.ftl" />
 	</div>
 </header>
 <div id="i-menuMobile" class="i-menuMobile hidden visuallyhidden">
@@ -113,3 +65,17 @@
 		</button>
     </div>
 </div>
+<script>
+	const appsBtn = document.getElementById('submenu-accesos-directos-btn')
+	const appsSubmenu = document.getElementById('submenu-accesos-directos')
+	const userBtn = document.getElementById('submenu-usuario-btn')
+	const userSubmenu = document.getElementById('submenu-usuario')
+	appsBtn.addEventListener('click', (e) => {
+		e.preventDefault()
+		appsSubmenu.classList.toggle('hide')
+	})
+	userBtn.addEventListener('click', (e) => {
+		e.preventDefault()
+		userSubmenu.classList.toggle('hide')
+	})
+</script>
