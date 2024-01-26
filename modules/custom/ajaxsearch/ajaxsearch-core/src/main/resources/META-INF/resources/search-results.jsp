@@ -197,7 +197,6 @@
                 $(".loading-animation").show();
             }
             if ($(".em-loading-overlay").length>0) {
-                //remove class hide
                 $(".em-loading-overlay").removeClass("hide");
             }
         }
@@ -209,7 +208,6 @@
                 $(".ajaxsearch-loading-animation").hide();
             }
             if ($(".em-loading-overlay").length>0) {
-                //addClass hide
                 $(".em-loading-overlay").addClass("hide");
             }
 
