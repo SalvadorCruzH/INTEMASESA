@@ -36,66 +36,37 @@
                 <li class="i-header__userItem__submenu__item">
                     <h4 class="i-header__userItem__submenu__item__title">Accesos directos</h4>
                     <ul class="i-header__userItem__submenu__item__apps">
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-boletin-digital.svg" alt="" />
-                                <span>Boletín digital</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-buzon-empleado.svg" alt="" />
-                                <span>Buzón del empleado</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-biblioteca-digital.svg" alt="" />
-                                <span>Biblioteca digital</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-calendario-laboral.svg" alt="" />
-                                <span>Calendario laboral</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-control-horario.svg" alt="" />
-                                <span>Control horario</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-gestion-salas.svg" alt="" />
-                                <span>Gestión de salas</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-mi-formacion.svg" alt="" />
-                                <span>Mi formación</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-nomina.svg" alt="" />
-                                <span>Mi nómina</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-mis-vacaciones.svg" alt="" />
-                                <span>Mis vacaciones</span>
-                            </a>
-                        </li>
-                        <li class="i-header__userItem__submenu__item__apps__app">
-                            <a href="#" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link">
-                                <img src="/o/emasesa-theme/images/icons/ico-organigrama.svg" alt="" />
-                                <span>Organigrama</span>
-                            </a>
-                        </li>
+                    	<#assign favoritoObjectId = favoritosServiceSettings.objectDefinitionId() >
+						<#assign entries = customEmasesaUtil.searchFavoritesJournalsArticleByUserAndDDMStructureKey(themeDisplay, "EMA-ACCESO-DIRECTO", -1, -1, favoritoObjectId) >
+						<#if entries?has_content>
+							<#list entries as curEntry>
+							    <#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
+							    <#assign ddmStructure = journalArticle.getDDMStructure() />
+					            <#assign ddmForm = ddmStructure.getDDMForm()/>
+					            <#assign ddmFormValues = ddmFieldLocalService.getDDMFormValues(ddmForm, journalArticle.getId()) />
+					            <#assign ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues() />
+					            <#assign urlJournal = ""
+					            		 name = ""
+					            		 icono = "">
+						        <#list ddmFormFieldValues as fieldName>
+						                <#if fieldName.getFieldReference() == 'url'>
+						                	<#assign urlJournal = fieldName.getValue().getString(locale) />
+						                </#if>
+						                <#if fieldName.getFieldReference() == 'name'>
+						                    <#assign name = fieldName.getValue().getString(locale) />
+						                </#if>
+						                <#if fieldName.getFieldReference() == 'icono'>
+						                    <#assign icono = fieldName.getValue().getString(locale) />						                   
+						                </#if>
+						        </#list>
+								<li class="i-header__userItem__submenu__item__apps__app">
+                           			<a href="${urlJournal}" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link" target="_blank">
+	                               		<img src="${icono}" alt="" data-fileentryid=""/>
+	                               		<span>${name}</span>
+                            		</a>
+                       			</li>
+						 	</#list>
+						</#if>
                     </ul>
                 </li>
             </ul>
@@ -114,7 +85,7 @@
             <ul class="i-header__userItem__submenu hide" id="submenu-usuario">
                 <li class="i-header__userItem__submenu__item">
                     <h4 class="i-header__userItem__submenu__item__title">Mi perfil</h4>
-                    <p>María de los Ángeles de la Fuente Fernández</p>
+                    <p>${theme_display.getUser().getFullName()}</p>
                     <hr />
                     <h4 class="i-header__userItem__submenu__item__title">Suscripciones</h4>
                     <p><a href="/c/portal/logout" title="Cerrar sesión">Cerrar sesión <i class="fa-solid fa-arrow-right-from-bracket"></i></a></p>
