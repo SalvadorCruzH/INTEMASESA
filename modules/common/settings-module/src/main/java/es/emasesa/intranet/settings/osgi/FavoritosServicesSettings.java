@@ -21,6 +21,10 @@ public class FavoritosServicesSettings {
 	 public String objectDefinitionId() {
 	    return configuration.objectDefinitionId();
 	 }	
+	 
+	 public String objectEnlaceDefinitionId() {
+		    return configuration.objectEnlaceDefinitionId();
+	 }
 	
 	@Activate
 	@Modified
