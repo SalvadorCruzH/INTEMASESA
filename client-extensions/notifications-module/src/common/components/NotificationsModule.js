@@ -182,8 +182,7 @@ class NotificationsModule extends React.Component {
                                             aria-labelledby="Filtrarpor-ariaLabel">
                                         <option value="">{Liferay.Language.get("notifications.filtrar")}</option>
                                         <option value="Fecha">Fecha</option>
-                                        <option value="Urgencia">Urgencia</option>
-                                        <option value="Departamento">Departamento</option>
+                                        <option value="Departamento">Tipo</option>
                                     </select>
                                 </div>
                                 <div className="form-row notification-filters__submit">

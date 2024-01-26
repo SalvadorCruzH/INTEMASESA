@@ -12,15 +12,20 @@ class Notification extends React.Component {
             notification: props.notification,
             refresh: props.refresh
         }
+
+
     }
 
     componentDidMount() {
-
     }
 
     markAsRead = () => {
         console.log(this.state.notification)
         NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.callDataCallback, this.callDataCallback);
+    }
+
+    goTo = () => {
+        location.href= this.state.configuration.objectMapping[this.state.notification.payload.entryType].urlNotificacion;
     }
 
     callDataCallback = (data) => {
@@ -75,13 +80,18 @@ class Notification extends React.Component {
                             className="ema-notifications__item__label">Mensaje:</span> {this.state.notification.payload.notificationMessage}
                         </li>
                         <li><span
-                            className="ema-notifications__item__label">{Liferay.Language.get("notifications.fecha")}:</span> {this.state.notification.timestamp}
+                            className="ema-notifications__item__label">{Liferay.Language.get("notifications.fecha")}:</span> {this.state.notification.timestamp}{this.state.notification.context}
                         </li>
                     </ul>
                     <p>
-                        <button className="btn btn-primary ema-notifications__item__btn" type="button" data-event={this.state.notification.userNotificationEventId} onClick={this.markAsRead}><i
-                            className="fa-regular fa-eye"></i> {Liferay.Language.get("notifications.mark.read")}
-                        </button>
+
+                        {(!this.state.notification.context) ?
+                            (<></> ) : (
+                            <button className="btn btn-primary ema-notifications__item__btn" type="button"
+                                    data-event={this.state.notification.userNotificationEventId} onClick={this.goTo}>
+                                 Ver tarea
+                            </button>
+                        )}
                     </p>
                 </div>
             </div>

@@ -26,6 +26,8 @@ import es.emasesa.intranet.sap.calendarioeventos.exception.CalendarioEventosExce
 import es.emasesa.intranet.sap.calendarioeventos.service.CalendarioEventosService;
 import es.emasesa.intranet.sap.centros.exception.DistanciaCentrosException;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
+import es.emasesa.intranet.sap.datospersona.exception.EmpleadoActDatosPersonalesException;
+import es.emasesa.intranet.sap.datospersona.service.EmpleadoActDatosPersonalesService;
 import es.emasesa.intranet.sap.empleadoBanco.exception.EmpleadoBancoException;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
@@ -54,6 +56,9 @@ import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraServic
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.*;
@@ -363,7 +368,7 @@ public class SapServicesUtil {
         }
         return datosEmpleadoPrestamos;
     }
-    
+
     /**
      * Llamada al servicio de empleado-prestamos para obtener datos de prestamo de un usuario.
      *
@@ -398,7 +403,7 @@ public class SapServicesUtil {
         }
         return datosEmpleadoPrestamos;
     }
-    
+
     /**
      * Llamada al servicio de empleado-relc-laboral para obtener datos laborales de un usuario.
      *
@@ -406,7 +411,7 @@ public class SapServicesUtil {
      * @return JSONObject
      */
 	 public JSONObject getEmpleadoRelacionLaboral(User user) {
-		
+
 		if(LOG.isDebugEnabled()){
 		     LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
 		}
@@ -434,7 +439,7 @@ public class SapServicesUtil {
 		}
 		 return datosEmpleadoRelacionLaboral;
 	 }
-	 
+
 	   /**
 	     * Llamada al servicio de empleado-banco para obtener datos de banco de un usuario.
 	     *
@@ -628,6 +633,87 @@ public class SapServicesUtil {
         }
     }
 
+    public void setDatosPersonales(Map<String, Object> workflowContext){
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[A] setDatosPersonales ");
+        }
+        try {
+            if (_empleadoActDatosPersonalesService == null) {
+                activate(null);
+            }
+            long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            LOG.debug("Obtenido classPK la petición" + classPK);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
+
+            String pernr = (String) objectValues.get("pernr");
+            String nombre = (String) objectValues.get("nombre");
+            String apellido1 = (String) objectValues.get("apellido1");
+            String apellido2 = (String) objectValues.get("apellido2");
+            String calle = (String) objectValues.get("calle");
+            Date fechaInicioDate =  _objectEntryLocalService.getObjectEntry(classPK).getCreateDate();
+            String fechaInicio = formatter.format(fechaInicioDate);
+            String email = (String) objectValues.get("email");
+            String claseId = StringPool.BLANK;
+            String codigoPostal = (String) objectValues.get("codigoPostal");
+            String estadoCivilId = StringPool.BLANK;
+            String nifE = StringPool.BLANK;
+            String generoId = StringPool.BLANK;
+            BigDecimal numeroHijos = BigDecimal.ZERO;
+            Date fechaNacimientoDate = (Date) objectValues.get("fechaDeNacimiento");
+            String fechaNacimiento = formatter.format(fechaNacimientoDate);
+            String poblacionNacimiento = StringPool.BLANK;
+            String provinciaNacimientoId = StringPool.BLANK;
+            String nacionalidadId = StringPool.BLANK;
+            String nroSs = StringPool.BLANK;
+            String numero = String.valueOf(objectValues.get("numero"));
+            String portal = (String) objectValues.get("portal");
+            String pisoLetra = (String) objectValues.get("pisoLetra");
+            String poblacion = (String) objectValues.get("poblacion");
+            String provinciaId = (String) objectValues.get("provincia");
+            String telefono = (String) objectValues.get("telefono");
+
+
+            _empleadoActDatosPersonalesService.actEmpleadoDatosPersonales(
+                    pernr,
+                    nombre,
+                    apellido1,
+                    apellido2,
+                    calle,
+                    fechaInicio,
+                    email,
+                    claseId,
+                    codigoPostal,
+                    estadoCivilId,
+                    nifE,
+                    generoId,
+                    numeroHijos,
+                    fechaNacimiento,
+                    poblacionNacimiento,
+                    provinciaNacimientoId,
+                    nacionalidadId,
+                    nroSs,
+                    numero,
+                    portal,
+                    pisoLetra,
+                    poblacion,
+                    provinciaId,
+                    telefono
+            );
+        } catch (PortalException e) {
+            LOG.debug("[B] setDatosPersonales al obtener objeto");
+        } catch (EmpleadoActDatosPersonalesException e) {
+            LOG.debug("[C] setDatosPersonales al comunicar con Datos Personales service");
+        } catch (SapCommunicationException e) {
+            LOG.debug("[C] setDatosPersonales al comunicar con SAP");
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[D] setDatosPersonales, finalizada ");
+            }
+        }
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -647,6 +733,8 @@ public class SapServicesUtil {
             CustomServiceTracker<EmpleadoBancoService> empleadoBancoServiceTracker = new CustomServiceTracker<>(EmpleadoBancoService.class, "getEmpleadoBancoService");
             CustomServiceTracker<NecesidadesFormacionService> necesidadesFormacionServiceTracker = new CustomServiceTracker<>(NecesidadesFormacionService.class, "getNecesidadesFormacionService");
             CustomServiceTracker<CalendarioEventosService> calendarioEventosServiceTracker = new CustomServiceTracker<>(CalendarioEventosService.class, "getCalendarioEventosService");
+            CustomServiceTracker<EmpleadoActDatosPersonalesService> empleadoActDatosPersonalesServiceServiceTracker = new CustomServiceTracker<>(EmpleadoActDatosPersonalesService.class, "getEmpleadoActDatosPersonalesService");
+
 
             this._customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
             this._marcajeService = marcajeServiceCustomServiceTracker.getService();
@@ -664,6 +752,7 @@ public class SapServicesUtil {
             this._empleadoBancoService = empleadoBancoServiceTracker.getService();
             this._necesidadesFormacionService = necesidadesFormacionServiceTracker.getService();
             this._calendarioEventosService = calendarioEventosServiceTracker.getService();
+            this._empleadoActDatosPersonalesService = empleadoActDatosPersonalesServiceServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -714,9 +803,9 @@ public class SapServicesUtil {
     private CiertosDatosEstructuraService _ciertosDatosEstructuraService;
     private EmpleadoBancoService _empleadoBancoService;
     private RelacionLaboralService _relacionLaboralService;
-
     private NecesidadesFormacionService _necesidadesFormacionService;
     private CalendarioEventosService _calendarioEventosService;
+    private EmpleadoActDatosPersonalesService _empleadoActDatosPersonalesService;
     private CustomExpandoUtil _customExpandoUtil;
     @Reference
     private ExpandoValueLocalService _expandoValueLocalService;

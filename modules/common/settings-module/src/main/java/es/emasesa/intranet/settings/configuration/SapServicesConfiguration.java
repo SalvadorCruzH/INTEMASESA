@@ -144,4 +144,12 @@ public interface SapServicesConfiguration {
             required = false
     )
     String calendarioEventosEndpoint();
+
+
+    @Meta.AD(
+            deflt = "",
+            name = "empleadoActDatosPersonalesEndpoint",
+            required = false
+    )
+    String empleadoActDatosPersonalesEndpoint();
 }

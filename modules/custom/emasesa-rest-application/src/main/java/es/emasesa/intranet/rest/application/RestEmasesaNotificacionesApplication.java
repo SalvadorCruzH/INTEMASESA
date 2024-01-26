@@ -1,7 +1,10 @@
 package es.emasesa.intranet.rest.application;
 
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,6 +39,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 @Component(
 	property = {
@@ -57,7 +61,7 @@ public class RestEmasesaNotificacionesApplication extends Application {
 										 @PathParam("start") int start, @PathParam("end") int end) {
 
 		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd MMMMMMMMMM yyyy | HH:mm");
+			SimpleDateFormat formato = new SimpleDateFormat("dd MMMMMMMMMM yyyy | HH:mm", LocaleThreadLocal.getDefaultLocale());
 			long companyId = CompanyThreadLocal.getCompanyId();
 			User user = PermissionThreadLocal.getPermissionChecker().getUser();
 
@@ -67,7 +71,7 @@ public class RestEmasesaNotificacionesApplication extends Application {
 					.where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
 							.and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false))
 									.and(UserNotificationEventTable.INSTANCE.archived.eq(false))
-									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))).limit(start, end);
+									.and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))).orderBy(UserNotificationEventTable.INSTANCE.timestamp.descending()).limit(start, end);
 
 			DSLQuery queryCount = DSLQueryFactoryUtil
 					.count()

@@ -870,7 +870,55 @@ html:not(#__):not(#___) {
                 }
             }
         }
+        &--white {
+            .ema-favoritos {
+                &__content {
+                    padding: 0;
+                }
+                &__items {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem 5rem;
+                }
+                &__item {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 0;
+                    padding: 0;
+                    border: none;
+                    button {
+                        width: 22px;
+                        height: 22px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 11px;
+                        background-color: $color-light-grey;
+                        cursor: pointer;
+                        i {
+                            text-indent: 1.5px;
+                            position: relative;
+                            top: -0.5px;
+                            color: $color-white;
+                            font-size: .875rem;
+                            cursor: pointer;
+                        }
+                        &:has(.fa-plus) {
+                            background: $color-aux-blue;
+                        }
+                        &:has(.fa-minus) i {
+                            color: $color-icon-grey;
+                        }
+                    }
+                }
+            }
+        }
     }
+}
+
+.favorito-icon i[class*="fa"],
+.unfavorito-icon i[class*="fa"] {
+    color: $color-error;
 }
 
 // Search bar
