@@ -6,6 +6,7 @@ export const oauthUserAgent = {
 
 export const NOTIFICATION_URL = {
     GET : '/emasesa/v1.0/intranet/notificaciones/',
+    COUNT : '/emasesa/v1.0/intranet/notificaciones/count',
     MARKASRED: '/headless-user-notification/v1.0/user-notifications/NOTIFICACIONID/read'
 }
 
