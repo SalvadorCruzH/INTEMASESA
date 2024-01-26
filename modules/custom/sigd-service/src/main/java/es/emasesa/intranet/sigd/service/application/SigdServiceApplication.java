@@ -737,6 +737,15 @@ public class SigdServiceApplication{
 				    case SidgServiceKeys.FORM_FORMATIVAS:
 				    	formConfiguration = _configuration.getFormativasConfiguration();
 				        break;
+					 case SidgServiceKeys.FORM_PRESTACION:
+						 formConfiguration = _configuration.getPrestacionConfiguration();
+						 break;
+					 case SidgServiceKeys.FORM_CAMBIODOMICILIO:
+						 formConfiguration = _configuration.getCambioDomicilioConfiguration();
+						 break;
+					 case SidgServiceKeys.FORM_VOLUNTADES:
+						 formConfiguration = _configuration.getVoluntadesConfiguration();
+						 break;
 				    default:
 				    	LoggerUtil.debug(LOG, "No se ha encontrado la configuracion del formulario con nombre: " + objectName +" " +SidgServiceKeys.FORM_IRPF);
 				}			   

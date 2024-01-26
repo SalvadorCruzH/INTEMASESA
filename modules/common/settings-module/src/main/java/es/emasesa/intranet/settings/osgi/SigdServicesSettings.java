@@ -53,6 +53,15 @@ public class SigdServicesSettings {
 	public String getPensionesConfiguration(){
 		return configuration.getPensionesConfiguration();
 	}
+	public String getCambioDomicilioConfiguration(){
+		return configuration.getCambioDomicilioConfiguration();
+	}
+	public String getVoluntadesConfiguration(){
+		return configuration.getVoluntadesConfiguration();
+	}
+	public String getPrestacionConfiguration(){
+		return configuration.getPrestacionConfiguration();
+	}
 	
 	public String getHorasExtrasConfiguration(){
 		return configuration.getHorasExtrasConfiguration();
