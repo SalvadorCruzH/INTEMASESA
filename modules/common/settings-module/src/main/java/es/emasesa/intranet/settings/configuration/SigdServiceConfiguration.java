@@ -131,7 +131,7 @@ public interface SigdServiceConfiguration {
             required = false
     )
 	String getCompatibilidadesConfiguration();
-	
+
 	@Meta.AD(
             deflt = "",
             name = "Flexibilidad horaria",
@@ -243,6 +243,14 @@ public interface SigdServiceConfiguration {
             required = false
     )
 	String getDatosPersonalesConfiguration();
+
+	@Meta.AD(
+			deflt = "",
+			name = "Empleado Act Datos Personales",
+			description = "Configuraciones del formulario de Empleado Act Datos Personales para llamadas a los servicios del SIGD. Serie, tipo documental y metadatos",
+			required = false
+	)
+	String getEmpleadoActDatosPersonalesConfiguration();
 	
 	@Meta.AD(
             deflt = "",

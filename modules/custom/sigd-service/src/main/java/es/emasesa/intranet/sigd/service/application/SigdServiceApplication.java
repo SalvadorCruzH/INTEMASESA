@@ -722,6 +722,9 @@ public class SigdServiceApplication{
 				    case SidgServiceKeys.FORM_DATOS_PERSONALES:
 				    	formConfiguration = _configuration.getDatosPersonalesConfiguration();
 				        break;
+					case SidgServiceKeys.FORM_EMPLEADO_ACT_DATOS_PERSONALES:
+						 formConfiguration = _configuration.getEmpleadoActDatosPersonalesConfiguration();
+						 break;
 				    case SidgServiceKeys.FORM_CONCURSOS_PROCESOS:
 				    	formConfiguration = _configuration.getConcursosConfiguration();
 				        break;

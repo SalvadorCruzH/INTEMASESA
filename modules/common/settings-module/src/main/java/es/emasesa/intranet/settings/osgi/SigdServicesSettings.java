@@ -133,6 +133,8 @@ public class SigdServicesSettings {
 	public String getDatosPersonalesConfiguration(){
 		return configuration.getDatosPersonalesConfiguration();
 	}
+
+	public String getEmpleadoActDatosPersonalesConfiguration(){return configuration.getEmpleadoActDatosPersonalesConfiguration();}
 	
 	public String getConcursosConfiguration(){
 		return configuration.getConcursosConfiguration();
