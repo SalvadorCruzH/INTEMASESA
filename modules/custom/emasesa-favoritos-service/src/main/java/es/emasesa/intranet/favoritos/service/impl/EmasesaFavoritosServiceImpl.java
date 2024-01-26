@@ -1,34 +1,48 @@
 package es.emasesa.intranet.favoritos.service.impl;
 
-import es.emasesa.intranet.base.util.LoggerUtil;
-import es.emasesa.intranet.favoritos.service.EmasesaFavoritosService;
-import es.emasesa.intranet.favoritos.service.util.EmasesaFavoritosUtil;
-import es.emasesa.intranet.settings.configuration.FavoritosConfiguration;
-
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import java.io.Serializable;
-import java.util.*;
+import es.emasesa.intranet.base.util.LoggerUtil;
+import es.emasesa.intranet.favoritos.service.EmasesaFavoritosService;
+import es.emasesa.intranet.favoritos.service.util.EmasesaFavoritosUtil;
+import es.emasesa.intranet.settings.configuration.FavoritosConfiguration;
 
 @Component(
         configurationPid="es.emasesa.intranet.settings.configuration.FavoritosConfiguration",
@@ -160,6 +174,63 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 
 	        return true;
 	    }
+	    
+	    @Override
+		public boolean addEnlace(String classPK, long assetEntryClassId, long groupId, String title, String url,
+				String ddmStructureKey) throws PortalException {
+	    	 PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+		        if(!permissionChecker.isCheckGuest()){
+		            throw new PortalException("El usuario debe estar logado");
+		        }
+
+		        long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectEnlaceDefinitionId(), permissionChecker.getUserId(), ""+classPK);
+		        if(objectEntryId > 0){
+		        	ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectEntryId);
+		        	//Añadir enlaces al JSON enlaces del object
+		        	if(Validator.isNotNull(object)) {
+		        		Map <String,Serializable> map = object.getValues();
+		        		JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("enlaces"));
+		        		jsonArray.put(_emasesaFavoritosUtil.generateJSONEnlacesFavoritos(title, url));
+		        		map.put("enlaces", jsonArray);
+		        		ServiceContext serviceContext = new ServiceContext();
+						_objectEntryLocalService.updateObjectEntry(
+									object.getUserId(), object.getObjectEntryId(), map, 
+									serviceContext);
+		        	}
+		            return true;
+		        }
+
+		        User user = permissionChecker.getUser();
+
+		        Map<String, Serializable> params = new HashMap<>();
+		        params.put("assetEntryId", classPK);
+		        params.put("classNameId", assetEntryClassId);
+		        params.put("title", title);
+		        params.put("url", url);
+		        params.put("assetEntryGroupId",groupId);
+		        params.put("r_userEnlace_userId", user.getUserId());
+		        params.put("ddmStructureKey", ddmStructureKey);
+		        params.put("enlaces", _emasesaFavoritosUtil.generateJSONEnlacesFavoritos(title, url));
+		        
+		        //AÑADIR EL JSON titulo/URL
+		       
+		        ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(user.getUserId(), groupId, Long.valueOf(_configuration.objectEnlaceDefinitionId()), params, ServiceContextThreadLocal.getServiceContext());
+		        _objectEntryLocalService.updateAsset(user.getUserId(), objectEntry, new long[0], new String[0], new long[0], null);
+		        return true;
+		}
+
+		@Override
+		public boolean deleteEnlace(String classPK) throws PortalException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isEnlace(String classPK) throws PortalException {
+			//existe relacion un enlace para ese usuario
+			//en el JSON hay un enlace con ese ID
+			return false;
+		}
 
 	    @Activate
 	    @Modified
@@ -184,4 +255,5 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 
 	    private volatile FavoritosConfiguration _configuration;
 	    private static final Log LOG = LoggerUtil.getLog(EmasesaFavoritosServiceImpl.class);
+		
 }

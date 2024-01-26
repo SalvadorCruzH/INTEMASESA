@@ -61,6 +61,33 @@ public class EmasesaFavoritosRest extends Application{
         }
         return "{\"code\": 500, \"msg\":\""+msg+"\"}";
     }
+    
+    @POST
+    @Path("/saveEnlace")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String saveEnlace(FavoritoBean data) {
+        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+        String msg ="";
+        if(permissionChecker.isCheckGuest()) {
+            try {
+                boolean result = false;
+                if("ADD".equalsIgnoreCase(data.getCmd())) {
+                    result = _emasesaFavoritosService.addEnlace(String.valueOf(data.getAssetEntryId()), data.getClassNameId(), data.getGroupId(), data.getTitle(), data.getUrl(), data.getDdmStructureKey());
+                }else{
+                	//Borrar del JSON el enlace y si no hay nada se borra todo
+                    result = _emasesaFavoritosService.deleteEnlace(String.valueOf(data.getAssetEntryId()));
+                }
+                return result ? "{\"code\": 200}" : "{\"code\": 500}";
+            } catch (Exception e) {
+                msg = e.getLocalizedMessage();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(e.getMessage(), e);
+                }
+            }
+        }
+        return "{\"code\": 500, \"msg\":\""+msg+"\"}";
+    }
 
     @GET
     @Path("/test")

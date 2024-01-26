@@ -19,4 +19,10 @@ public interface EmasesaFavoritosService {
 	 public Hits searchFavoritesByUserAndType(ThemeDisplay themeDisplay, String classNameId,int start,int end) throws ParseException, SearchException;
 
 	 public Hits searchFavoritesJournalsArticleByUserAndDDMStructureKey(ThemeDisplay themeDisplay, String ddmStructureKey,int start,int end) throws ParseException, SearchException;
+	 
+	 public boolean addEnlace(String classPK, long assetEntryClassId, long groupId, String title, String url , String ddmStructureKey) throws PortalException;
+
+	 public boolean deleteEnlace(String classPK) throws PortalException;
+
+	 public boolean isEnlace(String classPK) throws PortalException;
 }
