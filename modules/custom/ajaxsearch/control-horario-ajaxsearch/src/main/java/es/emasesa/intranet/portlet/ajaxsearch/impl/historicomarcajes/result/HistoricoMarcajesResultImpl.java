@@ -190,7 +190,7 @@ public class HistoricoMarcajesResultImpl implements AjaxSearchResult {
 
 		}else{
 			listJson = _specUtil.dbSPECSearch(fromDate,toDate,screenName);
-			_specUtil.orderByDateAndTime(listJson);
+			//_specUtil.orderByDateAndTime(listJson);
 			Map<String,List<JSONObject>> groupedRows = _specUtil.groupRows(listJson);
 			_specUtil.processData(array, themeDisplay, groupedRows);
 			_cache.put(cacheKey, array.toString(), timeToLive);

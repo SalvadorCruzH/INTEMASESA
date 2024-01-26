@@ -1,11 +1,14 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.marcajediaactual.result;
 
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -158,7 +161,21 @@ public class MarcajeDiaActualResultImpl implements AjaxSearchResult {
 
 		String directoTodos = ajaxSearchDisplayContext.getConfig(DIRECTO_TODOS);
 
-		JSONArray subordinados = _sapServicesUtil.getSubordinados(themeDisplay.getUser(),directoTodos);
+		String matricula = StringPool.BLANK;
+		try {
+			matricula = _expandoValueLocalService.getData(
+					themeDisplay.getCompanyId(),
+					User.class.getName(),
+					ExpandoTableConstants.DEFAULT_TABLE_NAME,
+					"matricula",
+					themeDisplay.getUser().getUserId(),
+					StringPool.BLANK
+			);
+		} catch (Exception e) {
+			LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
+		}
+
+		JSONArray subordinados = _sapServicesUtil.getSubordinados(matricula,directoTodos);
 
 		String pernrListStr = extractPernr(subordinados);
 
@@ -179,7 +196,7 @@ public class MarcajeDiaActualResultImpl implements AjaxSearchResult {
 
 		}else{
 			listJson = _specUtil.dbSPECSearch(fromDate,toDate,pernrListStr);
-			_specUtil.orderByDateAndTime(listJson);
+			//_specUtil.orderByDateAndTime(listJson);
 			Map<String,List<JSONObject>> groupedRows = _specUtil.groupRows(listJson);
 			_specUtil.processData(array, themeDisplay, groupedRows);
 			_cache.put(cacheKey, array.toString(), timeToLive);
@@ -241,5 +258,7 @@ public class MarcajeDiaActualResultImpl implements AjaxSearchResult {
 	SPECServicesSettings _specServicesSettings;
 	@Reference
 	SpecUtil _specUtil;
+	@Reference
+	ExpandoValueLocalService _expandoValueLocalService;
 
 }

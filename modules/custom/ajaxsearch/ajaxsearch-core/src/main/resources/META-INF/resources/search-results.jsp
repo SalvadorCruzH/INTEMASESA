@@ -196,6 +196,10 @@
                 $(".ajaxsearch-input-button").hide();
                 $(".loading-animation").show();
             }
+            if ($(".em-loading-overlay").length>0) {
+                //remove class hide
+                $(".em-loading-overlay").removeClass("hide");
+            }
         }
 
         var _notFirstLoad;
@@ -203,6 +207,10 @@
             if ($(".ajaxsearch-loading-animation").length>0){
                 $(".ajaxsearch-input-button").show();
                 $(".ajaxsearch-loading-animation").hide();
+            }
+            if ($(".em-loading-overlay").length>0) {
+                //addClass hide
+                $(".em-loading-overlay").addClass("hide");
             }
 
         }
