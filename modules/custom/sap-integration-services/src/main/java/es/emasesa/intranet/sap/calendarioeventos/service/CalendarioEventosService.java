@@ -7,15 +7,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.rfc.functions.ZPESTINSAYUDAESCOLAR;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStAyudasSolicitadas;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStBeneficiarios;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStCalendarioEventos;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStConteniObjetiEventos;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEstudios;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEAYUDAESCOLAR;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEAYUDAESCOLAR_Service;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPECALENDARIOEVENTOS;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPECALENDARIOEVENTOS_Service;
+import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -26,6 +18,7 @@ import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.calendarioeventos.exception.CalendarioEventosException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
+import jakarta.jws.WebParam;
 import jakarta.xml.ws.Holder;
 import java.net.Authenticator;
 import java.net.MalformedURLException;
@@ -45,24 +38,30 @@ public class CalendarioEventosService {
             ClassLoader objectFactoryClassLoader = ZWSPECALENDARIOEVENTOS.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos = new Holder<>();
-            Holder<TableOfZpeStCalendarioEventos> tCalendarioEventos = new Holder<>();
-            Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos2 = new Holder<>();
+
+            Holder<TableOfZpeStCalendarioEventosCoob> tContenido = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventosDocu> tDocumentos = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventos> tEventos = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventosCoob> tObjetivo = new Holder<>();
+
 
             String inscripcionAccion = "";
             String inscripcionEvento = "";
 
-            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, inscripcionAccion, inscripcionEvento, tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
+            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, inscripcionAccion, inscripcionEvento, tContenido, tDocumentos, tEventos, tObjetivo);
 
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
-            if (tConteniObjetiEventos.value != null){
-                jsonReturn.put("contenido", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tConteniObjetiEventos.value.getItem())));
+            if (tContenido.value != null){
+                jsonReturn.put("contenido", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tContenido.value.getItem())));
             }
-            if (tCalendarioEventos.value != null){
-                jsonReturn.put("eventos", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tCalendarioEventos.value.getItem())));
+            if (tEventos.value != null){
+                jsonReturn.put("eventos", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEventos.value.getItem())));
             }
-            if (tConteniObjetiEventos2.value != null){
-                jsonReturn.put("objetivo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tConteniObjetiEventos2.value.getItem())));
+            if (tObjetivo.value != null){
+                jsonReturn.put("objetivo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tObjetivo.value.getItem())));
+            }
+            if (tDocumentos.value != null){
+                jsonReturn.put("documento", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tDocumentos.value.getItem())));
             }
             return jsonReturn;
         } catch (ServerSOAPFaultException | JSONException e) {

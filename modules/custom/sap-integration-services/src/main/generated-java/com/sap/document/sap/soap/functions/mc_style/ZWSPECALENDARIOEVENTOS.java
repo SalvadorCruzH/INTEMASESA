@@ -33,6 +33,7 @@ public interface ZWSPECALENDARIOEVENTOS {
      * @param inscripcionEvento
      * @param inscripcionAccion
      * @param tObjetivo
+     * @param tDocumentos
      * @param tEventos
      * @return
      *     returns com.sap.document.sap.soap.functions.mc_style.Bapireturn1
@@ -53,10 +54,12 @@ public interface ZWSPECALENDARIOEVENTOS {
         @WebParam(name = "InscripcionEvento", targetNamespace = "")
         String inscripcionEvento,
         @WebParam(name = "TContenido", targetNamespace = "", mode = WebParam.Mode.OUT)
-        Holder<TableOfZpeStConteniObjetiEventos> tContenido,
+        Holder<TableOfZpeStCalendarioEventosCoob> tContenido,
+        @WebParam(name = "TDocumentos", targetNamespace = "", mode = WebParam.Mode.OUT)
+        Holder<TableOfZpeStCalendarioEventosDocu> tDocumentos,
         @WebParam(name = "TEventos", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<TableOfZpeStCalendarioEventos> tEventos,
         @WebParam(name = "TObjetivo", targetNamespace = "", mode = WebParam.Mode.OUT)
-        Holder<TableOfZpeStConteniObjetiEventos> tObjetivo);
+        Holder<TableOfZpeStCalendarioEventosCoob> tObjetivo);
 
 }

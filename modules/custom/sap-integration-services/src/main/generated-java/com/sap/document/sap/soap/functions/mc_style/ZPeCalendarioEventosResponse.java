@@ -19,9 +19,10 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="Return" type="{urn:sap-com:document:sap:soap:functions:mc-style}Bapireturn1"/&gt;
- *         &lt;element name="TContenido" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStConteniObjetiEventos"/&gt;
+ *         &lt;element name="TContenido" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStCalendarioEventosCoob"/&gt;
+ *         &lt;element name="TDocumentos" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStCalendarioEventosDocu"/&gt;
  *         &lt;element name="TEventos" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStCalendarioEventos"/&gt;
- *         &lt;element name="TObjetivo" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStConteniObjetiEventos"/&gt;
+ *         &lt;element name="TObjetivo" type="{urn:sap-com:document:sap:soap:functions:mc-style}TableOfZpeStCalendarioEventosCoob"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -34,6 +35,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "_return",
     "tContenido",
+    "tDocumentos",
     "tEventos",
     "tObjetivo"
 })
@@ -43,11 +45,13 @@ public class ZPeCalendarioEventosResponse {
     @XmlElement(name = "Return", required = true)
     protected Bapireturn1 _return;
     @XmlElement(name = "TContenido", required = true)
-    protected TableOfZpeStConteniObjetiEventos tContenido;
+    protected TableOfZpeStCalendarioEventosCoob tContenido;
+    @XmlElement(name = "TDocumentos", required = true)
+    protected TableOfZpeStCalendarioEventosDocu tDocumentos;
     @XmlElement(name = "TEventos", required = true)
     protected TableOfZpeStCalendarioEventos tEventos;
     @XmlElement(name = "TObjetivo", required = true)
-    protected TableOfZpeStConteniObjetiEventos tObjetivo;
+    protected TableOfZpeStCalendarioEventosCoob tObjetivo;
 
     /**
      * Obtiene el valor de la propiedad return.
@@ -78,10 +82,10 @@ public class ZPeCalendarioEventosResponse {
      * 
      * @return
      *     possible object is
-     *     {@link TableOfZpeStConteniObjetiEventos }
+     *     {@link TableOfZpeStCalendarioEventosCoob }
      *     
      */
-    public TableOfZpeStConteniObjetiEventos getTContenido() {
+    public TableOfZpeStCalendarioEventosCoob getTContenido() {
         return tContenido;
     }
 
@@ -90,11 +94,35 @@ public class ZPeCalendarioEventosResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link TableOfZpeStConteniObjetiEventos }
+     *     {@link TableOfZpeStCalendarioEventosCoob }
      *     
      */
-    public void setTContenido(TableOfZpeStConteniObjetiEventos value) {
+    public void setTContenido(TableOfZpeStCalendarioEventosCoob value) {
         this.tContenido = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tDocumentos.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TableOfZpeStCalendarioEventosDocu }
+     *     
+     */
+    public TableOfZpeStCalendarioEventosDocu getTDocumentos() {
+        return tDocumentos;
+    }
+
+    /**
+     * Define el valor de la propiedad tDocumentos.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TableOfZpeStCalendarioEventosDocu }
+     *     
+     */
+    public void setTDocumentos(TableOfZpeStCalendarioEventosDocu value) {
+        this.tDocumentos = value;
     }
 
     /**
@@ -126,10 +154,10 @@ public class ZPeCalendarioEventosResponse {
      * 
      * @return
      *     possible object is
-     *     {@link TableOfZpeStConteniObjetiEventos }
+     *     {@link TableOfZpeStCalendarioEventosCoob }
      *     
      */
-    public TableOfZpeStConteniObjetiEventos getTObjetivo() {
+    public TableOfZpeStCalendarioEventosCoob getTObjetivo() {
         return tObjetivo;
     }
 
@@ -138,10 +166,10 @@ public class ZPeCalendarioEventosResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link TableOfZpeStConteniObjetiEventos }
+     *     {@link TableOfZpeStCalendarioEventosCoob }
      *     
      */
-    public void setTObjetivo(TableOfZpeStConteniObjetiEventos value) {
+    public void setTObjetivo(TableOfZpeStCalendarioEventosCoob value) {
         this.tObjetivo = value;
     }
 
