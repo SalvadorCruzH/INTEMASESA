@@ -44,7 +44,6 @@ public class CalendarioEventosService {
             Holder<TableOfZpeStCalendarioEventos> tEventos = new Holder<>();
             Holder<TableOfZpeStCalendarioEventosCoob> tObjetivo = new Holder<>();
 
-
             String inscripcionAccion = "";
             String inscripcionEvento = "";
 
@@ -81,21 +80,25 @@ public class CalendarioEventosService {
             ClassLoader objectFactoryClassLoader = ZWSPECALENDARIOEVENTOS.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos = new Holder<>();
-            Holder<TableOfZpeStCalendarioEventos> tCalendarioEventos = new Holder<>();
-            Holder<TableOfZpeStConteniObjetiEventos> tConteniObjetiEventos2 = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventosCoob> tContenido = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventosDocu> tDocumentos = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventos> tEventos = new Holder<>();
+            Holder<TableOfZpeStCalendarioEventosCoob> tObjetivo = new Holder<>();
 
-            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, inscripcionAccion, inscripcionEvento, tConteniObjetiEventos, tCalendarioEventos, tConteniObjetiEventos2);
+            port.zPeCalendarioEventos(fechaDesde, fechaHasta, pernr, inscripcionAccion, inscripcionEvento, tContenido, tDocumentos, tEventos, tObjetivo);
 
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
-            if (tConteniObjetiEventos.value != null){
-                jsonReturn.put("contenido", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tConteniObjetiEventos.value.getItem())));
+            if (tContenido.value != null){
+                jsonReturn.put("contenido", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tContenido.value.getItem())));
             }
-            if (tCalendarioEventos.value != null){
-                jsonReturn.put("eventos", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tCalendarioEventos.value.getItem())));
+            if (tEventos.value != null){
+                jsonReturn.put("eventos", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tEventos.value.getItem())));
             }
-            if (tConteniObjetiEventos2.value != null){
-                jsonReturn.put("objetivo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tConteniObjetiEventos2.value.getItem())));
+            if (tObjetivo.value != null){
+                jsonReturn.put("objetivo", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tObjetivo.value.getItem())));
+            }
+            if (tDocumentos.value != null){
+                jsonReturn.put("documento", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tDocumentos.value.getItem())));
             }
             return jsonReturn;
         } catch (ServerSOAPFaultException | JSONException e) {
