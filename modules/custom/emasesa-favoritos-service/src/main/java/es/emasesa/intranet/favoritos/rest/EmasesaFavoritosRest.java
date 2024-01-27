@@ -69,12 +69,15 @@ public class EmasesaFavoritosRest extends Application{
     @Consumes("application/json")
     @Produces("application/json")
     public String saveEnlace(FavoritoBean data) {
+    	LOG.debug("Entra en la API REST saveEnlace");
         PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
         String msg ="";
         if(permissionChecker.isCheckGuest()) {
+        	LOG.debug("El usuario tiene permisos");
             try {
                 boolean result = false;
                 if("ADD".equalsIgnoreCase(data.getCmd())) {
+                	LOG.debug("Se procede a añadir enlace");
                     result = _emasesaFavoritosService.addEnlace(String.valueOf(data.getAssetEntryId()), data.getClassNameId(), data.getGroupId(), data.getTitle(), data.getUrl(), data.getDdmStructureKey());
                 }
                 return result ? "{\"code\": 200}" : "{\"code\": 500}";
@@ -84,6 +87,8 @@ public class EmasesaFavoritosRest extends Application{
                     LOG.debug(e.getMessage(), e);
                 }
             }
+        }else {
+        	LOG.debug("El usuario NO tiene permisos");
         }
         return "{\"code\": 500, \"msg\":\""+msg+"\"}";
     }
@@ -93,9 +98,11 @@ public class EmasesaFavoritosRest extends Application{
     @Consumes("application/json")
     @Produces("application/json")
     public String deleteEnlace(String data) {
+    	LOG.debug("Entra en la API REST deleteEnlace");
         PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
         String msg ="";
         if(permissionChecker.isCheckGuest()) {
+        	LOG.debug("El usuario tiene permisos");
             try {
                 boolean result = false;
                 JSONObject jsonData = JSONFactoryUtil.createJSONObject(data);
@@ -104,7 +111,11 @@ public class EmasesaFavoritosRest extends Application{
                 String assetEntryId = jsonData.getString("assetEntryId");
                 String idEnlace = jsonData.getString("idEnlace");
                 String cmd = jsonData.getString("cmd");
+                
+                LOG.debug("Enlace a borrar con ID: " + idEnlace);
+                
                 if("DELETE".equalsIgnoreCase(cmd)) {
+                	LOG.debug("Se procede a borrar el enlace");
                     result = _emasesaFavoritosService.deleteEnlace(assetEntryId, idEnlace);
                 }
                 return result ? "{\"code\": 200}" : "{\"code\": 500}";
@@ -114,6 +125,8 @@ public class EmasesaFavoritosRest extends Application{
                     LOG.debug(e.getMessage(), e);
                 }
             }
+        }else {
+        	LOG.debug("El usuario NO tiene permisos");
         }
         return "{\"code\": 500, \"msg\":\""+msg+"\"}";
     }

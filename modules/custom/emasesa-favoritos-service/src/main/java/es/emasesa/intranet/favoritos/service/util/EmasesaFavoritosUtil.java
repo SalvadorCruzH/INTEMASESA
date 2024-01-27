@@ -2,7 +2,6 @@ package es.emasesa.intranet.favoritos.service.util;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -112,27 +111,34 @@ public class EmasesaFavoritosUtil {
         return searchResponse.getSearchHits().getSearchHits();
     }
     
-    public String getEnlacesFavoritosForUser(User user) {
-    	String enlaces = StringPool.BLANK;
+    public JSONArray getEnlacesFavoritosForUser(User user) {
+    	
+    	LOG.debug("Obteniendo los enlaces del usuario: " + user.getFullName());
+    	JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
     	try {
     	    PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 	        if(!permissionChecker.isCheckGuest()){
 	            throw new PortalException("El usuario debe estar logado");
 	        }
 			long objectEntryByUser = searchObjectByFieldAndUserId(_configuration.objectEnlaceDefinitionId(), user.getUserId(), ""+0);
+			LOG.debug("objectEntryByUser: " + objectEntryByUser);
 			if(objectEntryByUser > 0){
+				LOG.debug("Recuperando el object....");
 				ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectEntryByUser);
-	        	//Añadir enlaces al JSON enlaces del object
 	        	if(Validator.isNotNull(object)) {
-	        		enlaces = object.getValues().get("enlaces").toString();
+	        		LOG.debug("Añadir enlaces al JSON enlaces del object");
+	        		String jsonArrayString = object.getValues().get("enlaces").toString();
+
+	        		jsonArray = JSONFactoryUtil.createJSONArray(jsonArrayString);
+	        		LOG.debug("jsonArray: " + jsonArray.toString());
 			    }
 			}
 		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("Error al recuperar los enlaces de un usuario...", e);
 		}
-    	return enlaces;
+    	return jsonArray;
     }
+    
     
     public JSONObject generateJSONEnlacesFavoritos(String title, String url) {
     	JSONObject jsonData = JSONFactoryUtil.createJSONObject();
@@ -141,6 +147,20 @@ public class EmasesaFavoritosUtil {
         jsonData.put("id", getRandomId());
         
         return jsonData;
+    }
+    
+    public JSONArray generateJSONArrayEnlacesFavoritos(String title, String url) {
+    	LOG.debug("Generando el JSONARRAY con los enlaces.");
+    	JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+    	JSONObject jsonData = JSONFactoryUtil.createJSONObject();
+        jsonData.put("title", title);
+        jsonData.put("url", url);
+        jsonData.put("id", getRandomId());
+        jsonArray.put(jsonData);
+        
+        LOG.debug("Generado." + jsonArray.toString());
+        
+        return jsonArray;
     }
     
     private static int getRandomId() {

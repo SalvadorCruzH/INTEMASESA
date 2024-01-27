@@ -179,28 +179,48 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 	    @Override
 		public boolean addEnlace(String classPK, long assetEntryClassId, long groupId, String title, String url,
 				String ddmStructureKey) throws PortalException {
+	    	
+	    	LOG.debug("Entra en el metodo addEnlaces");
 	    	 PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 		        if(!permissionChecker.isCheckGuest()){
 		            throw new PortalException("El usuario debe estar logado");
 		        }
 
 		        long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectEnlaceDefinitionId(), permissionChecker.getUserId(), ""+classPK);
+		        
 		        if(objectEntryId > 0){
+		        	LOG.debug("Se obtiene el objectEntryId: " + objectEntryId);
 		        	ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectEntryId);
+		        	
 		        	//Añadir enlaces al JSON enlaces del object
 		        	if(Validator.isNotNull(object)) {
+		        		LOG.debug("Se encuentra el object: " + objectEntryId);
 		        		Map <String,Serializable> map = object.getValues();
-		        		JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("enlaces"));
+		        		
+		        	    JSONArray jsonArray;
+		        	    if (map.containsKey("enlaces")) {
+		        	    	LOG.debug("Obtener el JSONArray actual ");
+		        	        jsonArray = JSONFactoryUtil.createJSONArray((String) map.get("enlaces"));
+		        	    } else {
+		        	    	LOG.debug("Crear uno nuevo si no existe");
+		        	        jsonArray = JSONFactoryUtil.createJSONArray();
+		        	    }
+		        	    
 		        		jsonArray.put(_emasesaFavoritosUtil.generateJSONEnlacesFavoritos(title, url));
+		        		LOG.debug("jsonArray: " + jsonArray);
+		        		
 		        		map.put("enlaces", jsonArray);
 		        		ServiceContext serviceContext = new ServiceContext();
 						_objectEntryLocalService.updateObjectEntry(
 									object.getUserId(), object.getObjectEntryId(), map, 
 									serviceContext);
+		        	}else {
+		        		LOG.debug("No se encuentra el object: " + objectEntryId);
 		        	}
 		            return true;
 		        }
-
+		        
+		        LOG.debug("El usuario no tiene enlaces, se procede a añadirlos.");
 		        User user = permissionChecker.getUser();
 
 		        Map<String, Serializable> params = new HashMap<>();
@@ -211,15 +231,20 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 		        params.put("assetEntryGroupId",groupId);
 		        params.put("r_userEnlace_userId", user.getUserId());
 		        params.put("ddmStructureKey", ddmStructureKey);
-		        params.put("enlaces", _emasesaFavoritosUtil.generateJSONEnlacesFavoritos(title, url));
+		        params.put("enlaces", _emasesaFavoritosUtil.generateJSONArrayEnlacesFavoritos(title, url));
+		        
+		        LOG.debug("Creando el nuevo object.");
 		       
 		        ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(user.getUserId(), groupId, Long.valueOf(_configuration.objectEnlaceDefinitionId()), params, ServiceContextThreadLocal.getServiceContext());
+		        LOG.debug("Actualizando el asset.");
 		        _objectEntryLocalService.updateAsset(user.getUserId(), objectEntry, new long[0], new String[0], new long[0], null);
 		        return true;
 		}
 
 		@Override
 		public boolean deleteEnlace(String classPK, String idEnlace) throws PortalException {
+			
+			LOG.debug("Entra en el metodo deleteEnlace");
 			 PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 		        if(!permissionChecker.isCheckGuest()){
 		            throw new PortalException("El usuario debe estar logado");
@@ -227,28 +252,32 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 
 		        long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectEnlaceDefinitionId(), permissionChecker.getUserId(), ""+classPK);
 		        if(objectEntryId == 0){
+		        	LOG.debug("No existe el object" );
 		            return true;
 		        }else {
+		        	LOG.debug("Se obtiene el objectEntryId: " + objectEntryId);
 		        	ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectEntryId);
-		        	//Añadir enlaces al JSON enlaces del object
+		        	
 		        	if(Validator.isNotNull(object)) {
+		        		LOG.debug("Se obtiene el object" );
 		        		Map <String,Serializable> map = object.getValues();
 		        		JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("enlaces"));
+		        		LOG.debug("jsonArray: " + jsonArray.toString());
 		        		
 		        		if(Validator.isNotNull(jsonArray) && jsonArray.length() > 0) {
-		        			// Crear una nueva matriz JSON para almacenar los enlaces filtrados
+		        			LOG.debug("Crear una nueva matriz JSON para almacenar los enlaces filtrados");
 			        	    JSONArray filteredArray = JSONFactoryUtil.createJSONArray();
-
-			        	    // Iterar sobre los elementos de la matriz y agregar solo los que no coinciden con el enlaceId
+			        	    LOG.debug("Iterar sobre los elementos de la matriz y agregar solo los que no coinciden con el enlaceId");
 			        	    for (int i = 0; i < jsonArray.length(); i++) {
 			        	        JSONObject enlace = jsonArray.getJSONObject(i);
 			        	        if (!String.valueOf(enlace.get("id")).equals(String.valueOf(idEnlace))) {
 			        	            filteredArray.put(enlace);
 			        	        }
 			        	    }
-			        	    // Actualizar el mapa con la nueva matriz JSON filtrada
+			        	    LOG.debug("Actualizar el mapa con la nueva matriz JSON filtrada: " + filteredArray.toString());
 			        	    map.put("enlaces", filteredArray.toString());
-			        	    // Actualizar el objeto de entrada
+			        	    LOG.debug("Actualizar el objeto de entrada");
+			        	    
 			        	    ServiceContext serviceContext = new ServiceContext();
 			        	    _objectEntryLocalService.updateObjectEntry(
 			        	            object.getUserId(), object.getObjectEntryId(), map, serviceContext);
