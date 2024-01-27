@@ -746,6 +746,9 @@ public class SigdServiceApplication{
 					 case SidgServiceKeys.FORM_VOLUNTADES:
 						 formConfiguration = _configuration.getVoluntadesConfiguration();
 						 break;
+					 case SidgServiceKeys.FORM_PENSION_INVALIDEZ:
+						 formConfiguration = _configuration.getVoluntadesConfiguration();
+						 break;
 				    default:
 				    	LoggerUtil.debug(LOG, "No se ha encontrado la configuracion del formulario con nombre: " + objectName +" " +SidgServiceKeys.FORM_IRPF);
 				}			   

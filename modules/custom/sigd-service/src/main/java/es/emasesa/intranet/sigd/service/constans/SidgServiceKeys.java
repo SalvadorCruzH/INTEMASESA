@@ -75,5 +75,6 @@ public class SidgServiceKeys {
 	public static final String FORM_PRESTACION = "Prestacion";
 	public static final String FORM_CAMBIODOMICILIO = "CambioDomicilio";
 	public static final String FORM_VOLUNTADES = "DeclaracionDeVoluntades";
+	public static final String FORM_PENSION_INVALIDEZ = "PensionInvalidez";
 
 }

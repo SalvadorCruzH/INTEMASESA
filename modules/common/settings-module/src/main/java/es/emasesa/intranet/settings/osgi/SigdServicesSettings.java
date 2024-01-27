@@ -59,6 +59,9 @@ public class SigdServicesSettings {
 	public String getVoluntadesConfiguration(){
 		return configuration.getVoluntadesConfiguration();
 	}
+	public getPensionInvalidezConfiguration(){
+		return configuration.getPensionInvalidezConfiguration();
+	}
 	public String getPrestacionConfiguration(){
 		return configuration.getPrestacionConfiguration();
 	}

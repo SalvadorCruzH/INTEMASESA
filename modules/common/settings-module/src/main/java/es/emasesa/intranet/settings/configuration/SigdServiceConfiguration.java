@@ -92,6 +92,13 @@ public interface SigdServiceConfiguration {
 	String getCambioDomicilioConfiguration();
 	@Meta.AD(
 			deflt = "",
+			name = "Prestacion",
+			description = "Configuraciones del formulario prestaciones para llamadas a los servicios del SIGD. Serie, tipo documental y metadatos",
+			required = false
+	)
+	String getPensionInvalidezConfiguration();
+	@Meta.AD(
+			deflt = "",
 			name = "Declaracion Voluntates",
 			description = "Configuraciones del formulario Declaracion Voluntates para llamadas a los servicios del SIGD. Serie, tipo documental y metadatos",
 			required = false
