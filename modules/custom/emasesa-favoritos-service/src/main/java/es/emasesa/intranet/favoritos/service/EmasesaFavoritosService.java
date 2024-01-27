@@ -22,7 +22,7 @@ public interface EmasesaFavoritosService {
 	 
 	 public boolean addEnlace(String classPK, long assetEntryClassId, long groupId, String title, String url , String ddmStructureKey) throws PortalException;
 
-	 public boolean deleteEnlace(String classPK) throws PortalException;
+	 public boolean deleteEnlace(String classPK, String idEnlace) throws PortalException;
 
-	 public boolean isEnlace(String classPK) throws PortalException;
+	 public boolean editEnlace(String classPK, String idEnlace, String title, String url) throws PortalException;
 }

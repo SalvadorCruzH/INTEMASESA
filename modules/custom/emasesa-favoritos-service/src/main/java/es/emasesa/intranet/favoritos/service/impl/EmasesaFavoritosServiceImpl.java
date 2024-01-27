@@ -7,6 +7,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -211,8 +212,6 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 		        params.put("r_userEnlace_userId", user.getUserId());
 		        params.put("ddmStructureKey", ddmStructureKey);
 		        params.put("enlaces", _emasesaFavoritosUtil.generateJSONEnlacesFavoritos(title, url));
-		        
-		        //AÑADIR EL JSON titulo/URL
 		       
 		        ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(user.getUserId(), groupId, Long.valueOf(_configuration.objectEnlaceDefinitionId()), params, ServiceContextThreadLocal.getServiceContext());
 		        _objectEntryLocalService.updateAsset(user.getUserId(), objectEntry, new long[0], new String[0], new long[0], null);
@@ -220,16 +219,96 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 		}
 
 		@Override
-		public boolean deleteEnlace(String classPK) throws PortalException {
-			// TODO Auto-generated method stub
-			return false;
+		public boolean deleteEnlace(String classPK, String idEnlace) throws PortalException {
+			 PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+		        if(!permissionChecker.isCheckGuest()){
+		            throw new PortalException("El usuario debe estar logado");
+		        }
+
+		        long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectEnlaceDefinitionId(), permissionChecker.getUserId(), ""+classPK);
+		        if(objectEntryId == 0){
+		            return true;
+		        }else {
+		        	ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectEntryId);
+		        	//Añadir enlaces al JSON enlaces del object
+		        	if(Validator.isNotNull(object)) {
+		        		Map <String,Serializable> map = object.getValues();
+		        		JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("enlaces"));
+		        		
+		        		if(Validator.isNotNull(jsonArray) && jsonArray.length() > 0) {
+		        			// Crear una nueva matriz JSON para almacenar los enlaces filtrados
+			        	    JSONArray filteredArray = JSONFactoryUtil.createJSONArray();
+
+			        	    // Iterar sobre los elementos de la matriz y agregar solo los que no coinciden con el enlaceId
+			        	    for (int i = 0; i < jsonArray.length(); i++) {
+			        	        JSONObject enlace = jsonArray.getJSONObject(i);
+			        	        if (!String.valueOf(enlace.get("id")).equals(String.valueOf(idEnlace))) {
+			        	            filteredArray.put(enlace);
+			        	        }
+			        	    }
+			        	    // Actualizar el mapa con la nueva matriz JSON filtrada
+			        	    map.put("enlaces", filteredArray.toString());
+			        	    // Actualizar el objeto de entrada
+			        	    ServiceContext serviceContext = new ServiceContext();
+			        	    _objectEntryLocalService.updateObjectEntry(
+			        	            object.getUserId(), object.getObjectEntryId(), map, serviceContext);
+		        			
+		        		}else {
+		        			LOG.debug("Enlaces vacios");
+		        		}
+		        	}
+		            return true;
+		        }
 		}
 
 		@Override
-		public boolean isEnlace(String classPK) throws PortalException {
-			//existe relacion un enlace para ese usuario
-			//en el JSON hay un enlace con ese ID
-			return false;
+		public boolean editEnlace(String classPK, String idEnlace, String title, String url) throws PortalException {
+		    PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+		    if (!permissionChecker.isCheckGuest()) {
+		        throw new PortalException("El usuario debe estar logado");
+		    }
+
+		    long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectEnlaceDefinitionId(), permissionChecker.getUserId(), "" + classPK);
+		    if (objectEntryId == 0) {
+		        return true;
+		    } else {
+		        ObjectEntry object = _objectEntryLocalService.fetchObjectEntry(objectEntryId);
+		        // Añadir enlaces al JSON enlaces del object
+		        if (Validator.isNotNull(object)) {
+		            Map<String, Serializable> map = object.getValues();
+		            JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get("enlaces"));
+
+		            if (Validator.isNotNull(jsonArray) && jsonArray.length() > 0) {
+		                // Iterar sobre los elementos de la matriz y buscar el enlace a editar
+		                for (int i = 0; i < jsonArray.length(); i++) {
+		                    JSONObject enlace = jsonArray.getJSONObject(i);
+		                    // Convertir el ID del enlace del JSON a String para la comparación
+		                    String jsonEnlaceId = String.valueOf(enlace.get("id"));
+
+		                    if (jsonEnlaceId.equals(idEnlace)) {
+		                        // Encontramos el enlace a editar
+		                        // Realizar las modificaciones necesarias
+		                        enlace.put("title", title);
+		                        enlace.put("url", url);
+
+		                        // Actualizar el mapa con la matriz JSON modificada
+		                        map.put("enlaces", jsonArray.toString());
+
+		                        // Actualizar el objeto de entrada
+		                        ServiceContext serviceContext = new ServiceContext();
+		                        _objectEntryLocalService.updateObjectEntry(
+		                                object.getUserId(), object.getObjectEntryId(), map, serviceContext);
+
+		                        return true;
+		                    }
+		                }
+		            } else {
+		                LOG.debug("Enlaces vacíos");
+		            }
+		        }
+		        // No se encontró el enlace a editar
+		        return false;
+		    }
 		}
 
 	    @Activate
