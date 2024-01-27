@@ -59,7 +59,7 @@ public class SigdServicesSettings {
 	public String getVoluntadesConfiguration(){
 		return configuration.getVoluntadesConfiguration();
 	}
-	public getPensionInvalidezConfiguration(){
+	public String getPensionInvalidezConfiguration(){
 		return configuration.getPensionInvalidezConfiguration();
 	}
 	public String getPrestacionConfiguration(){
