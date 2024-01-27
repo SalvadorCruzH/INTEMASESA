@@ -202,5 +202,17 @@
         "templateFile": "resultados-de-busqueda.ftl",
         "comment": "ADT para Los resultados de búsqueda en documentos de Plan de Formación.",
         "uuid": "54d6c613-7762-c01b-ba73-bcc727233ef9"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA - Consulta de eventos empeados",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-CONSULTA-EVENTOS-EMPLEADOS",
+        "templateFile": "consulta-formacion-eventos.ftl",
+        "comment": "ADT para La consulta de la Formación.",
+        "uuid": "ffbc8cda-bc60-699f-3b07-e4d6d0dacd86"
     }
 ]
