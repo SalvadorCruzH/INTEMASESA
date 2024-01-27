@@ -24,6 +24,8 @@ public class FormsSettings {
         return configuration.ttlOtp();
     }
 
+    public String destinatariosSolicitudesConsultas() {return configuration.destinatariosSolicitudesConsultas();}
+
     @Activate
     @Modified
     protected void activate(Map<String, Object> properties) {

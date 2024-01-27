@@ -1,0 +1,24 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+					{
+					"dataType": "string",
+					"defaultValue": "r_conversacion_c_solicitudConsultaId",
+					"label": "Nombre del Campo oculto del Selector de Preguntas",
+					"localizable": true,
+					"name": "nameConsultaId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "84951",
+					"label": "object Relationship Id",
+					"localizable": true,
+					"name": "objectRelationshipId",
+					"type": "text"
+				},
+			]
+		}
+	]
+}
