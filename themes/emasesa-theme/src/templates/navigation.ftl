@@ -118,7 +118,7 @@
 										</li>
 									</ul>
 									</div>
-									<a href="/consultas" class="btn btn-secondary mt-4 ema-20">
+									<a href="/group/guest/consultas" class="btn btn-secondary mt-4 ema-20">
 										<i class="i-icon i-icon--black fa-lg fa-regular fa-comment mr-3"></i>
 										<@liferay.language key='es.emasesa.intranet.common.consultas'/>
 									</a>
