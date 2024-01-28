@@ -1,24 +1,5 @@
 package es.emasesa.intranet.sigd.service.application;
 
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.template.ServiceLocator;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
@@ -39,16 +20,38 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.template.ServiceLocator;
 
 import es.emasesa.intranet.base.constant.EmasesaConstants;
 import es.emasesa.intranet.base.util.CustomObjectUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.settings.osgi.SigdServicesSettings;
 import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
+import org.osgi.util.tracker.ServiceTracker;
 
 @Component(
 		configurationPid = "es.emasesa.intranet.settings.configuration.SigdServiceConfiguration",
@@ -115,6 +118,8 @@ public class SigdServiceApplication{
 		
 		String idElemento = StringPool.BLANK;
 		try {
+
+
 			String url = _configuration.insertarDocumentoEndPoint();
 			
 			CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -135,6 +140,7 @@ public class SigdServiceApplication{
 			LoggerUtil.debug(LOG, "Respuesta obtenida: " + response.toString());
 	        HttpEntity responseEntity = response.getEntity();
 	        String responseBody = EntityUtils.toString(responseEntity);
+			// *************************************************************************************************************************************
 	        LoggerUtil.debug(LOG, "Entidad obtenida tras la ejecucion del post: " + responseBody);
 	       
 	        JSONObject jsonResponse = JSONFactoryUtil.createJSONObject(responseBody);
@@ -169,6 +175,50 @@ public class SigdServiceApplication{
     	return idDocument;
     }
 	
+	 /**
+	  * Llamada al servicio para obtener los metadatos del documento.
+	  * @return responseBody
+	 */
+	public String buscarDocumento(String matricula) {
+
+		String responseBody = StringPool.BLANK;
+		try {
+			String url = _configuration.buscarDocumentoEndPoint();
+			LoggerUtil.debug(LOG,"Se obtiene URL del enpoint: " + url);
+			
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			HttpPost post = new HttpPost(url);
+			post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+			LoggerUtil.debug(LOG, "Creacion de HtpPost a la URL: " + url);
+			LoggerUtil.debug(LOG,"Se crea un HHTP client con la autenticacion: " + httpClient.toString());
+			
+			JSONObject jsonObject = createBodyBuscarDocumento(matricula);
+
+			String json = jsonObject.toString();
+		    StringEntity jsonEntity = new StringEntity(json, ContentType.APPLICATION_JSON);
+
+			post.addHeader(HttpHeaders.AUTHORIZATION, getBasicAuthentication());
+			post.setEntity(jsonEntity);
+
+			LoggerUtil.debug(LOG, "Ejecucion de la solicitud post: " + post.toString());
+			CloseableHttpResponse response = httpClient.execute(post);
+			LoggerUtil.debug(LOG, "Respuesta obtenida: " + response.toString());
+			HttpEntity responseEntity = response.getEntity();
+			responseBody = EntityUtils.toString(responseEntity);
+			LoggerUtil.debug(LOG, "Entidad obtenida tras la ejecucion del post: " + responseBody);
+
+			response.close();
+			httpClient.close();
+
+		} catch (IOException e) {
+			 LoggerUtil.error(LOG, "Error en el servicio de obtener Elemento en SIGD: ", e);
+		}
+		
+		return responseBody;
+	}
+
+
+
 	 /**
 	  * Llamada al servicio para obtener los metadatos del documento.
 	  * tipo=1 y procesarContenidos=false
@@ -434,6 +484,58 @@ public class SigdServiceApplication{
 		return json;
 	 }
 	 
+/**
+	 * Creación del JSON que se debe enviar en la llamada al servicio de buscarDocumento
+	 * @return json con el body
+	  * 
+	 */
+	public JSONObject createBodyBuscarDocumento(String matricula){
+		 		
+		LoggerUtil.debug(LOG, "Creando el JSON del body" );
+		/*Creamos la cabecera del JSON*/
+		JSONObject json = JSONFactoryUtil.createJSONObject();
+		json.put(SidgServiceKeys.BUSCAR_DOCUMENTO_ID_SISTEMA_ORIGEN, "4");
+		json.put(SidgServiceKeys.BUSCAR_DOCUMENTO_ID_ALMACEN_FILE_NET, "desevilla");
+		json.put(SidgServiceKeys.BUSCAR_DOCUMENTO_TIPO_ELEMENTO, "1");
+		json.put(SidgServiceKeys.BUSCAR_DOCUMENTO_SERIE_DOCUMENTAL, "954");
+		json.put(SidgServiceKeys.BUSCAR_DOCUMENTO_CLASE_FILE_NET, "S_NominasEmpleados");
+
+		LoggerUtil.debug(LOG, "Cabecera creada: " + json.toString());
+		 
+		 /*Agrega el JSONArray "campos" al JSON principal*/
+		LoggerUtil.debug(LOG, "Añadiendo los campos con los metadatos" );
+		JSONArray camposArray = JSONFactoryUtil.createJSONArray();
+		JSONObject campo = JSONFactoryUtil.createJSONObject();
+
+		JSONArray consicionesArray = JSONFactoryUtil.createJSONArray();
+		consicionesArray.put("1");
+		campo.put(SidgServiceKeys.FORM_METADATO_CONDICIONES, consicionesArray);
+
+		JSONArray stringValoresArray = JSONFactoryUtil.createJSONArray();
+		stringValoresArray.put(matricula);
+		campo.put(SidgServiceKeys.FORM_METADATO_STRING_VALORES, stringValoresArray);
+
+		JSONArray enlaceArray = JSONFactoryUtil.createJSONArray();
+		enlaceArray.put("AND");
+		enlaceArray.put("OR");
+		campo.put(SidgServiceKeys.FORM_METADATO_TIPOS_ENLACE, enlaceArray);
+
+		campo.put(SidgServiceKeys.FORM_METADATO_NOMBRE_ORIGEN, "NumeroPersonal");
+		campo.put(SidgServiceKeys.FORM_METADATO_TIPO_ORIGEN, "java.lang.String");
+		campo.put(SidgServiceKeys.FORM_METADATO_NOMBRE_DESTINO, "NumeroPersonal");
+		campo.put(SidgServiceKeys.FORM_METADATO_TIPO_DESTINO, "java.lang.String");
+		camposArray.put(campo);
+		json.put(SidgServiceKeys.CREAR_DOCUMENTO_CAMPOS, camposArray);
+
+		JSONObject documento = JSONFactoryUtil.createJSONObject();
+		documento.put(SidgServiceKeys.BUSCAR_DOCUMENTO_DOCUMENTO_BUSQUEDA, json);
+
+		LoggerUtil.debug(LOG, "Añadido campos: " + json.toString());
+		LoggerUtil.debug(LOG, "Creado el JSON del body: "+  documento);
+		
+		return documento;
+	 }
+
 	 /**
 	  * Se añaden valores a los campos metadatos
 	 * @param metadatosService

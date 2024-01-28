@@ -1,13 +1,13 @@
 package es.emasesa.intranet.settings.osgi;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import es.emasesa.intranet.settings.configuration.SigdServiceConfiguration;
 
@@ -28,6 +28,10 @@ public class SigdServicesSettings {
 	
 	public String insertarDocumentoEndPoint() {
 		return configuration.insertarDocumentoEndPoint();
+	}
+
+	public String buscarDocumentoEndPoint() {
+		return configuration.buscarDocumentoEndPoint();
 	}
 	
 	public String obtenerElementoEndPoint(){

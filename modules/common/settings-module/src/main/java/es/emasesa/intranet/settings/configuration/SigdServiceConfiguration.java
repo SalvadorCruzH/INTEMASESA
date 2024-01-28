@@ -22,6 +22,13 @@ public interface SigdServiceConfiguration {
             required = false
     )
     String insertarDocumentoEndPoint();
+
+        @Meta.AD(
+                deflt = "",
+                name = "buscarDocumentoEndPoint",
+                required = false
+    )
+    String buscarDocumentoEndPoint();
 	
 	@Meta.AD(
             deflt = "",

@@ -3,8 +3,11 @@ package es.emasesa.intranet.service.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -29,8 +32,10 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -460,6 +465,17 @@ public class CustomWorkflowUtil {
 
 
         return roles;
+    }
+
+    public List<ObjectEntry> getSubObjects(long groupId, long objectRelationshipId, long objectEntryId){
+        List<ObjectEntry>  objects = new ArrayList<>();
+        try {
+            objects = new ArrayList<>(ObjectEntryLocalServiceUtil.getOneToManyObjectEntries(groupId, objectRelationshipId, objectEntryId, Boolean.TRUE, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+            if (objects.size()> 1) objects.sort(Comparator.comparing(ObjectEntry::getCreateDate));
+        } catch (PortalException e) {
+            LoggerUtil.error(LOG, e);
+        }
+        return objects;
     }
 
     @Activate

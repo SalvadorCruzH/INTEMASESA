@@ -115,6 +115,9 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                 document.addKeywordSortable(
                         "assigneePersonName", userAss.getFullName());
             } catch (Exception e) {
+                if (_log.isWarnEnabled()) {
+                    _log.warn(e);
+                }
             }
         }
 
@@ -163,16 +166,16 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                 document.addKeywordSortable("entryType",
                         JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getString("entryType"));
                 String entryClassName = JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getString("entryClassName");
-                if(entryClassName.contains("ObjectDefinition")){
+                if (entryClassName.contains("ObjectDefinition")) {
                     Long entryClassPK = JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getLong("entryClassPK");
                     JSONObject objetEstado = JSONFactoryUtil.createJSONObject(_objectEntryLocalService.getObjectEntry(entryClassPK).getValues());
-                    //objetEstado = objetEstado.getJSONObject("estadoObjeto");
-                    document.addKeywordSortable("estadoObjeto", ""+objetEstado.get("estadoObjeto"));
-
+                    document.addKeywordSortable("estadoObjeto", "" + objetEstado.get("estadoObjeto"));
 
                 }
-            }catch(Exception e){
-
+            } catch (Exception e) {
+                if (_log.isWarnEnabled()) {
+                    _log.warn(e);
+                }
             }
             KaleoDefinitionVersion kaleoDefinitionVersion =
                     kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
@@ -184,7 +187,6 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
             document.addKeyword(
                     KALEO_DEFINITION_ID,
                     kaleoDefinition.getKaleoDefinitionId());
-
 
 
         } catch (PortalException portalException) {
@@ -222,8 +224,9 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                 kaleoTaskInstanceToken.getClassName(),
                 kaleoTaskInstanceToken.getClassPK(), document,
                 kaleoTaskInstanceToken.getGroupId());
-                kaleoTaskInstanceToken.isCompleted();
-                document.addText("completed", Boolean.toString(kaleoTaskInstanceToken.isCompleted()));
+
+        kaleoTaskInstanceToken.isCompleted();
+        document.addText("completed", Boolean.toString(kaleoTaskInstanceToken.isCompleted()));
     }
 
     protected String[] getLanguageIds(

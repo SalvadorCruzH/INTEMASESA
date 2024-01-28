@@ -339,6 +339,65 @@ public class EmasesaFavoritosServiceImpl implements EmasesaFavoritosService{
 		        return false;
 		    }
 		}
+		
+		
+		 @Override
+		    public boolean addFavPortada(String classPK, long assetEntryClassId, long groupId, String title, String url, String fileExtension, String ddmStructureKey) throws PortalException {
+
+		        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+		        if(!permissionChecker.isCheckGuest()){
+		            throw new PortalException("El usuario debe estar logado");
+		        }
+
+		        long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectPortadaDefinitionId(), permissionChecker.getUserId(), ""+classPK);
+		        if(objectEntryId > 0){
+		            return true;
+		        }
+
+		        User user = permissionChecker.getUser();
+
+		        Map<String, Serializable> params = new HashMap<>();
+		        params.put("assetEntryId", classPK);
+		        params.put("classNameId", assetEntryClassId);
+		        params.put("title", title);
+		        params.put("url", url);
+		        params.put("assetEntryGroupId",groupId);
+		        params.put("r_userFavoritoPortada_userId", user.getUserId());
+		        params.put("ddmStructureKey", ddmStructureKey);
+		        if(!Validator.isBlank(fileExtension)) {
+		            params.put("fileExtension", fileExtension);
+		        }
+		        ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(user.getUserId(), groupId, Long.valueOf(_configuration.objectPortadaDefinitionId()), params, ServiceContextThreadLocal.getServiceContext());
+		        _objectEntryLocalService.updateAsset(user.getUserId(), objectEntry, new long[0], new String[0], new long[0], null);
+		        return true;
+		    }
+
+		    @Override
+		    public boolean deleteFavPortada(String classPK) throws PortalException {
+
+		        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+		        if(!permissionChecker.isCheckGuest()){
+		            throw new PortalException("El usuario debe estar logado");
+		        }
+
+		        long objectEntryId = _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectPortadaDefinitionId(), permissionChecker.getUserId(), ""+classPK);
+		        if(objectEntryId == 0){
+		            return true;
+		        }
+		        _objectEntryLocalService.deleteObjectEntry(objectEntryId);
+		        return true;
+		    }
+
+		    @Override
+		    public boolean isFavPortada(String classPK) throws PortalException {
+
+		        if(Validator.isBlank(_configuration.objectDefinitionId())){
+		            throw new PortalException("Es necesario configurar el objectDefinitionId");
+		        }
+		        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		        return _emasesaFavoritosUtil.searchObjectByFieldAndUserId(_configuration.objectPortadaDefinitionId(), permissionChecker.getUserId(), ""+classPK) > 0?true: false ;
+		    }
 
 	    @Activate
 	    @Modified

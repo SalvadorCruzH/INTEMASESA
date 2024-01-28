@@ -21,14 +21,25 @@ public class SidgServiceKeys {
 	public static final String OBTENER_ELEMENTO_PROCESAR = "procesarContenidos";
 	public static final String OBTENER_ELEMENTO_VERSION = "version";
 	public static final String OBTENER_ELEMENTO_ID_SISTEMA_ORIGEN = "idSistemaOrigen";
-	
+
+	public static final String BUSCAR_DOCUMENTO_DOCUMENTO_BUSQUEDA = "documentoBusqueda";
+	public static final String BUSCAR_DOCUMENTO_ID_SISTEMA_ORIGEN = "idSistemaOrigen";
+	public static final String BUSCAR_DOCUMENTO_ID_ALMACEN_FILE_NET = "idAlmacenFileNet";
+	public static final String BUSCAR_DOCUMENTO_TIPO_ELEMENTO = "tipoElemento";
+	public static final String BUSCAR_DOCUMENTO_SERIE_DOCUMENTAL = "codigoSerieDocumental";
+	public static final String BUSCAR_DOCUMENTO_CLASE_FILE_NET = "claseFileNet";
+
+	public static final String NOMINA_FECHA_NOMINA = "fechaNomina";
+
 	public static final String OBTENER_CONTENIDO_ID = "id";
 	public static final String OBTENER_CONTENIDO_VERSION = "version";
 	public static final String OBTENER_CONTENIDO_DESCARGA = "descarga";
 	
-	
 	/*Metadatos formulario*/
 	public static final String FORM_METADATOS = "metadatos";
+	public static final String FORM_METADATO_CONDICIONES = "condiciones";
+	public static final String FORM_METADATO_STRING_VALORES = "stringValores";
+	public static final String FORM_METADATO_TIPOS_ENLACE = "tiposEnlace";
 	public static final String FORM_METADATO_NOMBRE_ORIGEN = "nombreOrigen";
 	public static final String FORM_METADATO_TIPO_ORIGEN = "tipoOrigen";
 	public static final String FORM_METADATO_STRING_VALUE = "stringValue";
