@@ -40,8 +40,10 @@
             </thead>
             <tbody>
             <#list empleadosOrdenados as item>
-                <#assign eventoCalendario = sapUtil.getCalendarioEventos(item.pernr, primerDiaDelMes, nextDate).eventos?eval/>
-                <#list eventoCalendario as event>
+                <#assign eventoCalendario = sapUtil.getCalendarioEventos(item.pernr, primerDiaDelMes, nextDate)/>
+                <#assign eventos = eventoCalendario.eventos?eval/>
+                <#assign contenidos = eventoCalendario.contenido/>
+                <#list eventos as event>
                     <tr>
                         <#assign estado = ''>
                         <#assign fechaInicio = event.begda?date("yyyy-MM-dd")>
@@ -68,7 +70,8 @@
         </table>
     </div>
 </div>
-<#list eventoCalendario as event>
+
+<#list eventos as event>
     <div id="${event.eventoId}" class="detallesEventos container">
         <div class ="detallesEventos__close"></div>
         <h5 class="detallesEventos__titulo">Título de la formación: <span>${event.eventoDesc}</span></h5>
@@ -78,6 +81,10 @@
         <h5 class="detallesEventos__titulo">Duración: <span>${event.duracion}h</span></h5>
         <h5 class="detallesEventos__titulo">Sede: <span>${event.sede}</span></h5>
         <h5 class="detallesEventos__titulo">Id de la formación: <span>${event.eventoId}</span></h5>
+        <div class="detallesEventos__titulo">
+            <h5 >Contenido del evento:</h5>
+            <div id="contenidoCursos"></div>
+        </div>
     </div>
 </#list>
 <script type="text/javascript">
@@ -85,6 +92,7 @@
     $(document).ready(function() {
         $('.titleEvent').on('click', function(){
             var eventoID = $(this).attr('data-event');
+            verDetalles(eventoID);
             $('.detallesEventos').hide();
             $('#' + eventoID + '').show()
             $('html, body').animate({
@@ -99,4 +107,22 @@
             }, 'slow');
         });
     });
+
+    function verDetalles(eventoID) {
+        var contenidos = ${contenidos};
+        var literalesporId = {};
+        $('#contenidoCursos').empty();
+        contenidos.forEach(function(item){
+            if (!literalesporId[item.eventoId]){
+                literalesporId[item.eventoId] = [];
+            }
+            literalesporId[item.eventoId].push(item.literal);
+        });
+        if (literalesporId[eventoID]) {
+            let parrafo = document.createElement('p');
+            parrafo.innerHTML  = literalesporId[eventoID].join('<br>');
+
+            $('#contenidoCursos').append(parrafo);
+        }
+    }
 </script>

@@ -186,6 +186,13 @@ a[class*="ema-calendario__"] {
         span {
             font-style: italic;
         }
+
+        #contenidoCursos {
+            p{
+                font-style: italic;
+                padding-left: 15px;
+            }
+        }
     }
 
     &__close {
