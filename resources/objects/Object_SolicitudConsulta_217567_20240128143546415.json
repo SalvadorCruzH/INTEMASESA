@@ -1,0 +1,324 @@
+{
+  "enableComments": false,
+  "objectRelationships": [
+    {
+      "parameterObjectFieldName": "",
+      "parameterObjectFieldId": 0,
+      "label": {
+        "es_ES": "conversacion"
+      },
+      "reverse": false,
+      "type": "oneToMany",
+      "name": "conversacion",
+      "deletionType": "cascade",
+      "objectDefinitionExternalReferenceCode1": "8c148250-d16d-137f-c62d-c4af949b0b05",
+      "objectDefinitionExternalReferenceCode2": "d2fa0ba8-1615-e302-058a-a25dd749033b",
+      "objectDefinitionName2": "PreguntaConsulta"
+    }
+  ],
+  "enableCategorization": true,
+  "accountEntryRestrictedObjectFieldName": "",
+  "objectActions": [
+    {
+      "conditionExpression": "",
+      "objectActionExecutorKey": "add-object-entry",
+      "errorMessage": {},
+      "active": true,
+      "description": "",
+      "label": {
+        "es_ES": "conversacion"
+      },
+      "externalReferenceCode": "bc22d192-6595-ecc7-8c72-96321182b4f0",
+      "objectActionTriggerKey": "onAfterAdd",
+      "name": "conversacion",
+      "parameters": {
+        "objectDefinitionExternalReferenceCode": "d2fa0ba8-1615-e302-058a-a25dd749033b",
+        "relatedObjectEntries": true,
+        "system": "false",
+        "predefinedValues": [
+          {
+            "name": "informacion",
+            "inputAsValue": false,
+            "label": {
+              "es_ES": "Informacion"
+            },
+            "businessType": "LongText",
+            "value": "detalles"
+          },
+          {
+            "name": "adjunto",
+            "inputAsValue": false,
+            "label": {
+              "es_ES": "Adjunto"
+            },
+            "businessType": "Attachment",
+            "value": "adjunto"
+          }
+        ]
+      },
+      "status": {
+        "label_i18n": "Éxito",
+        "code": 1,
+        "label": "success"
+      }
+    }
+  ],
+  "accountEntryRestricted": false,
+  "externalReferenceCode": "8c148250-d16d-137f-c62d-c4af949b0b05",
+  "objectFields": [
+    {
+      "indexed": false,
+      "objectFieldSettings": [],
+      "readOnly": "true",
+      "DBType": "String",
+      "label": {
+        "es_ES": "Autor"
+      },
+      "type": "String",
+      "required": false,
+      "externalReferenceCode": "2fa07f9f-6526-245f-d809-2b4f45bb8991",
+      "indexedAsKeyword": false,
+      "system": true,
+      "indexedLanguageId": "",
+      "name": "creator",
+      "state": false,
+      "businessType": "Text",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": false,
+      "objectFieldSettings": [],
+      "readOnly": "true",
+      "DBType": "Date",
+      "label": {
+        "es_ES": "Fecha de creación"
+      },
+      "type": "Date",
+      "required": false,
+      "externalReferenceCode": "a6993088-9e4b-c8bb-d259-a6ed82fe3ce9",
+      "indexedAsKeyword": false,
+      "system": true,
+      "indexedLanguageId": "",
+      "name": "createDate",
+      "state": false,
+      "businessType": "Date",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": false,
+      "objectFieldSettings": [],
+      "readOnly": "false",
+      "DBType": "String",
+      "label": {
+        "es_ES": "Código de referencia externa"
+      },
+      "type": "String",
+      "required": false,
+      "externalReferenceCode": "ef9eca4c-7ff6-e8d3-96e5-ad1d6dfd9dc1",
+      "indexedAsKeyword": false,
+      "system": true,
+      "indexedLanguageId": "",
+      "name": "externalReferenceCode",
+      "state": false,
+      "businessType": "Text",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": true,
+      "objectFieldSettings": [],
+      "readOnly": "true",
+      "DBType": "Long",
+      "label": {
+        "es_ES": "Identificador"
+      },
+      "type": "Long",
+      "required": false,
+      "externalReferenceCode": "8ac8fe77-c661-1344-0a35-276e97afee0c",
+      "indexedAsKeyword": true,
+      "system": true,
+      "indexedLanguageId": "",
+      "name": "id",
+      "state": false,
+      "businessType": "LongInteger",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": false,
+      "objectFieldSettings": [],
+      "readOnly": "true",
+      "DBType": "Date",
+      "label": {
+        "es_ES": "Fecha de modificación"
+      },
+      "type": "Date",
+      "required": false,
+      "externalReferenceCode": "1d56706d-eca1-3698-022c-8730bd37ee02",
+      "indexedAsKeyword": false,
+      "system": true,
+      "indexedLanguageId": "",
+      "name": "modifiedDate",
+      "state": false,
+      "businessType": "Date",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": false,
+      "objectFieldSettings": [],
+      "readOnly": "true",
+      "DBType": "String",
+      "label": {
+        "es_ES": "Estado"
+      },
+      "type": "String",
+      "required": false,
+      "externalReferenceCode": "89b54c40-a989-a491-f955-d9cadb2cea1f",
+      "indexedAsKeyword": false,
+      "system": true,
+      "indexedLanguageId": "",
+      "name": "status",
+      "state": false,
+      "businessType": "Text",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": true,
+      "objectFieldSettings": [
+        {
+          "name": "showCounter",
+          "value": false
+        }
+      ],
+      "readOnly": "false",
+      "DBType": "Clob",
+      "label": {
+        "es_ES": "Detalles"
+      },
+      "type": "Clob",
+      "required": false,
+      "externalReferenceCode": "ccde29bd-80c9-6c2e-2024-e6cb83127ade",
+      "indexedAsKeyword": false,
+      "system": false,
+      "indexedLanguageId": "es_ES",
+      "name": "detalles",
+      "state": false,
+      "businessType": "LongText",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": true,
+      "objectFieldSettings": [
+        {
+          "name": "acceptedFileExtensions",
+          "value": "jpeg, jpg, pdf, png"
+        },
+        {
+          "name": "maximumFileSize",
+          "value": 100
+        },
+        {
+          "name": "fileSource",
+          "value": "userComputer"
+        },
+        {
+          "name": "showFilesInDocumentsAndMedia",
+          "value": false
+        }
+      ],
+      "readOnly": "false",
+      "DBType": "Long",
+      "label": {
+        "es_ES": "Adjunto"
+      },
+      "type": "Long",
+      "required": false,
+      "externalReferenceCode": "686ef8b4-f3d1-8094-a9e3-8f2c5855d404",
+      "indexedAsKeyword": false,
+      "system": false,
+      "indexedLanguageId": "es_ES",
+      "name": "adjunto",
+      "state": false,
+      "businessType": "Attachment",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "indexed": true,
+      "objectFieldSettings": [],
+      "readOnly": "false",
+      "DBType": "String",
+      "label": {
+        "es_ES": "Destinatario"
+      },
+      "type": "String",
+      "required": false,
+      "externalReferenceCode": "7e38b53c-001d-eb09-4614-d8c0a96316f9",
+      "indexedAsKeyword": false,
+      "system": false,
+      "indexedLanguageId": "es_ES",
+      "name": "destinatario",
+      "state": false,
+      "businessType": "Text",
+      "readOnlyConditionExpression": ""
+    },
+    {
+      "listTypeDefinitionExternalReferenceCode": "c37ad935-b02b-8829-b2b1-b963104d7772",
+      "indexed": true,
+      "defaultValue": "pendienteRespuesta",
+      "objectFieldSettings": [
+        {
+          "name": "defaultValueType",
+          "value": "inputAsValue"
+        },
+        {
+          "name": "defaultValue",
+          "value": "pendienteRespuesta"
+        }
+      ],
+      "readOnly": "false",
+      "DBType": "String",
+      "label": {
+        "es_ES": "Estado objeto"
+      },
+      "type": "String",
+      "required": false,
+      "externalReferenceCode": "a5f6d7bf-49b6-a616-4b8d-f7ce49dedcdf",
+      "indexedAsKeyword": false,
+      "system": false,
+      "indexedLanguageId": "es_ES",
+      "name": "estadoObjeto",
+      "state": false,
+      "businessType": "Picklist",
+      "readOnlyConditionExpression": ""
+    }
+  ],
+  "restContextPath": "/o/c/solicitudconsultas",
+  "scope": "site",
+  "portlet": true,
+  "parameterRequired": false,
+  "enableObjectEntryHistory": false,
+  "titleObjectFieldName": "id",
+  "objectValidationRules": [],
+  "active": true,
+  "defaultLanguageId": "es_ES",
+  "label": {
+    "es_ES": "Solicitud Consulta"
+  },
+  "panelCategoryKey": "envioBoletines",
+  "pluralLabel": {
+    "es_ES": "Solicitudes Consultas"
+  },
+  "objectLayouts": [],
+  "system": false,
+  "objectViews": [],
+  "name": "SolicitudConsulta",
+  "actions": {
+    "permissions": {},
+    "get": {},
+    "update": {},
+    "delete": {}
+  },
+  "status": {
+    "label_i18n": "Aprobado",
+    "code": 0,
+    "label": "approved"
+  }
+}
