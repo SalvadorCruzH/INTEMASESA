@@ -65,6 +65,33 @@ public class EmasesaFavoritosRest extends Application{
     }
     
     @POST
+    @Path("/savePortada")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String savePortada(FavoritoBean data) {
+        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+        String msg ="";
+        if(permissionChecker.isCheckGuest()) {
+            try {
+                boolean result = false;
+                if("ADD".equalsIgnoreCase(data.getCmd())) {
+                    result = _emasesaFavoritosService.addFavPortada(String.valueOf(data.getAssetEntryId()), data.getClassNameId(), data.getGroupId(), data.getTitle(), data.getUrl(), data.getFileExtension(), data.getDdmStructureKey());
+                }else{
+                    result = _emasesaFavoritosService.deleteFavPortada(String.valueOf(data.getAssetEntryId()));
+                }
+                return result ? "{\"code\": 200}" : "{\"code\": 500}";
+            } catch (Exception e) {
+                msg = e.getLocalizedMessage();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(e.getMessage(), e);
+                }
+            }
+        }
+        return "{\"code\": 500, \"msg\":\""+msg+"\"}";
+    }
+    
+    
+    @POST
     @Path("/saveEnlace")
     @Consumes("application/json")
     @Produces("application/json")
