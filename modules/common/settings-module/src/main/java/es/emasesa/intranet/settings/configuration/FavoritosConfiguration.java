@@ -22,5 +22,12 @@ public interface FavoritosConfiguration {
     )
     String objectDefinitionId();
 	
+	@Meta.AD(
+            deflt = "",
+            name = "objectId del objeto enlace favorito",
+            required = false
+    )
+    String objectEnlaceDefinitionId();
+	
 }
 

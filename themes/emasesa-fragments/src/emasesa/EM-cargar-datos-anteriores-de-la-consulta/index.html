@@ -1,0 +1,49 @@
+[#assign themeDisplay = request.getAttribute("LIFERAY_SHARED_THEME_DISPLAY")]
+[#assign userId = themeDisplay.getUserId()]
+[#if themeDisplay.getURLCurrent()?contains("?")]
+    [#assign urlParameters= themeDisplay.getURLCurrent()?split("?")[1]?split('&')]
+[#else]
+    [#assign urlParameters= []]
+[/#if]
+[#assign objectEntryId =  0]
+[#list urlParameters as param]
+   [#assign keyValue=param?split('=')]
+   [#if keyValue[0] == 'objectEntryId']
+      [#assign objectEntryId =  keyValue[1]]
+   [/#if]
+[/#list]
+[#assign objectEntryUtil = serviceLocator.findService("com.liferay.object.service.ObjectEntryLocalService")]
+[#assign objectEntries = objectEntryUtil.getOneToManyObjectEntries(themeDisplay.getScopeGroupId(), configuration.objectRelationshipId?number, objectEntryId?number, true ,null, -1,-1)]
+<div class="em-consulta">
+	[#list objectEntries as objectEntry]
+	[#assign values = objectEntry.getValues()]
+	 [#list values as key, value]
+	[#if (key == "informacion" || key == "detalles") && value?has_content && userId != objectEntry.getUserId()]
+	<div class="em-consulta__pregunta">
+		${value}
+	</div>
+	[#elseif (key == "informacion" || key == "detalles") && value?has_content]
+	<div class="em-consulta__respuesta">
+		${value}
+	</div>
+	[#elseif key == "adjunto" && value?has_content && value != 0]
+		[#assign dlFileEntryUtil = serviceLocator.findService("com.liferay.document.library.kernel.service.DLFileEntryLocalService")]
+		[#assign fileEntry = dlFileEntryUtil.getDLFileEntry(value)]
+		[#assign filePath = "/documents/" + fileEntry.getRepositoryId() + "/" + fileEntry.getFolderId() + "/" + fileEntry.getFileName()]
+
+		[#if userId != objectEntry.getUserId()]
+			<div class="em-consulta__pregunta">
+				Fichero Adjunto: <a href="${filePath}" download>${fileEntry.getTitle()}</a>
+			</div>
+		[#else]
+			<div class="em-consulta__respuesta">
+				Fichero Adjunto: <a href="${filePath}" download>${fileEntry.getTitle()}</a>
+			</div>
+		[/#if]
+	[/#if]
+[/#list]
+	[/#list]
+</div>
+<script>
+var consultaId = ${objectEntryId}
+</script>

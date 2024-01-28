@@ -57,6 +57,18 @@ public class SigdServicesSettings {
 	public String getPensionesConfiguration(){
 		return configuration.getPensionesConfiguration();
 	}
+	public String getCambioDomicilioConfiguration(){
+		return configuration.getCambioDomicilioConfiguration();
+	}
+	public String getVoluntadesConfiguration(){
+		return configuration.getVoluntadesConfiguration();
+	}
+	public String getPensionInvalidezConfiguration(){
+		return configuration.getPensionInvalidezConfiguration();
+	}
+	public String getPrestacionConfiguration(){
+		return configuration.getPrestacionConfiguration();
+	}
 	
 	public String getHorasExtrasConfiguration(){
 		return configuration.getHorasExtrasConfiguration();
@@ -137,6 +149,8 @@ public class SigdServicesSettings {
 	public String getDatosPersonalesConfiguration(){
 		return configuration.getDatosPersonalesConfiguration();
 	}
+
+	public String getEmpleadoActDatosPersonalesConfiguration(){return configuration.getEmpleadoActDatosPersonalesConfiguration();}
 	
 	public String getConcursosConfiguration(){
 		return configuration.getConcursosConfiguration();

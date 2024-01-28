@@ -1,0 +1,29 @@
+.em-consulta {
+	    display: flex;
+    flex-direction: column;
+}
+.em-consulta__pregunta,
+.em-consulta__respuesta {
+    display: inline-block;
+    max-width: 80%;
+}
+
+.em-consulta__pregunta {
+    margin: 1em 50% 1em 0;
+    padding: 1em;
+    background-color: #acc859; 
+    color: #333;
+    border-radius: 50px;
+    text-align: left;
+    position: relative;
+}
+
+.em-consulta__respuesta {
+    margin: 1em 0 1em 50%;
+    padding: 1em;
+    background-color: #4198d9;
+    color: white;
+    border-radius: 50px;
+    text-align: right;
+    position: relative;
+}

@@ -1,5 +1,7 @@
 <#ftl strip_whitespace=true>
 
+<!--- Scripts para usar con los documentos, accesos directos, contenidos favoritos --->
+
 <#macro favoritosInitScript namespace ppids...>
     <script type="text/javascript">
 

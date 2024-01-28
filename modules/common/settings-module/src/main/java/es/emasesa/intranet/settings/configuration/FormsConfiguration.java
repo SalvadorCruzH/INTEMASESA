@@ -28,4 +28,11 @@ public interface FormsConfiguration {
     )
     int ttlOtp();
 
+    @Meta.AD(
+            deflt = "",
+            name = "Destinatarios de las Solicitudes de Consultas",
+            required = false
+    )
+    String destinatariosSolicitudesConsultas();
+
 }

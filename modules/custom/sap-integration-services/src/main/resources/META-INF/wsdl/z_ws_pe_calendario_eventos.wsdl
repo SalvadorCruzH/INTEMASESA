@@ -205,7 +205,7 @@
                     <xsd:pattern value="\d*"/>
                 </xsd:restriction>
             </xsd:simpleType>
-            <xsd:complexType name="ZpeStConteniObjetiEventos">
+            <xsd:complexType name="ZpeStCalendarioEventosCoob">
                 <xsd:sequence>
                     <xsd:element name="EventoId" type="n0:numeric8"/>
                     <xsd:element name="TipoLiteral" type="n0:char1"/>
@@ -242,14 +242,26 @@
                     <xsd:element name="MessageV4" type="tns:char50"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="TableOfZpeStConteniObjetiEventos">
+            <xsd:complexType name="ZpeStCalendarioEventosDocu">
                 <xsd:sequence>
-                    <xsd:element name="item" type="tns:ZpeStConteniObjetiEventos" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="EventoId" type="n0:numeric8"/>
+                    <xsd:element name="DocumentoNombre" type="tns:char50"/>
+                    <xsd:element name="DocumentoUrl" type="tns:char50"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStCalendarioEventosCoob">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStCalendarioEventosCoob" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="TableOfZpeStCalendarioEventos">
                 <xsd:sequence>
                     <xsd:element name="item" type="tns:ZpeStCalendarioEventos" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="TableOfZpeStCalendarioEventosDocu">
+                <xsd:sequence>
+                    <xsd:element name="item" type="tns:ZpeStCalendarioEventosDocu" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="ZPeCalendarioEventos">
@@ -267,9 +279,10 @@
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element name="Return" type="tns:Bapireturn1"/>
-                        <xsd:element name="TContenido" type="tns:TableOfZpeStConteniObjetiEventos"/>
+                        <xsd:element name="TContenido" type="tns:TableOfZpeStCalendarioEventosCoob"/>
+                        <xsd:element name="TDocumentos" type="tns:TableOfZpeStCalendarioEventosDocu"/>
                         <xsd:element name="TEventos" type="tns:TableOfZpeStCalendarioEventos"/>
-                        <xsd:element name="TObjetivo" type="tns:TableOfZpeStConteniObjetiEventos"/>
+                        <xsd:element name="TObjetivo" type="tns:TableOfZpeStCalendarioEventosCoob"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>

@@ -1,5 +1,7 @@
 package es.emasesa.intranet.favoritos.rest;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -50,6 +52,105 @@ public class EmasesaFavoritosRest extends Application{
                     result = _emasesaFavoritosService.addFav(String.valueOf(data.getAssetEntryId()), data.getClassNameId(), data.getGroupId(), data.getTitle(), data.getUrl(), data.getFileExtension(), data.getDdmStructureKey());
                 }else{
                     result = _emasesaFavoritosService.deleteFav(String.valueOf(data.getAssetEntryId()));
+                }
+                return result ? "{\"code\": 200}" : "{\"code\": 500}";
+            } catch (Exception e) {
+                msg = e.getLocalizedMessage();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(e.getMessage(), e);
+                }
+            }
+        }
+        return "{\"code\": 500, \"msg\":\""+msg+"\"}";
+    }
+    
+    @POST
+    @Path("/saveEnlace")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String saveEnlace(FavoritoBean data) {
+    	LOG.debug("Entra en la API REST saveEnlace");
+        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+        String msg ="";
+        if(permissionChecker.isCheckGuest()) {
+        	LOG.debug("El usuario tiene permisos");
+            try {
+                boolean result = false;
+                if("ADD".equalsIgnoreCase(data.getCmd())) {
+                	LOG.debug("Se procede a añadir enlace");
+                    result = _emasesaFavoritosService.addEnlace(String.valueOf(data.getAssetEntryId()), data.getClassNameId(), data.getGroupId(), data.getTitle(), data.getUrl(), data.getDdmStructureKey());
+                }
+                return result ? "{\"code\": 200}" : "{\"code\": 500}";
+            } catch (Exception e) {
+                msg = e.getLocalizedMessage();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(e.getMessage(), e);
+                }
+            }
+        }else {
+        	LOG.debug("El usuario NO tiene permisos");
+        }
+        return "{\"code\": 500, \"msg\":\""+msg+"\"}";
+    }
+    
+    @POST
+    @Path("/deleteEnlace")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String deleteEnlace(String data) {
+    	LOG.debug("Entra en la API REST deleteEnlace");
+        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+        String msg ="";
+        if(permissionChecker.isCheckGuest()) {
+        	LOG.debug("El usuario tiene permisos");
+            try {
+                boolean result = false;
+                JSONObject jsonData = JSONFactoryUtil.createJSONObject(data);
+
+                // Obtener los valores de los parámetros
+                String assetEntryId = jsonData.getString("assetEntryId");
+                String idEnlace = jsonData.getString("idEnlace");
+                String cmd = jsonData.getString("cmd");
+                
+                LOG.debug("Enlace a borrar con ID: " + idEnlace);
+                
+                if("DELETE".equalsIgnoreCase(cmd)) {
+                	LOG.debug("Se procede a borrar el enlace");
+                    result = _emasesaFavoritosService.deleteEnlace(assetEntryId, idEnlace);
+                }
+                return result ? "{\"code\": 200}" : "{\"code\": 500}";
+            } catch (Exception e) {
+                msg = e.getLocalizedMessage();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(e.getMessage(), e);
+                }
+            }
+        }else {
+        	LOG.debug("El usuario NO tiene permisos");
+        }
+        return "{\"code\": 500, \"msg\":\""+msg+"\"}";
+    }
+    
+    @POST
+    @Path("/editEnlace")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String editEnlace(String data) {
+        PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+        String msg ="";
+        if(permissionChecker.isCheckGuest()) {
+            try {
+                boolean result = false;
+                JSONObject jsonData = JSONFactoryUtil.createJSONObject(data);
+
+                // Obtener los valores de los parámetros
+                String assetEntryId = jsonData.getString("assetEntryId");
+                String idEnlace = jsonData.getString("idEnlace");
+                String url = jsonData.getString("url");
+                String title = jsonData.getString("title");
+                String cmd = jsonData.getString("cmd");
+                if("EDIT".equalsIgnoreCase(cmd)) {
+                    result = _emasesaFavoritosService.editEnlace(assetEntryId, idEnlace, title, url);
                 }
                 return result ? "{\"code\": 200}" : "{\"code\": 500}";
             } catch (Exception e) {

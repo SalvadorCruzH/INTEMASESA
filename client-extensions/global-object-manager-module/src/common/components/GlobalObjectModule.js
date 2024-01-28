@@ -196,7 +196,20 @@ class GlobalObjectModule extends React.Component {
 
                             tbody.append(newRow);
                         });
-                    }
+                    }else if (modeOpened === 1 && key === "listadoBeneficiarios"){
+                         var tbody = $("#table-solicitudes tbody");
+                         var data = JSON.parse(object[key]);
+                         const checkboxEstado = '<input type="checkbox">';
+                         $.each(data, function(index, item) {
+                             var newRow = $('<tr>');
+                             newRow.append('<td></td>');
+                             newRow.append('<td>' + item.prelacion + '</td>');
+                             newRow.append('<td>' + item.nombreBeneficiario + '</td>');
+                             newRow.append('<td>' + item.NIF + '</td>');
+
+                             tbody.append(newRow);
+                         });
+                     }
                 }
             }
         });

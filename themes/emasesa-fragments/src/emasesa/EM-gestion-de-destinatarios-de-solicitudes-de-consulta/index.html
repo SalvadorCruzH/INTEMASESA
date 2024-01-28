@@ -1,0 +1,33 @@
+[#assign getConfigurationValueUtil = serviceLocator.findService("es.emasesa.intranet.settings.util.GetConfigurationValueUtil")]
+[#assign configValue = getConfigurationValueUtil.getMapValue("es.emasesa.intranet.settings.configuration.FormsConfiguration","destinatariosSolicitudesConsultas")]
+[#assign TIPOLOGÍASet = [] /]
+<div class="em-destinatariosConsultas">
+<select id="selectTipologia" class="form-control">
+[#list configValue as item]
+[#if TIPOLOGÍASet?seq_contains(item["TIPOLOGÍA"]) == false ]
+[#if item["SUBTIPOLOGÍA"]?has_content]
+<option value='${item["TIPOLOGÍA"]!}' data-subtipologia='true'>${item["TIPOLOGÍA"]}</option>
+[#else]
+<option value='${item["TIPOLOGÍA"]!}' data-subtipologia='false'>${item["TIPOLOGÍA"]}</option>
+[/#if]
+[#assign TIPOLOGÍASet = TIPOLOGÍASet + [item["TIPOLOGÍA"]] /]
+[/#if]
+[/#list]
+</select>
+
+<select id="selectSubtipologia" style="display: none;" class="form-control">
+[#list configValue as item]
+[#if item["SUBTIPOLOGÍA"]?has_content]
+<option value='${item["SUBTIPOLOGÍA"]}'>${item["SUBTIPOLOGÍA"]}</option>
+[/#if]
+[/#list]
+</select>
+</div>
+
+<script>
+var data = {
+  [#list configValue as item]
+  "${item.TIPOLOGÍA}${item.SUBTIPOLOGÍA?has_content?then('_' + item.SUBTIPOLOGÍA, '')}": "${item.DESTINATARIO}"[#sep],[/#sep]
+  [/#list]
+};
+</script>

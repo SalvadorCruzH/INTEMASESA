@@ -647,7 +647,7 @@ public class SapServicesUtil {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
 
-            String pernr = (String) objectValues.get("pernr");
+            String pernr = (String) objectValues.get("matricula");
             String nombre = (String) objectValues.get("nombre");
             String apellido1 = (String) objectValues.get("apellido1");
             String apellido2 = (String) objectValues.get("apellido2");
@@ -669,7 +669,7 @@ public class SapServicesUtil {
             String nroSs = StringPool.BLANK;
             String numero = String.valueOf(objectValues.get("numero"));
             String portal = (String) objectValues.get("portal");
-            String pisoLetra = (String) objectValues.get("pisoLetra");
+            String pisoLetra = (String) objectValues.get("pisoYLetra");
             String poblacion = (String) objectValues.get("poblacion");
             String provinciaId = (String) objectValues.get("provincia");
             String telefono = (String) objectValues.get("telefono");

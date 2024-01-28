@@ -9,7 +9,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +35,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
@@ -435,6 +436,30 @@ public class CustomWorkflowUtil {
 
         LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
         Thread.currentThread().setContextClassLoader(actualClassLoader);
+    }
+
+    /**
+     * Retrive employee ID from the soapService
+     * @param workflowContext
+     * @employeeType role
+     * @return users
+     */
+    public List<Role> assignWorkflowRole(Map<String, Serializable> workflowContext, String roleName) {
+        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+        List<Role> roles = new ArrayList<>();
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            Role role = RoleLocalServiceUtil.getRole(companyId, roleName);
+            roles.add(role);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        } catch (PortalException e) {
+            LoggerUtil.error(LOG, e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        }
+
+
+        return roles;
     }
 
     @Activate

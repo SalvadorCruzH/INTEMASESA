@@ -27,6 +27,22 @@ public class CustomUserNotificationUtil {
         return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId, TYPE_CUSTOM, false);
     }
 
+    public long getNotificationsByUserCount(long userId, boolean refreshCache) {
+        LoggerUtil.debug(LOG, "Obteniendo el numero de notificaciones de un usuario: " + userId);
+        DSLQuery queryCount = DSLQueryFactoryUtil
+                .count()
+                .from(UserNotificationEventTable.INSTANCE)
+                .where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
+                        .and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false))
+                        .and(UserNotificationEventTable.INSTANCE.archived.eq(false))
+                        .and(UserNotificationEventTable.INSTANCE.userId.eq(userId)));
+
+        int userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
+        Long notificationsCount = (long) userNotificationEventCount;
+        _customCacheSingleUtil.put("NOTIFICATIONS_COUNT"+userId, notificationsCount, CustomCacheSingleUtil.TTL_10_MIN);
+        return notificationsCount;
+    }
+
     public long getNotificationsByUserCount(long userId) {
         LoggerUtil.debug(LOG, "Obteniendo el numero de notificaciones de un usuario: " + userId);
         Long notificationsCount = (Long) _customCacheSingleUtil.get("NOTIFICATIONS_COUNT" + userId);

@@ -78,9 +78,14 @@ public class SidgServiceKeys {
 	public static final String FORM_HISTORIAL_ACADEMICO = "HistorialAcedemico";
 	public static final String FORM_SATISFACCION = "Satisfaccion";
 	public static final String FORM_DATOS_PERSONALES = "DatosPersonales";
+	public static final String FORM_EMPLEADO_ACT_DATOS_PERSONALES = "ModificacionDeDatosPersonales";
 	public static final String FORM_CONCURSOS_PROCESOS = "Concursos";
 	public static final String FORM_TRIBUNALES = "Tribunales";
 	public static final String FORM_SINDICALES = "Sindicales";
 	public static final String FORM_FORMATIVAS = "Formativas";
+	public static final String FORM_PRESTACION = "Prestacion";
+	public static final String FORM_CAMBIODOMICILIO = "CambioDomicilio";
+	public static final String FORM_VOLUNTADES = "DeclaracionDeVoluntades";
+	public static final String FORM_PENSION_INVALIDEZ = "PensionInvalidez";
 
 }

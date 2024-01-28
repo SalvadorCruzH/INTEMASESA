@@ -124,14 +124,14 @@
             }
         }
     });
-    //on document ready
     $(document).ready(function() {
-        //if #month is resumenanual add param to current url and refresh
-        let thisDate = (new Date().getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) +""+ new Date().getFullYear();
-        if($("#month").val() == 'resumenanual' ){
-            window.location.href = window.location.href.split('?')[0] +"?monthSelected="+thisDate;
-        } else if($("#month").val() == 'resumenanualpasado' ){
-            window.location.href = window.location.href.split('?')[0] +"?monthSelected="+thisDate;
+        if($("#page-editor").length == 0){
+            let thisDate = (new Date().getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) +""+ new Date().getFullYear();
+            if($("#month").val() == 'resumenanual' ){
+                window.location.href = window.location.href.split('?')[0] +"?monthSelected="+thisDate;
+            } else if($("#month").val() == 'resumenanualpasado' ){
+                window.location.href = window.location.href.split('?')[0] +"?monthSelected="+thisDate;
+            }
         }
     });
 

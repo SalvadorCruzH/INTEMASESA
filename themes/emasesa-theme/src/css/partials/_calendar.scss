@@ -27,7 +27,7 @@ a[class*="ema-calendario__"] {
         left: 0;
         width: 100%;
         height: 100%;
-        padding: 20px 50px;
+        padding: 0 50px;
         background: #545A5C;
         box-sizing: border-box;
         #btn-register, #btn-anular {
@@ -47,7 +47,7 @@ a[class*="ema-calendario__"] {
             align-items: center;
         }
     }
-    &__detailsClose,
+
     .close {
         position: absolute;
         width: 40px;
@@ -78,7 +78,7 @@ a[class*="ema-calendario__"] {
         padding: 1em;
         border-radius: 4px;
         text-align: center;
-        margin: 0 auto;
+        margin: 10px auto;
         border-radius: 30px;
         background-color: $color-bg-green;
         color: $color-black;
@@ -168,4 +168,48 @@ a[class*="ema-calendario__"] {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.85);
     z-index: 1000;
+}
+
+// Consulta formacion
+
+.detallesEventos {
+    background-color: #e2efec;
+    border-radius: 25px;
+    border: 1px solid gray;
+    padding: 25px;
+    position: relative;
+
+    &__titulo {
+        width: 75%;
+        margin: 10px auto;
+
+        span {
+            font-style: italic;
+        }
+    }
+
+    &__close {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background-color: $color-black;
+        }
+        &:after {
+            transform: rotate(-45deg);
+        }
+        &:before {
+            transform: rotate(45deg);
+        }
+    }
 }

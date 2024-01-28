@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "83422",
+					"label": "ddmStructureId",
+					"localizable": true,
+					"name": "ddmStructureId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -13,11 +13,14 @@ class NotificationsModule extends React.Component {
             mode: 1,
             notifications: [],
             notificationsCount : null,
+            tasksCount : null,
             hasMore : true,
             loading: true,
             start: 0,
             end: 10,
-            delta: 10
+            delta: 10,
+            filterSelected: "-",
+            sort: false
         }
 
         console.debug("Cargando módulo notificaciones");
@@ -30,10 +33,11 @@ class NotificationsModule extends React.Component {
 
     loadNotifications = (start, end) => {
         this.setState({loading: true});
+        console.debug(this.state.filterSelected);
         if(start !== undefined ){
-            NotificationApi.getNotificationsUnRead(start, end, this.buildNotifications, this.errorHandler);
+            NotificationApi.getNotificationsUnRead(this.state.filterSelected, start, end, this.state.sort, this.buildNotifications, this.errorHandler);
         }else{
-            NotificationApi.getNotificationsUnRead(this.state.start, this.state.end, this.buildNotifications, this.errorHandler);
+            NotificationApi.getNotificationsUnRead(this.state.filterSelected, this.state.start, this.state.end, this.state.sort, this.buildNotifications, this.errorHandler);
         }
 
     }
@@ -54,8 +58,6 @@ class NotificationsModule extends React.Component {
                 end: end
             });
         }
-        console.log(start);
-        console.log(end);
         this.loadNotifications(start, end)
     }
 
@@ -64,8 +66,6 @@ class NotificationsModule extends React.Component {
         let end = this.state.end;
         start = start + this.state.delta;
         end = end + this.state.delta
-        console.log(start)
-        console.log(end)
         this.setState( {
             start: start,
             end: end
@@ -79,14 +79,38 @@ class NotificationsModule extends React.Component {
             console.debug(result.notifications);
             this.setState( {
                 notifications: result.notifications,
-                hasMore:result.nomore
+                notificationsCount: result.count,
+                hasMore: result.noMore
             });
+            if(this.state.filterSelected === '-'){
+                document.querySelector(".ema-notif").textContent = result.count;
+            }
             this.setState({loading: false});
+        }else{
+            this.setState( {
+                notifications: [],
+                loading: false
+            });
         }
     }
 
-    setObject = (object) => {
+    loadFilter = (target) => {
+        console.debug(target.target.value);
+        this.setState({filterSelected: target.target.value}, function (){
+            this.loadNotificationsRefresh()
+        });
+    }
 
+    loadSort = (target) => {
+        console.debug(target.target.dataset.sort);
+        this.setState({sort: target.target.dataset.sort}, function (){
+            this.loadNotificationsRefresh()
+        });
+        if(target.target.dataset.sort === 'false'){
+            document.getElementById('sortButton').dataset.sort = 'true';
+        }else{
+            document.getElementById('sortButton').dataset.sort = 'false';
+        }
     }
 
     loadConfiguration = (result) => {
@@ -95,6 +119,9 @@ class NotificationsModule extends React.Component {
         if (result) {
             this.setState({
                 configuration: result
+            });
+            Object.keys(result.objectMapping).forEach(function(k){
+                console.log(k + ' - ' + result.objectMapping[k]);
             });
             this.loadNotifications();
         }
@@ -110,7 +137,6 @@ class NotificationsModule extends React.Component {
             },
             type: 'danger',
         });
-
     }
 
     markAllAsReadButton  = (e) => {
@@ -159,7 +185,7 @@ class NotificationsModule extends React.Component {
                         <li className="nav-item ema-tabs__tab" role="presentation">
                             <button className="nav-link  ema-tabs__tab__btn" id="second-tab" data-toggle="tab"
                                     data-target="#second" type="button" role="tab" aria-controls="second"
-                                    aria-selected="false">{Liferay.Language.get("notifications.task.list")} {this.state.notificationsCount ? "("+this.state.notificationsCount+")": ""}
+                                    aria-selected="false">{Liferay.Language.get("notifications.task.list")} {this.state.tasksCount ? "("+this.state.tasksCount+")": ""}
                             </button>
                         </li>
                     </ul>
@@ -179,14 +205,20 @@ class NotificationsModule extends React.Component {
                                     <label htmlFor="sel_Filtrarpor" id="Filtrarpor-ariaLabel" className="sr-only">Filtrar
                                         por</label>
                                     <select id="sel_Filtrarpor" name="sel_Filtrarpor"
-                                            aria-labelledby="Filtrarpor-ariaLabel">
-                                        <option value="">{Liferay.Language.get("notifications.filtrar")}</option>
-                                        <option value="Fecha">Fecha</option>
-                                        <option value="Departamento">Tipo</option>
+                                            aria-labelledby="Filtrarpor-ariaLabel" onChange={(x) => this.loadFilter(x)}>
+                                        <option value="-">{Liferay.Language.get("notifications.filtrar")}</option>
+                                        {(this.state.configuration && this.state.configuration.objectMapping)? (
+                                                Object.keys(this.state.configuration.objectMapping).map(v => {
+                                                    return (<option value={v}>{v}</option>)
+                                                })
+                                            )
+                                            : <></>
+                                        }
                                     </select>
                                 </div>
                                 <div className="form-row notification-filters__submit">
-                                    <i className="fa-solid fa-arrow-right-arrow-left"></i> <input type="submit"
+                                    <i className="fa-solid fa-arrow-right-arrow-left"></i> <input type="button" id="sortButton" onClick={x => this.loadSort(x)}
+                                                                                                  data-sort="true"
                                                                                                   value={Liferay.Language.get("notifications.ordenar")}
                                                                                                   aria-label={Liferay.Language.get("notifications.ordernar.list}")}/>
                                 </div>
@@ -208,6 +240,7 @@ class NotificationsModule extends React.Component {
                                             })}
                                         </>
                                     ) : (<>
+                                            <div>No se han encontado elementos</div>
                                         </>
                                     )}
                                     <div className="results-pagination-wrapper">

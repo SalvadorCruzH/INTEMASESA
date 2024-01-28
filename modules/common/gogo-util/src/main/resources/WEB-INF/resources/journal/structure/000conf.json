@@ -98,5 +98,15 @@
     "structureFile": "formacion.json",
     "comment": "Estructura para formación",
     "uuid": "19c3f49d-ab0c-6ed1-9719-0b83eee805c9"
+  },
+  {
+    "screenName": "aemasesa",
+    "name": "EMA - Eventos",
+    "companyWebId": "liferay.com",
+    "groupFriendlyUrl": "/global",
+    "structureKey": "EMA-EVENTOS",
+    "structureFile": "eventos-calendario.json",
+    "comment": "Estructura para eventos del calendario",
+    "uuid": "8f1ac2c0-c430-31f2-41d4-37e71ba97e9a"
   }
 ]
