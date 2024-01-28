@@ -13,6 +13,13 @@ public interface EmasesaFavoritosService {
 	 public boolean deleteFav(String classPK) throws PortalException;
 
 	 public boolean isFav(String classPK) throws PortalException;
+	 
+
+	 public boolean addFavPortada(String classPK, long assetEntryClassId, long groupId, String title, String url , String fileExtension, String ddmStructureKey) throws PortalException;
+
+	 public boolean deleteFavPortada(String classPK) throws PortalException;
+
+	 public boolean isFavPortada(String classPK) throws PortalException;
 
 	 public boolean deleteFavs(String classPK) throws PortalException;
 

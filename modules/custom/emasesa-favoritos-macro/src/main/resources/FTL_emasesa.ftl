@@ -207,3 +207,84 @@
 		<a style="text-decoration: none;" href="#" id="createContent"><@liferay_ui.message  key="es.camara.intranet.group.add.faq"/></a>
 	</button>
 </#macro>
+
+
+<!--- Scripts para usar con favoritos de portada --->
+
+<#macro favoritosPortadaInitScript namespace ppids...>
+    <script type="text/javascript">
+
+    var sendData =
+        (function(dataFav, that){
+            $.ajax({
+                type: "POST",
+                url: '/o/favoritos/savePortada',
+                dataType: 'json',
+                contentType:"application/json; charset=utf-8",
+                async: false,
+                data: JSON.stringify(dataFav),
+                success: function (data) {
+                    if(data != null && data.code == 200) {
+                        $(that).toggleClass('favoritoPortada-icon  unfavoritoPortada-icon');
+                         console.log('${ppids?join(",")}');
+                        <#list ppids as ppid>
+
+                            Liferay.Portlet.refresh("#${ppid}", {});
+                        </#list>
+                    }
+                },
+                error: function (data){
+                }
+            });
+        })
+        window['${namespace}'] = {};
+        window['${namespace}'].sendData = sendData;
+
+    </script>
+</#macro>
+
+<#macro accesosDirectosPortada userId groupId assetEntryId assetEntryClassNameId customNamespace title url fileExtension ddmStructureKey="">
+	<#if ddmStructureKey = "EMA-ACCESO-DIRECTO" >
+		<#if !emasesaFavoritosService.isFavPortada(assetEntryId?string) >
+		 <button type="button">
+	        <span class="${customNamespace} unfavoritoPortada-icon" data-groupId="${groupId}" data-assetEntryId="${assetEntryId}"
+	              data-classNameId="${assetEntryClassNameId}" data-title="${title}" data-fileextension="${fileExtension}"
+	              data-url="${url}" data-ddmStructureKey="${ddmStructureKey}"><i class="fa-solid fa-plus"></i></span>
+	         </button>
+	    <#else>
+	     <button type="button">
+	        <span class="${customNamespace} favoritoPortada-icon" data-groupId="${groupId}" data-assetEntryId="${assetEntryId}"
+	              data-classNameId="${assetEntryClassNameId}" data-title="${title}"
+	              data-url="${url}" data-ddmStructureKey="${ddmStructureKey}"><i class="fa-solid fa-minus"></i></span>
+	      </button>
+	    </#if>
+	</#if>
+</#macro>
+
+<#macro favoritosPortadaEndScript customNamespace>
+
+    <script type="text/javascript">
+        $('.${customNamespace}').click(function (){
+            let fav = new Object();
+            var classList = $(this).attr('class').split(/\s+/);
+            $.each(classList, function(index, item) {
+                if (item === 'favoritoPortada-icon') {
+                    fav.cmd = "DELETE";
+                }else if (item === 'unfavoritoPortada-icon') {
+                    fav.cmd = "ADD";
+                }
+            });
+            fav.assetEntryId  = $(this).data('assetentryid');
+            fav.groupId = $(this).data('groupid');
+            fav.classNameId = $(this).data('classnameid');
+            fav.title = ""+$(this).data('title');
+            fav.url = ""+$(this).data('url');
+            fav.fileExtension = ""+$(this).data('fileextension');
+            fav.ddmStructureKey = ""+$(this).data('ddmstructurekey');
+            window['${customNamespace}'].sendData(fav, $(this));
+        });
+
+    </script>
+
+</#macro>
+

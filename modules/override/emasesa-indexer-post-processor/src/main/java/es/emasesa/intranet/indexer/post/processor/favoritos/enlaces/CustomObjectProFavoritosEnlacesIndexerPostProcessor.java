@@ -1,4 +1,4 @@
-package es.emasesa.intranet.indexer.post.processor;
+package es.emasesa.intranet.indexer.post.processor.favoritos.enlaces;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -19,12 +19,12 @@ import es.emasesa.intranet.indexer.post.processor.util.PostProcessorUtil;
 
 @Component(
         immediate = true,
-        property = "indexer.class.name=com.liferay.object.model.ObjectDefinition#200145", // TODO: alguna manera de dinamizarlo.
+        property = "indexer.class.name=com.liferay.object.model.ObjectDefinition#95394", // TODO: alguna manera de dinamizarlo.
         service = IndexerPostProcessor.class
 )
-public class CustomObjectTestFavoriteIndexerPostProcessor implements IndexerPostProcessor{
+public class CustomObjectProFavoritosEnlacesIndexerPostProcessor implements IndexerPostProcessor{
 
-    private static final Log _log = LoggerUtil.getLog(CustomObjectTestFavoriteIndexerPostProcessor.class);
+    private static final Log _log = LoggerUtil.getLog(CustomObjectProFavoritosEnlacesIndexerPostProcessor.class);
 
     @Override
     public void postProcessContextBooleanFilter(BooleanFilter booleanFilter, SearchContext searchContext)
