@@ -4,12 +4,9 @@
   "htmlPath": "index.html",
   "cssPath": "index.css",
   "icon": "forms",
-  "name": "EM-Entrada de texto solo lectura",
+  "name": "EM - Seleccionar Lista Subordinados",
   "typeOptions": {"fieldTypes": [
-    "long-text",
-    "text",
-    "select",
-    "number"
+    "long-text"
   ]},
   "type": "input"
 }

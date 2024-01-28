@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.ServiceLocator;
 
+import com.liferay.util.JS;
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
@@ -37,6 +38,8 @@ import es.emasesa.intranet.sap.datospersona.exception.EmpleadoDatosDomicilioExce
 import es.emasesa.intranet.sap.datospersona.exception.EmpleadoDatosPersonalesException;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
+import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
+import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
@@ -714,6 +717,46 @@ public class SapServicesUtil {
         }
     }
 
+    public JSONObject getEmpleadoEstructura(String pernr){
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getEmpleadoEstructura ");
+        }
+        JSONObject empleadoEstructura = JSONFactoryUtil.createJSONObject();
+        try {
+            if (_empleadoEstructuraService == null) {
+                activate(null);
+            }
+            LOG.debug("Llamada a getEmpleadoEstructura con pernr: " + pernr );
+            empleadoEstructura = _empleadoEstructuraService.getEmpleadoEstructura(pernr);
+        } catch (EmpleadoEstructuraException | SapCommunicationException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getEmpleadoEstructura " + empleadoEstructura);
+            }
+        }
+        return empleadoEstructura;
+    }
+
+    public String getResponsableFromEstructuraEmpleado(String pernr, String responsable) {
+        String responsableEstructura = StringPool.BLANK;
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[E] getResponsableFromEstructuraEmpleado");
+        }
+        JSONObject empleadoEstructura;
+        if (_empleadoEstructuraService == null) {
+            activate(null);
+        }
+        empleadoEstructura = getEmpleadoEstructura(pernr);
+        if(Validator.isNotNull(empleadoEstructura)){
+            responsableEstructura = empleadoEstructura.getString(responsable);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getResponsableFromEstructuraEmpleado " + responsableEstructura);
+            }
+        }
+        return responsableEstructura;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -734,6 +777,7 @@ public class SapServicesUtil {
             CustomServiceTracker<NecesidadesFormacionService> necesidadesFormacionServiceTracker = new CustomServiceTracker<>(NecesidadesFormacionService.class, "getNecesidadesFormacionService");
             CustomServiceTracker<CalendarioEventosService> calendarioEventosServiceTracker = new CustomServiceTracker<>(CalendarioEventosService.class, "getCalendarioEventosService");
             CustomServiceTracker<EmpleadoActDatosPersonalesService> empleadoActDatosPersonalesServiceServiceTracker = new CustomServiceTracker<>(EmpleadoActDatosPersonalesService.class, "getEmpleadoActDatosPersonalesService");
+            CustomServiceTracker<EmpleadoEstructuraService> empleadoEstructuraServiceTracker = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
 
 
             this._customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
@@ -753,6 +797,7 @@ public class SapServicesUtil {
             this._necesidadesFormacionService = necesidadesFormacionServiceTracker.getService();
             this._calendarioEventosService = calendarioEventosServiceTracker.getService();
             this._empleadoActDatosPersonalesService = empleadoActDatosPersonalesServiceServiceTracker.getService();
+            this._empleadoEstructuraService = empleadoEstructuraServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -809,5 +854,6 @@ public class SapServicesUtil {
     private CustomExpandoUtil _customExpandoUtil;
     @Reference
     private ExpandoValueLocalService _expandoValueLocalService;
+    private EmpleadoEstructuraService _empleadoEstructuraService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }
