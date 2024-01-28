@@ -1,16 +1,20 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.form;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchForm;
-import org.osgi.service.component.annotations.Component;
-
+import java.time.LocalDate;
+import java.util.Properties;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.Properties;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 @Component(
         immediate = true,
@@ -40,10 +44,17 @@ public class ConsultaNominasFormImpl implements AjaxSearchForm {
     }
 
     private static final String VIEW = "/views/solicitudes/nominas/form.jsp";
+    private static final String CAT_SELECTED = "catSelected";
+    private static final String CATEGORIES = "categories";
 
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
         return VIEW;
     }
+
+
+    @Reference
+    AssetCategoryLocalService assetCategoryLocalService;
+
 }

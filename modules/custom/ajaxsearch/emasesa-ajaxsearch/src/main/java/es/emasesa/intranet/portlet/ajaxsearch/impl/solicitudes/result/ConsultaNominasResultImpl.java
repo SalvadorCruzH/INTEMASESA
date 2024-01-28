@@ -1,6 +1,5 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
@@ -34,13 +33,20 @@ import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.file.*;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Component(
         immediate = true,
-        property = { },
+        property = {},
         service = AjaxSearchResult.class
 )
 public class ConsultaNominasResultImpl implements AjaxSearchResult {
@@ -56,6 +62,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 	private static final String CAT_SELECTED = "catSelected";
 	private static final String FECHA_DESDE = "fechaDesde";
 	private static final String FECHA_HASTA = "fechaHasta";
+	private static final String MATRICULA = "matricula";
 
 
 
@@ -86,24 +93,42 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 			final int currentPage = ajaxSearchDisplayContext.getCurrentPage();
 			final int pageSize = ajaxSearchDisplayContext.getPageSize();
 			final JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+			final JSONArray pathArray = JSONFactoryUtil.createJSONArray();
 
 			final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
+			final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+			Date fromDate = ajaxSearchDisplayContext.getDate(FECHA_DESDE);
+			Date toDate = ajaxSearchDisplayContext.getDate(FECHA_HASTA);
+			String matricula = ajaxSearchDisplayContext.getString(MATRICULA);
 
-            Calendar calendar = Calendar.getInstance();
-            String year = calendar.get(Calendar.YEAR)+"";
+			if(matricula.equals("")){
+				try {
+					matricula = _expandoValueLocalService.getData(
+							themeDisplay.getCompanyId(),
+							User.class.getName(),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME,
+							"matricula",
+							themeDisplay.getUser().getUserId(),
+							StringPool.BLANK
+					);
 
-			if(year.isBlank()){
-				year = String.valueOf(Year.now().getValue());
+				} catch (Exception e) {
+					LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
+				}
 			}
+
             totalItems = performSearchAndParse(request,
                 response,
                 ajaxSearchDisplayContext,
-                    year,
+				pathArray,
                 currentPage,
                 pageSize,
                 disablePagination,
-                jsonArray);
+                jsonArray,
+				matricula,
+				fromDate,
+				toDate);
 
 			final int totalPages = (((int) totalItems + pageSize - 1) / pageSize);
 			final AjaxSearchJsonModel ajaxSearchJsonModel = new AjaxSearchJsonModel(
@@ -133,35 +158,33 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 	private long performSearchAndParse(final PortletRequest request,
 									   final PortletResponse response,
 									   final AjaxSearchDisplayContext ajaxSearchDisplayContext,
-									   final String year,
+									   final JSONArray pathArray,
 									   final int currentPage,
 									   final int pageSize,
 									   final boolean disablePagination,
-									   final JSONArray jsonArray) throws ParseException, SearchException {
+									   final JSONArray jsonArray,
+									   final String matricula,
+									   final Date fromDate,
+									   final Date toDate) throws ParseException, SearchException {
 
-		final ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+
 		int totalItems = 0;
-		String matricula = "", urlNominaDefinitiva = "", urlNominaProvisional = "", urlUltimoRecalculo="", fechaNomina="", fechaRecalculo="";
+		String urlNominaDefinitiva = "", urlNominaProvisional = "", urlUltimoRecalculo="", fechaNomina="", fechaRecalculo="";
 
-		try {
-			matricula = _expandoValueLocalService.getData(
-					themeDisplay.getCompanyId(),
-					User.class.getName(),
-					ExpandoTableConstants.DEFAULT_TABLE_NAME,
-					"matricula",
-					themeDisplay.getUser().getUserId(),
-					StringPool.BLANK
-			);
-
-		} catch (Exception e) {
-			LoggerUtil.error(LOG, "ERROR getValue from Expando", e);
-		}
+		Long fromDateMilisegundos = (fromDate != null) ? fromDate.getTime(): 0;
+		String desde = (fromDateMilisegundos != 0) ? fromDateMilisegundos.toString(): "";
+		desde = (desde != null) ? formatearFecha(desde) : "";
+		Long toDateMilisegundos = (toDate != null) ? toDate.getTime(): 0;
+		String hasta = (toDateMilisegundos != 0) ? toDateMilisegundos.toString() : "";
+		hasta = (hasta != null) ? formatearFecha(hasta) : "";
 
 		String listadoNominas = _sigdServiceApplication.buscarDocumento(matricula);
 		try {
 			JSONArray elementos = JSONFactoryUtil.createJSONObject(listadoNominas).getJSONObject("buscarDocumentosResponse").getJSONArray("elementos");
 			JSONArray nominas = JSONFactoryUtil.createJSONArray("");
 			if (elementos != null) {
+
+	//FILTRO LOS CAMPOS NECESARIOS DEL JSON
 				for (int i = 0; i < elementos.length(); i++) {
 					JSONObject nomina = JSONFactoryUtil.createJSONObject("");
 					JSONObject documentoOrigen = elementos.getJSONObject(i).getJSONObject("documentoOrigen");
@@ -173,7 +196,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 							String nombreOrigen = campos.getJSONObject(j).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
 								nomina.put("urlNominaDefinitiva",documentoOrigen.getString("urlDescarga"));
-								nomina.put("fechaNomina", campos.getJSONObject(j).getString("dateValue"));
+								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(j).getString("dateValue")));
 								nominas.put(nomina);
 								break;
 							}
@@ -184,7 +207,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 							String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
 								nomina.put("urlNominaProvisional", urlNominaProvisional = documentoOrigen.getString("urlDescarga"));
-								nomina.put("fechaNomina", campos.getJSONObject(b).getString("dateValue"));
+								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(b).getString("dateValue")));
 								nominas.put(nomina);
 								break;
 							}
@@ -195,10 +218,10 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 							String nombreOrigen = campos.getJSONObject(j).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
 								nomina.put("urlUltimoRecalculo", documentoOrigen.getString("urlDescarga"));
-								nomina.put("fechaNomina", campos.getJSONObject(j).getString("dateValue"));
+								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(j).getString("dateValue")));
 								nominas.put(nomina);
 								nomina = JSONFactoryUtil.createJSONObject("");
-								nomina.put("fechaNomina", campos.getJSONObject(j).getString("dateValue"));
+								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(j).getString("dateValue")));
 							}
 							if ("Fecharecalculo".equals(nombreOrigen)) {
 								nomina.put("fechaRecalculo", campos.getJSONObject(j).getString("dateValue"));
@@ -208,6 +231,8 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 						}
 					}
 				}
+
+	//AGRUPO LAS NOMINAS POR FECHA
 				Map<String, List<JSONObject>> nominasPorFecha = new HashMap<>();
 				for (int i = 0; i < nominas.length(); i++) {
 					fechaNomina = nominas.getJSONObject(i).getString("fechaNomina");
@@ -229,11 +254,13 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 					nominasPorFecha.get(fechaNomina).add(nominas.getJSONObject(i));
 				}
 
+	//SE CREAN LOS ARRAY DEFINITIVOS
 				JSONArray nominasArray = JSONFactoryUtil.createJSONArray();
+				JSONArray nominasArrayZip = JSONFactoryUtil.createJSONArray();
 				for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
 					JSONObject nominaFinal = JSONFactoryUtil.createJSONObject();
+					JSONObject nominaZip = JSONFactoryUtil.createJSONObject();
 
-					// Agregar todos los campos con valores predeterminados (pueden ser nulos o vacíos)
 					nominaFinal.put("fechaNomina", "");
 					nominaFinal.put("urlNominaDefinitiva", "");
 					nominaFinal.put("urlNominaProvisional", "");
@@ -242,35 +269,40 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 					List<JSONObject> ListaNominas = entry.getValue();
 					fechaNomina = entry.getKey();
-					String fechaFormateada = formatearFecha(fechaNomina);
-					nominaFinal.put("fechaNomina", fechaFormateada);
+					//String fechaFormateada = formatearFecha(fechaNomina);
+					nominaFinal.put("fechaNomina", fechaNomina);
 
 					if (nominasArray.length() < 24) {
+						List<Path> tempFiles = new ArrayList<>();
 						for (JSONObject nominasElemento : ListaNominas) {
 							if (nominasElemento.has("urlNominaDefinitiva")) {
 								urlNominaDefinitiva = nominasElemento.getString("urlNominaDefinitiva");
 								String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download>" +
 										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 								nominaFinal.put("urlNominaDefinitiva", descarga);
+								nominaZip.put("urlNominaDefinitiva", urlNominaDefinitiva);
 							}
 							if (nominasElemento.has("urlNominaProvisional")) {
 								urlNominaProvisional = nominasElemento.getString("urlNominaProvisional");
 								String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download>" +
 										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 								nominaFinal.put("urlNominaProvisional", descarga);
+								nominaZip.put("urlNominaProvisional", urlNominaProvisional);
 							}
 							if (nominasElemento.has("urlUltimoRecalculo")) {
 								urlUltimoRecalculo = nominasElemento.getString("urlUltimoRecalculo");
 								String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download>" +
 										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 								nominaFinal.put("urlUltimoRecalculo", descarga);
+								nominaZip.put("urlUltimoRecalculo", urlUltimoRecalculo);
 							}
 							if (nominasElemento.has("fechaRecalculo")) {
-								fechaFormateada = formatearFechaRecalculo(nominasElemento.getString("fechaRecalculo"));
-								nominaFinal.put("fechaRecalculo", fechaFormateada);
+								fechaNomina = formatearFechaRecalculo(nominasElemento.getString("fechaRecalculo"));
+								nominaFinal.put("fechaRecalculo", fechaNomina);
 							}
 						}
 						nominasArray.put(nominaFinal);
+						nominasArrayZip.put(nominaZip);
 					} else {
 						break;
 					}
@@ -282,20 +314,142 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 				totalItems = nominasArray.length();
 				List<JSONObject> listJson = new ArrayList<>();
-				for(int i = 0;i<24;i++){
+	//****************************** URL ******************************************
+				for(int i = 0;i<nominasArray.length();i++){
 					listJson.add(nominasArray.getJSONObject(i));
 				}
 
+				JSONArray zipFilePath = descargarPDFsTemporalmente(nominasArrayZip);
 				listJson.subList(start,end).stream().forEach(j->{
+					j.put("descargaUrl", zipFilePath.get(0));
 					jsonArray.put(j);
+
 				});
+
 			}
 
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 		return totalItems;
 	}
+
+	public static JSONArray descargarPDFsTemporalmente(JSONArray jsonArray) throws IOException, JSONException {
+		List<String> urls = obtenerURLsDesdeJSONArray(jsonArray);
+		List<Path> tempFiles = new ArrayList<>();
+		Path zipFilePath = null;
+
+		try {
+			for (int i = 0; i < urls.size(); i++) {
+				String url = urls.get(i);
+				String nombreArchivo = "archivo_" + i + ".pdf";
+
+				Path tempFile = descargarYAlmacenarTemporalmente(url, nombreArchivo);
+				tempFiles.add(tempFile);
+			}
+
+			// Crear un archivo ZIP y agregar los archivos temporales
+			zipFilePath = Files.createTempFile("Archivos_Nomina_", ".zip");
+			try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFilePath.toFile()))) {
+				for (int i = 0; i < tempFiles.size(); i++) {
+					Path tempFile = tempFiles.get(i);
+					String entryName = "archivo_" + i + ".pdf";
+
+					// Agregar entrada al archivo ZIP
+					zipOutputStream.putNextEntry(new ZipEntry(entryName));
+					// Copiar contenido del archivo temporal al archivo ZIP
+					Files.copy(tempFile, zipOutputStream);
+					// Cerrar entrada para el siguiente archivo
+					zipOutputStream.closeEntry();
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// Eliminar archivos temporales después de crear el ZIP
+			for (Path tempFile : tempFiles) {
+				Files.deleteIfExists(tempFile);
+			}
+		}
+
+		JSONArray enlaceDescarga = obtenerEnlaceDescarga(zipFilePath);
+
+		return enlaceDescarga;
+	}
+
+	public static JSONArray obtenerEnlaceDescarga(Path archivoPath) throws JSONException {
+		JSONObject urlDescarga = JSONFactoryUtil.createJSONObject();
+		JSONArray urls = JSONFactoryUtil.createJSONArray("");
+
+		String rutaArchivo = archivoPath.toString();
+
+		// Reemplazar las barras invertidas por barras inclinadas para formar una URL válida
+		String rutaConBarrasInclinadas = rutaArchivo.replace("\\", "/");
+
+		// Obtener el nombre del archivo para usarlo como nombre de descarga sugerido
+		String nombreArchivo = archivoPath.getFileName().toString();
+
+		// Codificar el nombre del archivo para asegurar que sea una URL válida
+		String nombreArchivoCodificado;
+		try {
+			nombreArchivoCodificado = URLEncoder.encode(nombreArchivo, "UTF-8");
+		} catch (Exception e) {
+			// Manejo de excepciones (puedes personalizarlo según tus necesidades)
+			e.printStackTrace();
+			return null;
+		}
+
+		// Formar el enlace de descarga
+		String enlaceDescarga = "<a class=\"btn-primary pe-none\" href=\"" + rutaConBarrasInclinadas + "\" download=\"" + nombreArchivoCodificado + "\">Descargar Nominas</a>";
+
+
+
+		urlDescarga.put("urlDescarga", enlaceDescarga);
+
+		urls.put(urlDescarga);
+
+		return urls;
+	}
+	private static List<String> obtenerURLsDesdeJSONArray(JSONArray jsonArray) {
+		List<String> urls = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject elemento = jsonArray.getJSONObject(i);
+
+			if (elemento.has("urlNominaDefinitiva")) {
+				String urlNominaDefinitiva = elemento.getString("urlNominaDefinitiva");
+				urls.add(urlNominaDefinitiva);
+			}
+			if (elemento.has("urlNominaProvisional")) {
+				String urlNominaProvisional = elemento.getString("urlNominaProvisional");
+				urls.add(urlNominaProvisional);
+			}
+			if (elemento.has("urlUltimoRecalculo")) {
+				String urlUltimoRecalculo = elemento.getString("urlUltimoRecalculo");
+				urls.add(urlUltimoRecalculo);
+			}
+		}
+		return urls;
+	}
+
+	private static Path descargarYAlmacenarTemporalmente(String url, String nombreArchivo) throws IOException {
+
+		URL conexion = new URL(url);
+		Path tempFile = Files.createTempFile("Nomina_", ".pdf");
+
+		try (InputStream in = conexion.openStream()) {
+			Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
+		} catch (FileAlreadyExistsException e) {
+			System.err.println("El archivo ya existe: " + e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tempFile;
+	}
+
 
 	private static final String VIEW = "/views/solicitudes/nominas/results.jsp";
 

@@ -23,6 +23,12 @@
                     </tbody>
                 </table>
             </div>
+<button class="btn btn-primary">
+						<div id="descargarButton" class="ema-download-all-button">
+
+
+            </div>
+</button>
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
@@ -54,25 +60,7 @@
     </tr>
 </template>
 
-<script>
-    // Función para descargar el PDF
-    function descargarPDF(pdfBase64, nombreArchivo) {
-        // Convierte el base64 a Blob
-        var byteCharacters = atob(pdfBase64);
-        var byteNumbers = new Array(byteCharacters.length);
-        for (var i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        var byteArray = new Uint8Array(byteNumbers);
-        var blob = new Blob([byteArray], { type: 'application/pdf' });
 
-        // Crea un enlace temporal y lo simula haciendo clic
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = nombreArchivo; // Nombre del archivo
-        link.click();
-    }
-</script>
 
 <script>
 ajaxSearchGlobalConfig = {
@@ -80,8 +68,14 @@ ajaxSearchGlobalConfig = {
     _postdrawItem : function (jsonItem) {},
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
+        // Select the div element
+
+        var myDiv = document.getElementById('descargarButton');
+        // Append innerHTML to the div
+        myDiv.innerHTML = payload.content[0].descargaUrl.urlDescarga;
+
         addClickFunctionality();
-        checkStatus();
+
     }
 }
 $(document).ready(function () {

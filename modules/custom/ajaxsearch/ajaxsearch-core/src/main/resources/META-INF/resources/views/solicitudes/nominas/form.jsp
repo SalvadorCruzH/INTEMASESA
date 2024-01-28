@@ -1,23 +1,45 @@
 <%@ include file="init.jsp" %>
 
-<liferay-portlet:resourceURL var="getSubCategoriasURL" id="/ajax/get-categorias"/>
-
 <div class="m-searchAjax m-searchAjax--form ema-ajaxsearch-form">
     <button class="ema-ajaxsearch-form__filterbutton">
         <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message><i class="fa-solid fa-chevron-down fa-2xs" aria-hidden="true"></i>
     </button>
-    <div class="ema-ajaxsearch-form__filters" aria-hidden="true" style="display: none;">
-        <div class="ema-ajaxsearch-filtros__text">
-            <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.free-text"></liferay-ui:message></label>
-            <input name="<portlet:namespace />queryText"
-                    type="text"
-                    id="queryText"
-                    value="<%=HtmlUtil.escape(ajaxSearchDisplayContext.getQueryText()) %>"
-                    data-as-id="queryText"
-                    class="m-searchAjax__input text"
-                    placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
+    <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
+        <div class="ema-ajaxsearch-filtros__text tipo-1">
+            <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.matricula"></liferay-ui:message></label>
+            <input
+                name="<portlet:namespace />matricula"
+                type="text"
+                id="matricula"
+                value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("matricula")) %>'
+                data-as-id="matricula"
+                class="m-searchAjax__input text"
+                placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
             />
         </div>
+         <div class="ema-ajaxsearch-filtros__dates tipo-1">
+             <div class="ema-ajaxsearch-filtros__dateFrom">
+                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.from-date"></liferay-ui:message></label>
+                 <input name="<portlet:namespace />fechaDesde"
+                         type="date"
+                         value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaDesde")) %>'
+                         data-as-id="fechaDesde"
+                         class="m-searchAjax__input date"
+                         id="fechaDesde"
+                 />
+             </div>
+             <div class="ema-ajaxsearch-filtros__dateTo">
+                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.to-date"></liferay-ui:message></label>
+                 <input name="<portlet:namespace />fechaHasta"
+                         type="date"
+                         value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
+                         data-as-id="fechaHasta"
+                         class="m-searchAjax__input date"
+                         id="fechaHasta"
+                 />
+             </div>
+         </div>
+
         <div class="ema-ajaxsearch-filtros__buttons">
             <button type="button"
                     class="btn btn-primary search"
@@ -35,31 +57,7 @@
             </button>
         </div>
     </div>
-    <div class="ema-ajaxsearch-filtros__sortby--wrapper">
-        <div class="ema-ajaxsearch-filtros__sortby">
-            <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort-by"></liferay-ui:message></label>
-            <select name="<portlet:namespace />sortby"
-                    type="text"
-                    value='<%=ajaxSearchDisplayContext.getLong("sortby") %>'
-                    data-as-id="sortby"
-                    class="m-searchAjax__input select"
-                    id="sortby"
-                >
-                    <option value="name-asc" >
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.name-asc" />
-                    </option>
-                    <option value="name-desc" >
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.name-desc" />
-                    </option>
-                    <option value="date-asc" >
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.date-asc" />
-                    </option>
-                    <option value="date-desc" >
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.documents.sort.date-desc" />
-                    </option>
-            </select>
-        </div>
-    </div>
+
 </div>
 
 
@@ -79,6 +77,7 @@
     });
 
     $("#m-searchAjax__clean__button").on("click", function (e){
+        $('#year').val('');
         $('#queryText').val('');
          ajaxSearchFeature.doSearch();
     });
@@ -90,7 +89,20 @@
         }
     });
 
-    $('select#sortby').on('change', function() {
-        ajaxSearchFeature.doSearch(true, false);
+    $(".tipo").on("click", function (e){
+      var value = $(this).val();
+      if(value == 1){
+        $(".tipo-2").hide();
+        $(".tipo-1").show();
+        $("#fechaUnica").val('');
+      }else{
+        $(".tipo-1").hide();
+        $(".tipo-2").show();
+        $("#fechaDesde").val('');
+        $("#fechaHasta").val('');
+        $("#matricula").val('');
+      }
+
     });
+
 </script>
