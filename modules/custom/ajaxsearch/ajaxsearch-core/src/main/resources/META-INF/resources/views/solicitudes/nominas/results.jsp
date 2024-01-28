@@ -68,14 +68,12 @@ ajaxSearchGlobalConfig = {
     _postdrawItem : function (jsonItem) {},
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
-        // Select the div element
 
-        var myDiv = document.getElementById('descargarButton');
-        // Append innerHTML to the div
-        myDiv.innerHTML = payload.content[0].descargaUrl.urlDescarga;
-
-        addClickFunctionality();
-
+        if (payload.content && payload.content[0] && payload.content[0].descargaUrl) {
+            var myDiv = document.getElementById('descargarButton');
+            myDiv.innerHTML = payload.content[0].descargaUrl;
+            addClickFunctionality();
+        }
     }
 }
 $(document).ready(function () {

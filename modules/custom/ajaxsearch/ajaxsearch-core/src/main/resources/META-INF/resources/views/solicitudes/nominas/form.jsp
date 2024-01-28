@@ -5,40 +5,42 @@
         <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.filter-by"></liferay-ui:message><i class="fa-solid fa-chevron-down fa-2xs" aria-hidden="true"></i>
     </button>
     <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
-        <div class="ema-ajaxsearch-filtros__text tipo-1">
-            <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.matricula"></liferay-ui:message></label>
-            <input
-                name="<portlet:namespace />matricula"
-                type="text"
-                id="matricula"
-                value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("matricula")) %>'
-                data-as-id="matricula"
-                class="m-searchAjax__input text"
-                placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
-            />
-        </div>
-         <div class="ema-ajaxsearch-filtros__dates tipo-1">
-             <div class="ema-ajaxsearch-filtros__dateFrom">
-                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.from-date"></liferay-ui:message></label>
-                 <input name="<portlet:namespace />fechaDesde"
-                         type="date"
-                         value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaDesde")) %>'
-                         data-as-id="fechaDesde"
-                         class="m-searchAjax__input date"
-                         id="fechaDesde"
-                 />
-             </div>
-             <div class="ema-ajaxsearch-filtros__dateTo">
-                 <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.to-date"></liferay-ui:message></label>
-                 <input name="<portlet:namespace />fechaHasta"
-                         type="date"
-                         value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
-                         data-as-id="fechaHasta"
-                         class="m-searchAjax__input date"
-                         id="fechaHasta"
-                 />
-             </div>
-         </div>
+				<c:if test="${role == 'departamentoNominas'}">
+				    <div class="ema-ajaxsearch-filtros__text tipo-1">
+				        <label><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.matricula"></liferay-ui:message></label>
+				        <input
+				            name="<portlet:namespace />matricula"
+				            type="text"
+				            id="matricula"
+				            value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("matricula")) %>'
+				            data-as-id="matricula"
+				            class="m-searchAjax__input text"
+				            placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
+				        />
+				    </div>
+        </c:if>
+				<div class="ema-ajaxsearch-filtros__dates tipo-1">
+				   <div class="ema-ajaxsearch-filtros__dateFrom">
+				       <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.from-date"></liferay-ui:message></label>
+				       <input name="<portlet:namespace />fechaDesde"
+				               type="date"
+				               value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaDesde")) %>'
+				               data-as-id="fechaDesde"
+				               class="m-searchAjax__input date"
+				               id="fechaDesde"
+				       />
+				   </div>
+				   <div class="ema-ajaxsearch-filtros__dateTo">
+				       <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.to-date"></liferay-ui:message></label>
+				       <input name="<portlet:namespace />fechaHasta"
+				               type="date"
+				               value='<%=HtmlUtil.escape(ajaxSearchDisplayContext.getStringRP("fechaHasta")) %>'
+				               data-as-id="fechaHasta"
+				               class="m-searchAjax__input date"
+				               id="fechaHasta"
+				       />
+				   </div>
+				</div>
 
         <div class="ema-ajaxsearch-filtros__buttons">
             <button type="button"

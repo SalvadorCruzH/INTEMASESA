@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -28,6 +29,7 @@ import es.emasesa.intranet.service.util.SapServicesUtil;
 import es.emasesa.intranet.settings.osgi.RolesSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.model.Role;
 
 import es.emasesa.intranet.sigd.service.application.SigdServiceApplication;
 
@@ -93,7 +95,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 			final int currentPage = ajaxSearchDisplayContext.getCurrentPage();
 			final int pageSize = ajaxSearchDisplayContext.getPageSize();
 			final JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-			final JSONArray pathArray = JSONFactoryUtil.createJSONArray();
 
 			final String disablePaginationStr = ajaxSearchDisplayContext.getConfig().getOrDefault(DISABLE_PAGINATION, StringConstants.ZERO);
 			final boolean disablePagination = !Validator.isBlank(disablePaginationStr) && disablePaginationStr.equals("1");
@@ -118,10 +119,10 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 				}
 			}
 
+
             totalItems = performSearchAndParse(request,
                 response,
                 ajaxSearchDisplayContext,
-				pathArray,
                 currentPage,
                 pageSize,
                 disablePagination,
@@ -158,7 +159,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 	private long performSearchAndParse(final PortletRequest request,
 									   final PortletResponse response,
 									   final AjaxSearchDisplayContext ajaxSearchDisplayContext,
-									   final JSONArray pathArray,
 									   final int currentPage,
 									   final int pageSize,
 									   final boolean disablePagination,
@@ -166,7 +166,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 									   final String matricula,
 									   final Date fromDate,
 									   final Date toDate) throws ParseException, SearchException {
-
 
 		int totalItems = 0;
 		String urlNominaDefinitiva = "", urlNominaProvisional = "", urlUltimoRecalculo="", fechaNomina="", fechaRecalculo="";
@@ -328,8 +327,10 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 				}
 
 				JSONArray zipFilePath = descargarPDFsTemporalmente(nominasArrayZip);
+				JSONObject zip = zipFilePath.getJSONObject(0);
+				String urlDescarga = zip.getString("urlDescarga");
 				listJson.subList(start,end).stream().forEach(j->{
-					j.put("descargaUrl", zipFilePath.get(0));
+					j.put("descargaUrl", urlDescarga);
 					jsonArray.put(j);
 
 				});
