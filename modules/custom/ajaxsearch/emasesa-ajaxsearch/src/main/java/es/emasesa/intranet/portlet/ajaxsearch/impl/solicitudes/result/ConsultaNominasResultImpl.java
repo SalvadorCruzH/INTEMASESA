@@ -206,7 +206,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 						for (int b = 0; b < campos.length(); b++) {
 							String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
-								nomina.put("urlNominaProvisional", urlNominaProvisional = documentoOrigen.getString("urlDescarga"));
+								nomina.put("urlNominaProvisional", documentoOrigen.getString("urlDescarga"));
 								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(b).getString("dateValue")));
 								nominas.put(nomina);
 								break;
@@ -255,8 +255,8 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 				}
 
 	//SE CREAN LOS ARRAY DEFINITIVOS
-				JSONArray nominasArray = JSONFactoryUtil.createJSONArray();
-				JSONArray nominasArrayZip = JSONFactoryUtil.createJSONArray();
+				JSONArray nominasArray = JSONFactoryUtil.createJSONArray("");
+				JSONArray nominasArrayZip = JSONFactoryUtil.createJSONArray("");
 				for (Map.Entry<String, List<JSONObject>> entry : nominasPorFecha.entrySet()) {
 					JSONObject nominaFinal = JSONFactoryUtil.createJSONObject();
 					JSONObject nominaZip = JSONFactoryUtil.createJSONObject();
@@ -270,41 +270,50 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 					List<JSONObject> ListaNominas = entry.getValue();
 					fechaNomina = entry.getKey();
 					//String fechaFormateada = formatearFecha(fechaNomina);
-					nominaFinal.put("fechaNomina", fechaNomina);
+					SimpleDateFormat formato = new SimpleDateFormat("MM.yyyy");
+					Date fechaNominaDate = formato.parse(fechaNomina);
+					Date desdeDate = (desde != null) ? formato.parse(desde) : null;
+					Date hastaDate = (hasta != null) ? formato.parse(hasta) : null;
 
-					if (nominasArray.length() < 24) {
-						List<Path> tempFiles = new ArrayList<>();
-						for (JSONObject nominasElemento : ListaNominas) {
-							if (nominasElemento.has("urlNominaDefinitiva")) {
-								urlNominaDefinitiva = nominasElemento.getString("urlNominaDefinitiva");
-								String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download>" +
-										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
-								nominaFinal.put("urlNominaDefinitiva", descarga);
-								nominaZip.put("urlNominaDefinitiva", urlNominaDefinitiva);
+					if ((desdeDate == null && hastaDate == null) ||
+							(desdeDate != null && fechaNominaDate.compareTo(desdeDate) >= 0) &&
+									(hastaDate != null && fechaNominaDate.compareTo(hastaDate) <= 0)) {
+						nominaFinal.put("fechaNomina", fechaNomina);
+
+						if (nominasArray.length() < 24) {
+							List<Path> tempFiles = new ArrayList<>();
+							for (JSONObject nominasElemento : ListaNominas) {
+								if (nominasElemento.has("urlNominaDefinitiva")) {
+									urlNominaDefinitiva = nominasElemento.getString("urlNominaDefinitiva");
+									String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download>" +
+											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
+									nominaFinal.put("urlNominaDefinitiva", descarga);
+									nominaZip.put("urlNominaDefinitiva", urlNominaDefinitiva);
+								}
+								if (nominasElemento.has("urlNominaProvisional")) {
+									urlNominaProvisional = nominasElemento.getString("urlNominaProvisional");
+									String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download>" +
+											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
+									nominaFinal.put("urlNominaProvisional", descarga);
+									nominaZip.put("urlNominaProvisional", urlNominaProvisional);
+								}
+								if (nominasElemento.has("urlUltimoRecalculo")) {
+									urlUltimoRecalculo = nominasElemento.getString("urlUltimoRecalculo");
+									String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download>" +
+											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
+									nominaFinal.put("urlUltimoRecalculo", descarga);
+									nominaZip.put("urlUltimoRecalculo", urlUltimoRecalculo);
+								}
+								if (nominasElemento.has("fechaRecalculo")) {
+									fechaNomina = formatearFechaRecalculo(nominasElemento.getString("fechaRecalculo"));
+									nominaFinal.put("fechaRecalculo", fechaNomina);
+								}
 							}
-							if (nominasElemento.has("urlNominaProvisional")) {
-								urlNominaProvisional = nominasElemento.getString("urlNominaProvisional");
-								String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download>" +
-										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
-								nominaFinal.put("urlNominaProvisional", descarga);
-								nominaZip.put("urlNominaProvisional", urlNominaProvisional);
-							}
-							if (nominasElemento.has("urlUltimoRecalculo")) {
-								urlUltimoRecalculo = nominasElemento.getString("urlUltimoRecalculo");
-								String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download>" +
-										"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
-								nominaFinal.put("urlUltimoRecalculo", descarga);
-								nominaZip.put("urlUltimoRecalculo", urlUltimoRecalculo);
-							}
-							if (nominasElemento.has("fechaRecalculo")) {
-								fechaNomina = formatearFechaRecalculo(nominasElemento.getString("fechaRecalculo"));
-								nominaFinal.put("fechaRecalculo", fechaNomina);
-							}
+							nominasArray.put(nominaFinal);
+							nominasArrayZip.put(nominaZip);
+						} else {
+							break;
 						}
-						nominasArray.put(nominaFinal);
-						nominasArrayZip.put(nominaZip);
-					} else {
-						break;
 					}
 				}
 
@@ -314,7 +323,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 				totalItems = nominasArray.length();
 				List<JSONObject> listJson = new ArrayList<>();
-	//****************************** URL ******************************************
 				for(int i = 0;i<nominasArray.length();i++){
 					listJson.add(nominasArray.getJSONObject(i));
 				}
@@ -327,12 +335,14 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 				});
 
 			}
-
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		} catch (java.text.ParseException ex) {
+			throw new RuntimeException(ex);
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		} catch (JSONException ex) {
+			throw new RuntimeException(ex);
 		}
+
 		return totalItems;
 	}
 
