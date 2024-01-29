@@ -37,39 +37,39 @@
                     <h4 class="i-header__userItem__submenu__item__title">Accesos directos</h4>
                     <ul class="i-header__userItem__submenu__item__apps">
                     	<#if (favoritosServiceSettings??) && (customEmasesaUtil??)>
-	                    	  <#assign favoritoObjectId = favoritosServiceSettings.objectDefinitionId() >
-	                    	  <#if (favoritoObjectId??)>
-								<#assign entries = customEmasesaUtil.searchFavoritesJournalsArticleByUserAndDDMStructureKey(themeDisplay, "EMA-ACCESO-DIRECTO", -1, -1, favoritoObjectId) >
-								<#if entries?has_content>
-									<#list entries as curEntry>
-									    <#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
-									    <#assign ddmStructure = journalArticle.getDDMStructure() />
-							            <#assign ddmForm = ddmStructure.getDDMForm()/>
-							            <#assign ddmFormValues = ddmFieldLocalService.getDDMFormValues(ddmForm, journalArticle.getId()) />
-							            <#assign ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues() />
-							            <#assign urlJournal = ""
-							            		 name = ""
-							            		 icono = "">
-								        <#list ddmFormFieldValues as fieldName>
-								                <#if fieldName.getFieldReference() == 'url'>
-								                	<#assign urlJournal = fieldName.getValue().getString(locale) />
-								                </#if>
-								                <#if fieldName.getFieldReference() == 'name'>
-								                    <#assign name = fieldName.getValue().getString(locale) />
-								                </#if>
-								                <#if fieldName.getFieldReference() == 'icono'>
-								                    <#assign icono = fieldName.getValue().getString(locale) />						                   
-								                </#if>
-								        </#list>
-										<li class="i-header__userItem__submenu__item__apps__app">
-		                           			<a href="${urlJournal}" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link" target="_blank">
-			                               		<img src="${icono}" alt="" data-fileentryid=""/>
-			                               		<span>${name}</span>
-		                            		</a>
-		                       			</li>
-								 	</#list>
-								</#if>
-							</#if>
+                            <#assign favoritoObjectId = favoritosServiceSettings.objectDefinitionId() >
+                            <#if (favoritoObjectId??)>
+                                <#assign entries = customEmasesaUtil.searchFavoritesJournalsArticleByUserAndDDMStructureKey(themeDisplay, "EMA-ACCESO-DIRECTO", -1, -1, favoritoObjectId) >
+                                <#if entries?has_content>
+                                    <#list entries as curEntry>
+                                        <#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
+                                        <#assign ddmStructure = journalArticle.getDDMStructure() />
+                                        <#assign ddmForm = ddmStructure.getDDMForm()/>
+                                        <#assign ddmFormValues = ddmFieldLocalService.getDDMFormValues(ddmForm, journalArticle.getId()) />
+                                        <#assign ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues() />
+                                        <#assign urlJournal = ""
+                                                    name = ""
+                                                    icono = "">
+                                        <#list ddmFormFieldValues as fieldName>
+                                            <#if fieldName.getFieldReference() == 'url'>
+                                                <#assign urlJournal = fieldName.getValue().getString(locale) />
+                                            </#if>
+                                            <#if fieldName.getFieldReference() == 'name'>
+                                                <#assign name = fieldName.getValue().getString(locale) />
+                                            </#if>
+                                            <#if fieldName.getFieldReference() == 'icono'>
+                                                <#assign icono = fieldName.getValue().getString(locale) />
+                                            </#if>
+                                        </#list>
+                                        <li class="i-header__userItem__submenu__item__apps__app">
+                                            <a href="${urlJournal}" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link" target="_blank">
+                                                <img src="${icono}" alt="" data-fileentryid=""/>
+                                                <span>${name}</span>
+                                            </a>
+                                        </li>
+                                    </#list>
+                                </#if>
+                            </#if>
 						</#if>
                     </ul>
                 </li>
