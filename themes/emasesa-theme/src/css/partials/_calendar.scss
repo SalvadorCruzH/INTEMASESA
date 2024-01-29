@@ -147,11 +147,11 @@ a[class*="ema-calendario__"] {
             cursor: default;
         }
         &.wrong-month {
-            background-color: rgba($color-light-grey, .25);
+            background-color: $color-light-grey;
             color: $color-icon-grey;
         }
         &.today {
-            background-color: rgba($color-light-blue, .25);
+            background-color: $color-light-grey;
         }
     }
     &__check {
@@ -164,6 +164,47 @@ a[class*="ema-calendario__"] {
     }
     &__buttonRegister {
         margin-top: 1rem;
+    }
+    &__leyenda {
+        background-color: white;
+        border-radius: 30px;
+        padding: 30px;
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        &__title {
+            .i-mainWrapper  & {
+                margin-bottom: 1rem;
+            }
+        }
+        &__items {
+            display: flex;
+            gap: 1.5rem;
+        }
+        &__item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+            &::after {
+                content: '';
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-color: #eee;
+            }
+            &:first-child::after {
+                background-color: #e5eecc;
+            }
+            &:nth-child(2)::after {
+                background-color: #d6e7f4;
+            }
+            &:last-child::after {
+                background-color: #ffe7d2;
+            }
+        }
     }
 }
 .blockCalendar {

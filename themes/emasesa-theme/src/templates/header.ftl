@@ -68,16 +68,24 @@
     </div>
 </div>
 <script>
-	const appsBtn = document.getElementById('submenu-accesos-directos-btn')
-	const appsSubmenu = document.getElementById('submenu-accesos-directos')
-	const userBtn = document.getElementById('submenu-usuario-btn')
-	const userSubmenu = document.getElementById('submenu-usuario')
-	appsBtn.addEventListener('click', (e) => {
-		e.preventDefault()
-		appsSubmenu.classList.toggle('hide')
-	})
-	userBtn.addEventListener('click', (e) => {
-		e.preventDefault()
-		userSubmenu.classList.toggle('hide')
-	})
+	if (
+		document.getElementById('submenu-accesos-directos-btn') &&
+		document.getElementById('submenu-accesos-directos') &&
+		document.getElementById('submenu-usuario-btn') &&
+		document.getElementById('submenu-usuario')
+	) {
+		const appsBtn = document.getElementById('submenu-accesos-directos-btn')
+		const appsSubmenu = document.getElementById('submenu-accesos-directos')
+		const userBtn = document.getElementById('submenu-usuario-btn')
+		const userSubmenu = document.getElementById('submenu-usuario')
+		appsBtn.addEventListener('click', (e) => {
+			e.preventDefault()
+			appsSubmenu.classList.toggle('hide')
+		})
+		userBtn.addEventListener('click', (e) => {
+			e.preventDefault()
+			userSubmenu.classList.toggle('hide')
+		})
+	}
+
 </script>
