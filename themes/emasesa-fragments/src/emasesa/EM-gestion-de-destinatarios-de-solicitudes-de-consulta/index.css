@@ -1,7 +1,7 @@
 .em-destinatariosConsultas{
  display:flex;
 }
-#selectTipologia, #selectSubtipologia{
+.tipologia, .subtipologia{
 	max-width:500px;
 	margin: 1rem;
 	

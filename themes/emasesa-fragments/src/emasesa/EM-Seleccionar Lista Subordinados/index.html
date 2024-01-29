@@ -1,0 +1,46 @@
+[#assign userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")]
+[#assign themeDisplay = request.getAttribute("LIFERAY_SHARED_THEME_DISPLAY")]
+[#assign userId = themeDisplay.getUserId()]
+[#assign user = userLocalService.getUserById(userId)]
+[#assign expandoValueLocalService = serviceLocator.findService("com.liferay.expando.kernel.service.ExpandoValueLocalService")]
+[#assign customExpandoUtil = serviceLocator.findService("es.emasesa.intranet.base.util.CustomExpandoUtil")]
+[#assign expandoValueByName = expandoValueLocalService.getData(themeDisplay.getCompanyId(), "com.liferay.portal.kernel.model.User", "CUSTOM_FIELDS", "matricula", userId, "")]
+[#assign sapServiceUtil = serviceLocator.findService("es.emasesa.intranet.service.util.SapServicesUtil")]
+[#assign listaSubordinados = sapServiceUtil.getSubordinados(expandoValueByName, "T")]
+<select id="select-subordinados" class="ema-select">
+    <option value="">Selecciona un subordinado</option>
+    [#assign listaSubordinadosSize = listaSubordinados.length()-1]
+    [#list 0..listaSubordinadosSize as i]
+        [#assign subordinado = sapServiceUtil.getDatosEmpleado(listaSubordinados.get(i).getString("pernr"))]
+        <option value='${subordinado}'>${subordinado.pernr} - ${subordinado.nombre} ${subordinado.apellido1} ${subordinado.apellido2}  </option>
+        
+    [/#list]
+</select>
+<div class="ema-table-wrapper">
+    
+    
+    <div class="component-button text-break">
+        <button class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" id="${fragmentEntryLinkNamespace}-add-button" >
+            Añadir
+        </button>
+        <button class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" type="button" id="btn-delete">Eliminar</button>
+    </div>
+    
+    <table id="table-usuarios-seleccionados" class="ema-table">
+        <h6>
+            Listado de subordinados Seleccionados
+        </h6>
+        <caption class="sr-only">Listado de subordinados Seleccionados</caption>
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Matrícula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Primer Apellido</th>
+            <th scope="col">Segundo Apellido</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

@@ -3,13 +3,11 @@
   "jsPath": "index.js",
   "htmlPath": "index.html",
   "cssPath": "index.css",
-  "icon": "forms",
-  "name": "EM-Entrada de texto solo lectura",
+  "icon": "custom-field",
+  "name": "EM - Horas Por día",
   "typeOptions": {"fieldTypes": [
     "long-text",
-    "text",
-    "select",
-    "number"
+    "text"
   ]},
   "type": "input"
 }

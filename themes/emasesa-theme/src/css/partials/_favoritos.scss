@@ -175,5 +175,12 @@
                 color: $color-white;
             }
         }
+        button {
+            background: none;
+            border: none;
+            color: $color-aux-blue;
+            margin-left: 5px;
+            cursor: pointer;
+        }
     }
 }

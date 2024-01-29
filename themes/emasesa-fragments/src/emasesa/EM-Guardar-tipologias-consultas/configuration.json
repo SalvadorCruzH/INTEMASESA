@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+		"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Administrador RRHH",
+					"label": "Rol para el que se muestra el fragment",
+					"localizable": true,
+					"name": "roleName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "_es.emasesa.intranet.settings.configuration.FormsConfiguration",
+					"label": "pid",
+					"localizable": true,
+					"name": "pidValue",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "destinatariosSolicitudesConsultas",
+					"label": "Config Key",
+					"localizable": true,
+					"name": "configKey",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
