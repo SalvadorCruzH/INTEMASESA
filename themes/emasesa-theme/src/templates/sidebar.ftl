@@ -32,7 +32,44 @@
                 <i class="i-icon i-icon--grey fa-solid fa-grip"></i>
                 <span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.apps'/></span>
             </button>
-            <ul class="i-header__userItem__submenu hide" id="submenu-accesos-directos">
+            <ul class="i-header__userItem__submenu__item__apps">
+                <#if favoritosServiceSettings??>
+                    <#assign favoritoObjectId = favoritosServiceSettings.objectDefinitionId() >
+                    <#if (favoritoObjectId??) && (favoritoObjectId > 0) >
+                        <#assign entries = customEmasesaUtil.searchFavoritesJournalsArticleByUserAndDDMStructureKey(themeDisplay, "EMA-ACCESO-DIRECTO", -1, -1, favoritoObjectId) >
+                        <#if entries?has_content>
+                            <#list entries as curEntry>
+                                <#assign journalArticle = curEntry.getAssetRenderer().getAssetObject() />
+                                <#assign ddmStructure = journalArticle.getDDMStructure() />
+                                <#assign ddmForm = ddmStructure.getDDMForm()/>
+                                <#assign ddmFormValues = ddmFieldLocalService.getDDMFormValues(ddmForm, journalArticle.getId()) />
+                                <#assign ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues() />
+                                <#assign urlJournal = ""
+                                    name = ""
+                                    icono = "">
+                                <#list ddmFormFieldValues as fieldName>
+                                    <#if fieldName.getFieldReference() == 'url'>
+                                        <#assign urlJournal = fieldName.getValue().getString(locale) />
+                                    </#if>
+                                    <#if fieldName.getFieldReference() == 'name'>
+                                        <#assign name = fieldName.getValue().getString(locale) />
+                                    </#if>
+                                    <#if fieldName.getFieldReference() == 'icono'>
+                                        <#assign icono = fieldName.getValue().getString(locale) />
+                                    </#if>
+                                </#list>
+                                <li class="i-header__userItem__submenu__item__apps__app">
+                                    <a href="${urlJournal}" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link" target="_blank">
+                                        <img src="${icono}" alt="" data-fileentryid=""/>
+                                        <span>${name}</span>
+                                    </a>
+                                </li>
+                            </#list>
+                        </#if>
+                    </#if>
+                </#if>
+            </ul>
+            <#--  <ul class="i-header__userItem__submenu hide" id="submenu-accesos-directos">
                 <li class="i-header__userItem__submenu__item">
                     <h4 class="i-header__userItem__submenu__item__title">Accesos directos</h4>
                     <ul class="i-header__userItem__submenu__item__apps">
@@ -46,23 +83,21 @@
                                     <#assign ddmForm = ddmStructure.getDDMForm()/>
                                     <#assign ddmFormValues = ddmFieldLocalService.getDDMFormValues(ddmForm, journalArticle.getId()) />
                                     <#assign ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues() />
-                                    <#assign urlJournal = ""
-                                            name = ""
-                                            icono = "">
+                                    <#assign urlJournal="" name="" icono="" />
                                     <#list ddmFormFieldValues as fieldName>
-                                            <#if fieldName.getFieldReference() == 'url'>
-                                                <#assign urlJournal = fieldName.getValue().getString(locale) />
-                                            </#if>
-                                            <#if fieldName.getFieldReference() == 'name'>
-                                                <#assign name = fieldName.getValue().getString(locale) />
-                                            </#if>
-                                            <#if fieldName.getFieldReference() == 'icono'>
-                                                <#assign icono = fieldName.getValue().getString(locale) />
-                                            </#if>
+                                        <#if fieldName.getFieldReference() == 'url'>
+                                            <#assign urlJournal = fieldName.getValue().getString(locale) />
+                                        </#if>
+                                        <#if fieldName.getFieldReference() == 'name'>
+                                            <#assign name = fieldName.getValue().getString(locale) />
+                                        </#if>
+                                        <#if fieldName.getFieldReference() == 'icono'>
+                                            <#assign icono = fieldName.getValue().getString(locale) />
+                                        </#if>
                                     </#list>
                                     <li class="i-header__userItem__submenu__item__apps__app">
                                         <a href="${urlJournal}" title="Enlace a la aplicación" class="i-header__userItem__submenu__item__apps__app__link" target="_blank">
-                                            <img src="${icono}" alt="" data-fileentryid=""/>
+                                            <img src="${icono.name}" alt="" data-fileentryid=""/>
                                             <span>${name}</span>
                                         </a>
                                     </li>
@@ -71,7 +106,7 @@
                         </#if>
                     </ul>
                 </li>
-            </ul>
+            </ul>  -->
         </li>
         <li class="i-header__userItem">
             <a href="${site_default_url}/inicio/favoritos" class="i-header__userLink">
