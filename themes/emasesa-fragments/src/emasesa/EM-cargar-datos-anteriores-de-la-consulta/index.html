@@ -13,7 +13,9 @@
    [/#if]
 [/#list]
 [#assign objectEntryUtil = serviceLocator.findService("com.liferay.object.service.ObjectEntryLocalService")]
-[#assign objectEntries = objectEntryUtil.getOneToManyObjectEntries(themeDisplay.getScopeGroupId(), configuration.objectRelationshipId?number, objectEntryId?number, true ,null, -1,-1)]
+[#assign customWorkflowUtil = serviceLocator.findService("es.emasesa.intranet.service.util.CustomWorkflowUtil")]
+[#assign objectEntries = customWorkflowUtil.getSubObjects(themeDisplay.getScopeGroupId(), configuration.objectRelationshipId?number, objectEntryId?number)]
+
 <div class="em-consulta">
 	[#list objectEntries as objectEntry]
 	[#assign values = objectEntry.getValues()]

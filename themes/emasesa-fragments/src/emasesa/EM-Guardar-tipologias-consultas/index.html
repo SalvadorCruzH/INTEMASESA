@@ -1,0 +1,69 @@
+[#assign UserServiceUtil = staticUtil["com.liferay.portal.kernel.service.UserServiceUtil"] /]
+[#assign RoleLocalServiceUtil = staticUtil["com.liferay.portal.kernel.service.RoleLocalServiceUtil"] /]
+[#assign user = UserServiceUtil.getUserById(themeDisplay.getUserId()) /]
+[#assign userRoles = RoleLocalServiceUtil.getUserGroupRoles(user.getUserId(), themeDisplay.getSiteGroupId()) /]
+[#assign isAdministrator = false /]
+[#list userRoles as userRole]
+    [#if userRole.getName() == configuration.roleName]
+        [#assign isAdministrator = true /]
+    [/#if]
+[/#list]
+[#assign getConfigurationValueUtil = serviceLocator.findService("es.emasesa.intranet.settings.util.GetConfigurationValueUtil")]
+[#assign configValue = getConfigurationValueUtil.getMapValue("es.emasesa.intranet.settings.configuration.FormsConfiguration","destinatariosSolicitudesConsultas")]
+[#assign TIPOLOGÍASet = [] /]
+[#if isAdministrator]
+<div class="alert-container cadmin container em-alert hide">
+		<div class="alert-notifications alert-notifications-fixed" id="ToastAlertContainer">
+            <div class="lfr-tooltip-scope"><div class="mb-3 alert alert-dismissible alert-success">
+                <div role="alert" class="alert-autofit-row autofit-row">
+                    <div class="autofit-col">
+                        <div class="autofit-section">
+                            <span class="alert-indicator">
+                                <svg class="lexicon-icon lexicon-icon-check-circle-full" role="presentation">
+                                    <use xlink:href="/o/admin-theme/images/clay/icons.svg#check-circle-full"></use>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="autofit-col autofit-col-expand">
+                        <div class="autofit-section">
+                            <div>
+                                <strong class="lead">Éxito:</strong>Su petición ha terminado con éxito.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button aria-label="Close" class="close" type="button">
+                    <svg class="lexicon-icon lexicon-icon-times" role="presentation">
+                        <use xlink:href="/o/admin-theme/images/clay/icons.svg#times"></use>
+                    </svg>
+                </button>
+            </div>
+            </div>
+        </div>
+	</div>
+<div class="em-config__tipologias">
+	
+	<table>
+    <thead>
+        <tr>
+            <th>TIPOLOGÍA</th>
+            <th>SUBTIPOLOGÍA</th>
+            <th>DESTINATARIO</th>
+        </tr>
+    </thead>
+    <tbody>
+        [#list configValue as item]
+            <tr>
+                <td><input type="text" value='${item["TIPOLOGÍA"]}' /></td>
+                <td><input type="text" value='${item["SUBTIPOLOGÍA"]}' /></td>
+                <td><input type="text" value='${item["DESTINATARIO"]}' /></td>
+            </tr>
+        [/#list]
+    </tbody>
+</table>
+	
+	<button id="addRow" class="btn btn-nm btn-secondary">Agregar Fila</button>
+	<button id="saveTable" class="btn btn-nm btn-primary">Guardar Tabla</button>
+</div>
+[/#if]
