@@ -1,0 +1,21 @@
+.em-config__tipologias {
+}
+.em-config__tipologias table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.em-config__tipologias th, .em-config__tipologias td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+} 
+.em-config__tipologias tr:nth-child(even) {background-color: #f2f2f2;}
+.em-config__tipologias th {
+    background-color: #a8c860;
+    color: white;
+}
+.em-config__tipologias input {
+    width: 100%;
+}
+

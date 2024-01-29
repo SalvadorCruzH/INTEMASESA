@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+        xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+    <name>0b727da0-20f9-3d11-d74f-4f75a81ccc37</name>
+    <version>6</version>
+    <state>
+        <name>520a5379-221f-426e-9e26-9e60b423ad47</name>
+        <description>Inicia un flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						304,
+						-108
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <action>
+                <name>Pendiente</name>
+                <description></description>
+                <status>1</status>
+                <priority>1</priority>
+                <execution-type>onEntry</execution-type>
+            </action>
+        </actions>
+        <initial>true</initial>
+        <labels>
+            <label language-id="es_ES">
+                Comienzo
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Envio
+                    </label>
+                </labels>
+                <name>Envio</name>
+                <target>RolDestino</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </state>
+    <state>
+        <name>c62d10c8-4438-411f-ad24-ad17dbc2eda8</name>
+        <description>Finaliza el flujo de trabajo.</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						299,
+						396
+					],
+					"terminal": true
+				}
+			]]>
+        </metadata>
+        <actions>
+            <notification>
+                <name>Notificacion al usuario</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Su Consulta ha sido finalizada.]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <user />
+                </recipients>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <labels>
+            <label language-id="es_ES">
+                Final
+            </label>
+        </labels>
+    </state>
+    <task>
+        <name>RolDestino</name>
+        <description>RolDestino</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						303.09375,
+						53.5
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <notification>
+                <name>Notificacion</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Tiene una Solicitud de Consulta Pendiente]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <assignees />
+                </recipients>
+                <execution-type>onAssignment</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <scripted-assignment>
+                <script>
+                    <![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.service.util.CustomWorkflowUtil;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundleCustomWorkflowBase = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowBaseUtilTracker = new ServiceTracker(bundleCustomWorkflowBase.getBundleContext(), CustomWorkflowBaseUtil.class, null);
+customWorkflowBaseUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowBaseUtil = customWorkflowBaseUtilTracker.getService();
+def roleName = customWorkflowBaseUtil.getValue(workflowContext, "destinatario"); customWorkflowBaseUtilTracker.close();
+Bundle bundleCustomWorklow = FrameworkUtil.getBundle(CustomWorkflowUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundleCustomWorklow.getBundleContext(), CustomWorkflowUtil.class, null);
+customWorkflowUtilTracker.open(); CustomWorkflowUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+roles = customWorkflowUtil.assignWorkflowRole(workflowContext, "Administrador RRHH");
+customWorkflowUtilTracker.close();]]>
+                </script>
+                <script-language>groovy</script-language>
+            </scripted-assignment>
+        </assignments>
+        <labels>
+            <label language-id="es_ES">
+                Tarea
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Enviar Respuesta
+                    </label>
+                </labels>
+                <name>Enviar Respuesta</name>
+                <target>usuarioCreadorConsulta</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>usuarioCreadorConsulta</name>
+        <description>usuarioCreadorConsulta</description>
+        <metadata>
+            <![CDATA[
+				{
+					"xy": [
+						301.09375,
+						253.5
+					]
+				}
+			]]>
+        </metadata>
+        <actions>
+            <notification>
+                <name>Notificacion</name>
+                <description>
+                    <![CDATA[]]>
+                </description>
+                <template>
+                    <![CDATA[Tiene una Solicitud de Consulta Pendiente]]>
+                </template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <recipients receptionType="to">
+                    <user />
+                </recipients>
+                <execution-type>onAssignment</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <user />
+        </assignments>
+        <labels>
+            <label language-id="es_ES">
+                Tarea
+            </label>
+        </labels>
+        <transitions>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Enviar Solicitud
+                    </label>
+                </labels>
+                <name>Enviar Solicitud</name>
+                <target>RolDestino</target>
+                <default>false</default>
+            </transition>
+            <transition>
+                <labels>
+                    <label language-id="es_ES">
+                        Finalizar Solicitud
+                    </label>
+                </labels>
+                <name>Finalizar Solicitud</name>
+                <target>c62d10c8-4438-411f-ad24-ad17dbc2eda8</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>

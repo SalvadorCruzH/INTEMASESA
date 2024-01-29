@@ -2,6 +2,8 @@
 [#assign configValue = getConfigurationValueUtil.getMapValue("es.emasesa.intranet.settings.configuration.FormsConfiguration","destinatariosSolicitudesConsultas")]
 [#assign TIPOLOGÍASet = [] /]
 <div class="em-destinatariosConsultas">
+	<div class="tipologia">
+		<label for="selectTipologia">Tipologia</label>
 <select id="selectTipologia" class="form-control">
 [#list configValue as item]
 [#if TIPOLOGÍASet?seq_contains(item["TIPOLOGÍA"]) == false ]
@@ -14,14 +16,18 @@
 [/#if]
 [/#list]
 </select>
-
-<select id="selectSubtipologia" style="display: none;" class="form-control">
+	</div>
+	<div  class="subtipologia" style="display: none;">
+		<label for="selectSubtipologia">Subtipologia</label>
+<select id="selectSubtipologia"  class="form-control">
 [#list configValue as item]
 [#if item["SUBTIPOLOGÍA"]?has_content]
 <option value='${item["SUBTIPOLOGÍA"]}'>${item["SUBTIPOLOGÍA"]}</option>
 [/#if]
 [/#list]
 </select>
+	</div>
+
 </div>
 
 <script>

@@ -7,9 +7,9 @@ $(document).ready(function(){
 $('#selectTipologia').change(function(){
     var subtipologia = $(this).find('option:selected').data("subtipologia");
     if (subtipologia == true) {
-      $('#selectSubtipologia').show();
+      $('.subtipologia').show();
     } else {
-      $('#selectSubtipologia').hide();
+      $('.subtipologia').hide();
     }
 });
 
