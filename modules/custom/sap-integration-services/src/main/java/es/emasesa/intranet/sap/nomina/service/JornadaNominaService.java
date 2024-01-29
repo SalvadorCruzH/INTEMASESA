@@ -70,8 +70,8 @@ public class JornadaNominaService {
         try {
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(idEmpleado);
-            zpeStActJornadaNomina.setHeInicio(getXMLGregorianCalendar(fechaInicio));
-            zpeStActJornadaNomina.setHeFin(getXMLGregorianCalendar(fechaFin));
+            //zpeStActJornadaNomina.setHeInicio(getXMLGregorianCalendar(fechaInicio));
+            //zpeStActJornadaNomina.setHeFin(getXMLGregorianCalendar(fechaFin));
             zpeStActJornadaNomina.setHeTipoRetribucion(tipoRetribucion);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             zpeStActJornadaNomina.setFechaInicio(fechaInicio.format(dtf));
@@ -84,6 +84,26 @@ public class JornadaNominaService {
             LOG.debug(e.getMessage(),e);
         }
 
+        return null;
+    }
+
+    public String addHorasExtra(String pernr, String fechaInicio, String horaInicio, String horaFin, String retibucion) {
+        try {
+            ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
+            zpeStActJornadaNomina.setPernr(pernr);
+
+            zpeStActJornadaNomina.setHeInicio(horaInicio + ":00");
+            zpeStActJornadaNomina.setHeFin(horaFin + ":00");
+            if(retibucion.isEmpty()){
+                zpeStActJornadaNomina.setHeTipoRetribucion(retibucion);
+            }
+            zpeStActJornadaNomina.setFechaInicio(fechaInicio);
+
+            Bapireturn1 result1 = port.zPeActJornadaNomina(zpeStActJornadaNomina);
+            return result1.toString();
+        } catch (Exception e) {
+            LOG.error("Se ha producido un error al intentar acceder a WS de jornadaNomina", e);
+        }
         return null;
     }
     

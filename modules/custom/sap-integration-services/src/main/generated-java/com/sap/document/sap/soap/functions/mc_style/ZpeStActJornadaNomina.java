@@ -65,10 +65,10 @@ public class ZpeStActJornadaNomina {
     protected BigDecimal irpfSolicitado;
     @XmlElement(name = "HeInicio", required = true)
     @XmlSchemaType(name = "time")
-    protected XMLGregorianCalendar heInicio;
+    protected String heInicio;
     @XmlElement(name = "HeFin", required = true)
     @XmlSchemaType(name = "time")
-    protected XMLGregorianCalendar heFin;
+    protected String heFin;
     @XmlElement(name = "HeTipoRetribucion", required = true)
     protected String heTipoRetribucion;
     @XmlElement(name = "PlusCcnomina", required = true)
@@ -185,10 +185,11 @@ public class ZpeStActJornadaNomina {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getHeInicio() {
+    public String getHeInicio() {
         return heInicio;
     }
 
+    //TODO: he cambiado HeInicio de XMLGregorianCalendar a String HH:mm:ss
     /**
      * Define el valor de la propiedad heInicio.
      * 
@@ -197,7 +198,7 @@ public class ZpeStActJornadaNomina {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setHeInicio(XMLGregorianCalendar value) {
+    public void setHeInicio(String value) {
         this.heInicio = value;
     }
 
@@ -209,10 +210,11 @@ public class ZpeStActJornadaNomina {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getHeFin() {
+    public String getHeFin() {
         return heFin;
     }
 
+    //TODO: he cambiado HeFin de XMLGregorianCalendar a String HH:mm:ss
     /**
      * Define el valor de la propiedad heFin.
      * 
@@ -221,7 +223,7 @@ public class ZpeStActJornadaNomina {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setHeFin(XMLGregorianCalendar value) {
+    public void setHeFin(String value) {
         this.heFin = value;
     }
 

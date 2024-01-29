@@ -9,6 +9,8 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +31,7 @@ import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.Normalizer;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -92,6 +95,48 @@ public class CustomWorkflowUtil {
         return users;
     }
     
+    public List<User> assignWorkflowUserFromMatriculaForm(Map<String, Serializable> workflowContext, long userId, String employeeType) {
+        List<User> users = new ArrayList<>();
+        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+        String matriculaSAPUser = StringPool.BLANK;
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        User user = null;
+        try {
+            if (customExpandoUtil == null || empleadoEstructuraService == null){
+                activate(null);
+            }
+
+            //TODO if gestorDeTiempo seleccionado
+            Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK))).getValues();
+            String matriculaSolicitado;
+            if(Validator.isNotNull(objectValues.get("seleccion")) && objectValues.get("seleccion").equals("gestorDeTiempo")) {
+                matriculaSolicitado = (String) objectValues.get("matriculaSolicitado");
+            }else {
+                matriculaSolicitado = (String) objectValues.get("matricula");
+            }
+            //User userDeMatricula = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaSolicitante);
+            JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matriculaSolicitado);
+            matriculaSAPUser = json.getString(employeeType);
+            LOG.debug("Tipo de empleado: "+employeeType);
+            LOG.debug("Nombre del empleado: "+matriculaSAPUser);
+            user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaSAPUser);
+            if(Validator.isNotNull(user)) {
+                LOG.debug("Se ha encontrado en Liferay un usuario con la matricula: " + matriculaSAPUser);
+                users.add(user);
+            }else {
+                LOG.debug("No existe en Liferay un usuario con la matricula: " + matriculaSAPUser);
+            }
+        } catch (SapException e) {
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+matriculaSAPUser, e);
+        } catch (PortalException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        }
+        return users;
+        
+    }
+
     /**
      * Devuelve usuarios de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
      * @param workflowContext
@@ -404,6 +449,84 @@ public class CustomWorkflowUtil {
         return datosServicio;
     }
 
+    public String addHorasExtra(Map<String, Serializable> workflowContext) {
+        String datosServicio = StringPool.BLANK;
+        String pernr = StringPool.BLANK;
+        String codigoMotivo = StringPool.BLANK;
+        LOG.debug("Se procede a añadir horas Extras...");
+
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            if (_objectEntryLocalService == null || jornadaNominaService == null){
+                activate(null);
+            }
+            long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+            LOG.debug("classPK: " + classPK);
+            Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
+            if (objectValues.get("seleccion").equals("gestorDeTiempo")) {
+                pernr = (String) objectValues.get("matriculaSolicitado");
+                LOG.debug("numeroDeMatriculaAjeno: " + pernr);
+            } else {
+                pernr = (String) objectValues.get("matricula");
+                LOG.debug("numeroDeMatricula: " + pernr);
+            }
+            String fechaInicio = (String) objectValues.get("fechaInicio");
+            String horasExtras = (String) objectValues.get("horasPorDiaExtra");
+            LOG.debug("horasExtras: " + horasExtras);
+            JSONObject json =  JSONFactoryUtil.createJSONObject(horasExtras);
+            LOG.debug("json: " + json);
+            JSONArray dias = json.names();
+            LOG.debug("dias: " + dias);
+            for (int i = 0; i < dias.length(); i++) {
+                String dia = dias.getString(i);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate fecha = LocalDate.parse(fechaInicio, dtf);
+
+                DayOfWeek diaDeLaSemana = fecha.getDayOfWeek();
+
+                int diferencia = getDayOfWeek(dia) - diaDeLaSemana.getValue();
+                LocalDate fechaSeleccionada = fecha.plusDays(diferencia);
+
+                String horaInicio = json.getJSONObject(dia).getString("horaInicio");
+                String horaFin = json.getJSONObject(dia).getString("horaFin");
+                String retribucion = json.getJSONObject(dia).getString("retribucion");
+                ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+                Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+                datosServicio = jornadaNominaService.addHorasExtra(pernr, fechaSeleccionada.format(dtf), horaInicio, horaFin, retribucion);
+
+                return datosServicio;
+            }
+
+        } catch (PortalException e) {
+            LOG.error("Se ha producido un error al añadir las horas extras para "+ pernr, e);
+        //} catch (JsonProcessingException e) {
+          //  throw new RuntimeException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+        }
+        return "";
+    }
+
+    public int getDayOfWeek(String dia) {
+    	switch (dia) {
+            case "lunes":
+                return DayOfWeek.MONDAY.getValue();
+            case "martes":
+                return DayOfWeek.TUESDAY.getValue();
+            case "miercoles":
+                return DayOfWeek.WEDNESDAY.getValue();
+            case "jueves":
+                return DayOfWeek.THURSDAY.getValue();
+            case "viernes":
+                return DayOfWeek.FRIDAY.getValue();
+            case "sabado":
+                return DayOfWeek.SATURDAY.getValue();
+            case "domingo":
+                return DayOfWeek.SUNDAY.getValue();
+            default:
+                return DayOfWeek.MONDAY.getValue();
+        }
+        }
     public static String quitarTildes(String input){
         String cadenaNormalizada = Normalizer.normalize(input, Normalizer.Form.NFD);
         return cadenaNormalizada.replaceAll("[^\\p{ASCII}]", "");
