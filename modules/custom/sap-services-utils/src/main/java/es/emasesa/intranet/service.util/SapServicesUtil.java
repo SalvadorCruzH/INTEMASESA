@@ -64,6 +64,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.logging.log4j.ThreadContext;
 import org.osgi.service.component.annotations.*;
 
 @Component(
@@ -75,6 +76,7 @@ public class SapServicesUtil {
     public JSONArray getResumenAnual(long userId, String anno) {
 
         User user = _userLocalService.fetchUser(userId);
+        ThreadContext.push(user.getScreenName());
         JSONArray resumenAnual = JSONFactoryUtil.createJSONArray();
         if (Validator.isNotNull(user)) {
             resumenAnual = getResumenAnual(user.getScreenName(), anno);
@@ -92,7 +94,7 @@ public class SapServicesUtil {
         JSONArray resumenAnual = JSONFactoryUtil.createJSONArray();
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if(_resumenAnualService == null){
+            if (_resumenAnualService == null) {
                 activate(null);
             }
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
@@ -113,14 +115,16 @@ public class SapServicesUtil {
 
         return getRetenciones(user.getScreenName(), anno);
     }
+
     public JSONObject getRetenciones(String pernr, String anno) {
 
+        ThreadContext.push(pernr);
         JSONObject retenciones = JSONFactoryUtil.createJSONObject();
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            if(_certificadoRetencionesService == null){
+            if (_certificadoRetencionesService == null) {
                 activate(null);
             }
             retenciones = _certificadoRetencionesService.getCertificadoRetenciones(pernr, anno);
@@ -138,6 +142,7 @@ public class SapServicesUtil {
 
         try {
             User user = _userLocalService.getUser(userId);
+            ThreadContext.push(user.getScreenName());
             marcajeHistoricoActual = getHistoricoActual(user.getScreenName(), fechaInicio, fechaFin);
         } catch (PortalException e) {
             LOG.error(e.getMessage());
@@ -150,7 +155,7 @@ public class SapServicesUtil {
 
     public JSONArray getHistoricoActual(User user, String fechaInicio, String fechaFin) {
         JSONArray marcajeHistoricoActual = JSONFactoryUtil.createJSONArray();
-
+        ThreadContext.push(user.getScreenName());
         marcajeHistoricoActual = getHistoricoActual(user.getScreenName(), fechaInicio, fechaFin);
         return marcajeHistoricoActual;
 
@@ -158,9 +163,9 @@ public class SapServicesUtil {
 
     public JSONArray getHistoricoActual(String pernr, String fechaInicio, String fechaFin) {
         JSONArray marcajeHistoricoActual = JSONFactoryUtil.createJSONArray();
-
+        ThreadContext.push(pernr);
         try {
-            if(_marcajeService == null){
+            if (_marcajeService == null) {
                 activate(null);
             }
             marcajeHistoricoActual = _marcajeService.obtenerMarcajeHistoricoActual(pernr, fechaInicio, fechaFin);
@@ -174,19 +179,19 @@ public class SapServicesUtil {
 
     public JSONObject getDatosEmpleado(String pernr) {
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
-
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getDatosEmpleado " + pernr);
         }
         try {
-            if(_empleadoDatosPersonalesService == null){
+            if (_empleadoDatosPersonalesService == null) {
                 activate(null);
             }
             datosEmpleado = _empleadoDatosPersonalesService.getEmpleadoDatosPersonales(pernr);
         } catch (SapCommunicationException | EmpleadoDatosPersonalesException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getDatosEmpleado " + pernr);
             }
         }
@@ -196,7 +201,8 @@ public class SapServicesUtil {
 
     public JSONObject getDatosEmpleadoDomicilio(String pernr) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getDatosEmpleadoDomicilio " + pernr);
         }
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
@@ -206,7 +212,7 @@ public class SapServicesUtil {
         } catch (SapCommunicationException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getDatosEmpleadoDomicilio " + pernr);
             }
         }
@@ -216,13 +222,14 @@ public class SapServicesUtil {
 
     public JSONObject getDatosEmpleadoAndDomicilio(String pernr) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getDatosEmpleadoAndDomicilio " + pernr);
         }
         JSONObject datosEmpleado = JSONFactoryUtil.createJSONObject();
 
         try {
-            if(_empleadoDatosPersonalesService == null){
+            if (_empleadoDatosPersonalesService == null) {
                 activate(null);
             }
 
@@ -231,7 +238,7 @@ public class SapServicesUtil {
         } catch (SapCommunicationException | EmpleadoDatosPersonalesException | EmpleadoDatosDomicilioException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getDatosEmpleadoAndDomicilio " + pernr);
             }
         }
@@ -241,24 +248,24 @@ public class SapServicesUtil {
 
     public JSONArray getDistanciaCentros(String origen, String destino) {
 
-        if(LOG.isDebugEnabled()){
-            LOG.debug("[B] getDistanciaCentros " + origen + " - "+ destino);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getDistanciaCentros " + origen + " - " + destino);
         }
         JSONArray distanciaCentros = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(_distanciaCentrosService == null){
+            if (_distanciaCentrosService == null) {
                 activate(null);
             }
 
             distanciaCentros = _distanciaCentrosService.getDistanciaEntreCentros(origen, destino);
-            if(!origen.equals("") && !destino.equals("")){
+            if (!origen.equals("") && !destino.equals("")) {
 
             }
         } catch (SapCommunicationException | DistanciaCentrosException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getDistanciaCentros " + origen);
             }
         }
@@ -268,13 +275,14 @@ public class SapServicesUtil {
 
     public JSONArray getMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getMarcajeHistoricoActual " + pernr);
         }
         JSONArray datosMarcajeHistorico = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(_marcajeService == null){
+            if (_marcajeService == null) {
                 activate(null);
             }
             datosMarcajeHistorico = _marcajeService.obtenerMarcajeHistoricoActual(pernr, fechaInicio, fechaFin);
@@ -283,27 +291,28 @@ public class SapServicesUtil {
         } catch (MarcajeException e) {
             throw new RuntimeException(e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getMarcajeHistoricoActual " + pernr);
             }
         }
         return datosMarcajeHistorico;
     }
 
-    public JSONArray getJornadaDiaria(User user,String fechaInicio,String fechaFin){
-
-        return getJornadaDiaria(user.getScreenName(),fechaInicio,fechaFin);
+    public JSONArray getJornadaDiaria(User user, String fechaInicio, String fechaFin) {
+        ThreadContext.push(user.getScreenName());
+        return getJornadaDiaria(user.getScreenName(), fechaInicio, fechaFin);
     }
 
     public JSONArray getJornadaDiaria(String pernr, String fechaInicio, String fechaFin) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getJornadaDiaria " + pernr);
         }
         JSONArray datosJornadaDiaria = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(_jornadaDiariaService == null){
+            if (_jornadaDiariaService == null) {
                 activate(null);
             }
             datosJornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria(pernr, fechaInicio, fechaFin);
@@ -312,36 +321,38 @@ public class SapServicesUtil {
         } catch (JornadaDiariaException e) {
             throw new RuntimeException(e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getJornadaDiaria " + pernr);
             }
         }
         return datosJornadaDiaria;
     }
 
-    public JSONArray getSubordinados(User user,String directorioOTodos) {
+    public JSONArray getSubordinados(User user, String directorioOTodos) {
 
-        return getSubordinados(user.getScreenName(),directorioOTodos);
+        ThreadContext.push(user.getScreenName());
+        return getSubordinados(user.getScreenName(), directorioOTodos);
     }
 
-    public JSONArray getSubordinados(String pernr,String directorioOTodos) {
+    public JSONArray getSubordinados(String pernr, String directorioOTodos) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getSubordinados " + pernr);
         }
         JSONArray datosSubordinados = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(_subordinadosService == null){
+            if (_subordinadosService == null) {
                 activate(null);
             }
-            datosSubordinados = _subordinadosService.getSubordinados(directorioOTodos,pernr);
+            datosSubordinados = _subordinadosService.getSubordinados(directorioOTodos, pernr);
         } catch (SapCommunicationException e) {
             LOG.error(e.getMessage(), e);
         } catch (SubordinadosException e) {
             throw new RuntimeException(e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getSubordinados " + pernr);
             }
         }
@@ -350,13 +361,14 @@ public class SapServicesUtil {
 
     public JSONArray getEmpleadoPrestamos(String pernr, String fechaInicio) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(pernr);
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getempleadoPrestamos " + pernr);
         }
         JSONArray datosEmpleadoPrestamos = JSONFactoryUtil.createJSONArray();
 
         try {
-            if(_empleadoPrestamsoService == null){
+            if (_empleadoPrestamsoService == null) {
                 activate(null);
             }
             datosEmpleadoPrestamos = _empleadoPrestamsoService.obtenerPrestamoEmpleados(pernr, fechaInicio);
@@ -365,7 +377,7 @@ public class SapServicesUtil {
         } catch (EmpleadoPrestamosException e) {
             throw new RuntimeException(e);
         } finally {
-            if(LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getempleadoPrestamos " + pernr);
             }
         }
@@ -380,27 +392,28 @@ public class SapServicesUtil {
      */
     public JSONArray getEmpleadoPrestamos(User user) {
 
-        if(LOG.isDebugEnabled()){
+        ThreadContext.push(user.getScreenName());
+        if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getempleadoPrestamos " + user.getUserId());
         }
         JSONArray datosEmpleadoPrestamos = JSONFactoryUtil.createJSONArray();
         String pernr = StringPool.BLANK;
         try {
-        	if(_empleadoPrestamsoService == null || _customExpandoUtil == null){
+            if (_empleadoPrestamsoService == null || _customExpandoUtil == null) {
                 activate(null);
             }
-        	 if(Validator.isNotNull(user)) {
- 	        	LOG.debug("Obteniendo los datos del usuario...");
-				pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
-				LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
-	            datosEmpleadoPrestamos = _empleadoPrestamsoService.obtenerPrestamoEmpleados(pernr, StringPool.BLANK);
-        	 }
+            if (Validator.isNotNull(user)) {
+                LOG.debug("Obteniendo los datos del usuario...");
+                pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+                LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+                datosEmpleadoPrestamos = _empleadoPrestamsoService.obtenerPrestamoEmpleados(pernr, StringPool.BLANK);
+            }
         } catch (SapCommunicationException e) {
             LOG.error(e.getMessage(), e);
         } catch (EmpleadoPrestamosException e) {
             throw new RuntimeException(e);
-		} finally {
-            if(LOG.isDebugEnabled()){
+        } finally {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getempleadoPrestamos " + user.getUserId());
             }
         }
@@ -413,96 +426,99 @@ public class SapServicesUtil {
      * @param user
      * @return JSONObject
      */
-	 public JSONObject getEmpleadoRelacionLaboral(User user) {
+    public JSONObject getEmpleadoRelacionLaboral(User user) {
 
-		if(LOG.isDebugEnabled()){
-		     LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
-		}
-		JSONObject datosEmpleadoRelacionLaboral = JSONFactoryUtil.createJSONObject();
-		String pernr = StringPool.BLANK;
-		try {
-			 if(_relacionLaboralService == null || _customExpandoUtil == null){
-	                activate(null);
-	            }
-			 if(Validator.isNotNull(user)) {
-	        	LOG.debug("Obteniendo los datos del usuario...");
-				pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
-				LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
-				datosEmpleadoRelacionLaboral = _relacionLaboralService.getRelacionLaboralEmpleado(pernr);
-			    LOG.debug("Obtenida la relacion laboral del empleado" + datosEmpleadoRelacionLaboral.toJSONString());
-			 }
-		} catch (SapCommunicationException e) {
-		    LOG.error(e.getMessage(), e);
-		} catch (RelacionLaboralException e) {
-		     throw new RuntimeException(e);
-		} finally {
-		   if(LOG.isDebugEnabled()){
-		        LOG.debug("[E] getempleadoPrestamos " + pernr);
-		   }
-		}
-		 return datosEmpleadoRelacionLaboral;
-	 }
+        ThreadContext.push(user.getScreenName());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getRelacionLaboralService " + user.getUserId());
+        }
+        JSONObject datosEmpleadoRelacionLaboral = JSONFactoryUtil.createJSONObject();
+        String pernr = StringPool.BLANK;
+        try {
+            if (_relacionLaboralService == null || _customExpandoUtil == null) {
+                activate(null);
+            }
+            if (Validator.isNotNull(user)) {
+                LOG.debug("Obteniendo los datos del usuario...");
+                pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+                LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+                datosEmpleadoRelacionLaboral = _relacionLaboralService.getRelacionLaboralEmpleado(pernr);
+                LOG.debug("Obtenida la relacion laboral del empleado" + datosEmpleadoRelacionLaboral.toJSONString());
+            }
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (RelacionLaboralException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getempleadoPrestamos " + pernr);
+            }
+        }
+        return datosEmpleadoRelacionLaboral;
+    }
 
-	   /**
-	     * Llamada al servicio de empleado-banco para obtener datos de banco de un usuario.
-	     *
-	     * @param user
-	     * @return JSONArray
-	     */
-	    public JSONArray getEmpleadoBanco(User user) {
+    /**
+     * Llamada al servicio de empleado-banco para obtener datos de banco de un usuario.
+     *
+     * @param user
+     * @return JSONArray
+     */
+    public JSONArray getEmpleadoBanco(User user) {
 
-	        if(LOG.isDebugEnabled()){
-	            LOG.debug("[B] getEmpleadoBanco " + user.getUserId());
-	        }
-	        JSONArray datosEmpleadoBanco = JSONFactoryUtil.createJSONArray();
-	        String pernr = StringPool.BLANK;
-	        try {
-	        	if(_empleadoBancoService == null || _customExpandoUtil == null){
-	                activate(null);
-	            }
-	        	if(Validator.isNotNull(user)) {
-	        		LOG.debug("Obteniendo los datos del usuario...");
-					pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
-					LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
-		            datosEmpleadoBanco = _empleadoBancoService.getEmpleadoBanco(pernr);
-	        	}
-	        } catch (SapCommunicationException e) {
-	            LOG.error(e.getMessage(), e);
-	        } catch (EmpleadoBancoException e) {
-	            throw new RuntimeException(e);
-			} finally {
-	            if(LOG.isDebugEnabled()){
-	                LOG.debug("[E] getEmpleadoBanco " + user.getUserId());
-	            }
-	        }
-	        return datosEmpleadoBanco;
-	    }
+        ThreadContext.push(user.getScreenName());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[B] getEmpleadoBanco " + user.getUserId());
+        }
+        JSONArray datosEmpleadoBanco = JSONFactoryUtil.createJSONArray();
+        String pernr = StringPool.BLANK;
+        try {
+            if (_empleadoBancoService == null || _customExpandoUtil == null) {
+                activate(null);
+            }
+            if (Validator.isNotNull(user)) {
+                LOG.debug("Obteniendo los datos del usuario...");
+                pernr = _customExpandoUtil.getDataValueByUser(user.getUserId(), user.getCompanyId(), "matricula");
+                LOG.debug("Obtenida matrícula del usuario que hace la petición" + pernr);
+                datosEmpleadoBanco = _empleadoBancoService.getEmpleadoBanco(pernr);
+            }
+        } catch (SapCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+        } catch (EmpleadoBancoException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[E] getEmpleadoBanco " + user.getUserId());
+            }
+        }
+        return datosEmpleadoBanco;
+    }
 
-     public JSONArray getImporteAnticipo(JSONArray datosEmpleados){
-         JSONArray datosCalculadosArray = JSONFactoryUtil.createJSONArray();
-         LOG.debug("[E] getImporteAnticipo " + datosEmpleados.toString());
-         JSONObject primerObjeto = datosEmpleados.getJSONObject(0);
+    public JSONArray getImporteAnticipo(JSONArray datosEmpleados) {
+        JSONArray datosCalculadosArray = JSONFactoryUtil.createJSONArray();
+        LOG.debug("[E] getImporteAnticipo " + datosEmpleados.toString());
+        JSONObject primerObjeto = datosEmpleados.getJSONObject(0);
 
-         double salarioBase = primerObjeto.getDouble("salarioBase");
-         double antiguedad = primerObjeto.getDouble("antiguedad");
+        double salarioBase = primerObjeto.getDouble("salarioBase");
+        double antiguedad = primerObjeto.getDouble("antiguedad");
 
-         double importeAnticipo = (salarioBase + antiguedad) * 30;
-         double reintegroMensual = importeAnticipo / 12;
+        double importeAnticipo = (salarioBase + antiguedad) * 30;
+        double reintegroMensual = importeAnticipo / 12;
 
-         double redondeoImporteAnticipo = Math.round(importeAnticipo * 100.0) / 100.0;
-         double redondeoReintegroMensual = Math.round(reintegroMensual * 100.0) / 100.0;
+        double redondeoImporteAnticipo = Math.round(importeAnticipo * 100.0) / 100.0;
+        double redondeoReintegroMensual = Math.round(reintegroMensual * 100.0) / 100.0;
 
-         JSONObject datosCalculados = JSONFactoryUtil.createJSONObject();
-         datosCalculados.put("importeAnticipo", redondeoImporteAnticipo);
-         datosCalculados.put("reintegroMensual", redondeoReintegroMensual);
-         LOG.debug("[E] este metodo devuelve " + datosCalculadosArray.toString());
-         datosCalculadosArray.put(datosCalculados);
+        JSONObject datosCalculados = JSONFactoryUtil.createJSONObject();
+        datosCalculados.put("importeAnticipo", redondeoImporteAnticipo);
+        datosCalculados.put("reintegroMensual", redondeoReintegroMensual);
+        LOG.debug("[E] este metodo devuelve " + datosCalculadosArray.toString());
+        datosCalculadosArray.put(datosCalculados);
 
-         return datosCalculadosArray;
-     }
+        return datosCalculadosArray;
+    }
 
     public JSONObject getAyudaEscolar(User user) throws PortalException {
 
+        ThreadContext.push(user.getScreenName());
         if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getAyudaEscolar " + user.getUserId());
         }
@@ -536,16 +552,17 @@ public class SapServicesUtil {
         long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
         LOG.debug("Obtenido classPK la petición" + classPK);
 
-         Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
-         String pernr = (String) objectValues.get("numeroDeMatricula");
-         String centro = (String) objectValues.get("centroDeEstudios");
-         String estudioId = (String) objectValues.get("estudios");
-         String estudioNivel = (String) objectValues.get("numero");
-         String famNumerosa = (String) objectValues.get("familiaNumerosa");
-         String famMonoparental = (String) objectValues.get("familiaMonoparental");
-         String numero = (String) objectValues.get("numero");
-         String tipoId = (String) objectValues.get("beneficiariosDeLaAyuda");
-         String comentarios = (String) objectValues.get("comentarios");
+        Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
+        String pernr = (String) objectValues.get("numeroDeMatricula");
+        ThreadContext.push(pernr);
+        String centro = (String) objectValues.get("centroDeEstudios");
+        String estudioId = (String) objectValues.get("estudios");
+        String estudioNivel = (String) objectValues.get("numero");
+        String famNumerosa = (String) objectValues.get("familiaNumerosa");
+        String famMonoparental = (String) objectValues.get("familiaMonoparental");
+        String numero = (String) objectValues.get("numero");
+        String tipoId = (String) objectValues.get("beneficiariosDeLaAyuda");
+        String comentarios = (String) objectValues.get("comentarios");
 
         try {
             if (_ayudaEscolarService == null) {
@@ -586,10 +603,12 @@ public class SapServicesUtil {
     }
 
     public JSONObject getCalendarioEventos(String pernr, String fechaDesde, String fechaHasta) throws CalendarioEventosException, SapCommunicationException {
+
+        ThreadContext.push(pernr);
         if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getCalendarioEventos ");
         }
-            JSONObject calendarioEventos = JSONFactoryUtil.createJSONObject();
+        JSONObject calendarioEventos = JSONFactoryUtil.createJSONObject();
         try {
             if (_calendarioEventosService == null) {
                 activate(null);
@@ -617,6 +636,7 @@ public class SapServicesUtil {
 
             Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
             String pernr = (String) objectValues.get("numeroDeMatricula");
+            ThreadContext.push(pernr);
             String eventoId = (String) objectValues.get("idDelEvento");
             String accion = (String) objectValues.get("accionAlEvento");
             String fecha = "";
@@ -636,7 +656,7 @@ public class SapServicesUtil {
         }
     }
 
-    public void setDatosPersonales(Map<String, Object> workflowContext){
+    public void setDatosPersonales(Map<String, Object> workflowContext) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("[A] setDatosPersonales ");
         }
@@ -651,11 +671,12 @@ public class SapServicesUtil {
             Map<String, Serializable> objectValues = _objectEntryLocalService.getObjectEntry(classPK).getValues();
 
             String pernr = (String) objectValues.get("matricula");
+            ThreadContext.push(pernr);
             String nombre = (String) objectValues.get("nombre");
             String apellido1 = (String) objectValues.get("apellido1");
             String apellido2 = (String) objectValues.get("apellido2");
             String calle = (String) objectValues.get("calle");
-            Date fechaInicioDate =  _objectEntryLocalService.getObjectEntry(classPK).getCreateDate();
+            Date fechaInicioDate = _objectEntryLocalService.getObjectEntry(classPK).getCreateDate();
             String fechaInicio = formatter.format(fechaInicioDate);
             String email = (String) objectValues.get("email");
             String claseId = StringPool.BLANK;
@@ -717,7 +738,9 @@ public class SapServicesUtil {
         }
     }
 
-    public JSONObject getEmpleadoEstructura(String pernr){
+    public JSONObject getEmpleadoEstructura(String pernr) {
+
+        ThreadContext.push(pernr);
         if (LOG.isDebugEnabled()) {
             LOG.debug("[B] getEmpleadoEstructura ");
         }
@@ -726,7 +749,7 @@ public class SapServicesUtil {
             if (_empleadoEstructuraService == null) {
                 activate(null);
             }
-            LOG.debug("Llamada a getEmpleadoEstructura con pernr: " + pernr );
+            LOG.debug("Llamada a getEmpleadoEstructura con pernr: " + pernr);
             empleadoEstructura = _empleadoEstructuraService.getEmpleadoEstructura(pernr);
         } catch (EmpleadoEstructuraException | SapCommunicationException e) {
             throw new RuntimeException(e);
@@ -739,6 +762,8 @@ public class SapServicesUtil {
     }
 
     public String getResponsableFromEstructuraEmpleado(String pernr, String responsable) {
+
+        ThreadContext.push(pernr);
         String responsableEstructura = StringPool.BLANK;
         if (LOG.isDebugEnabled()) {
             LOG.debug("[E] getResponsableFromEstructuraEmpleado");
@@ -748,7 +773,7 @@ public class SapServicesUtil {
             activate(null);
         }
         empleadoEstructura = getEmpleadoEstructura(pernr);
-        if(Validator.isNotNull(empleadoEstructura)){
+        if (Validator.isNotNull(empleadoEstructura)) {
             responsableEstructura = empleadoEstructura.getString(responsable);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("[E] getResponsableFromEstructuraEmpleado " + responsableEstructura);
@@ -823,10 +848,11 @@ public class SapServicesUtil {
             } */
         } catch (InterruptedException e) {
             LOG.error("Se ha producido un error levantando el CustomTracker de Spring");
-            LoggerUtil.info(LOG,"Error arrancando servicios", e);
+            LoggerUtil.info(LOG, "Error arrancando servicios", e);
        /*} catch (SapException e) {
             LOG.info("Se ha producido un error validando los servicios en el arranque", e);
-        */} catch (NullPointerException e) {
+        */
+        } catch (NullPointerException e) {
             LOG.info("Se ha producido un error accediendo a los servicios");
         }
     }

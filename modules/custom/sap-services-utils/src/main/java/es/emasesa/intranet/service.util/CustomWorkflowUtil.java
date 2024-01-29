@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.logging.log4j.ThreadContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -51,9 +52,10 @@ import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraServic
 public class CustomWorkflowUtil {
     /**
      * Retrive employee ID from the soapService
+     *
      * @param workflowContext
-     * @employeeType employeeType
      * @return users
+     * @employeeType employeeType
      */
     public List<User> assignWorkflowUser(Map<String, Serializable> workflowContext, long userId, String employeeType) {
         List<User> users = new ArrayList<>();
@@ -62,53 +64,56 @@ public class CustomWorkflowUtil {
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         User user = null;
         try {
-            if (customExpandoUtil == null || empleadoEstructuraService == null){
+            if (customExpandoUtil == null || empleadoEstructuraService == null) {
                 activate(null);
             }
             long userIdSolicitante = _objectEntryLocalService.getObjectEntry(GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK))).getUserId();
-            String matriculaActualUser  = customExpandoUtil.getDataValueByUser(userIdSolicitante, companyId, "matricula");
+            String matriculaActualUser = customExpandoUtil.getDataValueByUser(userIdSolicitante, companyId, "matricula");
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matriculaActualUser);
             Thread.currentThread().setContextClassLoader(actualClassLoader);
             matriculaSAPUser = json.getString(employeeType);
-            LOG.debug("Tipo de empleado: "+employeeType);
-            LOG.debug("Nombre del empleado: "+matriculaSAPUser);
+            LOG.debug("Tipo de empleado: " + employeeType);
+            LOG.debug("Nombre del empleado: " + matriculaSAPUser);
             user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaSAPUser);
-            if(Validator.isNotNull(user)) {
+            if (Validator.isNotNull(user)) {
                 LOG.debug("Se ha encontrado en Liferay un usuario con la matricula: " + matriculaSAPUser);
                 users.add(user);
-            }else {
+            } else {
                 LOG.debug("No existe en Liferay un usuario con la matricula: " + matriculaSAPUser);
             }
         } catch (SapException e) {
-            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+matriculaSAPUser, e);
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario " + matriculaSAPUser, e);
         } catch (PortalException e) {
             throw new RuntimeException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
 
         return users;
     }
-    
+
     /**
      * Devuelve usuarios de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
+     *
      * @param workflowContext
      * @param userType
      * @return List<User>
      */
-    public List<User> assignWorkflowHorizontalUser(Map<String, Serializable> workflowContext, String userType){
-    	
-    	 LOG.debug("Asignar usuario horizontal: " + userType);
-    	 List<User> users = new ArrayList<>();
-    	 User user = getUserSap(workflowContext, userType);
-    	 users.add(user);
-    	 return users;
+    public List<User> assignWorkflowHorizontalUser(Map<String, Serializable> workflowContext, String userType) {
+
+        LOG.debug("Asignar usuario horizontal: " + userType);
+        List<User> users = new ArrayList<>();
+        User user = getUserSap(workflowContext, userType);
+        users.add(user);
+        return users;
     }
 
     /**
      * Devuelve usuario de SAP consejeroId, direccionRrhhRespId, divisionRrhhRespId o subdireccionRrhhRespId
+     *
      * @param workflowContext
      * @param userType
      * @return user
@@ -120,71 +125,76 @@ public class CustomWorkflowUtil {
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-        	LOG.debug("Buscando usuario del SAP: " + userType);
+            LOG.debug("Buscando usuario del SAP: " + userType);
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            if (ciertosDatosEstructuraService == null){
+            if (ciertosDatosEstructuraService == null) {
                 activate(null);
             }
             JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
             Thread.currentThread().setContextClassLoader(actualClassLoader);
 
             matriculaUser = json.getString(userType);
+            ThreadContext.push(matriculaUser);
             LOG.debug("La matricula del usuario es: " + matriculaUser);
             user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
 
         } catch (SapException e) {
-            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+matriculaUser, e);
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario " + matriculaUser, e);
 
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
         return user;
     }
-    
+
     /**
      * Devuelve el usuario de SAP. Busca al subdireccionRrhhRespId y si no existe se trae el direccionRrhhRespId
+     *
      * @param workflowContext
      * @return List<User>
      */
-    public List<User> assignWorkflowSubdirectorOrDirector(Map<String, Serializable> workflowContext){
-    	
-    	 LOG.debug("Asignar usuario horizontal de SAP subdireccionRrhhRespId o direccionRrhhRespId en el caso de que el otro no exista.");
-    	 List<User> users = new ArrayList<>();
-    	 String matriculaUser = StringPool.BLANK;
+    public List<User> assignWorkflowSubdirectorOrDirector(Map<String, Serializable> workflowContext) {
 
-         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
-         long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-    	 
-         try {
-         	LOG.debug("Buscando usuario del SAP...");
-             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
-             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-             if (ciertosDatosEstructuraService == null){
-                 activate(null);
-             }
-             JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
-             Thread.currentThread().setContextClassLoader(actualClassLoader);
+        LOG.debug("Asignar usuario horizontal de SAP subdireccionRrhhRespId o direccionRrhhRespId en el caso de que el otro no exista.");
+        List<User> users = new ArrayList<>();
+        String matriculaUser = StringPool.BLANK;
 
-             matriculaUser = json.getString("subdireccionRrhhRespId");
-             LOG.debug("La matricula del usuario es: " + matriculaUser);
-             
-             if(Validator.isNotNull(matriculaUser) && ("00000000".equals(matriculaUser))) {
-            	 LOG.debug("No existe en SAP el usuario subdireccionRrhhRespId: " + matriculaUser + " . Se busca el direccionRrhhRespId");
-            	 matriculaUser = json.getString("direccionRrhhRespId");
-            	 LOG.debug("La matricula del usuario direccionRrhhRespId es: " + matriculaUser+ " . Se procede a buscar el usuaruio en liferay con esa matrícula.");
-             }else {
-            	 LOG.debug("Existe el usuario subdireccionRrhhRespId: " + matriculaUser + " . Se procede a buscar el usuaruio en liferay con esa matrícula.");
-             }
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+
+        try {
+            LOG.debug("Buscando usuario del SAP...");
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+            if (ciertosDatosEstructuraService == null) {
+                activate(null);
+            }
+            JSONObject json = ciertosDatosEstructuraService.getCiertosDatosEstructura();
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+
+            matriculaUser = json.getString("subdireccionRrhhRespId");
+            ThreadContext.push(matriculaUser);
+            LOG.debug("La matricula del usuario es: " + matriculaUser);
+
+            if (Validator.isNotNull(matriculaUser) && ("00000000".equals(matriculaUser))) {
+                LOG.debug("No existe en SAP el usuario subdireccionRrhhRespId: " + matriculaUser + " . Se busca el direccionRrhhRespId");
+                matriculaUser = json.getString("direccionRrhhRespId");
+                LOG.debug("La matricula del usuario direccionRrhhRespId es: " + matriculaUser + " . Se procede a buscar el usuaruio en liferay con esa matrícula.");
+            } else {
+                LOG.debug("Existe el usuario subdireccionRrhhRespId: " + matriculaUser + " . Se procede a buscar el usuaruio en liferay con esa matrícula.");
+            }
             User user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaUser);
             users.add(user);
 
-         } catch (SapException e) {
-             LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario "+ matriculaUser, e);
-         } finally {
-             Thread.currentThread().setContextClassLoader(actualClassLoader);
-         }
-    	 return users;
+        } catch (SapException e) {
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario " + matriculaUser, e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
+        }
+        return users;
     }
 
 
@@ -193,22 +203,24 @@ public class CustomWorkflowUtil {
         String pernr = "";
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if (_objectEntryLocalService == null){
+            if (_objectEntryLocalService == null) {
                 activate(null);
             }
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             String fechaSolicitud = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("fechaSolicitud");
             double IRPF_Solicitado = (double) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("retencinDelIRPFSolicitada");
             pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("nmeroDeMatricula");
+            ThreadContext.push(pernr);
 
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             i = jornadaNominaService.guardarIRPF(pernr, fechaSolicitud, IRPF_Solicitado);
-            LOG.debug("Se ha guardado el cambio de IRPF: "+IRPF_Solicitado + " para el usuario " +pernr);
+            LOG.debug("Se ha guardado el cambio de IRPF: " + IRPF_Solicitado + " para el usuario " + pernr);
         } catch (PortalException e) {
-            LOG.error("Se ha producido un error al modificar IRPF para "+ pernr, e);
-        } finally{
+            LOG.error("Se ha producido un error al modificar IRPF para " + pernr, e);
+        } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
 
         return i;
@@ -225,14 +237,15 @@ public class CustomWorkflowUtil {
         String pernr = StringPool.BLANK;
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if (_objectEntryLocalService == null){
+            if (_objectEntryLocalService == null) {
                 activate(null);
             }
             LOG.debug("Se procede con el cambio de domiciliacion bancaria...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             String fechaSolicitud = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("createDate");
-            String iban = (String)_objectEntryLocalService.getObjectEntry(classPK).getValues().get("iBAN");
+            String iban = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("iBAN");
             pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
+            ThreadContext.push(pernr);
             LOG.debug("fechaSolicitud: " + fechaSolicitud);
             LOG.debug("iban: " + iban);
             LOG.debug("pernr: " + pernr);
@@ -240,19 +253,20 @@ public class CustomWorkflowUtil {
             ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             datosServicio = jornadaNominaService.cambioDomiciliacionBancaria(pernr, fechaSolicitud, iban);
-            LOG.debug("Se ha guardado el cambio de iban: "+iban + " para el usuario " +pernr);
+            LOG.debug("Se ha guardado el cambio de iban: " + iban + " para el usuario " + pernr);
             LOG.debug("Los datosServicio son: " + datosServicio);
 
         } catch (PortalException e) {
-            LOG.error("Se ha producido un error al modificar de cambio de domiciliacion bancaria para "+ pernr, e);
+            LOG.error("Se ha producido un error al modificar de cambio de domiciliacion bancaria para " + pernr, e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
 
         return datosServicio;
     }
 
-    public String addPlusSap(Map<String, Serializable> workflowContext){
+    public String addPlusSap(Map<String, Serializable> workflowContext) {
         String datosServicio = StringPool.BLANK;
         String pernr = StringPool.BLANK;
         String codigoParte = StringPool.BLANK;
@@ -260,12 +274,12 @@ public class CustomWorkflowUtil {
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if (_objectEntryLocalService == null){
+            if (_objectEntryLocalService == null) {
                 activate(null);
             }
             LOG.debug("Se procede a añdir plus...");
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-            switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")){
+            switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")) {
                 case "paraMi":
                     pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
                     break;
@@ -273,6 +287,7 @@ public class CustomWorkflowUtil {
                     pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("nmeroDeMatrculaAjena");
                     break;
             }
+            ThreadContext.push(pernr);
             LOG.debug("obtenida matricula: " + pernr);
             String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
             ObjectMapper listadoParse = new ObjectMapper();
@@ -288,20 +303,20 @@ public class CustomWorkflowUtil {
                     valueUnits = 1;
                     addFechas(fecha, pernr, codigoParte, valueUnits);
                     return datosServicio;
-                } else if(parteModificado.equals("Penoso")) {
+                } else if (parteModificado.equals("Penoso")) {
                     codigoParte = "1J03";
                     valueUnits = 1;
-                }else if(parteModificado.equals("Toxico")) {
+                } else if (parteModificado.equals("Toxico")) {
                     codigoParte = "1J05";
                     valueUnits = 1;
                     addFechas(fecha, pernr, codigoParte, valueUnits);
                     return datosServicio;
-                }else if(parteModificado.equals("Trabajo con Pantalla")) {
+                } else if (parteModificado.equals("Trabajo con Pantalla")) {
                     codigoParte = "1J16";
                     valueUnits = 1;
                     addFechas(fecha, pernr, codigoParte, valueUnits);
                     return datosServicio;
-                }else if(parteModificado.equals("Locomocion")) {
+                } else if (parteModificado.equals("Locomocion")) {
                     codigoParte = "1J13";
                     valueUnits = solicitud.get("valor").asInt();
                 }
@@ -313,17 +328,18 @@ public class CustomWorkflowUtil {
 
             }
         } catch (PortalException e) {
-            LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+            LOG.error("Se ha producido un error al añadir los pluses para " + pernr, e);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
 
         return datosServicio;
     }
 
-    public String addMarcaje(Map<String, Serializable> workflowContext){
+    public String addMarcaje(Map<String, Serializable> workflowContext) {
         String datosServicio = StringPool.BLANK;
         String pernr = StringPool.BLANK;
         String codigoMotivo = StringPool.BLANK;
@@ -332,24 +348,25 @@ public class CustomWorkflowUtil {
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            if (_objectEntryLocalService == null || jornadaNominaService == null){
+            if (_objectEntryLocalService == null || jornadaNominaService == null) {
                 activate(null);
             }
-           
+
             long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
             LOG.debug("classPK: " + classPK);
-            switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")){
+            switch ((String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("pedirParaOtraPersona")) {
                 case "cuentaPropia":
-                	LOG.debug("cuentaPropia");
+                    LOG.debug("cuentaPropia");
                     pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("numeroDeMatricula");
                     LOG.debug("numeroDeMatricula: " + pernr);
                     break;
                 case "cuentaAjena":
-                	LOG.debug("cuentaAjena");
+                    LOG.debug("cuentaAjena");
                     pernr = (String) _objectEntryLocalService.getObjectEntry(classPK).getValues().get("nmeroDeMatrculaAjena");
                     LOG.debug("nmeroDeMatrculaAjena: " + pernr);
                     break;
             }
+            ThreadContext.push(pernr);
             String listadoString = _objectEntryLocalService.getObjectEntry(classPK).getValues().get("listadoSolicitudes").toString();
             LOG.debug("listadoString: " + listadoString);
             ObjectMapper listadoParse = new ObjectMapper();
@@ -361,56 +378,58 @@ public class CustomWorkflowUtil {
                 String parteModificado = quitarTildes(parte);
 
                 if (parteModificado.equals("Marcaje")) {
-                	LOG.debug("Marcaje");
+                    LOG.debug("Marcaje");
                     String motivo = solicitud.get("detalles").asText().substring("Motivo: ".length());
                     if (motivo.equals("asuntoSindicalASIPE")) {
                         codigoMotivo = "";
-                    } else if(motivo.equals("asuntoSindicalCCOO")) {
+                    } else if (motivo.equals("asuntoSindicalCCOO")) {
                         codigoMotivo = "";
-                    } else if(motivo.equals("asuntoSindicalUGT")) {
+                    } else if (motivo.equals("asuntoSindicalUGT")) {
                         codigoMotivo = "";
-                    } else if(motivo.equals("olvidoDeterioroTarjeta")) {
+                    } else if (motivo.equals("olvidoDeterioroTarjeta")) {
                         codigoMotivo = "";
-                    } else if(motivo.equals("trabajoFueraDelCT")) {
+                    } else if (motivo.equals("trabajoFueraDelCT")) {
                         codigoMotivo = "";
-                    } else if(motivo.equals("trabajoNoPresencial")) {
+                    } else if (motivo.equals("trabajoNoPresencial")) {
                         codigoMotivo = "";
                     }
                     LOG.debug("motivo: " + motivo);
 
                     ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
                     Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-                    String [] horas = solicitud.get("valor").asText().split(StringPool.DASH);
+                    String[] horas = solicitud.get("valor").asText().split(StringPool.DASH);
                     for (String hora : horas) {
                         datosServicio = jornadaNominaService.addMarcaje(pernr, fecha, hora, codigoMotivo);
                         LOG.debug("Se ha añadido el marcaje: " + hora + " para el usuario " + pernr);
                         LOG.debug("Los datosServicio son: " + datosServicio);
                     }
 
-                } else if(parteModificado.equals("Presencia de Formacion")) {
+                } else if (parteModificado.equals("Presencia de Formacion")) {
                     String requiereDesplazamiento = solicitud.get("detalles").asText().substring("Requiere Desplazamiento: ".length());
 
 
                 }
             }
         } catch (PortalException e) {
-            LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+            LOG.error("Se ha producido un error al añadir los pluses para " + pernr, e);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
 
         return datosServicio;
     }
 
-    public static String quitarTildes(String input){
+    public static String quitarTildes(String input) {
         String cadenaNormalizada = Normalizer.normalize(input, Normalizer.Form.NFD);
         return cadenaNormalizada.replaceAll("[^\\p{ASCII}]", "");
     }
 
-    public void addFechas(String fechas, String pernr, String plusNomina, int plusUnidades){
+    public void addFechas(String fechas, String pernr, String plusNomina, int plusUnidades) {
 
+        ThreadContext.push(pernr);
         String rangofechas = fechas;
         String[] fechasArray = rangofechas.split(" - ");
         String fechaInicioStr = fechasArray[0];
@@ -421,7 +440,7 @@ public class CustomWorkflowUtil {
         LocalDate fechaFin = LocalDate.parse(fechaFinStr, formatter);
 
         ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
-        if (jornadaNominaService == null){
+        if (jornadaNominaService == null) {
             activate(null);
         }
         while (!fechaInicio.isAfter(fechaFin)) {
@@ -432,7 +451,7 @@ public class CustomWorkflowUtil {
                 LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
 
             } catch (Exception e) {
-                LOG.error("Se ha producido un error al añadir los pluses para "+ pernr, e);
+                LOG.error("Se ha producido un error al añadir los pluses para " + pernr, e);
             } finally {
                 Thread.currentThread().setContextClassLoader(actualClassLoader);
             }
@@ -441,13 +460,15 @@ public class CustomWorkflowUtil {
 
         LOG.debug("Se ha añadido el plus: " + plusNomina + " para el usuario " + pernr);
         Thread.currentThread().setContextClassLoader(actualClassLoader);
+        ThreadContext.clearAll();
     }
 
     /**
      * Retrive employee ID from the soapService
+     *
      * @param workflowContext
-     * @employeeType role
      * @return users
+     * @employeeType role
      */
     public List<Role> assignWorkflowRole(Map<String, Serializable> workflowContext, String roleName) {
         long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
@@ -461,17 +482,16 @@ public class CustomWorkflowUtil {
             LoggerUtil.error(LOG, e);
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
         }
-
-
         return roles;
     }
 
-    public List<ObjectEntry> getSubObjects(long groupId, long objectRelationshipId, long objectEntryId){
-        List<ObjectEntry>  objects = new ArrayList<>();
+    public List<ObjectEntry> getSubObjects(long groupId, long objectRelationshipId, long objectEntryId) {
+        List<ObjectEntry> objects = new ArrayList<>();
         try {
             objects = new ArrayList<>(ObjectEntryLocalServiceUtil.getOneToManyObjectEntries(groupId, objectRelationshipId, objectEntryId, Boolean.TRUE, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-            if (objects.size()> 1) objects.sort(Comparator.comparing(ObjectEntry::getCreateDate));
+            if (objects.size() > 1) objects.sort(Comparator.comparing(ObjectEntry::getCreateDate));
         } catch (PortalException e) {
             LoggerUtil.error(LOG, e);
         }
@@ -497,9 +517,10 @@ public class CustomWorkflowUtil {
             this._objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
             this._objectEntryLocalService = (ObjectEntryLocalService) ServiceLocator.getInstance().findService("com.liferay.object.service.ObjectEntryLocalService");
         } catch (InterruptedException e) {
-            LoggerUtil.info(LOG,"Error arrancando servicios", e);
+            LoggerUtil.info(LOG, "Error arrancando servicios", e);
         }
     }
+
     protected CustomExpandoUtil customExpandoUtil;
     protected UserLocalService _userLocalService;
     protected EmpleadoEstructuraService empleadoEstructuraService;
