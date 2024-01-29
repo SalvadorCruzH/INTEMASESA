@@ -61,9 +61,9 @@ public class EmasesaIntranetPostLogin extends Action {
         }
     }
 
-    private void updateUserSapIntegration(long companyId, String screenName){
+    private void updateUserSapIntegration(long companyId, String screenName) {
 
-        if(!Validator.isNumber(screenName) && !screenName.contains("admin") && !screenName.contains("asesor") && !screenName.contains("jefe")) {
+        if (!Validator.isNumber(screenName) && !screenName.contains("admin") && !screenName.contains("asesor") && !screenName.contains("jefe")) {
 
             ThreadContext.push(screenName);
             LoggerUtil.debug(LOG, "Se procede a actualizar el usuario con user id " + screenName);
@@ -76,7 +76,7 @@ public class EmasesaIntranetPostLogin extends Action {
                 PermissionThreadLocal.setPermissionChecker(permissionChecker);
             }
 
-            if(employerData != null) {
+            if (employerData != null && employerData.getJSONObject("datosDomicilio") != null) {
                 Map<String, Serializable> expandoAttributes = user.getExpandoBridge().getAttributes();
 
                 JSONObject addressData = employerData.getJSONObject("datosDomicilio");
@@ -101,8 +101,8 @@ public class EmasesaIntranetPostLogin extends Action {
 
                 LOG.debug("Usuario user id " + screenName + " actualizado");
             }
-        }else{
-            LoggerUtil.debug(LOG, "El usuario no es numérico "+ screenName);
+        } else {
+            LoggerUtil.debug(LOG, "El usuario no es numérico " + screenName);
         }
         ThreadContext.clearAll();
     }
