@@ -72,13 +72,16 @@ diasSemana.each(function(index, element) {
     var span = $('<span>').text(element.value);
     var input1 = $('<input>').attr('type', 'text').attr('name', fragmentEntryLinkNamespace + "-" + element.value + 'horaInicio').addClass(element.value + '-horaInicio');
     var input2 = $('<input>').attr('type', 'text').attr('name', fragmentEntryLinkNamespace + "-" + element.value + 'horaFin').addClass(element.value + '-horaFin');
-	//SELECT to select from Abono and Descanso compensatorio
-	var select = $('<select>').attr('name', fragmentEntryLinkNamespace + "-" + element.value + '-select-compensacion');
-	var option1 = $('<option>').val('').text('Selecciona una compensación');
-	var option2 = $('<option>').val('abono').text('Abono');
-	var option3 = $('<option>').val('descansoCompensatorio').text('Descanso compensatorio');
-	select.append(option1, option2, option3);
-	div.append(span, input1, input2, select);	
+	if (configuration.horasExcedentes){
+		var select = $('<select>').attr('name', fragmentEntryLinkNamespace + "-" + element.value + '-select-compensacion');
+		var option1 = $('<option>').val('').text('Selecciona una compensación');
+		var option2 = $('<option>').val('abono').text('Abono');
+		var option3 = $('<option>').val('descansoCompensatorio').text('Descanso compensatorio');
+		select.append(option1, option2, option3);
+		div.append(span, input1, input2, select);	
+	} else {
+		div.append(span, input1, input2);
+	}
     divHoras.append(div);
 });
 
