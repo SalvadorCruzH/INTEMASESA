@@ -13,10 +13,12 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
+import es.emasesa.intranet.sap.base.logging.LogInterceptor;
 import es.emasesa.intranet.sap.necesidadesFormacion.exception.NecesidadesFormacionException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 import jakarta.xml.ws.Holder;
+import jakarta.xml.ws.handler.Handler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +27,7 @@ import java.net.Authenticator;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.List;
 
 @org.springframework.stereotype.Component("necesidadesFormacionService")
 public class NecesidadesFormacionService {
@@ -172,6 +175,9 @@ public class NecesidadesFormacionService {
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
+            List<Handler> handlerChain =  bp.getBinding().getHandlerChain();
+            handlerChain.add(new LogInterceptor());
+            bp.getBinding().setHandlerChain(handlerChain);
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             /**********************************************************************/

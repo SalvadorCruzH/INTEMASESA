@@ -620,31 +620,10 @@
 }
 
 .ema-wrapper {
-    margin-block: 3rem;
-    @include media-breakpoint-up(lg) {
-        display: flex;
-        &--x2 {
-            gap: 1rem;
-            .ema-wrapper__item {
-                &:first-child {
-                    width: 70%;
-                }
-                &:last-child {
-                    width: 30%;
-                }
-            }
-        }
-    }
-    @include media-breakpoint-up(xl) {
-        &--x2 {
-            .ema-wrapper__item {
-                &:first-child {
-                    width: 75%;
-                }
-                &:last-child {
-                    width: 25%;
-                }
-            }
+    margin-block-end: 3rem;
+    &--x2 {
+        .ema-wrapper__item {
+            flex: 1;
         }
     }
 
@@ -939,6 +918,7 @@ html:not(#__):not(#___) {
             background: none;
             border-radius: 27.5px;
             color: $color-white;
+            background-color: $color-aux-blue;
             width: 55px;
             padding: 0;
             button {

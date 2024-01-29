@@ -32,7 +32,9 @@
 				<span class="i-header__btnIn sr-only"><@liferay.language key='es.emasesa.intranet.common.administrar-tareas'/></span>
 			</button>
 		</div>
-		<#include "${full_templates_path}/sidebar.ftl" />
+		<#if themeDisplay.isSignedIn()>
+			<#include "${full_templates_path}/sidebar.ftl" />
+		</#if>
 	</div>
 </header>
 <div id="i-menuMobile" class="i-menuMobile hidden visuallyhidden">

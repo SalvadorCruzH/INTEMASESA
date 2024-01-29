@@ -12,6 +12,7 @@ import com.sap.document.sap.soap.functions.mc_style.ZWSPEACTJORNADANOMINA;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEACTJORNADANOMINA_Service;
 import com.sap.document.sap.soap.functions.mc_style.ZpeStActJornadaNomina;
 import com.sun.xml.ws.developer.WSBindingProvider;
+import es.emasesa.intranet.sap.base.logging.LogInterceptor;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 
@@ -30,6 +31,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
 
+import jakarta.xml.ws.handler.Handler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component("jornadaNominaService")
@@ -222,6 +224,9 @@ public class JornadaNominaService {
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
+            List<Handler> handlerChain =  bp.getBinding().getHandlerChain();
+            handlerChain.add(new LogInterceptor());
+            bp.getBinding().setHandlerChain(handlerChain);
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             /**********************************************************************/
