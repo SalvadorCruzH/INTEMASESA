@@ -327,47 +327,4 @@
 
 	}
 
-	// Leyenda de colores
-    document.addEventListener('DOMContentLoaded', () => {
-
-        setTimeout(() => {
-
-            if (document.getElementById('ema-calendario') && document.getElementById('ema-calendarioInscripcion')) {
-                const calendario = document.getElementById('ema-calendario')
-                const calendarioIns = document.getElementById('ema-calendarioInscripcion')
-
-                let leyenda = document.createElement('div')
-                leyenda.classList.add('ema-calendario__leyenda')
-
-                calendario.appendChild(leyenda)
-                leyenda.innerHTML = `
-                    <div class="ema-calendario__leyenda__header">
-                        <h4 class="ema-calendario__leyenda__title">Leyenda</h4>
-                        <ul class="ema-calendario__leyenda__items">
-                            <li class="ema-calendario__leyenda__item">Cursos</li>
-                            <li class="ema-calendario__leyenda__item">Seinarios</li>
-                            <li class="ema-calendario__leyenda__item">Webminars</li>
-                        </ul>
-                    </div>
-                `
-
-                let leyendaIns = document.createElement('div')
-                leyendaIns.classList.add('ema-calendario__leyenda')
-
-                calendarioIns.appendChild(leyendaIns)
-                leyendaIns.innerHTML = `
-                    <div class="ema-calendario__leyenda__header">
-                        <h4 class="ema-calendario__leyenda__title">Leyenda</h4>
-                        <ul class="ema-calendario__leyenda__items">
-                            <li class="ema-calendario__leyenda__item">Cursos</li>
-                            <li class="ema-calendario__leyenda__item">Seinarios</li>
-                            <li class="ema-calendario__leyenda__item">Webminars</li>
-                        </ul>
-                    </div>
-                `
-            }
-
-        }, '1250')
-
-    })
 </script>
