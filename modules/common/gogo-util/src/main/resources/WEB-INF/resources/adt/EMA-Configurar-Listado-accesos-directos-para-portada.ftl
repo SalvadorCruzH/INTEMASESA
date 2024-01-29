@@ -1,7 +1,10 @@
 <#assign custonNameSpace = "fav"+random.nextInt()/>
-<@emasesa.favoritosPortadaInitScript custonNameSpace "p_p_id_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_evwh_"/>
+<@emasesa.favoritosPortadaInitScript custonNameSpace "p_p_id_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_oupe_"/>
 <#if entries?has_content>
 	 <div class="ema-color-box ema-color-box--white ema-favoritos__box">
+		        <header class="ema-favoritos__header">
+                <h5 class="ema-favoritos__title">Accesos para la página de inicio</h5>
+            </header>
           <div class="ema-favoritos__content">
              <ul class="ema-favoritos__items">
 				<#list entries as curEntry>

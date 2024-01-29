@@ -16,6 +16,7 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
+import es.emasesa.intranet.sap.base.logging.LogInterceptor;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
@@ -26,6 +27,8 @@ import java.net.URL;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.xml.ws.BindingProvider;
+
+import jakarta.xml.ws.handler.Handler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component("subordinadosService")
@@ -86,6 +89,9 @@ public class SubordinadosService {
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
+            List<Handler> handlerChain =  bp.getBinding().getHandlerChain();
+            handlerChain.add(new LogInterceptor());
+            bp.getBinding().setHandlerChain(handlerChain);
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             /**********************************************************************/
