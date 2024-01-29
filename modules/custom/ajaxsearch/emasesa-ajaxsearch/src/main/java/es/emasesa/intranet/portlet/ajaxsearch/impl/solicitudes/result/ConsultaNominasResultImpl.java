@@ -194,7 +194,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 						for (int j = 0; j < campos.length(); j++) {
 							String nombreOrigen = campos.getJSONObject(j).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
-								nomina.put("urlNominaDefinitiva",documentoOrigen.getString("urlDescarga"));
+								nomina.put("urlNominaDefinitiva",documentoOrigen.getString("urlVisor"));
 								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(j).getString("dateValue")));
 								nominas.put(nomina);
 								break;
@@ -205,7 +205,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 						for (int b = 0; b < campos.length(); b++) {
 							String nombreOrigen = campos.getJSONObject(b).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
-								nomina.put("urlNominaProvisional", documentoOrigen.getString("urlDescarga"));
+								nomina.put("urlNominaProvisional", documentoOrigen.getString("urlVisor"));
 								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(b).getString("dateValue")));
 								nominas.put(nomina);
 								break;
@@ -216,7 +216,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 						for (int j = 0; j < campos.length(); j++) {
 							String nombreOrigen = campos.getJSONObject(j).getString("nombreOrigen");
 							if ("FechaNomina".equals(nombreOrigen)) {
-								nomina.put("urlUltimoRecalculo", documentoOrigen.getString("urlDescarga"));
+								nomina.put("urlUltimoRecalculo", documentoOrigen.getString("urlVisor"));
 								nomina.put("fechaNomina", formatearFecha(campos.getJSONObject(j).getString("dateValue")));
 								nominas.put(nomina);
 								nomina = JSONFactoryUtil.createJSONObject("");
@@ -284,21 +284,21 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 							for (JSONObject nominasElemento : ListaNominas) {
 								if (nominasElemento.has("urlNominaDefinitiva")) {
 									urlNominaDefinitiva = nominasElemento.getString("urlNominaDefinitiva");
-									String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download>" +
+									String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
 											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 									nominaFinal.put("urlNominaDefinitiva", descarga);
 									nominaZip.put("urlNominaDefinitiva", urlNominaDefinitiva);
 								}
 								if (nominasElemento.has("urlNominaProvisional")) {
 									urlNominaProvisional = nominasElemento.getString("urlNominaProvisional");
-									String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download>" +
+									String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
 											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 									nominaFinal.put("urlNominaProvisional", descarga);
 									nominaZip.put("urlNominaProvisional", urlNominaProvisional);
 								}
 								if (nominasElemento.has("urlUltimoRecalculo")) {
 									urlUltimoRecalculo = nominasElemento.getString("urlUltimoRecalculo");
-									String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download>" +
+									String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
 											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 									nominaFinal.put("urlUltimoRecalculo", descarga);
 									nominaZip.put("urlUltimoRecalculo", urlUltimoRecalculo);
@@ -361,18 +361,14 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 				tempFiles.add(tempFile);
 			}
 
-			// Crear un archivo ZIP y agregar los archivos temporales
 			zipFilePath = Files.createTempFile("Archivos_Nomina_", ".zip");
 			try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFilePath.toFile()))) {
 				for (int i = 0; i < tempFiles.size(); i++) {
 					Path tempFile = tempFiles.get(i);
 					String entryName = "archivo_" + i + ".pdf";
 
-					// Agregar entrada al archivo ZIP
 					zipOutputStream.putNextEntry(new ZipEntry(entryName));
-					// Copiar contenido del archivo temporal al archivo ZIP
 					Files.copy(tempFile, zipOutputStream);
-					// Cerrar entrada para el siguiente archivo
 					zipOutputStream.closeEntry();
 				}
 			}
@@ -380,7 +376,6 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			// Eliminar archivos temporales después de crear el ZIP
 			for (Path tempFile : tempFiles) {
 				Files.deleteIfExists(tempFile);
 			}
@@ -397,29 +392,19 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 
 		String rutaArchivo = archivoPath.toString();
 
-		// Reemplazar las barras invertidas por barras inclinadas para formar una URL válida
 		String rutaConBarrasInclinadas = rutaArchivo.replace("\\", "/");
-
-		// Obtener el nombre del archivo para usarlo como nombre de descarga sugerido
 		String nombreArchivo = archivoPath.getFileName().toString();
-
-		// Codificar el nombre del archivo para asegurar que sea una URL válida
 		String nombreArchivoCodificado;
 		try {
 			nombreArchivoCodificado = URLEncoder.encode(nombreArchivo, "UTF-8");
 		} catch (Exception e) {
-			// Manejo de excepciones (puedes personalizarlo según tus necesidades)
 			e.printStackTrace();
 			return null;
 		}
 
-		// Formar el enlace de descarga
 		String enlaceDescarga = "<a class=\"btn-primary pe-none\" href=\"" + rutaConBarrasInclinadas + "\" download=\"" + nombreArchivoCodificado + "\">Descargar Nominas</a>";
 
-
-
 		urlDescarga.put("urlDescarga", enlaceDescarga);
-
 		urls.put(urlDescarga);
 
 		return urls;
