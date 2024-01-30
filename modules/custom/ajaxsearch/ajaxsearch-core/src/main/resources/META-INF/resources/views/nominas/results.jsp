@@ -1,5 +1,6 @@
 <%@ include file="init.jsp" %>
 
+<liferay-portlet:resourceURL var="consultaNomina" id="consultaNomina"/>
 <div class="m-searchAjax m-searchAjax--results">
     <div>
         <div id="as-total-items">
@@ -23,12 +24,13 @@
                     </tbody>
                 </table>
             </div>
-<button class="btn btn-primary">
-						<div id="descargarButton" class="ema-download-all-button">
 
+						<button class="btn btn-primary" onclick="descargar()">
+                <div id="descargarButton" class="ema-download-all-button">
+                    <liferay-ui:message key="es.emasesa.intranet.nominas.descargaNominas" />
+                </div>
+            </button>
 
-            </div>
-</button>
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
@@ -69,13 +71,28 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
 
-        if (payload.content && payload.content[0] && payload.content[0].descargaUrl) {
-            var myDiv = document.getElementById('descargarButton');
-            myDiv.innerHTML = payload.content[0].descargaUrl;
-            addClickFunctionality();
-        }
+		var nominasArrayZipString = JSON.stringify(payload.additionalInfo.nominasArrayZip);
+		localStorage.setItem("nominasArrayZip", nominasArrayZipString);
+
     }
 }
+
+function descargar() {
+		var nominasArrayZip = localStorage.getItem("nominasArrayZip");
+
+    $.ajax({
+        type: "POST",
+        url: "${consultaNomina}",
+        data: { <portlet:namespace/>nominasArrayZip: nominasArrayZip },
+        success: function (response) {
+				   $("#nameAssign").text(response);
+				},
+        error: function (xhr, status, error) {
+            console.error("Error en la solicitud: " + error);
+        }
+    });
+}
+
 $(document).ready(function () {
     var options = $(".results-pagination-select-container .results-pagination-select option");
     for (var i = 0; i < options.length; i++) {
