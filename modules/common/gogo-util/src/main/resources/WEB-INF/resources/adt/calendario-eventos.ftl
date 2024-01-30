@@ -5,9 +5,10 @@
 <#assign ddmFieldLocalService = serviceLocator.findService("com.liferay.dynamic.data.mapping.service.DDMFieldLocalService")/>
 <#assign assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService") />
 <#assign orderByComparatorFactoryUtil = staticUtil["com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil"]>
+<#assign settingModule = serviceLocator.findService("es.emasesa.intranet.settings.osgi.GlobalThemeSettings")>
 
 <#assign comparator = orderByComparatorFactoryUtil.create("journalarticle", ["lastPublishDate", "ASC"]) />
-<#assign vocabularyId = 223010/>
+<#assign vocabularyId = settingModule.eventosCalendarioCategoryId()/>
 <#assign assetCategories = assetCategoryLocalService.getVocabularyCategories(vocabularyId, -1, -1, comparator) />
 
 <#macro createEvento journalArticle categories>

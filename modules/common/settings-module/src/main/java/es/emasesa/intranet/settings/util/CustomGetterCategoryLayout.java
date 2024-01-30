@@ -33,9 +33,11 @@ public class CustomGetterCategoryLayout {
         List<Layout> pages = null;
         PortalCache<String, Object> cache = CustomCacheSingleUtil.getPortalCache();
         pages = (List<Layout>) CustomCacheSingleUtil.get(cache, cacheKey);
+
         if(Validator.isNull(pages)) {
             // If cache is empty, get result and store in cache
             try {
+                LOG.debug("entra al metodo getdescen: " + getDescendantsByCategoryWithoutCache(parentLayout, categoryId));
                 pages = getDescendantsByCategoryWithoutCache(parentLayout, categoryId);
             } catch (PortalException e) {
                 LOG.error("Error busqueda de paginas por categorias en la cache",e);
@@ -56,11 +58,13 @@ public class CustomGetterCategoryLayout {
 
         if (parentLayout != null) {
             List<Long> listAssetEntryId = getAssetEntryCategoryLayouts(Long.parseLong(categoryId));
+            LOG.debug("listAssetEntryId: " + listAssetEntryId);
             if (listAssetEntryId.isEmpty()) {
                 return pages;
             }
             List<String> listNameDescendants = new ArrayList<>();
             List<Layout> descendantsLayoutList =  parentLayout.getAllChildren();
+            LOG.debug("descendantsLayoutList: " + descendantsLayoutList);
             descendantsLayoutList.forEach(layout -> {
                 listNameDescendants.add(layout.getUuid());
             });
@@ -76,12 +80,14 @@ public class CustomGetterCategoryLayout {
             Comparator<Layout> comparador = Comparator.comparing(Layout::getModifiedDate);
             pages.sort(comparador.reversed());
         }
+        LOG.debug("fin de getDescendants pages: " + pages);
         return pages;
     }
 
     public List<Long> getAssetEntryCategoryLayouts(long categoryId) throws PortalException {
         List<Long> assetEntryId = new ArrayList<>();
         List<AssetEntryAssetCategoryRel> assetEntryCategory = _assetEntryAssetCategoryRelLocalService.getAssetEntryAssetCategoryRelsByAssetCategoryId(categoryId);
+        LOG.debug("assetEntryCategory: " + assetEntryCategory);
         for (AssetEntryAssetCategoryRel category : assetEntryCategory) {
             assetEntryId.add(category.getAssetEntryId());
         }
