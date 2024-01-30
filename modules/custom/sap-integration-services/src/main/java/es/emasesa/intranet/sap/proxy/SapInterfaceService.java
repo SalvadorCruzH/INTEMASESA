@@ -17,7 +17,7 @@ import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
-import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
+import es.emasesa.intranet.sap.ciertosdatos.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.osgi.service.component.annotations.Activate;
@@ -46,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
-import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
+import es.emasesa.intranet.sap.ciertosdatos.service.CiertosDatosEstructuraService;
 
 @Component(
         immediate = true,

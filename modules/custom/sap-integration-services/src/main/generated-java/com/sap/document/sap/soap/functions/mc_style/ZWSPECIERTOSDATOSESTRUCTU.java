@@ -29,6 +29,7 @@ public interface ZWSPECIERTOSDATOSESTRUCTU {
      * @param direccionRrhhRespId
      * @param divisionRrhhRespId
      * @param subdireccionRrhhRespId
+     * @param presidentePpeId
      */
     @WebMethod(operationName = "ZPeCiertosDatosEstructura", action = "urn:sap-com:document:sap:soap:functions:mc-style:Z_WS_PE_CIERTOS_DATOS_ESTRUCTU:ZPeCiertosDatosEstructuraRequest")
     @RequestWrapper(localName = "ZPeCiertosDatosEstructura", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", className = "com.sap.document.sap.soap.functions.mc_style.ZPeCiertosDatosEstructura")
@@ -40,6 +41,8 @@ public interface ZWSPECIERTOSDATOSESTRUCTU {
         Holder<String> direccionRrhhRespId,
         @WebParam(name = "DivisionRrhhRespId", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<String> divisionRrhhRespId,
+        @WebParam(name = "PresidentePpeId", targetNamespace = "", mode = WebParam.Mode.OUT)
+        Holder<String> presidentePpeId,
         @WebParam(name = "SubdireccionRrhhRespId", targetNamespace = "", mode = WebParam.Mode.OUT)
         Holder<String> subdireccionRrhhRespId);
 

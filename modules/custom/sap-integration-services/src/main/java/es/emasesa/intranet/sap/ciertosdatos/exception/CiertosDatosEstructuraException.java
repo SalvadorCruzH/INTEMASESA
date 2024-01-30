@@ -1,4 +1,4 @@
-package es.emasesa.intranet.sap.subordinados.exception;
+package es.emasesa.intranet.sap.ciertosdatos.exception;
 
 import es.emasesa.intranet.sap.base.exception.SapException;
 
