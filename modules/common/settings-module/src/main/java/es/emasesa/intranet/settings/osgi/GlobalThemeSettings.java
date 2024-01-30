@@ -23,6 +23,9 @@ public class GlobalThemeSettings {
     public String lastModifiedCategoryId() {
         return configuration.lastModifiedCategoryId();
     }
+    public long eventosCalendarioCategoryId() {
+        return configuration.eventosCalendarioCategoryId();
+    }
 
     @Activate
     @Modified

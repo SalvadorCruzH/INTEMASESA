@@ -27,4 +27,11 @@ public interface GlobalThemeConfiguration {
             required = false
     )
     String lastModifiedCategoryId();
+
+    @Meta.AD(
+            deflt = "-1",
+            name = "eventosCalendarioCategoryId",
+            required = false
+    )
+    long eventosCalendarioCategoryId();
 }
