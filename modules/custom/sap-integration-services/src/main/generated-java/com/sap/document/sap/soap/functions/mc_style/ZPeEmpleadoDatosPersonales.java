@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Pernr" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
+ *         &lt;element name="Pernr" type="{urn:sap-com:document:sap:rfc:functions}numeric8" minOccurs="0"/&gt;
  *         &lt;element name="Usrid" type="{urn:sap-com:document:sap:soap:functions:mc-style}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -36,7 +36,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "ZPeEmpleadoDatosPersonales")
 public class ZPeEmpleadoDatosPersonales {
 
-    @XmlElement(name = "Pernr", required = true)
+    @XmlElement(name = "Pernr")
     protected String pernr;
     @XmlElement(name = "Usrid")
     protected String usrid;

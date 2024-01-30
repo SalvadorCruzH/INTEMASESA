@@ -1,11 +1,13 @@
 package es.emasesa.intranet.sap.datospersona.service;
 
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.Validator;
 import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -35,9 +37,13 @@ public class EmpleadoDatosPersonalesService {
         try {
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADODATOSPERSONA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-            TableOfZpeStEmpleadoDatosPersonal serviceResult = port.zPeEmpleadoDatosPersonales(pernr, "");
+            TableOfZpeStEmpleadoDatosPersonal serviceResult = new TableOfZpeStEmpleadoDatosPersonal();
+            if(Validator.isNumber(pernr)){
+                serviceResult = port.zPeEmpleadoDatosPersonales(pernr, "");
+            }else{
+                serviceResult = port.zPeEmpleadoDatosPersonales("", pernr);
+            }
             ZpeStEmpleadoDatosPersonal empleadoDatosPersonal = serviceResult.getItem().stream().findFirst().orElse(null);
-
             return JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerializeDeep(empleadoDatosPersonal));
         } catch (JSONException | ServerSOAPFaultException e) {
             throw new EmpleadoDatosPersonalesException("Error llamando al WS para el pernr "+ pernr, e);

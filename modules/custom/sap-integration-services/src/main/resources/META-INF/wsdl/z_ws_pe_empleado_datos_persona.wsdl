@@ -280,7 +280,7 @@
             <xsd:element name="ZPeEmpleadoDatosPersonales">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="Pernr" type="n0:numeric8"/>
+                        <xsd:element name="Pernr" type="n0:numeric8" minOccurs="0"/>
                         <xsd:element name="Usrid" type="tns:string" minOccurs="0"/>
                     </xsd:sequence>
                 </xsd:complexType>
@@ -397,11 +397,11 @@
     <wsdl:service name="Z_WS_PE_EMPLEADO_DATOS_PERSONA">
         <wsdl:port name="Z_WS_PE_EMPLEADO_DATOS_PERSONA" binding="tns:Z_WS_PE_EMPLEADO_DATOS_PERSONA">
             <soap:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_datos_persona/010/z_ws_pe_empleado_datos_persona/z_ws_pe_empleado_datos_persona"/>
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_datos_persona/010/z_ws_pe_empleado_datos_persona/z_ws_pe_empleado_datos_persona"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12" binding="tns:Z_WS_PE_EMPLEADO_DATOS_PERSONA_soap12">
             <wsoap12:address
-                    location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_datos_persona/010/z_ws_pe_empleado_datos_persona/z_ws_pe_empleado_datos_persona"/>
+                    location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_datos_persona/010/z_ws_pe_empleado_datos_persona/z_ws_pe_empleado_datos_persona"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
