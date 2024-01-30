@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,52 +34,39 @@ import java.util.zip.ZipOutputStream;
         },
         service = MVCResourceCommand.class
 )
-public class DescargaZipMVCResourceCommand implements MVCResourceCommand {
+public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
 
     @Override
-    public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-        String nominasArrayZip = ParamUtil.getString(resourceRequest, "nominasArrayZip");
+    public void doServeResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-        try {
-            JSONArray jsonArray = JSONFactoryUtil.createJSONArray(nominasArrayZip);
+        JSONArray jsonArray = (JSONArray) resourceRequest.getPortletSession().getAttribute("nominasArrayZip");
 
-            // Configurar el encabezado para la descarga del ZIP
-            HttpServletResponse response = PortalUtil.getHttpServletResponse(resourceResponse);
+        HttpServletResponse response = PortalUtil.getHttpServletResponse(resourceResponse);
 
-            response.setHeader("Content-Disposition", "attachment; filename=archivos.zip");
-            response.setContentType("application/zip");
+        response.setHeader("Content-Disposition", "attachment; filename=archivos.zip");
+        response.setContentType("application/zip");
 
-            // Desactivar el almacenamiento en caché para asegurarse de que la descarga sea siempre fresca
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-            response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-            response.setDateHeader("Expires", 0); // Proxies
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
 
-            // Crear un flujo de salida para el ZIP en memoria
-            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                 ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
 
-                // Descargar y agregar cada archivo al ZIP
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    agregarArchivoAlZipDesdeUrl(jsonObject, zipOutputStream);
-                }
-
-                // Cerrar el flujo de salida del ZIP
-                zipOutputStream.finish();
-
-                // Obtener los bytes del ZIP en memoria
-                byte[] zipBytes = byteArrayOutputStream.toByteArray();
-
-                ServletResponseUtil.sendFile(_portal.getHttpServletRequest(resourceRequest),_portal.getHttpServletResponse(resourceResponse), "archivos.zip", zipBytes);
-
-            } catch (Exception e) {
-                throw new RuntimeException("Error al crear el ZIP o transmitir el archivo", e);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                agregarArchivoAlZipDesdeUrl(jsonObject, zipOutputStream);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+
+            zipOutputStream.finish();
+            byte[] zipBytes = byteArrayOutputStream.toByteArray();
+
+            PortletResponseUtil.sendFile(resourceRequest, resourceResponse, "archivos.zip", zipBytes);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al crear el ZIP o transmitir el archivo", e);
         }
 
-        return true;
     }
 
     private void agregarArchivoAlZipDesdeUrl(JSONObject jsonObject, ZipOutputStream zipOutputStream)

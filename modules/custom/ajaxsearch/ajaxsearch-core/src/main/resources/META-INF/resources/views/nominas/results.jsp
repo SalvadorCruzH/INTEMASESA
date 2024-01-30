@@ -71,26 +71,22 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
 
-		var nominasArrayZipString = JSON.stringify(payload.additionalInfo.nominasArrayZip);
-		localStorage.setItem("nominasArrayZip", nominasArrayZipString);
+			$('a[href]').each(function () {
+          var href = this.href;
 
+          $(this).removeAttr('href').css('cursor', 'pointer').click(function () {
+              if (href.toLowerCase().indexOf("#") >= 0) {
+
+              } else {
+                  window.open(href, '_blank');
+              }
+          });
+      });
     }
 }
 
 function descargar() {
-		var nominasArrayZip = localStorage.getItem("nominasArrayZip");
-
-    $.ajax({
-        type: "POST",
-        url: "${consultaNomina}",
-        data: { <portlet:namespace/>nominasArrayZip: nominasArrayZip },
-        success: function (response) {
-				   $("#nameAssign").text(response);
-				},
-        error: function (xhr, status, error) {
-            console.error("Error en la solicitud: " + error);
-        }
-    });
+		location.href="${consultaNomina}";
 }
 
 $(document).ready(function () {

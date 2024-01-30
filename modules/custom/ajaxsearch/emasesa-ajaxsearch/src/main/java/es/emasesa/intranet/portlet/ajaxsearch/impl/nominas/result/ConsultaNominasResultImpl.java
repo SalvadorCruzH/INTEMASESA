@@ -287,28 +287,26 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 						nominaFinal.put(NominasKeys.CAMPO_FECHA_NOMINA, fechaNomina);
 
 						if (nominasArray.length() < 24) {
-							List<Path> tempFiles = new ArrayList<>();
+
 							for (JSONObject nominasElemento : ListaNominas) {
 								if (nominasElemento.has(NominasKeys.CAMPO_URL_NOMINA_DEFINITIVA)) {
 									urlNominaDefinitiva = nominasElemento.getString(NominasKeys.CAMPO_URL_NOMINA_DEFINITIVA);
-									String descarga = "<a href=\"" + urlNominaDefinitiva + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
+									String urlCodificada = Base64.getEncoder().encodeToString(urlNominaDefinitiva.getBytes());
+									String descarga = "<a href=\"" + urlCodificada + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
 											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 									nominaFinal.put(NominasKeys.CAMPO_URL_NOMINA_DEFINITIVA, descarga);
-									//nominaZip.put(NominasKeys.CAMPO_URL_NOMINA_DEFINITIVA, urlNominaDefinitiva);
 								}
 								if (nominasElemento.has(NominasKeys.CAMPO_URL_NOMINA_PROVISIONAL)) {
 									urlNominaProvisional = nominasElemento.getString(NominasKeys.CAMPO_URL_NOMINA_PROVISIONAL);
 									String descarga = "<a href=\"" + urlNominaProvisional + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
 											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 									nominaFinal.put(NominasKeys.CAMPO_URL_NOMINA_PROVISIONAL, descarga);
-									//nominaZip.put(NominasKeys.CAMPO_URL_NOMINA_PROVISIONAL, urlNominaProvisional);
 								}
 								if (nominasElemento.has(NominasKeys.CAMPO_URL_NOMINA_RECALCULO)) {
 									urlUltimoRecalculo = nominasElemento.getString(NominasKeys.CAMPO_URL_NOMINA_RECALCULO);
 									String descarga = "<a href=\"" + urlUltimoRecalculo + "\" class=\"ema-boton-descargar\" download target=\\\"_blank\\\">" +
 											"<i class=\"fa-solid fa-download\"></i> Descargar </a>";
 									nominaFinal.put(NominasKeys.CAMPO_URL_NOMINA_RECALCULO, descarga);
-									//nominaZip.put(NominasKeys.CAMPO_URL_NOMINA_RECALCULO, urlUltimoRecalculo);
 								}
 								if (nominasElemento.has(NominasKeys.CAMPO_FECHA_RECALCULO)) {
 									fechaNomina = formatearFechaRecalculo(nominasElemento.getString(NominasKeys.CAMPO_FECHA_RECALCULO));
@@ -316,11 +314,9 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 								}
 							}
 							nominasArray.put(nominaFinal);
-							//nominasArrayZip.put(nominaZip);
 						} else {
 							break;
 						}
-
 					}
 				}
 
@@ -334,13 +330,13 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 					listJson.add(nominasArray.getJSONObject(i));
 				}
 
-
 				zipObject.put("nominasArrayZip", urlDescargaArray);
 				listJson.subList(start,end).stream().forEach(j->{
 					jsonArray.put(j);
 
 				});
 
+				request.getPortletSession().setAttribute("nominasArrayZip", urlDescargaArray);
 			}
 		} catch (java.text.ParseException | JSONException ex) {
 			throw new RuntimeException(ex);
