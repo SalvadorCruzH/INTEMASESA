@@ -4,6 +4,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -12,6 +13,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import es.emasesa.intranet.base.util.CustomExpandoUtil;
+import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,13 +46,14 @@ public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
         String matricula = (String) resourceRequest.getPortletSession().getAttribute("matricula");
         HttpServletResponse response = PortalUtil.getHttpServletResponse(resourceResponse);
 
-        response.setHeader("Content-Disposition", "attachment; filename=archivos_" + matricula + ".zip");
+        response.setHeader("Content-Disposition", "attachment; filename=Nominas" + matricula + ".zip");
         response.setContentType("application/zip");
 
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
 
+        _log.debug("Se abren inician los outPutStream");
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
              ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
 
@@ -61,7 +65,7 @@ public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
             zipOutputStream.finish();
             byte[] zipBytes = byteArrayOutputStream.toByteArray();
 
-            PortletResponseUtil.sendFile(resourceRequest, resourceResponse, "archivos.zip", zipBytes);
+            PortletResponseUtil.sendFile(resourceRequest, resourceResponse, "Nominas_" + matricula +".zip", zipBytes);
 
         } catch (Exception e) {
             throw new RuntimeException("Error al crear el ZIP o transmitir el archivo", e);
@@ -76,6 +80,7 @@ public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
         String urlNominaProvisional = jsonObject.getString("urlNominaProvisional");
         String urlUltimoRecalculo = jsonObject.getString("urlUltimoRecalculo");
 
+        _log.debug("Se tratan las descargas");
         if(Validator.isNotNull(urlNominaDefinitiva)) {
             agregarArchivoAlZip(urlNominaDefinitiva, fechaNomina + "_Definitiva.pdf", zipOutputStream);
         }
@@ -89,6 +94,7 @@ public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
 
     private void agregarArchivoAlZip(String url, String nombreArchivo, ZipOutputStream zipOutputStream)
             throws IOException {
+        _log.debug("Se añaden los archivos al zip");
         try (InputStream inputStream = new URL(url).openStream()) {
             zipOutputStream.putNextEntry(new ZipEntry(nombreArchivo));
             byte[] buffer = new byte[4096];
@@ -105,4 +111,5 @@ public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
     }
     @Reference
     Portal _portal;
+    Log _log = LoggerUtil.getLog(CustomExpandoUtil.class);
 }
