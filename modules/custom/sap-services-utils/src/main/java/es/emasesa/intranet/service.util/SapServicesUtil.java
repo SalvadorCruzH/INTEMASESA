@@ -310,11 +310,15 @@ public class SapServicesUtil {
         }
         JSONArray datosJornadaDiaria = JSONFactoryUtil.createJSONArray();
 
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             if (_jornadaDiariaService == null) {
                 activate(null);
             }
             datosJornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria(pernr, fechaInicio, fechaFin);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         } catch (SapCommunicationException e) {
             LOG.error(e.getMessage(), e);
         } catch (JornadaDiariaException e) {
