@@ -1,7 +1,5 @@
-package es.emasesa.intranet.sap.subordinados.service;
+package es.emasesa.intranet.sap.ciertosdatos.service;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -14,11 +12,9 @@ import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.base.logging.LogInterceptor;
-import es.emasesa.intranet.sap.subordinados.exception.CiertosDatosEstructuraException;
-import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
+import es.emasesa.intranet.sap.ciertosdatos.exception.CiertosDatosEstructuraException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
-import jakarta.jws.WebParam;
 import jakarta.xml.ws.Holder;
 import jakarta.xml.ws.handler.Handler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +38,15 @@ public class CiertosDatosEstructuraService {
             Holder<String> direccionRrhhRespId = new Holder<>();
             Holder<String> divisionRrhhRespId = new Holder<>();
             Holder<String> subdireccionRrhhRespId = new Holder<>();
+            Holder<String> presidentePpeId = new Holder<>();
 
-            port.zPeCiertosDatosEstructura(consejeroId, direccionRrhhRespId, divisionRrhhRespId, subdireccionRrhhRespId);
+            port.zPeCiertosDatosEstructura(consejeroId, direccionRrhhRespId, divisionRrhhRespId, presidentePpeId,subdireccionRrhhRespId);
 
             JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
             jsonObject.put("consejeroId", consejeroId.value);
             jsonObject.put("direccionRrhhRespId", direccionRrhhRespId.value);
             jsonObject.put("divisionRrhhRespId", divisionRrhhRespId.value);
+            jsonObject.put("presidenteId", presidentePpeId.value);
             jsonObject.put("subdireccionRrhhRespId", subdireccionRrhhRespId.value);
 
             return jsonObject;

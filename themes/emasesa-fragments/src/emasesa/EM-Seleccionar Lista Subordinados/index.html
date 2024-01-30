@@ -9,12 +9,13 @@
 [#assign listaSubordinados = sapServiceUtil.getSubordinados(expandoValueByName, "T")]
 <select id="select-subordinados" class="ema-select">
     <option value="">Selecciona un subordinado</option>
-    [#assign listaSubordinadosSize = listaSubordinados.length()-1]
-    [#list 0..listaSubordinadosSize as i]
-        [#assign subordinado = sapServiceUtil.getDatosEmpleado(listaSubordinados.get(i).getString("pernr"))]
-        <option value='${subordinado}'>${subordinado.pernr} - ${subordinado.nombre} ${subordinado.apellido1} ${subordinado.apellido2}  </option>
-        
-    [/#list]
+    [#assign listaSubordinadosSize = listaSubordinados.length()]
+    [#if listaSubordinadosSize != 0]
+        [#list 0..listaSubordinadosSize-1 as i]
+            [#assign subordinado = sapServiceUtil.getDatosEmpleado(listaSubordinados.get(i).getString("pernr"))]
+            <option value='${subordinado}'>${subordinado.pernr} - ${subordinado.nombre} ${subordinado.apellido1} ${subordinado.apellido2}  </option>
+        [/#list]
+    [/#if]
 </select>
 <div class="ema-table-wrapper">
     

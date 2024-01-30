@@ -38,7 +38,9 @@ Export-Package: \
     es.emasesa.intranet.sap.necesidadesFormacion.service,\
     es.emasesa.intranet.sap.necesidadesFormacion.exception,\
     es.emasesa.intranet.sap.calendarioeventos.service,\
-    es.emasesa.intranet.sap.calendarioeventos.exception
+    es.emasesa.intranet.sap.calendarioeventos.exception,\
+    es.emasesa.intranet.sap.ciertosdatos.service,\
+    es.emasesa.intranet.sap.ciertosdatos.exception
 
 Import-Package:\*;resolution:=optional
 

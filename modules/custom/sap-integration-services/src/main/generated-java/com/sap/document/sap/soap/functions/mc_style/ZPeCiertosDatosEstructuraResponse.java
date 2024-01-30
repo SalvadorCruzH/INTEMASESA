@@ -21,6 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="ConsejeroId" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
  *         &lt;element name="DireccionRrhhRespId" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
  *         &lt;element name="DivisionRrhhRespId" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
+ *         &lt;element name="PresidentePpeId" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
  *         &lt;element name="SubdireccionRrhhRespId" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -35,6 +36,7 @@ import jakarta.xml.bind.annotation.XmlType;
     "consejeroId",
     "direccionRrhhRespId",
     "divisionRrhhRespId",
+    "presidentePpeId",
     "subdireccionRrhhRespId"
 })
 @XmlRootElement(name = "ZPeCiertosDatosEstructuraResponse")
@@ -46,6 +48,8 @@ public class ZPeCiertosDatosEstructuraResponse {
     protected String direccionRrhhRespId;
     @XmlElement(name = "DivisionRrhhRespId", required = true)
     protected String divisionRrhhRespId;
+    @XmlElement(name = "PresidentePpeId", required = true)
+    protected String presidentePpeId;
     @XmlElement(name = "SubdireccionRrhhRespId", required = true)
     protected String subdireccionRrhhRespId;
 
@@ -119,6 +123,30 @@ public class ZPeCiertosDatosEstructuraResponse {
      */
     public void setDivisionRrhhRespId(String value) {
         this.divisionRrhhRespId = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad presidentePpeId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPresidentePpeId() {
+        return presidentePpeId;
+    }
+
+    /**
+     * Define el valor de la propiedad presidentePpeId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPresidentePpeId(String value) {
+        this.presidentePpeId = value;
     }
 
     /**

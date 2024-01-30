@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.ServiceLocator;
 
-import com.liferay.util.JS;
 import es.emasesa.intranet.base.util.CustomExpandoUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.ayudaEscolar.exception.AyudaEscolarException;
@@ -55,7 +54,7 @@ import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.exception.CertificadoRetencionesException;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
 import es.emasesa.intranet.sap.subordinados.exception.SubordinadosException;
-import es.emasesa.intranet.sap.subordinados.service.CiertosDatosEstructuraService;
+import es.emasesa.intranet.sap.ciertosdatos.service.CiertosDatosEstructuraService;
 import es.emasesa.intranet.sap.subordinados.service.SubordinadosService;
 
 import java.io.Serializable;
