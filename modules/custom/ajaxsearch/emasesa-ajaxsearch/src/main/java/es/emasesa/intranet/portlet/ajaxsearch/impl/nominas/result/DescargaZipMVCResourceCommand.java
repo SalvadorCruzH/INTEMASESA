@@ -40,10 +40,10 @@ public class DescargaZipMVCResourceCommand extends BaseMVCResourceCommand {
     public void doServeResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
         JSONArray jsonArray = (JSONArray) resourceRequest.getPortletSession().getAttribute("nominasArrayZip");
-
+        String matricula = (String) resourceRequest.getPortletSession().getAttribute("matricula");
         HttpServletResponse response = PortalUtil.getHttpServletResponse(resourceResponse);
 
-        response.setHeader("Content-Disposition", "attachment; filename=archivos.zip");
+        response.setHeader("Content-Disposition", "attachment; filename=archivos_" + matricula + ".zip");
         response.setContentType("application/zip");
 
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1

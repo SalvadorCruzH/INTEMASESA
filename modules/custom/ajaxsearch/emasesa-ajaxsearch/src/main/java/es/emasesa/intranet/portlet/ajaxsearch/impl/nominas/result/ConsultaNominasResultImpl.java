@@ -337,6 +337,7 @@ public class ConsultaNominasResultImpl implements AjaxSearchResult {
 				});
 
 				request.getPortletSession().setAttribute("nominasArrayZip", urlDescargaArray);
+				request.getPortletSession().setAttribute("matricula", matricula);
 			}
 		} catch (java.text.ParseException | JSONException ex) {
 			throw new RuntimeException(ex);
