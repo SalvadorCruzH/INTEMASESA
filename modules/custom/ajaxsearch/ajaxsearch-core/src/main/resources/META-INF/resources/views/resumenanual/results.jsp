@@ -2,58 +2,57 @@
 
 <div class="m-searchAjax m-searchAjax--results">
     <div>
-
-            <div class="resums">
-                <div id="wrapper-resum-lastyear" class="resum">
-                    <h3 class="resum__title">Pasado a&ntilde;o</h3>
-                    <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
-                    <div class="resum__datas">
-                        <span class="m-searchAjax pdt-disfrutar resum__data">
-                            <div class="resum__input">
-                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
-                            </div>
-                            <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                        </span>
-                        <span class="m-searchAjax sin-planificar resum__data">
-                            <div class="resum__input">
-                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
-                            </div>
-                            <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                        </span>
-                        <span class="m-searchAjax vacaciones resum__data">
-                            <div class="resum__input">
-                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                            </div>
-                            <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
-                        </span>
-                    </div>
-                </div>
-                <div id="wrapper-resum" class="resum">
-                    <h3 class="resum__title">Actual</h3>
-                    <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
-                    <div class="resum__datas">
-                        <span class="m-searchAjax pdt-disfrutar resum__data">
-                            <div class="resum__input">
-                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
-                            </div>
-                            <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                        </span>
-                        <span class="m-searchAjax sin-planificar resum__data">
-                            <div class="resum__input">
-                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
-                            </div>
-                            <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
-                        </span>
-                        <span class="m-searchAjax vacaciones resum__data">
-                            <div class="resum__input">
-                                <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                            </div>
-                            <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
-                        </span>
-                    </div>
+        <div class="resums">
+            <div id="wrapper-resum" class="resum">
+                <h3 class="resum__title">Año actual</h3>
+                <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
+                <div class="resum__datas">
+                    <span class="m-searchAjax pdt-disfrutar resum__data">
+                        <div class="resum__input">
+                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                        </div>
+                        <input type="text" id="pdtDisfrutar" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax sin-planificar resum__data">
+                        <div class="resum__input">
+                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                        </div>
+                        <input type="text" id="sinPlanificar" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax vacaciones resum__data">
+                        <div class="resum__input">
+                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                        </div>
+                        <input type="text" id="vacaciones" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
                 </div>
             </div>
-            <%-- /.resums --%>
+            <div id="wrapper-resum-lastyear" class="resum">
+                <h3 class="resum__title">Año pasado</h3>
+                <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
+                <div class="resum__datas">
+                    <span class="m-searchAjax pdt-disfrutar resum__data">
+                        <div class="resum__input">
+                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.pendiente.disfrutar"/>
+                        </div>
+                        <input type="text" id="pdtDisfrutarLastYear" name="pdtDisfrutar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax sin-planificar resum__data">
+                        <div class="resum__input">
+                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sin.planificar"/>
+                        </div>
+                        <input type="text" id="sinPlanificarLastYear" name="sinPlanificar" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                    <span class="m-searchAjax vacaciones resum__data">
+                        <div class="resum__input">
+                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
+                        </div>
+                        <input type="text" id="vacacionesLastYear" name="vacaciones" class="m-searchAjax__input" value="0" readonly="readonly" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        <%-- /.resums --%>
         <div class="m-results-wrapper ema-publisher ema-ajaxsearch">
              <div class="ema-table-wrapper">
                 <table id="table-id" class="ema-table">
@@ -64,14 +63,22 @@
                             <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.total" /></th>
                             <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.dedicaciones"/></th>
                             <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.horas.extras"/></th>
-                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/>
-                            <liferay-ui:message key="es.emasesa.intranet.gestionhorarios.days"/></th>
+                            <th scope="col"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.vacaciones"/><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.days"/></th>
 
                         </tr>
                     </thead>
                     <tbody  id="as-wrapper">
             <!-- -->
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <th id="total">Total :</th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                   </tfoot>
                 </table>
             </div>
 
@@ -123,11 +130,13 @@ ajaxSearchGlobalConfig = {
                 document.getElementById("sinPlanificar").value = item.vacacionesYear.computoSinFuturo;
                 document.getElementById("vacaciones").value = item.vacacionesYear.contingenteVacaciones;
             } else {
-                document.getElementById("wrapper-resum").classList.add("d-none");
+                document.getElementById("pdtDisfrutar").value = "0d";
+                document.getElementById("sinPlanificar").value = "0d";
+                document.getElementById("vacaciones").value = "0d";
             }
             //if january, show last year
             let currentMonth = new Date().getMonth();
-            if(item.vacacionesLastYear && currentMonth == 0) {
+            if(item.vacacionesLastYear.computoConFuturo && item.vacacionesLastYear.computoSinFuturo && item.vacacionesLastYear.contingenteVacaciones && currentMonth == 0) {
                 document.getElementById("pdtDisfrutarLastYear").value = item.vacacionesLastYear.computoConFuturo;
                 document.getElementById("sinPlanificarLastYear").value = item.vacacionesLastYear.computoSinFuturo;
                 document.getElementById("vacacionesLastYear").value = item.vacacionesLastYear.contingenteVacaciones;
@@ -135,27 +144,82 @@ ajaxSearchGlobalConfig = {
                 document.getElementById("wrapper-resum-lastyear").classList.add("d-none");
             }
         } else {
-            if(payload.content.length > 0){
-                let item = payload.content[0];
-                if(item.vacacionesYear.computoConFuturo && item.vacacionesYear.computoSinFuturo && item.vacacionesYear.contingenteVacaciones) {
+             if(payload.content.length > 0){
+                 let item = payload.content[0];
+                 if(item.vacacionesYear.computoConFuturo && item.vacacionesYear.computoSinFuturo && item.vacacionesYear.contingenteVacaciones) {
                     document.getElementById("pdtDisfrutar").value = item.vacacionesYear.computoConFuturo;
                     document.getElementById("sinPlanificar").value = item.vacacionesYear.computoSinFuturo;
                     document.getElementById("vacaciones").value = item.vacacionesYear.contingenteVacaciones;
-                } else {
-                    document.getElementById("wrapper-resum").classList.add("d-none");
-                }
-                //if january, show last year
-                let currentMonth = new Date().getMonth();
-                if(item.vacacionesLastYear && currentMonth == 0) {
+                 } else {
+                    document.getElementById("pdtDisfrutar").value = "0d";
+                    document.getElementById("sinPlanificar").value = "0d";
+                    document.getElementById("vacaciones").value = "0d";
+                 }
+                 //if january, show last year
+                 let currentMonth = new Date().getMonth();
+                 if(item.vacacionesLastYear.computoConFuturo && item.vacacionesLastYear.computoSinFuturo && item.vacacionesLastYear.contingenteVacaciones && currentMonth == 0) {
                     document.getElementById("pdtDisfrutarLastYear").value = item.vacacionesLastYear.computoConFuturo;
                     document.getElementById("sinPlanificarLastYear").value = item.vacacionesLastYear.computoSinFuturo;
                     document.getElementById("vacacionesLastYear").value = item.vacacionesLastYear.contingenteVacaciones;
-                } else {
+                 } else {
                     document.getElementById("wrapper-resum-lastyear").classList.add("d-none");
+                 }
+             }
+        }
+
+        function ocultarColumnaSiTodosSonCero() {
+            var table = document.getElementById('table-id');
+            var columnas = table.rows[0].cells.length;
+
+            var columnasAOcultar = [3]
+
+            for (var i = 0; i < columnas; i++) {
+                if(columnasAOcultar.includes(i)){
+                    var todosSonCero = true;
+
+                    for (var j = 1; j < table.rows.length; j++) {
+                        if (parseInt(table.rows[j].cells[i].innerHTML) !== 0) {
+                            todosSonCero = false;
+                            break;
+                        }
+                    }
+                    //si todosSonCero ocultar columna
+                    if(todosSonCero){
+                        for (var j = 0; j < table.rows.length; j++) {
+                            table.rows[j].cells[i].classList.add("d-none");
+                        }
+                    }
                 }
             }
         }
+        function desocultarTodasLasColumnas() {
+            var table = document.getElementById('table-id');
+            var columnas = table.rows[0].cells.length;
 
+            for (var i = columnas-1; i >= 0; i--) {
+                for (var j = 0; j < table.rows.length; j++) {
+                    table.rows[j].cells[i].classList.remove("d-none");
+                }
+            }
+        }
+        function sumatorioColumnas() {
+            var table = document.getElementById('table-id');
+            var columnas = table.rows[0].cells.length;
+
+            var columnasASumar = [3]
+            for (var i = 0; i < columnas; i++) {
+                if(columnasASumar.includes(i)){
+                    var sum = 0;
+                    for (var j = 1; j < table.rows.length-1; j++) {
+                        sum += parseFloat(table.rows[j].cells[i].innerHTML);
+                    }
+                    table.rows[table.rows.length-1].cells[i].innerHTML = sum.toFixed(2);
+                } 
+            }
+        }
+        sumatorioColumnas();
+        desocultarTodasLasColumnas();
+        ocultarColumnaSiTodosSonCero();
     }
 }
 </script>

@@ -39,6 +39,7 @@
             td,
             th {
                 padding: 1rem;
+                white-space: nowrap;
                 &:nth-child(even) {
                     background-color: #f6f9ee;
                 }
