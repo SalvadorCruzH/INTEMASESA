@@ -484,10 +484,11 @@ public class CustomWorkflowUtil {
                 pernr = (String) objectValues.get("matriculaSolicitado");
                 LOG.debug("numeroDeMatriculaAjeno: " + pernr);
             } else {
-                pernr = (String) objectValues.get("matricula");
+                pernr = (String) objectValues.get("numeroDeMatricula");
                 LOG.debug("numeroDeMatricula: " + pernr);
             }
-            String fechaInicio = (String) objectValues.get("fechaInicio");
+            String fechaInicio = (String) objectValues.get("fechaDesde").toString();
+            LOG.debug("fechaInicio: " + fechaInicio);
             String horasExtras = (String) objectValues.get("horasPorDiaExtra");
             LOG.debug("horasExtras: " + horasExtras);
             JSONObject json =  JSONFactoryUtil.createJSONObject(horasExtras);
@@ -496,7 +497,7 @@ public class CustomWorkflowUtil {
             LOG.debug("dias: " + dias);
             for (int i = 0; i < dias.length(); i++) {
                 String dia = dias.getString(i);
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
                 LocalDate fecha = LocalDate.parse(fechaInicio, dtf);
 
                 DayOfWeek diaDeLaSemana = fecha.getDayOfWeek();
@@ -509,9 +510,11 @@ public class CustomWorkflowUtil {
                 String retribucion = json.getJSONObject(dia).getString("retribucion");
                 ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
                 Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
-                datosServicio = jornadaNominaService.addHorasExtra(pernr, fechaSeleccionada.format(dtf), horaInicio, horaFin, retribucion);
+                DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                datosServicio = jornadaNominaService.addHorasExtra(pernr, fechaSeleccionada.format(dtf2), horaInicio, horaFin, retribucion);
+                LOG.debug("datosServicio: " + datosServicio);
+                LOG.debug("dias for: " + i);
 
-                return datosServicio;
             }
 
         } catch (PortalException e) {
@@ -521,7 +524,7 @@ public class CustomWorkflowUtil {
         } finally {
             Thread.currentThread().setContextClassLoader(actualClassLoader);
         }
-        return "";
+        return datosServicio;
     }
 
     public int getDayOfWeek(String dia) {

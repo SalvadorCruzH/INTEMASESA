@@ -96,7 +96,7 @@ public class JornadaNominaService {
 
             zpeStActJornadaNomina.setHeInicio(horaInicio + ":00");
             zpeStActJornadaNomina.setHeFin(horaFin + ":00");
-            if(retibucion.isEmpty()){
+            if(!retibucion.isEmpty()){
                 zpeStActJornadaNomina.setHeTipoRetribucion(retibucion);
             }
             zpeStActJornadaNomina.setFechaInicio(fechaInicio);
