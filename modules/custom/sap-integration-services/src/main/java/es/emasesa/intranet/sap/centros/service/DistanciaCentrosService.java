@@ -33,7 +33,10 @@ public class DistanciaCentrosService {
 
     public JSONArray getDistanciaEntreCentros(String origen, String destino) throws DistanciaCentrosException, SapCommunicationException {
 
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPECENTROSDISTANCIAS.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStCentrosDistancias serviceResult = port.zPeCentrosDistancias(destino,origen);
             return JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(serviceResult.getItem()));
         } catch (JSONException | ServerSOAPFaultException e) {
@@ -42,6 +45,7 @@ public class DistanciaCentrosService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] getCertificadoRetenciones");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
 
