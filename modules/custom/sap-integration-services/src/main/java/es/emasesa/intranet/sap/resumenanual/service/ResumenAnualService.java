@@ -7,10 +7,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoJornadaResume;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADARESUM;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOJORNADARESUM_Service;
+import com.sap.document.sap.soap.functions.mc_style.*;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -38,14 +35,17 @@ public class ResumenAnualService {
 
 
     public JSONArray obtenerResumenAnual(String pernr, String anno) throws ResumenAnualException, SapCommunicationException {
-        JSONArray data = JSONFactoryUtil.createJSONArray();
 
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+        JSONArray data = JSONFactoryUtil.createJSONArray();
         Holder<BigDecimal> computoConFuturo = new Holder<>();
         Holder<BigDecimal> computoSinFuturo= new Holder<>();;
         Holder<BigDecimal> computoSinFuturoAnnoAnteri= new Holder<>();;
         Holder<BigDecimal> contingenteVacaciones= new Holder<>();;
         Holder<TableOfZpeStEmpleadoJornadaResume> tEmpleados= new Holder<>();;
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJORNADARESUM.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             port.zPeEmpleadoJornadaResumen(anno,pernr,computoConFuturo,
                     computoSinFuturo,computoSinFuturoAnnoAnteri,contingenteVacaciones,tEmpleados);
             if(!tEmpleados.value.getItem().isEmpty()){
@@ -75,6 +75,7 @@ public class ResumenAnualService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] obtenerMarcajeHistoricoActual");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
         return data;
     }

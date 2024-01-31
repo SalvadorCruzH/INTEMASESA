@@ -153,19 +153,17 @@ public class RestEmasesaNotificacionesApplication extends Application {
         try {
             User user = PermissionThreadLocal.getPermissionChecker().getUser();
 
-            Long notificationsCount = (Long) _customCacheSingleUtil.get("NOTIFICATIONS_COUNT" + user.getUserId());
-            if (notificationsCount == null) {
-                DSLQuery queryCount = DSLQueryFactoryUtil
-                        .count()
-                        .from(UserNotificationEventTable.INSTANCE)
-                        .where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
-                                .and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
-                                        .and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))));
+            Long notificationsCount = 0L;
+            DSLQuery queryCount = DSLQueryFactoryUtil
+                    .count()
+                    .from(UserNotificationEventTable.INSTANCE)
+                    .where(UserNotificationEventTable.INSTANCE.type.eq("com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet")
+                            .and(UserNotificationEventTable.INSTANCE.actionRequired.eq(false)
+                                    .and(UserNotificationEventTable.INSTANCE.userId.eq(user.getUserId()))));
 
-                int userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
-                notificationsCount = (long) userNotificationEventCount;
-                _customCacheSingleUtil.put("NOTIFICATIONS_COUNT" + user.getUserId(), notificationsCount, CustomCacheSingleUtil.TTL_10_MIN);
-            }
+            int userNotificationEventCount = _userNotificationEventLocalService.dslQueryCount(queryCount);
+            notificationsCount = (long) userNotificationEventCount;
+            _customCacheSingleUtil.put("NOTIFICATIONS_COUNT" + user.getUserId(), notificationsCount, CustomCacheSingleUtil.TTL_10_MIN);
             JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
             jsonObject.put("count", notificationsCount);
             return Response

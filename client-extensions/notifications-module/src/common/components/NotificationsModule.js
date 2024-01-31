@@ -144,8 +144,9 @@ class NotificationsModule extends React.Component {
         if (confirm(msg)) {
             let arraySelected = [];
             document.querySelectorAll('input.checkBoxRead').forEach(checkbox => {
-                arraySelected.push(checkbox.value);
+                NotificationApi.markAsRed(checkbox.value, this.callDataCallback, this.callDataCallback);
             });
+            this.loadNotificationsRefresh();
             console.log(arraySelected);
         }
     }

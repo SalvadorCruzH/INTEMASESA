@@ -39,7 +39,10 @@ public class JornadaDiariaService {
 
         LoggerUtil.debug(LOG, "[B] obtenerJornadaDiaria");
         JSONArray data = JSONFactoryUtil.createJSONArray();
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOJORNADADIARI.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TABLEOFZPESTEMPLEADOJORNADADIARIA response = port.zPeEmpleadoJornadaDiaria(fechaFin, fechaInicio, pernr);
             if (!response.getItem().isEmpty()) {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
@@ -52,6 +55,7 @@ public class JornadaDiariaService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] obtenerJornadaDiaria");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
         return data;
     }

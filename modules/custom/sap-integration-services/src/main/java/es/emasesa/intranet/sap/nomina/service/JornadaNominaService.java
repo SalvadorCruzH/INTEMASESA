@@ -69,11 +69,10 @@ public class JornadaNominaService {
     }
 
     public Bapireturn1 peticionHorasExtras(String idEmpleado, LocalDateTime fechaInicio, LocalDateTime fechaFin, String tipoRetribucion) {
+
         try {
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(idEmpleado);
-            //zpeStActJornadaNomina.setHeInicio(getXMLGregorianCalendar(fechaInicio));
-            //zpeStActJornadaNomina.setHeFin(getXMLGregorianCalendar(fechaFin));
             zpeStActJornadaNomina.setHeTipoRetribucion(tipoRetribucion);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             zpeStActJornadaNomina.setFechaInicio(fechaInicio.format(dtf));
@@ -90,6 +89,7 @@ public class JornadaNominaService {
     }
 
     public String addHorasExtra(String pernr, String fechaInicio, String horaInicio, String horaFin, String retibucion) {
+
         try {
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(pernr);
@@ -112,6 +112,7 @@ public class JornadaNominaService {
     public String cambioDomiciliacionBancaria(String pernr, String fechaInicio, String iban){
 
         try {
+
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(pernr);
             zpeStActJornadaNomina.setFechaInicio(fechaInicio);
@@ -129,6 +130,7 @@ public class JornadaNominaService {
 
     public String addPlusSap(String pernr, String fechaInicio, String parte, BigDecimal unidades){
         try {
+
             ZpeStActJornadaNomina zpeStActJornadaNomina = getObjectFactory().createZpeStActJornadaNomina();
             zpeStActJornadaNomina.setPernr(pernr);
             zpeStActJornadaNomina.setFechaInicio(fechaInicio);
@@ -159,7 +161,6 @@ public class JornadaNominaService {
 
             //TODO: he cambiado marcajeHora de XMLGregorianCalendar a String HH:mm:ss
             zpeStActJornadaNomina.setMarcajeHora(hora+":00");
-
 
             if (!motivo.equals(StringPool.BLANK)) {
                 zpeStActJornadaNomina.setMarcajeMotivo(motivo);

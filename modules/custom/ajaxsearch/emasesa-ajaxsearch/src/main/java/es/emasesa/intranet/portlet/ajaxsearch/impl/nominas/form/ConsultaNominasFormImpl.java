@@ -1,17 +1,15 @@
-package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.form;
+package es.emasesa.intranet.portlet.ajaxsearch.impl.nominas.form;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchForm;
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Properties;
 import javax.portlet.ActionRequest;
@@ -48,7 +46,7 @@ public class ConsultaNominasFormImpl implements AjaxSearchForm {
         return Boolean.TRUE;
     }
 
-    private static final String VIEW = "/views/solicitudes/nominas/form.jsp";
+    private static final String VIEW = "/views/nominas/form.jsp";
 
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,

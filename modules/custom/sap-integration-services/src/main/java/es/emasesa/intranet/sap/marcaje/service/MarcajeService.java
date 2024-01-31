@@ -38,8 +38,11 @@ public class MarcajeService {
     public JSONArray obtenerMarcajeHistoricoActual(String pernr, String fechaInicio, String fechaFin) throws MarcajeException, SapCommunicationException {
 
         LoggerUtil.debug(LOG, "[B] obtenerMarcajeHistoricoActual");
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         JSONArray data = JSONFactoryUtil.createJSONArray();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEMARCAJESHISTORICOACT.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStMarcajesHistoricoActu response = port.zPeMarcajesHistoricoActual(fechaFin, fechaInicio, pernr);
             if (response.getItem().size() > 0) {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
@@ -52,6 +55,7 @@ public class MarcajeService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] obtenerMarcajeHistoricoActual");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
         return data;
     }

@@ -66,8 +66,8 @@ public class SubordinadosService {
         if (LOG.isDebugEnabled()) {
             LOG.debug("[I] Activando SubordinadosService");
         }
-        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();

@@ -1,1 +1,324 @@
-{"definitionSchemaVersion":"2.0","availableLanguageIds":["es_ES"],"successPage":{"body":{},"title":{},"enabled":false},"defaultLanguageId":"es_ES","fields":[{"labelAtStructureLevel":true,"ddmDataProviderInstanceId":[],"tooltip":{"es_ES":""},"requireConfirmation":false,"type":"text","required":true,"showLabel":true,"displayStyle":"singleline","ddmDataProviderInstanceOutput":[],"repeatable":false,"options":[{"reference":"Opción34333416","label":{"es_ES":"Opción"},"value":"Opción34333416"}],"nativeField":false,"confirmationLabel":{"es_ES":""},"fieldReference":"tituloEventoLiferay","tip":{"es_ES":""},"placeholder":{"es_ES":""},"direction":["vertical"],"confirmationErrorMessage":{"es_ES":""},"hideField":false,"autocomplete":false,"dataType":"string","readOnly":false,"label":{"es_ES":"Título"},"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","name":"Text76903994","localizable":true,"dataSourceType":"manual"},{"labelAtStructureLevel":true,"dataType":"date","readOnly":false,"label":{"es_ES":"Fecha inicio"},"type":"date","required":true,"showLabel":true,"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","repeatable":false,"name":"Date66546500","localizable":true,"nativeField":false,"fieldReference":"fechaInicio","tip":{"es_ES":""}},{"labelAtStructureLevel":true,"dataType":"date","readOnly":false,"label":{"es_ES":"Fecha fin"},"type":"date","required":true,"showLabel":true,"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","repeatable":false,"name":"Date70216360","localizable":true,"nativeField":false,"fieldReference":"fechaFin","tip":{"es_ES":""}},{"labelAtStructureLevel":true,"ddmDataProviderInstanceId":[],"tooltip":{"es_ES":""},"requireConfirmation":false,"type":"text","required":false,"showLabel":true,"displayStyle":"singleline","ddmDataProviderInstanceOutput":[],"repeatable":false,"options":[{"reference":"Opción34333416","label":{"es_ES":"Opción"},"value":"Opción34333416"}],"nativeField":false,"confirmationLabel":{"es_ES":""},"fieldReference":"resumenEvento","tip":{"es_ES":""},"placeholder":{"es_ES":""},"direction":["vertical"],"confirmationErrorMessage":{"es_ES":""},"hideField":false,"autocomplete":false,"dataType":"string","readOnly":false,"label":{"es_ES":"Resumen"},"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","name":"Text35831125","localizable":true,"dataSourceType":"manual"},{"dataType":"link-to-page","readOnly":false,"label":{"es_ES":"Enlace a página"},"type":"link_to_layout","required":false,"showLabel":true,"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","repeatable":false,"name":"LinkToLayout28651985","localizable":true,"fieldReference":"LinkToLayout28651985","tip":{"es_ES":""}},{"labelAtStructureLevel":true,"ddmDataProviderInstanceId":[],"tooltip":{"es_ES":""},"requireConfirmation":false,"type":"text","required":true,"showLabel":true,"displayStyle":"singleline","ddmDataProviderInstanceOutput":[],"repeatable":false,"options":[{"reference":"Opción34333416","label":{"es_ES":"Opción"},"value":"Opción34333416"}],"nativeField":false,"confirmationLabel":{"es_ES":""},"fieldReference":"direccionEvento","tip":{"es_ES":""},"placeholder":{"es_ES":""},"direction":["vertical"],"confirmationErrorMessage":{"es_ES":""},"hideField":false,"autocomplete":false,"dataType":"string","readOnly":false,"label":{"es_ES":"Dirección"},"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","name":"Text14848302","localizable":true,"dataSourceType":"manual"},{"labelAtStructureLevel":true,"dataType":"document-library","readOnly":false,"label":{"es_ES":"documentoAdjunto"},"type":"document_library","required":false,"showLabel":true,"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","repeatable":true,"allowGuestUsers":false,"name":"DocumentLibrary20519620","localizable":true,"fieldReference":"documentoAdjunto","tip":{"es_ES":""}}]}
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "es_ES"
+  ],
+  "successPage": {
+    "body": {},
+    "title": {},
+    "enabled": false
+  },
+  "defaultLanguageId": "es_ES",
+  "fields": [
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": true,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción34333416",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción34333416"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "tituloEventoLiferay",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Título"
+      },
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "name": "Text76903994",
+      "localizable": true,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "date",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Fecha inicio"
+      },
+      "type": "date",
+      "required": true,
+      "showLabel": true,
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "repeatable": false,
+      "name": "Date66546500",
+      "localizable": true,
+      "nativeField": false,
+      "fieldReference": "fechaInicio",
+      "tip": {
+        "es_ES": ""
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "date",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Fecha fin"
+      },
+      "type": "date",
+      "required": true,
+      "showLabel": true,
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "repeatable": false,
+      "name": "Date70216360",
+      "localizable": true,
+      "nativeField": false,
+      "fieldReference": "fechaFin",
+      "tip": {
+        "es_ES": ""
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Tipo de formación"
+      },
+      "type": "radio",
+      "required": true,
+      "showLabel": true,
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "inline": true,
+      "repeatable": false,
+      "name": "Tipodeformacion",
+      "options": [
+        {
+          "reference": "Externa",
+          "label": {
+            "es_ES": "Externa"
+          },
+          "value": "Externa"
+        },
+        {
+          "reference": "Interna",
+          "label": {
+            "es_ES": "Interna"
+          },
+          "value": "Interna"
+        }
+      ],
+      "localizable": true,
+      "nativeField": false,
+      "fieldReference": "tipoFormacion",
+      "tip": {
+        "es_ES": ""
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Modalidad"
+      },
+      "type": "radio",
+      "required": true,
+      "showLabel": true,
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "inline": true,
+      "repeatable": false,
+      "name": "Modalidad",
+      "options": [
+        {
+          "reference": "Presencial",
+          "label": {
+            "es_ES": "Presencial"
+          },
+          "value": "Presencial"
+        },
+        {
+          "reference": "eLearning",
+          "label": {
+            "es_ES": "eLearning"
+          },
+          "value": "eLearning"
+        },
+        {
+          "reference": "Streaming",
+          "label": {
+            "es_ES": "Streaming"
+          },
+          "value": "Streaming"
+        }
+      ],
+      "localizable": true,
+      "nativeField": false,
+      "fieldReference": "modalidadFormacion",
+      "tip": {
+        "es_ES": ""
+      }
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": false,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción34333416",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción34333416"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "resumenEvento",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Resumen"
+      },
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "name": "Text35831125",
+      "localizable": true,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "ddmDataProviderInstanceId": [],
+      "tooltip": {
+        "es_ES": ""
+      },
+      "requireConfirmation": false,
+      "type": "text",
+      "required": true,
+      "showLabel": true,
+      "displayStyle": "singleline",
+      "ddmDataProviderInstanceOutput": [],
+      "repeatable": false,
+      "options": [
+        {
+          "reference": "Opción34333416",
+          "label": {
+            "es_ES": "Opción"
+          },
+          "value": "Opción34333416"
+        }
+      ],
+      "nativeField": false,
+      "confirmationLabel": {
+        "es_ES": ""
+      },
+      "fieldReference": "direccionEvento",
+      "tip": {
+        "es_ES": ""
+      },
+      "placeholder": {
+        "es_ES": ""
+      },
+      "direction": [
+        "vertical"
+      ],
+      "confirmationErrorMessage": {
+        "es_ES": ""
+      },
+      "hideField": false,
+      "autocomplete": false,
+      "dataType": "string",
+      "readOnly": false,
+      "label": {
+        "es_ES": "Dirección"
+      },
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "name": "Text14848302",
+      "localizable": true,
+      "dataSourceType": "manual"
+    },
+    {
+      "labelAtStructureLevel": true,
+      "dataType": "document-library",
+      "readOnly": false,
+      "label": {
+        "es_ES": "documentoAdjunto"
+      },
+      "type": "document_library",
+      "required": false,
+      "showLabel": true,
+      "indexType": "keyword",
+      "fieldNamespace": "",
+      "visibilityExpression": "",
+      "repeatable": true,
+      "allowGuestUsers": false,
+      "name": "DocumentLibrary20519620",
+      "localizable": true,
+      "fieldReference": "documentoAdjunto",
+      "tip": {
+        "es_ES": ""
+      }
+    }
+  ]
+}

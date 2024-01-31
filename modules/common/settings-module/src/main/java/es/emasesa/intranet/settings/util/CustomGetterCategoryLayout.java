@@ -33,7 +33,7 @@ public class CustomGetterCategoryLayout {
         List<Layout> pages = null;
         PortalCache<String, Object> cache = CustomCacheSingleUtil.getPortalCache();
         pages = (List<Layout>) CustomCacheSingleUtil.get(cache, cacheKey);
-        LOG.debug("pages: " + pages);
+
         if(Validator.isNull(pages)) {
             // If cache is empty, get result and store in cache
             try {
@@ -80,6 +80,7 @@ public class CustomGetterCategoryLayout {
             Comparator<Layout> comparador = Comparator.comparing(Layout::getModifiedDate);
             pages.sort(comparador.reversed());
         }
+        LOG.debug("fin de getDescendants pages: " + pages);
         return pages;
     }
 

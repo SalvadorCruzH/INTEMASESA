@@ -20,6 +20,8 @@ public class EmasesaConstants {
     public static final String EMASESA_EXPANDO_NOMBRE = "nombre";
     public static final String EMASESA_EXPANDO_MATRICULA = "matricula";
     public static final String EMASESA_EXPANDO_USUARIO = "usuario";
+    public static final String EMASESA_EXPANDO_DEPARTAMENTO = "departamento";
+    public static final String EMASESA_EXPANDO_PUESTOTRABAJO = "puestoTrabajo";
     public static final String EMASESA_FOLDER_OBJECTS = "PDF Objects";
     public static final String EMASESA_MIMETYPE = "application/pdf";
     

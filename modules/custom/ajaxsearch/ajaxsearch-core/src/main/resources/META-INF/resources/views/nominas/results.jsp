@@ -1,5 +1,6 @@
 <%@ include file="init.jsp" %>
 
+<liferay-portlet:resourceURL var="consultaNomina" id="consultaNomina"/>
 <div class="m-searchAjax m-searchAjax--results">
     <div>
         <div id="as-total-items">
@@ -23,12 +24,13 @@
                     </tbody>
                 </table>
             </div>
-<button class="btn btn-primary">
-						<div id="descargarButton" class="ema-download-all-button">
 
+						<button class="btn btn-primary" onclick="descargar()">
+                <div id="descargarButton" class="ema-download-all-button">
+                    <liferay-ui:message key="es.emasesa.intranet.nominas.descargaNominas" />
+                </div>
+            </button>
 
-            </div>
-</button>
             <div id="wrapper-not-result" class="d-none">
                 <liferay-ui:message key="no-results" />
             </div>
@@ -69,13 +71,24 @@ ajaxSearchGlobalConfig = {
     _predrawAll : function (payload) {},
     _postdrawAll : function (payload) {
 
-        if (payload.content && payload.content[0] && payload.content[0].descargaUrl) {
-            var myDiv = document.getElementById('descargarButton');
-            myDiv.innerHTML = payload.content[0].descargaUrl;
-            addClickFunctionality();
-        }
+			$('a[href]').each(function () {
+          var href = this.href;
+
+          $(this).removeAttr('href').css('cursor', 'pointer').click(function () {
+              if (href.toLowerCase().indexOf("#") >= 0) {
+
+              } else {
+                  window.open(href, '_blank');
+              }
+          });
+      });
     }
 }
+
+function descargar() {
+		location.href="${consultaNomina}";
+}
+
 $(document).ready(function () {
     var options = $(".results-pagination-select-container .results-pagination-select option");
     for (var i = 0; i < options.length; i++) {
