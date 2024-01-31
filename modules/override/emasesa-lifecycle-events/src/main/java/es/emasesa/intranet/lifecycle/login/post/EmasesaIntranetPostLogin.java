@@ -68,6 +68,7 @@ public class EmasesaIntranetPostLogin extends Action {
             ThreadContext.push(screenName);
             LoggerUtil.debug(LOG, "Se procede a actualizar el usuario con user id " + screenName);
             JSONObject employerData = _sapServices.getDatosEmpleadoAndDomicilio(screenName);
+            JSONObject jobData = _sapServices.getEmpleadoEstructura(employerData.getString("pernr"));
             LoggerUtil.debug(LOG, "Datos de empleado :" + employerData);
             User user = _userLocalService.fetchUserByScreenName(companyId, screenName);
             PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
@@ -76,7 +77,7 @@ public class EmasesaIntranetPostLogin extends Action {
                 PermissionThreadLocal.setPermissionChecker(permissionChecker);
             }
 
-            if (employerData != null && employerData.getJSONObject("datosDomicilio") != null) {
+            if (jobData != null && employerData != null && employerData.getJSONObject("datosDomicilio") != null) {
                 Map<String, Serializable> expandoAttributes = user.getExpandoBridge().getAttributes();
 
                 JSONObject addressData = employerData.getJSONObject("datosDomicilio");
@@ -96,6 +97,8 @@ public class EmasesaIntranetPostLogin extends Action {
                 expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NOMBRE, employerData.getString("nombre", StringConstants.EMPTY));
                 expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
                 expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, employerData.getString("pernr", StringConstants.EMPTY));
+                expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_DEPARTAMENTO, jobData.getString("posicionDesc", StringConstants.EMPTY));
+                expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_PUESTOTRABAJO, jobData.getString("funcionDesc", StringConstants.EMPTY));
 
                 user.getExpandoBridge().setAttributes(expandoAttributes, false);
 
