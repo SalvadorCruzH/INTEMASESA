@@ -13,7 +13,6 @@ import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.logging.LogInterceptor;
 import es.emasesa.intranet.sap.empleadoBanco.exception.EmpleadoBancoException;
-import es.emasesa.intranet.sap.empleadoPrestamos.exception.EmpleadoPrestamosException;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
@@ -32,9 +31,12 @@ import java.util.List;
 public class EmpleadoBancoService {
 
     public JSONArray getEmpleadoBanco(String pernr) throws EmpleadoBancoException, SapCommunicationException {
-        JSONArray data = JSONFactoryUtil.createJSONArray();
 
+        JSONArray data = JSONFactoryUtil.createJSONArray();
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOBANCO.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStEmpleadoBanco response = port.zPeEmpleadoBanco(pernr);
             if (!response.getItem().isEmpty()) {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
@@ -46,6 +48,7 @@ public class EmpleadoBancoService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] getEmpleadoBanco");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
         return data;
     }

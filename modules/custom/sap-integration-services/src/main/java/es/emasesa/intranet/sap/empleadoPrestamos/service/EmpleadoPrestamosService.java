@@ -30,21 +30,25 @@ import java.util.List;
 @org.springframework.stereotype.Component("prestamoEmpleados")
 public class EmpleadoPrestamosService {
 
-   public JSONArray obtenerPrestamoEmpleados(String pernr, String fechaInicio) throws EmpleadoPrestamosException, SapCommunicationException {
-        JSONArray data = JSONFactoryUtil.createJSONArray();
+    public JSONArray obtenerPrestamoEmpleados(String pernr, String fechaInicio) throws EmpleadoPrestamosException, SapCommunicationException {
 
+        JSONArray data = JSONFactoryUtil.createJSONArray();
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOPRESTAMOS.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStEmpleadoPrestamos response = port.zPeEmpleadoPrestamos(fechaInicio, pernr);
             if (!response.getItem().isEmpty()) {
                 data = JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(response.getItem()));
             }
-        }catch (JSONException | ServerSOAPFaultException e) {
+        } catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
             throw new EmpleadoPrestamosException("Error con el WS:" + e.getMessage(), e);
         } catch (ClientTransportException e) {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] obtenerprestamoEmpleados");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
         return data;
     }
@@ -81,18 +85,18 @@ public class EmpleadoPrestamosService {
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
-            List<Handler> handlerChain =  bp.getBinding().getHandlerChain();
+            List<Handler> handlerChain = bp.getBinding().getHandlerChain();
             handlerChain.add(new LogInterceptor());
             bp.getBinding().setHandlerChain(handlerChain);
             bp.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
             bp.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, password);
             /**********************************************************************/
-            LOG.info(this.getClass().getName() +" cargado correctamente");
+            LOG.info(this.getClass().getName() + " cargado correctamente");
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Se ha producido un error instanciando el servicio de EmpleadoPrestamosService");
             }
-        }catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             if (LOG.isInfoEnabled()) {
                 LOG.info("Error en el WSDL de ZWSPEEMPLEADOPRESTAMOS_Service --> " + configuration.empleadoPrestamosEndpoint());
             }

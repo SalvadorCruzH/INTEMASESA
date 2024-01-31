@@ -206,7 +206,7 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 
 			totalItems = array.length();
 			List<JSONObject> listJson = new ArrayList<>();
-			for(int i = array.length()-1;i>=0;i--){
+			for(int i = 0;i<array.length();i++){
 
 				listJson.add(array.getJSONObject(i));
 			}
@@ -214,6 +214,13 @@ public class JornadaDiariaResultImpl implements AjaxSearchResult {
 			listJson.subList(start,end).stream().forEach(j->{
 
 				try {
+					if (j.getString("SEMAFORO").equals("R")) {
+						j.put("tooltip", "Jornada Incompleta");
+					} else if (j.getString("SEMAFORO").equals("V")) {
+						j.put("tooltip", "Jornada con Superávit");
+					} else {
+						j.put("tooltip", "");
+					}
 					j.put("dia", getDatum(themeDisplay, j));
 					jsonArray.put(j);
 				} catch (java.text.ParseException e) {

@@ -33,7 +33,10 @@ public class CiertosDatosEstructuraService {
     public JSONObject getCiertosDatosEstructura() throws CiertosDatosEstructuraException, SapCommunicationException {
 
         LoggerUtil.debug(LOG, "[B] getCiertosDatosEstructura");
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPECIERTOSDATOSESTRUCTU.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             Holder<String> consejeroId = new Holder<>();
             Holder<String> direccionRrhhRespId = new Holder<>();
             Holder<String> divisionRrhhRespId = new Holder<>();
@@ -56,6 +59,7 @@ public class CiertosDatosEstructuraService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación ", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] getCiertosDatosEstructura");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
 

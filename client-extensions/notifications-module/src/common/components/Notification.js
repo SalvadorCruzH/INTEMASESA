@@ -21,10 +21,18 @@ class Notification extends React.Component {
 
     markAsRead = () => {
         console.log(this.state.notification)
-        NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.goTo(), this.callDataCallback);
+        NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.callDataCallback, this.callDataCallback);
     }
 
     goTo = () => {
+        NotificationApi.markAsRed(this.state.notification.userNotificationEventId, this.count, this.count);
+    }
+
+    count = () => {
+        NotificationApi.count(this.goTo2, this.goTo2);
+    }
+
+    goTo2 = () => {
         location.href= this.state.configuration.objectMapping[this.state.notification.payload.entryType].urlNotificacion;
         return "";
     }
@@ -95,7 +103,7 @@ class Notification extends React.Component {
                             </button>) : (
                                 <button className="btn btn-primary ema-notifications__item__btn" type="button"
                                         data-event={this.state.notification.userNotificationEventId}
-                                        onClick={this.markAsRead}>
+                                        onClick={this.goTo}>
                                     Ver tarea
                                 </button>
                             )}

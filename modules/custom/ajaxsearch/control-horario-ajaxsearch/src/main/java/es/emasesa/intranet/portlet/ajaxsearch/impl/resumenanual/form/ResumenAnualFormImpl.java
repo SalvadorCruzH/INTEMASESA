@@ -84,7 +84,7 @@ public class ResumenAnualFormImpl implements AjaxSearchForm {
             localDate = LocalDate.now();
             localDate = localDate.minusMonths(i);
             String value = localDate.format(DateTimeFormatter.ofPattern("MMyyyy"));
-            String label = localDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+            String label = localDate.getMonth().getDisplayName(TextStyle.FULL, new Locale("es")) + " " + localDate.getYear();
             month.put("value",value);
             month.put("label",label);
             months.put(month);

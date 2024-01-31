@@ -28,7 +28,7 @@ const NotificationApi = {
 
     count: (callback, errorHandler) => {
         let defUrl = Constants.NOTIFICATION_URL.COUNT;
-        LiferayApi.put(
+        LiferayApi.get(
             Constants.oauthUserAgent.CLIENT_ID,
             Constants.oauthUserAgent.URL_DEFAULT_NATIVE + defUrl,
             callback,
