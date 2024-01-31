@@ -39,7 +39,10 @@ public class EmpleadoEstructuraService {
     public JSONObject getEmpleadoEstructura(String pernr) throws EmpleadoEstructuraException, SapCommunicationException {
 
         LoggerUtil.debug(LOG, "[B] getEmpleadoEstructura");
+        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOESTRUCTURA.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             TableOfZpeStEmpleadoEstructura result = port.zPeEmpleadoEstructura(pernr);
             ZpeStEmpleadoEstructura empleadoEstructura = result.getItem().stream().findFirst().orElse(null);
 
@@ -50,6 +53,7 @@ public class EmpleadoEstructuraService {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
             LoggerUtil.debug(LOG, "[E] getEmpleadoEstructura");
+            Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
 
@@ -65,7 +69,6 @@ public class EmpleadoEstructuraService {
         }
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
-
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
