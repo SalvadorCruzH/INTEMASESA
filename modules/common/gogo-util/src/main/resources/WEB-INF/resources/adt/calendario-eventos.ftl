@@ -114,44 +114,46 @@
 			displayEvent: true,
 			events: [
 				<#if entries?has_content>
-				<#list entries as curEntry>
-				<#assign categories = curEntry.getCategories() />
-				<#assign renderer = curEntry.getAssetRenderer() className = renderer.getClassName() viewURL = (!stringUtil.equals(assetLinkBehavior, "showFullContent"))?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
-                />
-				<#if className == "com.liferay.journal.model.JournalArticle">
-				<#assign journalArticle = renderer.getArticle() />
-				${request.setAttribute("viewURL", viewURL )}
-				<@createEvento journalArticle categories/>
-				</#if>
-				</#list>
+					<#list entries as curEntry>
+						<#assign categories = curEntry.getCategories() />
+
+						<#assign renderer = curEntry.getAssetRenderer() className = renderer.getClassName() viewURL = (!stringUtil.equals(assetLinkBehavior, "showFullContent"))?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
+						/>
+						<#if className == "com.liferay.journal.model.JournalArticle">
+							<#assign journalArticle = renderer.getArticle() />
+
+							${request.setAttribute("viewURL", viewURL )}
+							<@createEvento journalArticle categories/>
+						</#if>
+					</#list>
 				</#if>
 				<#list eventos as item>
-				<#assign dia=item.begda?substring(8, 10)>
-				<#assign diaFin=item.endda?substring(8, 10)>
-				<#assign mes=item.begda?substring(5, 7)>
-				<#assign mesFin=item.endda?substring(5, 7)>
-				<#assign year=item.begda?substring(2, 4)>
-				<#assign yearFin=item.endda?substring(2, 4)>
-				<#assign fechaInicio = dia+"/"+mes+"/"+year/>
-				<#assign fechaFin = diaFin+"/"+mesFin+"/"+yearFin/>
-				{
-					startDate: new Date('${item.begda}').toDateString(),
-					endDate: new Date('${item.endda}').toDateString(),
-					summary: '${item.eventoDesc}',
-					<#if fechaInicio != fechaFin>
-					propstart: '${fechaInicio} - ${fechaFin}',
-					<#else>
-					propstart: '${fechaInicio}',
-					</#if>
-					duracion: '${item.duracion}',
-					formacion: '${item.convocatoria}',
-					modalidad: '${item.modalidad}',
-					eventoId: '${item.eventoId}',
-					<#if item.asisteElEmpleado != "">
-					asisteElEmpleado: '${item.asisteElEmpleado}',
-					</#if>
+					<#assign dia=item.begda?substring(8, 10)>
+					<#assign diaFin=item.endda?substring(8, 10)>
+					<#assign mes=item.begda?substring(5, 7)>
+					<#assign mesFin=item.endda?substring(5, 7)>
+					<#assign year=item.begda?substring(2, 4)>
+					<#assign yearFin=item.endda?substring(2, 4)>
+					<#assign fechaInicio = dia+"/"+mes+"/"+year/>
+					<#assign fechaFin = diaFin+"/"+mesFin+"/"+yearFin/>
+					{
+						startDate: new Date('${item.begda}').toDateString(),
+						endDate: new Date('${item.endda}').toDateString(),
+						summary: '${item.eventoDesc}',
+						<#if fechaInicio != fechaFin>
+						propstart: '${fechaInicio} - ${fechaFin}',
+						<#else>
+						propstart: '${fechaInicio}',
+						</#if>
+						duracion: '${item.duracion}',
+						formacion: '${item.convocatoria}',
+						modalidad: '${item.modalidad}',
+						eventoId: '${item.eventoId}',
+						<#if item.asisteElEmpleado != "">
+						asisteElEmpleado: '${item.asisteElEmpleado}',
+						</#if>
 
-				},
+					},
 				</#list>
 			],
 			disableEventDetails: false,
