@@ -40,7 +40,9 @@ Export-Package: \
     es.emasesa.intranet.sap.calendarioeventos.service,\
     es.emasesa.intranet.sap.calendarioeventos.exception,\
     es.emasesa.intranet.sap.ciertosdatos.service,\
-    es.emasesa.intranet.sap.ciertosdatos.exception
+    es.emasesa.intranet.sap.ciertosdatos.exception,\
+    es.emasesa.intranet.sap.historForm.service,\
+    es.emasesa.intranet.sap.historForm.exception
 
 Import-Package:\*;resolution:=optional
 
