@@ -2,7 +2,7 @@
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-textarea-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 <div id="${fragmentEntryLinkNamespace}-horasDiv">
-	
+
 		</div>
 		<textarea disabled style="display:none" aria-describedby="${fragmentEntryLinkNamespace}-textarea-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-textarea-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-textarea-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-textarea" name="${input.name}" placeholder="${configuration.placeholder}" ${input.required?then('required', '')} [#if configuration.numberOfLines > 0]rows="${configuration.numberOfLines}"[/#if] type="text">[#if input.value??]${input.value}[/#if]</textarea>
 

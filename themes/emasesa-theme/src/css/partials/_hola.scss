@@ -78,6 +78,9 @@
                 display: flex;
                 @include media-breakpoint-up(lg) {
                     flex: 1;
+                    > div {
+                        flex: 1;
+                    }
                 }
                 a {
                     border-bottom: 1px solid $color-light-grey;
@@ -101,6 +104,7 @@
                     img {
                         width: 30px;
                         height: auto;
+                        max-height: 20px;
                     }
                 }
                 &:last-child a {

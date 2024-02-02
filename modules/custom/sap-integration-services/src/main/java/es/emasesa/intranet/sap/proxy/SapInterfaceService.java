@@ -10,6 +10,7 @@ import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
+import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
@@ -61,6 +62,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected CalendarioEventosService calendarioEventosService;
     @Autowired(required = false)
     protected EmpleadoActDatosPersonalesService empleadoActDatosPersonalesService;
+    @Autowired(required = false)
+    protected HistorFormService historFormService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -115,5 +118,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public EmpleadoActDatosPersonalesService getEmpleadoActDatosPersonalesService() {
         return empleadoActDatosPersonalesService;
+    }
+    public HistorFormService getHistorFormService() {
+        return historFormService;
     }
 }

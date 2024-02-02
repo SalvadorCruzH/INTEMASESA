@@ -16,7 +16,7 @@
             </a>
         </li>
         <li class="i-header__userItem">
-            <a class="i-header__userLink" href="#">
+            <a class="i-header__userLink" href="https://outlook.office.com/mail/" target="_blank">
                 <i class="i-icon i-icon--grey fa-solid fa-envelope"></i>
                 <span class="sr-only"><@liferay.language key='es.emasesa.intranet.common.mail'/></span>
             </a>

@@ -4,7 +4,7 @@
     <div>
         <div class="resums">
             <div id="wrapper-resum" class="resum">
-                <h3 class="resum__title">Año actual</h3>
+                <h3 class="resum__title"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.this-year"/></h3>
                 <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
                 <div class="resum__datas">
                     <span class="m-searchAjax pdt-disfrutar resum__data">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div id="wrapper-resum-lastyear" class="resum">
-                <h3 class="resum__title">Año pasado</h3>
+                <h3 class="resum__title"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.past-year"/></h3>
                 <span class="resum__label"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.computo"/></span>
                 <div class="resum__datas">
                     <span class="m-searchAjax pdt-disfrutar resum__data">
@@ -84,7 +84,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th id="total">Total :</th>
+                      <th id="total"><liferay-ui:message key="es.emasesa.intranet.gestionhorarios.sum-total"/>:</th>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -218,7 +218,7 @@ ajaxSearchGlobalConfig = {
                     var todosSonCero = true;
 
                     for (var j = 1; j < table.rows.length; j++) {
-                        if (parseInt(table.rows[j].cells[i].innerHTML) !== 0) {
+                        if (parseFloat(table.rows[j].cells[i].innerHTML) !== 0) {
                             todosSonCero = false;
                             break;
                         }
@@ -257,9 +257,31 @@ ajaxSearchGlobalConfig = {
                 } 
             }
         }
+        function formatearMinutos() {
+            var table = document.getElementById('table-id');
+            var columnas = table.rows[0].cells.length;
+
+            var columnasAModificar = [2,5,6,7,8]
+            for (var i = 0; i < columnas; i++) {
+                if(columnasAModificar.includes(i)){
+                    for (var j = 1; j < table.rows.length; j++) {
+                        var numero = parseFloat(table.rows[j].cells[i].innerHTML)
+                        var parteEntera = Math.floor(numero);
+                        var parteDecimal = numero - parteEntera;
+                        var minutos = Math.round(parteDecimal * 60);
+                        if (minutos < 10) {
+                            minutos = "0" + minutos;
+                        }
+                        var horaFormateada = parteEntera + ":" + minutos;
+                        table.rows[j].cells[i].innerHTML = horaFormateada;
+                    }
+                }
+            }
+        }
         sumatorioColumnas();
         desocultarTodasLasColumnas();
         ocultarColumnaSiTodosSonCero();
+        formatearMinutos();
     }
 }
 </script>

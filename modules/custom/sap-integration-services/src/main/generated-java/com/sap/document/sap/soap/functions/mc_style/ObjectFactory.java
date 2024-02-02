@@ -639,4 +639,36 @@ public class ObjectFactory {
         return new ZpeStSubordinados();
     }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistform }
+     *
+     */
+    public ZPeEmpleadoHistform createZPeEmpleadoHistform() {
+        return new ZPeEmpleadoHistform();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistformResponse }
+     *
+     */
+    public ZPeEmpleadoHistformResponse createZPeEmpleadoHistformResponse() {
+        return new ZPeEmpleadoHistformResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistform }
+     *
+     */
+    public TableOfZpeStEmpleadoHistform createTableOfZpeStEmpleadoHistform() {
+        return new TableOfZpeStEmpleadoHistform();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistform }
+     *
+     */
+    public ZpeStEmpleadoHistform createZpeStEmpleadoHistform() {
+        return new ZpeStEmpleadoHistform();
+    }
+
 }

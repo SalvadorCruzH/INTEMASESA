@@ -152,4 +152,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String empleadoActDatosPersonalesEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "HistorFormEndpoint",
+            required = false
+    )
+    String historFormEndpoint();
 }

@@ -970,3 +970,39 @@ html:not(#__):not(#___) {
         }
     }
 }
+
+// Petición de horas extra
+.gestorDeTiempo .lfr-layout-structure-item-em-seleccionar-lista-subordinados #select-subordinados {
+    margin-top: 1rem;
+    + .ema-table-wrapper {
+        padding: 40px 30px 30px;
+        clear: both;
+        h6 {
+            float: left;
+            margin: -2px 0 0;
+        }
+        .component-button {
+            float: right;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+div[class*="-horas-padre"] {
+    margin-block: 1rem;
+    span:first-child {
+        text-transform: uppercase;
+        display: block;
+        font-weight: 700;
+        border-bottom: 1px solid rgba(255,255,255,.25);
+        margin-bottom: .5rem;
+    }
+    input {
+        display: inline-block;
+        margin: 0 .5rem;
+    }
+    select:last-child {
+        margin-left: .5rem;
+    }
+}

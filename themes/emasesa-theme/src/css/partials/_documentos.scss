@@ -107,7 +107,6 @@
                     width: 55px;
                     height: 100%;
                     border-radius: 27.5px;
-                    color: black;
                     font-size: 1.35rem;
                 }
             }
@@ -203,6 +202,9 @@
             }
             &:last-child {
                 border-radius: 0 0 30px 30px;
+            }
+            &:first-child:last-child {
+                border-radius: 30px;
             }
             .list-group-title {
                 font-size: 2rem;

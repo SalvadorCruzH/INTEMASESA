@@ -39,6 +39,8 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioServic
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
 import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
+import es.emasesa.intranet.sap.historForm.exception.HistorFormException;
+import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
@@ -785,6 +787,31 @@ public class SapServicesUtil {
         return responsableEstructura;
     }
 
+    public JSONObject getHistorialFormacion(String pernr){
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[A] getHistorialFormacion ");
+        }
+        JSONObject ret_historFormService = JSONFactoryUtil.createJSONObject();
+        try {
+            if (_historFormService == null) {
+                activate(null);
+            }
+            LOG.debug("Obtenido matricula: " + pernr);
+
+            ret_historFormService = _historFormService.obtenerHistorialFormacion(pernr);
+
+        } catch (SapCommunicationException e) {
+            LOG.debug("[C] getHistorialFormacion al comunicar con SAP " + e.getMessage());
+        } catch (HistorFormException e) {
+            LOG.debug("[E] getHistorialFormacion al obtener el historial " + e.getMessage());
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[D] getHistorialFormacion, finalizada ");
+            }
+        }
+        return ret_historFormService;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -806,6 +833,7 @@ public class SapServicesUtil {
             CustomServiceTracker<CalendarioEventosService> calendarioEventosServiceTracker = new CustomServiceTracker<>(CalendarioEventosService.class, "getCalendarioEventosService");
             CustomServiceTracker<EmpleadoActDatosPersonalesService> empleadoActDatosPersonalesServiceServiceTracker = new CustomServiceTracker<>(EmpleadoActDatosPersonalesService.class, "getEmpleadoActDatosPersonalesService");
             CustomServiceTracker<EmpleadoEstructuraService> empleadoEstructuraServiceTracker = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
+            CustomServiceTracker<HistorFormService> historFormServiceTracker = new CustomServiceTracker<>(HistorFormService.class, "getHistorFormService");
 
 
             this._customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
@@ -826,6 +854,7 @@ public class SapServicesUtil {
             this._calendarioEventosService = calendarioEventosServiceTracker.getService();
             this._empleadoActDatosPersonalesService = empleadoActDatosPersonalesServiceServiceTracker.getService();
             this._empleadoEstructuraService = empleadoEstructuraServiceTracker.getService();
+            this._historFormService = historFormServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -884,5 +913,6 @@ public class SapServicesUtil {
     @Reference
     private ExpandoValueLocalService _expandoValueLocalService;
     private EmpleadoEstructuraService _empleadoEstructuraService;
+    private HistorFormService _historFormService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }
