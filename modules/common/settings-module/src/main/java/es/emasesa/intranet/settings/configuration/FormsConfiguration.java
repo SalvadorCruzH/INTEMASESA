@@ -1,7 +1,8 @@
 package es.emasesa.intranet.settings.configuration;
 
-import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+import aQute.bnd.annotation.metatype.Meta;
 
 @ExtendedObjectClassDefinition(
         category = "emasesa-base",
@@ -35,4 +36,17 @@ public interface FormsConfiguration {
     )
     String destinatariosSolicitudesConsultas();
 
+    @Meta.AD(
+            deflt = "",
+            name = "Tipologia de las Solicitudes de Comunicacion",
+            required = false
+    )
+    String tipologiasSolicitudesComunicacion();
+
+    @Meta.AD(
+            deflt = "",
+            name = "Titulos de las Solicitudes de Comunicacion",
+            required = false
+    )
+    String titulosSolicitudesComunicacion();
 }
