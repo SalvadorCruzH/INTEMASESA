@@ -6,7 +6,6 @@
 <#assign assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService") />
 <#assign orderByComparatorFactoryUtil = staticUtil["com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil"]>
 <#assign settingModule = serviceLocator.findService("es.emasesa.intranet.settings.osgi.GlobalThemeSettings")>
-
 <#assign comparator = orderByComparatorFactoryUtil.create("journalarticle", ["lastPublishDate", "ASC"]) />
 <#assign vocabularyId = settingModule.eventosCalendarioCategoryId()/>
 <#assign assetCategories = assetCategoryLocalService.getVocabularyCategories(vocabularyId, -1, -1, comparator) />
@@ -18,15 +17,15 @@
 	<#assign ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues() />
 
 	<#assign
-	fechaInicio = ""
-	fechaFin = ""
-	titulo = ""
-	direccion = ""
-	resumen = ""
-	urlDocumento = ""
-	tipoEvento = ""
-	modalidad = ""
-	tipoFormacion = ""
+		fechaInicio = ""
+		fechaFin = ""
+		titulo = ""
+		direccion = ""
+		resumen = ""
+		urlDocumento = ""
+		tipoEvento = ""
+		modalidad = ""
+		tipoFormacion = ""
 	/>
 	<#assign urlsDocumentos  = []>
 
@@ -64,34 +63,32 @@
 		<#assign tipoEvento = htmlUtil.escape(category.getTitle(locale))?lower_case?trim/>
 	</#list>
 	,{
-	startDate: new Date('${fechaInicio}').toDateString(),
-	endDate: new Date('${fechaFin}').toDateString(),
-	summary:'/alone/'+'${titulo}',
-	eventoLiferay: "si",
-	tipoEvento: '${tipoEvento}',
-	direccion: '${direccion}',
-	modalidad: '${modalidad}',
-	formacion: '${tipoFormacion}',
-	<#if resumen?has_content>
-		resumen: '${resumen}',
-	</#if>
-	<#if urlDocumento?has_content>
-		documento: '<#list urlsDocumentos as urlDocumento><a href="${urlDocumento}" download>ver documento</a><br></#list>',
-	</#if>
-	<#if fechaInicio != fechaFin>
-		propstart: '${fechaInicio} - ${fechaFin}',
-	<#else>
-		propstart: '${fechaInicio}',
-	</#if>
+		startDate: new Date('${fechaInicio}').toDateString(),
+		endDate: new Date('${fechaFin}').toDateString(),
+		summary:'/alone/'+'${titulo}',
+		eventoLiferay: "si",
+		tipoEvento: '${tipoEvento}',
+		direccion: '${direccion}',
+		modalidad: '${modalidad}',
+		formacion: '${tipoFormacion}',
+		<#if resumen?has_content>
+			resumen: '${resumen}',
+		</#if>
+		<#if urlDocumento?has_content>
+			documento: '<#list urlsDocumentos as urlDocumento><a href="${urlDocumento}" download>ver documento</a><br></#list>',
+		</#if>
+		<#if fechaInicio != fechaFin>
+			propstart: '${fechaInicio} - ${fechaFin}',
+		<#else>
+			propstart: '${fechaInicio}',
+		</#if>
 	},
-
 </#macro>
 
 <#assign nextDate = customDate.getDateNextMonth()/>
 <#assign userPernr = customExpando.getDataValueByUser(themeDisplay.getUser().getUserId(), themeDisplay.getCompanyId(), "matricula")>
 <#assign fechaActual = .now?date />
 <#assign primerDiaDelMes = fechaActual?string("yyyy-MM-01") />
-
 <#assign eventosRegister = sapUtil.getCalendarioEventos(userPernr, primerDiaDelMes, nextDate)/>
 <#assign eventos = eventosRegister.eventos?eval/>
 <#assign objetivos = eventosRegister.objetivo/>
@@ -116,7 +113,6 @@
 				<#if entries?has_content>
 					<#list entries as curEntry>
 						<#assign categories = curEntry.getCategories() />
-
 						<#assign renderer = curEntry.getAssetRenderer() className = renderer.getClassName() viewURL = (!stringUtil.equals(assetLinkBehavior, "showFullContent"))?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
 						/>
 						<#if className == "com.liferay.journal.model.JournalArticle">
@@ -141,16 +137,16 @@
 						endDate: new Date('${item.endda}').toDateString(),
 						summary: '${item.eventoDesc}',
 						<#if fechaInicio != fechaFin>
-						propstart: '${fechaInicio} - ${fechaFin}',
+							propstart: '${fechaInicio} - ${fechaFin}',
 						<#else>
-						propstart: '${fechaInicio}',
+							propstart: '${fechaInicio}',
 						</#if>
 						duracion: '${item.duracion}',
 						formacion: '${item.convocatoria}',
 						modalidad: '${item.modalidad}',
 						eventoId: '${item.eventoId}',
 						<#if item.asisteElEmpleado != "">
-						asisteElEmpleado: '${item.asisteElEmpleado}',
+							asisteElEmpleado: '${item.asisteElEmpleado}',
 						</#if>
 
 					},
@@ -182,21 +178,21 @@
 				<#assign fechaInicio = dia+"/"+mes+"/"+year/>
 				<#assign fechaFin = diaFin+"/"+mesFin+"/"+yearFin/>
 				<#if item.asisteElEmpleado != "">
-				{
-					startDate: new Date('${item.begda}').toDateString(),
-					endDate: new Date('${item.endda}').toDateString(),
-					summary: '${item.eventoDesc}',
-					<#if fechaInicio != fechaFin>
-					propstart: '${fechaInicio} - ${fechaFin}',
-					<#else>
-					propstart: '${fechaInicio}',
-					</#if>
-					duracion: '${item.duracion}',
-					formacion: '${item.convocatoria}',
-					modalidad: '${item.modalidad}',
-					asisteElEmpleado: '${item.asisteElEmpleado}',
-					eventoId: '${item.eventoId}',
-				},
+					{
+						startDate: new Date('${item.begda}').toDateString(),
+						endDate: new Date('${item.endda}').toDateString(),
+						summary: '${item.eventoDesc}',
+						<#if fechaInicio != fechaFin>
+							propstart: '${fechaInicio} - ${fechaFin}',
+						<#else>
+							propstart: '${fechaInicio}',
+						</#if>
+						duracion: '${item.duracion}',
+						formacion: '${item.convocatoria}',
+						modalidad: '${item.modalidad}',
+						asisteElEmpleado: '${item.asisteElEmpleado}',
+						eventoId: '${item.eventoId}',
+					},
 				</#if>
 				</#list>
 			],
@@ -223,7 +219,7 @@
 		if(dateActual.getMonth() === calendar) {
 			btnPrev.click(false);
 			btnNext.off('click');
-		}else{
+		} else {
 			btnPrev.off('click');
 			btnNext.click(false);
 		}
@@ -247,7 +243,7 @@
 			calendarInscripcion.show();
 			addCheck(false);
 			comparacionMeses(convertMonths[calendarInscripcion.find('.month.ema-calendario__mes').text().split(' ')[0].trim()]);
-		}else{
+		} else {
 			calendar.show();
 			calendarInscripcion.hide();
 			$('#checkMisCursos').prop('checked', false);
@@ -270,7 +266,7 @@
 		if (valor) {
 			$('#mostrarMisCursos').remove();
 			emaCalendario.find('table').after(noCkeck);
-		}else if (!valor) {
+		} else if (!valor) {
 			$('#mostrarMisCursosCheck').remove();
 			emaCalendarioInscripcion.find('table').after(check);
 		}
@@ -297,7 +293,6 @@
 		$('[name="idDelEvento"]').val(eventoId);
 		var contenidos = ${contenidos?string};
 		var objetivos = ${objetivos};
-
 		var literalesporId = {};
 		var objetivosId = {};
 
@@ -332,28 +327,27 @@
 			$('#objetivoCursos').append(parrafo);
 		}
 		<#if documentos?has_content>
-		var documentos = ${documentos};
-		var documentosId = {};
-		documentos.forEach(function(item){
-			if (!documentosId[item.eventoId]){
-				documentosId[item.eventoId] = [];
+			var documentos = ${documentos};
+			var documentosId = {};
+			documentos.forEach(function(item){
+				if (!documentosId[item.eventoId]){
+					documentosId[item.eventoId] = [];
+				}
+				documentosId[item.eventoId].push(item.literal);
+			});
+
+			if(documentosId[eventoId]) {
+				let enlace = document.createElement('a');
+				enlace.href = documentosId[eventoId];
+
+				enlace.innerHTML = documentosId[eventoId].join('<br>');
+				$('#objetivoCurso').append(enlace);
 			}
-			documentosId[item.eventoId].push(item.literal);
-		});
-
-		if(documentosId[eventoId]) {
-			let enlace = document.createElement('a');
-			enlace.href = documentosId[eventoId];
-
-			enlace.innerHTML = documentosId[eventoId].join('<br>');
-			$('#objetivoCurso').append(enlace);
-		}
 		</#if>
 	}
 
 	// Leyenda de colores
 	document.addEventListener('DOMContentLoaded', () => {
-
 		setTimeout(() => {
 
 			if (document.getElementById('ema-calendario') && document.getElementById('ema-calendarioInscripcion')) {
@@ -367,9 +361,8 @@
                     <div class="ema-calendario__leyenda__header">
                         <h4 class="ema-calendario__leyenda__title">Leyenda</h4>
                         <ul class="ema-calendario__leyenda__items">
-                            <li class="ema-calendario__leyenda__item">Cursos</li>
 							<#list assetCategories as assetCategory>
-                            	<li class="ema-calendario__leyenda__item">${assetCategory.getName()}</li>
+                            	<li class="ema-calendario__leyenda__item ema-calendario__leyenda__item--${assetCategory.getName()}">${assetCategory.getName()}</li>
 							</#list>
                         </ul>
                     </div>
@@ -384,9 +377,8 @@
                     <div class="ema-calendario__leyenda__header">
                         <h4 class="ema-calendario__leyenda__title">Leyenda</h4>
                         <ul class="ema-calendario__leyenda__items">
-                            <li class="ema-calendario__leyenda__item">Cursos</li>
 							<#list assetCategories as assetCategory>
-                            	<li class="ema-calendario__leyenda__item">${assetCategory.getName()}</li>
+                            	<li class="ema-calendario__leyenda__item ema-calendario__leyenda__item--${assetCategory.getName()}">${assetCategory.getName()}</li>
 							</#list>
                         </ul>
                     </div>
@@ -394,7 +386,5 @@
 			}
 
 		}, '1250')
-
 	})
-
 </script>
