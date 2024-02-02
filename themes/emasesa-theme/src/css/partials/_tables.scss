@@ -40,16 +40,6 @@
             th {
                 padding: 1rem;
                 white-space: nowrap;
-                &:nth-child(even) {
-                    background-color: #f6f9ee;
-                }
-                &:nth-child(odd) {
-                    background-color: #e2efec;
-                }
-                &:first-child,
-                &:nth-child(2) {
-                    background-color: transparent;
-                }
             }
 
             &.last{
@@ -233,6 +223,21 @@
                 &.show {
                     a.dropdown-item {
                         white-space: nowrap;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    &:nth-child(odd) {
+                        background-color: #f9f9f9;
+                    }
+                    &:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+                    td {
+                        &:not(:last-child) {
+                            border-right: 1px solid $color-white;
+                        }
                     }
                 }
             }

@@ -70,15 +70,15 @@ var diasSemana = $("[name=seleccionDiasSemana]");
 diasSemana.each(function(index, element) {
 	var div = $('<div>').addClass(fragmentEntryLinkNamespace + "-" + element.value + '-horas-padre').hide();
     var span = $('<span>').text(element.value);
-    var input1 = $('<input>').attr('type', 'text').attr('name', fragmentEntryLinkNamespace + "-" + element.value + 'horaInicio').addClass(element.value + '-horaInicio');
-    var input2 = $('<input>').attr('type', 'text').attr('name', fragmentEntryLinkNamespace + "-" + element.value + 'horaFin').addClass(element.value + '-horaFin');
+    var input1 = $('<input>').attr('type', 'text').attr('name', fragmentEntryLinkNamespace + "-" + element.value + 'horaInicio').attr('placeholder','Hora de inicio').addClass(element.value + '-horaInicio');
+    var input2 = $('<input>').attr('type', 'text').attr('name', fragmentEntryLinkNamespace + "-" + element.value + 'horaFin').attr('placeholder','Hora de fin').addClass(element.value + '-horaFin');
 	if (configuration.horasExcedentes){
 		var select = $('<select>').attr('name', fragmentEntryLinkNamespace + "-" + element.value + '-select-compensacion');
 		var option1 = $('<option>').val('').text('Selecciona una compensación');
 		var option2 = $('<option>').val('abono').text('Abono');
 		var option3 = $('<option>').val('descansoCompensatorio').text('Descanso compensatorio');
 		select.append(option1, option2, option3);
-		div.append(span, input1, input2, select);	
+		div.append(span, input1, input2, select);
 	} else {
 		div.append(span, input1, input2);
 	}
@@ -121,8 +121,8 @@ function updateJson() {
 		json[dia][hora] = element.value;
 	});
 	textarea.value = JSON.stringify(json);
+	document.querySelector("textarea[name='horasPorDiaExtra']").value = JSON.stringify(json);
 }
-
 
 $("[name=seleccionDiasSemana]").change(function() {
 	for (var i = 0; i < $("[name=seleccionDiasSemana]").length; i++) {
@@ -135,7 +135,5 @@ $("[name=seleccionDiasSemana]").change(function() {
 		}
 	}
 });
-
-
 
 main();
