@@ -214,5 +214,17 @@
         "templateFile": "consulta-formacion-eventos.ftl",
         "comment": "ADT para La consulta de la Formación.",
         "uuid": "ffbc8cda-bc60-699f-3b07-e4d6d0dacd86"
+    },
+    {
+        "screenName": "aemasesa",
+        "name": "EMA-Consulta historial académico",
+        "type": "com.liferay.asset.kernel.model.AssetEntry",
+        "displayType": "display",
+        "companyWebId": "liferay.com",
+        "groupFriendlyUrl": "/global",
+        "templateKey": "EMA-CONSULTA-HISTORIAL-ACADEMICO",
+        "templateFile": "EMA-Consulta-historial-academico.ftl",
+        "comment": "ADT para La consulta del historial académico.",
+        "uuid": "09a01074-811f-fbb5-8aec-263071d89905"
     }
 ]
