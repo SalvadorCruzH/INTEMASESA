@@ -171,14 +171,14 @@ ajaxSearchGlobalConfig = {
             var table = document.getElementById('table-id');
             var columnas = table.rows[0].cells.length;
 
-            var columnasAOcultar = [3]
+            var columnasAOcultar = [2,3]
 
             for (var i = 0; i < columnas; i++) {
                 if(columnasAOcultar.includes(i)){
                     var todosSonCero = true;
 
                     for (var j = 1; j < table.rows.length; j++) {
-                        if (parseInt(table.rows[j].cells[i].innerHTML) !== 0) {
+                        if (parseFloat(table.rows[j].cells[i].innerHTML) !== 0) {
                             todosSonCero = false;
                             break;
                         }
@@ -206,7 +206,7 @@ ajaxSearchGlobalConfig = {
             var table = document.getElementById('table-id');
             var columnas = table.rows[0].cells.length;
 
-            var columnasASumar = [3]
+            var columnasASumar = [1,2,3,4]
             for (var i = 0; i < columnas; i++) {
                 if(columnasASumar.includes(i)){
                     var sum = 0;
@@ -217,9 +217,32 @@ ajaxSearchGlobalConfig = {
                 } 
             }
         }
+        function formatearMinutos() {
+            var table = document.getElementById('table-id');
+            var columnas = table.rows[0].cells.length;
+
+            var columnasAModificar = [1,2,3]
+            for (var i = 0; i < columnas; i++) {
+                if(columnasAModificar.includes(i)){
+                    for (var j = 1; j < table.rows.length; j++) {
+                        var numero = parseFloat(table.rows[j].cells[i].innerHTML)
+                        var parteEntera = Math.floor(numero);
+                        var parteDecimal = numero - parteEntera;
+                        var minutos = Math.round(parteDecimal * 60);
+                        if (minutos < 10) {
+                            minutos = "0" + minutos;
+                        }
+                        var horaFormateada = parteEntera + ":" + minutos;
+                        console.log(horaFormateada)
+                        table.rows[j].cells[i].innerHTML = horaFormateada;
+                    }
+                }
+            }
+        }
         sumatorioColumnas();
         desocultarTodasLasColumnas();
         ocultarColumnaSiTodosSonCero();
+        formatearMinutos();
     }
 }
 </script>

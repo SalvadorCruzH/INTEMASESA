@@ -97,8 +97,8 @@ public class EmasesaIntranetPostLogin extends Action {
                 expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_NOMBRE, employerData.getString("nombre", StringConstants.EMPTY));
                 expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_CP, addressData.getString("codigoPostal", StringConstants.EMPTY));
                 expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, employerData.getString("pernr", StringConstants.EMPTY));
-                expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_DEPARTAMENTO, jobData.getString("posicionDesc", StringConstants.EMPTY));
-                expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_PUESTOTRABAJO, jobData.getString("funcionDesc", StringConstants.EMPTY));
+                expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_DEPARTAMENTO, jobData.getString("dptoDesc", StringConstants.EMPTY));
+                expandoAttributes.put(EmasesaConstants.EMASESA_EXPANDO_PUESTOTRABAJO, jobData.getString("posicionDesc", StringConstants.EMPTY));
 
                 user.getExpandoBridge().setAttributes(expandoAttributes, false);
 
