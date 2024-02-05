@@ -1,0 +1,123 @@
+[#assign customExpando = serviceLocator.findService("es.emasesa.intranet.base.util.CustomExpandoUtil")/]
+[#assign sapUtil = serviceLocator.findService("es.emasesa.intranet.service.util.SapServicesUtil")/]
+
+[#assign userPernr = customExpando.getDataValueByUser(themeDisplay.getUser().getUserId(), themeDisplay.getCompanyId(), "matricula")/]
+[#--[#assign datos = sapUtil.getHistorialFormacion(userPernr)/]--]
+[#--[#assign formExterna = datos.externa?eval/]--]
+
+
+<div id="titulacionAcademica" class="ema-consultaHistorial" style="display: none">
+    <h3 class="ema-consultaHistorial__title container">Titulación académica</h3>
+    <div class="container">
+        <div class="ema-table-wrapper">
+            <table id="table-id-titulacion" class="ema-table">
+                <caption class="sr-only">Sumario de la tabla</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Nivel</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Especialidad</th>
+                    <th scope="col">Centro/Población</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Fecha</td>
+                    <td>Permiso</td>
+                  </tr>
+                </tbody>
+            </table>
+            <div class="ema-consultaHistorial__boton" id="buttonTitulacion" style="display: none">
+              <button class="ema-consultaHistorial__boton-modificar modificar">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="permisosConducir" class="ema-consultaHistorial" style="display: none">
+    <h3 class="ema-consultaHistorial__title container">Permisos de conducir</h3>
+    <div class="container">
+        <div class="ema-table-wrapper">
+            <table id="table-id-permisos" class="ema-table">
+                <caption class="sr-only">Sumario de la tabla</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Permiso</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Fecha</td>
+                    <td>Permiso</td>
+                  </tr>
+                </tbody>
+            </table>
+            <div class="ema-consultaHistorial__boton" id="buttonPermiso" style="display: none">
+              <button class="ema-consultaHistorial__boton-modificar modificar">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="expedienteFormativoFragment" class="ema-consultaHistorial" style="display: none">
+    <h3 class="ema-consultaHistorial__title container">Formación externa</h3>
+    <div class="container">
+        <div class="ema-table-wrapper">
+            <table class="ema-table">
+                <caption class="sr-only">Sumario de la tabla</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Nombre del Curso</th>
+                    <th scope="col">Inicio</th>
+                    <th scope="col">Fin</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Centro/Población</th>
+                    <th scope="col">País</th>
+                </tr>
+                </thead>
+                <tbody>
+[#--                    [#list formExterna as item]--]
+                        <tr>
+[#--                            <td>${item.curso}</td>--]
+[#--                            <td>${item.inicio}</td>--]
+[#--                            <td>${item.fin}</td>--]
+[#--                            <td>${item.duracion}</td>--]
+                            <td>------</td>
+                            <td>------</td>
+                        </tr>
+[#--                   [/#list]--]
+                </tbody>
+            </table>
+            <div class="ema-consultaHistorial__boton" id="buttonFormacion" style="display: none">
+              <button class="ema-consultaHistorial__boton-modificar modificar">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="innovacion" class="ema-consultaHistorial" style="display: none">
+    <h3 class="ema-consultaHistorial__title container">Innovación</h3>
+    <div class="container">
+        <div class="ema-table-wrapper">
+            <table id="table-id-innovacion" class="ema-table">
+                <caption class="sr-only">Sumario de la tabla</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Concurso</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Fecha</td>
+                  <td>Permiso</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="ema-consultaHistorial__boton" id="buttonInnovacion" style="display: none">
+              <button class="ema-consultaHistorial__boton-modificar modificar">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>
