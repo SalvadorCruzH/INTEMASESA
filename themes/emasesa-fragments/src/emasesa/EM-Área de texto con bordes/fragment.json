@@ -1,0 +1,13 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "custom-field",
+  "name": "EM-Área de texto con bordes",
+  "typeOptions": {"fieldTypes": [
+    "long-text",
+    "text"
+  ]},
+  "type": "input"
+}
