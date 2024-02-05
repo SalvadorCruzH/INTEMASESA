@@ -48,7 +48,7 @@ public class HistorFormService {
             Holder<TableOfZpeStEmpleadoHistform> tInterna = new Holder<>();
 
             port.zPeEmpleadoHistform(pernr, tExterna, tImpartida, tInterna);
-
+            LoggerUtil.debug(LOG, "Trae datos del WS correctamente: " +tExterna.value + " - " + tImpartida.value + " - " + tInterna.value);
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
             if (tExterna.value != null){
                 jsonReturn.put("externa", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tExterna.value.getItem())));
@@ -59,6 +59,7 @@ public class HistorFormService {
             if (tInterna.value != null){
                 jsonReturn.put("interna", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInterna.value.getItem())));
             }
+            LoggerUtil.debug(LOG, "devuelve: " +jsonReturn.toString());
             return jsonReturn;
 
         } catch (JSONException | ServerSOAPFaultException e) {

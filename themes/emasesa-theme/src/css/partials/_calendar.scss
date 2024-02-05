@@ -40,6 +40,7 @@ a[class*="ema-calendario__"] {
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
+            max-width: 400px;
             &::-webkit-scrollbar {
                 display: none;
             }
@@ -86,6 +87,15 @@ a[class*="ema-calendario__"] {
         border-radius: 30px;
         background-color: $color-bg-green;
         color: $color-black;
+        &.presentaciones {
+            background-color: $color-calendar;
+        }
+        &.webinar {
+            background-color: $color-warning;
+        }
+        &.seminario {
+            background-color: $color-light-blue;
+        }
     }
     &__titleEvent {
         padding-top: 0.75rem;
@@ -139,9 +149,21 @@ a[class*="ema-calendario__"] {
     .day {
         cursor: pointer;
         position: relative;
+        box-shadow: inset 0 0 0 .5px $color-white;
         &.has-event {
-            background: $color-bg-green;
-            border-right: 2px solid $white;
+            background-color: rgba($color-bg-green,.5);
+            &.cursos {
+                background-color: rgba($color-bg-green,.5);
+            }
+            &.seminario {
+                background-color: rgba($color-light-blue,.5);
+            }
+            &.webinar {
+                background-color: rgba($color-warning,.25);
+            }
+            &.presentaciones {
+                background-color: rgba($color-calendar,.5);
+            }
         }
         &.disabled {
             cursor: default;
@@ -193,16 +215,19 @@ a[class*="ema-calendario__"] {
                 display: block;
                 width: 20px;
                 height: 20px;
-                background-color: #eee;
+                background-color: $color-light-grey;
             }
-            &:first-child::after {
-                background-color: #e5eecc;
+            &--Cursos::after {
+                background-color: rgba($color-bg-green,.5);
             }
-            &:nth-child(2)::after {
-                background-color: #d6e7f4;
+            &--Seminario::after {
+                background-color: rgba($color-light-blue,.5);
             }
-            &:last-child::after {
-                background-color: #ffe7d2;
+            &--Webinar::after {
+                background-color: rgba($color-warning,.25);
+            }
+            &--Presentaciones::after {
+                background-color: rgba($color-calendar,.5);
             }
         }
     }

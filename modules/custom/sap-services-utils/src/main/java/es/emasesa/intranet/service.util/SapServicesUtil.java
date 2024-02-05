@@ -810,7 +810,7 @@ public class SapServicesUtil {
             LOG.debug("[E] getHistorialFormacion al obtener el historial " + e.getMessage());
         } finally {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("[D] getHistorialFormacion, finalizada ");
+                LOG.debug("[D] getHistorialFormacion, finalizada " + ret_historFormService.toString());
             }
         }
         return ret_historFormService;
