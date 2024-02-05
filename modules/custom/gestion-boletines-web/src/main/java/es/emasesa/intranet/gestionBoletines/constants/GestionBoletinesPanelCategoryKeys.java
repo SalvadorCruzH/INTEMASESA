@@ -5,6 +5,6 @@ package es.emasesa.intranet.gestionBoletines.constants;
  */
 public class GestionBoletinesPanelCategoryKeys {
 
-	public static final String CONTROL_PANEL_CATEGORY = "envioBoletines";
+	public static final String CONTROL_PANEL_CATEGORY = "emasesa";
 
 }
