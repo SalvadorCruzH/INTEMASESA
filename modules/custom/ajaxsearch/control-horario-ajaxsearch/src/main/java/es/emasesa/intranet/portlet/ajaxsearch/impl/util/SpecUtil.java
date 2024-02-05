@@ -131,7 +131,12 @@ public class SpecUtil {
 
                     LocalTime time = LocalTime.parse(list.get(i).getString(EmasesaConstants.SUBSTR_MARC_TMP_9_4), DateTimeFormatter.ofPattern("HHmm"));
                     String timeString = time.format(DateTimeFormatter.ofPattern("HH:mm"));
-                    jsonObject.put(String.valueOf(i), timeString);
+                    String codIncidencia = list.get(i).getString(EmasesaConstants.COD_INCIDENCIA);
+                    if (codIncidencia.equals("00")) {
+                        jsonObject.put(String.valueOf(i), timeString);
+                    } else {
+                        jsonObject.put(String.valueOf(i), timeString + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + codIncidencia);
+                    }
                 } else {
                     jsonObject.put(String.valueOf(i), StringPool.BLANK);
                 }

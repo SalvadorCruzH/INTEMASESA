@@ -32,6 +32,7 @@ public class EmasesaConstants {
     //SPEC
     public static final String SUBSTR_MARC_TMP_1_8 = "SUBSTR(MARC_TMP,1,8)";
     public static final String SUBSTR_MARC_TMP_9_4 = "SUBSTR(MARC_TMP,9,4)";
+    public static final String COD_INCIDENCIA = "SUBSTR(MARC_AUX,3)";
     public static final String YYYY_M_MDD = "yyyyMMdd";
     public static final String DD_MM_YYYY = "dd-MM-yyyy";
     public static final String DIA = "dia";

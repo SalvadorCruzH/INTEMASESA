@@ -121,7 +121,9 @@ function updateJson() {
 		json[dia][hora] = element.value;
 	});
 	textarea.value = JSON.stringify(json);
-	document.querySelector("textarea[name='horasPorDiaExtra']").value = JSON.stringify(json);
+	if (configuration.horasExcedentes){
+		document.querySelector("textarea[name='horasPorDiaExtra']").value = JSON.stringify(json);
+	}
 }
 
 $("[name=seleccionDiasSemana]").change(function() {

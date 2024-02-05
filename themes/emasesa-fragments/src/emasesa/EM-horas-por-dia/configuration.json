@@ -31,6 +31,15 @@
 					"typeOptions": {
 						"displayType": "toggle"
 					}
+				},
+				{
+					"defaultValue": false,
+					"label": "Horas excedentes",
+					"name": "horasExcedentes",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
 				}
 			]
 		}
