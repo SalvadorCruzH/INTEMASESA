@@ -36,7 +36,7 @@
                         <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.SUBTIPOLOGIA%>" value='<%= rowObject.getString("SUBTIPOLOGIA") %>'/>
                         <c:set var="foundRole" value="false" />
                         <c:forEach var="role" items="${requestScope.roles}">
-                            <c:if test='${role.getRoleId().toString() == rowObject.getString("DESTINATARIO")}'>
+                            <c:if test='${role.getName() == rowObject.getString("DESTINATARIO")}'>
                                 <c:set var="foundRole" value="true" />
                                 <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.DESTINATARIO%>" value="${role.name}"/>
                             </c:if>
