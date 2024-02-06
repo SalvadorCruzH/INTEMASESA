@@ -1,4 +1,4 @@
-<%@ page import = "es.emasesa.intranet.portlet.configuraciones.constants.EmasesaConfiguracionesWebPortletKeys" %><%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/META-INF/resources/init.jsp" %>
 
 <portlet:renderURL var="addURL">
