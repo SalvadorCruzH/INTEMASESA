@@ -1,32 +1,5 @@
 package es.emasesa.intranet.sigd.service.application;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.object.model.ObjectEntry;
@@ -46,12 +19,37 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.ServiceLocator;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 import es.emasesa.intranet.base.constant.EmasesaConstants;
 import es.emasesa.intranet.base.util.CustomObjectUtil;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.settings.osgi.SigdServicesSettings;
 import es.emasesa.intranet.sigd.service.constans.SidgServiceKeys;
-import org.osgi.util.tracker.ServiceTracker;
 
 @Component(
 		configurationPid = "es.emasesa.intranet.settings.configuration.SigdServiceConfiguration",
@@ -339,6 +337,54 @@ public class SigdServiceApplication{
 		
 		return url;
 	}
+	
+	 /**
+     * Recorre el JSON y construye un mapa con documentName y URL de descarga.
+     * 
+     * @param objectEntryId Identificador del objeto de entrada.
+     * @return Mapa con documentName como clave y URL de descarga como valor.
+     */
+    public Map<String, String> getURLSigdsIds(long objectEntryId) {
+        Map<String, String> mapaDescargas = new HashMap<>();
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+
+        try {
+        	LoggerUtil.debug(LOG,"Se procede a obtener los IDs del SIGD para el objecteEntry: " + objectEntryId);
+			Thread.currentThread().setContextClassLoader(actualClassLoader);
+			if (_customObjectUtil == null){
+	            activate(null);
+	        }
+			LoggerUtil.debug(LOG,"Obteniendo el valor del campo sIGDIds del objecyEntry: " + objectEntryId);
+			String sIGDIds = _customObjectUtil.getValueObjectField(objectEntryId, "sIGDIds");
+			LoggerUtil.debug(LOG,"Obtenido sIGDIds: " + sIGDIds);
+            JSONArray jsonArray = JSONFactoryUtil.createJSONArray(sIGDIds);
+            LoggerUtil.debug(LOG,"Se convierete en JSONARRAY para recorrerlo: " + jsonArray);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject elemento = jsonArray.getJSONObject(i);
+
+                String idSIGD = elemento.getString("idSIGD");
+                String documentName = elemento.getString("documentName");
+                LoggerUtil.debug(LOG,"Recorriendo: " + documentName + " con SIGID: " + idSIGD);
+
+                if (Validator.isNotNull(idSIGD) && Validator.isNotNull(documentName)) {
+                    String urlDescarga = getUrlDescarga(idSIGD);
+                    LoggerUtil.debug(LOG,"Se obtiene URL de descarga" + urlDescarga);
+
+                    if (Validator.isNotNull(urlDescarga)) {
+                        mapaDescargas.put(documentName, urlDescarga);
+                        LoggerUtil.debug(LOG,"Se añade al mapa");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Error al manejar la cadena JSON en Liferay.", e);
+	    }finally {
+	        Thread.currentThread().setContextClassLoader(actualClassLoader);
+	    }
+
+        return mapaDescargas;
+    }
 	
 	/**
 	  * Obtiene el ID de un documento por su nombre

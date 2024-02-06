@@ -6,16 +6,24 @@
 [#assign customExpandoUtil = serviceLocator.findService("es.emasesa.intranet.base.util.CustomExpandoUtil")]
 [#assign expandoValueByName = expandoValueLocalService.getData(themeDisplay.getCompanyId(), "com.liferay.portal.kernel.model.User", "CUSTOM_FIELDS", "matricula", userId, "")]
 [#assign sapServiceUtil = serviceLocator.findService("es.emasesa.intranet.service.util.SapServicesUtil")]
-[#assign listaSubordinados = sapServiceUtil.getSubordinados(expandoValueByName, "T")]
+
+[#attempt]
+    [#assign listaSubordinados = sapServiceUtil.getSubordinados(expandoValueByName, "T")]
+    [#assign errorSap = false]
+[#recover]
+    [#assign errorSap = true]
+[/#attempt]
 <select id="select-subordinados" class="ema-select">
     <option value="">Selecciona un subordinado</option>
-    [#assign listaSubordinadosSize = listaSubordinados.length()]
-    [#if listaSubordinadosSize != 0]
-        [#list 0..listaSubordinadosSize-1 as i]
-            [#assign subordinado = sapServiceUtil.getDatosEmpleado(listaSubordinados.get(i).getString("pernr"))]
-            <option value='${subordinado}'>${subordinado.pernr} - ${subordinado.nombre} ${subordinado.apellido1} ${subordinado.apellido2}  </option>
-        [/#list]
-    [/#if]
+	[#if errorSap == false]
+        [#assign listaSubordinadosSize = listaSubordinados.length()]
+        [#if listaSubordinadosSize != 0]
+            [#list 0..listaSubordinadosSize-1 as i]
+                [#assign subordinado = sapServiceUtil.getDatosEmpleado(listaSubordinados.get(i).getString("pernr"))]
+                <option value='${subordinado}'>${subordinado.pernr} - ${subordinado.nombre} ${subordinado.apellido1} ${subordinado.apellido2}  </option>
+            [/#list]
+        [/#if]
+	[/#if]
 </select>
 <div class="ema-table-wrapper">
     

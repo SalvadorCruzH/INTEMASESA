@@ -1,0 +1,4 @@
+Bundle-Name: emasesa-configuraciones-web
+Bundle-SymbolicName: es.emasesa.intranet.portlet.configuraciones
+Bundle-Version: 1.0.0
+Export-Package: es.emasesa.intranet.portlet.configuraciones.constants

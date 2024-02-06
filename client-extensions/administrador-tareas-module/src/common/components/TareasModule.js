@@ -256,6 +256,22 @@ class TareasModule extends React.Component {
         } else {
             this.setState({loading: false});
         }
+       /* if (result && result.tasks && result.tasks.length > 0) {
+            let combinedTasks = [...this.state.tareas, ...result.tasks];
+
+            // Eliminar duplicados basados en entryClassPK
+            let uniqueTasks = Array.from(new Set(combinedTasks.map(task => task.entryClassPK)))
+                .map(entryClassPK => combinedTasks.find(task => task.entryClassPK === entryClassPK));
+
+            this.setState({
+                tareas: uniqueTasks,
+                start: start + delta,
+                end: end + delta,
+                hasMore: result.hasMore
+            });
+        } else {
+            this.setState({ loading: false });
+        }*/
 
 
     }
@@ -446,9 +462,11 @@ class TareasModule extends React.Component {
                         {(this.state.loading) ? (<ClayLoadingIndicator displayType="primary" size="lg"/>) : (<>
                             {this.state.tareas.length != 0 ? (<>
                                     <tbody>
-                                    {this.state.tareas.map((tarea, i) => {
+                                    {[...new Set(this.state.tareas.map(tarea => tarea.entryClassPK))].map((uniqueEntryClassPK, i) => {
+                                        const tarea = this.state.tareas.find(t => t.entryClassPK === uniqueEntryClassPK);
                                         console.debug('Tarea --> ' + i)
                                         console.debug(tarea);
+                                        console.debug(this.state.tareas);
                                         return (<>
                                                 <tr data-objectId={tarea.entryClassPK}
                                                     data-workflowTaskId={tarea.workflowTaskId}>

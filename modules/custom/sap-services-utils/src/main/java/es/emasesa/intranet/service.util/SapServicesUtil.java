@@ -347,11 +347,15 @@ public class SapServicesUtil {
         }
         JSONArray datosSubordinados = JSONFactoryUtil.createJSONArray();
 
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
             if (_subordinadosService == null) {
                 activate(null);
             }
             datosSubordinados = _subordinadosService.getSubordinados(directorioOTodos, pernr);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
         } catch (SapCommunicationException e) {
             LOG.error(e.getMessage(), e);
         } catch (SubordinadosException e) {
@@ -806,7 +810,7 @@ public class SapServicesUtil {
             LOG.debug("[E] getHistorialFormacion al obtener el historial " + e.getMessage());
         } finally {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("[D] getHistorialFormacion, finalizada ");
+                LOG.debug("[D] getHistorialFormacion, finalizada " + ret_historFormService.toString());
             }
         }
         return ret_historFormService;
