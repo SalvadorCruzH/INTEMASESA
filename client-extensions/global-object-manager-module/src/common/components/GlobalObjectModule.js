@@ -209,7 +209,20 @@ class GlobalObjectModule extends React.Component {
 
                              tbody.append(newRow);
                          });
-                     }
+                     }else if (modeOpened === 1 && key === "listadoDeRecursos"){
+                       var tbody = $("#table-solicitudes tbody");
+                       var data = JSON.parse(object[key]);
+                       const checkboxEstado = '<input type="checkbox">';
+                       $.each(data, function(index, item) {
+                           var newRow = $('<tr>');
+                           newRow.append('<td></td>');
+                           newRow.append('<td>' + item.nombreDeServicio + '</td>');
+                           newRow.append('<td>' + item.prioridadRecurso + '</td>');
+                           newRow.append('<td>' + item.descripcion + '</td>');
+
+                           tbody.append(newRow);
+                       });
+                   }
                 }
             }
         });
