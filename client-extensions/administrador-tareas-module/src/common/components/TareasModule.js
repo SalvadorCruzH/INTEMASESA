@@ -133,8 +133,6 @@ class TareasModule extends React.Component {
     getTasksUser = () => {
         if (this.state.view === 1) {
             this.getAssignedToMe();
-        } else {
-            this.getAssignedToUserRol();
         }
     }
 
@@ -256,24 +254,6 @@ class TareasModule extends React.Component {
         } else {
             this.setState({loading: false});
         }
-       /* if (result && result.tasks && result.tasks.length > 0) {
-            let combinedTasks = [...this.state.tareas, ...result.tasks];
-
-            // Eliminar duplicados basados en entryClassPK
-            let uniqueTasks = Array.from(new Set(combinedTasks.map(task => task.entryClassPK)))
-                .map(entryClassPK => combinedTasks.find(task => task.entryClassPK === entryClassPK));
-
-            this.setState({
-                tareas: uniqueTasks,
-                start: start + delta,
-                end: end + delta,
-                hasMore: result.hasMore
-            });
-        } else {
-            this.setState({ loading: false });
-        }*/
-
-
     }
 
     getUser = (assigneePerson) => {
@@ -419,6 +399,7 @@ class TareasModule extends React.Component {
 
     showCompletedTask = () => {
         this.setState({showCompleted: !this.state.showCompleted});
+        this.setState({tareas:[],start: 0, end: 10, typeList: "toMe"});
         this.getTasksUser();
     }
 
@@ -435,16 +416,15 @@ class TareasModule extends React.Component {
                        onClick={this.getAssignedToUserRolButton}
                        aria-selected={this.state.view === 2}>{Liferay.Language.get('admin.task.assign.toRol')}</a>
                 </div>
-
-                <div className="filter-wrapper">
-
-                    <label for="showCompleted">
-                        <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"
-                               onClick={this.showCompletedTask} aria-selected={this.state.showCompleted}/>
-                        <span>{Liferay.Language.get("show.completed.tasks")}</span>
-                    </label>
-                </div>
-
+                {this.state.typeList !== 'toUserRol' && (
+                    <div className="filter-wrapper">
+                        <label for="showCompleted">
+                            <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"
+                                   onClick={this.showCompletedTask} aria-selected={this.state.showCompleted}/>
+                            <span>{Liferay.Language.get("show.completed.tasks")}</span>
+                        </label>
+                    </div>
+                )}
                 <div className="ema-table-wrapper">
                     <table id="table-id" className="ema-table last">
                         <caption className="sr-only">{Liferay.Language.get('admin.task.summary')}</caption>
