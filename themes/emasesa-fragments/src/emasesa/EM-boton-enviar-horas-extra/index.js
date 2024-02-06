@@ -27,16 +27,17 @@ $(`#fragment-${fragmentEntryLinkNamespace}-submit-button`).click(function (e) {
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log("success", data);
-            if(data){
-                alert('Se han enviado las horas extra correctamente');
+            if(data != null && data.code == 200) {
+                //hide form and append message next to it
+                $(this).closest("form").hide();
+                $(this).closest("form").after('<p>Gracias. Hemos recibido correctamente su información. <a href="/group/guest/mis-gestiones/todas">Ir a Todas Mis Gestiones</a></p>');
             }else{
                 alert('No se han podido enviar las horas extra');
+                $(`fragment-${fragmentEntryLinkNamespace}-error-message`).show();
             }
         },
         error: function (data) {
-            console.log("error",data);
-            alert('No se han podido enviar las horas extra');
+            $(`fragment-${fragmentEntryLinkNamespace}-error-message`).show();
         }
     });
 });
