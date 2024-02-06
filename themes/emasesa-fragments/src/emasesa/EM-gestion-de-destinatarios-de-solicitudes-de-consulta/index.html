@@ -1,28 +1,29 @@
 [#assign getConfigurationValueUtil = serviceLocator.findService("es.emasesa.intranet.settings.util.GetConfigurationValueUtil")]
-[#assign configValue = getConfigurationValueUtil.getMapValue("es.emasesa.intranet.settings.configuration.FormsConfiguration","destinatariosSolicitudesConsultas")]
-[#assign TIPOLOGÍASet = [] /]
+[#assign configValue = getConfigurationValueUtil.getStringValue("es.emasesa.intranet.settings.configuration.FormsConfiguration","destinatariosSolicitudesConsultas")]
+[#assign jsonArray = configValue?eval /]
+[#assign uniqueTipologia = []]
 <div class="em-destinatariosConsultas">
 	<div class="tipologia">
-		<label for="selectTipologia">Tipologia</label>
+		<label for="selectTipologia">Tipología</label>
 <select id="selectTipologia" class="form-control">
-[#list configValue as item]
-[#if TIPOLOGÍASet?seq_contains(item["TIPOLOGÍA"]) == false ]
-[#if item["SUBTIPOLOGÍA"]?has_content]
-<option value='${item["TIPOLOGÍA"]!}' data-subtipologia='true'>${item["TIPOLOGÍA"]}</option>
+[#list jsonArray as item]
+[#if !uniqueTipologia?seq_contains(item.TIPOLOGIA) ]
+	[#assign uniqueTipologia = uniqueTipologia + [item.TIPOLOGIA]]
+[#if item.SUBTIPOLOGIA?has_content]
+<option value='${item.TIPOLOGIA!}' data-subtipologia='true'>${item.TIPOLOGIA}</option>
 [#else]
-<option value='${item["TIPOLOGÍA"]!}' data-subtipologia='false'>${item["TIPOLOGÍA"]}</option>
+<option value='${item.TIPOLOGIA!}' data-subtipologia='false'>${item.TIPOLOGIA}</option>
 [/#if]
-[#assign TIPOLOGÍASet = TIPOLOGÍASet + [item["TIPOLOGÍA"]] /]
 [/#if]
 [/#list]
 </select>
 	</div>
 	<div  class="subtipologia" style="display: none;">
-		<label for="selectSubtipologia">Subtipologia</label>
+		<label for="selectSubtipologia">Subtipología</label>
 <select id="selectSubtipologia"  class="form-control">
-[#list configValue as item]
-[#if item["SUBTIPOLOGÍA"]?has_content]
-<option value='${item["SUBTIPOLOGÍA"]}'>${item["SUBTIPOLOGÍA"]}</option>
+[#list jsonArray as item]
+[#if item.SUBTIPOLOGIA?has_content]
+<option value='${item.SUBTIPOLOGIA}'>${item.SUBTIPOLOGIA}</option>
 [/#if]
 [/#list]
 </select>
@@ -32,8 +33,8 @@
 
 <script>
 var data = {
-  [#list configValue as item]
-  "${item.TIPOLOGÍA}${item.SUBTIPOLOGÍA?has_content?then('_' + item.SUBTIPOLOGÍA, '')}": "${item.DESTINATARIO}"[#sep],[/#sep]
-  [/#list]
+	[#list jsonArray as item]
+"${item.TIPOLOGIA}${item.SUBTIPOLOGIA?has_content?then('_' + item.SUBTIPOLOGIA, '')}": "${item.DESTINATARIO}"[#sep],[/#sep]
+		[/#list]
 };
 </script>
