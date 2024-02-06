@@ -40,6 +40,7 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesServi
 import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.historForm.exception.HistorFormException;
+//import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
@@ -791,7 +792,8 @@ public class SapServicesUtil {
         return responsableEstructura;
     }
 
-    public JSONObject getHistorialFormacion(String pernr){
+    public JSONObject getHistorialFormacion(String pernr, String eventoId){
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("[A] getHistorialFormacion ");
         }
@@ -802,7 +804,7 @@ public class SapServicesUtil {
             }
             LOG.debug("Obtenido matricula: " + pernr);
 
-            ret_historFormService = _historFormService.obtenerHistorialFormacion(pernr);
+            ret_historFormService = _historFormService.obtenerHistorialFormacion(pernr, eventoId);
 
         } catch (SapCommunicationException e) {
             LOG.debug("[C] getHistorialFormacion al comunicar con SAP " + e.getMessage());

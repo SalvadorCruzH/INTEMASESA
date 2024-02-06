@@ -11,6 +11,7 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioServic
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
+import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
