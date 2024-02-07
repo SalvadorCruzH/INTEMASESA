@@ -365,7 +365,7 @@ class Actions extends React.Component {
                 dialogIframe: {
                     bodyCssClass: 'dialog-with-footer i-mainWrapper'
                 },
-                id: 'rechazarDialog',
+                id: 'devolverDialog',
                 //refreshWindow: window,
                 title: 'Devolución de '+objectReviewed.entryType,
                 uri: url
@@ -567,18 +567,18 @@ class Actions extends React.Component {
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.label == 'Rechazar') {
+                                                }else if (transition.name == 'Rechazar') {
                                                     return (
-                                                        <a className="dropdown-item" data-name={transition.label} onClick={this.openModalRechazar}>
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalRechazar}>
                                                             { window.transitionsLabel[transition.label]
                                                                 ? window.transitionsLabel[transition.label].replace(/\./g, '')
                                                                 : transition.label.replace(/\./g, '')
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.label == 'Devolver') {
+                                                }else if (transition.name == 'Devolver') {
                                                     return (
-                                                        <a className="dropdown-item" data-name={transition.label} onClick={this.openModalDevolver}>
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalDevolver}>
                                                             { window.transitionsLabel[transition.label]
                                                                 ? window.transitionsLabel[transition.label].replace(/\./g, '')
                                                                 : transition.label.replace(/\./g, '')
