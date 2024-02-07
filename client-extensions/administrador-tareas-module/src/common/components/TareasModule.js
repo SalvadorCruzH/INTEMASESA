@@ -446,7 +446,6 @@ class TareasModule extends React.Component {
                                         const tarea = this.state.tareas.find(t => t.entryClassPK === uniqueEntryClassPK);
                                         console.debug('Tarea --> ' + i)
                                         console.debug(tarea);
-                                        console.debug(this.state.tareas);
                                         return (<>
                                                 <tr data-objectId={tarea.entryClassPK}
                                                     data-workflowTaskId={tarea.workflowTaskId}>
@@ -486,8 +485,17 @@ class TareasModule extends React.Component {
                             </div>
                         </>
                     }
-                </div>
 
+                </div>
+                {this.state.tareas.length ? (
+                    <div className="recuento-tareas">
+                        <span>Se han encontrado {this.state.tareas.length} tareas</span>
+                    </div>
+                ) : (
+                    <div className="recuento-tareas">
+                        <span>No se han encontrado tareas</span>
+                    </div>
+                )}
             </div>
         )
     }
