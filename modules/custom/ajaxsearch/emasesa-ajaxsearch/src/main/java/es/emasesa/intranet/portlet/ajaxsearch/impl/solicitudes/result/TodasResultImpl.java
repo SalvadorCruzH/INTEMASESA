@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.*;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -33,10 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component(
         immediate = true,
@@ -147,13 +146,27 @@ public class TodasResultImpl implements AjaxSearchResult {
         QueryConfig queryConfig = searchContext.getQueryConfig();
         queryConfig.addSelectedFieldNames(Field.ANY);
 
-        if (!ajaxSearchDisplayContext.getQueryText().isBlank()) {
-            booleanQuery.addTerm(AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME, ajaxSearchDisplayContext.getQueryText(), Boolean.TRUE, BooleanClauseOccur.MUST);
-        }
 
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
-        final List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+        List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+
+        String queryText = ajaxSearchDisplayContext.getQueryText();
+        if (!Validator.isBlank(queryText)) {
+            documents = (!documents.isEmpty()) ? documents.stream().filter(document -> {
+                String nombre = document.get(AjaxSearchPortletKeys.OBJECT_DEFINITION_NAME);
+                String nombreLocalised = null;
+                try {
+                    nombreLocalised = JSONFactoryUtil.createJSONObject(clientExtensionsSettings.objectNames()).getString(nombre, nombre);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                String tipoObjeto = objectsTypeSettings.getType(String.valueOf(document.get("objectDefinitionId")));
+
+                return nombreLocalised.toLowerCase().contains(queryText.toLowerCase()) || tipoObjeto.toLowerCase().contains(queryText.toLowerCase());
+            }).collect(Collectors.toList()) : new ArrayList<>();
+        }
+
         final int totalItems = documents.size();
 
         String[] sortBy = ajaxSearchDisplayContext.getString("sortby").split(StringPool.DASH);
