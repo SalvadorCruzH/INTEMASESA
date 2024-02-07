@@ -39,7 +39,7 @@ public class GestionComunicacionesFormImpl implements AjaxSearchForm {
         return Boolean.TRUE;
     }
 
-    private static final String VIEW = "/views/solicitudes/gescioncomunicaciones/form.jsp";
+    private static final String VIEW = "/views/solicitudes/gestioncomunicaciones/form.jsp";
 
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,

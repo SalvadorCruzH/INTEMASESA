@@ -318,5 +318,13 @@ public interface SigdServiceConfiguration {
             required = false
     )
 	String getFormativasConfiguration();
+
+        @Meta.AD(
+            deflt = "",
+            name = "Gestion comunicaciones",
+            description = "Configuraciones del formulario Gestion comunicaciones para llamadas a los servicios del SIGD. Serie, tipo documental y metadatos",
+            required = false
+    )
+	String getComunicacionesConfiguration();
 }
 

@@ -68,7 +68,7 @@ public class GestionComunicacionesResultImpl implements AjaxSearchResult {
         return DFLT_PROPERTIES;
     }
 
-    private static final String VIEW = "/views/solicitudes/gescioncomunicaciones/results.jsp";
+    private static final String VIEW = "/views/solicitudes/gestioncomunicaciones/results.jsp";
 
     @Override
     public String getResultsView(PortletRequest request, PortletResponse response) {
