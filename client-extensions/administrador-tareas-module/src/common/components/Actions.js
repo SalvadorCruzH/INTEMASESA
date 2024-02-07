@@ -309,6 +309,78 @@ class Actions extends React.Component {
             //window.open(url, "_blank")
         }
     }
+    
+    openModalDevolver = (event) => {
+        let thatContext = this;
+        let objectReviewed = this.state.objectReviewed;
+        let jsonObjectMapping = {};
+        try{
+            jsonObjectMapping = JSON.parse(this.state.configuration.objectMapping);
+        }catch(e){
+            jsonObjectMapping = this.state.configuration.objectMapping;
+        }
+        let objectMapping = jsonObjectMapping[objectReviewed.entryType];
+        if (objectMapping) {
+            let display = objectMapping.devolver;
+            display += "?objectEntryId=" + objectReviewed.entryClassPK;
+            display += "&objectType=" + objectReviewed.entryType;
+            display += "&mode=2";
+            display += "&p_p_state=pop_up";
+            let url = themeDisplay.getPortalURL() + display;
+            let dialog = Liferay.Util.openWindow({
+                //cache: false,
+                dialog: {
+                    destroyOnHide: true,
+                    modal: true,
+                    cssClass:'dialog-with-footer i-mainWrapper',
+                    after: {
+                        render: function(event) {},
+                        destroy: function(event) {
+                        }
+                    },
+                    toolbars: {
+                        footer: [
+                            {
+                                label: 'Avanzar flujo',
+                                id: 'avanzar-flujo-button',
+                                cssClass: 'btn-link pull-right btn btn-secondary hide',
+                                on: {
+                                    click: function() {
+                                    }
+                                },
+                            },
+                            {
+                                label: 'Cerrar',
+                                cssClass: 'btn-link pull-right btn btn-secondary',
+                                on: {
+                                    click: function() {
+                                        let dialog = Liferay.Util.Window.getById('devolverDialog_iframe_');
+                                        dialog.destroy();
+                                    }
+                                },
+                            }
+                        ]
+                    }
+                },
+                dialogIframe: {
+                    bodyCssClass: 'dialog-with-footer i-mainWrapper'
+                },
+                id: 'rechazarDialog',
+                //refreshWindow: window,
+                title: 'Devolución de '+objectReviewed.entryType,
+                uri: url
+            });
+
+            setTimeout(() => {
+                iframeURLChange(document.getElementById("devolverDialog_iframe_"), function (newURL) {
+                    let dialog = Liferay.Util.Window.getById('devolverDialog_iframe_');
+                    thatContext.changeTransition(event);
+                    dialog.destroy();
+                })
+            }, 4000);
+            //window.open(url, "_blank")
+        }
+    }
 
     openModalAsesor = (event) => {
         let thatContext = this;
@@ -498,6 +570,15 @@ class Actions extends React.Component {
                                                 }else if (transition.label == 'Rechazar') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.label} onClick={this.openModalRechazar}>
+                                                            { window.transitionsLabel[transition.label]
+                                                                ? window.transitionsLabel[transition.label].replace(/\./g, '')
+                                                                : transition.label.replace(/\./g, '')
+                                                            }
+                                                        </a>
+                                                    )
+                                                }else if (transition.label == 'Devolver') {
+                                                    return (
+                                                        <a className="dropdown-item" data-name={transition.label} onClick={this.openModalDevolver}>
                                                             { window.transitionsLabel[transition.label]
                                                                 ? window.transitionsLabel[transition.label].replace(/\./g, '')
                                                                 : transition.label.replace(/\./g, '')

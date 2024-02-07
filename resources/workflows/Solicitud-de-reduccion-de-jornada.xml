@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>596553e0-b7d6-cb0f-6f71-e358f8ed06e2</name>
-	<version>96</version>
+	<version>100</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -109,8 +109,8 @@ customWorkflowUtilTracker.close();]]>
 			<![CDATA[
 				{
 					"xy": [
-						21.945769092888014,
-						178.0806801669343
+						24.945770263671875,
+						178.0806884765625
 					],
 					"terminal": true
 				}
@@ -139,10 +139,10 @@ ServiceTracker sigdServiceTracker = new ServiceTracker(bundleSigd.getBundleConte
 sigdServiceTracker.open();
 SigdServiceApplication sigdService = sigdServiceTracker.getService();
 
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", userId, "");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazado", userId, "Administrador de RRHH");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "ReduccionJornada", "solicitud", userId, true);
 }
 
 String pdfFichero = customWorkflowUtil.getDocumentToLoad(workflowContext, "fichero");
@@ -152,7 +152,9 @@ if(pdfFichero != null && pdfFichero != ""){
 }
 
 customWorkflowUtilTracker.close();
-sigdServiceTracker.close();]]>
+sigdServiceTracker.close();
+
+]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -455,6 +457,16 @@ customWorkflowUtilTracker.close();]]>
 				<name>Aprobar y enviar a jefe departamento</name>
 				<target>asignar-jefe-departamento</target>
 				<default>true</default>
+			</transition>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Devolver al Usuario
+					</label>
+				</labels>
+				<name>Devolver al Usuario</name>
+				<target>Devolver-solicitud</target>
+				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
@@ -892,6 +904,80 @@ customWorkflowUtilTracker.close();
 				</labels>
 				<name>Mandar-a-portafirmas</name>
 				<target>portafirma-director-RRHH</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Devolver-solicitud</name>
+		<description>Pida a un usuario que trabaje en el elemento.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						24.546875,
+						-237.5
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Cambiar estado objeto</name>
+				<description></description>
+				<script>
+					<![CDATA[import com.liferay.portal.template.*;
+import com.liferay.portal.util.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+import es.emasesa.intranet.base.util.CustomWorkflowBaseUtil;
+
+Bundle bundle = FrameworkUtil.getBundle(CustomWorkflowBaseUtil.class);
+ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleContext(),CustomWorkflowBaseUtil.class, null);
+
+customWorkflowUtilTracker.open();
+CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "devueltoAUsuarioSolicitante", userId, "User");
+customWorkflowUtilTracker.close();]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<notification>
+				<name>Devuelta por RRHH</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Se devuelve solicitud para revisión]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<user />
+		</assignments>
+		<labels>
+			<label language-id="es_ES">
+				Devuelta por RRHH
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Devolver a RRHH
+					</label>
+				</labels>
+				<name>reenviar-solicitud</name>
+				<target>Asignar-admin-RRHH</target>
 				<default>true</default>
 			</transition>
 		</transitions>
