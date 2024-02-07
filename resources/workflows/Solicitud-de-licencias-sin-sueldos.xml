@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>55</version>
+	<version>56</version>
 	<state>
 		<name>envio</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -313,10 +313,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD</name>
+				<name>Rechaza Solicitud</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
@@ -422,10 +422,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD.</name>
+				<name>Rechazar Solicituds</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
@@ -521,10 +521,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD..</name>
+				<name>Rechazar Solicitu</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
@@ -639,10 +639,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD...</name>
+				<name>Rechazar Solicitud</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
