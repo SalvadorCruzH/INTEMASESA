@@ -2,6 +2,7 @@ package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.*;
@@ -150,6 +151,16 @@ public class TodasResultImpl implements AjaxSearchResult {
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
         List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+
+
+        String[] estado = ParamUtil.getParameterValues(request, AjaxSearchPortletKeys.ESTADO);
+        if (estado.length>0){
+            documents = (!documents.isEmpty()) ? documents.stream().filter(document -> {
+                Map<String, String> content =  searchingObject.getObjectEntryContent(document.get(AjaxSearchPortletKeys.FIELD_OBJECT_ENTRY_CONTENT));
+                String statusObject = content.get(AjaxSearchPortletKeys.ESTADO_OBJETO);
+                return Arrays.asList(estado).contains(statusObject);
+            }).collect(Collectors.toList()) : new ArrayList<>();
+        }
 
         String queryText = ajaxSearchDisplayContext.getQueryText();
         if (!Validator.isBlank(queryText)) {
