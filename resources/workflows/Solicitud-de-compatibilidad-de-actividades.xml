@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>3919e0dd-3d12-1ebb-eedb-cb1d09bcc345</name>
-	<version>74</version>
+	<version>77</version>
 	<state>
 		<name>InicioCreacionSolicitud</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -148,15 +148,18 @@ customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", us
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if(pdf != null && pdf != ""){
 	String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "Compatibilidad", "solicitud", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoSigd, "Solicitud Compatibilidad", false);
 }
 //Subir fichero certificacion o decalracion responsable
-String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
-String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
+String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
+String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
 
 if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
-	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "certificacion", userId, false);
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "declaracion", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Declaración responsable", false);
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "declaracion", userId, false);
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "certificacion", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Certificación de la empresa", false);
 }	
 
 customWorkflowUtilTracker.close();
@@ -714,15 +717,15 @@ if(pdf != null && pdf != ""){
 }
 
 //Subir fichero certificacion o decalracion responsable
-String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
-String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
+String pdfCuentaPropia = customWorkflowUtil.getDocumentToLoad(workflowContext, "declaracionResponsable");
+String pdfCuentaAjena = customWorkflowUtil.getDocumentToLoad(workflowContext, "certificacionDeLaEmpresa");
 
 if(pdfCuentaPropia != null && pdfCuentaPropia != ""){
-	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "certificacion", userId, false);
-	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Certificación de la empresa", false);
+	String idDocumentoCuentaPropiaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaPropia, "Compatibilidad", "declaracion", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaPropiaSigd, "Declaración responsable", false);
 }else if(pdfCuentaAjena != null && pdfCuentaAjena != ""){
-	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "declaracion", userId, false);
-	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Declaración responsable", false);
+	String idDocumentoCuentaAjenaSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdfCuentaAjena, "Compatibilidad", "certificacion", userId, false);
+	customWorkflowUtil.updateIdsSIGD(workflowContext, idDocumentoCuentaAjenaSigd, "Certificación de la empresa", false);
 }	
 
 //Recuperamos el usuario consejero delegado de SAP

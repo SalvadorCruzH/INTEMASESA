@@ -640,35 +640,51 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZPeEmpleadoHistform }
+     * Create an instance of {@link ZPeEmpleadoHistFormacion }
      *
      */
-    public ZPeEmpleadoHistform createZPeEmpleadoHistform() {
-        return new ZPeEmpleadoHistform();
+    public ZPeEmpleadoHistFormacion createZPeEmpleadoHistFormacion() {
+        return new ZPeEmpleadoHistFormacion();
     }
 
     /**
-     * Create an instance of {@link ZPeEmpleadoHistformResponse }
+     * Create an instance of {@link ZPeEmpleadoHistFormacionResponse }
      *
      */
-    public ZPeEmpleadoHistformResponse createZPeEmpleadoHistformResponse() {
-        return new ZPeEmpleadoHistformResponse();
+    public ZPeEmpleadoHistFormacionResponse createZPeEmpleadoHistFormacionResponse() {
+        return new ZPeEmpleadoHistFormacionResponse();
     }
 
     /**
-     * Create an instance of {@link TableOfZpeStEmpleadoHistform }
+     * Create an instance of {@link TableOfZpeStEmpleadoHistFormacion }
      *
      */
-    public TableOfZpeStEmpleadoHistform createTableOfZpeStEmpleadoHistform() {
-        return new TableOfZpeStEmpleadoHistform();
+    public TableOfZpeStEmpleadoHistFormacion createTableOfZpeStEmpleadoHistFormacion() {
+        return new TableOfZpeStEmpleadoHistFormacion();
     }
 
     /**
-     * Create an instance of {@link ZpeStEmpleadoHistform }
+     * Create an instance of {@link TableOfZpeStEmpleadoHistFormPais }
      *
      */
-    public ZpeStEmpleadoHistform createZpeStEmpleadoHistform() {
-        return new ZpeStEmpleadoHistform();
+    public TableOfZpeStEmpleadoHistFormPais createTableOfZpeStEmpleadoHistFormPais() {
+        return new TableOfZpeStEmpleadoHistFormPais();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistFormacion }
+     *
+     */
+    public ZpeStEmpleadoHistFormacion createZpeStEmpleadoHistFormacion() {
+        return new ZpeStEmpleadoHistFormacion();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistFormPais }
+     *
+     */
+    public ZpeStEmpleadoHistFormPais createZpeStEmpleadoHistFormPais() {
+        return new ZpeStEmpleadoHistFormPais();
     }
 
 }

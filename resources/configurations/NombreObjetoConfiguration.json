@@ -1,7 +1,7 @@
 {   "Compatibilidad" : "Compatibilidad",
     "Excedencias" : "Excedencia",
     "Flexibilidad" : "Flexibilidad horaria",
-    "Licencias" : "Licencia sin sueldo",
+    "LicenciaSinSueldo" : "Licencia sin sueldo",
     "Reduccion" : "Reduccion de jornada",
     "Turnos" : "Cambio turnos",
     "AsuntoSindical" : "Asunto Sindical",
@@ -16,9 +16,10 @@
     "VacacionesAusenciasYPermisos" : "Vacaciones, Ausencias y Permisos",
     "RegistroDeMarcaje" : "Registro de Marcaje",
     "JubiladoParcial" : "Jubilado Parcial",
-    "CambioDomicilio": "Cambio domicilio",
-    "DeclaracionDeVoluntades": "Declaracion voluntad",
+    "ModificacionDeDatosPersonales":"Modificación de Datos Personales",
+    "Cambiodomicilio": "Cambio domicilio",
+    "Voluntades": "Declaracion de voluntades",
     "Prestacion": "Prestacion",
-    "ModificacionDeDatosPersonales":"Modificacion de Datos Personales",
-    "SolicitudConsulta":"Consulta"
+    "SolicitudConsulta":"Solicitud Consulta",
+    "HorasExtra":"Horas Extra"
 }

@@ -7,8 +7,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
+import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistFormPais;
+import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistFormacion;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistform;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORM;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORMACIO;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORMACIO_Service;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORM_Service;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -35,7 +39,7 @@ import java.util.List;
 public class HistorFormService {
 
 
-    public JSONObject obtenerHistorialFormacion(String pernr) throws HistorFormException, SapCommunicationException {
+    public JSONObject obtenerHistorialFormacion(String pernr, String eventoId) throws HistorFormException, SapCommunicationException {
 
         LoggerUtil.debug(LOG, "[B] obtenerHistorialFormacion");
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
@@ -43,11 +47,15 @@ public class HistorFormService {
             ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORM.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            Holder<TableOfZpeStEmpleadoHistform> tExterna = new Holder<>();
-            Holder<TableOfZpeStEmpleadoHistform> tImpartida = new Holder<>();
-            Holder<TableOfZpeStEmpleadoHistform> tInterna = new Holder<>();
+            Holder<TableOfZpeStEmpleadoHistFormacion> tExterna = new Holder<>();
+            Holder<TableOfZpeStEmpleadoHistFormacion> tImpartida = new Holder<>();
+            Holder<TableOfZpeStEmpleadoHistFormacion> tInterna = new Holder<>();
+            Holder<TableOfZpeStEmpleadoHistFormPais> tPais = new Holder<>();
+            Holder<byte[]> exData = new Holder<>();
+            Holder<Integer> exReturn = new Holder<>();
 
-            port.zPeEmpleadoHistform(pernr, tExterna, tImpartida, tInterna);
+            port.zPeEmpleadoHistFormacion(eventoId, pernr, exData, exReturn, tExterna, tImpartida, tInterna, tPais);
+
             LoggerUtil.debug(LOG, "Trae datos del WS correctamente: " +tExterna.value + " - " + tImpartida.value + " - " + tInterna.value);
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
             if (tExterna.value != null){
@@ -58,6 +66,12 @@ public class HistorFormService {
             }
             if (tInterna.value != null){
                 jsonReturn.put("interna", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInterna.value.getItem())));
+            }
+            if (tInterna.value != null){
+                jsonReturn.put("pais", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tPais.value.getItem())));
+            }
+            if (tInterna.value != null){
+                jsonReturn.put("data", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(exData.value)));
             }
             LoggerUtil.debug(LOG, "devuelve: " +jsonReturn.toString());
             return jsonReturn;
@@ -88,7 +102,7 @@ public class HistorFormService {
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORM.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORMACIO.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
@@ -101,8 +115,8 @@ public class HistorFormService {
                 }
             });
             URL urlEndpoint = new URL(configuration.historFormEndpoint());
-            ZWSPEEMPLEADOHISTFORM_Service service = new ZWSPEEMPLEADOHISTFORM_Service(urlEndpoint);
-            port = service.getPort(ZWSPEEMPLEADOHISTFORM.class);
+            ZWSPEEMPLEADOHISTFORMACIO_Service service = new ZWSPEEMPLEADOHISTFORMACIO_Service(urlEndpoint);
+            port = service.getPort(ZWSPEEMPLEADOHISTFORMACIO.class);
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
@@ -131,7 +145,7 @@ public class HistorFormService {
 
     }
 
-    private ZWSPEEMPLEADOHISTFORM port;
+    private ZWSPEEMPLEADOHISTFORMACIO port;
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 

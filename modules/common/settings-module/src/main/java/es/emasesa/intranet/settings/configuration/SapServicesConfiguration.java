@@ -159,4 +159,16 @@ public interface SapServicesConfiguration {
             required = false
     )
     String historFormEndpoint();
+    @Meta.AD(
+            deflt = "",
+            name = "ReginaEndpoint",
+            required = false
+    )
+    String reginaEndpoint();
+    @Meta.AD(
+            deflt = "",
+            name = "ReginaReferee",
+            required = false
+    )
+    String reginaReferee();
 }

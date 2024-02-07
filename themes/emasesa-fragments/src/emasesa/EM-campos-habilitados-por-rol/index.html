@@ -1,0 +1,19 @@
+[#assign rolesSettings = serviceLocator.findService("es.emasesa.intranet.settings.osgi.RolesSettings")/]
+[#assign userGroupRole = serviceLocator.findService("com.liferay.portal.kernel.service.UserGroupRoleLocalService")/]
+
+[#assign roleRRHH = rolesSettings.administradorRRHHId() /]
+[#assign userRolId = 0/]
+[#assign rolUser = userGroupRole.getUserGroupRoles(themeDisplay.getUser().getUserId()) /]
+
+[#list rolUser as rolId]
+    [#if rolId.roleId == roleRRHH]
+        [#assign userRolId = rolId.roleId /]
+        [#break]
+    [/#if]
+[/#list]
+<div class="hide" id="userRol" value="${userRolId}"></div>
+<div class="hide" id="roleRRHH" value="${roleRRHH}"></div>
+
+
+
+

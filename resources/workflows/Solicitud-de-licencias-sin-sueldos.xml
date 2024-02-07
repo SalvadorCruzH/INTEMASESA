@@ -6,7 +6,7 @@
 		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>ab106ed7-3b90-217e-a2f0-80327a3b9bd9</name>
-	<version>48</version>
+	<version>56</version>
 	<state>
 		<name>envio</name>
 		<description>Inicia un flujo de trabajo.</description>
@@ -73,7 +73,7 @@ customWorkflowUtilTracker.close();]]>
 				{
 					"xy": [
 						26,
-						331
+						332
 					],
 					"terminal": true
 				}
@@ -105,7 +105,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "rechazada", userId, "");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, true);
 }
 
 customWorkflowUtilTracker.close();
@@ -123,12 +123,12 @@ sigdServiceTracker.close();]]>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Notificacion de solicitud</name>
+				<name>Solicitud de Licencia sin sueldo finalizada</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Su solicitud de licensia sin sueldo ha sido rechaza]]>
+					<![CDATA[Su solicitud de licensia sin sueldo ha sido rechazada]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
@@ -152,7 +152,7 @@ sigdServiceTracker.close();]]>
 				{
 					"xy": [
 						850.9365234375,
-						469.24432373046875
+						468.24432373046875
 					],
 					"terminal": true
 				}
@@ -184,7 +184,7 @@ SigdServiceApplication sigdService = sigdServiceTracker.getService();
 customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "aceptada", userId, "Jefe división Personas");
 String pdf = customWorkflowUtil.pdfBase64(customWorkflowUtil.createPDF(workflowContext));
 if (pdf != null && pdf != ""){
-    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, false);
+    String idDocumentoSigd = sigdService.saveDocumentOnSIGD(workflowContext, pdf, "LicenciaSinSueldo", "solicitud", userId, true);
 }
 
 customWorkflowUtilTracker.close();
@@ -202,12 +202,12 @@ sigdServiceTracker.close();]]>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Notificacion de solicitud</name>
+				<name>Solicitud de Licencia sin sueldo finalizada</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Su solicitud de licensia sin sueldo ha sido aprobada]]>
+					<![CDATA[Su solicitud de licencia sin sueldo ha sido aceptada]]>
 				</template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
@@ -268,7 +268,7 @@ customWorkflowUtilTracker.close();]]>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>notificación asignación</name>
+				<name>Validación Licencia sin sueldo</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -313,10 +313,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD</name>
+				<name>Rechaza Solicitud</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
@@ -377,7 +377,7 @@ customWorkflowUtilTracker.close();]]>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Notificación de solicitud</name>
+				<name>Validación Licencia sin sueldo</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -422,10 +422,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD.</name>
+				<name>Rechazar Solicituds</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
@@ -478,15 +478,15 @@ ServiceTracker customWorkflowUtilTracker = new ServiceTracker(bundle.getBundleCo
 
 customWorkflowUtilTracker.open();
 CustomWorkflowBaseUtil customWorkflowUtil = customWorkflowUtilTracker.getService();
-customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteAdmRRHH", 0, "admin RRHH");
+customWorkflowUtil.updateObjectHistoryAndStatus(workflowContext, "pendienteRRHH", 0, "admin RRHH");
 customWorkflowUtilTracker.close();]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
-				<execution-type>onAssignment</execution-type>
+				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Notificación de solicitud</name>
+				<name>Validación Licencia sin sueldo</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -521,10 +521,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD..</name>
+				<name>Rechazar Solicitu</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>
@@ -548,7 +548,7 @@ customWorkflowUtilTracker.close();]]>
 				{
 					"xy": [
 						849.12109375,
-						199.30020141601562
+						198.30020141601562
 					]
 				}
 			]]>
@@ -585,7 +585,7 @@ customWorkflowUtilTracker.close();]]>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Notificación de solicitud</name>
+				<name>Validación Licencia sin sueldo</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -639,10 +639,10 @@ customWorkflowUtilTracker.close();]]>
 			<transition>
 				<labels>
 					<label language-id="es_ES">
-						Rechazar Solicitud y Guardar en SIGD
+						Rechazar
 					</label>
 				</labels>
-				<name>Rechazar Solicitud y Guardar en SIGD...</name>
+				<name>Rechazar Solicitud</name>
 				<target>rechazada y guardar SIGD</target>
 				<default>false</default>
 			</transition>

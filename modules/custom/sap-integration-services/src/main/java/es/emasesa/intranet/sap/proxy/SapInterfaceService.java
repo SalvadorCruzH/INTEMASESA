@@ -11,10 +11,12 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioServic
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
+import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
+import es.emasesa.intranet.sap.regina.service.ReginaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
@@ -64,6 +66,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected EmpleadoActDatosPersonalesService empleadoActDatosPersonalesService;
     @Autowired(required = false)
     protected HistorFormService historFormService;
+    @Autowired(required = false)
+    protected ReginaService reginaService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -121,5 +125,9 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public HistorFormService getHistorFormService() {
         return historFormService;
+    }
+
+    public ReginaService getReginaService() {
+        return reginaService;
     }
 }

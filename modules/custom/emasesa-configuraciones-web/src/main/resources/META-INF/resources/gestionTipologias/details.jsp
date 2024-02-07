@@ -39,7 +39,7 @@
                 <aui:select name="DESTINATARIO" label="Destinatario">
                     <c:forEach var="role" items="${requestScope.roles}">
                         <c:set var="selectedRole" value="${requestScope['registro'].DESTINATARIO}" />
-                        <aui:option value="${role.getRoleId().toString()}" label="${role.getName()}" selected="${role.getRoleId().toString() eq selectedRole}" />
+                        <aui:option value="${role.getName()}" label="${role.getName()}" selected="${role.getName() eq selectedRole}" />
                     </c:forEach>
                 </aui:select>
 

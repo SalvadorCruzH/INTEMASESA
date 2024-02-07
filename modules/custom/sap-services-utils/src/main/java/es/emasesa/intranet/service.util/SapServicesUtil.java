@@ -40,6 +40,7 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesServi
 import es.emasesa.intranet.sap.estructura.exception.EmpleadoEstructuraException;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.historForm.exception.HistorFormException;
+//import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
@@ -48,6 +49,8 @@ import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.exception.NecesidadesFormacionException;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
+import es.emasesa.intranet.sap.regina.exception.ReginaException;
+import es.emasesa.intranet.sap.regina.service.ReginaService;
 import es.emasesa.intranet.sap.relacionLaboral.exception.RelacionLaboralException;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.exception.ResumenAnualException;
@@ -791,7 +794,8 @@ public class SapServicesUtil {
         return responsableEstructura;
     }
 
-    public JSONObject getHistorialFormacion(String pernr){
+    public JSONObject getHistorialFormacion(String pernr, String eventoId){
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("[A] getHistorialFormacion ");
         }
@@ -802,7 +806,7 @@ public class SapServicesUtil {
             }
             LOG.debug("Obtenido matricula: " + pernr);
 
-            ret_historFormService = _historFormService.obtenerHistorialFormacion(pernr);
+            ret_historFormService = _historFormService.obtenerHistorialFormacion(pernr, eventoId);
 
         } catch (SapCommunicationException e) {
             LOG.debug("[C] getHistorialFormacion al comunicar con SAP " + e.getMessage());
@@ -814,6 +818,21 @@ public class SapServicesUtil {
             }
         }
         return ret_historFormService;
+    }
+    public void savedReginaTicket(String pernr, String title, String description) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[E] savedReginaTicket");
+        }
+
+       if (_reginaService == null) {
+           activate(null);
+       }
+       LOG.debug("Obtenido matricula: " + pernr);
+       LOG.debug("Obtenido title: " + title);
+       LOG.debug("Obtenido description: " + description);
+       LOG.debug("Regina service: " + _reginaService.toString());
+       _reginaService.guardarTiquetRegina(pernr, title, description);
+
     }
 
     @Activate
@@ -838,6 +857,7 @@ public class SapServicesUtil {
             CustomServiceTracker<EmpleadoActDatosPersonalesService> empleadoActDatosPersonalesServiceServiceTracker = new CustomServiceTracker<>(EmpleadoActDatosPersonalesService.class, "getEmpleadoActDatosPersonalesService");
             CustomServiceTracker<EmpleadoEstructuraService> empleadoEstructuraServiceTracker = new CustomServiceTracker<>(EmpleadoEstructuraService.class, "getEmpleadoEstructuraService");
             CustomServiceTracker<HistorFormService> historFormServiceTracker = new CustomServiceTracker<>(HistorFormService.class, "getHistorFormService");
+            CustomServiceTracker<ReginaService> reginaServiceTracker = new CustomServiceTracker<>(ReginaService.class, "getReginaService");
 
 
             this._customExpandoUtil = (CustomExpandoUtil) ServiceLocator.getInstance().findService("es.emasesa.intranet.base.util.CustomExpandoUtil");
@@ -859,6 +879,7 @@ public class SapServicesUtil {
             this._empleadoActDatosPersonalesService = empleadoActDatosPersonalesServiceServiceTracker.getService();
             this._empleadoEstructuraService = empleadoEstructuraServiceTracker.getService();
             this._historFormService = historFormServiceTracker.getService();
+            this._reginaService =reginaServiceTracker.getService();
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
                 if (jornadaDiaria != null && jornadaDiaria.length() > 0) {
@@ -918,5 +939,7 @@ public class SapServicesUtil {
     private ExpandoValueLocalService _expandoValueLocalService;
     private EmpleadoEstructuraService _empleadoEstructuraService;
     private HistorFormService _historFormService;
+
+    private ReginaService _reginaService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
 }
