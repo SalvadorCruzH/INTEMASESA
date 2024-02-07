@@ -567,7 +567,7 @@ class Actions extends React.Component {
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.name == 'Rechazar') {
+                                                }else if (transition.label === 'Rechazar') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalRechazar}>
                                                             { window.transitionsLabel[transition.label]
@@ -576,7 +576,7 @@ class Actions extends React.Component {
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.name == 'Devolver') {
+                                                }else if (transition.label === 'Devolver') {
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalDevolver}>
                                                             { window.transitionsLabel[transition.label]
