@@ -24,13 +24,13 @@
 
                 <aui:input type="text" name="TITULO"
                            value="${requestScope['registro'].TITULO}"
-                           label="Tipología" required="true"
+                           label="Título" required="true"
                 />
 
                 <aui:select name="USUARIO" label="Usuario">
                     <c:forEach var="role" items="${requestScope.roles}">
                         <c:set var="selectedRole" value="${requestScope['registro'].USUARIO}" />
-                        <aui:option value="${role.getRoleId().toString()}" label="${role.getName()}" selected="${role.getRoleId().toString() eq selectedRole}" />
+                        <aui:option value="${role.getName()}" label="${role.getName()}" selected="${role.getName() eq selectedRole}" />
                     </c:forEach>
                 </aui:select>
 

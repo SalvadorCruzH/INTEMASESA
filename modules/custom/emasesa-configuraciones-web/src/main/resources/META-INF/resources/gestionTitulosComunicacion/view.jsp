@@ -1,4 +1,4 @@
-<%@ page import = "es.emasesa.intranet.portlet.configuraciones.constants.EmasesaConfiguracionesWebPortletKeys" %><%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/META-INF/resources/init.jsp" %>
 
 <portlet:renderURL var="addURL">
@@ -36,7 +36,7 @@
 
                         <c:set var="foundRole" value="false" />
                         <c:forEach var="role" items="${requestScope.roles}">
-                            <c:if test='${role.getRoleId().toString() == rowObject.getString("USUARIO")}'>
+                            <c:if test='${role.getName() == rowObject.getString("USUARIO")}'>
                                 <c:set var="foundRole" value="true" />
                                 <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.USUARIO%>" value="${role.name}"/>
                             </c:if>

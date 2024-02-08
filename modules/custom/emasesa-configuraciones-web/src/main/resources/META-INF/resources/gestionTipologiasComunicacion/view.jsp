@@ -33,17 +33,7 @@
                             keyProperty="TIPOLOGIA"
                             modelVar="rowObject">
                         <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.TIPOLOGIA%>" value='<%= rowObject.getString("TIPOLOGIA") %>'/>
-
-                        <c:set var="foundRole" value="false" />
-                        <c:forEach var="role" items="${requestScope.roles}">
-                            <c:if test='${role.getRoleId().toString() == rowObject.getString("DEPARTAMENTO")}'>
-                                <c:set var="foundRole" value="true" />
-                                <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.DEPARTAMENTO%>" value="${role.name}"/>
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${!foundRole}">
-                            <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.DEPARTAMENTO%>" value=""/>
-                        </c:if>
+                        <liferay-ui:search-container-column-text name="<%=EmasesaConfiguracionesWebPortletKeys.DEPARTAMENTO%>" value='<%= rowObject.getString("DEPARTAMENTO") %>'/>
 
                         <liferay-ui:search-container-column-text name="">
                             <portlet:renderURL var="editURL">

@@ -18,8 +18,8 @@
                            value="${requestScope['registro'].OLD_TIPOLOGIA}" cssClass="hide"
                 />
 
-                <aui:input type="text" name="OLD_DESTINATARIO" label=""
-                           value="${requestScope['registro'].OLD_DESTINATARIO}" cssClass="hide"
+                <aui:input type="text" name="OLD_DEPARTAMENTO" label=""
+                           value="${requestScope['registro'].OLD_DEPARTAMENTO}" cssClass="hide"
                 />
 
                 <aui:input type="text" name="TIPOLOGIA"
@@ -27,12 +27,10 @@
                            label="Tipología" required="true"
                 />
 
-                <aui:select name="DEPARTAMENTO" label="Departamento">
-                    <c:forEach var="role" items="${requestScope.roles}">
-                        <c:set var="selectedRole" value="${requestScope['registro'].DEPARTAMENTO}" />
-                        <aui:option value="${role.getRoleId().toString()}" label="${role.getName()}" selected="${role.getRoleId().toString() eq selectedRole}" />
-                    </c:forEach>
-                </aui:select>
+                <aui:input type="text" name="DEPARTAMENTO"
+                           value="${requestScope['registro'].DEPARTAMENTO}"
+                           label="Departamento" required="true"
+                />
 
                 <a href="${goBack}" class="btn btn-cancel btn-secondary">Volver</a>
                 <aui:button type="submit"
