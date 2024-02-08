@@ -20,6 +20,10 @@ public class BaseSettings {
     public long fileTypeId(){
         return configuration.fileTypeId();
     }
+
+    public long idListaEstadosSolicitudes(){
+        return configuration.idListaEstadosSolicitudes();
+    }
     
     @Activate
     @Modified

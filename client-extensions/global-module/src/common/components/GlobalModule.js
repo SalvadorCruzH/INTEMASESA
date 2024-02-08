@@ -35,6 +35,12 @@ class GlobalModule extends React.Component {
         window.transitionsLabel["reenviar-solicitud"] = Liferay.Language.get("es.emasesa.transition.label.reenviar-solicitud");
         window.transitionsLabel["rechazarSolicitudResponsable"] = Liferay.Language.get("es.emasesa.transition.label.rechazarSolicitudResponsable");
         window.transitionsLabel["aprobarSolicitudResponsable"] = Liferay.Language.get("es.emasesa.transition.label.aprobarSolicitudResponsable");
+        window.transitionsLabel["Rechazar-peticion"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-peticion");
+        window.transitionsLabel["Rechazar-peticion-1"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-peticion-1");
+        window.transitionsLabel["Rechazar-peticion-2"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-peticion-2");
+        window.transitionsLabel["Rechazar-peticion-3"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-peticion-3");
+        window.transitionsLabel["Rechazar-peticion-4"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-peticion-4");
+        window.transitionsLabel["Rechazar-peticion-5"] = Liferay.Language.get("es.emasesa.transition.label.Rechazar-peticion-5");
         window.objToString = function(obj) {
             var str = '';
             for (var p in obj) {

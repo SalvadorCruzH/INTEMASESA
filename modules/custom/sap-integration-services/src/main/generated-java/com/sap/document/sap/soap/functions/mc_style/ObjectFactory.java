@@ -687,4 +687,100 @@ public class ObjectFactory {
         return new ZpeStEmpleadoHistFormPais();
     }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistContrCateg }
+     *
+     */
+    public ZPeEmpleadoHistContrCateg createZPeEmpleadoHistContrCateg() {
+        return new ZPeEmpleadoHistContrCateg();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistContrCategResponse }
+     *
+     */
+    public ZPeEmpleadoHistContrCategResponse createZPeEmpleadoHistContrCategResponse() {
+        return new ZPeEmpleadoHistContrCategResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistContrCat }
+     *
+     */
+    public TableOfZpeStEmpleadoHistContrCat createTableOfZpeStEmpleadoHistContrCat() {
+        return new TableOfZpeStEmpleadoHistContrCat();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistContrCat }
+     *
+     */
+    public ZpeStEmpleadoHistContrCat createZpeStEmpleadoHistContrCat() {
+        return new ZpeStEmpleadoHistContrCat();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistTitulacion }
+     *
+     */
+    public ZPeEmpleadoHistTitulacion createZPeEmpleadoHistTitulacion() {
+        return new ZPeEmpleadoHistTitulacion();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistTitulacionResponse }
+     *
+     */
+    public ZPeEmpleadoHistTitulacionResponse createZPeEmpleadoHistTitulacionResponse() {
+        return new ZPeEmpleadoHistTitulacionResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistTitulacio }
+     *
+     */
+    public TableOfZpeStEmpleadoHistTitulacio createTableOfZpeStEmpleadoHistTitulacio() {
+        return new TableOfZpeStEmpleadoHistTitulacio();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistTitulNiv }
+     *
+     */
+    public TableOfZpeStEmpleadoHistTitulNiv createTableOfZpeStEmpleadoHistTitulNiv() {
+        return new TableOfZpeStEmpleadoHistTitulNiv();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistTitulTit }
+     *
+     */
+    public TableOfZpeStEmpleadoHistTitulTit createTableOfZpeStEmpleadoHistTitulTit() {
+        return new TableOfZpeStEmpleadoHistTitulTit();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistTitulacio }
+     *
+     */
+    public ZpeStEmpleadoHistTitulacio createZpeStEmpleadoHistTitulacio() {
+        return new ZpeStEmpleadoHistTitulacio();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistTitulTit }
+     *
+     */
+    public ZpeStEmpleadoHistTitulTit createZpeStEmpleadoHistTitulTit() {
+        return new ZpeStEmpleadoHistTitulTit();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistTitulNiv }
+     *
+     */
+    public ZpeStEmpleadoHistTitulNiv createZpeStEmpleadoHistTitulNiv() {
+        return new ZpeStEmpleadoHistTitulNiv();
+    }
+
 }

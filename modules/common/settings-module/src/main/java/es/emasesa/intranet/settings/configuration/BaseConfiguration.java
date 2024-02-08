@@ -21,4 +21,11 @@ public interface BaseConfiguration {
     )
     long fileTypeId();
 
+    @Meta.AD(
+            deflt = "-1",
+            name = "es.emasesa.intranet.settings.configuration.BaseConfiguration.id-lista-estado-solicitudes",
+            required = false
+    )
+    long idListaEstadosSolicitudes();
+
 }

@@ -108,6 +108,9 @@
                     height: 100%;
                     border-radius: 27.5px;
                     font-size: 1.35rem;
+                    svg {
+                        color: $color-white;
+                    }
                 }
             }
         }

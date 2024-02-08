@@ -365,7 +365,7 @@ class Actions extends React.Component {
                 dialogIframe: {
                     bodyCssClass: 'dialog-with-footer i-mainWrapper'
                 },
-                id: 'rechazarDialog',
+                id: 'devolverDialog',
                 //refreshWindow: window,
                 title: 'Devolución de '+objectReviewed.entryType,
                 uri: url
@@ -553,12 +553,14 @@ class Actions extends React.Component {
                     {(this.state.assigneePerson && this.state.transitions && Number(this.state.assigneePerson) === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
                             console.debug(transition);
+                            console.debug("Name: " + transition.name + "Label: " + transition.label);
                             return (
                                 <>
                                     <li>
                                         <>
                                             {(() => {
-                                                if (transition.name == 'reenviar-solicitud'){
+                                                if (transition.name === 'reenviar-solicitud'){
+                                                	console.debug('reenviar-solicitud');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalReenviar}>
                                                             { window.transitionsLabel[transition.label]
@@ -567,18 +569,20 @@ class Actions extends React.Component {
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.label == 'Rechazar') {
+                                                }else if (transition.name === 'Rechazar-peticion' || transition.name === 'Rechazar-peticion-1' || transition.name === 'Rechazar-peticion-2' || transition.name === 'Rechazar-peticion-3' || transition.name === 'Rechazar-peticion-4') {
+                                                	console.debug('Rechazar');
                                                     return (
-                                                        <a className="dropdown-item" data-name={transition.label} onClick={this.openModalRechazar}>
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalRechazar}>
                                                             { window.transitionsLabel[transition.label]
                                                                 ? window.transitionsLabel[transition.label].replace(/\./g, '')
                                                                 : transition.label.replace(/\./g, '')
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.label == 'Devolver') {
+                                                }else if (transition.name === 'Devolver') {
+                                                	console.debug('Devolver');
                                                     return (
-                                                        <a className="dropdown-item" data-name={transition.label} onClick={this.openModalDevolver}>
+                                                        <a className="dropdown-item" data-name={transition.name} onClick={this.openModalDevolver}>
                                                             { window.transitionsLabel[transition.label]
                                                                 ? window.transitionsLabel[transition.label].replace(/\./g, '')
                                                                 : transition.label.replace(/\./g, '')
@@ -586,6 +590,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 }else if (transition.name !== 'Mandar-a-portafirmas') {
+                                                	console.debug('Mandar-a-portafirmas');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
                                                             { window.transitionsLabel[transition.label]
@@ -595,6 +600,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 } else if (transition.name !== 'portafirma-director-RRHH') {
+                                                	console.debug('portafirma-director-RRHH');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
                                                             { window.transitionsLabel[transition.label]
@@ -604,6 +610,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 } else {
+                                                	console.debug('Else');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
                                                             { window.transitionsLabel[transition.label]

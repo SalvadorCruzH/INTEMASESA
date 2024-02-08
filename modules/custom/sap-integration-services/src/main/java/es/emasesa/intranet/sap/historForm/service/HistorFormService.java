@@ -9,11 +9,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistFormPais;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistFormacion;
-import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistform;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORM;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORMACIO;
 import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORMACIO_Service;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORM_Service;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
@@ -44,7 +41,7 @@ public class HistorFormService {
         LoggerUtil.debug(LOG, "[B] obtenerHistorialFormacion");
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORM.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORMACIO.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             Holder<TableOfZpeStEmpleadoHistFormacion> tExterna = new Holder<>();

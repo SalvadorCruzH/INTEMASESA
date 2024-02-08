@@ -18,6 +18,22 @@
                     placeholder='<liferay-ui:message key="search"></liferay-ui:message>'
             />
         </div>
+        <div class="ema-ajaxsearch-filtros__text" >
+            <label><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.news.estado"></liferay-ui:message></label>
+            <select name="<portlet:namespace /><%=AjaxSearchPortletKeys.ESTADO%>"
+                   id="<%=AjaxSearchPortletKeys.ESTADO%>"
+                    value='<%=ajaxSearchDisplayContext.getLong(AjaxSearchPortletKeys.ESTADO) %>'
+                   data-as-id="<%=AjaxSearchPortletKeys.ESTADO%>"
+                   class="m-searchAjax__input select"
+            >
+                <option value="">Selecciona un estado</option>
+                <c:forEach items="${listadoEstados}" var="estado">
+                    <option value="${estado.getKey()}" ${estado.getKey() == estadoSelected ? "selected" : ""}>
+                        <liferay-ui:message key="${estado.getKey()}"></liferay-ui:message>
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
         <div class="ema-ajaxsearch-filtros__buttons">
             <button type="button"
                     class="btn btn-primary search"

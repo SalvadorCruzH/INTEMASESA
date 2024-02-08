@@ -3,6 +3,7 @@ package es.emasesa.intranet.sap.proxy;
 import es.emasesa.intranet.sap.ayudaEscolar.service.AyudaEscolarService;
 import es.emasesa.intranet.sap.calendarioeventos.service.CalendarioEventosService;
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
+import es.emasesa.intranet.sap.contratosCategorias.service.ContratosCategoriasService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoActDatosPersonalesService;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
@@ -11,12 +12,12 @@ import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioServic
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
-import es.emasesa.intranet.sap.historForm.service.HistorFormService;
+import es.emasesa.intranet.sap.historialTitulacion.service.HistorialTitulacionService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
-import es.emasesa.intranet.sap.regina.service.ReginaService;
+//import es.emasesa.intranet.sap.regina.service.ReginaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
@@ -66,8 +67,12 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected EmpleadoActDatosPersonalesService empleadoActDatosPersonalesService;
     @Autowired(required = false)
     protected HistorFormService historFormService;
+//    @Autowired(required = false)
+//    protected ReginaService reginaService;
     @Autowired(required = false)
-    protected ReginaService reginaService;
+    protected ContratosCategoriasService contratosCategoriasService;
+    @Autowired(required = false)
+    protected HistorialTitulacionService historialTitulacionService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -127,7 +132,13 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
         return historFormService;
     }
 
-    public ReginaService getReginaService() {
-        return reginaService;
+//    public ReginaService getReginaService() {
+//        return reginaService;
+//    }
+    public ContratosCategoriasService getContratosCategoriasService() {
+        return contratosCategoriasService;
+    }
+    public HistorialTitulacionService getHistorialTitulacion() {
+        return historialTitulacionService;
     }
 }
