@@ -569,7 +569,7 @@ class Actions extends React.Component {
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.name.includes('Rechazar-peticion')) {
+                                                }else if (transition.name === 'Rechazar-peticion' || transition.name === 'Rechazar-peticion-1' || transition.name === 'Rechazar-peticion-2' || transition.name === 'Rechazar-peticion-3' || transition.name === 'Rechazar-peticion-4') {
                                                 	console.debug('Rechazar');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalRechazar}>
