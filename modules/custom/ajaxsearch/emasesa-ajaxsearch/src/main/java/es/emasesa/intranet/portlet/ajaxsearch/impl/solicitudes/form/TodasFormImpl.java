@@ -35,12 +35,9 @@ public class TodasFormImpl implements AjaxSearchForm {
     private static final Properties DFLT_PROPERTIES = new Properties();
     private final static Log LOG = LoggerUtil.getLog(TodasFormImpl.class);
 
-    public static final String CATEGORY_ID = "category-id";
     public static final String LISTA_ESTADO_OBJETO_ID = "lista-estado-objeto-id";
-    public static final String ESTADO_SELECTED = "estadoSelected";
 
     static {
-        DFLT_PROPERTIES.put(CATEGORY_ID, "-1");
         DFLT_PROPERTIES.put(LISTA_ESTADO_OBJETO_ID, "-1");
     }
 
@@ -62,10 +59,9 @@ public class TodasFormImpl implements AjaxSearchForm {
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
         String listaEstadoId = ajaxSearchDisplayContext.getConfig().get(LISTA_ESTADO_OBJETO_ID);
         List<ListTypeEntry> listaEstados = new ArrayList<>();
-        if(Validator.isNumber(listaEstadoId)){
+        if(Validator.isNumber(listaEstadoId) && Long.parseLong(listaEstadoId) > 0){
             listaEstados = listTypeEntryLocalService.getListTypeEntries(Long.parseLong(listaEstadoId));
         }
-        listaEstados.get(0).getKey();
 
         request.setAttribute("listadoEstados", listaEstados);
         request.setAttribute(AjaxSearchPortletKeys.ESTADO, ajaxSearchDisplayContext.getLong(AjaxSearchPortletKeys.ESTADO));

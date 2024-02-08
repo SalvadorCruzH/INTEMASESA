@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.*;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -147,6 +148,15 @@ public class PermisosResultImpl implements AjaxSearchResult {
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
         List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
+
+        String[] estado = ParamUtil.getParameterValues(request, AjaxSearchPortletKeys.ESTADO);
+        if (estado.length>0){
+            documents = (!documents.isEmpty()) ? documents.stream().filter(document -> {
+                Map<String, String> content =  searchingObject.getObjectEntryContent(document.get(AjaxSearchPortletKeys.FIELD_OBJECT_ENTRY_CONTENT));
+                String statusObject = content.get(AjaxSearchPortletKeys.ESTADO_OBJETO);
+                return Arrays.asList(estado).contains(statusObject);
+            }).collect(Collectors.toList()) : new ArrayList<>();
+        }
 
         String queryText = ajaxSearchDisplayContext.getQueryText();
         if (!Validator.isBlank(queryText)) {

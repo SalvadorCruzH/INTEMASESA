@@ -1,5 +1,6 @@
 package es.emasesa.intranet.portlet.ajaxsearch.impl.solicitudes.result;
 
+import com.liferay.notification.type.NotificationType;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
@@ -8,7 +9,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.*;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -147,11 +152,9 @@ public class TodasResultImpl implements AjaxSearchResult {
         QueryConfig queryConfig = searchContext.getQueryConfig();
         queryConfig.addSelectedFieldNames(Field.ANY);
 
-
         searchingObject.setMustBooleanClauses(searchContext, booleanQuery);
 
         List<Document> documents = searchingObject.searchObjects(solicitudesId.split(","), searchContext);
-
 
         String[] estado = ParamUtil.getParameterValues(request, AjaxSearchPortletKeys.ESTADO);
         if (estado.length>0){
