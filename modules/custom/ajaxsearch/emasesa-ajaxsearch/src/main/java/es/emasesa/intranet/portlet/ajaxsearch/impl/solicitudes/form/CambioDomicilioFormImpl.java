@@ -8,6 +8,7 @@ import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchForm;
+import es.emasesa.intranet.settings.osgi.BaseSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,10 +52,11 @@ public class CambioDomicilioFormImpl implements AjaxSearchForm {
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
-        String listaEstadoId = ajaxSearchDisplayContext.getConfig().get(LISTA_ESTADO_OBJETO_ID);
+
+        long listaEstadoId = baseSettings.idListaEstadosSolicitudes();
         List<ListTypeEntry> listaEstados = new ArrayList<>();
-        if(Validator.isNumber(listaEstadoId) && Long.parseLong(listaEstadoId) > 0){
-            listaEstados = listTypeEntryLocalService.getListTypeEntries(Long.parseLong(listaEstadoId));
+        if(listaEstadoId > 0){
+            listaEstados = listTypeEntryLocalService.getListTypeEntries(listaEstadoId);
         }
 
         request.setAttribute("listadoEstados", listaEstados);
@@ -64,4 +66,7 @@ public class CambioDomicilioFormImpl implements AjaxSearchForm {
 
     @Reference
     ListTypeEntryLocalService listTypeEntryLocalService;
+
+    @Reference
+    BaseSettings baseSettings;
 }
