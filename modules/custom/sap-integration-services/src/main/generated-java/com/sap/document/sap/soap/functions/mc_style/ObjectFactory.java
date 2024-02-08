@@ -687,4 +687,36 @@ public class ObjectFactory {
         return new ZpeStEmpleadoHistFormPais();
     }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistContrCateg }
+     *
+     */
+    public ZPeEmpleadoHistContrCateg createZPeEmpleadoHistContrCateg() {
+        return new ZPeEmpleadoHistContrCateg();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistContrCategResponse }
+     *
+     */
+    public ZPeEmpleadoHistContrCategResponse createZPeEmpleadoHistContrCategResponse() {
+        return new ZPeEmpleadoHistContrCategResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistContrCat }
+     *
+     */
+    public TableOfZpeStEmpleadoHistContrCat createTableOfZpeStEmpleadoHistContrCat() {
+        return new TableOfZpeStEmpleadoHistContrCat();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistContrCat }
+     *
+     */
+    public ZpeStEmpleadoHistContrCat createZpeStEmpleadoHistContrCat() {
+        return new ZpeStEmpleadoHistContrCat();
+    }
+
 }
