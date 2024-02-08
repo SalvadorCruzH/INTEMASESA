@@ -55,7 +55,6 @@ public class RestoFormImpl implements AjaxSearchForm {
         if(Validator.isNumber(listaEstadoId) && Long.parseLong(listaEstadoId) > 0){
             listaEstados = listTypeEntryLocalService.getListTypeEntries(Long.parseLong(listaEstadoId));
         }
-        listaEstados.get(0).getKey();
 
         request.setAttribute("listadoEstados", listaEstados);
         request.setAttribute(AjaxSearchPortletKeys.ESTADO, ajaxSearchDisplayContext.getLong(AjaxSearchPortletKeys.ESTADO));
