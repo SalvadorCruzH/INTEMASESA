@@ -1,4 +1,4 @@
-package es.emasesa.intranet.sap.historForm.service;
+package es.emasesa.intranet.sap.contratosCategorias.service;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -7,17 +7,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.sap.document.sap.soap.functions.mc_style.ObjectFactory;
+import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistContrCat;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistFormPais;
 import com.sap.document.sap.soap.functions.mc_style.TableOfZpeStEmpleadoHistFormacion;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORMACIO;
-import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTFORMACIO_Service;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTCONTRCA;
+import com.sap.document.sap.soap.functions.mc_style.ZWSPEEMPLEADOHISTCONTRCA_Service;
 import com.sun.xml.ws.client.ClientTransportException;
 import com.sun.xml.ws.developer.WSBindingProvider;
 import com.sun.xml.ws.fault.ServerSOAPFaultException;
 import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.sap.base.exception.SapCommunicationException;
 import es.emasesa.intranet.sap.base.logging.LogInterceptor;
-import es.emasesa.intranet.sap.historForm.exception.HistorFormException;
+import es.emasesa.intranet.sap.contratosCategorias.exception.ContratosCategoriasException;
 import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 import jakarta.xml.ws.Holder;
@@ -32,54 +33,42 @@ import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.List;
 
-@org.springframework.stereotype.Component("historFormService")
-public class HistorFormService {
+@org.springframework.stereotype.Component("contratosCategoriasService")
+public class ContratosCategoriasService {
 
 
-    public JSONObject obtenerHistorialFormacion(String pernr, String eventoId) throws HistorFormException, SapCommunicationException {
+    public JSONObject obtenerContratosCategorias(String pernr) throws ContratosCategoriasException, SapCommunicationException {
 
-        LoggerUtil.debug(LOG, "[B] obtenerHistorialFormacion");
+        LoggerUtil.debug(LOG, "[B] obtenerContratos");
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         try {
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORMACIO.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTCONTRCA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
-            Holder<TableOfZpeStEmpleadoHistFormacion> tExterna = new Holder<>();
-            Holder<TableOfZpeStEmpleadoHistFormacion> tImpartida = new Holder<>();
-            Holder<TableOfZpeStEmpleadoHistFormacion> tInterna = new Holder<>();
-            Holder<TableOfZpeStEmpleadoHistFormPais> tPais = new Holder<>();
-            Holder<byte[]> exData = new Holder<>();
-            Holder<Integer> exReturn = new Holder<>();
+            Holder<TableOfZpeStEmpleadoHistContrCat> tHistContrCategDesglose = new Holder<>();
+            Holder<TableOfZpeStEmpleadoHistContrCat> tHistContrCategResumen = new Holder<>();
 
-            port.zPeEmpleadoHistFormacion(eventoId, pernr, exData, exReturn, tExterna, tImpartida, tInterna, tPais);
+            port.zPeEmpleadoHistContrCateg(pernr, tHistContrCategDesglose, tHistContrCategResumen);
 
-            LoggerUtil.debug(LOG, "Trae datos del WS correctamente: " +tExterna.value + " - " + tImpartida.value + " - " + tInterna.value);
+
             JSONObject jsonReturn = JSONFactoryUtil.createJSONObject();
-            if (tExterna.value != null){
-                jsonReturn.put("externa", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tExterna.value.getItem())));
+            if (tHistContrCategDesglose.value != null){
+                jsonReturn.put("desglose", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tHistContrCategDesglose.value.getItem())));
             }
-            if (tImpartida.value != null){
-                jsonReturn.put("impartida", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tImpartida.value.getItem())));
+            if (tHistContrCategResumen.value != null){
+                jsonReturn.put("resumen", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tHistContrCategResumen.value.getItem())));
             }
-            if (tInterna.value != null){
-                jsonReturn.put("interna", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInterna.value.getItem())));
-            }
-            if (tInterna.value != null){
-                jsonReturn.put("pais", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tPais.value.getItem())));
-            }
-            if (tInterna.value != null){
-                jsonReturn.put("data", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(exData.value)));
-            }
+
             LoggerUtil.debug(LOG, "devuelve: " +jsonReturn.toString());
             return jsonReturn;
 
         } catch (JSONException | ServerSOAPFaultException e) {
             LOG.error(e.getMessage());
-            throw new HistorFormException("Error con el WS:" + e.getMessage(), e);
+            throw new ContratosCategoriasException("Error con el WS:" + e.getMessage(), e);
         } catch (ClientTransportException e) {
             throw new SapCommunicationException("Error llamando al WS, error de comunicación", e);
         } finally {
-            LoggerUtil.debug(LOG, "[E] obtenerHistorialFormacion");
+            LoggerUtil.debug(LOG, "[E] obtenerContratosCategoriasn");
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
     }
@@ -92,14 +81,14 @@ public class HistorFormService {
     public void activate() {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[I] Activando HistorialFormacion");
+            LOG.debug("[I] Activando ContratosCategorias");
         }
 
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         SapServicesConfiguration configuration = null;
         try {
             configuration = sapConfigurationUtil.getConfiguration();
-            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTFORMACIO.class.getClassLoader();
+            ClassLoader objectFactoryClassLoader = ZWSPEEMPLEADOHISTCONTRCA.class.getClassLoader();
             Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
 
             String userName = configuration.userPrompt();
@@ -111,9 +100,9 @@ public class HistorFormService {
                     return new PasswordAuthentication(userName, password.toCharArray());
                 }
             });
-            URL urlEndpoint = new URL(configuration.historFormEndpoint());
-            ZWSPEEMPLEADOHISTFORMACIO_Service service = new ZWSPEEMPLEADOHISTFORMACIO_Service(urlEndpoint);
-            port = service.getPort(ZWSPEEMPLEADOHISTFORMACIO.class);
+            URL urlEndpoint = new URL(configuration.contratosCategoriasEndpoint());
+            ZWSPEEMPLEADOHISTCONTRCA_Service service = new ZWSPEEMPLEADOHISTCONTRCA_Service(urlEndpoint);
+            port = service.getPort(ZWSPEEMPLEADOHISTCONTRCA.class);
 
             /*******************UserName & Password ******************************/
             WSBindingProvider bp = ((WSBindingProvider) port);
@@ -126,26 +115,26 @@ public class HistorFormService {
             LOG.info(this.getClass().getName() +" cargado correctamente");
         } catch (ConfigurationException e) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Se ha producido un error instanciando el servicio de HistorFormService", e);
+                LOG.info("Se ha producido un error instanciando el servicio de ContratosCategoriasService", e);
             }
         } catch (MalformedURLException e) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Error en el WSDL de ZWSPEEMPLEADOHISTFORM_Service --> " + configuration.historFormEndpoint());
+                LOG.info("Error en el WSDL de ZWSPEEMPLEADOHISTCONTRCA_Service --> " + configuration.contratosCategoriasEndpoint());
             }
         } finally {
             Thread.currentThread().setContextClassLoader(currentClassLoader);
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("[E] HistorFormService");
+            LOG.debug("[E] ContratosCategoriasService");
         }
 
     }
 
-    private ZWSPEEMPLEADOHISTFORMACIO port;
+    private ZWSPEEMPLEADOHISTCONTRCA port;
     @Autowired
     SapConfigurationUtil sapConfigurationUtil;
 
-    private static final Log LOG = LogFactoryUtil.getLog(HistorFormService.class);
+    private static final Log LOG = LogFactoryUtil.getLog(ContratosCategoriasService.class);
 
 }

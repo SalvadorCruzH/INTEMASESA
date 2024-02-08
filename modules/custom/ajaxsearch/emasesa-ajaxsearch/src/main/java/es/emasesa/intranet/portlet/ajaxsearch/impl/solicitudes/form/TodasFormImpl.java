@@ -14,6 +14,7 @@ import es.emasesa.intranet.base.util.LoggerUtil;
 import es.emasesa.intranet.portlet.ajaxsearch.base.AjaxSearchDisplayContext;
 import es.emasesa.intranet.portlet.ajaxsearch.constant.AjaxSearchPortletKeys;
 import es.emasesa.intranet.portlet.ajaxsearch.model.AjaxSearchForm;
+import es.emasesa.intranet.settings.osgi.BaseSettings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,12 +36,9 @@ public class TodasFormImpl implements AjaxSearchForm {
     private static final Properties DFLT_PROPERTIES = new Properties();
     private final static Log LOG = LoggerUtil.getLog(TodasFormImpl.class);
 
-    public static final String CATEGORY_ID = "category-id";
     public static final String LISTA_ESTADO_OBJETO_ID = "lista-estado-objeto-id";
-    public static final String ESTADO_SELECTED = "estadoSelected";
 
     static {
-        DFLT_PROPERTIES.put(CATEGORY_ID, "-1");
         DFLT_PROPERTIES.put(LISTA_ESTADO_OBJETO_ID, "-1");
     }
 
@@ -60,12 +58,12 @@ public class TodasFormImpl implements AjaxSearchForm {
     @Override
     public String getFormView(PortletRequest request, PortletResponse response,
                               AjaxSearchDisplayContext ajaxSearchDisplayContext) {
-        String listaEstadoId = ajaxSearchDisplayContext.getConfig().get(LISTA_ESTADO_OBJETO_ID);
+
+        long listaEstadoId = baseSettings.idListaEstadosSolicitudes();
         List<ListTypeEntry> listaEstados = new ArrayList<>();
-        if(Validator.isNumber(listaEstadoId)){
-            listaEstados = listTypeEntryLocalService.getListTypeEntries(Long.parseLong(listaEstadoId));
+        if(listaEstadoId > 0){
+            listaEstados = listTypeEntryLocalService.getListTypeEntries(listaEstadoId);
         }
-        listaEstados.get(0).getKey();
 
         request.setAttribute("listadoEstados", listaEstados);
         request.setAttribute(AjaxSearchPortletKeys.ESTADO, ajaxSearchDisplayContext.getLong(AjaxSearchPortletKeys.ESTADO));
@@ -75,4 +73,6 @@ public class TodasFormImpl implements AjaxSearchForm {
     @Reference
     ListTypeEntryLocalService listTypeEntryLocalService;
 
+    @Reference
+    BaseSettings baseSettings;
 }

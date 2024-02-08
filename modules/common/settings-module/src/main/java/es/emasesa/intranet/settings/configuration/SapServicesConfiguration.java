@@ -171,4 +171,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String reginaReferee();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ContratosCategoriasEndpoint",
+            required = false
+    )
+    String contratosCategoriasEndpoint();
 }
