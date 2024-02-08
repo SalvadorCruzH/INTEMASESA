@@ -12,8 +12,6 @@
                     <thead>
                      <tr>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.subject" /></th>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.dateactivity" /></th>
-                      <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.status" /></th>
                       <th><liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.datesent" /></th>
                       <th></th>
                      </tr>
@@ -47,21 +45,12 @@
 <template id="as-template">
     <tr>
         <td>#nombreObjeto#</td>
-        <td>#fechaActividad#</td>
-        <td><span class="ema-pill-estado #estado-code# #is-user-editable#">#estado#</span></td>
         <td>#fechaEnvio#</td>
+        <td><span class="ema-pill-estado #estado-code# #is-user-editable#">#estado#</span></td>
         <td class="ema-td-dropdown">
             <button class="ema-button-moreoptions">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
-            <ul class="ema-desplegable-moreoptions">
-                <li>
-                    <button onclick="openEditDialog('#urlEditar#')">
-                        <i class="fa-solid fa-edit"></i>
-                        <liferay-ui:message key="es.emasesa.intranet.ajaxsearch.objects.result.edit" />
-                    </button>
-                </li>
-            </ul>
             <button class="ema-enlace-visualizar" onclick="openViewDialog('#urlVisualizar#')">
                 <i class="fa-solid fa-eye"></i>
             </button>
