@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -111,9 +112,11 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
             assigneeGroupIds.add(kaleoTaskAssignmentInstance.getGroupId());
             assigneeUserName.add(kaleoTaskAssignmentInstance.getUserName());
             try {
-                User userAss = _userLocalService.getUser(kaleoTaskAssignmentInstance.getAssigneeClassPK());
-                document.addKeywordSortable(
-                        "assigneePersonName", userAss.getFullName());
+                if(kaleoTaskAssignmentInstance.getAssigneeClassName().equals(User.class.getName())){
+                    User userAss = _userLocalService.getUser(kaleoTaskAssignmentInstance.getAssigneeClassPK());
+                    document.addKeywordSortable("assigneePersonName", userAss.getFullName());
+                }
+
             } catch (Exception e) {
                 if (_log.isWarnEnabled()) {
                     _log.warn(e);
