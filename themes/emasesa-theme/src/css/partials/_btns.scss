@@ -89,3 +89,13 @@
        color: $color-hover-blue;
     }
 }
+
+.ema-boton-descargar {
+    background-color: $color-aux-blue;
+    color: $color-white;
+    padding: 9px 15px;
+    border-radius: 20px;
+    i.fa-solid {
+        color: $color-white;
+    }
+}
