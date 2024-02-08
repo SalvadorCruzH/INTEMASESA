@@ -178,4 +178,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String contratosCategoriasEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "HistorialTitulacionEndpoint",
+            required = false
+    )
+    String historialTitulacionEndpoint();
 }

@@ -46,7 +46,9 @@ Export-Package: \
     es.emasesa.intranet.sap.regina.service,\
     es.emasesa.intranet.sap.regina.exception,\
     es.emasesa.intranet.sap.contratosCategorias.service,\
-    es.emasesa.intranet.sap.contratosCategorias.exception
+    es.emasesa.intranet.sap.contratosCategorias.exception,\
+  es.emasesa.intranet.sap.historialTitulacion.service,\
+  es.emasesa.intranet.sap.historialTitulacion.exception
 
 Import-Package:\*;resolution:=optional
 
