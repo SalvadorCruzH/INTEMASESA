@@ -553,12 +553,14 @@ class Actions extends React.Component {
                     {(this.state.assigneePerson && this.state.transitions && Number(this.state.assigneePerson) === Number(Liferay.ThemeDisplay.getUserId()) ) &&
                         this.state.transitions.map((transition) => {
                             console.debug(transition);
+                            console.debug("Name: " + transition.name + "Label: " + transition.label);
                             return (
                                 <>
                                     <li>
                                         <>
                                             {(() => {
-                                                if (transition.name == 'reenviar-solicitud'){
+                                                if (transition.name === 'reenviar-solicitud'){
+                                                	console.debug('reenviar-solicitud');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalReenviar}>
                                                             { window.transitionsLabel[transition.label]
@@ -568,6 +570,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 }else if (transition.name == 'Rechazar') {
+                                                	console.debug('Rechazar');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalRechazar}>
                                                             { window.transitionsLabel[transition.label]
@@ -576,7 +579,8 @@ class Actions extends React.Component {
                                                             }
                                                         </a>
                                                     )
-                                                }else if (transition.name == 'Devolver') {
+                                                }else if (transition.name === 'Devolver') {
+                                                	console.debug('Devolver');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalDevolver}>
                                                             { window.transitionsLabel[transition.label]
@@ -586,6 +590,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 }else if (transition.name !== 'Mandar-a-portafirmas') {
+                                                	console.debug('Mandar-a-portafirmas');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.changeTransition}>
                                                             { window.transitionsLabel[transition.label]
@@ -595,6 +600,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 } else if (transition.name !== 'portafirma-director-RRHH') {
+                                                	console.debug('portafirma-director-RRHH');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
                                                             { window.transitionsLabel[transition.label]
@@ -604,6 +610,7 @@ class Actions extends React.Component {
                                                         </a>
                                                     )
                                                 } else {
+                                                	console.debug('Else');
                                                     return (
                                                         <a className="dropdown-item" data-name={transition.name} onClick={this.openModalAsesor}>
                                                             { window.transitionsLabel[transition.label]
