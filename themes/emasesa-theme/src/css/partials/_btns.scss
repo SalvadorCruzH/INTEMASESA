@@ -47,6 +47,10 @@
         color: white;
         border-color: transparent;
     }
+    i[class*="fa"] {
+        color: $color-white;
+        margin-right: 5px;
+    }
 }
 .btn-secondary {
     background-color: $color-secondary;
