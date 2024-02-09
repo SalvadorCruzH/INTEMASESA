@@ -11,29 +11,26 @@
 <#setting locale = localeUtil.getDefault()>
 <#assign displaydate = displaydate?datetime("EEE, d MMM yyyy HH:mm:ss Z")>
 
-
-
-
 <#assign journalContentId = "jc" + articleId />
-<#assign 
-		dLFileEntryLocalService = serviceLocator.findService("com.liferay.document.library.kernel.service.DLFileEntryLocalService")
-		groupLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.GroupLocalService")
-		articleGroup = groupLocalService.fetchGroup(articleGroupId)
-	/>
+<#assign
+    dLFileEntryLocalService = serviceLocator.findService("com.liferay.document.library.kernel.service.DLFileEntryLocalService")
+    groupLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.GroupLocalService")
+    articleGroup = groupLocalService.fetchGroup(articleGroupId)
+/>
 
 <div class="ema-noticiasDetail">
     <div class="container ">
         <div class="ema-noticia-tarjeta">
             <#if categorias?has_content>
-            <div class="ema-noticia-tarjeta__categoriasContainer">
-                <ul class="ema-noticia-tarjeta__categorias m-listBaseNoStyles m-listBase">
-                    <#list categorias as category>
-                        <li class="ema-noticia-tarjeta__categoria">
-                            ${category.getName()}<#if category?index+1 < categorias?size>,&nbsp;</#if>
-                        </li>
-                    </#list>
-                </ul>
-            </div>
+                <div class="ema-noticia-tarjeta__categoriasContainer">
+                    <ul class="ema-noticia-tarjeta__categorias m-listBaseNoStyles m-listBase">
+                        <#list categorias as category>
+                            <li class="ema-noticia-tarjeta__categoria">
+                                ${category.getName()}<#if category?index+1 < categorias?size>,&nbsp;</#if>
+                            </li>
+                        </#list>
+                    </ul>
+                </div>
             </#if>
             <div class="ema-noticiasDetail__wrapperTitleImg">
                 <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
@@ -41,22 +38,21 @@
                 <#else>
                     <div class="ema-noticiasDetail__wrapperTexts">
                 </#if>
-                <#if (antetitulo.getData())??>
-                    <p class="ema-noticiasDetail__antetitulo">${antetitulo.getData()}</p>
-                </#if>
-                    <h2 class="ema-noticia-tarjeta__titulo">
-                        ${title.getData()}
-                    </h2>
+                    <#if (antetitulo.getData())??>
+                        <p class="ema-noticiasDetail__antetitulo">${antetitulo.getData()}</p>
+                    </#if>
+                    <h2 class="ema-noticia-tarjeta__titulo">${title.getData()}</h2>
                     <p class="ema-noticia-tarjeta__fecha">${displaydate?string["dd"]} de ${displaydate?string["MMMM"]} de ${displaydate?string["yyyy"]}</p>
                     <#if (subtitle.getData())??>
-                    <h3 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h3>
+                        <h3 class="ema-noticia-tarjeta__subtitulo">${subtitle.getData()}</h3>
                     </#if>
-                    <div class="ema-noticia-tarjeta__entradilla">${entradilla.getData()}</div>
-                   
+                    <div class="ema-noticia-tarjeta__entradilla">
+                        ${entradilla.getData()}
+                    </div>
                 </div>
                 <#if (imagenPrincipal.imgPrincipal.getData())?? && imagenPrincipal.imgPrincipal.getData() != "">
                     <div class="ema-noticiasDetail__wrapperImg">
-                        <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute("alt")}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
+                        <img class="ema-noticia-tarjeta__img" alt="${imagenPrincipal.imgPrincipal.getAttribute('alt')}" data-fileentryid="${imagenPrincipal.imgPrincipal.getAttribute("fileEntryId")}" src="${imagenPrincipal.imgPrincipal.getData()}" />
                         <#if (imagenPrincipal.pieFotoPrincipal.getData())??>
                             <p class="ema-noticia-tarjeta__pie">${imagenPrincipal.pieFotoPrincipal.getData()}</p>
                         </#if>
@@ -79,7 +75,8 @@
                                     <a class="ema-noticiasDetail__listLink" href="${cur_campoUrl.url.getData()}">
                                         <#if cur_campoUrl.urlTitle.getData()?? && cur_campoUrl.urlTitle.getData() != "">
                                             ${cur_campoUrl.urlTitle.getData()}
-                                        <#else>${cur_campoUrl.url.getData()}
+                                        <#else>
+                                            ${cur_campoUrl.url.getData()}
                                         </#if>
                                     </a>
                                 </li>
@@ -100,29 +97,34 @@
                                         groupIdDoc = documentPath[2]
                                         dlFileEntry = dLFileEntryLocalService.fetchDLFileEntryByUuidAndGroupId(uuid,groupIdDoc?number)
                                     />
-                                <li class="ema-noticiasDetail__filesLi">
-                                    <@emasesa.docSize doc=cur_file.getData() locale=locale/>
-                                </li>
+                                    <#if archivosDescargar.getSiblings()?has_content>
+                                        <#list archivosDescargar.getSiblings() as cur_archivosDescargar>
+                                            <#assign docSplit = cur_archivosDescargar.getData()?split("/") />
+                                            <li class="ema-noticiasDetail__filesLi">
+                                                <a href="${cur_archivosDescargar.getData()}" title="Descargar documento" target="_blank">${docSplit[4]}</a>
+                                            </li>
+                                        </#list>
+                                    </#if>
                                 </#if>
                             </#list>
                         </ul>
                     </div>
                 </#if>
             </div>
-                <#if imgVideoGaleria.getSiblings()?has_content && (imgVideoGaleria.imgGaleria.getSiblings()[0].getData() != "" || imgVideoGaleria.videoGaleria.getSiblings()[0].getData() != "")>
+            <#if imgVideoGaleria.getSiblings()?has_content && (imgVideoGaleria.imgGaleria.getSiblings()[0].getData() != "" || imgVideoGaleria.videoGaleria.getSiblings()[0].getData() != "")>
                 <div class="ema-noticiasDetail__wrapperGaleria">
                     <h3 class="ema-noticiasDetail__galeriaTitle">Galería Multimedia</h3>
                     <div class="ema-carousel-icons">
-						<button aria-label="anterior slide" class="prev ema-slide-btn ema-slide-pre">
+                        <button aria-label="anterior slide" class="prev ema-slide-btn ema-slide-pre">
                             <i class="i-icon--white fa-solid fa-angle-left"></i>
                         </button>
-						<div class="carousel-dots"></div>
-        				<button aria-label="siguiente slide" class="next ema-slide-btn ema-slide-next">
+                        <div class="carousel-dots"></div>
+                        <button aria-label="siguiente slide" class="next ema-slide-btn ema-slide-next">
                             <i class="i-icon--white fa-solid fa-angle-right"></i>
                         </button>
-				    </div>
-                    <div class="ema-noticiasDetail__galeria"> 
-                        
+                    </div>
+                    <div class="ema-noticiasDetail__galeria">
+
                         <#if imgVideoGaleria.imgGaleria.getSiblings()?has_content>
                             <#list imgVideoGaleria.imgGaleria.getSiblings() as cur_imgG>
                                 <#if (cur_imgG.getData())?? && cur_imgG.getData() != "">
@@ -147,8 +149,8 @@
                         </#if>
                     </div>
                 </div>
-                </#if>
-       
+            </#if>
+
             <#if (autor.getData())?? || (departamento.getData())??>
                 <div class="ema-noticiasDetail__footer">
                     <#if (departamento.getData())??>
@@ -160,15 +162,18 @@
                 </div>
             </#if>
             <div class="ema-go-back">
-                <@emasesa.header title=title.getData()/>
-            </div>    
+                <button class="btn btn-nm btn-primary" type="button" onclick="history.back()">
+                    <i class="fa-solid fa-arrow-left i-icon--blue"></i>
+                    <span>Volver atrás</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {  
-	
+    $(document).ready(function () {
+
 		$('.ema-noticiasDetail__galeria').slick({
 			slidesToShow: 3,
 			slidesToScroll: 3,
@@ -177,7 +182,7 @@
             appendDots: '.carousel-dots',
             prevArrow: $('.prev'),
 			nextArrow: $('.next'),
-			cssEase: 'linear', 
+			cssEase: 'linear',
 
 			responsive: [
                 {
