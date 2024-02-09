@@ -209,7 +209,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
 
                 String portalUrl = PortalUtil.getPortalURL(actionRequest);
                 htmlContenido = postProcesadoContenido(htmlContenido, portalUrl);
-                htmlContenido = _customMailUtil.parseImgsOnBodyToBase64(htmlContenido);
+                //htmlContenido = _customMailUtil.parseImgsOnBodyToBase64(htmlContenido);
             }
         } catch (PortalException e) {
             LoggerUtil.error(LOG, e);
@@ -239,6 +239,7 @@ public class GestionBoletinesPortlet extends MVCPortlet {
                 if (!src.startsWith("http") && !src.startsWith("https")) {
                     String absoluteUrl = portalUrl + src;
                     imgElement.attr("src", absoluteUrl);
+                    LoggerUtil.debug(LOG,"src Image: " + absoluteUrl);
                 }
 
                 if (src.contains("admin-theme")){
