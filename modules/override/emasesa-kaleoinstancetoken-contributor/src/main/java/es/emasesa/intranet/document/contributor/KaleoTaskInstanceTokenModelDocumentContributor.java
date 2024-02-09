@@ -154,14 +154,21 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
                 assigneeUserName.toArray(new String[0]));
 
         try {
-
-            User user = _userLocalService.getUser(kaleoTaskInstanceToken.getUserId());
-            if (user.getExpandoBridge().hasAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA)) {
-                if (Validator.isNotNull(user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, false))) {
-                    document.addKeywordSortable(MATRICULA, (String) user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, false));
-                    document.addKeywordSortable(FULLNAME, (String) user.getFullName());
+            try {
+                Long entryClassPK = JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getLong("entryClassPK");
+                User user = _userLocalService.getUser(_objectEntryLocalService.getObjectEntry(entryClassPK).getUserId());
+                if (user.getExpandoBridge().hasAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA)) {
+                    if (Validator.isNotNull(user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, false))) {
+                        document.addKeywordSortable(MATRICULA, (String) user.getExpandoBridge().getAttribute(EmasesaConstants.EMASESA_EXPANDO_MATRICULA, false));
+                        document.addKeywordSortable(FULLNAME, (String) user.getFullName());
+                    }
+                }
+            } catch (Exception e) {
+                if (_log.isWarnEnabled()) {
+                    _log.warn(e);
                 }
             }
+
             try {
                 document.addKeywordSortable("entryType",
                         JSONFactoryUtil.createJSONObject(kaleoTaskInstanceToken.getWorkflowContext()).getJSONObject("map").getString("entryType"));
