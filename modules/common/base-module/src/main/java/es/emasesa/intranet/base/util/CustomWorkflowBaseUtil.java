@@ -182,7 +182,7 @@ public class CustomWorkflowBaseUtil {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get(EmasesaConstants.WORKFLOW_HISTORICO));
 			JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 			
-			LocalDateTime now = LocalDateTime.now();
+			LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Madrid"));
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DDMMYYYYHHmmss);
 			
 			if(userId != 0) {
