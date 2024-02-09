@@ -9,7 +9,9 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.*;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +76,7 @@ public class CustomWorkflowBaseUtil {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray((String) object.getValues().get(EmasesaConstants.WORKFLOW_HISTORICO));
 				JSONObject datosHistorico = JSONFactoryUtil.createJSONObject();
 				
-				LocalDateTime now = LocalDateTime.now();
+				LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Madrid"));
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EmasesaConstants.DDMMYYYYHHmmss);
 				
 				if(userId != 0) {
