@@ -1,0 +1,14 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "EM - Campo Hora",
+  "typeOptions": {"fieldTypes": [
+    "date",
+    "number",
+    "text"
+  ]},
+  "type": "input"
+}
