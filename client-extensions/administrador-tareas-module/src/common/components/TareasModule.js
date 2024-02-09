@@ -95,39 +95,50 @@ class TareasModule extends React.Component {
     }
 
     getAssignedToMeButton = (event) => {
+        console.debug("getAssignedToMeButton start");
         this.setState({loading: true});
         this.setState({tareas:[],start: 0, end: 10, typeList: "toMe"});
         this.getAssignedToMe();
 
+        console.debug("getAssignedToMeButton end");
     }
 
     getAssignedToMe = () => {
+        console.debug("getAssignedToMe start");
+        
         this.setState({
             view: 1
         });
 
         console.log(this.state.columnSelected);
+        let queryText = document.getElementById("queryText").value;
         setTimeout(() => {
-            TareasApi.getWorkflowTask("", this.state.showCompleted, false, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler);
+            TareasApi.getWorkflowTask("", this.state.showCompleted, false, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler, queryText);
         }, 100)
+        console.debug("getAssignedToMe end");
 
     }
 
     getAssignedToUserRolButton = (event) => {
+        console.debug("getAssignedToUserRolButton start");
         this.setState({loading: true});
         this.setState({tareas:[],start: 0, end: 10, typeList: "toUserRol"});
         this.getAssignedToUserRol();
+        console.debug("getAssignedToUserRolButton end");
     }
 
     getAssignedToUserRol = () => {
+        console.debug("getAssignedToUserRol start");
         this.setState({
             view: 2
         });
         this.setState({loading: true});
         this.setState({start: 0, end: 10});
+        let queryText = document.getElementById("queryText").value;
         setTimeout(() => {
-            TareasApi.getWorkflowTask("", this.state.showCompleted, true, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler);
+            TareasApi.getWorkflowTask("", this.state.showCompleted, true, this.state.start, this.state.end, this.state.columnSelected, this.setTasks, this.errorHandler, queryText);
         }, 100)
+        console.debug("getAssignedToUserRol end");
     }
 
     getTasksUser = () => {
@@ -184,7 +195,7 @@ class TareasModule extends React.Component {
                                 result = JSON.parse(JSON.stringify(response));
                                 console.debug(result);
                                 tarea.objectData = result;
-                                console.log(tarea.objectData);
+                                console.log("addTareaExtraData", tarea.objectData);
                                 this.addTareaTransition(tarea);
 
                             } catch (e) {
@@ -403,10 +414,23 @@ class TareasModule extends React.Component {
         this.getTasksUser();
     }
 
+    filtrarTareas = (event) => {
+        console.debug("filtrarTareas start");
+        if (this.state.typeList === 'toMe') {
+            this.getAssignedToMeButton();
+        } else if (this.state.typeList === 'toUserRol') {
+            this.getAssignedToUserRolButton();
+        } else {
+            this.getAssignedToMeButton();
+        }
+        console.debug("filtrarTareas middle");
+    }
     render() {
 
         return (
             <div>
+                <input type="text" id="queryText" name="search" placeholder="Buscar tarea" aria-label="Buscar tarea"></input>
+                <button id="searchButton" aria-label="Buscar" onClick={this.filtrarTareas}>Buscar</button>
 
                 <div className="button-holder btn-wrapper btn-wrapper--inline">
                     <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi"

@@ -47,16 +47,17 @@ public class RestEmasesaWorkflowApplication extends Application {
 	}
 
 	@GET
-	@Path("/{assetType}/{completed}/{byRole}/{start}/{end}/{orderColumn}/{orderType}")
+	@Path("/{assetType}/{completed}/{byRole}/{start}/{end}/{orderColumn}/{orderType}/{queryText}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response getWorkflowTasksAssigned(@Context HttpServletRequest request, @PathParam("assetType") String assetType,
 									 @PathParam("completed") boolean completed, @PathParam("byRole") boolean byRole, @PathParam("start") int start,
-									 @PathParam("end") int end, @PathParam("orderColumn") String orderColumn, @PathParam("orderType") String orderType)  {
+									 @PathParam("end") int end, @PathParam("orderColumn") String orderColumn, @PathParam("orderType") String orderType,
+									 @PathParam("queryText") String queryText){
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		try {
-			JSONObject result = getTasks(assetType, completed, byRole, start, end, orderColumn, orderType, serviceContext);
+			JSONObject result = getTasks(assetType, completed, byRole, start, end, orderColumn, orderType, serviceContext, queryText);
 
 			return Response
 					.status(Response.Status.OK)
@@ -72,16 +73,17 @@ public class RestEmasesaWorkflowApplication extends Application {
 	}
 
 	@GET
-	@Path("/{completed}/{byRole}/{start}/{end}/{orderColumn}/{orderType}")
+	@Path("/{completed}/{byRole}/{start}/{end}/{orderColumn}/{orderType}/{queryText}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response getAllWorkflowTasksAssigned(@Context HttpServletRequest request,
 											 @PathParam("completed") boolean completed,@PathParam("byRole") boolean byRole, @PathParam("start") int start,
-											 @PathParam("end") int end, @PathParam("orderColumn") String orderColumn, @PathParam("orderType") String orderType) {
+											 @PathParam("end") int end, @PathParam("orderColumn") String orderColumn, @PathParam("orderType") String orderType,
+											 @PathParam("queryText") String queryText) {
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 		try {
-			JSONObject result = getTasks("",completed, byRole, start, end, orderColumn, orderType, serviceContext);
+			JSONObject result = getTasks("",completed, byRole, start, end, orderColumn, orderType, serviceContext, queryText);
 
 			return Response
 					.status(Response.Status.OK)
@@ -98,7 +100,7 @@ public class RestEmasesaWorkflowApplication extends Application {
 
 
 	private JSONObject getTasks(String assetType, boolean completed, boolean byRole, int start, int end,
-							   String orderColumn, String orderType, ServiceContext serviceContext) throws Exception {
+							   String orderColumn, String orderType, ServiceContext serviceContext, String queryText) throws Exception {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 		Long[] asigneeIds = new Long[]{user.getUserId()};
@@ -109,6 +111,9 @@ public class RestEmasesaWorkflowApplication extends Application {
 			asigneeIds = null;
 		}
 		JSONArray jsonArray = _emasesaWorkflowTaskSearch.searchWorkflowTask(serviceContext, false, assetTypes, asigneeIds, completed, start, end, byRole, orderColumn, orderType);
+		if (queryText != null && !queryText.isEmpty()) {
+			jsonArray = filterTasks(jsonArray, queryText);
+		}
 		long count = _emasesaWorkflowTaskSearch.searchWorkflowTaskCount(serviceContext, false, assetTypes, asigneeIds, completed, 0, 0, byRole, orderColumn, orderType);
 
 		jsonArray.forEach(jsonObject -> {
@@ -123,6 +128,22 @@ public class RestEmasesaWorkflowApplication extends Application {
 		return result;
 	}
 
+	private JSONArray filterTasks(JSONArray jsonArray, String queryText) {
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		jsonArray.forEach(jsonObject -> {
+			JSONObject jsonTask = (JSONObject) jsonObject;
+			if (jsonTask.getString("matricula").toLowerCase().contains(queryText.toLowerCase())) {
+				result.put(jsonTask);
+			} else if (jsonTask.getString("assetType").toLowerCase().contains(queryText.toLowerCase())) {
+				result.put(jsonTask);
+			} else if (jsonTask.getString("assigneePersonName").toLowerCase().contains(queryText.toLowerCase())) {
+				result.put(jsonTask);
+			} else if (jsonTask.getString("taskName").toLowerCase().contains(queryText.toLowerCase())) {
+				result.put(jsonTask);
+			}
+		});
+		return result;
+	}
 
 	@GET
 	@Path("/check/{roleId}/{workflowtaskId}")
