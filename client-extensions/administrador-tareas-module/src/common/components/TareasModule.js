@@ -425,12 +425,46 @@ class TareasModule extends React.Component {
         }
         console.debug("filtrarTareas middle");
     }
+    hideFilters = (event) => {
+        var button = $('button.ema-ajaxsearch-form__filterbutton');
+        var filters = $('div.ema-ajaxsearch-form__filters');
+        filters.fadeToggle();
+        if (filters.attr('aria-hidden') === 'true') {
+            button.find('i.fa-chevron-down').toggleClass('fa-chevron-down fa-chevron-up');
+            filters.attr('aria-hidden', 'false');
+        } else {
+            button.find('i.fa-chevron-up').toggleClass('fa-chevron-up fa-chevron-down');
+            filters.attr('aria-hidden', 'true');
+        }
+    }
     render() {
 
         return (
             <div>
-                <input type="text" id="queryText" name="search" placeholder="Buscar tarea" aria-label="Buscar tarea"></input>
-                <button id="searchButton" aria-label="Buscar" onClick={this.filtrarTareas}>Buscar</button>
+                <div class="m-searchAjax m-searchAjax--form ema-ajaxsearch-form">
+                    <button class="ema-ajaxsearch-form__filterbutton" onClick={this.hideFilters}>
+                        <i class="fa-solid fa-filter fa-lg" aria-hidden="true"></i>{Liferay.Language.get('es.emasesa.intranet.ajaxsearch.news.filter-by')}<i class="fa-solid fa-chevron-down fa-2xs" aria-hidden="true"></i>
+                    </button>
+                    <div class="ema-ajaxsearch-form__filters" aria-hidden="false">
+                        <div class="ema-ajaxsearch-filtros__text">
+                            <label>{Liferay.Language.get('es.emasesa.intranet.ajaxsearch.news.free-text')}</label>
+                            <input type="text" 
+                                id="queryText" 
+                                name="search" 
+                                placeholder="Buscar tarea" 
+                                aria-label="Buscar tarea"></input>
+                        </div>
+                        <div class="ema-ajaxsearch-filtros__buttons">
+                            <button id="searchButton" 
+                                aria-label="Buscar" 
+                                onClick={this.filtrarTareas} 
+                                type="button"
+                                class="btn btn-primary search">
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="button-holder btn-wrapper btn-wrapper--inline">
                     <a href id="toMe" className="btn btn-primary" aria-label="Asignadas a mi"

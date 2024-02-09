@@ -111,7 +111,7 @@ public class RestEmasesaWorkflowApplication extends Application {
 			asigneeIds = null;
 		}
 		JSONArray jsonArray = _emasesaWorkflowTaskSearch.searchWorkflowTask(serviceContext, false, assetTypes, asigneeIds, completed, start, end, byRole, orderColumn, orderType);
-		if (queryText != null && !queryText.isEmpty()) {
+		if (!queryText.equals("null")) {
 			jsonArray = filterTasks(jsonArray, queryText);
 		}
 		long count = _emasesaWorkflowTaskSearch.searchWorkflowTaskCount(serviceContext, false, assetTypes, asigneeIds, completed, 0, 0, byRole, orderColumn, orderType);
@@ -134,11 +134,9 @@ public class RestEmasesaWorkflowApplication extends Application {
 			JSONObject jsonTask = (JSONObject) jsonObject;
 			if (jsonTask.getString("matricula").toLowerCase().contains(queryText.toLowerCase())) {
 				result.put(jsonTask);
-			} else if (jsonTask.getString("assetType").toLowerCase().contains(queryText.toLowerCase())) {
+			} else if (jsonTask.getString("entryType").toLowerCase().contains(queryText.toLowerCase())) {
 				result.put(jsonTask);
 			} else if (jsonTask.getString("assigneePersonName").toLowerCase().contains(queryText.toLowerCase())) {
-				result.put(jsonTask);
-			} else if (jsonTask.getString("taskName").toLowerCase().contains(queryText.toLowerCase())) {
 				result.put(jsonTask);
 			}
 		});
