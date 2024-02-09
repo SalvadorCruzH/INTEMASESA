@@ -185,4 +185,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String historialTitulacionEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "HistorFormEndpoint",
+            required = false
+    )
+    String histPerConduEndpoint();
 }

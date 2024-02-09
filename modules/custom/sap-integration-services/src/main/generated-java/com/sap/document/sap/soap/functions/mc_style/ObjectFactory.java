@@ -782,5 +782,53 @@ public class ObjectFactory {
     public ZpeStEmpleadoHistTitulNiv createZpeStEmpleadoHistTitulNiv() {
         return new ZpeStEmpleadoHistTitulNiv();
     }
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistPercondu }
+     *
+     */
+    public ZPeEmpleadoHistPercondu createZPeEmpleadoHistPercondu() {
+        return new ZPeEmpleadoHistPercondu();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistPerconduResponse }
+     *
+     */
+    public ZPeEmpleadoHistPerconduResponse createZPeEmpleadoHistPerconduResponse() {
+        return new ZPeEmpleadoHistPerconduResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistPercond }
+     *
+     */
+    public TableOfZpeStEmpleadoHistPercond createTableOfZpeStEmpleadoHistPercond() {
+        return new TableOfZpeStEmpleadoHistPercond();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistPercondL }
+     *
+     */
+    public TableOfZpeStEmpleadoHistPercondL createTableOfZpeStEmpleadoHistPercondL() {
+        return new TableOfZpeStEmpleadoHistPercondL();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistPercondL }
+     *
+     */
+    public ZpeStEmpleadoHistPercondL createZpeStEmpleadoHistPercondL() {
+        return new ZpeStEmpleadoHistPercondL();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistPercond }
+     *
+     */
+    public ZpeStEmpleadoHistPercond createZpeStEmpleadoHistPercond() {
+        return new ZpeStEmpleadoHistPercond();
+    }
 
 }
+
