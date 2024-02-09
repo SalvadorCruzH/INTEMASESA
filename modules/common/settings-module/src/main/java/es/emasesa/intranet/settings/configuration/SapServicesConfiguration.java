@@ -192,4 +192,11 @@ public interface SapServicesConfiguration {
             required = false
     )
     String histPerConduEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "HistoricoInnovacionEndpoint",
+            required = false
+    )
+    String historicoInnovacionEndpoint();
 }

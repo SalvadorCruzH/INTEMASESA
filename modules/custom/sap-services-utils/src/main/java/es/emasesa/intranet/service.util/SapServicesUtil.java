@@ -47,6 +47,8 @@ import es.emasesa.intranet.sap.historForm.exception.HistorFormException;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.historialTitulacion.exception.HistorialTitulacionException;
 import es.emasesa.intranet.sap.historialTitulacion.service.HistorialTitulacionService;
+import es.emasesa.intranet.sap.innovacion.exception.HistoricoInnovacionException;
+import es.emasesa.intranet.sap.innovacion.service.HistoricoInnovacionService;
 import es.emasesa.intranet.sap.jornadadiaria.exception.JornadaDiariaException;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
@@ -918,6 +920,33 @@ public class SapServicesUtil {
         return permisos;
     }
 
+    public JSONObject getInnovacion(String pernr){
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[A] getInnovacion ");
+        }
+        JSONObject innovacion = JSONFactoryUtil.createJSONObject();
+        try {
+            if (_historicoInnovacionService == null) {
+                activate(null);
+            }
+            LOG.debug("Obtenido matricula: " + pernr);
+
+            innovacion = _historicoInnovacionService.obtenerHistoricoInnovacion(pernr);
+
+        } catch (SapCommunicationException e) {
+            LOG.debug("[C] getInnovacion al comunicar con SAP " + e.getMessage());
+        }catch (HistoricoInnovacionException e) {
+            LOG.debug("[E] getInnovacion al obtener el historial " + e.getMessage());
+
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[D] getInnovacion, finalizada " + innovacion.toString());
+            }
+        }
+        return innovacion;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -943,6 +972,7 @@ public class SapServicesUtil {
             CustomServiceTracker<ContratosCategoriasService> contratosCategoriasServiceTracker = new CustomServiceTracker<>(ContratosCategoriasService.class, "getContratosCategoriasService");
             CustomServiceTracker<HistorialTitulacionService> historTituServiceTracker = new CustomServiceTracker<>(HistorialTitulacionService.class, "getHistorialTitulacion");
             CustomServiceTracker<HistPerConduService> histPerConduServiceTracker = new CustomServiceTracker<>(HistPerConduService.class, "getHistPerConduService");
+            CustomServiceTracker<HistoricoInnovacionService> historicoInnovacionServiceTracker = new CustomServiceTracker<>(HistoricoInnovacionService.class, "getHistoricoInnovacionService");
 //            CustomServiceTracker<ReginaService> reginaServiceTracker = new CustomServiceTracker<>(ReginaService.class, "getReginaService");
 
 
@@ -969,6 +999,7 @@ public class SapServicesUtil {
             this._contratosCategoriasService = contratosCategoriasServiceTracker.getService();
             this._historialTitulacionService = historTituServiceTracker.getService();
             this._histPerConduService = histPerConduServiceTracker.getService();
+            this._historicoInnovacionService = historicoInnovacionServiceTracker.getService();
 
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
@@ -1032,6 +1063,7 @@ public class SapServicesUtil {
     private ContratosCategoriasService _contratosCategoriasService;
     private HistorialTitulacionService _historialTitulacionService;
     private HistPerConduService _histPerConduService;
+    private HistoricoInnovacionService _historicoInnovacionService;
 
 //    private ReginaService _reginaService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);

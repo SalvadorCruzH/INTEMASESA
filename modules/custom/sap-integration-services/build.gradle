@@ -60,7 +60,8 @@ war {
 	//wsdl = "../META-INF/wsdl/z_ws_pe_act_datos_personales.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_histform.wsdl"
 	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_hist_contr_ca.wsdl"
-	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_hist_percondu.wsdl"
+	//wsdl = "../META-INF/wsdl/z_ws_pe_empleado_hist_percondu.wsdl"
+	wsdl = "../META-INF/wsdl/z_ws_pe_empleado_hist_innovaci.wsdl"
 	generatedClassesRoot = "build/classes"
 	generatedSourceRoot= "../src/main/generated-java"
 }*/

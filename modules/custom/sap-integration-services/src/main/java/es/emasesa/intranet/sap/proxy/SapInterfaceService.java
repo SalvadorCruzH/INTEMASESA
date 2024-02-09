@@ -14,6 +14,7 @@ import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
 import es.emasesa.intranet.sap.histoPerCondu.service.HistPerConduService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.historialTitulacion.service.HistorialTitulacionService;
+import es.emasesa.intranet.sap.innovacion.service.HistoricoInnovacionService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
@@ -76,6 +77,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected HistorialTitulacionService historialTitulacionService;
     @Autowired(required = false)
     protected HistPerConduService histPerConduService;
+    @Autowired(required = false)
+    protected HistoricoInnovacionService historicoInnovacionService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -146,5 +149,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public HistPerConduService getHistPerConduService() {
         return histPerConduService;
+    }
+    public HistoricoInnovacionService getHistoricoInnovacionService() {
+        return historicoInnovacionService;
     }
 }
