@@ -199,4 +199,10 @@ public interface SapServicesConfiguration {
             required = false
     )
     String historicoInnovacionEndpoint();
+    @Meta.AD(
+            deflt = "",
+            name = "DiplomaEventosEndpoint",
+            required = false
+    )
+    String diplomaEventosEndpoint();
 }

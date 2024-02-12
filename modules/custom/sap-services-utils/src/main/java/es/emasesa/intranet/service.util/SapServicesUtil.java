@@ -30,6 +30,8 @@ import es.emasesa.intranet.sap.contratosCategorias.exception.ContratosCategorias
 import es.emasesa.intranet.sap.contratosCategorias.service.ContratosCategoriasService;
 import es.emasesa.intranet.sap.datospersona.exception.EmpleadoActDatosPersonalesException;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoActDatosPersonalesService;
+import es.emasesa.intranet.sap.diplomaEventos.exception.DiplomaEventosException;
+import es.emasesa.intranet.sap.diplomaEventos.service.DiplomaEventosService;
 import es.emasesa.intranet.sap.empleadoBanco.exception.EmpleadoBancoException;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
@@ -947,6 +949,32 @@ public class SapServicesUtil {
         return innovacion;
     }
 
+    public JSONObject getDiplomas(String pernr, String eventoId){
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[A] getDiploma ");
+        }
+        JSONObject diplomas = JSONFactoryUtil.createJSONObject();
+        try {
+            if (_diplomaEventosService == null) {
+                activate(null);
+            }
+            LOG.debug("Obtenido matricula: " + pernr);
+
+            diplomas = _diplomaEventosService.obtenerDiplomaEventos(pernr, eventoId);
+
+        } catch (SapCommunicationException e) {
+            LOG.debug("[C] getDiploma al comunicar con SAP " + e.getMessage());
+        } catch (DiplomaEventosException e) {
+            LOG.debug("[E] getDiploma al obtener el historial " + e.getMessage());
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[D] getDiploma, finalizada " + diplomas.toString());
+            }
+        }
+        return diplomas;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -973,6 +1001,7 @@ public class SapServicesUtil {
             CustomServiceTracker<HistorialTitulacionService> historTituServiceTracker = new CustomServiceTracker<>(HistorialTitulacionService.class, "getHistorialTitulacion");
             CustomServiceTracker<HistPerConduService> histPerConduServiceTracker = new CustomServiceTracker<>(HistPerConduService.class, "getHistPerConduService");
             CustomServiceTracker<HistoricoInnovacionService> historicoInnovacionServiceTracker = new CustomServiceTracker<>(HistoricoInnovacionService.class, "getHistoricoInnovacionService");
+            CustomServiceTracker<DiplomaEventosService> diplomaEventosServiceTracker = new CustomServiceTracker<>(DiplomaEventosService.class, "getDiplomaEventosService");
 //            CustomServiceTracker<ReginaService> reginaServiceTracker = new CustomServiceTracker<>(ReginaService.class, "getReginaService");
 
 
@@ -1000,6 +1029,7 @@ public class SapServicesUtil {
             this._historialTitulacionService = historTituServiceTracker.getService();
             this._histPerConduService = histPerConduServiceTracker.getService();
             this._historicoInnovacionService = historicoInnovacionServiceTracker.getService();
+            this._diplomaEventosService = diplomaEventosServiceTracker.getService();
 
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
@@ -1064,6 +1094,7 @@ public class SapServicesUtil {
     private HistorialTitulacionService _historialTitulacionService;
     private HistPerConduService _histPerConduService;
     private HistoricoInnovacionService _historicoInnovacionService;
+    private DiplomaEventosService _diplomaEventosService;
 
 //    private ReginaService _reginaService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);

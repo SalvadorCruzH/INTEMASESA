@@ -1,6 +1,8 @@
 
 package com.sap.document.sap.soap.functions.mc_style;
 
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.XmlElementDecl;
 import jakarta.xml.bind.annotation.XmlRegistry;
 
 
@@ -860,7 +862,50 @@ public class ObjectFactory {
     public ZpeStEmpleadoHistInnovacio createZpeStEmpleadoHistInnovacio() {
         return new ZpeStEmpleadoHistInnovacio();
     }
+    /**
+     * Create an instance of {@link ZPeEmpleadoDiplomaEventoRfcException }
+     *
+     */
+    public ZPeEmpleadoDiplomaEventoRfcException createZPeEmpleadoDiplomaEventoRfcException() {
+        return new ZPeEmpleadoDiplomaEventoRfcException();
+    }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoDiplomaEvento }
+     *
+     */
+    public ZPeEmpleadoDiplomaEvento createZPeEmpleadoDiplomaEvento() {
+        return new ZPeEmpleadoDiplomaEvento();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoDiplomaEventoResponse }
+     *
+     */
+    public ZPeEmpleadoDiplomaEventoResponse createZPeEmpleadoDiplomaEventoResponse() {
+        return new ZPeEmpleadoDiplomaEventoResponse();
+    }
+
+    /**
+     * Create an instance of {@link RfcExceptionMessage }
+     *
+     */
+    public RfcExceptionMessage createRfcExceptionMessage() {
+        return new RfcExceptionMessage();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ZPeEmpleadoDiplomaEventoRfcException }{@code >}
+     *
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ZPeEmpleadoDiplomaEventoRfcException }{@code >}
+     */
+    @XmlElementDecl(namespace = "urn:sap-com:document:sap:soap:functions:mc-style", name = "ZPeEmpleadoDiplomaEvento.Exception")
+    public JAXBElement<ZPeEmpleadoDiplomaEventoRfcException> createZPeEmpleadoDiplomaEventoException(ZPeEmpleadoDiplomaEventoRfcException value) {
+        return new JAXBElement<ZPeEmpleadoDiplomaEventoRfcException>(null, ZPeEmpleadoDiplomaEventoRfcException.class, null, value);
+    }
 }
 
 

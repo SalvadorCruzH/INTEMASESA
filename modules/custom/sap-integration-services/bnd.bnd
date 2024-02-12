@@ -52,7 +52,9 @@ Export-Package: \
   es.emasesa.intranet.sap.histoPerCondu.service,\
   es.emasesa.intranet.sap.histoPerCondu.exception,\
   es.emasesa.intranet.sap.innovacion.service,\
-  es.emasesa.intranet.sap.innovacion.exception
+  es.emasesa.intranet.sap.innovacion.exception,\
+  es.emasesa.intranet.sap.diplomaEventos.service,\
+  es.emasesa.intranet.sap.diplomaEventos.exception
 
 Import-Package:\*;resolution:=optional
 

@@ -5,6 +5,7 @@ import es.emasesa.intranet.sap.calendarioeventos.service.CalendarioEventosServic
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.contratosCategorias.service.ContratosCategoriasService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoActDatosPersonalesService;
+import es.emasesa.intranet.sap.diplomaEventos.service.DiplomaEventosService;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
@@ -79,6 +80,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected HistPerConduService histPerConduService;
     @Autowired(required = false)
     protected HistoricoInnovacionService historicoInnovacionService;
+    @Autowired(required = false)
+    protected DiplomaEventosService diplomaEventosService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -152,5 +155,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     }
     public HistoricoInnovacionService getHistoricoInnovacionService() {
         return historicoInnovacionService;
+    }
+    public DiplomaEventosService getDiplomaEventosService() {
+        return diplomaEventosService;
     }
 }
