@@ -1,7 +1,6 @@
 package es.emasesa.intranet.portlet.ajaxsearch.constant;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Field;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -102,4 +101,10 @@ public class AjaxSearchPortletKeys {
 	public static final String FIELD_OBJECT_ENTRY_ID = "objectEntryId";
 	public static final String EMAIL = "email";
 	public static final String NOMBRE_COMPLETO = "nombreCompleto";
+
+	/** CONSURSOS Y PROCESOS DE SELECCION **/
+	public static final String FECHA_FIN_PROCESO = "fechafinproceso";
+	public static final String NUMERO_PLAZAS = "numerodeplazas";
+	public static final String TIPO_PROCESO = "tipoproceso";
+	public static final String TIPO_PROCESO_FILTER = "tipoprocesofilter";
 }

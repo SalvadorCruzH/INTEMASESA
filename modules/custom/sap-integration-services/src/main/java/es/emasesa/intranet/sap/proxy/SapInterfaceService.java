@@ -21,6 +21,7 @@ import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 //import es.emasesa.intranet.sap.regina.service.ReginaService;
+import es.emasesa.intranet.sap.procesoseleccionlista.service.ProcesoSeleccionListaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
@@ -82,6 +83,8 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected HistoricoInnovacionService historicoInnovacionService;
     @Autowired(required = false)
     protected DiplomaEventosService diplomaEventosService;
+    @Autowired(required = false)
+    protected ProcesoSeleccionListaService procesoSeleccionListaService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -159,4 +162,5 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     public DiplomaEventosService getDiplomaEventosService() {
         return diplomaEventosService;
     }
+    public ProcesoSeleccionListaService getProcesoSeleccionLista() {return procesoSeleccionListaService;}
 }

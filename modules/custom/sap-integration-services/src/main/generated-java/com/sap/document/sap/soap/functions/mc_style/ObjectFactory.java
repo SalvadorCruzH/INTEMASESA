@@ -32,6 +32,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ZPeProcesosSeleccionLista }
+     *
+     */
+    public ZPeProcesosSeleccionLista createZPeProcesosSeleccionLista() {
+        return new ZPeProcesosSeleccionLista();
+    }
+
+    /**
+     * Create an instance of {@link ZPeProcesosSeleccionListaResponse }
+     *
+     */
+    public ZPeProcesosSeleccionListaResponse createZPeProcesosSeleccionListaResponse() {
+        return new ZPeProcesosSeleccionListaResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStProcesoSeleccionLista }
+     *
+     */
+    public TableOfZpeStProcesoSeleccionLista createTableOfZpeStProcesoSeleccionLista() {
+        return new TableOfZpeStProcesoSeleccionLista();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStProcesoSeleccionLista }
+     *
+     */
+    public ZpeStProcesoSeleccionLista createZpeStProcesoSeleccionLista() {
+        return new ZpeStProcesoSeleccionLista();
+    }
+
+    /**
      * Create an instance of {@link ZPeActDatosPersonales }
      *
      */

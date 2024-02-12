@@ -205,4 +205,18 @@ public interface SapServicesConfiguration {
             required = false
     )
     String diplomaEventosEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ProcesoSeleccionListaEndpoint",
+            required = false
+    )
+    String procesoSeleccionListaEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ProcesoSeleccionInscripcionEndpoint",
+            required = false
+    )
+    String procesoSeleccionInscripcionEndpoint();
 }

@@ -54,7 +54,16 @@ Export-Package: \
   es.emasesa.intranet.sap.innovacion.service,\
   es.emasesa.intranet.sap.innovacion.exception,\
   es.emasesa.intranet.sap.diplomaEventos.service,\
-  es.emasesa.intranet.sap.diplomaEventos.exception
+  es.emasesa.intranet.sap.diplomaEventos.exception,\
+  es.emasesa.intranet.sap.innovacion.exception,\
+  es.emasesa.intranet.sap.histoPerCondu.exception,\
+    es.emasesa.intranet.sap.historialTitulacion.service,\
+    es.emasesa.intranet.sap.historialTitulacion.exception,\
+    es.emasesa.intranet.sap.contratosCategorias.exception,\
+    es.emasesa.intranet.sap.procesoseleccionlista.service,\
+    es.emasesa.intranet.sap.procesoseleccionlista.exception,\
+    es.emasesa.intranet.sap.procesoseleccioninscripcion.service,\
+    es.emasesa.intranet.sap.procesoseleccioninscripcion.exception
 
 Import-Package:\*;resolution:=optional
 

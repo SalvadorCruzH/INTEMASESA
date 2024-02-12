@@ -57,6 +57,8 @@ import es.emasesa.intranet.sap.marcaje.exception.MarcajeException;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.exception.NecesidadesFormacionException;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
+import es.emasesa.intranet.sap.procesoseleccionlista.exception.ProcesoSeleccionListaException;
+import es.emasesa.intranet.sap.procesoseleccionlista.service.ProcesoSeleccionListaService;
 import es.emasesa.intranet.sap.proxy.SapInterfaceService;
 //import es.emasesa.intranet.sap.regina.exception.ReginaException;
 //import es.emasesa.intranet.sap.regina.service.ReginaService;
@@ -975,6 +977,31 @@ public class SapServicesUtil {
         return diplomas;
     }
 
+    public JSONArray getProcesoSeleccionLista(){
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("[A] getProcesoSeleccionLista ");
+        }
+        JSONArray procesoSeleccionLista = JSONFactoryUtil.createJSONArray();
+        try {
+            if (_procesoSeleccionListaService == null) {
+                activate(null);
+            }
+
+            procesoSeleccionLista = _procesoSeleccionListaService.getListadoSolicitudes(StringPool.BLANK);
+
+        } catch (SapCommunicationException e) {
+            LOG.debug("[C] getProcesoSeleccionLista al comunicar con SAP " + e.getMessage());
+        } catch (ProcesoSeleccionListaException e) {
+            LOG.debug("[E] getProcesoSeleccionLista al obtener el historial " + e.getMessage());
+        } finally {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("[D] getContratos, finalizada " + procesoSeleccionLista.toString());
+            }
+        }
+        return procesoSeleccionLista;
+    }
+
     @Activate
     protected void activate(Map<String, Object> properties) {
 
@@ -1002,6 +1029,7 @@ public class SapServicesUtil {
             CustomServiceTracker<HistPerConduService> histPerConduServiceTracker = new CustomServiceTracker<>(HistPerConduService.class, "getHistPerConduService");
             CustomServiceTracker<HistoricoInnovacionService> historicoInnovacionServiceTracker = new CustomServiceTracker<>(HistoricoInnovacionService.class, "getHistoricoInnovacionService");
             CustomServiceTracker<DiplomaEventosService> diplomaEventosServiceTracker = new CustomServiceTracker<>(DiplomaEventosService.class, "getDiplomaEventosService");
+            CustomServiceTracker<ProcesoSeleccionListaService> procesoSeleccionListaServiceServiceTracker = new CustomServiceTracker<>(ProcesoSeleccionListaService.class, "getProcesoSeleccionLista");
 //            CustomServiceTracker<ReginaService> reginaServiceTracker = new CustomServiceTracker<>(ReginaService.class, "getReginaService");
 
 
@@ -1030,6 +1058,7 @@ public class SapServicesUtil {
             this._histPerConduService = histPerConduServiceTracker.getService();
             this._historicoInnovacionService = historicoInnovacionServiceTracker.getService();
             this._diplomaEventosService = diplomaEventosServiceTracker.getService();
+            this._procesoSeleccionListaService = procesoSeleccionListaServiceServiceTracker.getService();
 
             /*if(_jornadaDiariaService != null) {
                 JSONArray jornadaDiaria = _jornadaDiariaService.obtenerJornadaDiaria("1002982", "2022-09-10", "2022-10-10");
@@ -1095,6 +1124,7 @@ public class SapServicesUtil {
     private HistPerConduService _histPerConduService;
     private HistoricoInnovacionService _historicoInnovacionService;
     private DiplomaEventosService _diplomaEventosService;
+    private ProcesoSeleccionListaService _procesoSeleccionListaService;
 
 //    private ReginaService _reginaService;
     private static final Log LOG = LogFactoryUtil.getLog(SapServicesUtil.class);
