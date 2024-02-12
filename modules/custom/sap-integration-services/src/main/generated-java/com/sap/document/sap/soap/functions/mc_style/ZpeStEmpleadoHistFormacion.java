@@ -21,11 +21,13 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="Inicio" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
  *         &lt;element name="Objid" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
  *         &lt;element name="Tabseqnr" type="{urn:sap-com:document:sap:rfc:functions}numeric6"/&gt;
- *         &lt;element name="Curso" type="{urn:sap-com:document:sap:rfc:functions}char80"/&gt;
+ *         &lt;element name="Curso" type="{urn:sap-com:document:sap:soap:functions:mc-style}char80"/&gt;
  *         &lt;element name="Fin" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
  *         &lt;element name="Duracion" type="{urn:sap-com:document:sap:rfc:functions}decimal8.2"/&gt;
  *         &lt;element name="Titulo" type="{urn:sap-com:document:sap:rfc:functions}char1"/&gt;
  *         &lt;element name="TituloDesc" type="{urn:sap-com:document:sap:soap:functions:mc-style}char50"/&gt;
+ *         &lt;element name="Sland" type="{urn:sap-com:document:sap:soap:functions:mc-style}char3"/&gt;
+ *         &lt;element name="Insti" type="{urn:sap-com:document:sap:soap:functions:mc-style}char80"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -43,7 +45,9 @@ import jakarta.xml.bind.annotation.XmlType;
     "fin",
     "duracion",
     "titulo",
-    "tituloDesc"
+    "tituloDesc",
+    "sland",
+    "insti"
 })
 public class ZpeStEmpleadoHistFormacion {
 
@@ -63,6 +67,10 @@ public class ZpeStEmpleadoHistFormacion {
     protected String titulo;
     @XmlElement(name = "TituloDesc", required = true)
     protected String tituloDesc;
+    @XmlElement(name = "Sland", required = true)
+    protected String sland;
+    @XmlElement(name = "Insti", required = true)
+    protected String insti;
 
     /**
      * Obtiene el valor de la propiedad inicio.
@@ -254,6 +262,54 @@ public class ZpeStEmpleadoHistFormacion {
      */
     public void setTituloDesc(String value) {
         this.tituloDesc = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad sland.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSland() {
+        return sland;
+    }
+
+    /**
+     * Define el valor de la propiedad sland.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSland(String value) {
+        this.sland = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad insti.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInsti() {
+        return insti;
+    }
+
+    /**
+     * Define el valor de la propiedad insti.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInsti(String value) {
+        this.insti = value;
     }
 
 }
