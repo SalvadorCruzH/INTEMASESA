@@ -96,7 +96,46 @@ public class CustomWorkflowUtil {
 
         return users;
     }
-    
+
+    public List<User> assignWorkflowPeticionesRRHH(Map<String, Serializable> workflowContext, long userId, String employeeType) {
+
+        List<User> users = new ArrayList<>();
+        long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+        String matriculaSAPUser = StringPool.BLANK;
+        ClassLoader actualClassLoader = Thread.currentThread().getContextClassLoader();
+        User user = null;
+        try {
+            if (customExpandoUtil == null || empleadoEstructuraService == null) {
+                activate(null);
+            }
+            long userIdSolicitante = _objectEntryLocalService.getObjectEntry(GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK))).getUserId();
+            String matriculaActualUser = customExpandoUtil.getDataValueByUser(userIdSolicitante, companyId, "matricula");
+            ClassLoader objectFactoryClassLoader = SapInterfaceService.class.getClassLoader();
+            Thread.currentThread().setContextClassLoader(objectFactoryClassLoader);
+
+            JSONObject json = empleadoEstructuraService.getEmpleadoEstructura(matriculaActualUser);
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+
+            matriculaSAPUser = json.getString(employeeType);
+            user = customExpandoUtil.getUserByExpandoValue(companyId, "matricula", matriculaSAPUser);
+
+            if (Validator.isNotNull(user)) {
+                users.add(user);
+            } else {
+                LOG.debug("No existe en Liferay un usuario con la matricula: " + matriculaSAPUser);
+            }
+        } catch (SapException e) {
+            LOG.error("Se ha producido un error a la hora de obtener la estructura del usuario " + matriculaSAPUser, e);
+        } catch (PortalException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(actualClassLoader);
+            ThreadContext.clearAll();
+        }
+
+        return users;
+    }
+
     public List<User> assignWorkflowUserFromMatriculaForm(Map<String, Serializable> workflowContext, long userId, String employeeType) {
         List<User> users = new ArrayList<>();
         long companyId = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
