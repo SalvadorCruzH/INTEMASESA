@@ -1,6 +1,8 @@
 
 package com.sap.document.sap.soap.functions.mc_style;
 
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.XmlElementDecl;
 import jakarta.xml.bind.annotation.XmlRegistry;
 
 
@@ -27,6 +29,38 @@ public class ObjectFactory {
      *
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link ZPeProcesosSeleccionLista }
+     *
+     */
+    public ZPeProcesosSeleccionLista createZPeProcesosSeleccionLista() {
+        return new ZPeProcesosSeleccionLista();
+    }
+
+    /**
+     * Create an instance of {@link ZPeProcesosSeleccionListaResponse }
+     *
+     */
+    public ZPeProcesosSeleccionListaResponse createZPeProcesosSeleccionListaResponse() {
+        return new ZPeProcesosSeleccionListaResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStProcesoSeleccionLista }
+     *
+     */
+    public TableOfZpeStProcesoSeleccionLista createTableOfZpeStProcesoSeleccionLista() {
+        return new TableOfZpeStProcesoSeleccionLista();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStProcesoSeleccionLista }
+     *
+     */
+    public ZpeStProcesoSeleccionLista createZpeStProcesoSeleccionLista() {
+        return new ZpeStProcesoSeleccionLista();
     }
 
     /**
@@ -782,5 +816,128 @@ public class ObjectFactory {
     public ZpeStEmpleadoHistTitulNiv createZpeStEmpleadoHistTitulNiv() {
         return new ZpeStEmpleadoHistTitulNiv();
     }
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistPercondu }
+     *
+     */
+    public ZPeEmpleadoHistPercondu createZPeEmpleadoHistPercondu() {
+        return new ZPeEmpleadoHistPercondu();
+    }
 
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistPerconduResponse }
+     *
+     */
+    public ZPeEmpleadoHistPerconduResponse createZPeEmpleadoHistPerconduResponse() {
+        return new ZPeEmpleadoHistPerconduResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistPercond }
+     *
+     */
+    public TableOfZpeStEmpleadoHistPercond createTableOfZpeStEmpleadoHistPercond() {
+        return new TableOfZpeStEmpleadoHistPercond();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistPercondL }
+     *
+     */
+    public TableOfZpeStEmpleadoHistPercondL createTableOfZpeStEmpleadoHistPercondL() {
+        return new TableOfZpeStEmpleadoHistPercondL();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistPercondL }
+     *
+     */
+    public ZpeStEmpleadoHistPercondL createZpeStEmpleadoHistPercondL() {
+        return new ZpeStEmpleadoHistPercondL();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistPercond }
+     *
+     */
+    public ZpeStEmpleadoHistPercond createZpeStEmpleadoHistPercond() {
+        return new ZpeStEmpleadoHistPercond();
+    }
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistInnovacion }
+     *
+     */
+    public ZPeEmpleadoHistInnovacion createZPeEmpleadoHistInnovacion() {
+        return new ZPeEmpleadoHistInnovacion();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoHistInnovacionResponse }
+     *
+     */
+    public ZPeEmpleadoHistInnovacionResponse createZPeEmpleadoHistInnovacionResponse() {
+        return new ZPeEmpleadoHistInnovacionResponse();
+    }
+
+    /**
+     * Create an instance of {@link TableOfZpeStEmpleadoHistInnovacio }
+     *
+     */
+    public TableOfZpeStEmpleadoHistInnovacio createTableOfZpeStEmpleadoHistInnovacio() {
+        return new TableOfZpeStEmpleadoHistInnovacio();
+    }
+
+    /**
+     * Create an instance of {@link ZpeStEmpleadoHistInnovacio }
+     *
+     */
+    public ZpeStEmpleadoHistInnovacio createZpeStEmpleadoHistInnovacio() {
+        return new ZpeStEmpleadoHistInnovacio();
+    }
+    /**
+     * Create an instance of {@link ZPeEmpleadoDiplomaEventoRfcException }
+     *
+     */
+    public ZPeEmpleadoDiplomaEventoRfcException createZPeEmpleadoDiplomaEventoRfcException() {
+        return new ZPeEmpleadoDiplomaEventoRfcException();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoDiplomaEvento }
+     *
+     */
+    public ZPeEmpleadoDiplomaEvento createZPeEmpleadoDiplomaEvento() {
+        return new ZPeEmpleadoDiplomaEvento();
+    }
+
+    /**
+     * Create an instance of {@link ZPeEmpleadoDiplomaEventoResponse }
+     *
+     */
+    public ZPeEmpleadoDiplomaEventoResponse createZPeEmpleadoDiplomaEventoResponse() {
+        return new ZPeEmpleadoDiplomaEventoResponse();
+    }
+
+    /**
+     * Create an instance of {@link RfcExceptionMessage }
+     *
+     */
+    public RfcExceptionMessage createRfcExceptionMessage() {
+        return new RfcExceptionMessage();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ZPeEmpleadoDiplomaEventoRfcException }{@code >}
+     *
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ZPeEmpleadoDiplomaEventoRfcException }{@code >}
+     */
+    @XmlElementDecl(namespace = "urn:sap-com:document:sap:soap:functions:mc-style", name = "ZPeEmpleadoDiplomaEvento.Exception")
+    public JAXBElement<ZPeEmpleadoDiplomaEventoRfcException> createZPeEmpleadoDiplomaEventoException(ZPeEmpleadoDiplomaEventoRfcException value) {
+        return new JAXBElement<ZPeEmpleadoDiplomaEventoRfcException>(null, ZPeEmpleadoDiplomaEventoRfcException.class, null, value);
+    }
 }
+
+

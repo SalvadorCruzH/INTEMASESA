@@ -5,19 +5,23 @@ import es.emasesa.intranet.sap.calendarioeventos.service.CalendarioEventosServic
 import es.emasesa.intranet.sap.centros.service.DistanciaCentrosService;
 import es.emasesa.intranet.sap.contratosCategorias.service.ContratosCategoriasService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoActDatosPersonalesService;
+import es.emasesa.intranet.sap.diplomaEventos.service.DiplomaEventosService;
 import es.emasesa.intranet.sap.empleadoBanco.service.EmpleadoBancoService;
 import es.emasesa.intranet.sap.empleadoPrestamos.service.EmpleadoPrestamosService;
 import es.emasesa.intranet.sap.base.AbstractSelfRegisteringService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosDomicilioService;
 import es.emasesa.intranet.sap.datospersona.service.EmpleadoDatosPersonalesService;
 import es.emasesa.intranet.sap.estructura.service.EmpleadoEstructuraService;
+import es.emasesa.intranet.sap.histoPerCondu.service.HistPerConduService;
 import es.emasesa.intranet.sap.historForm.service.HistorFormService;
 import es.emasesa.intranet.sap.historialTitulacion.service.HistorialTitulacionService;
+import es.emasesa.intranet.sap.innovacion.service.HistoricoInnovacionService;
 import es.emasesa.intranet.sap.jornadadiaria.service.JornadaDiariaService;
 import es.emasesa.intranet.sap.marcaje.service.MarcajeService;
 import es.emasesa.intranet.sap.necesidadesFormacion.service.NecesidadesFormacionService;
 import es.emasesa.intranet.sap.nomina.service.JornadaNominaService;
 //import es.emasesa.intranet.sap.regina.service.ReginaService;
+import es.emasesa.intranet.sap.procesoseleccionlista.service.ProcesoSeleccionListaService;
 import es.emasesa.intranet.sap.relacionLaboral.service.RelacionLaboralService;
 import es.emasesa.intranet.sap.resumenanual.service.ResumenAnualService;
 import es.emasesa.intranet.sap.retenciones.service.CertificadoRetencionesService;
@@ -73,6 +77,14 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     protected ContratosCategoriasService contratosCategoriasService;
     @Autowired(required = false)
     protected HistorialTitulacionService historialTitulacionService;
+    @Autowired(required = false)
+    protected HistPerConduService histPerConduService;
+    @Autowired(required = false)
+    protected HistoricoInnovacionService historicoInnovacionService;
+    @Autowired(required = false)
+    protected DiplomaEventosService diplomaEventosService;
+    @Autowired(required = false)
+    protected ProcesoSeleccionListaService procesoSeleccionListaService;
 
     public JornadaDiariaService getJornadaDiariaService(){
         return jornadaDiariaService;
@@ -141,4 +153,14 @@ public class SapInterfaceService  extends AbstractSelfRegisteringService {
     public HistorialTitulacionService getHistorialTitulacion() {
         return historialTitulacionService;
     }
+    public HistPerConduService getHistPerConduService() {
+        return histPerConduService;
+    }
+    public HistoricoInnovacionService getHistoricoInnovacionService() {
+        return historicoInnovacionService;
+    }
+    public DiplomaEventosService getDiplomaEventosService() {
+        return diplomaEventosService;
+    }
+    public ProcesoSeleccionListaService getProcesoSeleccionLista() {return procesoSeleccionListaService;}
 }

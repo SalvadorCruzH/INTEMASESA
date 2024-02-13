@@ -22,6 +22,7 @@ import es.emasesa.intranet.sap.util.SapConfigurationUtil;
 import es.emasesa.intranet.settings.configuration.SapServicesConfiguration;
 import jakarta.xml.ws.Holder;
 import jakarta.xml.ws.handler.Handler;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -64,11 +65,12 @@ public class HistorFormService {
             if (tInterna.value != null){
                 jsonReturn.put("interna", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tInterna.value.getItem())));
             }
-            if (tInterna.value != null){
+            if (tPais.value != null){
                 jsonReturn.put("pais", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(tPais.value.getItem())));
             }
-            if (tInterna.value != null){
-                jsonReturn.put("data", JSONFactoryUtil.createJSONArray(JSONFactoryUtil.looseSerializeDeep(exData.value)));
+            if (exData.value != null){
+                String decoded = Base64.encodeBase64String(exData.value);
+                jsonReturn.put("data", decoded);
             }
             LoggerUtil.debug(LOG, "devuelve: " +jsonReturn.toString());
             return jsonReturn;

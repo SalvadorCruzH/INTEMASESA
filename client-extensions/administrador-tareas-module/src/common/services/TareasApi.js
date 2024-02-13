@@ -3,13 +3,16 @@ import {WORKFLOWTASKS, WORKFLOWTASK_BASE} from "../js/Constants";
 
 
 const TareasApi = {
-    getWorkflowTask: (assetType, completed, byRole, start, end, columnSelected, callback, errorHandler) => {
+    getWorkflowTask: (assetType, completed, byRole, start, end, columnSelected, callback, errorHandler, queryText) => {
         let url = WORKFLOWTASK_BASE.URL_DEFAULT;
+        if(queryText === "" || queryText === undefined){
+            queryText = "null";
+        }
         if (assetType !== "") {
-            url = url + assetType + "/" + completed + "/" + byRole + "/" + start + "/" + end + "/"+columnSelected.name+ "/"+columnSelected.order;
+            url = url + assetType + "/" + completed + "/" + byRole + "/" + start + "/" + end + "/"+columnSelected.name+ "/"+columnSelected.order+"/" + queryText;
 
         } else {
-            url = url + completed + "/" + byRole + "/" + start + "/" + end+ "/"+columnSelected.name+ "/"+columnSelected.order;
+            url = url + completed + "/" + byRole + "/" + start + "/" + end+ "/"+columnSelected.name+ "/"+columnSelected.order+ "/" + queryText;
         }
 
         LiferayApi.get(

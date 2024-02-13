@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "Z_WS_PE_EMPLEADO_HISTFORM", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "file:/C:/Dev/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_histform.wsdl")
+@WebServiceClient(name = "Z_WS_PE_EMPLEADO_HISTFORM", targetNamespace = "urn:sap-com:document:sap:soap:functions:mc-style", wsdlLocation = "classpath:META-INF/wsdl/z_ws_pe_empleado_histform.wsdl")
 public class ZWSPEEMPLEADOHISTFORM_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ZWSPEEMPLEADOHISTFORM_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/C:/Dev/INTEMASESA/modules/custom/sap-integration-services/src/main/resources/META-INF/wsdl/z_ws_pe_empleado_histform.wsdl");
+            url = new URL("classpath:META-INF/wsdl/z_ws_pe_empleado_histform.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

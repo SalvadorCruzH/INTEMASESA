@@ -166,6 +166,11 @@
                     <xsd:maxLength value="50"/>
                 </xsd:restriction>
             </xsd:simpleType>
+            <xsd:simpleType name="char80">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="80"/>
+                </xsd:restriction>
+            </xsd:simpleType>
             <xsd:simpleType name="numeric8">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="8"/>
@@ -177,11 +182,13 @@
                     <xsd:element name="Inicio" type="n0:date10"/>
                     <xsd:element name="Objid" type="n0:numeric8"/>
                     <xsd:element name="Tabseqnr" type="n0:numeric6"/>
-                    <xsd:element name="Curso" type="n0:char80"/>
+                    <xsd:element name="Curso" type="tns:char80"/>
                     <xsd:element name="Fin" type="n0:date10"/>
                     <xsd:element name="Duracion" type="n0:decimal8.2"/>
                     <xsd:element name="Titulo" type="n0:char1"/>
                     <xsd:element name="TituloDesc" type="tns:char50"/>
+                    <xsd:element name="Sland" type="tns:char3"/>
+                    <xsd:element name="Insti" type="tns:char80"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="ZpeStEmpleadoHistFormPais">
@@ -226,11 +233,6 @@
             <xsd:simpleType name="char1">
                 <xsd:restriction base="xsd:string">
                     <xsd:maxLength value="1"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType name="char80">
-                <xsd:restriction base="xsd:string">
-                    <xsd:maxLength value="80"/>
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="date10">
@@ -309,10 +311,10 @@
     </wsdl:binding>
     <wsdl:service name="Z_WS_PE_EMPLEADO_HIST_FORMACIO">
         <wsdl:port name="Z_WS_PE_EMPLEADO_HIST_FORMACIO" binding="tns:Z_WS_PE_EMPLEADO_HIST_FORMACIO">
-            <soap:address location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
+            <soap:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_HIST_FORMACIO_soap12" binding="tns:Z_WS_PE_EMPLEADO_HIST_FORMACIO_soap12">
-            <wsoap12:address location="http://10.3.4.223:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
+            <wsoap12:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

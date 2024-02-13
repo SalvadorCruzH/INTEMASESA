@@ -185,4 +185,38 @@ public interface SapServicesConfiguration {
             required = false
     )
     String historialTitulacionEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "HistorFormEndpoint",
+            required = false
+    )
+    String histPerConduEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "HistoricoInnovacionEndpoint",
+            required = false
+    )
+    String historicoInnovacionEndpoint();
+    @Meta.AD(
+            deflt = "",
+            name = "DiplomaEventosEndpoint",
+            required = false
+    )
+    String diplomaEventosEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ProcesoSeleccionListaEndpoint",
+            required = false
+    )
+    String procesoSeleccionListaEndpoint();
+
+    @Meta.AD(
+            deflt = "",
+            name = "ProcesoSeleccionInscripcionEndpoint",
+            required = false
+    )
+    String procesoSeleccionInscripcionEndpoint();
 }
