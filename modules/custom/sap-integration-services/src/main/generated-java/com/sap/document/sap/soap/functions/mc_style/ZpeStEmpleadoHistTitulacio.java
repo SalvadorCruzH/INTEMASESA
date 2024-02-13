@@ -17,6 +17,8 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="Begda" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
+ *         &lt;element name="Endda" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
  *         &lt;element name="Slart" type="{urn:sap-com:document:sap:rfc:functions}char2"/&gt;
  *         &lt;element name="Sltxt" type="{urn:sap-com:document:sap:rfc:functions}char20"/&gt;
  *         &lt;element name="Ausbi" type="{urn:sap-com:document:sap:rfc:functions}numeric8"/&gt;
@@ -37,6 +39,8 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ZpeStEmpleadoHistTitulacio", propOrder = {
+    "begda",
+    "endda",
     "slart",
     "sltxt",
     "ausbi",
@@ -50,6 +54,10 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class ZpeStEmpleadoHistTitulacio {
 
+    @XmlElement(name = "Begda", required = true)
+    protected String begda;
+    @XmlElement(name = "Endda", required = true)
+    protected String endda;
     @XmlElement(name = "Slart", required = true)
     protected String slart;
     @XmlElement(name = "Sltxt", required = true)
@@ -70,6 +78,54 @@ public class ZpeStEmpleadoHistTitulacio {
     protected String satxt;
     @XmlElement(name = "Zzverifi", required = true)
     protected String zzverifi;
+
+    /**
+     * Obtiene el valor de la propiedad begda.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getBegda() {
+        return begda;
+    }
+
+    /**
+     * Define el valor de la propiedad begda.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setBegda(String value) {
+        this.begda = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad endda.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEndda() {
+        return endda;
+    }
+
+    /**
+     * Define el valor de la propiedad endda.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEndda(String value) {
+        this.endda = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad slart.

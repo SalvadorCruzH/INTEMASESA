@@ -311,10 +311,10 @@
     </wsdl:binding>
     <wsdl:service name="Z_WS_PE_EMPLEADO_HIST_FORMACIO">
         <wsdl:port name="Z_WS_PE_EMPLEADO_HIST_FORMACIO" binding="tns:Z_WS_PE_EMPLEADO_HIST_FORMACIO">
-            <soap:address location="http://10.3.4.223:8010/sap/bc/srt/wsdl/flv_10002A111AD1/srvc_url/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
+            <soap:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
         </wsdl:port>
         <wsdl:port name="Z_WS_PE_EMPLEADO_HIST_FORMACIO_soap12" binding="tns:Z_WS_PE_EMPLEADO_HIST_FORMACIO_soap12">
-            <wsoap12:address location="http://10.3.4.223:8010/sap/bc/srt/wsdl/flv_10002A111AD1/srvc_url/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
+            <wsoap12:address location="http://tc0002.desevilla.org:8010/sap/bc/srt/rfc/sap/z_ws_pe_empleado_hist_formacio/010/z_ws_pe_empleado_hist_formacio/z_ws_pe_empleado_hist_formacio"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="Endda" type="{urn:sap-com:document:sap:rfc:functions}date10"/&gt;
  *         &lt;element name="Adatanr" type="{urn:sap-com:document:sap:rfc:functions}char32"/&gt;
  *         &lt;element name="Chara" type="{urn:sap-com:document:sap:rfc:functions}numeric4"/&gt;
- *         &lt;element name="Pstext" type="{urn:sap-com:document:sap:soap:functions:mc-style}char40"/&gt;
+ *         &lt;element name="Pstext" type="{urn:sap-com:document:sap:rfc:functions}char40"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
